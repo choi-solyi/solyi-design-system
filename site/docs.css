@@ -175,6 +175,8 @@ main:focus {outline: none;}
 dialog {border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-lg); padding: 24px; width: min(520px,calc(100% - 32px)); max-height: calc(100dvh - 48px); overflow: auto; background: var(--sol-color-surface); color: var(--sol-color-text);}
 dialog::backdrop {background: #10121c88;}
 .dialog-head {display: flex; align-items: center; gap: 16px; justify-content: space-between; margin-bottom: 16px;}
+.dialog-head > .eyebrow {flex: 1; min-width: 0;}
+.dialog-head > .sol-button {flex: 0 0 auto; white-space: nowrap;}
 dialog h2 {font-size: 25px;}
 dialog > p {font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
 .detail-list {font-size: var(--sol-text-sm); margin: 20px 0;}
