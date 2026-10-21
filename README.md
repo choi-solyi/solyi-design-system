@@ -1,25 +1,31 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.1 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
 ## 구성
 
 - **Overview**: 방향과 작동하는 작은 화면
-- **Style / Core**: 원칙, 역할 색, 타이포, 간격, 밀도, 접근성 작업 기준, 컬러 적용 예시와 Motion
-- **Component**: Button, Field, Choice, Switch, Feedback, native Dialog, Tooltip, Popover, Accordion, Breadcrumb, Side panel, Toast의 상태·키보드 계약·토큰 매핑·복사 가능한 예시
-- **Pattern**: 폼 검증과 회복, 검색·필터·상세, 비교 선택, 표·목록의 선택/정렬/필터/페이지 조합, 날짜 기간, 로컬 파일 선택, IME를 고려한 자동완성, 가상 응답 상태
-- **Theme & adoption**: Cool violet / Quiet sage / Warm sand, 라이트·다크, 도입 방법과 범위
+- **Style / Core**: 원칙, 역할 색, 타이포, 간격, 밀도, 접근성 작업 기준, 컬러 적용 예시와 Motion, UI 아이콘·레이어·문구 규칙
+- **Component**: Button, Field, Choice, Switch, Feedback, native Dialog, Tooltip, Popover, Accordion, Breadcrumb, Side panel, Toast, Textarea·숫자·다중 선택·탭·행동 메뉴·Avatar·Progress·Time·Chart·Tree의 상태·키보드 계약·토큰 매핑·복사 가능한 예시
+- **Pattern**: 폼 검증과 회복, 검색·필터·상세, 비교 선택, 표·목록의 선택/정렬/필터/페이지 조합, 날짜 기간, 로컬 파일 선택, IME를 고려한 자동완성, 가상 응답 상태, 반응형 셸과 설정/목록/상세, 편집·미저장·삭제·Undo
+- **Theme & adoption**: Cool violet / Quiet sage / Warm sand, 라이트·다크, 도입 방법과 범위, 독립 Vue/Vuetify starter와 버전·폐기 규칙
 
 쿨 바이올렛 A안은 기본 출발점이며 모든 앱의 영구 규칙이 아닙니다. 브랜드 고유성은 정보 위계·타입·여백 리듬·밀도·절제된 강조에 둡니다. 게임 전투력·등급 색은 Core에 포함하지 않습니다.
 
 ## 로컬 실행
 
-Node.js 20 이상을 사용합니다. 게시 사이트와 빌드에는 외부 패키지가 필요하지 않습니다. `jsdom`은 DOM 검사 전용 개발 의존성입니다.
+Node.js 20 이상을 사용합니다. Core·문서 원본은 외부 런타임 패키지 없이 동작합니다. 독립 starter 빌드는 아래 별도 의존성과 Node ^22.18.0 또는 >=24.12.0이 필요합니다. `jsdom`은 DOM 검사 전용 개발 의존성입니다.
 
 ```sh
 npm ci
+npm run build:core
+npm run sync:starter
+cd examples/vue-vuetify
+npm ci
+npm run build
+cd ../..
 npm run build
 npm run check
 npm test
@@ -48,7 +54,7 @@ QA.md                    완료한 검증과 미검증 범위
 
 `tokens.json`을 수정한 뒤 `npm run build`를 실행합니다. 생성된 `docs/tokens.css`, `docs/token-data.js`, `docs/tokens.json`을 직접 수정하지 않습니다. 문서·데모·다운로드가 같은 소스를 사용합니다.
 
-앱에서는 `tokens.css`를 가져오고 `--sol-color-surface`, `--sol-color-text`, `--sol-color-accent`처럼 역할로 연결합니다. `components.css`는 선택 사항이며 `docs.css`와 분리되어 있습니다. Vue/Vuetify/React 어댑터는 아직 제공하지 않습니다.
+앱에서는 `tokens.css`를 가져오고 `--sol-color-surface`, `--sol-color-text`, `--sol-color-accent`처럼 역할로 연결합니다. `components.css`는 선택 사항이며 `docs.css`와 분리되어 있습니다. examples/vue-vuetify는 Button·Field·Dialog만 매핑한 독립 starter입니다. 다른 라이브러리·버전은 미검증입니다.
 
 ```html
 <html lang="ko" data-theme="violet" data-mode="light" data-density="comfortable">
@@ -62,7 +68,7 @@ QA.md                    완료한 검증과 미검증 범위
 
 변경 시 `npm run build`, `npm run check`, `npm test`를 실행한 후 원본과 `docs/`를 함께 커밋합니다. `main`으로 푸시하면 GitHub Pages의 기본 게시 작업이 실행됩니다.
 
-배포 후 `npm run verify-live`로 실제 HTTPS 사이트의 13개 공개 자산이 모두 HTTP 200인지, 검증한 로컬 파일과 SHA-256이 같은지 확인할 수 있습니다.
+배포 후 `npm run verify-live`로 실제 HTTPS 사이트의 모든 허용된 공개 자산이 모두 HTTP 200인지, 검증한 로컬 파일과 SHA-256이 같은지 확인할 수 있습니다.
 
 ## 추가 예시의 재사용 계약
 
@@ -104,3 +110,9 @@ QA.md                    완료한 검증과 미검증 범위
 ## 검증 범위
 
 접근성 전체 준수나 모든 앱 호환성을 주장하지 않습니다. 토큰 대비 및 합성 DOM 검사는 실제 브라우저 레이아웃·키보드·native dialog·화면 낭독기 검증을 대신하지 않습니다. 자세한 상태는 [QA.md](QA.md)를 확인하세요.
+
+## v0.2 확장 소스
+
+icons.js·foundation.js·layouts.js·inputs.js·workflow.js·extras.js·adoption.js는 각각 문서 렌더와 가상 상태 어댑터를 분리합니다. expansion.js가 기존 경로에 연결하고 해제 시 리스너를 정리합니다. components.css만 앱에 선택적으로 가져가며 docs.css는 가져가지 않습니다.
+
+실행 가능한 독립 starter는 [examples/vue-vuetify](examples/vue-vuetify/README.md), 변경 이력은 CHANGELOG.md, 버전·폐기는 COMPATIBILITY.md, 단계별 기록은 PLAN.md와 QA.md를 확인하세요. npm run build는 미리 빌드한 starter/dist의 네 허용 파일도 docs/starter에 복사합니다. Core를 바꾼 경우 build:core → sync:starter → starter 빌드 → 전체 build 순서입니다.

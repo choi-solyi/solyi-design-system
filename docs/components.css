@@ -1,4 +1,7 @@
 /* Framework-neutral examples. Pair with tokens.css. Component class prefix: sol-. */
+:where([hidden]) {display:none!important;}
+.sol-fieldset {min-width:0;margin:0;padding:var(--sol-space-4);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-md);}
+.sol-fieldset legend {padding-inline:var(--sol-space-2);font-size:var(--sol-text-sm);font-weight:600;}
 .sol-icon {display:inline-block;flex:none;vertical-align:middle;pointer-events:none;}
 .sol-icon.size-16 {width:var(--sol-icon-sm);height:var(--sol-icon-sm);}
 .sol-icon.size-20 {width:var(--sol-icon-md);height:var(--sol-icon-md);}
@@ -9,7 +12,6 @@
 .sol-icon-size {display:inline-flex;align-items:center;gap:var(--sol-space-2);font-size:var(--sol-text-xs);}
 .sol-elevated {box-shadow:var(--sol-elevation-floating);}
 .sol-avatar {display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;border-radius:50%;background:var(--sol-color-accent-soft);color:var(--sol-color-accent);font-size:var(--sol-text-xs);font-weight:700;}
-.sol-progress {width:100%;height:10px;accent-color:var(--sol-color-accent);}
 .sol-steps {list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--sol-space-3);font-size:var(--sol-text-sm);}
 .sol-steps li {display:inline-flex;align-items:center;gap:var(--sol-space-2);color:var(--sol-color-muted);}
 .sol-steps li span {display:inline-grid;place-items:center;width:24px;height:24px;border:1px solid var(--sol-color-control-border);border-radius:50%;}

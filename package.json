@@ -1,6 +1,6 @@
 {
   "name": "solyi-design-system",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Solyi's independent, framework-neutral design system draft.",
@@ -9,7 +9,9 @@
     "check": "node scripts/check.mjs",
     "test": "node scripts/dom-check.mjs",
     "serve": "node scripts/serve.mjs",
-    "verify-live": "node scripts/verify-live.mjs"
+    "verify-live": "node scripts/verify-live.mjs",
+    "build:core": "node scripts/build.mjs --core-only",
+    "sync:starter": "node scripts/sync-starter.mjs"
   },
   "devDependencies": {
     "jsdom": "^26.1.0"

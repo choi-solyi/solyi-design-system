@@ -1,4 +1,6 @@
 node_modules/
+.tooling/
+examples/vue-vuetify/dist/
 .DS_Store
 *.log
 .env

@@ -5,7 +5,8 @@ import {execFileSync} from 'node:child_process';
 const base='https://choi-solyi.github.io/solyi-design-system/';
 const ref=process.argv[2];
 if(ref)assert.match(ref,/^[0-9a-f]{7,40}$/,'Optional published commit SHA');
-const files=ref?execFileSync('git',['ls-tree','-r','--name-only',ref,'--','docs'],{encoding:'utf8'}).trim().split(/\r?\n/).map(s=>s.slice(5)).filter(s=>!s.startsWith('.')):(await readdir(new URL('../docs/',import.meta.url))).filter(name=>!name.startsWith('.'));
+async function list(dir,prefix=''){const out=[];for(const x of await readdir(dir,{withFileTypes:true})){if(x.name.startsWith('.'))continue;const name=prefix+x.name;if(x.isDirectory())out.push(...await list(new URL(x.name+'/',dir),name+'/'));else out.push(name);}return out;}
+const files=ref?execFileSync('git',['ls-tree','-r','--name-only',ref,'--','docs'],{encoding:'utf8'}).trim().split(/\r?\n/).map(s=>s.slice(5)).filter(s=>!s.startsWith('.')):await list(new URL('../docs/',import.meta.url));
 const hash=data=>createHash('sha256').update(data).digest('hex');
 for(const name of files) {
   const url=new URL(name==='index.html'?'':name,base);
