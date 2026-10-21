@@ -41,13 +41,13 @@
 - [x] 삭제 영향 확인·가상 삭제·Undo (지속 복구 수단 포함)
 - [x] 기존 Dialog/Toast 토큰·스타일·동작 재사용, 문서/테스트/커밋
 
-## 5. 확장 — 대기
+## 5. 확장 — 완료
 
-- [ ] 가상 Avatar/user menu (공유 Menu 동작)
-- [ ] Progress/step indicator와 실제 단계 이동·검증
-- [ ] Time picker와 시간 전용 값/유효성
-- [ ] 최소 차트·텍스트 표 대안·데이터 전환, 키보드 tree
-- [ ] 상태/모바일/토큰·사용 예시, 문서/테스트/커밋
+- [x] 가상 Avatar/user menu (공유 Menu 동작)
+- [x] Progress/step indicator와 실제 단계 이동·검증
+- [x] Time picker와 시간 전용 값/유효성
+- [x] 최소 차트·텍스트 표 대안·데이터 전환, 키보드 tree
+- [x] 상태/모바일/토큰·사용 예시, 문서/테스트/커밋
 
 ## 6. 개발 적용·검증 — 대기
 
