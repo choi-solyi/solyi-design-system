@@ -76,3 +76,7 @@
 ## 확장 2단계
 
 설정/목록/상세, 선택·검색·빈 결과, 오류 후 저장과 요약 반영, 모바일 disclosure Escape를 합성 DOM 검사했습니다. 전체 168개 대비·기존 회귀 통과. 실제 Chrome 764px에서 desktop sidebar의 설정 이동을 확인했습니다. container query의 모든 폭·물리 기기는 최종 회귀 범위와 구분합니다.
+
+## 확장 3단계
+
+Textarea 필수/줄바꿈/카운트, 숫자 min/max/step와 증감 경계, 다중 선택 제한·태그 제거 초점, 실제 탭 패널/한 Tab stop/값 유지, 메뉴 비활성/방향키/Home/End/Escape/Tab/외부초점을 검사했습니다. 기존 대비·전체 DOM 회귀 통과. 로컬 Chrome에서도 탭 ArrowRight와 메뉴 Escape 후 실행 버튼 복귀를 확인했습니다.
