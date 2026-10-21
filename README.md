@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2.1 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2.2 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -117,13 +117,12 @@ icons.js·foundation.js·layouts.js·inputs.js·workflow.js·extras.js·adoption
 
 실행 가능한 독립 starter는 [examples/vue-vuetify](examples/vue-vuetify/README.md), 변경 이력은 CHANGELOG.md, 버전·폐기는 COMPATIBILITY.md, 단계별 기록은 PLAN.md와 QA.md를 확인하세요. npm run build는 미리 빌드한 starter/dist의 네 허용 파일도 docs/starter에 복사합니다. Core를 바꾼 경우 build:core → sync:starter → starter 빌드 → 전체 build 순서입니다.
 
-## 문서 탐색과 버튼 상태 (0.2.1)
+## 문서 탐색과 버튼 상태 (0.2.2)
 
-상위 메뉴는 짧은 주제 개요입니다. 기능군별 2차 메뉴에서 한 주제를 고르면 관련 예시·상태·사용 방법만 표시합니다. 모바일 세부 메뉴는 접어서 시작하고 현재 주제/그룹과 이전·다음 링크를 제공합니다. 기존 해시 링크를 보존하며 inputs, advanced-inputs, identity-progress, chart-tree는 세부 예시로 가는 호환 안내입니다. 원래 통합 계약은 접이식으로 보존합니다.
+각 상위 메뉴의 본문은 한 페이지에서 연속해서 읽습니다. 사이드바의 현재 상위 항목 바로 아래에 들여쓰기된 섹션 앵커 41개가 표시되고, 목차만 접거나 펼칠 수 있습니다. 본문을 숨기는 독립 주제 화면이나 본문 위의 별도 주제 개요 블록은 없습니다. 사이드바 안의 스크롤 컨테이너도 하나입니다.
 
-- Style: 기본 / 색 / 형태와 공간 / 모션
-- Component: 동작 / 입력 / 탐색 / 피드백과 표시
-- Pattern: 조회 / 작성과 편집 / 상태와 복구 / 화면틀과 조합
-- Theme: 표현 설정 / 도입 / 범위
+모바일은 하나의 문서 메뉴 안에 같은 계층을 담으며, 섹션을 선택하면 닫히고 제목으로 이동합니다. 스크롤로 읽는 섹션은 활성 표시만 바꾸고 URL 기록을 추가하지 않습니다. 명시적인 앵커 선택은 해시 기록을 유지합니다. 같은 페이지 앵커 이동은 데모를 다시 만들지 않아 입력을 보존하며 다른 상위 문서를 떠날 때만 기존 미저장 확인을 적용합니다.
 
-630개 의미색 버튼 상태·변형·테마 대비는 scripts/button-state-check.mjs, 47개 개별 주제·호환/직접 링크·뒤로/앞으로·미저장 이동은 scripts/navigation-check.mjs로 검사합니다. 기존 컴포넌트 계약 검사는 예시를 모아 둔 fixture로 보존하고 실제 주제 격리는 별도로 검사합니다. site/topics.js의 단일 목록이 메뉴·개요·제목·순서를 만듭니다.
+기존 #style/color-examples, #pattern/inputs와 0.2.1의 #pattern/date/files/autocomplete, #component/textarea/number/multiselect/avatar/progress/chart/tree 링크도 같은 연속 본문 안의 위치로 연결합니다. 이동은 고정 헤더 높이를 고려하고 즉시 실행해 reduced motion을 존중합니다.
+
+630개 의미색 버튼 상태·변형·테마 대비는 scripts/button-state-check.mjs, 연속 본문·앵커·기록 이동·모바일 닫힘·읽기 위치 활성·입력 보존은 scripts/navigation-check.mjs로 검사합니다. site/topics.js가 사이드바와 앵커 동작을 담당합니다. 0.2.1의 주제별 독립 화면 방식은 사용자 정정에 따라 대체됐습니다.
