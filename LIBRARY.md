@@ -1,6 +1,6 @@
 # 패키지 소비와 자동 검증
 
-첫 패키지 초안은 `@solyi/core@0.1.3` / `@solyi/vue-ui@0.1.3`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
+첫 패키지 초안은 `@solyi/core@0.1.4` / `@solyi/vue-ui@0.1.4`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
 
 ## 구조와 적용 범위
 
@@ -65,7 +65,7 @@ Pages 게시 소스는 자동 검증을 거치도록 legacy main/docs에서 같�
 
 공식 근거: [Vite library mode](https://vite.dev/guide/build.html#library-mode), [Vue plugin packaging](https://vuejs.org/guide/reusability/plugins.html#bundle-for-npm), [npm pack](https://docs.npmjs.com/cli/v11/commands/npm-pack/), [GitHub Pages dependent build/deploy jobs](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
-## Package spacing and icons (0.1.3)
+## Package spacing and icons (0.1.4)
 
 Table owns its caption inset, mobile caption/actions and footer spacing. The consuming screen owns the gap between search controls and Table; the starter uses space-4 (16px). Sorting headers explicitly override Vuetify button padding to align with body content. No adapter CSS is needed for the Table's internal spacing.
 

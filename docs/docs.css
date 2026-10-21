@@ -38,7 +38,7 @@ kbd {border: 1px solid var(--sol-color-control-border); border-radius: 4px; padd
 .sidebar > nav a {display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 8px 12px; border-radius:var(--sol-radius-control); text-decoration: none; font-size: var(--sol-text-sm); color: var(--sol-color-muted); font-weight: 500; line-height: 1.4;}
 .sidebar > nav a:hover {background: var(--sol-color-surface-alt); color: var(--sol-color-text);}
 .sidebar > nav a[aria-current="page"] {background: var(--sol-color-accent-soft); color: var(--sol-color-accent); font-weight: 650;}
-.nav-index {font-family: var(--sol-font-mono); font-size: 11px;}
+.nav-index {font-family: var(--sol-font-mono); font-size: 11px; flex:0 0 2ch; min-width:2ch; white-space:nowrap; overflow-wrap:normal;}
 .nav-note {font-size: 11px; margin-left: auto;}
 .sidebar {overflow-y:auto;}
 .doc-nav-row {display:flex;align-items:center;gap:0;}

@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.3.3 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.3.4 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -143,8 +143,10 @@ Component → Progress bar·circle은 기존 sol-progress를 재사용하고 수
 
 ## 패키지화와 승인된 UX (0.3.1)
 
-@solyi/core·@solyi/vue-ui 0.1.3은 private 로컬 pack 초안입니다. 공개 starter는 실제 tarball에서 Button/Field/Dialog/Table을 import하며 별도 package-consumer가 타입·설치·빌드를 검증합니다. npm/GitHub Packages 미게시, 아페·개인 홈페이지 미연결입니다. HTML/CSS 참고 데모 전체가 Vue로 전환된 것은 아닙니다.
+@solyi/core·@solyi/vue-ui 0.1.4은 private 로컬 pack 초안입니다. 공개 starter는 실제 tarball에서 Button/Field/Dialog/Table을 import하며 별도 package-consumer가 타입·설치·빌드를 검증합니다. npm/GitHub Packages 미게시, 아페·개인 홈페이지 미연결입니다. HTML/CSS 참고 데모 전체가 Vue로 전환된 것은 아닙니다.
 
 오류 요약, 가상404, 일괄 작업 부분 실패/실패만 재시도, 비동기 자동완성의 지연/경합/오류/회복을 추가했습니다. Time은 HH:mm 직접 입력과 작은 시/분 패널입니다. 날짜·파일·자동완성·차트·트리는 연속 본문의 개별 목차로 바로 이동합니다. 버튼6px와 이전 표·말줄임·브랜드는 유지합니다.
 
 [패키지 구조·실행·버전·CI·롤백](LIBRARY.md), [계획](LIBRARY-PLAN.md), [검증 근거와 한계](QA.md)를 확인하세요. 다른 소비 앱의 자동 버전 업데이트/배포는 별도 승인과 설계가 필요합니다.
+
+개발자 종합 리뷰의 재현 절차·심각도·검증 범위는 [DEVELOPER-REVIEW.md](./DEVELOPER-REVIEW.md)에 기록합니다.

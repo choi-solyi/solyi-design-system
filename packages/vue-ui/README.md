@@ -1,6 +1,6 @@
-# @solyi/vue-ui 0.1.3
+# @solyi/vue-ui 0.1.4
 
-Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.1.3. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
+Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.1.4. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
 
 ```js
 import 'vuetify/styles';
@@ -21,3 +21,5 @@ import {SolButton, SolField, SolDialog, SolTable} from '@solyi/vue-ui';
 Table is controlled: the app owns filtering/sorting/paging and off-page selection. Changing a query/sort resets page in the consumer; pass only current-page rows and a valid page count. Select-all is current page, existing off-page IDs remain. Never sort or mutate the supplied rows inside the component. Keep at least one column without width. Slots can opt out of ellipsis with column.ellipsis=false for genuinely multi-line/custom content. Don't put nested interactions inside an ellipsis span.
 
 Types are generated from TypeScript. No theme plugin, global CSS injection, network, account, storage or backend is installed. Other documentation components remain framework-independent reference demos, not Vue package exports.
+
+Button honors forwarded aria-disabled while retaining focus; disabled uses the native disabled prop. Table exposes labeled column/direction sorting for its mobile card view using the same sort/update:sort contract. Selection updates support reactive in-place ID/row edits as well as array replacement.

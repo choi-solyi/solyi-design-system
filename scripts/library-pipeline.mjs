@@ -24,6 +24,7 @@ for(const project of ['examples/package-consumer/','examples/vue-vuetify/']){
 run('6/10 Independent consumer typecheck + app build','examples/package-consumer/',npm,['run','build']);
 node('7/10 Pack contracts and installed runtime tests','scripts/library-contract-check.mjs');
 node('7/10 Component runtime','scripts/library-runtime-check.mjs');
+node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 node('9/10 Documentation build','scripts/build.mjs');
 run('10/10 Existing checks','',npm,['run','check']);

@@ -10,3 +10,5 @@ packages/*/dist/
 artifacts/
 examples/package-consumer/dist/
 examples/package-consumer/.runtime-check.mjs
+examples/vue-vuetify/.runtime-check.mjs
+examples/vue-vuetify/.runtime-test/

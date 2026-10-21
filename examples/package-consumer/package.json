@@ -7,8 +7,8 @@
     "build": "tsc -p tsconfig.json && vite build"
   },
   "dependencies": {
-    "@solyi/core": "file:../../artifacts/solyi-core-0.1.3.tgz",
-    "@solyi/vue-ui": "file:../../artifacts/solyi-vue-ui-0.1.3.tgz",
+    "@solyi/core": "file:../../artifacts/solyi-core-0.1.4.tgz",
+    "@solyi/vue-ui": "file:../../artifacts/solyi-vue-ui-0.1.4.tgz",
     "vue": "3.5.44",
     "vuetify": "4.3.0"
   },

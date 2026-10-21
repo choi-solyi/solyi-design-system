@@ -1,4 +1,4 @@
-# @solyi/core 0.1.3
+# @solyi/core 0.1.4
 
 Local `npm pack` preview, private/UNLICENSED, not published. The source of truth is the repository's `tokens.json`, `site/components.css`, `site/overflow.js` and `site/icons.js`. Do not edit dist.
 

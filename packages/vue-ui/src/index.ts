@@ -7,7 +7,7 @@ import {mountOverflowText} from '@solyi/core/overflow';
 import {solIconPaths} from '@solyi/core/icons';
 import './styles.css';
 
-export const uiVersion='0.1.3';
+export const uiVersion='0.1.4';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
@@ -17,7 +17,7 @@ export const SolButton=defineComponent({
   name:'SolButton', inheritAttrs:false,
   props:{variant:{type:String as PropType<ButtonVariant>,default:'secondary'},disabled:Boolean,loading:Boolean,type:{type:String as PropType<'button'|'submit'|'reset'>,default:'button'}},
   emits:{click:(_event:MouseEvent)=>true},
-  setup(props,{attrs,slots,emit}){return()=>h(VBtn as Component,{...attrs,class:['sol-ui-button','sol-ui-button--'+props.variant,attrs.class],type:props.type,disabled:props.disabled,'aria-disabled':props.loading?'true':undefined,'aria-busy':props.loading?'true':undefined,ripple:false,variant:'flat',onClick:(e:MouseEvent)=>{if(props.loading){e.preventDefault();return;}emit('click',e);}},()=>[props.loading?h('span',{class:'sol-ui-busy','aria-hidden':'true'},'◷'):null,slots.default?.()]);}
+  setup(props,{attrs,slots,emit}){return()=>{const unavailable=props.disabled||props.loading||attrs['aria-disabled']===true||attrs['aria-disabled']==='true';return h(VBtn as Component,{...attrs,class:['sol-ui-button','sol-ui-button--'+props.variant,attrs.class],type:props.type,disabled:props.disabled,'aria-disabled':unavailable?'true':attrs['aria-disabled'],'aria-busy':props.loading?'true':attrs['aria-busy'],ripple:false,variant:'flat',onClick:(e:MouseEvent)=>{if(unavailable){e.preventDefault();return;}emit('click',e);}},()=>[props.loading?h('span',{class:'sol-ui-busy','aria-hidden':'true'},'◷'):null,slots.default?.()]);};}
 });
 
 export const SolField=defineComponent({
@@ -61,7 +61,7 @@ export const SolTable=defineComponent({
     function choose(id:string,checked:boolean){const ids=new Set(props.selected);checked?ids.add(id):ids.delete(id);emit('update:selected',[...ids]);}
     function selectPage(checked:boolean){const ids=new Set(props.selected);for(const row of props.rows)checked?ids.add(row.id):ids.delete(row.id);emit('update:selected',[...ids]);}
     async function move(page:number){emit('update:page',page);await nextTick();host.value?.querySelector<HTMLElement>('.sol-pagination [aria-current="page"]')?.focus();}
-    watch(()=>[props.rows,props.selected],async()=>{await nextTick();for(const input of [all.value,allMobile.value])if(input)input.indeterminate=props.rows.some(r=>props.selected.includes(r.id))&&!props.rows.every(r=>props.selected.includes(r.id));},{immediate:true});
+    watch(()=>[props.selectable,props.rows.map(row=>[row.id,props.selected.includes(row.id)])],async()=>{await nextTick();for(const input of [all.value,allMobile.value])if(input)input.indeterminate=props.rows.some(r=>props.selected.includes(r.id))&&!props.rows.every(r=>props.selected.includes(r.id));},{immediate:true});
     onBeforeUnmount(()=>cleanup());
     const cell=(row:TableRow,c:TableColumn):VNode=>h('span',{class:c.ellipsis===false?'':'sol-ellipsis sol-ui-cell-clip'},slots['cell-'+c.key]?.({row,value:row[c.key]})||String(row[c.key]??'—'));
     const action=(row:TableRow)=>h(SolButton,{variant:'inline','aria-label':String(row[props.columns[0]?.key]??'자료')+' 전체 내용 보기',onClick:(e:MouseEvent)=>{previewOpener.value=e.currentTarget as HTMLElement;preview.value=row;emit('rowAction',row);}},()=> '상세');
@@ -73,6 +73,10 @@ export const SolTable=defineComponent({
         h('tbody',!busy()?props.rows.map(row=>h('tr',{key:row.id,'data-row-id':row.id,'data-selected':props.selected.includes(row.id)},[props.selectable?h('td',h('input',{type:'checkbox','aria-label':String(row[props.columns[0]?.key]??'자료')+' 선택',checked:props.selected.includes(row.id),onChange:(e:Event)=>choose(row.id,(e.target as HTMLInputElement).checked)})):null,...props.columns.map(c=>h('td',{style:{textAlign:c.align}},cell(row,c))),h('td',action(row))])):[])
       ])),
       h('p',{class:'sol-ui-table-mobile-caption'},props.caption),
+      props.columns.some(c=>c.sortable)?h('div',{class:'sol-ui-table-mobile-sort'},[
+        h('label',{class:'sol-field'},[h('span',{class:'sol-label'},'정렬 항목'),h('select',{class:'sol-select',value:props.columns.some(c=>c.sortable&&c.key===props.sort?.key)?props.sort?.key:'',disabled:busy(),onChange:(e:Event)=>emit('update:sort',{key:(e.target as HTMLSelectElement).value,direction:'ascending'})},[h('option',{value:'',disabled:true},'정렬할 항목 선택'),...props.columns.filter(c=>c.sortable).map(c=>h('option',{value:c.key},c.label))])]),
+        h(SolButton,{disabled:busy()||!props.columns.some(c=>c.sortable&&c.key===props.sort?.key),'aria-label':'정렬 방향 바꾸기, 현재 '+(props.sort?.direction==='descending'?'내림차순':'오름차순'),onClick:()=>{if(props.sort)emit('update:sort',{key:props.sort.key,direction:props.sort.direction==='ascending'?'descending':'ascending'});}},()=>props.sort?.direction==='descending'?'내림차순':'오름차순')
+      ]):null,
       props.selectable?h('label',{class:'sol-choice sol-ui-table-mobile-select'},[h('input',{ref:allMobile,type:'checkbox',checked:!!props.rows.length&&props.rows.every(r=>props.selected.includes(r.id)),disabled:busy()||!props.rows.length,onChange:(e:Event)=>selectPage((e.target as HTMLInputElement).checked)}),'현재 페이지 모두 선택']):null,
       h('ul',{class:'sol-ui-table-mobile','aria-label':props.caption},!busy()?props.rows.map(row=>h('li',{key:row.id,'data-row-id':row.id,'data-selected':props.selected.includes(row.id)},[props.selectable?h('label',{class:'sol-choice'},[h('input',{type:'checkbox','aria-label':String(row[props.columns[0]?.key]??'자료')+' 선택',checked:props.selected.includes(row.id),onChange:(e:Event)=>choose(row.id,(e.target as HTMLInputElement).checked)}),'자료 선택']):null,h('dl',props.columns.flatMap(c=>[h('dt',c.label),h('dd',cell(row,c))])),h('div',{class:'sol-ui-table-mobile-actions'},action(row))])):[]),
       props.loading?h('p',{role:'status',class:'sol-ui-hint'},'자료를 불러오는 중이에요.'):props.error?h('div',{role:'alert',class:'sol-notice danger'},[h('p',props.error),h(SolButton,{variant:'inline',onClick:()=>emit('retry')},()=> '다시 시도')]):!props.rows.length?h('p',{role:'status',class:'sol-ui-hint'},props.emptyText):null,
