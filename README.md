@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2.2 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2.3 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -126,3 +126,7 @@ icons.js·foundation.js·layouts.js·inputs.js·workflow.js·extras.js·adoption
 기존 #style/color-examples, #pattern/inputs와 0.2.1의 #pattern/date/files/autocomplete, #component/textarea/number/multiselect/avatar/progress/chart/tree 링크도 같은 연속 본문 안의 위치로 연결합니다. 이동은 고정 헤더 높이를 고려하고 즉시 실행해 reduced motion을 존중합니다.
 
 630개 의미색 버튼 상태·변형·테마 대비는 scripts/button-state-check.mjs, 연속 본문·앵커·기록 이동·모바일 닫힘·읽기 위치 활성·입력 보존은 scripts/navigation-check.mjs로 검사합니다. site/topics.js가 사이드바와 앵커 동작을 담당합니다. 0.2.1의 주제별 독립 화면 방식은 사용자 정정에 따라 대체됐습니다.
+
+## 모서리 역할 (0.2.3)
+
+Style → 간격·밀도·모서리에 실제 중첩 예시가 있습니다. 공유 CSS와 starter는 radius-small 6px / radius-control·inset 10px / radius-card 20px / radius-panel 28px를 사용합니다. 원형 표시와 좁은 화면 가장자리에 붙는 패널은 용도에 맞게 유지합니다. 버튼·필드 높이와 색·폰트는 바꾸지 않았습니다.

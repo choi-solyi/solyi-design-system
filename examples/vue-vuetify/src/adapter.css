@@ -9,17 +9,17 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 .starter-eyebrow,.starter-hint {color:var(--sol-color-muted);font-size:var(--sol-text-sm);}
 .starter-eyebrow {letter-spacing:.08em;}
 .starter-link {color:var(--sol-color-accent);text-underline-offset:3px;}
-.starter-card {background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-md);padding:var(--sol-space-6);margin-block:var(--sol-space-4);}
+.starter-card {background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);padding:var(--sol-space-6);margin-block:var(--sol-space-4);}
 .starter-card dl>div {display:grid;grid-template-columns:80px minmax(0,1fr);gap:var(--sol-space-3);padding-block:var(--sol-space-2);font-size:var(--sol-text-sm);}
 .starter-card dd {margin:0;}
 .starter-actions,.starter-settings {display:flex;gap:var(--sol-space-3);flex-wrap:wrap;align-items:start;}
 .starter-settings label {display:grid;gap:var(--sol-space-2);font-size:var(--sol-text-sm);}
-.starter-settings select {appearance:auto;min-height:var(--sol-control-height);background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);padding:var(--sol-space-2) var(--sol-space-3);border-radius:var(--sol-radius-sm);}
+.starter-settings select {appearance:auto;min-height:var(--sol-control-height);background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);padding:var(--sol-space-2) var(--sol-space-3);border-radius:var(--sol-radius-control);}
 .starter-label {display:block;font-size:var(--sol-text-sm);font-weight:600;margin-bottom:var(--sol-space-2);}
-.starter-main .v-btn,.starter-dialog .v-btn {min-width:0;height:var(--sol-button-height);padding-inline:var(--sol-space-3);border-radius:var(--sol-radius-sm);font-size:var(--sol-text-sm);font-weight:600;text-transform:none;letter-spacing:normal;}
+.starter-main .v-btn,.starter-dialog .v-btn {min-width:0;height:var(--sol-button-height);padding-inline:var(--sol-space-3);border-radius:var(--sol-radius-control);font-size:var(--sol-text-sm);font-weight:600;text-transform:none;letter-spacing:normal;}
 .v-btn .v-btn__overlay {opacity:0!important;}
 .v-btn.bg-primary:hover {background:var(--sol-color-accent-hover)!important;}
-.starter-field .v-field {--v-input-control-height:var(--sol-control-height);--v-field-padding-top:0;--v-field-padding-bottom:0;--v-field-input-padding-top:8px;--v-field-input-padding-bottom:8px;border-radius:var(--sol-radius-sm);background:var(--sol-color-surface);color:var(--sol-color-text);}
+.starter-field .v-field {--v-input-control-height:var(--sol-control-height);--v-field-padding-top:0;--v-field-padding-bottom:0;--v-field-input-padding-top:8px;--v-field-input-padding-bottom:8px;border-radius:var(--sol-radius-control);background:var(--sol-color-surface);color:var(--sol-color-text);}
 .starter-field .v-field__input {min-height:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);font:inherit;line-height:1.4;}
 .starter-field .v-field__outline {color:var(--sol-color-control-border);--v-field-border-opacity:1;}
 .starter-field .v-field--focused .v-field__outline {color:var(--sol-color-focus);}
@@ -32,3 +32,5 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 :focus-visible,.starter-field:has(input:focus-visible) .v-field {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
 @media(max-width:680px),(pointer:coarse) {.starter-main{padding:var(--sol-space-4);}.starter-card{padding:var(--sol-space-4);}.starter-main .v-btn,.starter-dialog .v-btn{min-height:var(--sol-touch-target-min);height:auto;}.starter-card dl>div{grid-template-columns:1fr;gap:0;}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+
+.starter-dialog {border-radius:var(--sol-radius-panel);}

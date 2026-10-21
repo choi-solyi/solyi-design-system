@@ -1,7 +1,7 @@
 /* Continuous parent documents. Indented sidebar links scroll to headings; they never hide content. */
 import {solIcon} from './icons.js';
 const documentSections={
- style:[['principles','Core 원칙'],['tokens','색 토큰'],['type','타이포그래피'],['space','간격과 밀도'],['accessibility','접근성 기준'],['color-examples','컬러 적용 예시'],['motion','모션'],['icons','아이콘'],['layers','레이어와 그림자'],['writing','UI 문구']],
+ style:[['principles','Core 원칙'],['tokens','색 토큰'],['type','타이포그래피'],['space','간격·밀도·모서리'],['accessibility','접근성 기준'],['color-examples','컬러 적용 예시'],['motion','모션'],['icons','아이콘'],['layers','레이어와 그림자'],['writing','UI 문구']],
  component:[['buttons','버튼'],['fields','텍스트 필드'],['choices','선택 컨트롤 기본'],['feedback','상태 알림'],['dialog','대화상자'],['selection','체크·라디오·스위치'],['help','툴팁과 팝오버'],['accordion','아코디언'],['navigation','경로·패널·토스트'],['advanced-inputs','Textarea·숫자·다중 선택'],['content-tabs','탭 패널'],['action-menu','행동 메뉴'],['identity-progress','Avatar·진행률과 단계'],['time','시간 선택'],['chart-tree','차트와 트리']],
  pattern:[['form','폼 검증과 회복'],['search','검색과 상세'],['compare','비교 선택'],['empty','빈 상태'],['data','표와 목록'],['inputs','날짜·파일·자동완성'],['responses','로딩·권한·오류'],['composition','조합 규칙'],['layouts','화면 템플릿'],['workflow','편집·이탈·삭제·Undo']],
  theme:[['themes','테마'],['density','밀도'],['adoption','CSS·JSON 도입'],['scope','범위와 출처'],['starter','Vue·Vuetify starter'],['versioning','버전과 폐기 정책']]
