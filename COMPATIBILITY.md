@@ -14,3 +14,7 @@
 
 - 0.2.5: radius-button 역할은 v0.2.2 버튼의6px입니다. 기본/메뉴 항목/파일 선택/문서 메뉴 버튼/페이지·진행률·starter 버튼에 연결합니다. radius-control10px, card20px, panel28px는 유지합니다. 원형 스위치/로딩 표식과 순수 내비게이션 링크 규칙은 이번 버튼 복원 대상이 아닙니다.
 - 말줄임은 sol-record-title/sol-ellipsis 범위에만 적용합니다. overflow.js는 잘린 비대화형 제목에 전체 보기 버튼을 추가하고, 기존 링크·버튼의 클릭 행동을 바꾸지 않습니다. body/textarea에는 적용하지 않습니다. 프로그레스 unknown은 aria-valuenow와 퍼센트를 표시하지 않습니다.
+
+## 0.3.0 패키지 초안
+
+Core/Vue UI0.1.0은 로컬 tarball만 검증한 private 패키지입니다. 실제 설치 조합/4개 API/외부 d.ts 검사 한계·업데이트/롤백·자동 변경 대상은 LIBRARY.md를 따릅니다. 기존 Core 복사 snapshot은 starter에서 import하지 않으며 실제 설치된 Core가 원본과 일치하는지 검사합니다. 문서의 나머지 부품은 HTML/CSS/JS 참고 예시입니다.

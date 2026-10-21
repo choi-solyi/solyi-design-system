@@ -1,8 +1,28 @@
-# v0.2.5 검증 기록
+# v0.3.0 검증 기록
 
 검증일: 2026-10-21 UTC. 현재 기록은 6단계 확장과 독립 starter 기준이며 이전 검수 근거도 구분해 보존합니다. 기존 aion2page·solyi.kr는 변경하지 않았습니다.
 
-## 최신: 말줄임·Progress·버튼 복원 (0.2.5)
+
+## 최신: 패키지 소비와 승인된 UX (0.3.0)
+
+- Core/Vue UI 0.1.0은 private/UNLICENSED local pack입니다. Core9개·UI5개 파일의 실제 tarball에 CSS/JSON/ES모듈/선언이 포함됐습니다. 브랜드/개인 파일/node_modules는 포함하지 않습니다. Vite library ES의 Vue/Vuetify/Core helper external import와 약11.5kB UI 코드, 두 소비 lock의 tarball SHA512·소스 alias/link 부재·각 소비자의 Vue/Vuetify 한 벌을 확인했습니다.
+- TypeScript6.0.3의 자체 strict 소스·생성 선언·독립 소비 앱 build와 유효/잘못된 variant/sort 타입 검사를 통과했습니다. Vuetify 선택 서비스 선언과 TS6 오류 때문에 skipLibCheck=true이며 외부 d.ts 전체 검증과 구분합니다. 타입/CSS exports·단일 원본·라이선스 원문 보존·레지스트리 미게시·기존 앱 미연결을 검사했습니다.
+- 실제 설치 패키지의 Button 로딩/중복 차단/초점, Field 입력/연결 오류, Table controlled 선택·정렬·페이지/로딩·오류·재시도, Dialog 닫기/반환과 unmount 정리를 JSDOM+Vite SSR 변환으로 검사했습니다. CSS/ShadowRoot/visualViewport 등은 합성 환경 설정이며 네이티브 키보드 검증을 대신하지 않습니다.
+- 전체 library:refresh는 Core → library build/types → pack → 독립 소비자/공개 starter 설치 → type/app build → contract/runtime → demo → 문서 check/test 순서로 통과했습니다. 선언/동작 검사 실패 시 뒤 demo/build 단계로 진행하지 않는 것도 작업 중 실패 결과에서 확인했습니다. 잠금 파일 갱신 없는 최종 library:verify도 npm ci부터 전체 순서로 통과했습니다. 원격 CI 결과는 게시 후 확인하고 보고합니다.
+- 새 오류 요약은 제출 시 요약 초점/각 오류 링크 이동/입력별 aria-invalid·설명 연결/수정 갱신/값 보존을 검사했습니다. 가상404는 문서 해시를 유지하며 복구·제목 초점, 일괄 처리는2성공/1실패→실패1개만 재시도·각 처리횟수1/2/1·중복 차단을 확인했습니다. 실제 Chrome에서도 같은 동작을 확인했습니다.
+- 자체 리뷰 수정: 일괄 처리 완료가 다른 입력으로 옮긴 초점을 빼앗던 문제를 발견했습니다. 작업 버튼/비어 있는 초점에만 결과 초점을 보내며 다른 검색 입력을 보존하는 회귀를 추가했습니다. 오류/결과 안내는 지속 문구입니다.
+- 비동기 자동완성은 외부 요청 없는90~260ms 가상 응답입니다. 로딩/값 보존/빈 결과/오류/재시도·오래된 응답 무시·닫힘/화면 이탈 정리·한글 IME 비선택과 키보드 계약을 검사했습니다. 실제 Chrome 오류→재시도 입력 초점→ArrowDown/Enter 확정도 확인했습니다. 물리 OS IME 검증과 구분합니다.
+- Time은 단일 HH:mm/HHmm 직접 입력+작은 비모달 시/분 패널입니다. 상시 선택창은 제거했습니다. 실제1730→17:30,18시→18:00/잘못된 분 비활성,Tab 시→분,Escape 닫힘·열기 버튼 복귀를 확인했습니다. 기존 형식/범위/15분/부분 선택 보존·지우기·잘못된 값은 DOM 회귀에서 유지합니다.
+- 실제 사용자 PC Chrome333 CSS px의 세 테마×라이트/다크에서 Pattern/Time 가로 넘침 없음, 패널 left약8/right약325.31px·시 선택약44px·초기 시 선택 초점을 확인했습니다. 시스템 reduced-motion=true였으며 불필요한 패널 모션은 없습니다. 날짜 달력333px 열기/Escape 회귀도 확인했습니다.
+- 패키지 starter는333/766/1643px의 세 테마×두 모드에서 버튼6/필드10px, 높이44/44 또는36/40px·모바일 카드/선택/번호 묶음·넘침 없음을 확인했습니다. Dialog28px·333px left약16/right301.34·초기 닫기/Escape/실행 버튼 복귀와 Button aria-busy 동안 초점 유지도 확인했습니다.
+- 자체 리뷰 수정: 중간 폭에서 package Table에 table-layout:fixed가 빠져766px의 표가750.6px까지 늘어났습니다. 선언을 패키지에 연결하고 CSS 회귀·실제 여섯 조합을 재검수했습니다. 현재 desktop 열은약47.986/707.622/95.990/127.986/71.997px이며 정렬·페이지·검색 전후 최대 변화0px, 모든 행약49.08px로 일정했습니다.
+- 자체 리뷰 수정: 실제 화면 캡처에서 검색 필드가 flex의 최소 폭으로 줄어든 점을 발견해 데모 화면틀에 flex-basis240px를 추가했습니다. 이는 패키지 입력의 전역 폭을 강제하는 규칙이 아닙니다. 모바일 개별 선택의 이름과 전체/부분 선택, 페이지 이동 초점, 버튼 포커스의 토큰 우선순위도 보완했습니다.
+- 기본/실제 hover/keyboard focus의 여섯 테마와 disabled opacity1을 확인했습니다. 기존 토큰186개·문서 버튼672개 상태 대비와48개 연속 앵커·날짜/업로드/표/Progress/입력 회귀는 유지합니다. 새 메뉴는 같은 본문의 날짜/파일/자동완성/차트/트리 위치로 이동하며 예전 inputs/chart-tree 링크도 남습니다.
+- 이번 실제 Chrome의 첫 화면 캡처는 성공해 표·카드·컨트롤 표본을 시각 확인했습니다. 검색 폭 보완 뒤 실측은 약966.7px, 검색/상태 높이40px로 일치했습니다. 다음 캡처는 다시5초 제한에 걸렸으므로 모든 캡처가 성공했다고 기록하지 않습니다. 전체 폭·전체 시각 상태 감사, 화면 낭독기·400%·forced colors·실제 폴드/OS 드롭·기본 모션 전체 시각은 여전히 미검증입니다.
+- 기존 Pages에만 validate 의존 deploy를 구성했습니다. PR/실패 시 게시하지 않습니다. 새로운 registry publish/token/credential/OAuth/다른 저장소 쓰기는 없습니다. 원격 CI의 성공/실패 게이트와 공개32개 자산 HTTP/SHA·공개 화면 결과는 커밋 후 최종 보고에 기록합니다.
+
+
+## 이전: 말줄임·Progress·버튼 복원 (0.2.5)
 
 - v0.2.2의86b5f7b6e412955bd74baa75e50322b89c67945e 원본 CSS/JSON을 직접 대조했습니다. 기본 sol-button(링크형 포함), 메뉴 항목, 파일 선택, 달력 날짜, 문서 접기/모바일 메뉴, starter v-btn은6px였습니다. radius-button=var(--sol-radius-sm) 역할로 분리해 복원합니다. 새 페이지·Progress·전체 제목 버튼도 같은6px입니다. 입력10·카드20·패널28·일반 높이36/40·모바일44와 나머지 기능은 유지합니다. 순수 sidebar 링크의 반경은 버튼 복원 범위에 포함하지 않았고 원형 스위치/로딩 표식은 원래 규칙을 유지합니다.
 - 제목만 nowrap/ellipsis를 적용합니다. 본문·Textarea는 제외합니다. 잘린 비대화형 제목만 native button으로 감싸 hover/focus 설명과 Enter/터치 전체 제목 Dialog를 제공합니다. 기존 링크·버튼 안의 제목은 클릭 행동과 원래 설명을 유지합니다. Tooltip은 title 속성이 아니며 Escape로 닫고 포인터가 tooltip에 머무르면 유지합니다. 전체 Dialog는 native Escape/초점 반환을 사용합니다.

@@ -1,3 +1,4 @@
+import {recoveryChecks} from './recovery-tests.mjs';
 /* Synthetic DOM checks. These do not replace a browser, layout, native keyboard, or screen reader review. */
 import {JSDOM, VirtualConsole} from 'jsdom';
 import assert from 'node:assert/strict';
@@ -249,6 +250,7 @@ assert.equal(overflowFixture.querySelector('textarea').value,'본문은 자르�
 console.log('PASS: overflow tooltip focus/Escape, native full-text dialog/focus return, touch click, original link action/description and cleanup; textareas excluded.');
 
 await expansionChecks({w,d,$,fire,click,route,integrity});
+await recoveryChecks({w,d,$,fire,click,route,integrity});
 assert.deepEqual(errors,[],'No runtime errors in the synthetic DOM');
 dom.window.close();
 console.log('PASS: 5 routes, internal anchors/ARIA IDs, route focus, token search/copy, example copy, theme/mode/density.');

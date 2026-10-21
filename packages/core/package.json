@@ -1,0 +1,20 @@
+{
+  "name": "@solyi/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "description": "Framework-independent Solyi tokens and CSS. Local pack preview; not published.",
+  "files": ["dist", "README.md"],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"},
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./components.css": "./dist/components.css",
+    "./overflow": {"types": "./dist/overflow.d.ts", "import": "./dist/overflow.js"}
+  },
+  "sideEffects": ["**/*.css"],
+  "scripts": {"build": "node ../../scripts/build-packages.mjs --core"}
+}

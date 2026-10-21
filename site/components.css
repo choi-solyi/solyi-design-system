@@ -322,3 +322,8 @@
 .sol-record-cards,.sol-record-list{min-width:0;grid-template-columns:minmax(0,1fr);}
 .sol-record-cards>li,.sol-mini-list>li{min-width:0;}
 .sol-mini-list:not(.cards){min-width:0;grid-template-columns:minmax(0,1fr);}
+
+/* Nonmodal time panel; direct HH:mm input remains available. */
+.sol-time-entry{display:flex;gap:var(--sol-space-2);min-width:0;align-items:start;}.sol-time-entry>.sol-input{min-width:0;flex:1;}.sol-time-entry>.sol-button{height:var(--sol-control-height);flex:none;white-space:nowrap;}
+.sol-time-panel{position:fixed;z-index:var(--sol-layer-floating);width:min(320px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-card);box-shadow:var(--sol-elevation-floating);padding:var(--sol-space-4);}.sol-time-panel h3{font-size:var(--sol-text-md);margin:0;}.sol-time-panel .row-between{align-items:center;margin-bottom:var(--sol-space-3);}.sol-time-panel .sol-time-options{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+#summary-errors ul{margin-block:var(--sol-space-2);padding-left:24px;}#summary-errors a{color:var(--sol-color-danger);text-underline-offset:3px;}
