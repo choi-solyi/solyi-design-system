@@ -6,7 +6,7 @@ import {moduleOrder} from './site-manifest.mjs';
 import {expansionChecks} from './expansion-tests.mjs';
 const html=await readFile(new URL('../docs/index.html',import.meta.url),'utf8');
 const tokenSource=JSON.parse(await readFile(new URL('../tokens.json',import.meta.url),'utf8'));
-const withoutImports=source=>source.replace(/^import .* from '\.\/(?:extended|motion|calendar|palette|icons|foundation|expansion)\.js';\r?\n/gm,'');
+const withoutImports=source=>source.replace(/^import .* from '\.\/[\w-]+\.js';\r?\n/gm,'');
 const app=withoutImports((await readFile(new URL('../docs/app.js',import.meta.url),'utf8')).replace("import tokens from './token-data.js';",`const tokens = ${JSON.stringify(tokenSource)};`));
 const virtualConsole=new VirtualConsole();
 const errors=[];

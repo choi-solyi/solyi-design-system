@@ -1,0 +1,3 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const phase=Number(process.argv[2]),note=process.argv[3];if(![2,3,4,5,6].includes(phase)||!note)throw Error('Provide phase 2..6 and verified note');
+let p=await readFile('PLAN.md','utf8');const start=p.indexOf(`## ${phase}.`),next=p.indexOf(`## ${phase+1}.`,start+1),end=next<0?p.indexOf('## 진행과',start):next;const stop=end<0?p.length:end;p=p.slice(0,start)+p.slice(start,stop).replace('— 대기','— 완료').replaceAll('- [ ]','- [x]')+p.slice(stop);await writeFile('PLAN.md',p);await writeFile('QA.md',(await readFile('QA.md','utf8'))+`\n## 확장 ${phase}단계\n\n${note}\n`);

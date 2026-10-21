@@ -1,0 +1,30 @@
+import {solIcon} from './icons.js';
+const layoutRows=[{id:'garden',name:'작은 정원',note:'식물 관찰을 모으는 가상 기록',status:'진행 중'},{id:'books',name:'저녁 책장',note:'짧은 독서 감상을 담는 가상 기록',status:'초안'},{id:'walk',name:'주말 산책',note:'걷고 싶은 길의 가상 목록',status:'완료'}];
+const layoutEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export function renderLayouts(h){
+  const nav=()=>`<button class="sol-button subtle" data-layout-view="list">목록</button><button class="sol-button subtle" data-layout-view="detail">상세</button><button class="sol-button subtle" data-layout-view="settings">설정</button>`;
+  return h.section('layouts','App shell & templates','한 화면틀, 세 가지 작업 · 모두 가상 데이터',h.demo('Fictional notebook / responsive shell',`<div class="sol-app-shell" id="layout-demo"><header class="sol-app-header"><strong>가상 기록함</strong><span class="sol-badge">Local demo</span></header><details class="sol-app-mobile-nav"><summary>${solIcon('menu',{size:16})} 화면 이동</summary><nav aria-label="가상 앱 모바일 화면">${nav()}</nav></details><div class="sol-app-body"><nav class="sol-app-sidebar" aria-label="가상 앱 화면">${nav()}</nav><section class="sol-app-content" aria-label="가상 앱 작업 영역"><h3 id="layout-view-title" tabindex="-1">목록</h3><div id="layout-list"><label class="sol-field"><span class="sol-label">기록 검색</span><input id="layout-query" class="sol-input" type="search" placeholder="가상 기록 이름"></label><div class="sol-master-detail" style="margin-top:16px"><ul class="sol-app-records" id="layout-records"></ul><section id="layout-preview" class="sol-card" aria-label="선택한 기록"></section></div><p id="layout-count" class="sol-hint" role="status"></p></div><article id="layout-detail" hidden></article><form id="layout-settings" hidden novalidate><label class="sol-field"><span class="sol-label">가상 공간 이름</span><input id="layout-name" class="sol-input" maxlength="30" value="가상 기록함" aria-describedby="layout-name-help"><span id="layout-name-help" class="sol-hint">1~30자. 이 데모를 벗어나면 초기화됩니다.</span></label><label class="sol-choice" style="margin-block:16px"><input id="layout-summary" type="checkbox" checked>목록에 요약 표시</label><button class="sol-button primary" type="submit">설정 저장</button><p id="layout-settings-result" class="sol-hint" role="status"></p></form></section></div></div>`) + h.contract('설정: 유효·오류·저장. 목록: 검색·선택·결과 없음. 상세: 선택 항목·목록 복귀. 값은 화면틀 안에서만 유지합니다.','화면 이동은 일반 버튼의 Tab/Enter. 변경 후 영역 제목에 초점. 모바일 nav는 details/summary, Escape로 접고 summary로 복귀합니다.','content-max · reading-max · space-2/4/6 · border · surface · accent-soft · control-height') + `<p class="small muted">제품의 header·nav·main과 내부 내용 컴포넌트를 분리합니다. 이 문서 안의 표본은 main을 중첩하지 않습니다. 컨테이너 폭 600px 이하에서 사이드바는 접이식 nav, 목록·상세는 한 열이 됩니다. 콘텐츠 최대 72rem, 긴 읽기 영역 최대 44rem입니다. 실제 폴드 힌지 처리는 별도 기기 검수가 필요합니다.</p>` + h.codeSample('설정·목록·상세의 공통 구조',`<!-- 실제 앱에서는 section 대신 main을 한 번 사용합니다. -->
+<div class="sol-app-shell"><header class="sol-app-header">앱 이름</header>
+  <details class="sol-app-mobile-nav"><summary>화면 이동</summary><nav>…</nav></details>
+  <div class="sol-app-body"><nav class="sol-app-sidebar">…</nav>
+    <section class="sol-app-content">
+      <div class="sol-master-detail"><ul>목록</ul><article>선택한 상세</article></div>
+      <!-- 설정 폼 / 목록 / 상세 중 현재 화면만 표시합니다. -->
+    </section>
+  </div>
+</div>
+// layouts.js의 renderLayouts / mountLayouts는 문서의 가상 상태 어댑터입니다.
+// 앱에서는 같은 의미 구조·CSS를 라우터와 데이터에 연결합니다.`));
+}
+export function mountLayouts(root){
+  const shell=root.querySelector('#layout-demo');if(!shell)return()=>{};
+  const abort=new AbortController(),signal=abort.signal,$=s=>shell.querySelector(s);let selected='garden',savedName='가상 기록함',summary=true;
+  const row=()=>layoutRows.find(x=>x.id===selected);
+  const article=x=>`<h4>${layoutEscape(x.name)}</h4><p>${layoutEscape(x.note)}</p><p class="sol-hint">${x.status} · 가상 데이터</p>`;
+  function list(){const rows=layoutRows.filter(x=>x.name.includes($('#layout-query').value.trim()));$('#layout-records').innerHTML=rows.map(x=>`<li><button class="sol-button ${x.id===selected?'primary':''}" data-layout-row="${x.id}" ${x.id===selected?'aria-current="true"':''}>${x.name}</button>${summary?`<p class="sol-hint">${x.note}</p>`:''}</li>`).join('')||'<li>조건에 맞는 기록이 없어요.</li>';$('#layout-preview').innerHTML=rows.length?article(row())+'<button class="sol-button" data-layout-view="detail">상세 화면 열기</button>':'<h4>검색 조건을 바꿔 보세요.</h4><p>선택한 기록은 유지됩니다.</p>';$('#layout-count').textContent=`${rows.length}개 결과 · 선택: ${row().name}`;}
+  function view(name,focus=true){for(const v of ['list','detail','settings'])$('#layout-'+v).hidden=v!==name;$('#layout-view-title').textContent={list:'목록',detail:'상세',settings:'설정'}[name];shell.querySelectorAll('nav [data-layout-view]').forEach(b=>{b.setAttribute('aria-current',b.dataset.layoutView===name?'page':'false');});$('#layout-detail').innerHTML=article(row())+'<button class="sol-button" data-layout-view="list">목록으로</button>';$('.sol-app-mobile-nav').open=false;if(focus)$('#layout-view-title').focus();}
+  shell.addEventListener('click',e=>{const b=e.target.closest('[data-layout-view],[data-layout-row]');if(!b)return;if(b.dataset.layoutRow){selected=b.dataset.layoutRow;list();shell.querySelector(`[data-layout-row="${selected}"]`)?.focus();}else view(b.dataset.layoutView);},{signal});
+  $('#layout-query').addEventListener('input',list,{signal});
+  $('#layout-settings').addEventListener('submit',e=>{e.preventDefault();const name=$('#layout-name').value.trim();if(!name||name.length>30){$('#layout-name').setAttribute('aria-invalid','true');$('#layout-settings-result').textContent='공간 이름을 1~30자로 입력해 주세요.';$('#layout-name').focus();return;}savedName=name;summary=$('#layout-summary').checked;$('#layout-name').removeAttribute('aria-invalid');$('.sol-app-header strong').textContent=savedName;$('#layout-settings-result').textContent='✓ 가상 설정을 저장했어요. 목록에도 반영됩니다.';list();},{signal});
+  $('.sol-app-mobile-nav').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();$('.sol-app-mobile-nav').open=false;$('.sol-app-mobile-nav summary').focus();}},{signal});list();view('list',false);return()=>abort.abort();
+}
