@@ -58,6 +58,8 @@ QA.md                    완료한 검증과 미검증 범위
 
 변경 시 `npm run build`, `npm run check`, `npm test`를 실행한 후 원본과 `docs/`를 함께 커밋합니다. `main`으로 푸시하면 GitHub Pages의 기본 게시 작업이 실행됩니다.
 
+배포 후 `npm run verify-live`로 실제 HTTPS 사이트의 9개 공개 자산이 모두 HTTP 200인지, 검증한 로컬 파일과 SHA-256이 같은지 확인할 수 있습니다.
+
 ## 자료와 독립성
 
 - [참고 정보 구조](https://design.yeolyi.com/) — 2026-10-21 확인. Style / Component / Pattern 및 공유 UI·사이트 셸 분리 개념을 참고했습니다. 원문·색·디자인은 복제하지 않았습니다.

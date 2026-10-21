@@ -8,6 +8,7 @@
 - `npm run check`: 3개 테마 × 라이트·다크 × 18개 조합 = **108개 대비 조합** 검사. 일반 글자 역할 4.5:1, 선택한 입력 경계·포커스 조합 3:1을 기준으로 함. 전체 픽셀·화면 감사는 아님.
 - 가장 여유가 작은 글자 조합: Violet light의 accent / accent-soft **약 4.562:1**. 반올림된 표시가 아닌 원래 수치로 판정.
 - 출력 파일 목록, 원본/산출물 일치, 로컬 자산 링크, 알려진 자격증명 패턴, 외부 데이터 요청 부재 검사.
+- 로컬 HTTP 서버의 문서와 8개 자산 응답: 모두 HTTP 200. 원격 게시 자산은 별도 `npm run verify-live`로 검사합니다.
 - `npm test`: jsdom 기반 합성 DOM에서 5개 경로, 문서 내부 링크, 중복 ID·ARIA 참조, 경로 이동의 heading 포커스, 토큰 검색·복사와 예시 복사 검사.
 - 폼의 잘못된 입력·첫 오류 초점·실패 시 값 보존·성공 회복·중복 제출 방지·처리 중 초기화 차단 검사.
 - 검색·필터·결과 없음·오류·재시도·조건 유지·오래된 비동기 응답 차단, 비교 선택, 빈 상태 추가·초기화 검사.
@@ -42,4 +43,10 @@
 
 ## 게시 확인
 
-게시 후 GitHub Pages 설정과 배포 상태, 실제 HTTPS URL과 배포 파일 응답·해시를 확인하고 결과를 추가합니다.
+- 사이트: https://choi-solyi.github.io/solyi-design-system/
+- 새 공개 저장소: https://github.com/choi-solyi/solyi-design-system
+- GitHub Pages 소스: `main` / `/docs`. 사용자 지정 도메인 없음(`cname: null`), `https_enforced: true`.
+- 초기 배포 커밋 `c206ddda7d27927c69770a74a729c60d52a3acf6`: Pages와 최신 build 모두 `built`, error message 없음.
+- `npm run verify-live` 통과: 문서·JS·CSS·JSON·SVG **공개 자산 9개 모두 HTTP 200이며 로컬 검증 산출물과 SHA-256이 일치**합니다.
+- 이 확인은 네트워크 전달과 파일 일치 검증입니다. 실제 브라우저 렌더링·키보드 동작 검증으로 계산하지 않습니다.
+- 기존 저장소·사이트의 소스·공개 범위·권한을 변경하지 않았습니다. 추가 비용 결제나 인증 범위 확대를 요청하거나 수행하지 않았습니다.

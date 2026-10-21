@@ -8,7 +8,8 @@
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
     "test": "node scripts/dom-check.mjs",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "verify-live": "node scripts/verify-live.mjs"
   },
   "devDependencies": {
     "jsdom": "^26.1.0"
