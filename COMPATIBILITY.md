@@ -22,3 +22,7 @@ Core/Vue UI0.1.1은 로컬 tarball만 검증한 private 패키지입니다. 실�
 ## 0.3.2 카드 반경
 
 radius-card는12px입니다. radius-lg 기초값20px와 새 radius-floating20px는 유지해 카드 변경이 메뉴/팝오버/달력/시간 패널로 번지지 않게 했습니다. 버튼6/입력10/큰 패널28/보조 inset10은 그대로입니다. Core/Vue UI local pack0.1.2를 같은 tarball 소비 흐름으로 검증하며 다른 앱은 자동 변경되지 않습니다.
+
+## 0.3.3 반경 체계
+
+현재 역할은 button/small6px, control/inset10px, card/floating12px, panel16px입니다. 기초 radius-lg도12px, radius-xl도16px로 맞췄으므로 기초값에 직접 의존한 소비자는 업데이트 전에 확인해야 합니다. 원형·알약형 상태 표식과 화면 가장자리에 붙는 패널의 연결된 모서리0px는 의도된 예외입니다. 색·패딩·타이포·높이·기능은 동일하며 Core/Vue UI local pack0.1.3은 이 문서 데모에서만 소비합니다. 다른 앱·레지스트리·권한은 변경하지 않습니다.

@@ -214,3 +214,13 @@ Textarea 필수/줄바꿈/카운트, 숫자 min/max/step와 증감 경계, 다�
 - Table 마지막 행 동작으로 실제 Tab 이동 후 포커스 경계 확인: 하단 여유8.21px, outline 폭+offset4.44px로 컨테이너 안에 여유가 있었습니다. 전체 제목 tooltip은 body에 놓여 카드 overflow clipping 밖에 유지됩니다.
 - **이미지 검수 범위:** 문서의 중첩 예시 일부와 반경 규칙/카드가 보이는 Chrome 캡처를 확인하고 원본 JPEG 한 개를 보존했습니다. 패키지 데모 및 일부 캡처 방식은 Page.captureScreenshot 5초 제한에 걸렸으므로 패키지 전체 이미지 검수 완료를 주장하지 않습니다. 실기기·화면 낭독기·400%·forced colors 등 기존 미검증은 유지됩니다.
 - 커밋 직전 기록이며 CI/배포 URL/공개 파일 해시 결과는 릴리스 최종 보고를 따릅니다. npm 게시·다른 앱·새 권한 변경은 없습니다.
+
+# v0.3.3 반경 체계 검증
+
+- button/small6px · control/inset10px · card/floating12px · panel16px로 통일. 메뉴·팝오버·달력·시간 패널·자동완성 목록·툴팁·토스트와 native/Vue Dialog·큰 예시 패널이 같은 역할 토큰을 사용합니다. radius-lg12/radius-xl16으로 이전20/28px 기초 반경도 정리했습니다. 원형·알약형 표식, 화면 가장자리에 연결되는 패널의0px는 유지합니다. 역사 기록의20/28px, 아이콘20px 및 그림자28px는 현재 반경과 구분합니다.
+- 색·여백·타이포·높이·기능 토큰은 직전 커밋과 구조 비교로 같음을 확인했습니다. Core/문서 CSS의 border-radius 이외 선언과 Vue UI/adapter CSS는 바이트 비교로 동일합니다. 관련 문서의 tooltip/time token 설명도 실제 floating 역할과 맞췄습니다.
+- 새 계약 검사에서 보관용 starter 스냅샷의 옛 토큰을 발견해 원본과 동기화하고 JSON/CSS 바이트 일치 검사를 추가했습니다. 수정 후 CI와 같은 전체 library-pipeline을 통과했습니다. Core/Vue UI0.1.3 local pack, 독립 소비 앱2개 설치·타입·빌드·런타임, 기존 전체 DOM/앵커/날짜/업로드/Progress 회귀, 색 대비186쌍·버튼 상태672쌍을 검증했습니다.
+- 사용자 PC Chrome 실제 치수:1644/766/333 CSS px × 3테마 × 2모드18조합에서 카드12/필드 프레임10/버튼6, 기존24/16px 카드 padding·36/44px 버튼 높이 및 가로 넘침 없음을 확인했습니다. 333px Vue Dialog 표면16px·padding16px·left16.01/right301.34, 초기 닫기 초점·Escape 실행 버튼 복귀 확인.
+- 333px 문서에서16px 패널→12px 카드→10px 중첩 면, 기존24px 안쪽 여백·overflow visible을 확인했습니다. 실제 Tab으로 버튼에 이동해 focus-visible outline/offset 각각2.22px를 확인했습니다. 팝오버12px(left15.99/right317.31), 달력12px(left0/right333.33), 시간 패널12px(left7.99/right325.31) 및 Escape 후 실행 버튼 복귀를 확인했습니다. 좁은 달력의 기존4px padding은 유지됩니다.
+- **검증 한계:** 이번 릴리스는 요청에 따라 사용자 PC 캡처를 반복하지 않았고 새 스크린샷 기반 전체 시각 검수는 미완료입니다. 위 기록은 실제 Chrome의 DOM/치수/키보드 검증이며 픽셀 검수와 구분합니다. 별도 클라우드 시각 검수, 실기기/물리 폴드·화면 낭독기·400%·forced colors 등은 후속 확인 범위입니다.
+- CI·배포 및 공개 자산 해시는 최종 보고에 기록합니다. npm 게시·다른 앱·새 권한 변경은 없습니다. 개발자 종합 리뷰는 이 반경 릴리스 이후 별도 단계이며 여기서 완료한 것으로 간주하지 않습니다.

@@ -1,6 +1,6 @@
 # 패키지 소비와 자동 검증
 
-첫 패키지 초안은 `@solyi/core@0.1.2` / `@solyi/vue-ui@0.1.2`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
+첫 패키지 초안은 `@solyi/core@0.1.3` / `@solyi/vue-ui@0.1.3`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
 
 ## 구조와 적용 범위
 
@@ -38,7 +38,7 @@ import {SolButton, SolField, SolDialog, SolTable} from '@solyi/vue-ui';
 
 앱은 Vuetify plugin과 data-theme/data-mode를 설정합니다. Button은 variant/type/disabled/loading, Field는 id/label/v-model/help/error, Dialog는 id/title/v-model, Table은 columns/current-page rows/선택 IDs/sort/page를 받습니다. 상세 계약과 slots/events는 각 packages/*/README.md 및 생성된 index.d.ts를 확인하세요. Table은 앱의 자료를 변경하거나 내부에서 검색/정렬하지 않습니다. 소비 앱이 조건 변경 시 페이지를 보정하고 전체 선택의 범위를 결정합니다.
 
-기존 6px 버튼·10px 필드·12px 카드·28px 패널과 36/40px·모바일44px를 유지합니다. 라이브러리 CSS는 명시적으로 한 번 import합니다. docs.css는 포함하지 않으며 reset·사이트 셸·앱 라우터도 설치하지 않습니다.
+기존 6px 버튼·10px 필드·12px 카드·16px 패널과 36/40px·모바일44px를 유지합니다. 라이브러리 CSS는 명시적으로 한 번 import합니다. docs.css는 포함하지 않으며 reset·사이트 셸·앱 라우터도 설치하지 않습니다.
 
 ## 검증의 의미
 
@@ -65,7 +65,7 @@ Pages 게시 소스는 자동 검증을 거치도록 legacy main/docs에서 같�
 
 공식 근거: [Vite library mode](https://vite.dev/guide/build.html#library-mode), [Vue plugin packaging](https://vuejs.org/guide/reusability/plugins.html#bundle-for-npm), [npm pack](https://docs.npmjs.com/cli/v11/commands/npm-pack/), [GitHub Pages dependent build/deploy jobs](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
-## Package spacing and icons (0.1.2)
+## Package spacing and icons (0.1.3)
 
 Table owns its caption inset, mobile caption/actions and footer spacing. The consuming screen owns the gap between search controls and Table; the starter uses space-4 (16px). Sorting headers explicitly override Vuetify button padding to align with body content. No adapter CSS is needed for the Table's internal spacing.
 

@@ -138,7 +138,7 @@
 .sol-mini-list {display: grid; gap: var(--sol-space-2); list-style: none; padding: 0; margin: 0;}
 .sol-mini-list.cards {grid-template-columns: repeat(2,minmax(0,1fr));}
 .sol-mini-list li {padding: var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); font-size: var(--sol-text-sm);}
-.sol-tooltip {position: fixed; z-index: var(--sol-layer-floating); max-width: min(280px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-small); background: var(--sol-color-text); color: var(--sol-color-surface); font-size: var(--sol-text-xs); line-height: var(--sol-line-body);}
+.sol-tooltip {position: fixed; z-index: var(--sol-layer-floating); max-width: min(280px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); background: var(--sol-color-text); color: var(--sol-color-surface); font-size: var(--sol-text-xs); line-height: var(--sol-line-body);}
 .sol-popover {position: fixed; z-index: var(--sol-layer-floating); width: min(320px,calc(100vw - 32px)); padding: var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); background: var(--sol-color-surface); color: var(--sol-color-text); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
 .sol-popover p {margin: var(--sol-space-2) 0 var(--sol-space-3);}
 .sol-accordion {border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); background: var(--sol-color-surface);}
@@ -155,7 +155,7 @@
 .sol-side-panel::backdrop {background: var(--sol-backdrop-color);}
 .sol-side-panel-head {display: flex; justify-content: space-between; align-items: center; gap: var(--sol-space-3); margin-bottom: var(--sol-space-6);}
 .sol-side-panel-head button {flex: 0 0 auto; white-space: nowrap;}
-.sol-toast {position: fixed; inset-inline-end: max(16px,env(safe-area-inset-right)); inset-block-end: max(16px,env(safe-area-inset-bottom)); z-index: var(--sol-layer-toast); display: flex; align-items: center; gap: var(--sol-space-3); width: max-content; max-width: min(440px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3) var(--sol-space-2) var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-inset); color: var(--sol-color-text); background: var(--sol-color-surface); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
+.sol-toast {position: fixed; inset-inline-end: max(16px,env(safe-area-inset-right)); inset-block-end: max(16px,env(safe-area-inset-bottom)); z-index: var(--sol-layer-toast); display: flex; align-items: center; gap: var(--sol-space-3); width: max-content; max-width: min(440px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3) var(--sol-space-2) var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); color: var(--sol-color-text); background: var(--sol-color-surface); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
 .sol-toast .sol-button {flex-shrink: 0;}
 .sol-table-wrap {max-width: 100%; overflow: auto;}
 .sol-data-table {width: 100%; border-collapse: collapse; font-size: var(--sol-text-sm);line-height:1.4;}
@@ -198,7 +198,7 @@
 .sol-file-list li {display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sol-space-2); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); font-size: var(--sol-text-sm);}
 .sol-file-list li > span {min-width: 0; overflow-wrap: anywhere; flex: 1;}
 .sol-file-list .sol-button {flex: 0 0 auto;}
-.sol-combobox-menu {max-height: 240px; overflow: auto; margin-top: var(--sol-space-1); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-control); background: var(--sol-color-surface);}
+.sol-combobox-menu {max-height: 240px; overflow: auto; margin-top: var(--sol-space-1); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); background: var(--sol-color-surface);}
 .sol-combobox-menu ul {padding: 0; margin: 0; list-style: none;}
 .sol-combobox-menu [role="option"] {display: flex; align-items: center; min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-3); font-size: var(--sol-text-sm); cursor: pointer;}
 .sol-combobox-menu [role="option"][aria-selected="true"] {background: var(--sol-color-accent-soft); color: var(--sol-color-accent); font-weight: 600;}

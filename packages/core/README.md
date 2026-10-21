@@ -1,4 +1,4 @@
-# @solyi/core 0.1.2
+# @solyi/core 0.1.3
 
 Local `npm pack` preview, private/UNLICENSED, not published. The source of truth is the repository's `tokens.json`, `site/components.css`, `site/overflow.js` and `site/icons.js`. Do not edit dist.
 
@@ -10,7 +10,7 @@ import {mountOverflowText} from '@solyi/core/overflow';
 import {solIcon, solIconPaths} from '@solyi/core/icons';
 ```
 
-Set `data-theme="violet|sage|sand"` and `data-mode="light|dark"` on html. Components use button radius 6px, field 10px, card 12px, panel 28px. CSS is opt-in and unscoped; import once. It is not a reset or a DTCG interchange format. CSS reference selectors beyond the four Vue wrappers remain example-level APIs in this draft. Brand logo/favicon and third-party dependencies are not packaged here.
+Set `data-theme="violet|sage|sand"` and `data-mode="light|dark"` on html. Components use button radius 6px, field 10px, card 12px, panel 16px. CSS is opt-in and unscoped; import once. It is not a reset or a DTCG interchange format. CSS reference selectors beyond the four Vue wrappers remain example-level APIs in this draft. Brand logo/favicon and third-party dependencies are not packaged here.
 
 `mountOverflowText(root)` enhances clipped `.sol-record-title/.sol-ellipsis` with a tooltip and full-text dialog. Call its returned cleanup function before unmounting. Existing interactive titles retain their click behavior.
 

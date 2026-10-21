@@ -197,7 +197,7 @@ main:focus {outline: none;}
 .source-list {padding: 0; list-style: none; font-size: var(--sol-text-sm);}
 .source-list li {padding: 12px 0; border-bottom: 1px solid var(--sol-color-border);}
 .source-list p {color: var(--sol-color-muted); margin: 6px 0 0; font-size: var(--sol-text-xs);}
-.toast {position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); max-width: min(90vw,500px); color: var(--sol-color-surface); background: var(--sol-color-text); padding: 12px 18px; border-radius:var(--sol-radius-inset); font-size: var(--sol-text-sm); box-shadow: var(--sol-elevation-floating); pointer-events: none; z-index: var(--sol-layer-announcement);}
+.toast {position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); max-width: min(90vw,500px); color: var(--sol-color-surface); background: var(--sol-color-text); padding: 12px 18px; border-radius:var(--sol-radius-floating); font-size: var(--sol-text-sm); box-shadow: var(--sol-elevation-floating); pointer-events: none; z-index: var(--sol-layer-announcement);}
 .toast:empty {display: none;}
 dialog {border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-panel); padding: 24px; width: min(520px,calc(100% - 32px)); max-height: calc(100dvh - 48px); overflow: auto; background: var(--sol-color-surface); color: var(--sol-color-text);}
 dialog::backdrop {background: var(--sol-backdrop-color);}

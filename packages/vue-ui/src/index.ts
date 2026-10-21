@@ -7,7 +7,7 @@ import {mountOverflowText} from '@solyi/core/overflow';
 import {solIconPaths} from '@solyi/core/icons';
 import './styles.css';
 
-export const uiVersion='0.1.2';
+export const uiVersion='0.1.3';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));

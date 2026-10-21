@@ -22,4 +22,8 @@ for(const project of ['examples/package-consumer','examples/vue-vuetify']){
 assert.deepEqual(await readFile(new URL('packages/core/dist/components.css',root)),await readFile(new URL('site/components.css',root)));
 assert.deepEqual(await readFile(new URL('packages/core/dist/icons.js',root)),await readFile(new URL('site/icons.js',root)));
 assert.deepEqual(await readFile(new URL('packages/core/dist/tokens.json',root)),await readFile(new URL('tokens.json',root)));
+assert.match(styles,/\.sol-ui-dialog\{[^}]*border-radius:var\(--sol-radius-panel\)/,'Vue Dialog consumes the shared panel radius');
+assert.match(styles,/\.sol-ui-table-desktop\{[^}]*border-radius:var\(--sol-radius-card\)/,'Vue Table consumes the shared card radius');
+assert.deepEqual(await readFile(new URL('examples/vue-vuetify/src/core/tokens.json',root)),await readFile(new URL('tokens.json',root)),'Archived starter token snapshot stays consistent');
+assert.deepEqual(await readFile(new URL('examples/vue-vuetify/src/core/tokens.css',root)),await readFile(new URL('packages/core/dist/tokens.css',root)),'Archived starter CSS matches Core');
 console.log('PASS: private pack contents/typed exports/CSS, shared source bytes, external Vue/Vuetify/Core, two actual tarball consumers, locked registry integrity/licenses and one framework copy each.');
