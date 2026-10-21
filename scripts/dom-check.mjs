@@ -29,7 +29,9 @@ const $=selector=>{const result=d.querySelector(selector);assert.ok(result,selec
 const fire=(element,type)=>element.dispatchEvent(new w.Event(type,{bubbles:true,cancelable:true}));
 const click=selector=>$(selector).click();
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const route=async name=>{w.location.hash=name;await pause(20);};
+// Legacy component-contract fixture exposes examples together, as before the topic split.
+// navigation-check.mjs independently verifies the real, isolated topic visibility/routes.
+const route=async name=>{w.location.hash=name;await pause(20);d.querySelectorAll('main > section.section').forEach(s=>s.hidden=false);};
 function integrity() {
   const ids=[...d.querySelectorAll('[id]')].map(element=>element.id);
   assert.equal(ids.length,new Set(ids).size,'No duplicate IDs');

@@ -1,4 +1,5 @@
 import tokens from './token-data.js';
+import {presentTopics} from './topics.js';
 import {renderExpansion,mountExpansion,requestExpansionLeave} from './expansion.js';
 import {renderComponentExamples, renderPatternExamples, mountExamples} from './extended.js';
 import {renderGoalSpecimen, renderMotionSection, mountMotion} from './motion.js';
@@ -12,7 +13,7 @@ const routes = {overview:'Overview', style:'Style / Core', component:'Component'
 let snippetId = 0;
 let toastTimer;
 let returnFocus;
-let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
+let cleanupTopics = () => {}; let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
 const projects = [
   {title:'작은 정원 기록', type:'기록 도구', status:'진행 중', description:'식물 관찰을 모으는 가상의 프로젝트입니다.', next:'관찰 화면의 입력 흐름 정리'},
@@ -31,7 +32,7 @@ function codeSample(label, code) {
 }
 const contract = (states, keys, mapping) => `<dl class="contract"><dt>상태</dt><dd>${states}</dd><dt>Keyboard</dt><dd>${keys}</dd><dt>Tokens</dt><dd>${mapping}</dd></dl>`;
 const demo = (name, content, note = 'LIVE · 가상 데이터') => `<div class="demo"><div class="demo-header"><span>${name}</span><span>${note}</span></div><div class="demo-stage">${content}</div></div>`;
-const footer = () => `<footer class="site-footer"><p>Solyi Design System · v0.2.0 <span aria-hidden="true">/</span> 2026.10</p><p><a href="#theme/scope">범위와 검증</a> · <a href="https://github.com/choi-solyi/solyi-design-system">Source ↗</a></p></footer>`;
+const footer = () => `<footer class="site-footer"><p>Solyi Design System · v0.2.1 <span aria-hidden="true">/</span> 2026.10</p><p><a href="#theme/scope">범위와 검증</a> · <a href="https://github.com/choi-solyi/solyi-design-system">Source ↗</a></p></footer>`;
 
 function overview() {
   return `<div class="overview-hero"><div class="page-intro"><span class="eyebrow">A PERSONAL DESIGN FOUNDATION</span><h1 class="intro-title" tabindex="-1">같은 결,<br><span class="accent">다른 표정.</span></h1><p>솔의 여러 앱이 함께 쓰는 작은 기준.<br>읽기 좋은 위계와 적당한 밀도를 바탕으로,<br>각 앱에 어울리는 색과 성격을 더합니다.</p><div class="button-row"><a class="sol-button primary" href="#style">Style 둘러보기 <span aria-hidden="true">→</span></a><a class="sol-button" href="#component">예시 사용하기</a></div></div><div>${renderGoalSpecimen()}<div class="hero-caption"><span>역할 기반 색</span><span>또렷한 위계</span><span>4px 간격 리듬</span></div></div></div>
@@ -104,10 +105,11 @@ function currentRoute() {return location.hash.slice(1).split('/')[0] || 'overvie
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'overview';
-  cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
+  cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
   main.innerHTML = `<div class="breadcrumb"><span>Solyi</span><span aria-hidden="true">/</span><span>${routes[route]}</span></div>` + ({overview,style,component,pattern,theme}[route])() + (route==='component'?renderComponentExamples({section,demo,contract,codeSample}):route==='pattern'?renderPatternExamples({section,demo,contract,codeSample}):route==='style'?renderColorExamples({section,codeSample})+renderMotionSection({section,demo,codeSample,tokens}):'') + renderExpansion(route,{section,demo,contract,codeSample}) + footer();
   document.title = `Solyi Design System · ${routes[route]}`;
+  cleanupTopics = presentTopics(main,route,{section,demo,contract,codeSample});
   document.querySelectorAll('[data-route]').forEach(link=>{
     if (link.dataset.route===route) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
   });
@@ -117,7 +119,7 @@ function render({focus=false}={}) {
   if (anchor) {
     const target = document.getElementById(anchor);
     target?.scrollIntoView({block:'start'});
-    if (focus && target) {const heading=target.querySelector('h2'); heading?.setAttribute('tabindex','-1'); heading?.focus({preventScroll:true});}
+    if (focus && target) {const heading=target.querySelector('h1,h2'); heading?.setAttribute('tabindex','-1'); heading?.focus({preventScroll:true});}
   } else if (focus) {main.querySelector('h1')?.focus(); window.scrollTo({top:0});}
   bindPageEvents(); cleanupExamples = mountExamples(main,notify); cleanupMotion = mountMotion(main); cleanupColors = mountColorExamples(main); cleanupExpansion = mountExpansion(main,notify);
 }

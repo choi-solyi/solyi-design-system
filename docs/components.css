@@ -229,11 +229,12 @@
 .sol-tone[data-tone="success"] {--sol-tone-fg: var(--sol-color-success); --sol-tone-bg: var(--sol-color-success-soft);}
 .sol-tone[data-tone="warning"] {--sol-tone-fg: var(--sol-color-warning); --sol-tone-bg: var(--sol-color-warning-soft);}
 .sol-tone[data-tone="danger"] {--sol-tone-fg: var(--sol-color-danger); --sol-tone-bg: var(--sol-color-danger-soft);}
-.sol-tone .sol-button.tone-fill {background: var(--sol-tone-fg); border-color: var(--sol-tone-fg); color: var(--sol-tone-bg);}
-.sol-tone .sol-button.tone-soft {background: var(--sol-tone-bg); border-color: var(--sol-tone-bg); color: var(--sol-tone-fg);}
-.sol-tone .sol-button.tone-outline {background: var(--sol-color-surface); border-color: var(--sol-tone-fg); color: var(--sol-tone-fg);}
-.sol-tone .sol-button:is(.tone-fill,.tone-soft,.tone-outline):hover:not(:disabled) {text-decoration: underline; text-underline-offset: 3px; border-color: var(--sol-tone-fg);}
-.sol-tone .sol-button:is(.tone-fill,.tone-soft,.tone-outline):disabled {background: var(--sol-color-surface-alt); color: var(--sol-color-muted); border-color: var(--sol-color-border);}
+.sol-tone .sol-button.tone-fill {--sol-tone-action-bg:var(--sol-tone-fg);--sol-tone-action-ink:var(--sol-tone-bg);background:var(--sol-tone-action-bg);border-color:var(--sol-tone-fg);color:var(--sol-tone-action-ink);}
+.sol-tone .sol-button.tone-soft {--sol-tone-action-bg:var(--sol-tone-bg);--sol-tone-action-ink:var(--sol-tone-fg);background:var(--sol-tone-action-bg);border-color:var(--sol-tone-fg);color:var(--sol-tone-action-ink);}
+.sol-tone .sol-button.tone-outline {--sol-tone-action-bg:var(--sol-color-surface);--sol-tone-action-ink:var(--sol-tone-fg);background:var(--sol-tone-action-bg);border-color:var(--sol-tone-fg);color:var(--sol-tone-action-ink);}
+/* Keep each tested ink/background pair together. This outranks generic button hover. */
+.sol-tone .sol-button:is(.tone-fill,.tone-soft,.tone-outline):is(:hover,:focus-visible,:active):not(:disabled):not([aria-disabled="true"]) {background:var(--sol-tone-action-bg);color:var(--sol-tone-action-ink);border-color:var(--sol-tone-fg);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;}
+.sol-tone .sol-button:is(.tone-fill,.tone-soft,.tone-outline):is(:disabled,[aria-disabled="true"]) {background:var(--sol-color-surface-alt);color:var(--sol-color-muted);border-color:var(--sol-color-border);opacity:1;}
 .sol-tone-badge {background: var(--sol-tone-bg); color: var(--sol-tone-fg);}
 .sol-tone-notice {background: var(--sol-tone-bg); color: var(--sol-tone-fg); border-color: var(--sol-tone-fg); margin-top: var(--sol-space-3);}
 .sol-tone.sol-toast {background: var(--sol-tone-bg); color: var(--sol-tone-fg); border-color: var(--sol-tone-fg);}

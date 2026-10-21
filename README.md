@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2.1 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -116,3 +116,14 @@ QA.md                    완료한 검증과 미검증 범위
 icons.js·foundation.js·layouts.js·inputs.js·workflow.js·extras.js·adoption.js는 각각 문서 렌더와 가상 상태 어댑터를 분리합니다. expansion.js가 기존 경로에 연결하고 해제 시 리스너를 정리합니다. components.css만 앱에 선택적으로 가져가며 docs.css는 가져가지 않습니다.
 
 실행 가능한 독립 starter는 [examples/vue-vuetify](examples/vue-vuetify/README.md), 변경 이력은 CHANGELOG.md, 버전·폐기는 COMPATIBILITY.md, 단계별 기록은 PLAN.md와 QA.md를 확인하세요. npm run build는 미리 빌드한 starter/dist의 네 허용 파일도 docs/starter에 복사합니다. Core를 바꾼 경우 build:core → sync:starter → starter 빌드 → 전체 build 순서입니다.
+
+## 문서 탐색과 버튼 상태 (0.2.1)
+
+상위 메뉴는 짧은 주제 개요입니다. 기능군별 2차 메뉴에서 한 주제를 고르면 관련 예시·상태·사용 방법만 표시합니다. 모바일 세부 메뉴는 접어서 시작하고 현재 주제/그룹과 이전·다음 링크를 제공합니다. 기존 해시 링크를 보존하며 inputs, advanced-inputs, identity-progress, chart-tree는 세부 예시로 가는 호환 안내입니다. 원래 통합 계약은 접이식으로 보존합니다.
+
+- Style: 기본 / 색 / 형태와 공간 / 모션
+- Component: 동작 / 입력 / 탐색 / 피드백과 표시
+- Pattern: 조회 / 작성과 편집 / 상태와 복구 / 화면틀과 조합
+- Theme: 표현 설정 / 도입 / 범위
+
+630개 의미색 버튼 상태·변형·테마 대비는 scripts/button-state-check.mjs, 47개 개별 주제·호환/직접 링크·뒤로/앞으로·미저장 이동은 scripts/navigation-check.mjs로 검사합니다. 기존 컴포넌트 계약 검사는 예시를 모아 둔 fixture로 보존하고 실제 주제 격리는 별도로 검사합니다. site/topics.js의 단일 목록이 메뉴·개요·제목·순서를 만듭니다.
