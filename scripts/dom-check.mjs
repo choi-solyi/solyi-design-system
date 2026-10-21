@@ -144,13 +144,26 @@ click('#extra-table-body [data-extra-select="r1"]');assert.equal($('#extra-selec
 click('#extra-select-page');assert.equal($('#extra-select-page').checked,true);assert.match($('#extra-selection-count').textContent,/선택 3개/);
 click('#extra-data-next');assert.match($('#extra-data-count').textContent,/2\/4/);assert.match($('#extra-selection-count').textContent,/선택 3개/);
 $('#extra-data-filter').value='초안';fire($('#extra-data-filter'),'change');assert.match($('#extra-data-count').textContent,/1\/1/);assert.match($('#extra-selection-count').textContent,/현재 결과 밖 3개/);
-$('#extra-data-query').value='없는자료';fire($('#extra-data-query'),'input');assert.equal($('#extra-data-empty').hidden,false);assert.equal($('#extra-select-page').disabled,true);assert.equal($('#extra-data-next').disabled,true);assert.equal($('#extra-data-page').value,'1');
+$('#extra-data-query').value='없는자료';fire($('#extra-data-query'),'input');assert.equal($('#extra-data-empty').hidden,false);assert.equal($('#extra-select-page').disabled,true);assert.equal($('#extra-data-next').disabled,true);assert.equal(d.querySelector('#extra-data-page'),null);assert.equal($('#extra-data-page-buttons [aria-current="page"]').textContent,'1');
 click('[data-extra="data-reset"]');assert.equal($('#extra-data-empty').hidden,true);assert.equal($('#extra-data-filter').value,'all');assert.match($('#extra-selection-count').textContent,/선택 3개/);
 $('#extra-data-sort').value='name-asc';fire($('#extra-data-sort'),'change');assert.equal($('#extra-sort-name').getAttribute('aria-sort'),'ascending');
 click('[data-extra-sort="name"]');assert.equal($('#extra-data-sort').value,'name-desc');assert.equal($('#extra-sort-name').getAttribute('aria-sort'),'descending');
 $('#extra-data-query').value='기록';fire($('#extra-data-query'),'input');click('#extra-data-next');assert.match($('#extra-data-count').textContent,/2\/2/);
 $('#extra-data-filter').value='초안';fire($('#extra-data-filter'),'change');assert.match($('#extra-data-count').textContent,/1\/1/);assert.equal($('#extra-data-empty').hidden,false);
 click('#extra-selection-clear');assert.match($('#extra-selection-count').textContent,/선택 0개/);
+// Number pagination, bounds, many/long data, state recovery and focus without a page select.
+click('[data-extra="data-reset"]');$('#extra-data-set').value='many';fire($('#extra-data-set'),'change');assert.match($('#extra-data-count').textContent,/1\/28/);assert.equal($('#extra-data-prev').disabled,true);assert.ok(d.querySelector('.sol-page-gap'));
+assert.deepEqual(w.paginationItems(14,28).filter(x=>!x.gap).map(x=>x.page).join(','),'1,13,14,15,28');
+click('[data-extra-page="28"]');assert.match($('#extra-data-count').textContent,/28\/28/);assert.equal($('#extra-data-next').disabled,true);assert.equal(d.activeElement.getAttribute('aria-current'),'page');
+click('#extra-data-prev');assert.match($('#extra-data-count').textContent,/27\/28/);assert.equal(d.activeElement.id,'extra-data-prev');
+$('#extra-data-filter').value='초안';fire($('#extra-data-filter'),'change');assert.match($('#extra-data-count').textContent,/1\//);assert.equal($('#extra-data-page-buttons [aria-current="page"]').textContent,'1');
+$('#extra-data-size').value='10';fire($('#extra-data-size'),'change');assert.ok(d.querySelectorAll('#extra-table-body tr').length<=10);
+click('[data-extra="data-reset"]');$('#extra-data-set').value='long';fire($('#extra-data-set'),'change');assert.match($('#extra-table-body').textContent,/FictionalLong/);assert.equal(d.querySelectorAll('.sol-selectable-table col').length,5);
+click('#extra-select-page');const selectedBefore=$('#extra-selection-count').textContent;$('#extra-data-state').value='loading';fire($('#extra-data-state'),'change');assert.equal($('#extra-data-loading').hidden,false);assert.equal($('#extra-data-table-view').hidden,true);assert.equal($('#extra-data-next').disabled,true);
+$('#extra-data-state').value='error';fire($('#extra-data-state'),'change');assert.equal($('#extra-data-error').hidden,false);assert.equal($('#extra-selection-count').textContent,selectedBefore);click('#extra-data-retry');assert.equal($('#extra-data-state').value,'ready');assert.equal($('#extra-selection-count').textContent,selectedBefore);assert.equal(d.activeElement.id,'extra-data-count');
+$('#extra-data-set').value='many';fire($('#extra-data-set'),'change');$('#extra-data-sort').value='date-desc';fire($('#extra-data-sort'),'change');const extraRecord=d.querySelector('#extra-table-body [data-record-id="r84"]');extraRecord.click();assert.equal($('#extra-panel').open,true);assert.equal($('#extra-panel-title').textContent,'가상 자료 084');click('[data-extra="panel-close"]');
+console.log('PASS: numbered pages/ellipsis/current/bounds/focus, page-size/filter correction, long/many fixtures, stable column definitions and loading/error selection recovery.');
+
 // Unified single/range picker: complete values only, calendar drafts, direct input and reusable API.
 assert.equal(w.parseDateOnly('2024-02-29').d,29);assert.equal(w.parseDateOnly('2025-02-29'),null);assert.equal(w.parseDateOnly('1900-02-29'),null);assert.equal(w.parseDateOnly('2000-02-29').d,29);assert.equal(w.parseDateOnly('0000-01-01'),null);
 assert.equal(w.parseDateOnly('2026-13-01'),null);assert.equal(w.parseDateOnly('2026-04-31'),null);assert.equal(w.parseDateOnly('2026-1-01'),null);

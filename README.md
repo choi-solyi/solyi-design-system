@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2.3 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.2.4 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -130,3 +130,11 @@ icons.js·foundation.js·layouts.js·inputs.js·workflow.js·extras.js·adoption
 ## 모서리 역할 (0.2.3)
 
 Style → 간격·밀도·모서리에 실제 중첩 예시가 있습니다. 공유 CSS와 starter는 radius-small 6px / radius-control·inset 10px / radius-card 20px / radius-panel 28px를 사용합니다. 원형 표시와 좁은 화면 가장자리에 붙는 패널은 용도에 맞게 유지합니다. 버튼·필드 높이와 색·폰트는 바꾸지 않았습니다.
+
+## 입력과 컬렉션 (0.2.4)
+
+- Textarea는 한 줄 필드 높이와 분리한 최소96px, 세로 resize/overflow auto, 가로 줄바꿈과 아래 오른쪽 카운터입니다.
+- Time picker는 HH:mm/HHmm 직접 입력과 시·분 select를 제공합니다. 09:00–18:00/15분 검증, 오류 값과 부분 선택 보존, 18시의 00분 정책을 문서화합니다.
+- 선택 표는 colgroup 48 / 유연한 제목 / 96 / 128 / 88px와 fixed layout을 사용합니다. 정렬 아이콘 자리는16px로 고정하며 제목만 필요에 따라 줄바꿈합니다. 기본 데이터 행 약52px, 일반 차트 값 표 약37px입니다.
+- 이전·번호·다음을 한 그룹에 모으고 페이지 select를 제거했습니다. 표시 개수는 별도 select입니다. 많은 페이지는 양끝과 ellipsis, 콘텐츠600px 이하에서는 현재 주변3개 번호와 전체 수 요약을 제공합니다.
+- 리스트·모바일 카드도 같은 밀도/작은 액션/선택 언어를 씁니다. 가상 데이터·상태 메뉴에서 긴 제목·84개 자료·로딩·오류·재시도를 실제 확인합니다. 기능은 로컬 가상 데이터에만 연결됩니다.

@@ -51,8 +51,16 @@
   --sol-radius-card: var(--sol-radius-lg);
   --sol-radius-panel: var(--sol-radius-xl);
   --sol-radius-inset: var(--sol-radius-md);
+  --sol-table-cell-padding-y: 0.375rem;
+  --sol-list-item-padding-y: 0.75rem;
+  --sol-table-selection-width: 3rem;
+  --sol-table-status-width: 6rem;
+  --sol-table-date-width: 8rem;
+  --sol-table-action-width: 5.5rem;
   --sol-content-gap: 1rem;
   --sol-row-padding: 1rem;
+  --sol-table-cell-padding-y: 0.375rem;
+  --sol-list-item-padding-y: 0.75rem;
   --sol-color-canvas: #F5F6FA;
   --sol-color-surface: #FFFFFF;
   --sol-color-surface-alt: #ECEEF5;
@@ -217,9 +225,13 @@
 [data-density="comfortable"] {
   --sol-content-gap: 1rem;
   --sol-row-padding: 1rem;
+  --sol-table-cell-padding-y: 0.375rem;
+  --sol-list-item-padding-y: 0.75rem;
 }
 [data-density="compact"] {
   --sol-content-gap: 0.75rem;
   --sol-row-padding: 0.75rem;
+  --sol-table-cell-padding-y: 0.25rem;
+  --sol-list-item-padding-y: 0.5rem;
 }
 @media (max-width: 680px), (pointer: coarse) { :root { --sol-control-height: var(--sol-touch-target-min); --sol-button-height: var(--sol-touch-target-min); } }

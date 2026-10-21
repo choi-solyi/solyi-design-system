@@ -163,10 +163,10 @@ main:focus {outline: none;}
 .form-demo {display: grid; gap: 20px; max-width: 480px;}
 .form-demo fieldset, .choice-fieldset {border: 0; padding: 0; margin: 0; min-width: 0;}
 .form-demo legend, .choice-fieldset legend {font-weight: 650; font-size: var(--sol-text-sm); margin-bottom: 6px;}
-.project-list {display: grid; gap: 12px; margin-top: 20px;}
-.project-row {display: flex; gap: 16px; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: var(--sol-row-padding); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset);}
-.project-row h4 {margin: 0 0 4px;}
-.project-row p {font-size: var(--sol-text-xs); color: var(--sol-color-muted); margin: 0;}
+.project-list {margin-top:var(--sol-space-4);}
+.project-row {border-radius:0;}
+.project-row h4 {margin:0 0 2px;font-size:var(--sol-text-sm);line-height:1.4;font-weight:650;}
+.project-row p {font-size:var(--sol-text-xs);line-height:1.35;color:var(--sol-color-muted);margin:0;}
 .empty-state {padding: 32px 16px; text-align: center; background: var(--sol-color-canvas); border: 1px dashed var(--sol-color-control-border); border-radius:var(--sol-radius-inset); margin-top: 16px;}
 .empty-state h3 {font-size: 19px; margin: 12px 0 8px;}
 .empty-state p {font-size: var(--sol-text-sm); color: var(--sol-color-muted); margin: 0 0 16px;}

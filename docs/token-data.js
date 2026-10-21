@@ -1,6 +1,6 @@
 // Generated from tokens.json.
 export default {
-  "version": "0.2.3",
+  "version": "0.2.4",
   "format": "Solyi plain JSON export (not a DTCG interchange format)",
   "description": "CSS role tokens shared by the documentation and its examples. Violet is a starting theme, not a permanent brand requirement.",
   "base": {
@@ -54,7 +54,13 @@ export default {
     "radius-control": "var(--sol-radius-md)",
     "radius-card": "var(--sol-radius-lg)",
     "radius-panel": "var(--sol-radius-xl)",
-    "radius-inset": "var(--sol-radius-md)"
+    "radius-inset": "var(--sol-radius-md)",
+    "table-cell-padding-y": "0.375rem",
+    "list-item-padding-y": "0.75rem",
+    "table-selection-width": "3rem",
+    "table-status-width": "6rem",
+    "table-date-width": "8rem",
+    "table-action-width": "5.5rem"
   },
   "reference": {
     "brand-purple": "#6666AA",
@@ -212,11 +218,15 @@ export default {
   "density": {
     "comfortable": {
       "content-gap": "1rem",
-      "row-padding": "1rem"
+      "row-padding": "1rem",
+      "table-cell-padding-y": "0.375rem",
+      "list-item-padding-y": "0.75rem"
     },
     "compact": {
       "content-gap": "0.75rem",
-      "row-padding": "0.75rem"
+      "row-padding": "0.75rem",
+      "table-cell-padding-y": "0.25rem",
+      "list-item-padding-y": "0.5rem"
     }
   }
 };

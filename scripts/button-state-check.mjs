@@ -30,4 +30,24 @@ for(const [theme,data]of Object.entries(tokens.themes))for(const mode of ['light
  const ink=value(button,'color'),background=value(button,'background')||value(button,'background-color'),contrast=ratio(ink,background),name=`${theme}/${mode}/${tone}/${variant}/${state}`;assert.ok(contrast>=4.5,`${name}: ${ink} on ${background} = ${contrast.toFixed(3)}:1`);assert.equal(value(button,'opacity'),'1',`${name}: no fading of readable state`);minimum=Math.min(minimum,contrast);count++;
  if(state==='hover'||state==='focus'||state==='focus-hover'||state==='active')assert.equal(value(button,'text-decoration'),'underline',`${name}: visible non-color feedback`);
 }
+
+// Regression fixtures: a multiline editor must not inherit single-line sizing; only selectable tables reserve a dedicated checkbox column.
+Object.assign(roles,Object.fromEntries(Object.entries(tokens.base).map(([k,v])=>['--sol-'+k,v])));
+const fixture=d.createElement('section');fixture.innerHTML='<textarea class="sol-input sol-textarea" rows="3"></textarea><input class="sol-input"><table class="sol-data-table sol-chart-table"><tbody><tr><th>월요일</th><td>Long free-flowing content</td></tr></tbody></table><table class="sol-data-table sol-selectable-table"><tbody><tr><th>선택</th><td>항목</td></tr></tbody></table>';d.body.append(fixture);
+const textarea=fixture.querySelector('textarea'),single=fixture.querySelector('input'),day=fixture.querySelector('.sol-chart-table th'),longCell=fixture.querySelector('.sol-chart-table td'),selection=fixture.querySelector('.sol-selectable-table th');
+for(const controlHeight of ['2.5rem','2.75rem']){roles['--sol-control-height']=controlHeight;assert.equal(value(textarea,'height'),'auto');const minimum=value(textarea,'min-height'),px=parseFloat(minimum)*(minimum.endsWith('rem')?16:1);assert.ok(px>=3*14*1.65+18,'At least three body lines plus padding');assert.equal(value(single,'height'),controlHeight);}
+assert.equal(value(textarea,'resize'),'vertical');assert.equal(value(textarea,'overflow-y'),'auto');assert.equal(value(textarea,'overflow-wrap'),'anywhere');assert.equal(value(textarea,'line-height'),'1.65');
+assert.notEqual(value(day,'width'),'44px');assert.equal(value(day,'white-space'),'nowrap');assert.notEqual(value(longCell,'white-space'),'nowrap');assert.equal(value(selection,'width'),tokens.base['table-selection-width']);assert.equal(value(day,'padding'),'0.5rem 0.75rem');
+assert.equal(value(fixture.querySelector('.sol-selectable-table'),'table-layout'),'fixed');
+console.log('PASS: multiline sizing survives single-line cascade, conditional scrolling/resize/wrapping, compact chart cells and selection-only column width. Geometry remains a real-browser check.');
+
+
+// New numbered navigation has its own selected foreground; check its full state cascade too.
+card.className='sol-pagination';button.className='sol-button sol-page-button';button.setAttribute('aria-current','page');let pageCount=0,pageMinimum=Infinity;
+for(const [theme,data]of Object.entries(tokens.themes))for(const mode of ['light','dark'])for(const[state,pseudo]of Object.entries(states)){
+ roles=Object.fromEntries(Object.entries(data[mode]).map(([k,v])=>['--sol-color-'+k,v]));button.dataset.cssState=pseudo.join(' ');button.disabled=state==='disabled';button.setAttribute('aria-disabled',String(state==='aria-disabled'));
+ const contrast=ratio(value(button,'color'),value(button,'background'));assert.ok(contrast>=4.5,theme+'/'+mode+'/page/'+state+': '+contrast);pageMinimum=Math.min(pageMinimum,contrast);pageCount++;
+}
+console.log('PASS: '+pageCount+' current-page button state contrasts, minimum '+pageMinimum.toFixed(3)+':1.');
+
 dom.window.close();console.log(`PASS: ${count} semantic button state/variant/theme text contrasts (minimum ${minimum.toFixed(3)}:1); cascade specificity, paired ink/background, readable disabled and non-color interaction feedback.`);
