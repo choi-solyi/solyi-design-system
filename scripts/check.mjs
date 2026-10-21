@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile,readdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
+import {siteFiles,generatedFiles} from './site-manifest.mjs';
 const root = fileURLToPath(new URL('../',import.meta.url));
 const tokens = JSON.parse(await readFile(path.join(root,'tokens.json'),'utf8'));
 const luminance = hex => hex.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((s,x,i)=>s+x*[.2126,.7152,.0722][i],0);
@@ -26,11 +27,11 @@ for(const [name,theme] of Object.entries(tokens.themes)) {
     }
   }
 }
-const expected=['.nojekyll','app.js','extended.js','motion.js','calendar.js','palette.js','components.css','docs.css','favicon.ico','brand-sparkle.svg','index.html','preferences.js','token-data.js','tokens.css','tokens.json'];
+const expected=[...siteFiles,...generatedFiles];
 assert.deepEqual((await readdir(path.join(root,'docs'))).sort(),expected.sort(),'Only intended public site files');
-for(const name of ['index.html','app.js','extended.js','motion.js','calendar.js','palette.js','components.css','docs.css','preferences.js','favicon.ico','brand-sparkle.svg']) assert.deepEqual(await readFile(path.join(root,'site',name)),await readFile(path.join(root,'docs',name)),`${name} build is current`);
+for(const name of siteFiles) assert.deepEqual(await readFile(path.join(root,'site',name)),await readFile(path.join(root,'docs',name)),`${name} build is current`);
 assert.deepEqual(JSON.parse(await readFile(path.join(root,'docs/tokens.json'),'utf8')),tokens);
-const source=(await Promise.all(['index.html','app.js','extended.js','motion.js','calendar.js','palette.js','docs.css','components.css'].map(name=>readFile(path.join(root,'docs',name),'utf8')))).join('\n');
+const source=(await Promise.all(siteFiles.filter(name=>/\.(html|js|css)$/.test(name)).map(name=>readFile(path.join(root,'docs',name),'utf8')))).join('\n');
 assert.ok(!/\binfinite\b/.test(source),'No unbounded CSS animation');
 for(const match of source.matchAll(/(?:href|src)=["']\.\/([^"'#?]+)["']/g)) assert.ok(expected.includes(match[1]),`Local link ${match[1]} exists`);
 assert.ok(!/\b(?:AIza[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,})\b/.test(source),'No known credential pattern');

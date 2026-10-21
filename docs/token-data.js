@@ -35,7 +35,20 @@ export default {
     "motion-duration-loading": "600ms",
     "motion-easing-standard": "cubic-bezier(0.2, 0, 0, 1)",
     "motion-easing-linear": "linear",
-    "motion-distance-small": "4px"
+    "motion-distance-small": "4px",
+    "icon-sm": "16px",
+    "icon-md": "20px",
+    "icon-lg": "24px",
+    "layer-base": "0",
+    "layer-sticky": "20",
+    "layer-floating": "60",
+    "layer-toast": "80",
+    "layer-announcement": "100",
+    "elevation-flat": "none",
+    "elevation-floating": "0 8px 28px #0002",
+    "backdrop-color": "#10121c88",
+    "content-max": "72rem",
+    "reading-max": "44rem"
   },
   "reference": {
     "brand-purple": "#6666AA",

@@ -1,4 +1,14 @@
 /* Framework-neutral examples. Pair with tokens.css. Component class prefix: sol-. */
+.sol-icon {display:inline-block;flex:none;vertical-align:middle;pointer-events:none;}
+.sol-icon.size-16 {width:var(--sol-icon-sm);height:var(--sol-icon-sm);}
+.sol-icon.size-20 {width:var(--sol-icon-md);height:var(--sol-icon-md);}
+.sol-icon.size-24 {width:var(--sol-icon-lg);height:var(--sol-icon-lg);}
+.sol-icon-button {min-width:var(--sol-button-height);padding:var(--sol-space-1);}
+.sol-icon-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:var(--sol-space-3);}
+.sol-icon-grid>div {display:flex;gap:var(--sol-space-2);align-items:center;min-height:var(--sol-control-height);font-size:var(--sol-text-xs);}
+.sol-icon-size {display:inline-flex;align-items:center;gap:var(--sol-space-2);font-size:var(--sol-text-xs);}
+.sol-elevated {box-shadow:var(--sol-elevation-floating);}
+@media (max-width:680px),(pointer:coarse) {.sol-icon-button {min-width:var(--sol-touch-target-min);}}
 :where(.sol-button,.sol-input,.sol-select,.sol-card,.sol-side-panel,.sol-popover,.sol-tooltip,.sol-toast,.sol-combobox-menu) {box-sizing: border-box;}
 .sol-button {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sol-space-2);
@@ -65,8 +75,8 @@
 .sol-mini-list {display: grid; gap: var(--sol-space-2); list-style: none; padding: 0; margin: 0;}
 .sol-mini-list.cards {grid-template-columns: repeat(2,minmax(0,1fr));}
 .sol-mini-list li {padding: var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-sm); font-size: var(--sol-text-sm);}
-.sol-tooltip {position: fixed; z-index: 60; max-width: min(280px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm); background: var(--sol-color-text); color: var(--sol-color-surface); font-size: var(--sol-text-xs); line-height: var(--sol-line-body);}
-.sol-popover {position: fixed; z-index: 60; width: min(320px,calc(100vw - 32px)); padding: var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-md); background: var(--sol-color-surface); color: var(--sol-color-text); box-shadow: 0 8px 28px #0002; font-size: var(--sol-text-sm);}
+.sol-tooltip {position: fixed; z-index: var(--sol-layer-floating); max-width: min(280px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm); background: var(--sol-color-text); color: var(--sol-color-surface); font-size: var(--sol-text-xs); line-height: var(--sol-line-body);}
+.sol-popover {position: fixed; z-index: var(--sol-layer-floating); width: min(320px,calc(100vw - 32px)); padding: var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-md); background: var(--sol-color-surface); color: var(--sol-color-text); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
 .sol-popover p {margin: var(--sol-space-2) 0 var(--sol-space-3);}
 .sol-accordion {border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-md); background: var(--sol-color-surface);}
 .sol-accordion + .sol-accordion {margin-top: var(--sol-space-2);}
@@ -79,10 +89,10 @@
 .sol-breadcrumbs a {display: inline-flex; align-items: center; min-height: var(--sol-control-height); color: var(--sol-color-accent);}
 .sol-breadcrumbs [aria-current] {color: var(--sol-color-muted);}
 .sol-side-panel {position: fixed; inset: 0 0 0 auto; margin: 0; width: min(440px,100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; overflow: auto; padding: var(--sol-space-6); border: 0; border-inline-start: 1px solid var(--sol-color-border); border-radius: 0; background: var(--sol-color-surface); color: var(--sol-color-text);}
-.sol-side-panel::backdrop {background: #10121c88;}
+.sol-side-panel::backdrop {background: var(--sol-backdrop-color);}
 .sol-side-panel-head {display: flex; justify-content: space-between; align-items: center; gap: var(--sol-space-3); margin-bottom: var(--sol-space-6);}
 .sol-side-panel-head button {flex: 0 0 auto; white-space: nowrap;}
-.sol-toast {position: fixed; inset-inline-end: max(16px,env(safe-area-inset-right)); inset-block-end: max(16px,env(safe-area-inset-bottom)); z-index: 80; display: flex; align-items: center; gap: var(--sol-space-3); width: max-content; max-width: min(440px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3) var(--sol-space-2) var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-md); color: var(--sol-color-text); background: var(--sol-color-surface); box-shadow: 0 8px 28px #0002; font-size: var(--sol-text-sm);}
+.sol-toast {position: fixed; inset-inline-end: max(16px,env(safe-area-inset-right)); inset-block-end: max(16px,env(safe-area-inset-bottom)); z-index: var(--sol-layer-toast); display: flex; align-items: center; gap: var(--sol-space-3); width: max-content; max-width: min(440px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3) var(--sol-space-2) var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-md); color: var(--sol-color-text); background: var(--sol-color-surface); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
 .sol-toast .sol-button {flex-shrink: 0;}
 .sol-table-wrap {max-width: 100%; overflow: auto;}
 .sol-data-table {width: 100%; border-collapse: collapse; font-size: var(--sol-text-sm);}
@@ -134,7 +144,7 @@
 .sol-date-output {font-size: var(--sol-text-xs); white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--sol-space-1) 0 0; padding: var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-sm); background: var(--sol-color-surface-alt);}
 .sol-calendar-status {min-height: 3.3em; margin: var(--sol-space-2) 0;}
 .sol-calendar-dialog {box-sizing: border-box; position: fixed; margin: auto; width: min(384px,calc(100vw - 8px)); max-width: calc(100vw - 8px); max-height: calc(100dvh - 48px); overflow: auto; padding: var(--sol-space-4); border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-md); background: var(--sol-color-surface); color: var(--sol-color-text);}
-.sol-calendar-dialog::backdrop {background: #10121c88;}
+.sol-calendar-dialog::backdrop {background: var(--sol-backdrop-color);}
 .sol-calendar-top > span {font-size: var(--sol-text-xs); font-weight: 600; line-height: 1.4;}
 .sol-calendar-top,.sol-calendar-heading,.sol-calendar-footer {display: flex; align-items: center; justify-content: space-between; gap: var(--sol-space-2);}
 .sol-calendar-top .eyebrow {min-width: 0;}

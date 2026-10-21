@@ -1,4 +1,5 @@
 import tokens from './token-data.js';
+import {renderExpansion,mountExpansion} from './expansion.js';
 import {renderComponentExamples, renderPatternExamples, mountExamples} from './extended.js';
 import {renderGoalSpecimen, renderMotionSection, mountMotion} from './motion.js';
 import {renderColorExamples, mountColorExamples} from './palette.js';
@@ -11,7 +12,7 @@ const routes = {overview:'Overview', style:'Style / Core', component:'Component'
 let snippetId = 0;
 let toastTimer;
 let returnFocus;
-let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
+let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
 const projects = [
   {title:'작은 정원 기록', type:'기록 도구', status:'진행 중', description:'식물 관찰을 모으는 가상의 프로젝트입니다.', next:'관찰 화면의 입력 흐름 정리'},
@@ -59,7 +60,7 @@ function tokenCards(query='') {
 }
 function style() {
   return intro('01 / STYLE · CORE','보기 좋은 화면의 기본값','색의 이름 대신 역할로 연결합니다. 앱이 달라져도 읽는 순서, 간격의 관계, 상태를 알리는 방식은 이어집니다.') +
-  localNav([['principles','Principles'],['tokens','Color tokens'],['color-examples','컬러 적용 예시'],['type','Typography'],['space','Space & density'],['accessibility','Accessibility'],['motion','Motion']]) +
+  localNav([['principles','Principles'],['tokens','Color tokens'],['color-examples','컬러 적용 예시'],['type','Typography'],['space','Space & density'],['accessibility','Accessibility'],['motion','Motion'],['icons','Icons'],['layers','Layers'],['writing','UI writing']]) +
   section('principles','Core의 경계','공통 규칙과 앱의 언어를 나눕니다.',`<div class="grid-2"><div class="sol-card"><h3>함께 가져가는 것</h3><ul class="rule-list"><li>제목 → 설명 → 행동의 정보 위계</li><li>16px 본문과 여유 있는 행간, 4px 기반 간격</li><li>역할 기반 색, 키보드 포커스, 오류·완료 안내</li><li>조밀한 화면에도 유지하는 터치 목표와 의미 구조</li></ul></div><div class="sol-card"><h3>앱에서 결정하는 것</h3><ul class="rule-list"><li>앱의 강조색·의미 색·목록 밀도</li><li>도메인의 정보 구조와 특수 시각화</li><li>게임의 전투력·등급·희귀도 색은 앱 전용 토큰</li><li>특정 프레임워크의 컴포넌트·라우터·상태 관리</li></ul></div></div>`) +
   section('tokens','역할로 연결하는 색','카드를 누르면 현재 CSS 선언이 복사됩니다.',`<div class="token-toolbar"><label class="sol-label" for="token-search">토큰 찾기</label><input class="sol-input" type="search" id="token-search" placeholder="역할, 설명, HEX로 검색" aria-describedby="token-search-help"><div class="token-actions"><a class="sol-button" href="#theme/themes">테마 바꾸기 →</a><a class="sol-button" href="./tokens.css" download>전체 CSS ↓</a><a class="sol-button" href="./tokens.json" download>JSON ↓</a></div><p id="token-search-help" class="sol-hint">현재 테마와 라이트·다크 모드의 값을 보여줍니다.</p></div><p id="token-count" class="small muted" role="status">20개 토큰 · ${E(tokens.themes[root.dataset.theme].label)} / ${root.dataset.mode}</p><div id="token-grid" class="token-grid">${tokenCards()}</div><p class="small muted" style="margin-top:16px"><code>border</code>는 구획용입니다. 입력처럼 경계 인지가 필요한 곳에는 더 뚜렷한 <code>control-border</code>를 씁니다. 상태 색은 UI의 의미이며 등급 색이 아닙니다.</p>${codeSample('CSS 역할 매핑 보기',`.app-panel {\n  background: var(--sol-color-surface);\n  color: var(--sol-color-text);\n  border: 1px solid var(--sol-color-border);\n  padding: var(--sol-space-6);\n  border-radius: var(--sol-radius-md);\n}\n.app-primary {\n  background: var(--sol-color-accent);\n  color: var(--sol-color-on-accent);\n}`)}`) +
   section('type','크기보다 먼저, 읽는 순서','시스템 폰트 · 외부 폰트 요청 없음',`<dl><div class="type-sample"><dt>Display · 48 / 1.25<br>--sol-text-display</dt><dd style="font-size:clamp(2rem,4vw,3rem);font-weight:720;line-height:1.25;letter-spacing:-.04em">같은 결, 다른 표정.</dd></div><div class="type-sample"><dt>Section · 28 / 1.25<br>--sol-text-xl</dt><dd style="font-size:1.75rem;font-weight:700;line-height:1.25">읽는 순서가 보이게</dd></div><div class="type-sample"><dt>Title · 20 / 1.25<br>--sol-text-lg</dt><dd style="font-size:1.25rem;font-weight:650;line-height:1.25">오늘의 작은 기록</dd></div><div class="type-sample"><dt>Body · 16 / 1.65<br>--sol-text-md</dt><dd>중요한 정보는 먼저, 부가 설명은 다음에 둡니다. 한 문장에 하나의 뜻을 담습니다.</dd></div><div class="type-sample"><dt>Label · 14 / 1.65<br>--sol-text-sm</dt><dd class="small">레이블은 무엇을 입력할지, 안내는 왜 필요한지 설명합니다.</dd></div><div class="type-sample"><dt>Meta · 13 / 1.65<br>--sol-text-xs</dt><dd style="font-size:.8125rem" class="muted">초안 · 가상 프로젝트 · 방금 업데이트</dd></div></dl><p class="small muted">본문은 60~70자 안팎의 줄 길이를 목표로 합니다. 표·메타 정보를 줄이기 전에 덜 중요한 정보를 접거나 나눕니다. 한국어 제목은 어절을 지키되 좁은 폭에서는 줄바꿈을 허용합니다.</p>`) +
@@ -103,9 +104,9 @@ function currentRoute() {return location.hash.slice(1).split('/')[0] || 'overvie
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'overview';
-  cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
+  cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
-  main.innerHTML = `<div class="breadcrumb"><span>Solyi</span><span aria-hidden="true">/</span><span>${routes[route]}</span></div>` + ({overview,style,component,pattern,theme}[route])() + (route==='component'?renderComponentExamples({section,demo,contract,codeSample}):route==='pattern'?renderPatternExamples({section,demo,contract,codeSample}):route==='style'?renderColorExamples({section,codeSample})+renderMotionSection({section,demo,codeSample,tokens}):'') + footer();
+  main.innerHTML = `<div class="breadcrumb"><span>Solyi</span><span aria-hidden="true">/</span><span>${routes[route]}</span></div>` + ({overview,style,component,pattern,theme}[route])() + (route==='component'?renderComponentExamples({section,demo,contract,codeSample}):route==='pattern'?renderPatternExamples({section,demo,contract,codeSample}):route==='style'?renderColorExamples({section,codeSample})+renderMotionSection({section,demo,codeSample,tokens}):'') + renderExpansion(route,{section,demo,contract,codeSample}) + footer();
   document.title = `Solyi Design System · ${routes[route]}`;
   document.querySelectorAll('[data-route]').forEach(link=>{
     if (link.dataset.route===route) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
@@ -118,7 +119,7 @@ function render({focus=false}={}) {
     target?.scrollIntoView({block:'start'});
     if (focus && target) {const heading=target.querySelector('h2'); heading?.setAttribute('tabindex','-1'); heading?.focus({preventScroll:true});}
   } else if (focus) {main.querySelector('h1')?.focus(); window.scrollTo({top:0});}
-  bindPageEvents(); cleanupExamples = mountExamples(main,notify); cleanupMotion = mountMotion(main); cleanupColors = mountColorExamples(main);
+  bindPageEvents(); cleanupExamples = mountExamples(main,notify); cleanupMotion = mountMotion(main); cleanupColors = mountColorExamples(main); cleanupExpansion = mountExpansion(main);
 }
 function persistPreferences() {
   try {localStorage.setItem('solyi-ds-prefs',JSON.stringify({theme:root.dataset.theme,mode:root.dataset.mode,density:root.dataset.density}));} catch {}

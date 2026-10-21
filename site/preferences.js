@@ -1,4 +1,4 @@
-/* Local preferences only. No analytics or network request. */
+/* Local preferences only. No remote services or network request. */
 try {
   const prefs = JSON.parse(localStorage.getItem('solyi-ds-prefs') || '{}');
   document.documentElement.dataset.mode = ['light','dark'].includes(prefs.mode) ? prefs.mode : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');

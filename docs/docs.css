@@ -21,9 +21,9 @@ kbd {border: 1px solid var(--sol-color-control-border); border-radius: 4px; padd
 .small {font-size: var(--sol-text-sm);}
 .muted {color: var(--sol-color-muted);}
 .eyebrow {display: block; color: var(--sol-color-muted); font-size: var(--sol-text-xs); letter-spacing: .12em; font-weight: 650; line-height: 1.5;}
-.skip-link {position: fixed; top: -100px; left: 12px; z-index: 100; background: var(--sol-color-text); color: var(--sol-color-surface); padding: 12px 18px; border-radius: 6px;}
+.skip-link {position: fixed; top: -100px; left: 12px; z-index: var(--sol-layer-announcement); background: var(--sol-color-text); color: var(--sol-color-surface); padding: 12px 18px; border-radius: 6px;}
 .skip-link:focus {top: 12px;}
-.topbar {min-height: 76px; padding: 12px 32px; border-bottom: 1px solid var(--sol-color-border); display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--sol-color-canvas); position: sticky; top: 0; z-index: 20;}
+.topbar {min-height: 76px; padding: 12px 32px; border-bottom: 1px solid var(--sol-color-border); display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--sol-color-canvas); position: sticky; top: 0; z-index: var(--sol-layer-sticky);}
 .brand {min-height: var(--sol-touch-target-min); display: flex; gap: 12px; align-items: center; text-decoration: none; color: var(--sol-color-text); font-weight: 700; font-size: 18px; letter-spacing: -.03em;}
 .brand-detail {font-weight: 450; margin-left: 5px; color: var(--sol-color-muted); font-size: 15px;}
 .brand-mark {display: block; width: 32px; height: 32px; flex: 0 0 32px; object-fit: contain;}
@@ -184,10 +184,10 @@ main:focus {outline: none;}
 .source-list {padding: 0; list-style: none; font-size: var(--sol-text-sm);}
 .source-list li {padding: 12px 0; border-bottom: 1px solid var(--sol-color-border);}
 .source-list p {color: var(--sol-color-muted); margin: 6px 0 0; font-size: var(--sol-text-xs);}
-.toast {position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); max-width: min(90vw,500px); color: var(--sol-color-surface); background: var(--sol-color-text); padding: 12px 18px; border-radius: 10px; font-size: var(--sol-text-sm); box-shadow: 0 8px 24px #0002; pointer-events: none; z-index: 100;}
+.toast {position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); max-width: min(90vw,500px); color: var(--sol-color-surface); background: var(--sol-color-text); padding: 12px 18px; border-radius: 10px; font-size: var(--sol-text-sm); box-shadow: var(--sol-elevation-floating); pointer-events: none; z-index: var(--sol-layer-announcement);}
 .toast:empty {display: none;}
 dialog {border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-lg); padding: 24px; width: min(520px,calc(100% - 32px)); max-height: calc(100dvh - 48px); overflow: auto; background: var(--sol-color-surface); color: var(--sol-color-text);}
-dialog::backdrop {background: #10121c88;}
+dialog::backdrop {background: var(--sol-backdrop-color);}
 .dialog-head {display: flex; align-items: center; gap: 16px; justify-content: space-between; margin-bottom: 16px;}
 .dialog-head > .eyebrow {flex: 1; min-width: 0;}
 .dialog-head > .sol-button {flex: 0 0 auto; white-space: nowrap;}
