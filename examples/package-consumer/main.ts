@@ -4,6 +4,7 @@ import {VApp} from 'vuetify/components/VApp';
 import {SolButton,SolField,SolDialog,SolTable,uiVersion} from '@solyi/vue-ui';
 import type {TableColumn,TableRow,TableSort,ButtonVariant} from '@solyi/vue-ui';
 import {tokens,coreVersion} from '@solyi/core';
+import {solIcon,solIconPaths} from '@solyi/core/icons';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import 'vuetify/styles';
@@ -18,6 +19,11 @@ const invalidVariant:ButtonProps={variant:'rainbow'};
 // @ts-expect-error Sort direction is a defined accessibility state.
 const invalidSort:TableSort={key:'name',direction:'up'};
 void validProps;void invalidVariant;void invalidSort;
+const chevron=solIcon('chevron',{size:20});void chevron;void solIconPaths.close;
+const invalidIconTypeOnly=()=>{
+  // @ts-expect-error Only the shared icon names are accepted.
+  solIcon('unregistered-symbol');
+};void invalidIconTypeOnly;
 const app=createApp({setup(){const text=ref(''),open=ref(false),sort=ref<TableSort|null>(null),selected=ref<string[]>([]);return()=>h(VApp,{},()=>h('main',{style:'padding:24px'},[
   h('h1',`Independent tarball consumer: ${coreVersion}/${uiVersion} (${tokens.version})`),
   h(SolField,{id:'consumer-title',label:'가상 제목',modelValue:text.value,'onUpdate:modelValue':value=>text.value=value}),

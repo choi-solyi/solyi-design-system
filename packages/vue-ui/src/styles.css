@@ -1,4 +1,6 @@
 /* Vue/Vuetify adapter only. Import @solyi/core/tokens.css + components.css first. */
+.sol-ui-button.v-btn,.sol-ui-field,.sol-ui-dialog,.sol-ui-table {font-family:var(--sol-font-sans);}
+.sol-ui-field,.sol-ui-dialog,.sol-ui-table {line-height:var(--sol-line-body);}
 .sol-ui-button.v-btn {min-width:0;height:var(--sol-button-height);padding-inline:var(--sol-space-3);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-button);background:var(--sol-color-surface);color:var(--sol-color-text);font-size:var(--sol-text-sm);font-weight:600;letter-spacing:normal;text-transform:none;box-shadow:none;}
 .sol-ui-button.v-btn:hover,.sol-ui-button.v-btn:active {background:var(--sol-color-surface-alt);text-decoration:underline;text-underline-offset:3px;}
 .sol-ui-button.v-btn .v-btn__overlay {opacity:0;}
@@ -8,44 +10,62 @@
 .sol-ui-button--inline.v-btn {font-size:var(--sol-text-xs);padding-inline:4px;text-decoration:underline;text-underline-offset:3px;}
 .sol-ui-button.v-btn:disabled,.sol-ui-button.v-btn[aria-disabled=true] {opacity:1;color:var(--sol-color-muted);background:var(--sol-color-disabled);border-color:var(--sol-color-border);text-decoration:none;cursor:default;}
 .sol-ui-button.v-btn:disabled .v-btn__content {opacity:1;}
-.sol-ui-button .v-btn__content {gap:6px;white-space:nowrap;}
+.sol-ui-button .v-btn__content {display:inline-flex;align-items:center;justify-content:center;gap:var(--sol-space-2);line-height:1.3;white-space:nowrap;}
+.sol-ui-icon {display:block;flex:none;width:20px;height:20px;pointer-events:none;}
+.sol-ui-icon--small {width:16px;height:16px;}
+.sol-ui-icon--previous {transform:rotate(90deg);}
+.sol-ui-icon--next {transform:rotate(-90deg);}
 .sol-ui-busy {font-size:1em;}
 .sol-ui-button.v-btn:focus-visible,.sol-ui-table input:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
-.sol-ui-label {display:block;font-size:var(--sol-text-sm);font-weight:600;margin-bottom:var(--sol-space-2);}
-.sol-ui-field {min-width:0;}
+.sol-ui-label {display:block;font-size:var(--sol-text-sm);font-weight:600;margin:0;}
+.sol-ui-field {display:grid;align-content:start;gap:var(--sol-space-2);min-width:0;}
 .sol-ui-input .v-field {--v-input-control-height:var(--sol-control-height);--v-field-padding-top:0;--v-field-padding-bottom:0;--v-field-input-padding-top:8px;--v-field-input-padding-bottom:8px;border-radius:var(--sol-radius-control);background:var(--sol-color-surface);color:var(--sol-color-text);}
 .sol-ui-input .v-field__input {min-height:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);font:inherit;line-height:1.4;}
 .sol-ui-input .v-field__outline {color:var(--sol-color-control-border);--v-field-border-opacity:1;}
 .sol-ui-input .v-field--focused .v-field__outline {color:var(--sol-color-focus);}
 .sol-ui-input:has(input:focus-visible) .v-field {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
 .sol-ui-input .v-field--error .v-field__outline {color:var(--sol-color-danger);}
-.sol-ui-hint,.sol-ui-error {font-size:var(--sol-text-sm);margin-block:var(--sol-space-2);overflow-wrap:anywhere;}
+.sol-ui-hint,.sol-ui-error {font-size:var(--sol-text-sm);margin:0;overflow-wrap:anywhere;}
 .sol-ui-hint {color:var(--sol-color-muted);}.sol-ui-error{color:var(--sol-color-danger);}
 .sol-ui-overlay .v-overlay__scrim {background:var(--sol-backdrop-color);opacity:1;}
 .sol-ui-dialog {background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-panel);padding:var(--sol-space-6);max-height:calc(100dvh - 48px);overflow:auto;overflow-wrap:anywhere;}
 .sol-ui-dialog-heading {display:flex;align-items:start;justify-content:space-between;gap:var(--sol-space-3);margin-bottom:var(--sol-space-4);}
 .sol-ui-dialog h2 {font-size:var(--sol-text-lg);margin:0;}.sol-ui-dialog-heading>.sol-ui-button {flex:none;}
+.sol-ui-dialog-body {display:grid;gap:var(--sol-space-3);min-width:0;}
+.sol-ui-dialog-body>p,.sol-ui-detail {margin:0;}
 .sol-ui-dialog-actions {display:flex;flex-wrap:wrap;gap:var(--sol-space-3);margin-top:var(--sol-space-4);}
-.sol-ui-table {container-type:inline-size;min-width:0;}
-.sol-ui-table-desktop {border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);}
+.sol-ui-table {container-type:inline-size;min-width:0;display:grid;gap:var(--sol-space-4);}
+.sol-ui-table-desktop {border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);overflow:hidden;}
 .sol-ui-table .sol-data-table {margin:0;table-layout:fixed;width:100%;}
+.sol-ui-table .sol-data-table caption {padding:var(--sol-space-4) var(--sol-space-3);color:var(--sol-color-text);}
+.sol-ui-table .sol-sort-button.v-btn {padding-inline:0;gap:var(--sol-space-1);justify-content:flex-start;}
+.sol-ui-table .sol-sort-button .v-btn__content {gap:var(--sol-space-1);}
 .sol-ui-table th:first-child,.sol-ui-table td:first-child {width:auto;}
 .sol-ui-table th,.sol-ui-table td {padding:var(--sol-table-cell-padding-y) var(--sol-space-3);}
 .sol-ui-table input[type=checkbox] {width:18px;height:18px;accent-color:var(--sol-color-accent);}
 .sol-ui-table th:has(input),.sol-ui-table td:has(>input) {text-align:center;}
 .sol-ui-table tr[data-selected=true],.sol-ui-table-mobile>li[data-selected=true] {background:var(--sol-color-accent-soft);}
-.sol-ui-table .sol-pagination {justify-content:center;gap:var(--sol-space-1);flex-wrap:wrap;margin-top:var(--sol-space-4);}
+.sol-ui-table-footer {display:grid;gap:var(--sol-space-2);}
+.sol-ui-table .sol-pagination {justify-content:center;gap:var(--sol-space-1);flex-wrap:wrap;margin:0;}
+.sol-ui-table-footer>.sol-ui-hint {text-align:center;}
+.sol-ui-table>.sol-ui-hint {padding:var(--sol-space-4);background:var(--sol-color-surface-alt);border-radius:var(--sol-radius-inset);}
 .sol-ui-table .sol-pagination>.sol-ui-button {padding-inline:8px;min-width:var(--sol-button-height);}
+.sol-ui-table .sol-pagination>.sol-ui-page-icon {padding:0;}
 .sol-ui-table .sol-ui-button[aria-current=page] {background:var(--sol-color-accent-soft);color:var(--sol-color-accent);border-color:var(--sol-color-accent);}
 .sol-ui-table-mobile {display:none;list-style:none;padding:0;margin:0;grid-template-columns:minmax(0,1fr);gap:var(--sol-space-3);}
 .sol-ui-table-mobile>li {min-width:0;padding:var(--sol-space-4);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);}
+.sol-ui-table-mobile-caption {display:none;margin:0;font-size:var(--sol-text-sm);font-weight:650;}
+.sol-ui-table-mobile-actions {display:flex;justify-content:flex-end;margin-top:var(--sol-space-2);}
 .sol-ui-table-mobile dl {margin:0;display:grid;grid-template-columns:64px minmax(0,1fr);gap:var(--sol-space-1) var(--sol-space-2);}
 .sol-ui-table-mobile dt {color:var(--sol-color-muted);font-size:var(--sol-text-sm);}.sol-ui-table-mobile dd{margin:0;min-width:0;}
 .sol-ui-detail dt {font-weight:600;margin-top:var(--sol-space-3);}.sol-ui-detail dd {margin:0;overflow-wrap:anywhere;white-space:pre-wrap;}
-@container(max-width:600px){.sol-ui-table-desktop{display:none;}.sol-ui-table-mobile{display:grid;}.sol-ui-page-edge,.sol-ui-page-gap{display:none!important;}}
+.sol-ui-detail dt:first-child {margin-top:0;}
+@container(max-width:600px){.sol-ui-table-desktop{display:none;}.sol-ui-table-mobile-caption{display:block;}.sol-ui-table-mobile{display:grid;}.sol-ui-page-edge,.sol-ui-page-gap{display:none!important;}}
 @media(max-width:680px),(pointer:coarse){.sol-ui-button.v-btn{min-height:var(--sol-touch-target-min);height:var(--sol-touch-target-min);}.sol-ui-dialog{padding:var(--sol-space-4);}.sol-ui-table .sol-pagination>.sol-ui-button{min-width:var(--sol-touch-target-min);}}
 @media(prefers-reduced-motion:reduce){.sol-ui-button,.sol-ui-input,.sol-ui-overlay *{animation:none!important;transition:none!important;}}
 
 .sol-ui-table-mobile-select{display:none;}
-@container(max-width:600px){.sol-ui-table-mobile-select{display:flex;margin-block:var(--sol-space-3);}}
+@container(max-width:600px){.sol-ui-table-mobile-select{display:flex;margin:0;}}
 .sol-ui-input .v-field--disabled{opacity:1;color:var(--sol-color-muted);background:var(--sol-color-disabled);}
+
+.sol-ui-table-mobile:empty {display:none;}

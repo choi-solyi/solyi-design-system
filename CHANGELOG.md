@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 0.3.1 — 2026-10-21
+
+- 패키지 Table caption 좌우 inset, 검색 컨트롤과 표 사이 간격, header/body 시작점과 footer 리듬 수정.
+- Core의 기존 Solyi line icon 원본을 typed icons export로 공유하고 페이지 이동/닫기에 고정 SVG box 사용. 버튼 반경 6px과 compact row/고정 열/말줄임은 유지.
+- 패키지 Field의 label/help/error 간격, Dialog 본문 간격, 모바일 caption/상세 행동, 로딩/빈 결과의 여백을 함께 정리. Core/Vue UI local pack 0.1.1.
+- 시각 검토의 실제 캡처 범위와 제한은 VISUAL-REVIEW.md 및 QA.md에 분리 기록. 다른 앱 연결/레지스트리 게시 없음.
+
 ## 0.3.0 — 2026-10-21
 
 - private Core/Vue UI 0.1.0 local pack, Button/Field/Dialog/Table 타입·스타일 exports와 실제 tarball 소비 demo/독립 소비 검증. Vue/Vuetify external.

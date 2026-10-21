@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.3.0 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.3.1 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -141,9 +141,9 @@ Component → Progress bar·circle은 기존 sol-progress를 재사용하고 수
 
 버튼 반경은 v0.2.2의 86b5f7b6e412955bd74baa75e50322b89c67945e를 대조해 radius-button=6px로 복원했습니다. 입력10px·카드20px·패널28px와 높이/기능은 유지합니다. v0.2.3의 버튼10px 권고는 이 요청으로 대체됩니다. Time picker UI는 v0.2.4 그대로이며 팝오버는 제안만입니다. 누락 감사의 분류/우선순위와 실제 검증 한계는 QA.md 최신 절을 확인하세요. 새 감사 항목은 자동 구현하지 않았습니다.
 
-## 패키지화와 승인된 UX (0.3.0)
+## 패키지화와 승인된 UX (0.3.1)
 
-@solyi/core·@solyi/vue-ui 0.1.0은 private 로컬 pack 초안입니다. 공개 starter는 실제 tarball에서 Button/Field/Dialog/Table을 import하며 별도 package-consumer가 타입·설치·빌드를 검증합니다. npm/GitHub Packages 미게시, 아페·개인 홈페이지 미연결입니다. HTML/CSS 참고 데모 전체가 Vue로 전환된 것은 아닙니다.
+@solyi/core·@solyi/vue-ui 0.1.1은 private 로컬 pack 초안입니다. 공개 starter는 실제 tarball에서 Button/Field/Dialog/Table을 import하며 별도 package-consumer가 타입·설치·빌드를 검증합니다. npm/GitHub Packages 미게시, 아페·개인 홈페이지 미연결입니다. HTML/CSS 참고 데모 전체가 Vue로 전환된 것은 아닙니다.
 
 오류 요약, 가상404, 일괄 작업 부분 실패/실패만 재시도, 비동기 자동완성의 지연/경합/오류/회복을 추가했습니다. Time은 HH:mm 직접 입력과 작은 시/분 패널입니다. 날짜·파일·자동완성·차트·트리는 연속 본문의 개별 목차로 바로 이동합니다. 버튼6px와 이전 표·말줄임·브랜드는 유지합니다.
 

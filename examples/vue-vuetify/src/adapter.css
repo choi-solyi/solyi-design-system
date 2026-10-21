@@ -10,6 +10,10 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 .starter-eyebrow {letter-spacing:.08em;}
 .starter-link {color:var(--sol-color-accent);text-underline-offset:3px;}
 .starter-card {background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);padding:var(--sol-space-6);margin-block:var(--sol-space-4);}
+.starter-card form {display:grid;gap:var(--sol-space-4);}
+.starter-card>.starter-hint {margin:0 0 var(--sol-space-4);}
+.starter-card>.starter-settings {margin-bottom:var(--sol-space-4);}
+.starter-card>.sol-ui-table {margin-bottom:var(--sol-space-2);}
 .starter-card dl>div {display:grid;grid-template-columns:80px minmax(0,1fr);gap:var(--sol-space-3);padding-block:var(--sol-space-2);font-size:var(--sol-text-sm);}
 .starter-card dd {margin:0;}
 .starter-actions,.starter-settings {display:flex;gap:var(--sol-space-3);flex-wrap:wrap;align-items:start;}
@@ -17,7 +21,8 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 .starter-settings>.sol-ui-field {flex:1 1 240px;}
 .starter-settings select {appearance:auto;min-height:var(--sol-control-height);background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);padding:var(--sol-space-2) var(--sol-space-3);border-radius:var(--sol-radius-control);}
 .starter-label {display:block;font-size:var(--sol-text-sm);font-weight:600;margin-bottom:var(--sol-space-2);}
-.starter-result {color:var(--sol-color-success);font-size:var(--sol-text-sm);margin-top:var(--sol-space-4);overflow-wrap:anywhere;}
+.starter-result {color:var(--sol-color-success);font-size:var(--sol-text-sm);margin:0;overflow-wrap:anywhere;}
+.starter-result:empty {display:none;}
 .starter-error {color:var(--sol-color-danger);font-size:var(--sol-text-sm);margin-block:var(--sol-space-2) var(--sol-space-4);}
 .starter-dialog {margin:0;max-height:calc(100dvh - 48px);overflow:auto;overflow-wrap:anywhere;}
 :focus-visible,.starter-field:has(input:focus-visible) .v-field {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}

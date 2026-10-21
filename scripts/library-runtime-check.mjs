@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {JSDOM,VirtualConsole} from 'jsdom';
+import {solIconPaths} from '../site/icons.js';
 const root=new URL('../',import.meta.url),consumer=new URL('examples/package-consumer/',root);
 const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
 const dom=new JSDOM('<html><body><div id="app"></div></body></html>',{url:'https://example.test/',pretendToBeVisual:true,virtualConsole:vc}),w=dom.window,d=w.document;
@@ -27,6 +28,8 @@ const app=createApp({setup(){return()=>h(VApp,{},()=>h('main',[
  h(SolTable,{caption:'패키지 검사 자료',columns,rows,selectable:true,selected:selection.value,'onUpdate:selected':value=>selection.value=value,sort:sort.value,'onUpdate:sort':value=>sort.value=value,page:page.value,pageCount:3,'onUpdate:page':value=>page.value=value,loading:state.value==='loading',error:state.value==='error'?'가상 오류':'',onRetry:()=>retries++})
  ]));}});app.use(createVuetify());app.mount('#app');await nextTick();
 const $=s=>d.querySelector(s),click=s=>$(s).click(),pause=()=>new Promise(r=>setTimeout(r,50));
+for(const button of d.querySelectorAll('.sol-pagination .sol-ui-page-icon')){const svg=button.querySelector('svg');assert.ok(svg);assert.equal(svg.getAttribute('aria-hidden'),'true');assert.equal(svg.getAttribute('viewBox'),'0 0 24 24');assert.equal(svg.querySelector('path').getAttribute('d'),solIconPaths.chevron);assert.equal(button.querySelector('.v-btn__content').textContent,'');}
+assert.equal($('.sol-ui-table-mobile-caption').textContent,$('.sol-ui-table caption').textContent);
 click('#package-button');assert.equal(clicks,1);loading.value=true;await nextTick();$('#package-button').focus();click('#package-button');assert.equal(clicks,1);assert.equal($('#package-button').getAttribute('aria-busy'),'true');assert.equal(d.activeElement.id,'package-button');loading.value=false;await nextTick();
 const field=$('#package-field');assert.equal(d.querySelector('label[for=package-field]').textContent,'가상 제목');field.value='가';field.dispatchEvent(new w.Event('input',{bubbles:true}));await nextTick();assert.equal(text.value,'가');assert.equal(field.getAttribute('aria-invalid'),'true');assert.ok(field.getAttribute('aria-describedby').includes('package-field-error'));field.value='가상';field.dispatchEvent(new w.Event('input',{bubbles:true}));await nextTick();assert.equal(field.getAttribute('aria-invalid'),'false');
 const select=$('.sol-ui-table-desktop tbody input');select.checked=true;select.dispatchEvent(new w.Event('change',{bubbles:true}));await nextTick();assert.deepEqual(selection.value,['a']);$('.sol-sort-button').click();await nextTick();assert.deepEqual(sort.value,{key:'name',direction:'ascending'});$('.sol-pagination [aria-label="다음 페이지"]').click();await nextTick();await nextTick();assert.equal(page.value,2);assert.equal(d.activeElement.getAttribute('aria-current'),'page');

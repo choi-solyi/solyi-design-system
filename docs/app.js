@@ -33,7 +33,7 @@ function codeSample(label, code) {
 }
 const contract = (states, keys, mapping) => `<dl class="contract"><dt>상태</dt><dd>${states}</dd><dt>Keyboard</dt><dd>${keys}</dd><dt>Tokens</dt><dd>${mapping}</dd></dl>`;
 const demo = (name, content, note = 'LIVE · 가상 데이터') => `<div class="demo"><div class="demo-header"><span>${name}</span><span>${note}</span></div><div class="demo-stage">${content}</div></div>`;
-const footer = () => `<footer class="site-footer"><p>Solyi Design System · v0.3.0 <span aria-hidden="true">/</span> 2026.10</p><p><a href="#theme/scope">범위와 검증</a> · <a href="https://github.com/choi-solyi/solyi-design-system">Source ↗</a></p></footer>`;
+const footer = () => `<footer class="site-footer"><p>Solyi Design System · v0.3.1 <span aria-hidden="true">/</span> 2026.10</p><p><a href="#theme/scope">범위와 검증</a> · <a href="https://github.com/choi-solyi/solyi-design-system">Source ↗</a></p></footer>`;
 
 function overview() {
   return `<div class="overview-hero"><div class="page-intro"><span class="eyebrow">A PERSONAL DESIGN FOUNDATION</span><h1 class="intro-title" tabindex="-1">같은 결,<br><span class="accent">다른 표정.</span></h1><p>솔의 여러 앱이 함께 쓰는 작은 기준.<br>읽기 좋은 위계와 적당한 밀도를 바탕으로,<br>각 앱에 어울리는 색과 성격을 더합니다.</p><div class="button-row"><a class="sol-button primary" href="#style">Style 둘러보기 <span aria-hidden="true">→</span></a><a class="sol-button" href="#component">예시 사용하기</a></div></div><div>${renderGoalSpecimen()}<div class="hero-caption"><span>역할 기반 색</span><span>또렷한 위계</span><span>4px 간격 리듬</span></div></div></div>

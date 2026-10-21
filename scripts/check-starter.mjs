@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const base=new URL('../examples/vue-vuetify/',import.meta.url);
 const pkg=JSON.parse(await readFile(new URL('package.json',base),'utf8')),lock=JSON.parse(await readFile(new URL('package-lock.json',base),'utf8'));
-assert.deepEqual(pkg.dependencies,{'@solyi/core':'file:../../artifacts/solyi-core-0.1.0.tgz','@solyi/vue-ui':'file:../../artifacts/solyi-vue-ui-0.1.0.tgz',vue:'3.5.44',vuetify:'4.3.0'});
+const packageVersions=Object.fromEntries(await Promise.all(['core','vue-ui'].map(async name=>[name,JSON.parse(await readFile(new URL('../../packages/'+name+'/package.json',base),'utf8')).version])));
+assert.deepEqual(pkg.dependencies,{'@solyi/core':`file:../../artifacts/solyi-core-${packageVersions.core}.tgz`,'@solyi/vue-ui':`file:../../artifacts/solyi-vue-ui-${packageVersions['vue-ui']}.tgz`,vue:'3.5.44',vuetify:'4.3.0'});
 assert.deepEqual(pkg.devDependencies,{vite:'8.3.4','@vitejs/plugin-vue':'6.0.10'});
 for(const [name,entry] of Object.entries(lock.packages)){if(!name)continue;assert.ok(name.startsWith('node_modules/'),`No local project linkage ${name}`);assert.ok(!entry.link);if(entry.resolved){assert.ok(name.startsWith('node_modules/@solyi/')?entry.resolved.startsWith('file:')&&entry.resolved.endsWith('.tgz'):entry.resolved.startsWith('https://registry.npmjs.org/'),`Official registry or own tarball ${name}`);assert.match(entry.integrity,/^sha512-/,`Integrity ${name}`);}assert.ok(entry.license,`License recorded ${name}`);}
 for(const name of ['tokens.css','tokens.json'])assert.deepEqual(await readFile(new URL(`node_modules/@solyi/core/dist/${name}`,base)),await readFile(new URL(`../docs/${name}`,import.meta.url)),`Installed Core shares generated ${name}`);

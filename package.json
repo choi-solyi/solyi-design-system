@@ -1,6 +1,6 @@
 {
   "name": "solyi-design-system",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "description": "Solyi's independent, framework-neutral design system draft.",
