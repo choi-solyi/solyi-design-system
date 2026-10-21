@@ -24,10 +24,9 @@ kbd {border: 1px solid var(--sol-color-control-border); border-radius: 4px; padd
 .skip-link {position: fixed; top: -100px; left: 12px; z-index: 100; background: var(--sol-color-text); color: var(--sol-color-surface); padding: 12px 18px; border-radius: 6px;}
 .skip-link:focus {top: 12px;}
 .topbar {min-height: 76px; padding: 12px 32px; border-bottom: 1px solid var(--sol-color-border); display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--sol-color-canvas); position: sticky; top: 0; z-index: 20;}
-.brand {display: flex; gap: 12px; align-items: center; text-decoration: none; color: var(--sol-color-text); font-weight: 700; font-size: 18px; letter-spacing: -.03em;}
+.brand {min-height: var(--sol-touch-target-min); display: flex; gap: 12px; align-items: center; text-decoration: none; color: var(--sol-color-text); font-weight: 700; font-size: 18px; letter-spacing: -.03em;}
 .brand-detail {font-weight: 450; margin-left: 5px; color: var(--sol-color-muted); font-size: 15px;}
-.brand-symbol {font-family: Georgia,serif; font-style: italic; font-size: 36px; font-weight: 600; letter-spacing: -.14em; color: var(--sol-color-accent); width: 36px; line-height: 1;}
-.brand-symbol span {color: var(--sol-color-text);}
+.brand-mark {display: block; width: 32px; height: 32px; flex: 0 0 32px; object-fit: contain;}
 .header-actions {display: flex; gap: 14px; align-items: center; font-size: var(--sol-text-sm); flex-wrap: wrap;}
 .version {font-family: var(--sol-font-mono); color: var(--sol-color-muted); font-size: var(--sol-text-xs);}
 .version span {margin-left: 5px; color: var(--sol-color-accent);}
@@ -218,5 +217,5 @@ dialog > p {font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
   .type-sample {grid-template-columns: 1fr; gap: 8px;}.demo-stage {padding: 20px 16px;}.demo-header {padding: 12px 16px;}.state-grid {gap: 20px 14px;}.state-grid .sol-button {padding-inline: 10px;}
   .theme-card {grid-template-columns: 1fr;}.theme-card-body {padding: 16px;}.theme-card .theme-preview {padding: 16px;}.contract {grid-template-columns: 70px minmax(0,1fr);}.callout {padding: 20px; gap: 16px;}.detail-list div {grid-template-columns: 72px minmax(0,1fr);}
 }
-@media (max-width: 359px) {.topbar {gap: 8px;}.version {display: none;}.brand-detail {font-size: 10px;}.brand-symbol {width: 26px; font-size: 30px;}.state-grid {grid-template-columns: 1fr;}.grid-4 {grid-template-columns: 1fr;}.header-actions .sol-button {font-size: 12px;}.intro-title {font-size: 2rem;}}
+@media (max-width: 359px) {.topbar {gap: 8px;}.version {display: none;}.brand-detail {font-size: 10px;}.brand-mark {width: 28px; height: 28px; flex-basis: 28px;}.state-grid {grid-template-columns: 1fr;}.grid-4 {grid-template-columns: 1fr;}.header-actions .sol-button {font-size: 12px;}.intro-title {font-size: 2rem;}}
 @media (horizontal-viewport-segments: 2) {.app-layout {padding-inline: env(safe-area-inset-left,0px) env(safe-area-inset-right,0px);}}

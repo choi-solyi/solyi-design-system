@@ -26,9 +26,9 @@ for(const [name,theme] of Object.entries(tokens.themes)) {
     }
   }
 }
-const expected=['.nojekyll','app.js','extended.js','motion.js','calendar.js','palette.js','components.css','docs.css','favicon.svg','index.html','preferences.js','token-data.js','tokens.css','tokens.json'];
+const expected=['.nojekyll','app.js','extended.js','motion.js','calendar.js','palette.js','components.css','docs.css','favicon.ico','brand-sparkle.svg','index.html','preferences.js','token-data.js','tokens.css','tokens.json'];
 assert.deepEqual((await readdir(path.join(root,'docs'))).sort(),expected.sort(),'Only intended public site files');
-for(const name of ['index.html','app.js','extended.js','motion.js','calendar.js','palette.js','components.css','docs.css','preferences.js','favicon.svg']) assert.equal(await readFile(path.join(root,'site',name),'utf8'),await readFile(path.join(root,'docs',name),'utf8'),`${name} build is current`);
+for(const name of ['index.html','app.js','extended.js','motion.js','calendar.js','palette.js','components.css','docs.css','preferences.js','favicon.ico','brand-sparkle.svg']) assert.deepEqual(await readFile(path.join(root,'site',name)),await readFile(path.join(root,'docs',name)),`${name} build is current`);
 assert.deepEqual(JSON.parse(await readFile(path.join(root,'docs/tokens.json'),'utf8')),tokens);
 const source=(await Promise.all(['index.html','app.js','extended.js','motion.js','calendar.js','palette.js','docs.css','components.css'].map(name=>readFile(path.join(root,'docs',name),'utf8')))).join('\n');
 assert.ok(!/\binfinite\b/.test(source),'No unbounded CSS animation');
@@ -40,3 +40,5 @@ for(const [name,value] of Object.entries(tokens.base)) assert.ok(css.includes(`-
 console.log(`PASS: ${checked} contrast pairs across 3 themes × 2 modes.`);
 console.log(`Tightest relative margin: ${minimum.theme}/${minimum.mode} ${minimum.pair} ${minimum.ratio.toFixed(3)}:1 (threshold ${minimum.threshold}:1).`);
 console.log('PASS: public allowlist, current generated files, shared token exports, local links, no external data calls or known credential pattern.');
+
+await import('./check-brand.mjs');

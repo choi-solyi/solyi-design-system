@@ -1,0 +1,27 @@
+{
+  "sourceRepository": "https://github.com/choi-solyi/solyi-brand-assets",
+  "sourceRevision": "16594ecf68e40df33bbae0773083abca98176aa5",
+  "sourceGallery": "https://choi-solyi.github.io/solyi-brand-assets/",
+  "checkedAt": "2026-10-21",
+  "assets": [
+    {
+      "file": "brand-sparkle.svg",
+      "originalPath": "01-Production-Assets/00-Core/sparkle--master.svg",
+      "originalUrl": "https://choi-solyi.github.io/solyi-brand-assets/01-Production-Assets/00-Core/sparkle--master.svg",
+      "gitBlob": "2295fb417f611b0601af5ddc8aef0eab2f8b100a",
+      "bytes": 235,
+      "sha256": "9b3ff97d3170191c5ff3f4554df3e38f0b02273376a9eaa8ca83e80e40adade0",
+      "use": "Decorative official symbol beside the accessible site name; unchanged color and aspect ratio"
+    },
+    {
+      "file": "favicon.ico",
+      "originalPath": "01-Production-Assets/00-Core/favicon.ico",
+      "originalUrl": "https://choi-solyi.github.io/solyi-brand-assets/01-Production-Assets/00-Core/favicon.ico",
+      "gitBlob": "fcdeb10f1c3163a42895bf62833e2500786edfc0",
+      "bytes": 13424,
+      "sha256": "8c96ed421bc0bafe7ebc00f4391bbb2edcd24624c85aa0ffc7500a4860b377d2",
+      "use": "Browser favicon; original ICO with six embedded sizes"
+    }
+  ],
+  "conditions": "Original bytes and embedded notices are preserved. No repository-wide LICENSE file or explicit gallery license was found at the checked source revision. These assets are used for the owner's design-system site at the user's request; this project does not grant additional rights to the brand assets."
+}
