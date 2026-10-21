@@ -36,7 +36,7 @@ site/components.css      재사용 가능한 프레임워크 독립 컴포넌트
 site/docs.css            이 문서 사이트만의 셸·레이아웃
 site/app.js              문서와 가상 상호작용
 site/extended.js         추가 컴포넌트·로컬 입력·자료 목록의 가상 동작
-site/calendar.js         한국어 custom 달력·date-only 기간 검증
+site/calendar.js         단일/기간 통합 DatePicker·한국어 달력·date-only 검증
 site/motion.js           목표 상태·유한 모션·줄이기/정리 정책
 site/palette.js          의미색 UI 비교·단일 스낵바
 scripts/build.mjs        허용된 파일만 docs/에 복사 + CSS/JS 토큰 생성
@@ -70,9 +70,21 @@ QA.md                    완료한 검증과 미검증 범위
 - 알림의 보조 동작은 `sol-button inline-action`을 사용합니다. 시각 크기는 13px 텍스트이고 데스크톱 36px·좁은 화면/터치 44px 조작 영역과 포커스를 유지합니다. 일반 버튼도 button-height 토큰을 사용하고, 필드 옆 행동은 control-height로 맞춥니다.
 - `extended.js`는 참고용 가상 데이터와 DOM 연결입니다. `renderComponentExamples(helpers)` 또는 `renderPatternExamples(helpers)`로 문서 예시를 만들고 `mountExamples(root, announce)`로 연결합니다. 반환된 정리 함수를 화면 전환 전에 호출해 리스너·로딩 타이머를 해제합니다. 제품에서는 의미 구조·토큰·상태 계약을 앱의 상태 관리에 옮깁니다.
 - 표 선택은 자료 ID로 유지하고, 모두 선택은 현재 페이지에만 적용합니다. 필터·정렬 변경은 첫 페이지로 이동하며 결과 밖 선택 수를 보여 줍니다. 모바일 카드도 같은 자료에서 렌더링합니다.
-- 기간은 `YYYY-MM-DD`의 실제 날짜·윤년·순서를 검증해 시간대에 따라 하루 바뀌지 않게 합니다. 네이티브 날짜 팝업의 스타일 한계 때문에 이 예시는 한국어 custom 달력을 제공합니다. 직접 입력도 유지하며 native dialog 안의 하루/주/월/연도 탐색, 한 개의 roving Tab stop, Tab 경계 순환, Escape/선택 후 실행 버튼 복귀를 연결합니다. `calendar.js`의 렌더와 mount 함수를 함께 사용하고 정리 시 AbortSignal을 중단합니다. 자동완성은 조합 중 키 이벤트를 선택으로 해석하지 않습니다.
-- 파일은 확장자·크기·개수·중복을 검사하고 메모리의 파일명/크기만 표시합니다. 파일 내용을 읽거나 실행하지 않으며 외부 전송·자동 저장하지 않습니다. 이 데모의 확장자 검사는 서버의 보안 검증을 대신하지 않습니다.
+- 기간은 `YYYY-MM-DD`의 실제 날짜·윤년·순서를 검증해 시간대에 따라 하루 바뀌지 않게 합니다. 네이티브 날짜 팝업의 스타일 한계 때문에 이 예시는 한국어 custom 달력을 제공합니다. 직접 입력도 유지하며 native dialog 안의 하루/주/월/연도 탐색, 한 개의 roving Tab stop, Tab 경계 순환, Escape/선택 후 실행 버튼 복귀를 연결합니다. `createDatePicker(container, options)`로 연결하며 mode를 single 또는 range로 설정합니다. 한 입력창에서 단일 날짜 또는 기간을 표시합니다. 반환된 destroy() 또는 options.signal로 해제합니다. 자동완성은 조합 중 키 이벤트를 선택으로 해석하지 않습니다.
+- 파일 선택 버튼과 드롭 영역은 같은 확장자·크기·개수·중복 검사와 목록을 사용합니다. 각 파일의 확장자·알려진 MIME 이름·크기를 표시하고 모르는 MIME은 추측하지 않습니다. 데모가 열린 동안 영역 밖 파일 드롭은 이동을 취소하며 텍스트·링크 드래그는 가로채지 않습니다. 파일 내용을 읽거나 실행하지 않으며 외부 전송·자동 저장하지 않습니다. 이 데모의 확장자 검사는 서버의 보안 검증을 대신하지 않습니다.
 - 툴팁에는 필수 안내나 조작을 넣지 않습니다. 비모달 팝오버는 Tab을 가두지 않고, 모달 패널은 native dialog를 사용합니다. 토스트는 짧은 완료에만 쓰고 오류는 지속 알림으로 남깁니다.
+
+## 통합 날짜 설정과 값 계약
+
+`createDatePicker(container, { mode: 'single' | 'range', id, label, required, value, onChange })`를 사용합니다. mode 선택창은 문서의 개발 설정 시연이며 실제 앱에는 필요하지 않습니다.
+
+`single`의 값은 YYYY-MM-DD 문자열 또는 null, `range`는 완성된 { start, end } 또는 null입니다. 기간은 한 입력에 `YYYY-MM-DD ~ YYYY-MM-DD`로 표시합니다. 첫 날짜만 선택한 상태는 입력·완료값·change를 바꾸지 않으며 두 번째 선택에서만 확정합니다. 역순 클릭은 두 날짜를 정렬하고 같은 날 두 번 선택도 허용합니다. Escape/닫기는 임시값을 취소합니다.
+
+유효한 직접 입력은 Enter/blur에서 반영합니다. 잘못된 날짜·미완성/역순 입력은 보존하고 Enter 또는 입력 확인에서 오류를 안내합니다. 오류가 있는 입력에서 다음 버튼을 누를 때 blur의 새 오류 행 때문에 클릭이 취소되지 않도록 처리했습니다. 제출 전 `picker.validate()`가 true인지 확인한 후 `getValue()`를 사용하세요. 잘못된 입력은 마지막 완료값을 덮어쓰지 않습니다.
+
+`onChange({ mode, value, reason })`과 컨테이너의 `sol-date-change` 이벤트는 같은 완료값을 알립니다. 같은 값은 중복 출력하지 않으며 초기 값은 change가 아닙니다. `clear()`는 null, `setMode()`는 이전 값/임시값/오류를 비우고 새 모드의 null을 알립니다. `setValue(value, { emit: true })`로 프로그램 변경 알림을 선택할 수 있습니다. 같은 화면에서는 id를 고유하게 지정하세요. 문서에 복사 가능한 전체 예시가 있습니다.
+
+파일 선택의 내부 버튼은 button-height(데스크톱 36px, 좁은 화면/터치 44px)이며 입력 전체는 control-height(40/44px)를 유지합니다. 로컬 선택·드롭은 서버 전송이나 자동 저장을 하지 않습니다.
 
 ## 모션과 컬러 적용
 
