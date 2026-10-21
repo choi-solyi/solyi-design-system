@@ -1,0 +1,27 @@
+/* Truncated collection titles only. Existing links/buttons keep their own click actions. */
+let overflowInstance=0;
+export function mountOverflowText(root){const id='sol-full-text-'+(++overflowInstance),ctl=new AbortController(),signal=ctl.signal,entries=new Map();let frame=0,timer=0,active=null,hot=null,hoveringTip=false,suppressed=null,opener=null,destroyed=false;
+ const tip=document.createElement('div');tip.id=id+'-hint';tip.className='sol-tooltip sol-overflow-tooltip';tip.role='tooltip';tip.hidden=true;
+ const panel=document.createElement('dialog');panel.className='sol-dialog sol-full-text-dialog';panel.setAttribute('aria-labelledby',id+'-title');panel.innerHTML='<div class="row-between"><h2 id="'+id+'-title">전체 제목</h2><button type="button" class="sol-button inline-action" autofocus>닫기 ×</button></div><p class="sol-full-text-content"></p>';document.body.append(tip,panel);const close=panel.querySelector('button');
+ const on=(node,type,fn,options={})=>node.addEventListener(type,fn,{...options,signal});
+ function dismiss(){clearTimeout(timer);if(active){const ids=(active.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==tip.id);if(ids.length)active.setAttribute('aria-describedby',ids.join(' '));else active.removeAttribute('aria-describedby');}tip.hidden=true;active=null;}
+ function show(entry){if(suppressed===entry.trigger||panel.open)return;dismiss();active=entry.trigger;tip.textContent=entry.node.textContent;tip.hidden=false;const ids=new Set((active.getAttribute('aria-describedby')||'').split(' ').filter(Boolean));ids.add(tip.id);active.setAttribute('aria-describedby',[...ids].join(' '));const r=active.getBoundingClientRect(),b=tip.getBoundingClientRect();tip.style.left=Math.max(8,Math.min(r.left,innerWidth-b.width-8))+'px';tip.style.top=Math.max(8,r.bottom+b.height+8<innerHeight?r.bottom+6:r.top-b.height-6)+'px';}
+ function laterDismiss(){clearTimeout(timer);timer=setTimeout(()=>{if(active&&hot!==active&&!hoveringTip&&!active.contains(document.activeElement))dismiss();},100);}
+ function refresh(){frame=0;const focused=entryFor(document.activeElement);for(const[node,entry]of entries)if(!root.contains(node)){if(active===entry.trigger)dismiss();entries.delete(node);}
+  for(const node of root.querySelectorAll('.sol-record-title,.sol-ellipsis')){if(entries.has(node)||node.scrollWidth<=node.clientWidth+1||!node.getClientRects().length)continue;let trigger=node.closest('a,button'),created=false;
+   if(!trigger){trigger=document.createElement('button');trigger.type='button';trigger.className='sol-title-preview';trigger.setAttribute('aria-haspopup','dialog');trigger.setAttribute('aria-label',node.textContent+' · 전체 제목 보기');node.before(trigger);trigger.append(node);created=true;}
+   entries.set(node,{node,trigger,created,key:node.closest('[data-row-id]')?.dataset.rowId||node.textContent});
+  }
+  if(!panel.open&&focused&&!focused.trigger.getClientRects().length){const next=[...entries.values()].find(e=>e.key===focused.key&&e.trigger.getClientRects().length);if(next){suppressed=next.trigger;next.trigger.focus({preventScroll:true});}}
+ }
+ function schedule(){if(!frame)frame=requestAnimationFrame(refresh);}
+ function entryFor(target){for(const entry of entries.values())if(entry.trigger===target||entry.trigger.contains(target))return entry;return null;}
+ on(root,'pointerover',e=>{const entry=entryFor(e.target);if(entry&&!entry.trigger.contains(e.relatedTarget)){hot=entry.trigger;show(entry);}});on(root,'pointerout',e=>{const entry=entryFor(e.target);if(entry&&!entry.trigger.contains(e.relatedTarget)){hot=null;if(suppressed===entry.trigger)suppressed=null;laterDismiss();}});
+ on(root,'focusin',e=>{const entry=entryFor(e.target);if(entry)show(entry);});on(root,'focusout',e=>{const entry=entryFor(e.target);if(entry){if(suppressed===entry.trigger)suppressed=null;laterDismiss();}});
+ on(tip,'pointerenter',()=>{hoveringTip=true;clearTimeout(timer);});on(tip,'pointerleave',()=>{hoveringTip=false;laterDismiss();});
+ on(root,'click',e=>{const entry=entryFor(e.target);if(!entry?.created)return;opener=entry.trigger;suppressed=opener;dismiss();panel.querySelector('p').textContent=entry.node.textContent;panel.showModal();close.focus();});
+ on(close,'click',()=>panel.close());on(panel,'close',()=>{if(!destroyed){refresh();const old=[...entries.values()].find(e=>e.trigger===opener);const target=opener?.isConnected&&opener.getClientRects().length?opener:[...entries.values()].find(e=>e.key===old?.key&&e.trigger.getClientRects().length)?.trigger||root.querySelector('h1,button,a,[tabindex]');if(target){suppressed=target;target.focus({preventScroll:true});}}});
+ on(document,'keydown',e=>{if(e.key==='Escape'&&!e.isComposing&&!tip.hidden){suppressed=active;dismiss();}});on(document,'scroll',e=>{if(e.target===tip)return;const entry=active&&entryFor(active);if(entry&&active.contains(document.activeElement))show(entry);else dismiss();},{capture:true});on(window,'resize',()=>{dismiss();schedule();});
+ const observer=new MutationObserver(schedule);observer.observe(root,{childList:true,subtree:true,characterData:true});refresh();
+ const cleanup=()=>{destroyed=true;ctl.abort();observer.disconnect();clearTimeout(timer);if(frame)cancelAnimationFrame(frame);dismiss();if(panel.open)panel.close();panel.remove();tip.remove();for(const entry of entries.values())if(entry.created&&entry.trigger.isConnected)entry.trigger.replaceWith(entry.node);entries.clear();};cleanup.refresh=refresh;return cleanup;
+}

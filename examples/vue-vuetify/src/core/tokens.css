@@ -57,6 +57,7 @@
   --sol-table-status-width: 6rem;
   --sol-table-date-width: 8rem;
   --sol-table-action-width: 5.5rem;
+  --sol-radius-button: var(--sol-radius-sm);
   --sol-content-gap: 1rem;
   --sol-row-padding: 1rem;
   --sol-table-cell-padding-y: 0.375rem;

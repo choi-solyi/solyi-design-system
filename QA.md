@@ -1,8 +1,37 @@
-# v0.2.4 검증 기록
+# v0.2.5 검증 기록
 
 검증일: 2026-10-21 UTC. 현재 기록은 6단계 확장과 독립 starter 기준이며 이전 검수 근거도 구분해 보존합니다. 기존 aion2page·solyi.kr는 변경하지 않았습니다.
 
-## 최신: 입력 수정과 컬렉션 재설계 (0.2.4)
+## 최신: 말줄임·Progress·버튼 복원 (0.2.5)
+
+- v0.2.2의86b5f7b6e412955bd74baa75e50322b89c67945e 원본 CSS/JSON을 직접 대조했습니다. 기본 sol-button(링크형 포함), 메뉴 항목, 파일 선택, 달력 날짜, 문서 접기/모바일 메뉴, starter v-btn은6px였습니다. radius-button=var(--sol-radius-sm) 역할로 분리해 복원합니다. 새 페이지·Progress·전체 제목 버튼도 같은6px입니다. 입력10·카드20·패널28·일반 높이36/40·모바일44와 나머지 기능은 유지합니다. 순수 sidebar 링크의 반경은 버튼 복원 범위에 포함하지 않았고 원형 스위치/로딩 표식은 원래 규칙을 유지합니다.
+- 제목만 nowrap/ellipsis를 적용합니다. 본문·Textarea는 제외합니다. 잘린 비대화형 제목만 native button으로 감싸 hover/focus 설명과 Enter/터치 전체 제목 Dialog를 제공합니다. 기존 링크·버튼 안의 제목은 클릭 행동과 원래 설명을 유지합니다. Tooltip은 title 속성이 아니며 Escape로 닫고 포인터가 tooltip에 머무르면 유지합니다. 전체 Dialog는 native Escape/초점 반환을 사용합니다.
+- 실제 사용자 PC Chrome1643px/767px·세 테마×두 모드에서 정상/긴 제목 전후 열 너비·행 높이 변화0px, 행약56.63px를 확인했습니다. 333px·여섯 조합의 카드 높이는 정상/긴 제목 모두약141.02px로 변화0px·가로 넘침 없음입니다. 처음 모바일 Grid item의 auto 최소 너비가 긴 nowrap 내용만큼 늘어나던 문제를 발견해 minmax(0,1fr)/min-width:0로 수정하고 실패한 측정과 구분해 재검수했습니다.
+- 실제 Tab→전체 Tooltip/aria-describedby, Escape 닫기, Enter→전체 제목 Dialog/닫기 초기 초점/Escape 반환을 확인했습니다. 333px 클릭 전체 보기와 화면 안의 Dialog, 모바일에서 열고 데스크톱으로 전환 후 닫으면 보이는 테이블 제목으로 초점 복귀도 확인했습니다. 원래 상세 버튼은 별도 Panel과 전체 제목을 계속 열었습니다. 물리 포인터 hover/화면 낭독기 전체 검증과 이벤트/초점 검수를 구분합니다.
+- 기존 goal/steps의 sol-progress를 재사용해 Component Progress bar·circle 메뉴를 추가했습니다. native 선형과 SVG 원형의 min0/max100/now를 동기화합니다. 값 없음은 now와 퍼센트 글자를 제거하고 정적 띠/호와 처리 중 문구를 씁니다. 수동 범위/10% 증가·완료·오류 마지막 값·0% 재시작/재시도입니다. 실제 작업/타이머에 의한 가짜 진행은 없습니다.
+- 실제18개 테마·폭 조합에서 바 value 속성과 원형 now35 동기화, unknown의 양쪽 now 없음/처리 중 글자, 가로 넘침 없음, 버튼6px/선택창10px를 확인했습니다. End로100% 완료해도 범위 초점이 유지되고,0%는 호를 숨겨 가짜 점이 남지 않습니다. 단계 증가가 완료로 비활성되거나 재시도 버튼이 사라지면 재시작 버튼으로 초점을 옮깁니다. 오류·재시작은 DOM 회귀에도 포함합니다.
+- 연결 Chrome 시스템 reduced motion=true에서 circle transition0s를 확인했습니다. 기본 상태는 기존 motion 토큰의 짧은 값 전환만 사용하며 반복 회전/번쩍임은 없습니다. 기본 모션의 전체 시각 검수는 통과로 간주하지 않습니다. Progress fill/track의 추가 비텍스트 대비와 기존 버튼·텍스트 대비를 검사합니다.
+- Time picker markup/parser/handler는 직전0.2.4와 byte 문자열 대조로 동일함을 확인했습니다. 팝오버 재구현은 하지 않았습니다. 버튼 반경만 새 공통 규칙을 따릅니다.
+- 자동 검사는 tooltip/전체 Dialog/링크 보존·정리,Progress 값/unknown/완료·오류/재시작,버튼6·필드10·카드20·패널28의 분리,42개 섹션/호환 앵커와 기존 날짜·업로드·모달·표 회귀를 포함합니다. 스크린샷/물리 기기/화면 낭독기/400%/forced colors 등 이전 제한을 유지하며 게시 CI/공개29개 자산·화면은 최종 보고에 기록합니다.
+- 최종 build:core/sync:starter/Node22 starter build/문서 build/check/test를 완료했고 현재 토큰 대비186개·버튼 상태672개(630+42)·연속 앵커42개와 전체 DOM 회귀를 통과했습니다. 실제 파일 선택 내부 버튼은6px/약36px였고 starter는 버튼6·필드10·카드20·Dialog28px였습니다. 좁은 starter 실측370px에서 버튼약44px·넘침 없음·Escape 후 실행 버튼 복귀를 확인했습니다(설정 요청333px와 실제 CSS 폭370px를 구분). 이번 화면 캡처도 Page.captureScreenshot의5초 제한으로 실패했으며 시각 캡처 성공으로 기록하지 않습니다.
+
+### 범주별 누락 점검 — 새 항목은 구현하지 않음
+
+| 범주 | 확인한 실제 예시/소스 | 남은 핵심 검토 |
+|---|---|---|
+| 폼 | Field·Textarea·Number·Date/Time, 제출/오류/값 보존 (app.js·inputs.js·calendar.js·extras.js) | P1 다중 필드 오류를 모아 개별 필드로 이동하는 오류 요약 없음. 현재 단일 필드 오류와 초점은 있음 |
+| 선택 | 체크·라디오·스위치·다중 태그와 제한 (extended.js·inputs.js) | 기본 선택 부품 누락으로 판단하지 않음 |
+| 내비게이션 | 실제 Tabs, 행동 메뉴, 경로, 반응형 문서/앱 셸 (topics.js·inputs.js·layouts.js) | P2 앱용404 템플릿 없음. 잘못된 문서 경로는 Overview로 돌아감 |
+| 피드백/오버레이 | 지속 알림·Toast·Tooltip·Popover·Dialog·Panel·Undo (palette.js·workflow.js·extended.js) | 기본 부품은 있음. 전체 제목 Dialog도 이번 구현에 포함 |
+| 데이터 표시 | 고정 표/리스트·번호 탐색·Chart/표 대안·Tree·Avatar | P2 선택 후 일괄 작업의 영향 확인/부분 실패/Undo를 묶은 예시 부족. 선택 모델과 단일 삭제/Undo는 각각 있음 |
+| 업로드 | 로컬 파일/drop·형식/개수/크기 오류·개별 제거/재선택 | P2 실제 전송/취소/재시도 조합은 앱 연결 시 검토. 현재 메타데이터 전용이며 전송하지 않음 |
+| 로딩/상태 | Skeleton·결과 없음·권한 없음·오류/재시도·선형/원형 진행률 | P2 비동기 자동완성의 pending/error/retry 결합 예시 부족. 로컬 검색·키보드·IME·결과 없음은 구현 |
+| 접근성 | 키보드/초점/ARIA/대비/줄이기 예시와 회귀 | P1 화면 낭독기·forced colors·400% 실검증은 부족. 이는 부품 부재와 구분한 검증 공백 |
+| 발견성 | 날짜·파일·자동완성은 Pattern inputs, 차트·Tree는 한 섹션에 묶임 | P3 개별 앵커는 있으나 사이드바에는 묶인 항목. Progress는 이번에 전용 메뉴로 해결 |
+
+분류: **아예 없음** = 오류 요약/404; **결합 상태·동작 예시 부족** = 일괄 작업·비동기 자동완성·실제 업로드 처리; **있지만 개별 발견성이 약함** = 묶인 입력/Chart·Tree. 개인용 최소 시스템 관점의 우선순위이며 모든 후보의 추가를 권장하거나 자동 착수하지 않습니다. Time은 현재 직접 입력+상시 시/분 선택이며 단일 입력+작은 팝오버는 공간을 줄이지만 명명된 열기 버튼·Escape/초점 복귀·터치 폭·직접 입력의 검증 연결이 필요합니다. UI 변경은 보류합니다.
+
+## 입력 수정과 컬렉션 재설계 (0.2.4)
 
 - 원인 재현: 사용자 PC Chrome 공개0.2.3에서 빈 Textarea height/min-height40px(한 줄 sol-input 규칙이 앞의96px를 덮음), native time 입력, 차트 첫 열44px·행71.45px를 확인했습니다. 사용자 캡처의 픽셀 검증과 이 브라우저 측정을 구분합니다.
 - Textarea는 단일 높이 규칙에서 제외하고 CSS cascade 회귀로 최소3줄+패딩/auto height/세로 resize·overflow auto를 확인합니다. 실제 빈96px에서 scrollHeight=clientHeight94px,100자·50줄에서 내용 scrollHeight1193px와 값/카운터 유지,333px 긴120자에서 가로 넘침 없음을 확인했습니다. 도구의 Ctrl+End는 selectionEnd100을 확인했으나 scrollTop은0으로 남아 끝까지 스크롤된 시각 결과를 통과로 기록하지 않습니다. 실제 resize 드래그·물리 키보드·화면 낭독기 검증도 별도입니다.

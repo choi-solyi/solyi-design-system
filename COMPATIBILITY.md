@@ -11,3 +11,6 @@
 폐기/이행 규칙은 CHANGELOG.md를 따릅니다. 어댑터 업데이트 시 라이브러리 내부 선택자, 모달 포커스, 오류 메시지 연결, 각 테마의 실제 픽셀 대비를 다시 확인합니다.
 
 - 0.2.3 모서리: 앱에는 radius-control/card/panel/small/inset 역할을 권장합니다. 기초 스케일 radius-md는 12→10px, radius-lg는 16→20px로 변경했고 radius-xl 28px를 추가했습니다. 예전 스케일에 직접 의존한 앱은 변경 전 확인이 필요합니다. 문서·공유 CSS·독립 starter를 같은 Core로 갱신했으며 기존 운영 앱에는 적용하지 않았습니다.
+
+- 0.2.5: radius-button 역할은 v0.2.2 버튼의6px입니다. 기본/메뉴 항목/파일 선택/문서 메뉴 버튼/페이지·진행률·starter 버튼에 연결합니다. radius-control10px, card20px, panel28px는 유지합니다. 원형 스위치/로딩 표식과 순수 내비게이션 링크 규칙은 이번 버튼 복원 대상이 아닙니다.
+- 말줄임은 sol-record-title/sol-ellipsis 범위에만 적용합니다. overflow.js는 잘린 비대화형 제목에 전체 보기 버튼을 추가하고, 기존 링크·버튼의 클릭 행동을 바꾸지 않습니다. body/textarea에는 적용하지 않습니다. 프로그레스 unknown은 aria-valuenow와 퍼센트를 표시하지 않습니다.

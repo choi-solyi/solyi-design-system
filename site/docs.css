@@ -43,7 +43,7 @@ kbd {border: 1px solid var(--sol-color-control-border); border-radius: 4px; padd
 .sidebar {overflow-y:auto;}
 .doc-nav-row {display:flex;align-items:center;gap:0;}
 .sidebar > nav .doc-nav-row>a {flex:1;min-width:0;}
-.doc-section-toggle {flex:none;display:inline-grid;place-items:center;width:36px;min-height:44px;border:0;border-radius:var(--sol-radius-control);background:transparent;color:var(--sol-color-muted);font:inherit;cursor:pointer;}
+.doc-section-toggle {flex:none;display:inline-grid;place-items:center;width:36px;min-height:44px;border:0;border-radius:var(--sol-radius-button);background:transparent;color:var(--sol-color-muted);font:inherit;cursor:pointer;}
 .doc-section-toggle[aria-expanded="false"] svg {transform:rotate(-90deg);}
 .doc-section-toggle:hover {background:var(--sol-color-surface-alt);}
 .sidebar .section-subnav {display:grid;gap:2px;margin:4px 0 12px 20px;padding-left:10px;border-left:1px solid var(--sol-color-border);}
@@ -51,7 +51,7 @@ kbd {border: 1px solid var(--sol-color-control-border); border-radius: 4px; padd
 .sidebar .section-subnav>a {display:block;min-height:36px;align-content:center;padding:7px 8px;font-size:13px;line-height:1.45;font-weight:400;color:var(--sol-color-muted);border-radius:var(--sol-radius-small);}
 .sidebar .section-subnav>a[aria-current="location"] {background:var(--sol-color-accent-soft);color:var(--sol-color-accent);font-weight:650;}
 .document-alias-heading {font-size:var(--sol-text-lg);margin:var(--sol-space-4) 0 var(--sol-space-3);}
-.mobile-document-menu {display:block;width:100%;min-height:44px;text-align:start;font:inherit;font-size:var(--sol-text-sm);font-weight:600;color:var(--sol-color-text);background:transparent;border:0;border-radius:var(--sol-radius-control);padding:8px;cursor:pointer;}
+.mobile-document-menu {display:block;width:100%;min-height:44px;text-align:start;font:inherit;font-size:var(--sol-text-sm);font-weight:600;color:var(--sol-color-text);background:transparent;border:0;border-radius:var(--sol-radius-button);padding:8px;cursor:pointer;}
 @media(max-width:800px){.sidebar > nav#document-primary-nav{display:block;padding-block:8px;}.sidebar > nav>a{display:block;}.sidebar .section-subnav>a{min-height:44px;}.doc-nav-branch{width:100%;}.sidebar{max-height:55dvh;overflow-y:auto;}}
 .sidebar-foot {margin-top: auto; padding: 32px 12px 0; font-size: var(--sol-text-xs); color: var(--sol-color-muted);}
 .sidebar-foot p {margin: 10px 0; line-height: 1.8;}

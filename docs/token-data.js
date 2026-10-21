@@ -1,6 +1,6 @@
 // Generated from tokens.json.
 export default {
-  "version": "0.2.4",
+  "version": "0.2.5",
   "format": "Solyi plain JSON export (not a DTCG interchange format)",
   "description": "CSS role tokens shared by the documentation and its examples. Violet is a starting theme, not a permanent brand requirement.",
   "base": {
@@ -60,7 +60,8 @@ export default {
     "table-selection-width": "3rem",
     "table-status-width": "6rem",
     "table-date-width": "8rem",
-    "table-action-width": "5.5rem"
+    "table-action-width": "5.5rem",
+    "radius-button": "var(--sol-radius-sm)"
   },
   "reference": {
     "brand-purple": "#6666AA",

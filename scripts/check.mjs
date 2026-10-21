@@ -13,6 +13,7 @@ for(const [name,theme] of Object.entries(tokens.themes)) {
   for(const mode of ['light','dark']) {
     assert.equal(Object.keys(theme[mode]).length,20,`${name}/${mode}: 20 roles`);
     for(const [a,b,min] of [
+      ['accent','surface-alt',3],['success','surface-alt',3],['danger','surface-alt',3],
       ['text','canvas',4.5],['text','surface',4.5],['text','surface-alt',4.5],['text','accent-soft',4.5],['muted','accent-soft',4.5],
       ['muted','canvas',4.5],['muted','surface',4.5],['muted','surface-alt',4.5],
       ['accent','surface',4.5],['accent','accent-soft',4.5],

@@ -43,7 +43,7 @@
 .sol-tabs [role="tabpanel"][hidden] {display:none;}
 .sol-menu {box-sizing:border-box;position:fixed;z-index:var(--sol-layer-floating);width:max-content;min-width:200px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow:auto;padding:var(--sol-space-2);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-card);background:var(--sol-color-surface);color:var(--sol-color-text);box-shadow:var(--sol-elevation-floating);}
 .sol-menu[hidden] {display:none;}
-.sol-menu [role="menuitem"] {display:flex;align-items:center;gap:var(--sol-space-2);width:100%;min-height:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);font:inherit;font-size:var(--sol-text-sm);text-align:start;border:0;border-radius:var(--sol-radius-control);background:transparent;color:var(--sol-color-text);cursor:pointer;}
+.sol-menu [role="menuitem"] {display:flex;align-items:center;gap:var(--sol-space-2);width:100%;min-height:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);font:inherit;font-size:var(--sol-text-sm);text-align:start;border:0;border-radius:var(--sol-radius-button);background:transparent;color:var(--sol-color-text);cursor:pointer;}
 .sol-menu [role="menuitem"]:hover,.sol-menu [role="menuitem"]:focus-visible {background:var(--sol-color-accent-soft);}
 .sol-menu [aria-disabled="true"] {color:var(--sol-color-muted);cursor:not-allowed;}
 .sol-app-shell {container-type:inline-size;border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-panel);overflow:clip;background:var(--sol-color-surface);color:var(--sol-color-text);}
@@ -69,7 +69,7 @@
 .sol-button {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sol-space-2);
   min-height: var(--sol-button-height); padding: var(--sol-space-1) var(--sol-space-3);
-  border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-control);
+  border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-button);
   font: inherit; font-size: var(--sol-text-sm); font-weight: 600; line-height: 1.4;
   color: var(--sol-color-text); background: var(--sol-color-surface); text-decoration: none;
   cursor: pointer; transition: background var(--sol-motion-fast) var(--sol-motion-easing-standard), border-color var(--sol-motion-fast) var(--sol-motion-easing-standard);
@@ -193,7 +193,7 @@
 .sol-dropzone[data-drag-state="over"] {border-style: solid; border-color: var(--sol-color-accent); background: var(--sol-color-accent-soft);}
 .sol-dropzone strong {font-size: var(--sol-text-sm);}
 .sol-file-errors {overflow-wrap: anywhere;}
-.sol-file-input::file-selector-button {box-sizing: border-box; height: var(--sol-button-height); min-height: var(--sol-button-height); padding: var(--sol-space-1) var(--sol-space-3); margin-inline-end: var(--sol-space-2); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-control); background: var(--sol-color-surface); color: var(--sol-color-text); font: inherit; font-weight: 600; line-height: 1.4; white-space: nowrap; vertical-align: middle; cursor: pointer;}
+.sol-file-input::file-selector-button {box-sizing: border-box; height: var(--sol-button-height); min-height: var(--sol-button-height); padding: var(--sol-space-1) var(--sol-space-3); margin-inline-end: var(--sol-space-2); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-button); background: var(--sol-color-surface); color: var(--sol-color-text); font: inherit; font-weight: 600; line-height: 1.4; white-space: nowrap; vertical-align: middle; cursor: pointer;}
 .sol-file-list {padding: 0; margin: 0; list-style: none; display: grid; gap: var(--sol-space-2);}
 .sol-file-list li {display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sol-space-2); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); font-size: var(--sol-text-sm);}
 .sol-file-list li > span {min-width: 0; overflow-wrap: anywhere; flex: 1;}
@@ -223,7 +223,7 @@
 .sol-calendar-grid {border-collapse: separate; border-spacing: 2px 4px; width: 100%; table-layout: fixed; font-size: var(--sol-text-sm);}
 .sol-calendar-grid th {font-size: var(--sol-text-xs); font-weight: 500; color: var(--sol-color-muted); padding-block: var(--sol-space-2);}
 .sol-calendar-grid td {padding: 0; text-align: center;}
-.sol-calendar-day {position: relative; box-sizing: border-box; display: flex; justify-content: center; align-items: center; width: 100%; min-width: 0; height: var(--sol-button-height); padding: 0; border: 1px solid transparent; border-radius:var(--sol-radius-small); font: inherit; color: var(--sol-color-text); background: transparent; cursor: pointer; font-variant-numeric: tabular-nums;}
+.sol-calendar-day {position: relative; box-sizing: border-box; display: flex; justify-content: center; align-items: center; width: 100%; min-width: 0; height: var(--sol-button-height); padding: 0; border: 1px solid transparent; border-radius:var(--sol-radius-button); font: inherit; color: var(--sol-color-text); background: transparent; cursor: pointer; font-variant-numeric: tabular-nums;}
 .sol-calendar-day[data-outside="true"] {color: var(--sol-color-muted);}
 .sol-calendar-day[data-range="true"] {background: var(--sol-color-accent-soft); color: var(--sol-color-accent);}
 .sol-calendar-day[data-preview="true"] {background: var(--sol-color-accent-soft); color: var(--sol-color-accent); border-style: dashed; border-color: var(--sol-color-accent);}
@@ -302,3 +302,23 @@
 .sol-record-cards dl{display:flex;flex-wrap:wrap;gap:6px 12px;margin:8px 0 0;}
 .sol-record-cards dl div{display:inline-flex;align-items:baseline;gap:6px;min-width:0;}
 .sol-record-cards dd{overflow-wrap:anywhere;}
+
+/* Collection text stays one line. Full text lives in the accessible preview, not a title attribute. */
+.sol-record-title,.sol-ellipsis{display:block;min-width:0;max-width:100%;min-height:24px;line-height:24px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sol-title-preview{display:block;min-width:0;width:100%;padding:0;border:0;border-radius:var(--sol-radius-button);background:transparent;color:inherit;font:inherit;text-align:start;cursor:pointer;}
+.sol-title-preview:hover{text-decoration:underline;text-underline-offset:3px;}
+.sol-record-card-head{align-items:center;}.sol-record-card-head>.sol-title-preview{flex:1;min-width:0;min-height:44px;display:grid;align-items:center;}.sol-record-card-head .sol-record-title{padding-top:0;}
+.sol-full-text-content{white-space:pre-wrap;overflow-wrap:anywhere;}.sol-full-text-dialog h2{margin-bottom:0;}.sol-full-text-dialog .row-between{margin-bottom:var(--sol-space-4);}
+.sol-overflow-tooltip{max-width:min(420px,calc(100vw - 32px));max-height:min(240px,50dvh);overflow:auto;white-space:normal;overflow-wrap:anywhere;}
+.sol-progress-demo{--sol-progress-fill:var(--sol-color-accent);}.sol-progress-demo[data-state="complete"]{--sol-progress-fill:var(--sol-color-success);}.sol-progress-demo[data-state="error"]{--sol-progress-fill:var(--sol-color-danger);}
+.sol-progress-examples{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:var(--sol-space-6);align-items:center;margin-block:var(--sol-space-6);}.sol-progress-examples h3{font-size:var(--sol-text-sm);}
+.sol-progress-demo progress::-webkit-progress-value{background:var(--sol-progress-fill);transition:width var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}.sol-progress-demo progress::-moz-progress-bar{background:var(--sol-progress-fill);}
+.sol-progress-pending{display:block;}.sol-progress-pending>span{display:block;width:35%;height:100%;border-radius:inherit;background:var(--sol-progress-fill);}
+.sol-progress-circle{position:relative;display:grid;place-items:center;width:128px;height:128px;}.sol-progress-circle svg{width:100%;height:100%;transform:rotate(-90deg);}.sol-progress-circle circle{fill:none;stroke-width:8;}.sol-progress-track{stroke:var(--sol-color-surface-alt);}.sol-progress-arc{stroke:var(--sol-progress-fill);stroke-linecap:round;transition:stroke-dashoffset var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}.sol-progress-circle-text{position:absolute;font-size:var(--sol-text-sm);font-weight:650;color:var(--sol-color-text);}
+.sol-progress-status{min-height:3.3em;font-size:var(--sol-text-sm);color:var(--sol-progress-fill);}.sol-range{width:100%;min-height:44px;accent-color:var(--sol-color-accent);}
+@media(max-width:680px){.sol-progress-examples{grid-template-columns:minmax(0,1fr);}.sol-title-preview{min-height:44px;display:grid;align-items:center;}}
+
+.sol-progress-demo progress{accent-color:var(--sol-progress-fill);}
+.sol-record-cards,.sol-record-list{min-width:0;grid-template-columns:minmax(0,1fr);}
+.sol-record-cards>li,.sol-mini-list>li{min-width:0;}
+.sol-mini-list:not(.cards){min-width:0;grid-template-columns:minmax(0,1fr);}

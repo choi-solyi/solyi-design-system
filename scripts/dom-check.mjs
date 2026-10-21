@@ -238,6 +238,16 @@ response.value='error';fire(response,'change');click('[data-extra-response="load
 response.value='loading';fire(response,'change');assert.ok($('#extra-response-body .sol-skeleton'));response.value='denied';fire(response,'change');await pause(960);assert.match($('#extra-response-status').textContent,/접근 불가/);
 response.value='loading';fire(response,'change');await route('component');await pause(960);assert.equal(d.activeElement.tagName,'H1','Unmount cancels stale response focus');
 assert.equal(fileDrag(d.body,'drop',[jpg]).defaultPrevented,false,'The file navigation guard is removed when the file demo unmounts');
+
+// Overflow previews are measurable fixtures; layout itself is checked in Chrome.
+const overflowFixture=d.createElement('section');overflowFixture.innerHTML='<div class="sol-record-list"><span class="sol-record-title">가상의 아주 긴 제목 전체 내용</span></div><span id="overflow-existing-help">기존 설명</span><a href="#kept-action" aria-describedby="overflow-existing-help"><span class="sol-ellipsis">기존 이동 제목 전체 내용</span></a><textarea>본문은 자르지 않음</textarea>';d.body.append(overflowFixture);
+for(const node of overflowFixture.querySelectorAll('.sol-record-title,.sol-ellipsis')){Object.defineProperty(node,'scrollWidth',{value:400,configurable:true});Object.defineProperty(node,'clientWidth',{value:100,configurable:true});node.getClientRects=()=>[{width:100}];}
+const overflowCleanup=w.mountOverflowText(overflowFixture),preview=overflowFixture.querySelector('.sol-title-preview');assert.ok(preview);assert.equal(overflowFixture.querySelectorAll('button').length,1);assert.equal(preview.hasAttribute('title'),false);preview.focus();const overflowTip=d.querySelector('.sol-overflow-tooltip:not([hidden])');assert.ok(overflowTip);assert.match(overflowTip.textContent,/전체 내용/);assert.ok(preview.getAttribute('aria-describedby').includes(overflowTip.id));preview.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal(overflowTip.hidden,true);
+preview.click();const fullPanel=d.querySelector('.sol-full-text-dialog[open]');assert.ok(fullPanel);assert.match(fullPanel.querySelector('p').textContent,/전체 내용/);fullPanel.querySelector('button').click();assert.equal(d.activeElement,preview);
+const preserved=overflowFixture.querySelector('a');let originalAction=0;preserved.addEventListener('click',e=>{e.preventDefault();originalAction++;});preserved.focus();assert.ok(preserved.getAttribute('aria-describedby').includes('overflow-existing-help'));preserved.click();assert.equal(originalAction,1);assert.equal(d.querySelector('.sol-full-text-dialog[open]'),null);
+assert.equal(overflowFixture.querySelector('textarea').value,'본문은 자르지 않음');overflowCleanup();assert.equal(overflowFixture.querySelector('.sol-title-preview'),null);assert.equal(preserved.getAttribute('aria-describedby'),'overflow-existing-help');overflowFixture.remove();
+console.log('PASS: overflow tooltip focus/Escape, native full-text dialog/focus return, touch click, original link action/description and cleanup; textareas excluded.');
+
 await expansionChecks({w,d,$,fire,click,route,integrity});
 assert.deepEqual(errors,[],'No runtime errors in the synthetic DOM');
 dom.window.close();
