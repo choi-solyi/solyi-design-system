@@ -1,0 +1,51 @@
+/* Framework-neutral examples. Pair with tokens.css. Component class prefix: sol-. */
+.sol-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sol-space-2);
+  min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-4);
+  border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm);
+  font: inherit; font-size: var(--sol-text-sm); font-weight: 600; line-height: 1.4;
+  color: var(--sol-color-text); background: var(--sol-color-surface); text-decoration: none;
+  cursor: pointer; transition: background var(--sol-motion-fast), border-color var(--sol-motion-fast);
+}
+.sol-button:hover:not(:disabled):not([aria-disabled="true"]) {background: var(--sol-color-surface-alt); border-color: var(--sol-color-accent);}
+.sol-button.primary {background: var(--sol-color-accent); border-color: var(--sol-color-accent); color: var(--sol-color-on-accent);}
+.sol-button.primary:hover:not(:disabled):not([aria-disabled="true"]) {background: var(--sol-color-accent-hover); border-color: var(--sol-color-accent-hover);}
+.sol-button.subtle {border-color: transparent; background: transparent;}
+.sol-button.danger {color: var(--sol-color-danger); border-color: var(--sol-color-danger);}
+.sol-button:disabled, .sol-button[aria-disabled="true"] {color: var(--sol-color-muted); background: var(--sol-color-surface-alt); border-color: var(--sol-color-border); cursor: not-allowed;}
+.sol-button[aria-busy="true"] {cursor: wait;}
+.sol-button[aria-busy="true"]::before {content: ''; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: sol-spin .7s linear infinite;}
+.sol-field {display: grid; gap: var(--sol-space-2); min-width: 0;}
+.sol-label {font-weight: 650; font-size: var(--sol-text-sm);}
+.sol-input, .sol-select {
+  width: 100%; min-width: 0; min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-3);
+  border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm); color: var(--sol-color-text); background: var(--sol-color-surface); font: inherit; font-size: var(--sol-text-sm);
+}
+.sol-input::placeholder {color: var(--sol-color-muted); opacity: 1;}
+.sol-input:hover:not(:disabled), .sol-select:hover:not(:disabled) {border-color: var(--sol-color-accent);}
+.sol-input[aria-invalid="true"] {border-color: var(--sol-color-danger); border-width: 2px;}
+.sol-input:disabled, .sol-select:disabled {background: var(--sol-color-surface-alt); color: var(--sol-color-muted); cursor: not-allowed;}
+.sol-hint {font-size: var(--sol-text-xs); color: var(--sol-color-muted); margin: 0; line-height: var(--sol-line-body);}
+.sol-error {color: var(--sol-color-danger); font-size: var(--sol-text-sm); margin: 0;}
+.sol-choice {display: flex; align-items: center; gap: var(--sol-space-2); min-height: var(--sol-control-height); cursor: pointer; font-size: var(--sol-text-sm);}
+.sol-choice input {width: 20px; height: 20px; margin: 0; accent-color: var(--sol-color-accent); flex-shrink: 0; cursor: pointer;}
+.sol-choice:has(input:disabled) {color: var(--sol-color-muted); cursor: not-allowed;}
+.sol-choice:has(input:disabled) input {cursor: not-allowed;}
+.sol-status {display: inline-flex; align-items: center; gap: var(--sol-space-1); padding: 3px 8px; border-radius: var(--sol-radius-sm); font-size: var(--sol-text-xs); font-weight: 600; color: var(--sol-color-info); background: var(--sol-color-info-soft); white-space: nowrap;}
+.sol-status.success {color: var(--sol-color-success); background: var(--sol-color-success-soft);}
+.sol-status.warning {color: var(--sol-color-warning); background: var(--sol-color-warning-soft);}
+.sol-status.danger {color: var(--sol-color-danger); background: var(--sol-color-danger-soft);}
+.sol-notice {padding: var(--sol-space-4); border-radius: var(--sol-radius-md); border-inline-start: 3px solid var(--sol-color-info); color: var(--sol-color-info); background: var(--sol-color-info-soft); font-size: var(--sol-text-sm);}
+.sol-notice.success {color: var(--sol-color-success); border-color: var(--sol-color-success); background: var(--sol-color-success-soft);}
+.sol-notice.danger {color: var(--sol-color-danger); border-color: var(--sol-color-danger); background: var(--sol-color-danger-soft);}
+.sol-card {background: var(--sol-color-surface); color: var(--sol-color-text); border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-md); padding: var(--sol-space-6); min-width: 0;}
+.sol-card h3 {margin-top: 0;}
+.sol-progress {width: 100%; height: 6px; border: 0; border-radius: 99px; overflow: hidden; accent-color: var(--sol-color-accent); background: var(--sol-color-surface-alt);}
+.sol-progress::-webkit-progress-bar {background: var(--sol-color-surface-alt); border-radius: 99px;}
+.sol-progress::-webkit-progress-value {background: var(--sol-color-accent); border-radius: 99px;}
+.sol-progress::-moz-progress-bar {background: var(--sol-color-accent); border-radius: 99px;}
+.sol-divider {border: 0; border-top: 1px solid var(--sol-color-border); margin: var(--sol-space-4) 0;}
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {outline: var(--sol-focus-width) solid var(--sol-color-focus); outline-offset: var(--sol-focus-offset);}
+@keyframes sol-spin {to {transform: rotate(360deg);}}
+@media (prefers-reduced-motion: reduce) {*, *::before, *::after {animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important;}}
+@media (forced-colors: active) {a, button, input, select, summary {forced-color-adjust: auto;} .sol-status, .sol-notice {border: 1px solid CanvasText;}}

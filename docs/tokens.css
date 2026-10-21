@@ -1,0 +1,197 @@
+/* Generated from tokens.json. Run npm run build; do not edit. */
+:root {
+  --sol-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+  --sol-font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --sol-text-xs: 0.8125rem;
+  --sol-text-sm: 0.875rem;
+  --sol-text-md: 1rem;
+  --sol-text-lg: 1.25rem;
+  --sol-text-xl: 1.75rem;
+  --sol-text-display: 3rem;
+  --sol-line-body: 1.65;
+  --sol-line-heading: 1.25;
+  --sol-space-1: 0.25rem;
+  --sol-space-2: 0.5rem;
+  --sol-space-3: 0.75rem;
+  --sol-space-4: 1rem;
+  --sol-space-6: 1.5rem;
+  --sol-space-8: 2rem;
+  --sol-space-12: 3rem;
+  --sol-radius-sm: 0.375rem;
+  --sol-radius-md: 0.75rem;
+  --sol-radius-lg: 1rem;
+  --sol-control-height: 2.75rem;
+  --sol-focus-width: 3px;
+  --sol-focus-offset: 3px;
+  --sol-motion-fast: 140ms;
+  --sol-content-gap: 1rem;
+  --sol-row-padding: 1rem;
+  --sol-color-canvas: #F5F6FA;
+  --sol-color-surface: #FFFFFF;
+  --sol-color-surface-alt: #ECEEF5;
+  --sol-color-text: #202330;
+  --sol-color-muted: #5F6375;
+  --sol-color-border: #D9DCE6;
+  --sol-color-control-border: #818596;
+  --sol-color-accent: #7560B5;
+  --sol-color-accent-hover: #604B9C;
+  --sol-color-accent-soft: #F4F0FA;
+  --sol-color-on-accent: #FFFFFF;
+  --sol-color-focus: #7560B5;
+  --sol-color-success: #256448;
+  --sol-color-success-soft: #E6F2EA;
+  --sol-color-warning: #885019;
+  --sol-color-warning-soft: #FFF2DB;
+  --sol-color-danger: #B33750;
+  --sol-color-danger-soft: #FBEAF0;
+  --sol-color-info: #315D96;
+  --sol-color-info-soft: #EAF0FA;
+}
+[data-theme="violet"][data-mode="light"],
+[data-mode="light"]:not([data-theme]) {
+  color-scheme: light;
+  --sol-color-canvas: #F5F6FA;
+  --sol-color-surface: #FFFFFF;
+  --sol-color-surface-alt: #ECEEF5;
+  --sol-color-text: #202330;
+  --sol-color-muted: #5F6375;
+  --sol-color-border: #D9DCE6;
+  --sol-color-control-border: #818596;
+  --sol-color-accent: #7560B5;
+  --sol-color-accent-hover: #604B9C;
+  --sol-color-accent-soft: #F4F0FA;
+  --sol-color-on-accent: #FFFFFF;
+  --sol-color-focus: #7560B5;
+  --sol-color-success: #256448;
+  --sol-color-success-soft: #E6F2EA;
+  --sol-color-warning: #885019;
+  --sol-color-warning-soft: #FFF2DB;
+  --sol-color-danger: #B33750;
+  --sol-color-danger-soft: #FBEAF0;
+  --sol-color-info: #315D96;
+  --sol-color-info-soft: #EAF0FA;
+}
+[data-theme="violet"][data-mode="dark"],
+[data-mode="dark"]:not([data-theme]) {
+  color-scheme: dark;
+  --sol-color-canvas: #171821;
+  --sol-color-surface: #20222E;
+  --sol-color-surface-alt: #292C3B;
+  --sol-color-text: #F0F0F7;
+  --sol-color-muted: #B7B9C9;
+  --sol-color-border: #424658;
+  --sol-color-control-border: #85899D;
+  --sol-color-accent: #B8A3F1;
+  --sol-color-accent-hover: #CAB8F9;
+  --sol-color-accent-soft: #342C49;
+  --sol-color-on-accent: #211A30;
+  --sol-color-focus: #C6B2FF;
+  --sol-color-success: #8DD3AD;
+  --sol-color-success-soft: #213C31;
+  --sol-color-warning: #F2C27B;
+  --sol-color-warning-soft: #403321;
+  --sol-color-danger: #FFA9B8;
+  --sol-color-danger-soft: #452A35;
+  --sol-color-info: #AACCF6;
+  --sol-color-info-soft: #26364C;
+}
+[data-theme="sage"][data-mode="light"] {
+  color-scheme: light;
+  --sol-color-canvas: #F4F6F2;
+  --sol-color-surface: #FFFFFF;
+  --sol-color-surface-alt: #E9EEE8;
+  --sol-color-text: #28372F;
+  --sol-color-muted: #58685E;
+  --sol-color-border: #D5DED5;
+  --sol-color-control-border: #7B8B7F;
+  --sol-color-accent: #476A56;
+  --sol-color-accent-hover: #355443;
+  --sol-color-accent-soft: #E6EEE7;
+  --sol-color-on-accent: #FFFFFF;
+  --sol-color-focus: #476A56;
+  --sol-color-success: #256448;
+  --sol-color-success-soft: #E6F2EA;
+  --sol-color-warning: #885019;
+  --sol-color-warning-soft: #FFF2DB;
+  --sol-color-danger: #B33750;
+  --sol-color-danger-soft: #FBEAF0;
+  --sol-color-info: #315D96;
+  --sol-color-info-soft: #EAF0FA;
+}
+[data-theme="sage"][data-mode="dark"] {
+  color-scheme: dark;
+  --sol-color-canvas: #17201B;
+  --sol-color-surface: #202C25;
+  --sol-color-surface-alt: #2B3930;
+  --sol-color-text: #EEF4EF;
+  --sol-color-muted: #B5C6B9;
+  --sol-color-border: #42594A;
+  --sol-color-control-border: #829C8A;
+  --sol-color-accent: #A1CBB0;
+  --sol-color-accent-hover: #BBDEC6;
+  --sol-color-accent-soft: #2E4536;
+  --sol-color-on-accent: #182E20;
+  --sol-color-focus: #BBDEC6;
+  --sol-color-success: #8DD3AD;
+  --sol-color-success-soft: #213C31;
+  --sol-color-warning: #F2C27B;
+  --sol-color-warning-soft: #403321;
+  --sol-color-danger: #FFA9B8;
+  --sol-color-danger-soft: #452A35;
+  --sol-color-info: #AACCF6;
+  --sol-color-info-soft: #26364C;
+}
+[data-theme="sand"][data-mode="light"] {
+  color-scheme: light;
+  --sol-color-canvas: #F8F4EE;
+  --sol-color-surface: #FFFDFA;
+  --sol-color-surface-alt: #EFE8DF;
+  --sol-color-text: #352E2C;
+  --sol-color-muted: #6E625B;
+  --sol-color-border: #E0D5C9;
+  --sol-color-control-border: #968374;
+  --sol-color-accent: #85614D;
+  --sol-color-accent-hover: #6B4938;
+  --sol-color-accent-soft: #F5ECE3;
+  --sol-color-on-accent: #FFFFFF;
+  --sol-color-focus: #85614D;
+  --sol-color-success: #256448;
+  --sol-color-success-soft: #E6F2EA;
+  --sol-color-warning: #885019;
+  --sol-color-warning-soft: #FFF2DB;
+  --sol-color-danger: #B33750;
+  --sol-color-danger-soft: #FBEAF0;
+  --sol-color-info: #315D96;
+  --sol-color-info-soft: #EAF0FA;
+}
+[data-theme="sand"][data-mode="dark"] {
+  color-scheme: dark;
+  --sol-color-canvas: #231D19;
+  --sol-color-surface: #2E2721;
+  --sol-color-surface-alt: #3A3129;
+  --sol-color-text: #F6EEE5;
+  --sol-color-muted: #CEBEB0;
+  --sol-color-border: #5B4A3E;
+  --sol-color-control-border: #A28A77;
+  --sol-color-accent: #D9B394;
+  --sol-color-accent-hover: #E8C8AB;
+  --sol-color-accent-soft: #483629;
+  --sol-color-on-accent: #302116;
+  --sol-color-focus: #E8C8AB;
+  --sol-color-success: #8DD3AD;
+  --sol-color-success-soft: #213C31;
+  --sol-color-warning: #F2C27B;
+  --sol-color-warning-soft: #403321;
+  --sol-color-danger: #FFA9B8;
+  --sol-color-danger-soft: #452A35;
+  --sol-color-info: #AACCF6;
+  --sol-color-info-soft: #26364C;
+}
+[data-density="comfortable"] {
+  --sol-content-gap: 1rem;
+  --sol-row-padding: 1rem;
+}
+[data-density="compact"] {
+  --sol-content-gap: 0.75rem;
+  --sol-row-padding: 0.75rem;
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko" data-theme="violet" data-mode="light" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="솔의 여러 앱을 위한 독립적인 디자인 시스템 v0.1. 역할 기반 토큰, 작동하는 컴포넌트와 패턴, 선택 가능한 테마.">
+  <meta name="theme-color" content="#F5F6FA">
+  <meta name="color-scheme" content="light dark">
+  <title>Solyi Design System · Overview</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./components.css">
+  <link rel="stylesheet" href="./docs.css">
+  <script src="./preferences.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+  <header class="topbar">
+    <a href="#overview" class="brand" aria-label="Solyi Design System 홈"><span class="brand-symbol" aria-hidden="true">s<span>·</span></span><span>Solyi <span class="brand-detail">Design System</span></span></a>
+    <div class="header-actions"><span class="version">v0.1 <span>Draft</span></span><button type="button" id="mode-toggle" class="sol-button subtle" aria-pressed="false">Dark mode</button><a class="repo-link" href="https://github.com/choi-solyi/solyi-design-system" aria-label="GitHub 저장소">GitHub ↗</a></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-caption">THE SYSTEM</p>
+      <nav aria-label="문서 내비게이션">
+        <a href="#overview" data-route="overview"><span class="nav-index">00</span> Overview</a>
+        <a href="#style" data-route="style"><span class="nav-index">01</span> Style <span class="nav-note">Core</span></a>
+        <a href="#component" data-route="component"><span class="nav-index">02</span> Component</a>
+        <a href="#pattern" data-route="pattern"><span class="nav-index">03</span> Pattern</a>
+        <a href="#theme" data-route="theme"><span class="nav-index">04</span> Theme & adoption</a>
+      </nav>
+      <div class="sidebar-foot"><span class="status-dot" aria-hidden="true"></span> Small, useful, evolving.<p>여러 앱에 같은 기준을.<br>각 앱에는 어울리는 표정을.</p><a href="./tokens.json" download>Tokens JSON ↓</a></div>
+    </aside>
+    <main id="main-content" tabindex="-1"></main>
+  </div>
+  <div id="announcement" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <dialog id="detail-dialog" aria-labelledby="detail-dialog-title"><div class="dialog-head"><span class="eyebrow">FICTIONAL PROJECT</span><button class="sol-button subtle" id="dialog-close" autofocus>닫기 <span aria-hidden="true">×</span></button></div><h2 id="detail-dialog-title">작은 정원 기록</h2><p>식물 관찰을 모아 두는 가상의 개인 프로젝트입니다. 모든 데모 데이터는 브라우저 안에서만 바뀝니다.</p><dl class="detail-list"><div><dt>상태</dt><dd>진행 중</dd></div><div><dt>다음 할 일</dt><dd>관찰 화면의 입력 흐름 정리</dd></div><div><dt>업데이트</dt><dd>방금 · 가상 데이터</dd></div></dl><p class="small muted">Escape로 닫기 · 닫은 뒤 실행한 버튼으로 포커스 복귀</p></dialog>
+  <noscript><div class="noscript">작동하는 예시와 문서 탐색에는 JavaScript가 필요합니다. <a href="./tokens.css">CSS 토큰</a>과 <a href="./tokens.json">JSON 토큰</a>은 바로 열 수 있습니다.</div></noscript>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
