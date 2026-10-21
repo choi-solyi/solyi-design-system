@@ -1,4 +1,5 @@
 /* Framework-neutral examples. Pair with tokens.css. Component class prefix: sol-. */
+:where(.sol-button,.sol-input,.sol-select,.sol-card,.sol-side-panel,.sol-popover,.sol-tooltip,.sol-toast,.sol-combobox-menu) {box-sizing: border-box;}
 .sol-button {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sol-space-2);
   min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-4);
@@ -22,10 +23,10 @@
 .sol-notice-actions {display: flex; flex-wrap: wrap; gap: var(--sol-space-2); margin-top: var(--sol-space-1);}
 .sol-notice-actions > .inline-action {margin-inline-start: calc(-1 * var(--sol-space-2));}
 .sol-notice-message {margin: var(--sol-space-1) 0 0;}
-.sol-field {display: grid; gap: var(--sol-space-2); min-width: 0;}
+.sol-field {display: grid; align-content: start; gap: var(--sol-space-2); min-width: 0;}
 .sol-label {font-weight: 650; font-size: var(--sol-text-sm);}
 .sol-input, .sol-select {
-  width: 100%; min-width: 0; min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-3);
+  box-sizing: border-box; width: 100%; min-width: 0; height: var(--sol-control-height); min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-3);
   border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm); color: var(--sol-color-text); background: var(--sol-color-surface); font: inherit; font-size: var(--sol-text-sm);
 }
 .sol-input::placeholder {color: var(--sol-color-muted); opacity: 1;}
@@ -52,6 +53,76 @@
 .sol-progress::-webkit-progress-value {background: var(--sol-color-accent); border-radius: 99px;}
 .sol-progress::-moz-progress-bar {background: var(--sol-color-accent); border-radius: 99px;}
 .sol-divider {border: 0; border-top: 1px solid var(--sol-color-border); margin: var(--sol-space-4) 0;}
+.sol-stack {display: grid; gap: var(--sol-space-4); min-width: 0;}
+.sol-filterbar {display: grid; grid-template-columns: minmax(0,1fr) minmax(150px,.6fr); align-items: start; gap: var(--sol-space-4);}
+.sol-filterbar.three {grid-template-columns: minmax(0,1.4fr) minmax(130px,.7fr) minmax(150px,.8fr);}
+.sol-switch {display: inline-flex; align-items: center; gap: var(--sol-space-3); min-height: var(--sol-control-height); border: 0; padding: var(--sol-space-2) 0; background: transparent; color: var(--sol-color-text); font: inherit; font-size: var(--sol-text-sm); text-align: start; cursor: pointer;}
+.sol-switch-track {position: relative; display: inline-block; flex: 0 0 40px; width: 40px; height: 24px; border: 1px solid var(--sol-color-control-border); border-radius: 99px; background: var(--sol-color-surface-alt);}
+.sol-switch-track::after {content: ''; position: absolute; width: 16px; height: 16px; inset-block-start: 3px; inset-inline-start: 3px; border-radius: 50%; background: var(--sol-color-muted);}
+.sol-switch[aria-checked="true"] .sol-switch-track {background: var(--sol-color-accent); border-color: var(--sol-color-accent);}
+.sol-switch[aria-checked="true"] .sol-switch-track::after {inset-inline-start: 19px; background: var(--sol-color-on-accent);}
+.sol-mini-list {display: grid; gap: var(--sol-space-2); list-style: none; padding: 0; margin: 0;}
+.sol-mini-list.cards {grid-template-columns: repeat(2,minmax(0,1fr));}
+.sol-mini-list li {padding: var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-sm); font-size: var(--sol-text-sm);}
+.sol-tooltip {position: fixed; z-index: 60; max-width: min(280px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm); background: var(--sol-color-text); color: var(--sol-color-surface); font-size: var(--sol-text-xs); line-height: var(--sol-line-body);}
+.sol-popover {position: fixed; z-index: 60; width: min(320px,calc(100vw - 32px)); padding: var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-md); background: var(--sol-color-surface); color: var(--sol-color-text); box-shadow: 0 8px 28px #0002; font-size: var(--sol-text-sm);}
+.sol-popover p {margin: var(--sol-space-2) 0 var(--sol-space-3);}
+.sol-accordion {border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-md); background: var(--sol-color-surface);}
+.sol-accordion + .sol-accordion {margin-top: var(--sol-space-2);}
+.sol-accordion summary {min-height: var(--sol-control-height); padding: var(--sol-space-3) var(--sol-space-4); cursor: pointer; font-size: var(--sol-text-sm); font-weight: 600;}
+.sol-accordion[open] summary {border-bottom: 1px solid var(--sol-color-border);}
+.sol-accordion-content {padding: var(--sol-space-4); font-size: var(--sol-text-sm);}
+.sol-accordion-content p:last-child {margin-bottom: 0;}
+.sol-breadcrumbs ol {display: flex; flex-wrap: wrap; align-items: center; gap: var(--sol-space-2); padding: 0; margin: 0 0 var(--sol-space-4); list-style: none; font-size: var(--sol-text-sm);}
+.sol-breadcrumbs li + li::before {content: '/'; color: var(--sol-color-muted); margin-inline-end: var(--sol-space-2);}
+.sol-breadcrumbs a {display: inline-flex; align-items: center; min-height: var(--sol-control-height); color: var(--sol-color-accent);}
+.sol-breadcrumbs [aria-current] {color: var(--sol-color-muted);}
+.sol-side-panel {position: fixed; inset: 0 0 0 auto; margin: 0; width: min(440px,100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; overflow: auto; padding: var(--sol-space-6); border: 0; border-inline-start: 1px solid var(--sol-color-border); border-radius: 0; background: var(--sol-color-surface); color: var(--sol-color-text);}
+.sol-side-panel::backdrop {background: #10121c88;}
+.sol-side-panel-head {display: flex; justify-content: space-between; align-items: center; gap: var(--sol-space-3); margin-bottom: var(--sol-space-6);}
+.sol-side-panel-head button {flex: 0 0 auto; white-space: nowrap;}
+.sol-toast {position: fixed; inset-inline-end: max(16px,env(safe-area-inset-right)); inset-block-end: max(16px,env(safe-area-inset-bottom)); z-index: 80; display: flex; align-items: center; gap: var(--sol-space-3); width: max-content; max-width: min(440px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3) var(--sol-space-2) var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-md); color: var(--sol-color-text); background: var(--sol-color-surface); box-shadow: 0 8px 28px #0002; font-size: var(--sol-text-sm);}
+.sol-toast .sol-button {flex-shrink: 0;}
+.sol-table-wrap {max-width: 100%; overflow: auto;}
+.sol-data-table {width: 100%; border-collapse: collapse; font-size: var(--sol-text-sm);}
+.sol-data-table caption {text-align: start; font-weight: 650; padding: var(--sol-space-4) 0;}
+.sol-data-table th, .sol-data-table td {text-align: start; padding: var(--sol-row-padding) var(--sol-space-2); border-bottom: 1px solid var(--sol-color-border); vertical-align: middle;}
+.sol-data-table th {font-weight: 600; color: var(--sol-color-muted);}
+.sol-data-table tbody th {color: var(--sol-color-text);}
+.sol-data-table th:first-child, .sol-data-table td:first-child {width: 44px;}
+.sol-data-table .sol-choice {justify-content: center;}
+.sol-data-table tbody tr:has(input:checked) {background: var(--sol-color-accent-soft);}
+.sol-table-sub {display: block; margin-top: 3px; color: var(--sol-color-muted); font-size: var(--sol-text-xs);}
+.sol-record-cards {display: none; list-style: none; padding: 0; margin: var(--sol-space-4) 0; gap: var(--sol-space-3);}
+.sol-record-cards li {padding: var(--sol-row-padding); border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-md);}
+.sol-record-cards li:has(input:checked) {border-color: var(--sol-color-accent); background: var(--sol-color-accent-soft);}
+.sol-record-cards dl {margin: var(--sol-space-2) 0; font-size: var(--sol-text-xs);}
+.sol-record-cards dl div {display: grid; grid-template-columns: 60px minmax(0,1fr); gap: var(--sol-space-2);}
+.sol-record-cards dt {color: var(--sol-color-muted);}
+.sol-record-cards dd {margin: 0;}
+.sol-mobile-select {display: none;}
+.sol-pagination {display: flex; justify-content: space-between; align-items: center; gap: var(--sol-space-2); flex-wrap: wrap; padding-top: var(--sol-space-4);}
+.sol-pagination label {display: flex; align-items: center; gap: var(--sol-space-2); font-size: var(--sol-text-sm);}
+.sol-pagination select {width: auto; min-width: 76px;}
+.sol-skeleton {display: grid; gap: var(--sol-space-3); padding: var(--sol-space-4) 0;}
+.sol-skeleton span {display: block; height: 16px; max-width: 100%; border-radius: var(--sol-radius-sm); background: var(--sol-color-surface-alt); animation: sol-pulse 1.4s ease-in-out infinite;}
+.sol-skeleton span:nth-child(2) {width: 76%;}
+.sol-skeleton span:nth-child(3) {width: 88%;}
+@keyframes sol-pulse {50% {opacity: .45;}}
+.sol-file-input {display: block; width: 100%; min-width: 0; min-height: var(--sol-control-height); color: var(--sol-color-text); font: inherit; font-size: var(--sol-text-sm);}
+.sol-file-input::file-selector-button {min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-3); margin-inline-end: var(--sol-space-2); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm); background: var(--sol-color-surface); color: var(--sol-color-text); font: inherit; cursor: pointer;}
+.sol-file-list {padding: 0; margin: 0; list-style: none; display: grid; gap: var(--sol-space-2);}
+.sol-file-list li {display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sol-space-2); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius: var(--sol-radius-sm); font-size: var(--sol-text-sm);}
+.sol-file-list li > span {min-width: 0; overflow-wrap: anywhere; flex: 1;}
+.sol-file-list .sol-button {flex: 0 0 auto;}
+.sol-combobox-menu {max-height: 240px; overflow: auto; margin-top: var(--sol-space-1); border: 1px solid var(--sol-color-control-border); border-radius: var(--sol-radius-sm); background: var(--sol-color-surface);}
+.sol-combobox-menu ul {padding: 0; margin: 0; list-style: none;}
+.sol-combobox-menu [role="option"] {display: flex; align-items: center; min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-3); font-size: var(--sol-text-sm); cursor: pointer;}
+.sol-combobox-menu [role="option"][aria-selected="true"] {background: var(--sol-color-accent-soft); color: var(--sol-color-accent); font-weight: 600;}
+.sol-combobox-menu p {margin: 0; padding: var(--sol-space-3); font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
+.sol-tooltip[hidden], .sol-popover[hidden], .sol-toast[hidden], .sol-combobox-menu[hidden] {display: none;}
+@media (max-width: 680px) {.sol-filterbar.three {grid-template-columns: minmax(0,1fr);}.sol-table-wrap {display: none;}.sol-record-cards {display: grid;}.sol-mobile-select {display: flex;}}
+@media (max-width: 520px) {.sol-filterbar {grid-template-columns: minmax(0,1fr);}.sol-mini-list.cards {grid-template-columns: 1fr;}.sol-side-panel {padding: var(--sol-space-4);}}
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {outline: var(--sol-focus-width) solid var(--sol-color-focus); outline-offset: var(--sol-focus-offset);}
 @keyframes sol-spin {to {transform: rotate(360deg);}}
 @media (prefers-reduced-motion: reduce) {*, *::before, *::after {animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important;}}

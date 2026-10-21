@@ -26,11 +26,11 @@ for(const [name,theme] of Object.entries(tokens.themes)) {
     }
   }
 }
-const expected=['.nojekyll','app.js','components.css','docs.css','favicon.svg','index.html','preferences.js','token-data.js','tokens.css','tokens.json'];
+const expected=['.nojekyll','app.js','extended.js','components.css','docs.css','favicon.svg','index.html','preferences.js','token-data.js','tokens.css','tokens.json'];
 assert.deepEqual((await readdir(path.join(root,'docs'))).sort(),expected.sort(),'Only intended public site files');
-for(const name of ['index.html','app.js','components.css','docs.css','preferences.js','favicon.svg']) assert.equal(await readFile(path.join(root,'site',name),'utf8'),await readFile(path.join(root,'docs',name),'utf8'),`${name} build is current`);
+for(const name of ['index.html','app.js','extended.js','components.css','docs.css','preferences.js','favicon.svg']) assert.equal(await readFile(path.join(root,'site',name),'utf8'),await readFile(path.join(root,'docs',name),'utf8'),`${name} build is current`);
 assert.deepEqual(JSON.parse(await readFile(path.join(root,'docs/tokens.json'),'utf8')),tokens);
-const source=(await Promise.all(['index.html','app.js','docs.css','components.css'].map(name=>readFile(path.join(root,'docs',name),'utf8')))).join('\n');
+const source=(await Promise.all(['index.html','app.js','extended.js','docs.css','components.css'].map(name=>readFile(path.join(root,'docs',name),'utf8')))).join('\n');
 for(const match of source.matchAll(/(?:href|src)=["']\.\/([^"'#?]+)["']/g)) assert.ok(expected.includes(match[1]),`Local link ${match[1]} exists`);
 assert.ok(!/\b(?:AIza[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,})\b/.test(source),'No known credential pattern');
 assert.ok(!/analytics|googletagmanager|google-analytics|supabase\.co|fetch\(/i.test(source),'No analytics or external data request');

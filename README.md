@@ -8,8 +8,8 @@
 
 - **Overview**: 방향과 작동하는 작은 화면
 - **Style / Core**: 원칙, 역할 색, 타이포, 간격, 밀도, 접근성 작업 기준
-- **Component**: Button, Field, Choice, Feedback, native Dialog의 상태·키보드 계약·토큰 매핑·복사 가능한 예시
-- **Pattern**: 폼 검증과 회복, 검색·필터·상세, 비교 선택, 빈 상태
+- **Component**: Button, Field, Choice, Switch, Feedback, native Dialog, Tooltip, Popover, Accordion, Breadcrumb, Side panel, Toast의 상태·키보드 계약·토큰 매핑·복사 가능한 예시
+- **Pattern**: 폼 검증과 회복, 검색·필터·상세, 비교 선택, 표·목록의 선택/정렬/필터/페이지 조합, 날짜 기간, 로컬 파일 선택, IME를 고려한 자동완성, 가상 응답 상태
 - **Theme & adoption**: Cool violet / Quiet sage / Warm sand, 라이트·다크, 도입 방법과 범위
 
 쿨 바이올렛 A안은 기본 출발점이며 모든 앱의 영구 규칙이 아닙니다. 브랜드 고유성은 정보 위계·타입·여백 리듬·밀도·절제된 강조에 둡니다. 게임 전투력·등급 색은 Core에 포함하지 않습니다.
@@ -35,6 +35,7 @@ tokens.json              단일 토큰 원본 (단순 JSON export, DTCG 호환 �
 site/components.css      재사용 가능한 프레임워크 독립 컴포넌트 예시
 site/docs.css            이 문서 사이트만의 셸·레이아웃
 site/app.js              문서와 가상 상호작용
+site/extended.js         추가 컴포넌트·로컬 입력·자료 목록의 가상 동작
 scripts/build.mjs        허용된 파일만 docs/에 복사 + CSS/JS 토큰 생성
 scripts/check.mjs        대비·출력 목록·토큰·링크 구조 검사
 scripts/dom-check.mjs    합성 DOM 상태·이벤트·초점 연결 검사
@@ -58,7 +59,17 @@ QA.md                    완료한 검증과 미검증 범위
 
 변경 시 `npm run build`, `npm run check`, `npm test`를 실행한 후 원본과 `docs/`를 함께 커밋합니다. `main`으로 푸시하면 GitHub Pages의 기본 게시 작업이 실행됩니다.
 
-배포 후 `npm run verify-live`로 실제 HTTPS 사이트의 9개 공개 자산이 모두 HTTP 200인지, 검증한 로컬 파일과 SHA-256이 같은지 확인할 수 있습니다.
+배포 후 `npm run verify-live`로 실제 HTTPS 사이트의 10개 공개 자산이 모두 HTTP 200인지, 검증한 로컬 파일과 SHA-256이 같은지 확인할 수 있습니다.
+
+## 추가 예시의 재사용 계약
+
+- `components.css`의 `sol-field`는 위쪽부터 레이블 → 44px 입력 → 설명 순서로 정렬합니다. `sol-filterbar`는 같은 시작점을 유지하다 작은 폭에서 한 열로 쌓습니다.
+- 알림의 보조 동작은 `sol-button inline-action`을 사용합니다. 시각 크기는 13px 텍스트이고 기본 44px 조작 영역과 포커스는 유지합니다.
+- `extended.js`는 참고용 가상 데이터와 DOM 연결입니다. `renderComponentExamples(helpers)` 또는 `renderPatternExamples(helpers)`로 문서 예시를 만들고 `mountExamples(root, announce)`로 연결합니다. 반환된 정리 함수를 화면 전환 전에 호출해 리스너·로딩 타이머를 해제합니다. 제품에서는 의미 구조·토큰·상태 계약을 앱의 상태 관리에 옮깁니다.
+- 표 선택은 자료 ID로 유지하고, 모두 선택은 현재 페이지에만 적용합니다. 필터·정렬 변경은 첫 페이지로 이동하며 결과 밖 선택 수를 보여 줍니다. 모바일 카드도 같은 자료에서 렌더링합니다.
+- 기간은 `YYYY-MM-DD` 문자열로 검증해 시간대에 따라 하루 바뀌지 않게 합니다. 자동완성은 조합 중 키 이벤트를 선택으로 해석하지 않습니다.
+- 파일은 확장자·크기·개수·중복을 검사하고 메모리의 파일명/크기만 표시합니다. 파일 내용을 읽거나 실행하지 않으며 외부 전송·자동 저장하지 않습니다. 이 데모의 확장자 검사는 서버의 보안 검증을 대신하지 않습니다.
+- 툴팁에는 필수 안내나 조작을 넣지 않습니다. 비모달 팝오버는 Tab을 가두지 않고, 모달 패널은 native dialog를 사용합니다. 토스트는 짧은 완료에만 쓰고 오류는 지속 알림으로 남깁니다.
 
 ## 자료와 독립성
 

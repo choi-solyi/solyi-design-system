@@ -3,15 +3,18 @@ import {JSDOM, VirtualConsole} from 'jsdom';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const html=await readFile(new URL('../docs/index.html',import.meta.url),'utf8');
-const app=(await readFile(new URL('../docs/app.js',import.meta.url),'utf8')).replace("import tokens from './token-data.js';",`const tokens = ${await readFile(new URL('../tokens.json',import.meta.url),'utf8')};`);
+const app=(await readFile(new URL('../docs/app.js',import.meta.url),'utf8')).replace("import tokens from './token-data.js';",`const tokens = ${await readFile(new URL('../tokens.json',import.meta.url),'utf8')};`).replace(/^import .* from '\.\/extended\.js';\r?\n/m,'');
 const virtualConsole=new VirtualConsole();
 const errors=[];
 virtualConsole.on('jsdomError',error=>errors.push(error.message));
 const dom=new JSDOM(html,{url:'https://example.test/solyi-design-system/',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole});
 const {window:w}=dom;const d=w.document;
 w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};
+w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','');this.querySelector('[autofocus]')?.focus();};
+w.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open');this.dispatchEvent(new w.Event('close'));};
 let clipboard='';
 Object.defineProperty(w.navigator,'clipboard',{value:{writeText:async value=>{clipboard=value;}}});
+w.eval((await readFile(new URL('../docs/extended.js',import.meta.url),'utf8')).replace(/^export /gm,''));
 w.eval(app);
 const $=selector=>{const result=d.querySelector(selector);assert.ok(result,selector);return result;};
 const fire=(element,type)=>element.dispatchEvent(new w.Event(type,{bubbles:true,cancelable:true}));
@@ -21,8 +24,8 @@ const route=async name=>{w.location.hash=name;await pause(20);};
 function integrity() {
   const ids=[...d.querySelectorAll('[id]')].map(element=>element.id);
   assert.equal(ids.length,new Set(ids).size,'No duplicate IDs');
-  for(const element of d.querySelectorAll('[aria-describedby],[aria-labelledby]')) {
-    for(const attr of ['aria-describedby','aria-labelledby']) for(const id of (element.getAttribute(attr)||'').split(' ').filter(Boolean)) assert.ok(d.getElementById(id),`ARIA ${id} exists`);
+  for(const element of d.querySelectorAll('[aria-describedby],[aria-labelledby],[aria-controls],[aria-activedescendant]')) {
+    for(const attr of ['aria-describedby','aria-labelledby','aria-controls','aria-activedescendant']) for(const id of (element.getAttribute(attr)||'').split(' ').filter(Boolean)) assert.ok(d.getElementById(id),`ARIA ${id} exists`);
   }
   for(const a of d.querySelectorAll('a[href^="#"]')) {
     const hash=a.getAttribute('href').slice(1);
@@ -83,8 +86,67 @@ const density=$('input[name="density"][value="compact"]');density.checked=true;f
 assert.equal(JSON.parse(w.localStorage.getItem('solyi-ds-prefs')).density,'compact');
 await route('theme/adoption');assert.equal(d.activeElement.id,'adoption-title');integrity();
 await route('style');assert.match($('#token-count').textContent,/Quiet sage/);
+// Extended components: semantic choices, touch help, native disclosure and overlays.
+await route('component');integrity();
+assert.match($('#extra-choice-count').textContent,/3개/);
+click('#extra-switch');assert.equal($('#extra-switch').getAttribute('aria-checked'),'true');assert.match($('#extra-choice-count').textContent,/4개/);
+for(const input of d.querySelectorAll('input[name="extra-kind"]')){input.checked=false;fire(input,'change');}
+assert.match($('#extra-choice-count').textContent,/결과가 없/);
+$('input[name="extra-kind"][value="기록"]').checked=true;fire($('input[name="extra-kind"][value="기록"]'),'change');
+$('input[name="extra-layout"][value="cards"]').checked=true;fire($('input[name="extra-layout"][value="cards"]'),'change');assert.ok($('#extra-choice-preview').classList.contains('cards'));
+$('#extra-tooltip-trigger').focus();assert.equal($('#extra-tooltip').hidden,false);
+d.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal($('#extra-tooltip').hidden,true);assert.equal(d.activeElement.id,'extra-tooltip-trigger');
+$('#mode-toggle').focus();fire($('#extra-tooltip-trigger'),'pointerenter');fire($('#extra-tooltip-trigger'),'pointerleave');fire($('#extra-tooltip'),'pointerenter');await pause(190);assert.equal($('#extra-tooltip').hidden,false,'Hover can move from trigger to tooltip');fire($('#extra-tooltip'),'pointerleave');await pause(190);assert.equal($('#extra-tooltip').hidden,true);
+click('#extra-popover-trigger');assert.equal($('#extra-popover').hidden,false);assert.equal(d.activeElement.id,'extra-popover-close');
+d.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal($('#extra-popover').hidden,true);assert.equal(d.activeElement.id,'extra-popover-trigger');
+click('#extra-popover-trigger');$('#mode-toggle').focus();assert.equal($('#extra-popover').hidden,true);assert.equal(d.activeElement.id,'mode-toggle','Nonmodal help does not trap focus');
+const disclosure=$('.sol-accordion');assert.equal(disclosure.open,false);disclosure.open=true;assert.equal(disclosure.open,true);disclosure.open=false;
+click('[data-extra-level="0"]');assert.equal($('#extra-location-title').textContent,'작업 공간');assert.equal(d.activeElement.id,'extra-location-title');
+click('[data-extra="breadcrumb-detail"]');assert.equal($('#extra-location-title').textContent,'작은 정원 기록');
+const panelButton=$('[data-extra="panel-open"]');panelButton.getClientRects=()=>[{}];panelButton.focus();panelButton.click();assert.equal($('#extra-panel').open,true);assert.equal(d.activeElement.dataset.extra,'panel-close');click('[data-extra="panel-close"]');assert.equal($('#extra-panel').open,false);assert.equal(d.activeElement,panelButton);
+const toastButton=$('[data-extra="toast-show"]');toastButton.focus();toastButton.click();assert.equal($('#extra-toast').hidden,false);assert.equal(d.activeElement,toastButton,'Toast never steals focus');$('#extra-toast-close').focus();click('#extra-toast-close');assert.equal($('#extra-toast').hidden,true);assert.equal(d.activeElement,toastButton);
+// Stable row selection, sorting, filter/page reset, empty result and both responsive views.
+await route('pattern');integrity();
+assert.equal(d.querySelectorAll('#extra-table-body tr').length,3);assert.match($('#extra-data-count').textContent,/1\/4/);
+click('#extra-select-page');assert.match($('#extra-selection-count').textContent,/선택 3개/);assert.equal(d.querySelectorAll('#extra-record-cards input:checked').length,3);
+click('#extra-table-body [data-extra-select="r1"]');assert.equal($('#extra-select-page').indeterminate,true);assert.equal($('#extra-select-page-mobile').indeterminate,true);assert.equal($('#extra-record-cards [data-extra-select="r1"]').checked,false);
+click('#extra-select-page');assert.equal($('#extra-select-page').checked,true);assert.match($('#extra-selection-count').textContent,/선택 3개/);
+click('#extra-data-next');assert.match($('#extra-data-count').textContent,/2\/4/);assert.match($('#extra-selection-count').textContent,/선택 3개/);
+$('#extra-data-filter').value='초안';fire($('#extra-data-filter'),'change');assert.match($('#extra-data-count').textContent,/1\/1/);assert.match($('#extra-selection-count').textContent,/현재 결과 밖 3개/);
+$('#extra-data-query').value='없는자료';fire($('#extra-data-query'),'input');assert.equal($('#extra-data-empty').hidden,false);assert.equal($('#extra-select-page').disabled,true);assert.equal($('#extra-data-next').disabled,true);assert.equal($('#extra-data-page').value,'1');
+click('[data-extra="data-reset"]');assert.equal($('#extra-data-empty').hidden,true);assert.equal($('#extra-data-filter').value,'all');assert.match($('#extra-selection-count').textContent,/선택 3개/);
+$('#extra-data-sort').value='name-asc';fire($('#extra-data-sort'),'change');assert.equal($('#extra-sort-name').getAttribute('aria-sort'),'ascending');
+click('[data-extra-sort="name"]');assert.equal($('#extra-data-sort').value,'name-desc');assert.equal($('#extra-sort-name').getAttribute('aria-sort'),'descending');
+$('#extra-data-query').value='기록';fire($('#extra-data-query'),'input');click('#extra-data-next');assert.match($('#extra-data-count').textContent,/2\/2/);
+$('#extra-data-filter').value='초안';fire($('#extra-data-filter'),'change');assert.match($('#extra-data-count').textContent,/1\/1/);assert.equal($('#extra-data-empty').hidden,false);
+click('#extra-selection-clear');assert.match($('#extra-selection-count').textContent,/선택 0개/);
+// Date-only validation, with no timezone conversion.
+$('#extra-date-start').value='2026-10-24';$('#extra-date-end').value='2026-10-21';fire($('#extra-range-form'),'submit');assert.equal($('#extra-date-error').hidden,false);assert.equal(d.activeElement.id,'extra-date-end');
+$('#extra-date-end').value='2026-10-25';fire($('#extra-range-form'),'submit');assert.match($('#extra-date-result').textContent,/2026-10-24 → 2026-10-25/);
+$('#extra-date-start').value='';fire($('#extra-range-form'),'submit');assert.equal(d.activeElement.id,'extra-date-start');$('#extra-range-form').reset();assert.equal($('#extra-date-error').hidden,true);
+// File metadata only: explicit rejection, removal, same-file reselection and count cap.
+const fileInput=$('#extra-files');const attach=files=>{Object.defineProperty(fileInput,'files',{configurable:true,value:files});fire(fileInput,'change');};
+const fileA=new w.File(['sample'],'sample.txt',{type:'text/plain',lastModified:1});attach([fileA]);assert.equal(d.querySelectorAll('#extra-file-list li').length,1);assert.equal(fileInput.value,'');
+attach([fileA]);assert.match($('#extra-file-errors').textContent,/이미 선택/);
+attach([new w.File(['x'],'bad.exe'),new w.File([new Uint8Array(2*1024*1024+1)],'large.pdf')]);assert.match($('#extra-file-errors').textContent,/지원하지 않는/);assert.match($('#extra-file-errors').textContent,/2MiB/);
+attach([new w.File(['b'],'b.png'),new w.File(['c'],'c.pdf'),new w.File(['d'],'d.txt')]);assert.equal(d.querySelectorAll('#extra-file-list li').length,3);assert.match($('#extra-file-errors').textContent,/최대 3개/);
+click('[data-extra-remove="1"]');attach([fileA]);assert.equal(d.querySelectorAll('#extra-file-list li').length,3,'Removed file can be chosen again');click('#extra-file-clear');assert.equal(d.querySelectorAll('#extra-file-list li').length,0);assert.equal(d.activeElement,fileInput);
+// Local combobox, including Korean IME composition and Escape/Tab.
+const auto=$('#extra-autocomplete');auto.focus();auto.value='메';fire(auto,'input');assert.equal(auto.getAttribute('aria-expanded'),'true');assert.equal(d.querySelectorAll('#extra-autocomplete-list [role="option"]').length,1);
+auto.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}));assert.equal(auto.getAttribute('aria-activedescendant'),'extra-option-0');
+auto.dispatchEvent(new w.CompositionEvent('compositionstart',{bubbles:true}));auto.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',isComposing:true,bubbles:true,cancelable:true}));assert.equal(auto.value,'메');assert.match($('#extra-autocomplete-result').textContent,/아직 선택/);
+auto.dispatchEvent(new w.CompositionEvent('compositionend',{bubbles:true}));auto.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}));auto.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));assert.equal(auto.value,'독서 메모');assert.equal(auto.getAttribute('aria-expanded'),'false');assert.equal(d.activeElement,auto);
+auto.value='일치없음';fire(auto,'input');assert.equal($('#extra-autocomplete-empty').hidden,false);auto.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal(auto.getAttribute('aria-expanded'),'false');assert.equal(auto.value,'일치없음');
+click('#extra-autocomplete-clear');auto.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowUp',bubbles:true,cancelable:true}));assert.equal(auto.getAttribute('aria-activedescendant'),'extra-option-5');auto.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Tab',bubbles:true}));assert.equal(auto.getAttribute('aria-expanded'),'false');
+// Response simulator: all cases, recovery and stale timer cleanup on route changes.
+const response=$('#extra-response-mode');response.value='denied';fire(response,'change');assert.match($('#extra-response-body').textContent,/실제 계정/);click('[data-extra-response="ready"]');assert.match($('#extra-response-status').textContent,/결과 2개/);
+response.value='empty';fire(response,'change');assert.match($('#extra-response-body').textContent,/조건에 맞는/);click('[data-extra-response="ready"]');
+response.value='error';fire(response,'change');click('[data-extra-response="loading"]');assert.equal($('#extra-response-body').getAttribute('aria-busy'),'true');click('[data-extra-response="loading"]');await pause(960);assert.match($('#extra-response-status').textContent,/결과 2개/);assert.equal(d.activeElement.id,'extra-response-ready');
+response.value='loading';fire(response,'change');assert.ok($('#extra-response-body .sol-skeleton'));response.value='denied';fire(response,'change');await pause(960);assert.match($('#extra-response-status').textContent,/접근 불가/);
+response.value='loading';fire(response,'change');await route('component');await pause(960);assert.equal(d.activeElement.tagName,'H1','Unmount cancels stale response focus');
 assert.deepEqual(errors,[],'No runtime errors in the synthetic DOM');
 dom.window.close();
 console.log('PASS: 5 routes, internal anchors/ARIA IDs, route focus, token search/copy, example copy, theme/mode/density.');
 console.log('PASS: form validation/failure/recovery/duplicate guard/reset, search/filter/empty/failure/retry/stale response, comparison, first-use state, dialog open/close wiring.');
+console.log('PASS: table/list selection/filter/sort/page combinations, choices/switch, tooltip/popover dismissal, breadcrumb, panel/toast wiring, dates, file rejection/removal/reselection, IME combobox, response states and cleanup.');
 console.log('LIMIT: no browser rendering, CSS layout, physical keyboard, native modal trap, or screen reader verification.');

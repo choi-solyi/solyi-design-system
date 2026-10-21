@@ -19,6 +19,6 @@ await mkdir(out, {recursive:true});
 await writeFile(path.join(out, 'tokens.css'), css);
 await writeFile(path.join(out, 'token-data.js'), `// Generated from tokens.json.\nexport default ${JSON.stringify(tokens, null, 2)};\n`);
 await copyFile(path.join(root, 'tokens.json'), path.join(out, 'tokens.json'));
-for (const name of ['index.html', 'app.js', 'preferences.js', 'docs.css', 'components.css', 'favicon.svg']) await copyFile(path.join(root, 'site', name), path.join(out, name));
+for (const name of ['index.html', 'app.js', 'extended.js', 'preferences.js', 'docs.css', 'components.css', 'favicon.svg']) await copyFile(path.join(root, 'site', name), path.join(out, name));
 await writeFile(path.join(out, '.nojekyll'), '');
 console.log('Built docs/ from the allowlisted site files and shared tokens.json.');
