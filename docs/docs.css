@@ -64,6 +64,16 @@ main:focus {outline: none;}
 .specimen-task {border-top: 1px solid var(--sol-color-border); padding: var(--sol-row-padding) 0; font-size: var(--sol-text-sm); display: flex; gap: 12px; align-items: center; justify-content: space-between;}
 .specimen-task:last-of-type {margin-bottom: 8px;}
 .specimen-task .sol-choice {min-height: 44px;}
+.goal-specimen .specimen-task {border-radius: var(--sol-radius-sm); transition: background var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}
+.goal-specimen [data-complete="true"] {background: var(--sol-color-accent-soft);}
+.goal-copy {transition: color var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}
+[data-complete="true"] .goal-copy {color: var(--sol-color-muted); text-decoration: line-through; text-decoration-thickness: 1px;}
+.goal-marker {flex: 0 0 24px; width: 24px; text-align: center; font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
+[data-complete="true"] .goal-marker {color: var(--sol-color-accent);}
+.goal-status {flex: 0 0 6em; width: 6em; justify-content: center;}
+.goal-specimen .goal-feedback {min-height: 3.3em; margin: var(--sol-space-2) 0 var(--sol-space-4); color: var(--sol-color-muted);}
+.goal-specimen .sol-progress::-webkit-progress-value {transition: width var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}
+.goal-specimen .sol-progress::-moz-progress-bar {transition: width var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}
 .hero-caption {display: flex; gap: 12px; font-size: 11px; color: var(--sol-color-muted); margin-top: 16px; flex-wrap: wrap;}
 .hero-caption span::before {content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; background: var(--sol-color-accent);}
 .hero-caption span:nth-child(2)::before {background: var(--sol-color-text);}
@@ -93,8 +103,13 @@ main:focus {outline: none;}
 .local-nav a {min-height: 44px; display: flex; align-items: center;}
 .rule-list {padding-left: 20px; margin: 0; font-size: var(--sol-text-sm);}
 .rule-list li {margin-bottom: 10px; padding-left: 4px;}
-.token-toolbar {display: flex; align-items: end; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;}
-.token-toolbar .sol-field {flex: 1; min-width: min(100%,240px);}
+.token-toolbar {display: grid; grid-template-columns: minmax(180px,1fr) auto; gap: 8px 12px; align-items: start; margin-bottom: 16px;}
+.token-toolbar > .sol-label {grid-area: 1 / 1;}
+.token-toolbar > .sol-input {grid-area: 2 / 1;}
+.token-actions {grid-area: 2 / 2; display: flex; flex-wrap: wrap; gap: 8px;}
+.token-actions .sol-button {min-height: var(--sol-control-height);}
+.token-toolbar > .sol-hint {grid-area: 3 / 1 / 4 / -1;}
+@media (max-width: 1000px) {.token-toolbar {grid-template-columns: minmax(0,1fr);}.token-actions {grid-area: 4 / 1;}.token-toolbar > .sol-hint {grid-area: 3 / 1;}}
 .token-grid {display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px;}
 .token {text-align: left; border: 1px solid var(--sol-color-border); border-radius: 9px; padding: 12px; background: var(--sol-color-surface); cursor: pointer; min-width: 0; color: var(--sol-color-text);}
 .token:hover {border-color: var(--sol-color-accent);}

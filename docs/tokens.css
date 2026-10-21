@@ -20,10 +20,18 @@
   --sol-radius-sm: 0.375rem;
   --sol-radius-md: 0.75rem;
   --sol-radius-lg: 1rem;
-  --sol-control-height: 2.75rem;
+  --sol-control-height: 2.5rem;
+  --sol-button-height: 2.25rem;
+  --sol-touch-target-min: 2.75rem;
   --sol-focus-width: 3px;
   --sol-focus-offset: 3px;
   --sol-motion-fast: 140ms;
+  --sol-motion-duration-state: 160ms;
+  --sol-motion-duration-enter: 220ms;
+  --sol-motion-duration-loading: 600ms;
+  --sol-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --sol-motion-easing-linear: linear;
+  --sol-motion-distance-small: 4px;
   --sol-content-gap: 1rem;
   --sol-row-padding: 1rem;
   --sol-color-canvas: #F5F6FA;
@@ -195,3 +203,4 @@
   --sol-content-gap: 0.75rem;
   --sol-row-padding: 0.75rem;
 }
+@media (max-width: 680px), (pointer: coarse) { :root { --sol-control-height: var(--sol-touch-target-min); --sol-button-height: var(--sol-touch-target-min); } }
