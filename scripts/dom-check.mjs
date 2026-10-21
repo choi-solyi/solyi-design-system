@@ -50,6 +50,10 @@ click('[data-action="loading-demo"]');click('[data-action="loading-demo"]');
 assert.equal($('[data-action="loading-demo"]').getAttribute('aria-busy'),'true');
 await pause(760);assert.equal($('[data-action="loading-demo"]').hasAttribute('aria-busy'),false);
 assert.match($('#button-feedback').textContent,/마쳤/);
+const noticeRetry=$('[data-action="retry-feedback"]');noticeRetry.focus();noticeRetry.click();noticeRetry.click();
+assert.equal(noticeRetry.getAttribute('aria-busy'),'true','Notice retry prevents duplicate execution while loading');
+await pause(760);assert.equal(noticeRetry.hasAttribute('aria-busy'),false);assert.match($('#retry-result').textContent,/성공/);
+assert.equal(d.activeElement,noticeRetry,'Notice retry retains keyboard focus after completion');
 click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/sol-button/);
 // Only the app's dialog opening and return-focus wiring is checked; no native modal trap is simulated.
 const dialog=$('#detail-dialog');dialog.showModal=function(){this.setAttribute('open','');};dialog.close=function(){this.removeAttribute('open');fire(this,'close');};

@@ -17,7 +17,7 @@ for(const [name,theme] of Object.entries(tokens.themes)) {
       ['accent','surface',4.5],['accent','accent-soft',4.5],
       ['on-accent','accent',4.5],['on-accent','accent-hover',4.5],
       ['success','success-soft',4.5],['warning','warning-soft',4.5],['danger','danger-soft',4.5],['info','info-soft',4.5],
-      ['control-border','surface',3],['focus','surface',3],['focus','canvas',3],['focus','accent-soft',3]
+      ['control-border','surface',3],['focus','surface',3],['focus','canvas',3],['focus','accent-soft',3],['focus','danger-soft',3]
     ]) {
       const ratio=contrast(theme[mode][a],theme[mode][b]);
       assert.ok(ratio>=min,`${name}/${mode}: ${a}/${b} ${ratio.toFixed(3)} < ${min}`);

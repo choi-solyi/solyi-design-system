@@ -15,6 +15,13 @@
 .sol-button:disabled, .sol-button[aria-disabled="true"] {color: var(--sol-color-muted); background: var(--sol-color-surface-alt); border-color: var(--sol-color-border); cursor: not-allowed;}
 .sol-button[aria-busy="true"] {cursor: wait;}
 .sol-button[aria-busy="true"]::before {content: ''; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: sol-spin .7s linear infinite;}
+/* Secondary notice action: quiet text, with a full 44px interaction target. */
+.sol-button.inline-action {min-width: var(--sol-control-height); min-height: var(--sol-control-height); padding: 0 var(--sol-space-2); border: 0; background: transparent; color: inherit; font-size: var(--sol-text-xs); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap;}
+.sol-button.inline-action:hover:not(:disabled):not([aria-disabled="true"]) {background: transparent; text-decoration-thickness: 2px;}
+.sol-button.inline-action:disabled, .sol-button.inline-action[aria-disabled="true"] {color: var(--sol-color-muted); background: transparent;}
+.sol-notice-actions {display: flex; flex-wrap: wrap; gap: var(--sol-space-2); margin-top: var(--sol-space-1);}
+.sol-notice-actions > .inline-action {margin-inline-start: calc(-1 * var(--sol-space-2));}
+.sol-notice-message {margin: var(--sol-space-1) 0 0;}
 .sol-field {display: grid; gap: var(--sol-space-2); min-width: 0;}
 .sol-label {font-weight: 650; font-size: var(--sol-text-sm);}
 .sol-input, .sol-select {
