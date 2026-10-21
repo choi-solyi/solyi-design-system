@@ -41,7 +41,7 @@
 .sol-tabs [role="tab"][aria-selected="true"] {color:var(--sol-color-accent);background:var(--sol-color-accent-soft);border-bottom-color:var(--sol-color-accent);}
 .sol-tabs [role="tabpanel"] {padding-block:var(--sol-space-4);}
 .sol-tabs [role="tabpanel"][hidden] {display:none;}
-.sol-menu {box-sizing:border-box;position:fixed;z-index:var(--sol-layer-floating);width:max-content;min-width:200px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow:auto;padding:var(--sol-space-2);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-card);background:var(--sol-color-surface);color:var(--sol-color-text);box-shadow:var(--sol-elevation-floating);}
+.sol-menu {box-sizing:border-box;position:fixed;z-index:var(--sol-layer-floating);width:max-content;min-width:200px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow:auto;padding:var(--sol-space-2);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-floating);background:var(--sol-color-surface);color:var(--sol-color-text);box-shadow:var(--sol-elevation-floating);}
 .sol-menu[hidden] {display:none;}
 .sol-menu [role="menuitem"] {display:flex;align-items:center;gap:var(--sol-space-2);width:100%;min-height:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);font:inherit;font-size:var(--sol-text-sm);text-align:start;border:0;border-radius:var(--sol-radius-button);background:transparent;color:var(--sol-color-text);cursor:pointer;}
 .sol-menu [role="menuitem"]:hover,.sol-menu [role="menuitem"]:focus-visible {background:var(--sol-color-accent-soft);}
@@ -139,7 +139,7 @@
 .sol-mini-list.cards {grid-template-columns: repeat(2,minmax(0,1fr));}
 .sol-mini-list li {padding: var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); font-size: var(--sol-text-sm);}
 .sol-tooltip {position: fixed; z-index: var(--sol-layer-floating); max-width: min(280px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-small); background: var(--sol-color-text); color: var(--sol-color-surface); font-size: var(--sol-text-xs); line-height: var(--sol-line-body);}
-.sol-popover {position: fixed; z-index: var(--sol-layer-floating); width: min(320px,calc(100vw - 32px)); padding: var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-card); background: var(--sol-color-surface); color: var(--sol-color-text); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
+.sol-popover {position: fixed; z-index: var(--sol-layer-floating); width: min(320px,calc(100vw - 32px)); padding: var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); background: var(--sol-color-surface); color: var(--sol-color-text); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
 .sol-popover p {margin: var(--sol-space-2) 0 var(--sol-space-3);}
 .sol-accordion {border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); background: var(--sol-color-surface);}
 .sol-accordion + .sol-accordion {margin-top: var(--sol-space-2);}
@@ -211,7 +211,7 @@
 .sol-date-summary > span {min-width: 0; overflow-wrap: anywhere;}
 .sol-date-output {font-size: var(--sol-text-xs); white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--sol-space-1) 0 0; padding: var(--sol-space-3); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); background: var(--sol-color-surface-alt);}
 .sol-calendar-status {min-height: 3.3em; margin: var(--sol-space-2) 0;}
-.sol-calendar-dialog {box-sizing: border-box; position: fixed; margin: auto; width: min(384px,calc(100vw - 8px)); max-width: calc(100vw - 8px); max-height: calc(100dvh - 48px); overflow: auto; padding: var(--sol-space-4); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-card); background: var(--sol-color-surface); color: var(--sol-color-text);}
+.sol-calendar-dialog {box-sizing: border-box; position: fixed; margin: auto; width: min(384px,calc(100vw - 8px)); max-width: calc(100vw - 8px); max-height: calc(100dvh - 48px); overflow: auto; padding: var(--sol-space-4); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-floating); background: var(--sol-color-surface); color: var(--sol-color-text);}
 .sol-calendar-dialog::backdrop {background: var(--sol-backdrop-color);}
 .sol-calendar-top > span {font-size: var(--sol-text-xs); font-weight: 600; line-height: 1.4;}
 .sol-calendar-top,.sol-calendar-heading,.sol-calendar-footer {display: flex; align-items: center; justify-content: space-between; gap: var(--sol-space-2);}
@@ -325,5 +325,5 @@
 
 /* Nonmodal time panel; direct HH:mm input remains available. */
 .sol-time-entry{display:flex;gap:var(--sol-space-2);min-width:0;align-items:start;}.sol-time-entry>.sol-input{min-width:0;flex:1;}.sol-time-entry>.sol-button{height:var(--sol-control-height);flex:none;white-space:nowrap;}
-.sol-time-panel{position:fixed;z-index:var(--sol-layer-floating);width:min(320px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-card);box-shadow:var(--sol-elevation-floating);padding:var(--sol-space-4);}.sol-time-panel h3{font-size:var(--sol-text-md);margin:0;}.sol-time-panel .row-between{align-items:center;margin-bottom:var(--sol-space-3);}.sol-time-panel .sol-time-options{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+.sol-time-panel{position:fixed;z-index:var(--sol-layer-floating);width:min(320px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-floating);box-shadow:var(--sol-elevation-floating);padding:var(--sol-space-4);}.sol-time-panel h3{font-size:var(--sol-text-md);margin:0;}.sol-time-panel .row-between{align-items:center;margin-bottom:var(--sol-space-3);}.sol-time-panel .sol-time-options{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
 #summary-errors ul{margin-block:var(--sol-space-2);padding-left:24px;}#summary-errors a{color:var(--sol-color-danger);text-underline-offset:3px;}

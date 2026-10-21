@@ -18,3 +18,7 @@
 ## 0.3.1 패키지 초안
 
 Core/Vue UI0.1.1은 로컬 tarball만 검증한 private 패키지입니다. 실제 설치 조합/4개 API/외부 d.ts 검사 한계·업데이트/롤백·자동 변경 대상은 LIBRARY.md를 따릅니다. 기존 Core 복사 snapshot은 starter에서 import하지 않으며 실제 설치된 Core가 원본과 일치하는지 검사합니다. 문서의 나머지 부품은 HTML/CSS/JS 참고 예시입니다.
+
+## 0.3.2 카드 반경
+
+radius-card는12px입니다. radius-lg 기초값20px와 새 radius-floating20px는 유지해 카드 변경이 메뉴/팝오버/달력/시간 패널로 번지지 않게 했습니다. 버튼6/입력10/큰 패널28/보조 inset10은 그대로입니다. Core/Vue UI local pack0.1.2를 같은 tarball 소비 흐름으로 검증하며 다른 앱은 자동 변경되지 않습니다.
