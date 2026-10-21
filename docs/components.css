@@ -8,6 +8,10 @@
 .sol-icon-grid>div {display:flex;gap:var(--sol-space-2);align-items:center;min-height:var(--sol-control-height);font-size:var(--sol-text-xs);}
 .sol-icon-size {display:inline-flex;align-items:center;gap:var(--sol-space-2);font-size:var(--sol-text-xs);}
 .sol-elevated {box-shadow:var(--sol-elevation-floating);}
+.sol-dialog {box-sizing:border-box;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 48px);overflow:auto;padding:var(--sol-space-6);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-lg);background:var(--sol-color-surface);color:var(--sol-color-text);}
+.sol-dialog::backdrop {background:var(--sol-backdrop-color);}
+.sol-button.danger {color:var(--sol-color-danger);border-color:var(--sol-color-danger);}
+.sol-button.danger:hover {background:var(--sol-color-danger-soft);}
 .sol-textarea {width:100%;min-height:96px;resize:vertical;line-height:var(--sol-line-body);padding:var(--sol-space-2) var(--sol-space-3);}
 .sol-stepper {display:flex;align-items:center;gap:var(--sol-space-2);}
 .sol-stepper input {max-width:7rem;min-width:0;}
