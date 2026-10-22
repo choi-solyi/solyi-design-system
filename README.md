@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.4.0 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.5.0 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -152,3 +152,5 @@ Component → Progress bar·circle은 기존 sol-progress를 재사용하고 수
 개발자 종합 리뷰의 재현 절차·심각도·검증 범위는 [DEVELOPER-REVIEW.md](./DEVELOPER-REVIEW.md)에 기록합니다.
 
 현재 Vue API는 기존4종+입력6종·Tabs·Toast·DatePicker·TimePicker, 총14종입니다. [API와 코드](VUE-API.md), [예제 전체 전환표와 후속 범위](VUE-MIGRATION.md)를 구분해 보세요. 모든 문서 예제가 Vue로 전환된 것은 아닙니다.
+
+신규 재사용 API6종(SegmentedControl, MultiSelect, RangeSlider, SplitButton, ContextMenu, ResizableSplitPane)을 더해 실제 Vue export는20종입니다. [확장 API](ADVANCED-VUE-API.md)와 [진행 계획](VUE-EXPANSION-PLAN.md)을 참고하세요. 기본 UI는 공식 Wanted Sans1.0.3을 self-host하며 코드용 monospace는 유지합니다. [폰트 출처·범위](FONT.md)에서 OFL·fallback·검증 한계를 확인할 수 있습니다.

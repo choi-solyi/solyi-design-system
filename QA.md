@@ -1,5 +1,19 @@
 # 검증 기록
 
+## 최신: 확장 Vue6종과 Wanted Sans (0.5.0) · 2026-10-22 UTC
+
+- Core/UI0.3.0의 실제 private tarball(Core17/UI12파일)을 두 독립 소비 앱에 설치했습니다. 기존14+신규6종20개 export의 strict source/선언·정상/오류 타입·Vite build·실제 설치 런타임을 검사합니다. Vue/Vuetify/Core는 external이며 UI 자체 JS약87.6kB입니다. 신규 메뉴·선택·분할은 문서용 DOM ID가 아닌 소유 refs/Vue 상태를 사용합니다.
+- 전체 파이프라인 통과: 패키지 내용/exports/CSS/원본 일치, 두 소비 lock/단일 프레임워크, 기존14종과 새6종의 동작, 실제 starter SFC,38 public asset allowlist,186개 토큰 대비,630 의미색 버튼·42 pagination·42 선택 메뉴 상태,50개 연속 앵커와 기존 폼/날짜/파일/비동기/모션 회귀. 초기 검사가 잡은 보관용 토큰 사본의 버전 불일치는 원본에서 다시 동기화했습니다. 선언·동작 실패 시 뒤 빌드로 진행하지 않는 기존 흐름을 유지합니다.
+- 신규 동작 회귀: Segmented native radio/비활성 건너뛰기/readonly, MultiSelect controlled 태그/제한/required/제거/IME/abort·늦은 응답·오류/재시도·unmount, Range 고정 핸들 순서/경계/격자/교차 방지/키/포인터/트랙, 공유 메뉴 roving·Esc/Tab/outside/반환·외부 제어/편집입력 기본 메뉴, SplitPane min/max/포인터/키/최소·복원/좁은 컨테이너 전환·값/내용 유지. 합성 DOM의 포인터와 native popover stub은 실제 브라우저 검증과 구분합니다.
+- 자체 리뷰 수정: MultiSelect의 선택 항목 이름을 날짜 문구와 분리하고, 사라지는 재시도 버튼 대신 유지되는 검색칸으로 초점을 이동합니다. 메뉴 동작이 새 워크플로 초점으로 옮겼으면 이를 빼앗지 않고, programmatic open/close는 현재 실행 위치를 사용합니다. 편집 입력의 native context menu는 보존합니다. 같은 위치의 두 핸들 오른쪽을 누르면 상한을 움직이도록 트랙 선택 경계도 보완했습니다. 신규 disabled 스타일의 색은 실제 정의된 surface-alt 역할을 사용합니다. TimePicker 완료 버튼에 space-2 8px를 추가했습니다. 기존 LF 설정을 유지하고 원문 라이선스의 공백만 Git 검사 예외로 보존했습니다.
+- Wanted Sans1.0.3의 원본 WOFF2/CSS/OFL을 공식 고정 커밋/Git blob/SHA256으로 검증했습니다. 사이트·Core pack·starter 글꼴 바이트가 같고, 원본 OFL과 고정 출처를 포함합니다. 일반 UI/root 및 포털의 글꼴 토큰을 연결하고 기존 code/pre monospace는 유지합니다. 새 코드 폰트 적용은 보류됐습니다.
+- 사용자 PC Chrome155.0.8059.85 실제 로컬 데모: 단일·다중 선택, async 오류에서 Tab으로 retry 접근, 메뉴 native top layer/키·Esc/Tab/ShiftF10/우클릭/보이는 실행 버튼·반환을 확인했습니다. 실제 포인터 드래그로 Range25→35, SplitPane45→35와 완료 이벤트를 확인했고, 키보드 Home/End/Enter 경계도 확인했습니다.333 CSS px에서는 divider가 사라지고30% 비율·입력 메모가 보존됐습니다. TimePicker 선택행→완료 버튼 간격은 약7.99px입니다.
+- 데스크톱1920px3테마×light/dark에서 가로 넘침/끊어진 ARIA ID0, 표 열 폭47.99/707.62/95.99/127.99/72px 유지.333px에서 scrollWidth316, 버튼/필드약44px, textarea약96px, 메뉴184px/시간 패널317px이 화면 안에 표시됐습니다. 픽셀 기반 전체 시각 검수 통과를 뜻하지 않습니다.
+- 별도 임시 서버가 WOFF2만 실제404로 반환하는 상태에서도 글꼴 check=false, 입력/오류 초점·가로 넘침 없음 및 위 고정 열/컨트롤 치수 유지. code/pre는 monospace입니다.333px 제목은 Wanted 높이35px와 시스템 폴백70px로 줄바꿈 차이가 있었습니다. swap 중 줄바꿈 차이를 감추지 않으며 정량 CLS는 이 로컬 비교로 측정하지 않았습니다. complete 폰트는 약1.29MB이고 실패 시 시스템 스택을 씁니다.
+- 이 세션의 화면 캡처5초 제한은 반복하지 않았습니다. 실제 이미지 전체 검토·화면낭독기·iPhone Safari/실기기/터치 보조기술·모든 OS·forced colors·400% 확대와 실제 한국어 IME 하드웨어 입력은 미검증입니다. IME/race/reduced-motion의 코드·합성 검증과 구분합니다.
+- 마지막 확정 빌드의 표 정렬/페이지/필터 및 MultiSelect 재시도 초점 재확인 도중 Chrome 도구 연결이 종료됐고, 읽기 전용 탭 조회도 실패했습니다. 그 마지막 호출의 완료 범위는 불확실하므로 통과로 기록하지 않습니다. 앞선 실제 로컬 검증과 확정 tarball의 합성 회귀는 위와 같이 구분합니다. 새 공개 브라우저/PSI 측정은 이 연결에서 불가할 수 있습니다.
+- 커밋 시점 로컬 기록입니다. 기존 Pages CI/공개 자산 비교 및 공개 런타임·가능한 성능 측정은 게시 후 최종 보고에 정확한 커밋/실행 URL과 함께 기록합니다. 레지스트리/다른 앱/권한 변경은 없습니다.
+
 ## 최신: 기존 예제의 Vue API 전환 (0.4.0) · 2026-10-22 UTC
 
 - Core/Vue UI0.2.0, 총14종(기존4+새10)의 실제 private tarball을 두 별도 소비 앱에 설치했습니다. strict 소스·생성 선언·정상/잘못된 API 타입, CSS/exports/순수 날짜 모듈 포함, Vue/Vuetify external import 및 단일 설치를 검사합니다. UI 자체 ES 약55.5kB이며 프레임워크를 묶지 않습니다. 레지스트리 미게시입니다.

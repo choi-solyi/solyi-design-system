@@ -22,7 +22,7 @@ await writeFile(path.join(out, 'tokens.css'), css);
 await writeFile(path.join(out, 'token-data.js'), `// Generated from tokens.json.\nexport default ${JSON.stringify(tokens, null, 2)};\n`);
 await copyFile(path.join(root, 'tokens.json'), path.join(out, 'tokens.json'));
 if(process.argv.includes('--core-only')) {console.log('Generated shared Core tokens only.');process.exit(0);}
-for (const name of siteFiles) await copyFile(path.join(root, 'site', name), path.join(out, name));
+for (const name of siteFiles) {await mkdir(path.dirname(path.join(out,name)),{recursive:true});await copyFile(path.join(root, 'site', name), path.join(out, name));}
 await mkdir(path.join(out,'starter'),{recursive:true});
 for(const name of starterFiles)await copyFile(path.join(root,'examples/vue-vuetify/dist',name),path.join(out,'starter',name));
 await writeFile(path.join(out, '.nojekyll'), '');

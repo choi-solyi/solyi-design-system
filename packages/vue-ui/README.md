@@ -1,14 +1,16 @@
-# @solyi/vue-ui 0.2.0
+# @solyi/vue-ui 0.3.0
 
-Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.2.0. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
+Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.3.0. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
 
 ```js
 import 'vuetify/styles';
+import '@solyi/core/fonts.css'; // optional self-hosted official Wanted Sans/OFL
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';
 import {SolButton, SolField, SolDialog, SolTable, SolCheckbox, SolRadioGroup, SolSwitch,
-  SolSelect, SolTextarea, SolNumberInput, SolTabs, SolToast, SolDatePicker, SolTimePicker} from '@solyi/vue-ui';
+  SolSelect, SolTextarea, SolNumberInput, SolTabs, SolToast, SolDatePicker, SolTimePicker, SolSegmentedControl, SolMultiSelect, SolRangeSlider,
+  SolSplitButton, SolContextMenu, SolResizableSplitPane} from '@solyi/vue-ui';
 // Or app.use(SolyiUI) for global registration. Install createVuetify() once in the app.
 ```
 
@@ -25,8 +27,12 @@ Types are generated from TypeScript. No theme plugin, global CSS injection, netw
 
 Button honors forwarded aria-disabled while retaining focus; disabled uses the native disabled prop. Table exposes labeled column/direction sorting for its mobile card view using the same sort/update:sort contract. Selection updates support reactive in-place ID/row edits as well as array replacement.
 
-## Additional typed exports (0.2.0)
+## Additional typed exports (0.3.0)
 
 SolCheckbox, SolRadioGroup, SolSwitch, SolSelect, SolTextarea, SolNumberInput, SolTabs, SolToast, SolDatePicker and SolTimePicker are actual package components. Field controls share id/label/help/error/disabled/readonly and locale contracts; state is controlled by v-model. Dates emit complete single/range values, Time emits HH:mm, and Toast has persistent/pauseable timing. See the [complete API and ten usage examples](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-API.md) and [remaining reference-only inventory](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-MIGRATION.md).
 
 `app.use(SolyiUI,{locale:koLocale})` supplies defaults; per-component locale overrides win. Korean/English built-in messages are exported. This does not translate application content or the documentation.
+
+## Six additional APIs (20 total)
+
+SegmentedControl(string|null), MultiSelect(string[] with cancellable optional option loader), RangeSlider(readonly number pair), SplitButton and ContextMenu(flat action events/optional controlled open), ResizableSplitPane(percentage/keyboard/pointer/reflow) are actual typed exports. See ../../ADVANCED-VUE-API.md and the installed AdvancedExamples.vue consumer. The original14 remain. Other reference demos are not implicitly converted.

@@ -40,3 +40,7 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 .starter-api-output summary {min-height:var(--sol-touch-target-min);align-content:center;cursor:pointer;}
 .starter-card>.sol-ui-tabs,.starter-card>.sol-field+.sol-ui-tabs {margin-top:var(--sol-space-4);}
 @media(max-width:680px){.starter-control-grid{grid-template-columns:minmax(0,1fr);}}
+
+/* Advanced examples arrange public components; component appearance stays in the package. */
+.starter-card>.sol-ui-split-button{justify-self:start;}
+.starter-card>.sol-ui-context{margin-top:var(--sol-space-4);}

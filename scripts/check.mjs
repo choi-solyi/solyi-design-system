@@ -29,7 +29,8 @@ for(const [name,theme] of Object.entries(tokens.themes)) {
   }
 }
 const expected=[...siteFiles,...generatedFiles,'starter'];
-assert.deepEqual((await readdir(path.join(root,'docs'))).sort(),expected.sort(),'Only intended public site files');
+async function walk(dir,prefix=''){const result=[];for(const item of await readdir(dir,{withFileTypes:true})){const n=prefix+item.name;if(item.isDirectory())result.push(...await walk(path.join(dir,item.name),n+'/'));else result.push(n);}return result;}
+assert.deepEqual((await walk(path.join(root,'docs'))).sort(),[...siteFiles,...generatedFiles,...starterFiles.map(n=>'starter/'+n)].sort(),'Only intended public site files, including licensed font assets');
 assert.deepEqual((await readdir(path.join(root,'docs/starter'))).sort(),[...starterFiles].sort(),'Only intended standalone starter files');
 for(const name of starterFiles)assert.deepEqual(await readFile(path.join(root,'examples/vue-vuetify/dist',name)),await readFile(path.join(root,'docs/starter',name)),`Published starter ${name} is current`);
 for(const name of siteFiles) assert.deepEqual(await readFile(path.join(root,'site',name)),await readFile(path.join(root,'docs',name)),`${name} build is current`);
@@ -48,3 +49,5 @@ console.log('PASS: public allowlist, current generated files, shared token expor
 
 await import('./check-brand.mjs');
 await import('./check-starter.mjs');
+
+await import('./font-check.mjs');

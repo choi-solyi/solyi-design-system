@@ -30,3 +30,7 @@ radius-card는12px입니다. radius-lg 기초값20px와 새 radius-floating20px�
 ## 0.4.0 Vue API 확장
 
 Core/Vue UI0.2.0은 private local tarball이며 총14종의 typed API를 제공합니다. 실제 설치 조합은 Vue3.5.44/Vuetify4.3.0/Vite8.3.4 그대로입니다. 새10종은 Vue 소유 DOM/native controls와 공통 CSS를 쓰며 별도 Vuetify wrapper로 위장하지 않습니다. 기존 SolField/Dialog는 Vuetify 기반입니다. 코어의 /date export는 시간대 변환 없는 순수 함수입니다. ko/en 내장 문구와 앱/컴포넌트 locale override는 확장 지점이며 문서 전체 번역/모든 언어 호환을 뜻하지 않습니다. 자세한 API/변경 정책은 VUE-API.md, 전체 전환 범위와 후속은 VUE-MIGRATION.md를 따릅니다. 기존 앱 자동 업데이트 및 공개 레지스트리 배포는 연결하지 않았습니다.
+
+## 0.5.0 신규6종과 기본 UI 글꼴
+
+Core/UI0.3.0은 기존14+신규6의20종 typed API입니다. native popover를 지원하면 메뉴 top layer를 쓰고, 없는 브라우저에서는 fixed fallback이므로 transform/clip 조상에서 추가 검증이 필요합니다. SplitPane은 ResizeObserver와 좁은 컨테이너의 세로 리플로우를 사용합니다. MultiSelect 공급자 함수의 실제 서버/인증은 라이브러리 범위 밖이며 데모는 타이머뿐입니다. Wanted Sans1.0.3 WOFF2/CSS/OFL은 원본 해시를 고정해 self-host합니다. 코드용 monospace와 나머지 색·반경은 유지합니다. iPhone Safari·실제 터치 화면낭독기와 모든 OS 렌더링을 검증한 것으로 해석하지 않습니다.

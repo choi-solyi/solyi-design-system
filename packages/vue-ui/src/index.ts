@@ -9,6 +9,12 @@ import './styles.css';
 import {SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput} from './controls';
 import {SolTabs,SolToast} from './navigation';
 import {SolDatePicker,SolTimePicker} from './date-time';
+import {SolSegmentedControl,SolMultiSelect,SolRangeSlider} from './selection';
+import {SolSplitButton,SolContextMenu} from './actions';
+import {SolResizableSplitPane} from './split-pane';
+export {SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane};
+export type {SolOptionLoader,SolMultiSelectHandle,SolRangeValue} from './selection';
+export type {SolMenuItem,SolMenuCloseReason} from './actions';
 import {provideSolLocale} from './locale';
 import type {SolLocale} from './locale';
 export {SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput};
@@ -20,7 +26,7 @@ export type {SolOption,SolNumberInputHandle} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale} from './locale';
 export type {SolLocale} from './locale';
 
-export const uiVersion='0.2.0';
+export const uiVersion='0.3.0';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
@@ -110,5 +116,5 @@ export const SolTable=defineComponent({
 });
 
 export interface SolyiOptions {locale?:Partial<SolLocale>}
-export function install(app:App,options:SolyiOptions={}){if(options.locale)provideSolLocale(app,options.locale);for(const component of [SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker])app.component(component.name!,component);}
+export function install(app:App,options:SolyiOptions={}){if(options.locale)provideSolLocale(app,options.locale);for(const component of [SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane])app.component(component.name!,component);}
 export default {install};

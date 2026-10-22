@@ -1,6 +1,6 @@
 # Vue migration inventory · phase 2
 
-Baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository and its existing Pages demo are in scope. Packages remain private local tarballs. Existing apps, registry publication, Figma and new credentials/permissions are excluded.
+Historical phase2 baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository and its existing Pages demo are in scope. Packages remain private local tarballs. Existing apps, registry publication, Figma and new credentials/permissions are excluded.
 
 ## Release gates
 
@@ -10,7 +10,7 @@ Baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository and its existing Pag
 - [x] C. DatePicker and TimePicker: source runtime complete values, leap/bounds, draft/cancel/reverse/same-day, mode reset, locale/firstDay, keyboard/outside/focus recovery passed. Final installed gate remains D.
 - [x] D. Document every API and usage, connect the actual installed starter and independent type consumer, run the complete package/document regression pipeline.
 - [x] E1. Actual Chrome keyboard/state checks and 1643/833/333/320 CSS px geometry; 3 themes × light/dark representative layout. Screenshot timed out; no pixel-review pass. See QA.md.
-- [ ] E2. Commit-time pending: push, existing Pages CI, public asset comparison and public interaction checks. Exact final completion evidence is reported after publication, not assumed before it.
+- [x] E2. Phase2 published at e04ba299; CI39716365908 attempt1 succeeded,33 public asset hashes matched, public Chrome interactions confirmed. See release report; no registry or other-app update.
 
 ## Existing examples and conversion status
 
@@ -32,7 +32,7 @@ Baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository and its existing Pag
 | Snackbar / Toast | None | B: SolToast |
 | Date single/range | None | C: SolDatePicker |
 | HH:mm direct entry / time panel | None | C: SolTimePicker |
-| Static multi-select tags | None | Follow-up; do not claim converted |
+| Static multi-select tags | None | New SolMultiSelect API in phase3; original HTML example remains a reference |
 | Autocomplete local/delayed/empty/error/retry | None | Follow-up; keep reference behavior |
 | Tooltip / interactive popover | None | Follow-up |
 | Accordion | None | Follow-up |
@@ -55,13 +55,15 @@ Baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository and its existing Pag
 
 ## Approved later additions · excluded from this release
 
-SegmentedControl; searchable MultiSelect; two-ended RangeSlider; SplitButton; ContextMenu; ResizableSplitPane. Document-wide search, complete shared-locale settings, distribution/update channels, Figma kit and broader real-device verification also remain later work. Their absence is explicit, not a completed checklist.
+SegmentedControl, searchable MultiSelect, two-ended RangeSlider, SplitButton, ContextMenu and ResizableSplitPane now have actual typed exports, standalone consumer usage and an installed starter. [Contracts](ADVANCED-VUE-API.md) and [phase3 release gates](VUE-EXPANSION-PLAN.md) distinguish source/installed/browser/public validation. The existing14 stay available.
+
+Document-wide search, complete shared-locale settings, distribution/update channels, Figma kit and broader real-device verification remain later work. The reference examples listed as follow-up above remain HTML/JS references; these six exports do not convert them all.
 
 ## API decisions
 
 - Required unique `id` and visible `label` for form controls; `help`/`error` link by ID. Consumers own business validation. Local parsing errors never erase typed input.
 - Controlled `modelValue` and `update:modelValue`; `change` carries committed values. Disabled uses native disabled where supported. Readonly keeps readable/focusable content and blocks mutations; no invented unsupported ARIA.
 - String-valued native Select/Radio options, boolean Checkbox/Switch, string Textarea, number-or-null NumberInput, string Tabs value, boolean Toast visibility, date-only single/range values and HH:mm-or-null Time values. No partial date/time value is emitted as a completed value.
-- Locale-ready message objects and Intl formatting hooks are shared by new APIs; this is not a claim that the whole document has been translated. Korean remains the starter default.
+- Locale-ready message objects and Intl formatting hooks are shared by new APIs; this is not a claim that the whole document has been translated. Korean remains the starter default. Wanted Sans is the newly approved default UI font; code/pre monospace stays unchanged.
 - Date arithmetic is pure and shared with the existing calendar. Components use Vue-rendered owned nodes/refs and lifecycle cleanup, not document-example IDs or innerHTML mounting.
 - Existing compact desktop sizes, mobile44px targets and button6/field10/card-popup12/dialog16 radius roles remain.

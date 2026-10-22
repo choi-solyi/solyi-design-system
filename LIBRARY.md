@@ -1,6 +1,6 @@
 # 패키지 소비와 자동 검증
 
-첫 패키지 초안은 `@solyi/core@0.2.0` / `@solyi/vue-ui@0.2.0`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
+현재 패키지 초안은 `@solyi/core@0.3.0` / `@solyi/vue-ui@0.3.0`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
 
 0.1.5의 접근성 보완: Field 외부 label의 ID와 입력의 aria-labelledby를 연결합니다. Table의 오류 재시도 버튼에 초점이 있는 채로 정상/로딩 상태로 바뀌면, 제거된 버튼 대신 지속되는 결과 요약에 초점을 둡니다. 사용자가 다른 조작부로 이동한 뒤 완료되면 그 초점을 유지합니다. API/색/타이포/반경은 유지합니다.
 
@@ -10,7 +10,7 @@
 |---|---|
 | `tokens.json`, `site/components.css`, `site/overflow.js` | 프레임워크 독립 원본. Core dist로 생성/복사하며 수동 이중 편집하지 않음 |
 | `packages/core` | tokens.css, tokens.json, components.css, tokens/coreVersion JS+타입, overflow helper exports |
-| `packages/vue-ui` | SolButton, SolField, SolDialog, SolTable. Vite ES library, TypeScript 선언, 별도 styles.css |
+| `packages/vue-ui` | 기존14종과 확장6종의20개 typed API. Vite ES library, TypeScript 선언, 별도 styles.css |
 | `examples/package-consumer` | 소스 alias·workspace·심볼릭 링크 없이 두 `.tgz`를 설치하는 독립 타입/빌드/동작 검증 |
 | `examples/vue-vuetify` → `docs/starter` | 실제 tarball을 쓰는 공개 데모. 필드 검증, Dialog, 검색·정렬·선택·페이지 Table |
 | 나머지 `site/*` | 계속 사용할 수 있는 HTML/CSS/JS 참고 예제. **Vue 패키지로 전부 전환한 상태가 아님** |
@@ -76,3 +76,7 @@ Import solIcon / solIconPaths from @solyi/core/icons to use the same 16/20/24 li
 ## Typed control expansion (0.2.0)
 
 기존4종은 유지하고 Checkbox/RadioGroup/Switch/Select/Textarea/NumberInput/Tabs/Toast/DatePicker/TimePicker10종을 실제 export합니다. [API·사용법](VUE-API.md)과 [전환표](VUE-MIGRATION.md)를 확인하세요. Core의 `./date`는 문서와 Vue가 함께 쓰는 DOM 없는 날짜/시각 계산입니다. 새 컴포넌트의 locale 객체/앱 주입은 확장 지점이며 문서 전체 번역·외부 배포 경로·나머지 예제의 전환을 뜻하지 않습니다.
+
+## 0.3.0 추가6종과 UI 폰트
+
+[ADVANCED-VUE-API.md](ADVANCED-VUE-API.md)는 새6종의 값/이벤트/키보드/async 계약을 설명합니다. 이전14종 API를 삭제하지 않습니다. Core의 `fonts.css` export와 동일 폴더의 원본 WOFF2/OFL/SOURCE.json이 실제 tarball에 포함됩니다. 소비 앱은 `import '@solyi/core/fonts.css'`를 한 번 추가하고, UI 토큰은 Wanted Sans와 시스템 fallback을 사용합니다. 글꼴은 OFL1.1이며 자체 소스의 UNLICENSED와 구분합니다. 코드용 monospace는 그대로입니다. 설치·업데이트는 같은 lockfile/tarball 방식이며 공개 레지스트리와 다른 앱 자동배포를 연결하지 않습니다.

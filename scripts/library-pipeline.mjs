@@ -25,6 +25,7 @@ run('6/10 Independent consumer typecheck + app build','examples/package-consumer
 node('7/10 Pack contracts and installed runtime tests','scripts/library-contract-check.mjs');
 node('7/10 Component runtime','scripts/library-runtime-check.mjs');
 node('7/10 Extended controlled Vue runtime','scripts/vue-extended-runtime-check.mjs');
+node('7/10 Six new reusable Vue APIs','scripts/vue-expansion-runtime-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 node('9/10 Documentation build','scripts/build.mjs');

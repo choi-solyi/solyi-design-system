@@ -1,11 +1,12 @@
 import {createApp,h,ref} from 'vue';
 import {createVuetify} from 'vuetify';
 import {VApp} from 'vuetify/components/VApp';
-import SolyiUI,{SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,koLocale,uiVersion} from '@solyi/vue-ui';
-import type {DateValue,DateRange,SolOption,SolPickerHandle,SolNumberInputHandle,SolLocale} from '@solyi/vue-ui';
+import SolyiUI,{SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane,koLocale,uiVersion} from '@solyi/vue-ui';
+import type {DateValue,DateRange,SolOption,SolPickerHandle,SolNumberInputHandle,SolLocale,SolRangeValue,SolOptionLoader,SolMenuItem} from '@solyi/vue-ui';
 import type {TableColumn,TableRow,TableSort,ButtonVariant} from '@solyi/vue-ui';
 import {tokens,coreVersion} from '@solyi/core';
 import {solIcon,solIconPaths} from '@solyi/core/icons';
+import '@solyi/core/fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import 'vuetify/styles';
@@ -47,12 +48,29 @@ const badMode:InstanceType<typeof SolDatePicker>['$props']={id:'bad',label:'bad'
 // @ts-expect-error Time model is HH:mm string or null.
 const badTime:InstanceType<typeof SolTimePicker>['$props']={id:'bad',label:'bad',modelValue:930};
 void [badCheckbox,badRadio,badSwitch,badSelect,badText,badNumber,badTabs,badToast,badDate,badMode,badTime];
+const rangeValue:SolRangeValue=[20,80],menuItems:SolMenuItem[]=[{id:'copy',label:'Copy'}];
+const localLoader:SolOptionLoader=async(_query,_signal)=>choices;void localLoader;
+// @ts-expect-error SegmentedControl is a single string value.
+const badSegment:InstanceType<typeof SolSegmentedControl>['$props']={id:'bad',label:'bad',options:choices,modelValue:['a']};
+// @ts-expect-error MultiSelect is a string array.
+const badMulti:InstanceType<typeof SolMultiSelect>['$props']={id:'bad',label:'bad',modelValue:'a'};
+// @ts-expect-error Range requires two endpoints.
+const badRange:SolRangeValue=[1];
+// @ts-expect-error Menu action IDs are strings.
+const badMenu:SolMenuItem={id:1,label:'bad'};
+// @ts-expect-error Open is controlled boolean, not text.
+const badSplit:InstanceType<typeof SolSplitButton>['$props']={id:'bad',label:'bad',items:menuItems,open:'yes'};
+// @ts-expect-error Context items require visible text labels.
+const badContext:InstanceType<typeof SolContextMenu>['$props']={id:'bad',label:'bad',items:[{id:'x'}]};
+// @ts-expect-error Pane orientation is explicit.
+const badPane:InstanceType<typeof SolResizableSplitPane>['$props']={id:'bad',label:'bad',primaryLabel:'A',secondaryLabel:'B',orientation:'diagonal'};
+void [badSegment,badMulti,badRange,badMenu,badSplit,badContext,badPane];
 const chevron=solIcon('chevron',{size:20});void chevron;void solIconPaths.close;
 const invalidIconTypeOnly=()=>{
   // @ts-expect-error Only the shared icon names are accepted.
   solIcon('unregistered-symbol');
 };void invalidIconTypeOnly;
-const app=createApp({setup(){const text=ref(''),open=ref(false),sort=ref<TableSort|null>(null),selected=ref<string[]>([]),checked=ref(false),choice=ref<string|null>('note'),amount=ref<number|null>(2),tab=ref('a'),toast=ref(false),dates=ref<DateValue>(validRange),time=ref<string|null>('09:00');return()=>h(VApp,{},()=>h('main',{style:'padding:24px'},[
+const app=createApp({setup(){const text=ref(''),open=ref(false),sort=ref<TableSort|null>(null),selected=ref<string[]>([]),checked=ref(false),choice=ref<string|null>('note'),amount=ref<number|null>(2),tab=ref('a'),toast=ref(false),dates=ref<DateValue>(validRange),time=ref<string|null>('09:00'),multi=ref<string[]>([]),range=ref<SolRangeValue>(rangeValue),ratio=ref(50);return()=>h(VApp,{},()=>h('main',{style:'padding:24px;font-family:var(--sol-font-sans)'},[
   h('h1',`Independent tarball consumer: ${coreVersion}/${uiVersion} (${tokens.version})`),
   h(SolField,{id:'consumer-title',label:'가상 제목',modelValue:text.value,'onUpdate:modelValue':value=>text.value=value}),
   h(SolButton,{variant,onClick:()=>open.value=true},()=> '열기'),
@@ -67,6 +85,12 @@ const app=createApp({setup(){const text=ref(''),open=ref(false),sort=ref<TableSo
   h(SolTabs,{id:'consumer-tabs',label:'가상 탭',modelValue:tab.value,items:[{value:'a',label:'A'},{value:'b',label:'B'}],'onUpdate:modelValue':v=>tab.value=v},{'panel-a':()=>h('p','가상 요약'),'panel-b':()=>h('p','가상 상세')}),
   h(SolToast,{id:'consumer-toast',message:'가상 알림',modelValue:toast.value,'onUpdate:modelValue':v=>toast.value=v}),
   h(SolDatePicker,{id:'consumer-date',label:'가상 일정',mode:'range',modelValue:dates.value,'onUpdate:modelValue':v=>dates.value=v}),
+  h(SolSegmentedControl,{id:'consumer-segment',label:'View',options:choices,modelValue:choice.value,'onUpdate:modelValue':v=>choice.value=v}),
+  h(SolMultiSelect,{id:'consumer-multi',label:'Tags',options:choices,modelValue:multi.value,'onUpdate:modelValue':v=>multi.value=v}),
+  h(SolRangeSlider,{id:'consumer-range',label:'Range',modelValue:range.value,'onUpdate:modelValue':v=>range.value=v}),
+  h(SolSplitButton,{id:'consumer-split',label:'Export',items:menuItems}),
+  h(SolContextMenu,{id:'consumer-context',label:'Record',items:menuItems},()=>h('p','Fictional record')),
+  h(SolResizableSplitPane,{id:'consumer-pane',label:'Layout',primaryLabel:'A',secondaryLabel:'B',modelValue:ratio.value,'onUpdate:modelValue':v=>ratio.value=v},{primary:()=>h('p','A'),secondary:()=>h('p','B')}),
   h(SolTimePicker,{id:'consumer-time',label:'가상 시각',modelValue:time.value,min:'09:00',max:'18:00',step:15,'onUpdate:modelValue':v=>time.value=v})
 ]));}});
 app.use(createVuetify()).use(SolyiUI,{locale:koLocale}).mount('#app');

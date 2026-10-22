@@ -1,6 +1,6 @@
 {
   "name": "@solyi/core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "license": "UNLICENSED",
@@ -30,7 +30,8 @@
     "./date": {
       "types": "./dist/date-only.d.ts",
       "import": "./dist/date-only.js"
-    }
+    },
+    "./fonts.css": "./dist/fonts/wanted-sans/WantedSansVariable.css"
   },
   "sideEffects": [
     "**/*.css"

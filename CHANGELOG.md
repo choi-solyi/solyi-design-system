@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.5.0 — 2026-10-22
+
+- Core/UI local pack0.3.0: SegmentedControl, 검색 가능한 MultiSelect, 양끝 RangeSlider, SplitButton, ContextMenu, ResizableSplitPane을 더해 실제 typed export20종을 제공합니다. 기존14종과 공개 링크/기능은 유지합니다.
+- 다중 선택의 IME·비동기 레이스·오류/재시도·태그 제거, 고정 순서 슬라이더 경계/키보드/트랙, 공유 메뉴의 키보드/우클릭/모바일 버튼/초점, 분할 패널의 포인터·키보드·min/max·세로 리플로우를 실제 설치 데모에 연결했습니다.
+- 기본 UI는 사용자 선택에 따라 공식 Wanted Sans1.0.3을 self-host합니다. 원본 CSS/WOFF2/OFL·고정 출처/해시를 패키지와 사이트에 보존하고 코드용 monospace는 변경하지 않습니다.
+- TimePicker의 선택행과 완료 버튼 사이에 space-2(8px)를 추가했습니다. MultiSelect 재시도 버튼이 사라지는 로딩 상태에는 초점을 검색칸에 유지하고, 메뉴 동작 후 소비 앱이 옮긴 초점은 보존합니다.
+- 레지스트리 게시·다른 앱 연결·새 권한 없이 기존 검증→Pages 흐름만 사용합니다. 남은 기존 예제 전환/문서 검색/전체 locale/설치 배포 채널/Figma는 후속으로 구분합니다.
+
 ## 0.4.0 — 2026-10-22
 
 - Core/Vue UI local pack0.2.0: 기존 Button/Field/Dialog/Table에 Checkbox, RadioGroup, Switch, Select, Textarea, NumberInput, Tabs, Toast, DatePicker, TimePicker의 typed Vue API를 추가했습니다. 실제 설치 starter와 별도 타입 소비자가 총14종을 가져옵니다.

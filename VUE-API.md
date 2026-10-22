@@ -1,6 +1,6 @@
-# Vue UI API · 0.2.0 preview
+# Vue UI API · 0.3.0 preview
 
-Actual exports: the existing **SolButton / SolField / SolDialog / SolTable** plus the ten components below. All are built and packed from TypeScript; Vue/Vuetify and Core stay external. This is a private local-tarball preview, not an npm release. See [inventory and remaining examples](VUE-MIGRATION.md), [installation/update/rollback](LIBRARY.md) and [the real consumer source](examples/vue-vuetify/src/ExtendedExamples.vue).
+This document preserves the first14 APIs. Six additional exports make20 total; see [the new API contracts](ADVANCED-VUE-API.md). Actual exports below: the existing **SolButton / SolField / SolDialog / SolTable** plus the ten components below. All are built and packed from TypeScript; Vue/Vuetify and Core stay external. This is a private local-tarball preview, not an npm release. See [inventory and remaining examples](VUE-MIGRATION.md), [installation/update/rollback](LIBRARY.md) and [the real consumer source](examples/vue-vuetify/src/ExtendedExamples.vue).
 
 ## Shared contracts
 
@@ -87,4 +87,4 @@ app.use(SolyiUI,{locale:koLocale}); // createVuetify() once separately
 // Per-app/per-component overrides: {...enLocale,code:'en-GB',firstDay:1,clear:'Reset'}.
 ```
 
-SolLocale contains code/firstDay, plain messages, count/numberHelp/timeHelp functions. Per-component overrides win over injected app values; undefined entries keep defaults. Intl date formatting is Gregorian/UTC for arithmetic/display safety. Caller-provided labels, slot content and business errors remain the caller's text. Existing reference documents and old four component labels are not automatically translated. Broader locale settings, other reference examples and the six newly proposed components remain in the inventory, not this release's completion claim.
+SolLocale contains code/firstDay, plain messages, count/numberHelp/timeHelp functions. Per-component overrides win over injected app values; undefined entries keep defaults. Intl date formatting is Gregorian/UTC for arithmetic/display safety. Caller-provided labels, slot content and business errors remain the caller's text. Existing reference documents and old four component labels are not automatically translated. Broader locale settings, other reference examples remain in the inventory, not this release's completion claim.

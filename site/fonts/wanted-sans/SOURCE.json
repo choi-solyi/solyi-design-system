@@ -1,0 +1,31 @@
+{
+  "project": "Wanted Sans",
+  "version": "1.0.3",
+  "repository": "https://github.com/wanteddev/wanted-sans",
+  "commit": "02c9b822349c188ada95f9e2d90c2ed18f853235",
+  "license": "OFL-1.1",
+  "modified": false,
+  "files": [
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/complete/woff2/WantedSansVariable.woff2",
+      "local": "woff2/WantedSansVariable.woff2",
+      "bytes": 1289292,
+      "gitBlob": "edca6ec90a39ee96ba1a8927fe5e624438ce22a6",
+      "sha256": "4259e7e9a172e634c2cb419d793b84148990316341e910443e5d10965b2c8f16"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css",
+      "local": "WantedSansVariable.css",
+      "bytes": 510,
+      "gitBlob": "dc1e0c9cd6fd69f21cac08d7847345b5fa1fa5ac",
+      "sha256": "340ed458c7530e6adeab6e0a9b9b101148765ba693ff8644dc5e14692b967c0c"
+    },
+    {
+      "path": "OFL.txt",
+      "local": "OFL.txt",
+      "bytes": 4394,
+      "gitBlob": "de64d7050da4906548292a504c8da5ac04957a79",
+      "sha256": "db345ad0216d0b73ba5dd3a540507281da6695f234e0a4e70cf2e1a8f30d4331"
+    }
+  ]
+}

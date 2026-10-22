@@ -1,4 +1,4 @@
-import {mkdir, readFile, writeFile, copyFile} from 'node:fs/promises';
+import {mkdir, readFile, writeFile, copyFile, cp} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {solIconNames} from '../site/icons.js';
@@ -16,3 +16,5 @@ await writeFile(new URL('icons.d.ts',dist),'export type SolIconName = '+solIconN
 console.log('Built @solyi/core '+pkg.version+' from the shared source (no Vue dependency).');
 
 await copyFile(new URL('site/date-only.d.ts',root),new URL('date-only.d.ts',dist));
+
+await cp(new URL('site/fonts/',root),new URL('fonts/',dist),{recursive:true});
