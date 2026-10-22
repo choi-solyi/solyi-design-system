@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, STextField, SSelect, SAlert, SBtn } from '@solyi/vue-ui';
+
 const query = ref(''),
   state = ref<string | null>('all'),
   failed = ref(true);

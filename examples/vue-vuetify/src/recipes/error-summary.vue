@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue';
-import { SCard, SAlert, STextField, SNumberInput, SBtn } from '@solyi/vue-ui';
+
 const name = ref(''),
   count = ref<number | null>(null),
   submitted = ref(false);
@@ -10,8 +10,7 @@ const nameError = computed(() =>
       : '',
   ),
   countError = computed(() =>
-    submitted.value &&
-    (count.value === null || count.value < 1 || count.value > 5)
+    submitted.value && (count.value === null || count.value < 1 || count.value > 5)
       ? '1~5 사이 개수를 입력해 주세요.'
       : '',
   );

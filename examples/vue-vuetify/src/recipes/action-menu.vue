@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, SSplitBtn, SContextMenu } from '@solyi/vue-ui';
+
 const result = ref('');
 const items = [
   { id: 'copy', label: '가상 복제' },

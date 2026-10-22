@@ -1,6 +1,6 @@
 <script setup>
 import {computed,ref,watch} from 'vue';
-import {SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,SSwitch,SSelect,SNumberInput,STextarea} from '@solyi/vue-ui';
+
 const disabled=ref(false),readonly=ref(false),display=ref('brief'),selected=ref(['garden']),scenario=ref('local'),requests=ref(0);
 const choices=[{value:'garden',label:'정원'},{value:'book',label:'책장'},{value:'walk',label:'산책'},{value:'season',label:'계절 관찰'},{value:'locked',label:'보관 · 선택 불가',disabled:true}];
 const loader=computed(()=>{const mode=scenario.value;if(mode==='local')return undefined;return async(query,signal)=>{const attempt=++requests.value;await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{signal.removeEventListener('abort',abort);resolve();},query.includes('느림')?600:180);const abort=()=>{clearTimeout(timer);reject(new DOMException('Cancelled','AbortError'));};signal.addEventListener('abort',abort,{once:true});if(signal.aborted)abort();});if(mode==='retry'&&attempt===1)throw new Error('가상 실패');return choices.filter(o=>o.label.includes(query.trim()));};});

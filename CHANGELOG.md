@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 0.10.0 · 전용 Vue API와 같은 원본의 실행 예제
+
+- Core0.4.2 / Vue UI0.8.0. STooltip, SPopover, SAccordion, SBreadcrumbs, SFileInput, SAutocomplete, SAvatar, SStepper, SBarChart를 제공합니다.
+- 문서 캔버스·기본 코드·실행 화면30개가 같은 정본 SFC와 설치한 패키지를 사용합니다. 전역 등록 및 opt-in 템플릿 타입, 공통 코드 여백·상단 복사·실행 링크 footer를 제공합니다.
+- 자체 재사용 코드의 MIT 범위와 브랜드 제외, 폰트 원본 라이선스를 명시합니다. sol-ui registry tombstone은 사용 가능 확인을 뜻하지 않습니다. npm 미게시·1.0.0 미확정·이전 산출물 보존.
+
 ## 0.9.1 문서 후속 · 사용 예제 탐색
 
 - 사용 예제 선택 필드를 분류별 링크 목록으로 교체합니다. 넓은 화면은 왼쪽 목록과 오른쪽 콘텐츠, 좁은 화면은 접이식 목록을 사용하며 URL·히스토리·키보드 선택을 유지합니다.

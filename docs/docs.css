@@ -180,7 +180,7 @@ main:focus {outline: none;}
 .token .token-value {float: right; font-family: var(--sol-font-mono); font-size: 11px; color: var(--sol-color-muted);}
 .code-example {margin-top: 16px; border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); overflow: visible; background: var(--sol-color-surface-alt);}
 .code-example summary {padding: 12px 16px; cursor: pointer; min-height: 44px; font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
-.code-example .code-body {padding: 0 16px 16px;}
+.code-example .code-body {padding:0;min-width:0;}
 .code-body .button-row {margin-top: 12px;}
 .spec-table {width: 100%; border-collapse: collapse; font-size: var(--sol-text-sm);}
 .spec-table th, .spec-table td {padding: 14px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--sol-color-border);}
@@ -329,13 +329,27 @@ html {scroll-padding-top:var(--sol-document-offset,100px);}
 .vue-code-examples {margin-top:var(--sol-space-4);min-width:0;}
 .vue-code-examples[open]>summary {border-bottom:1px solid var(--sol-color-border);border-radius:var(--sol-radius-inset) var(--sol-radius-inset) 0 0;}
 .vue-code-frame {min-width:0;}
-.vue-code-frame>[role=tablist] {display:flex;flex-wrap:wrap;gap:0;padding-inline:var(--sol-space-4);border-bottom:1px solid var(--sol-color-border);background:var(--sol-color-surface);}
+.code-toolbar {display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sol-space-2);padding:var(--sol-space-2) var(--sol-space-4);border-bottom:1px solid var(--sol-color-border);background:var(--sol-color-surface);min-width:0;}
+.code-toolbar>[role=tablist] {display:flex;flex-wrap:wrap;gap:0;min-width:0;flex:1;}
+.code-language {font-size:var(--sol-text-sm);color:var(--sol-color-muted);padding-block:var(--sol-space-2);overflow-wrap:anywhere;}
+.code-toolbar>.code-copy-button {display:inline-flex;align-items:center;justify-content:center;flex:none;width:var(--sol-button-height);height:var(--sol-button-height);min-height:var(--sol-button-height);padding:0;margin:2px 0 0 auto;}
+.code-copy-button .sol-icon {display:block;}
+.code-check-glyph,.code-copy-button[data-copied=true] .code-copy-glyph {display:none;}
+.code-copy-button[data-copied=true] .code-check-glyph {display:block;color:var(--sol-color-success);}
+.code-example pre {margin:0;padding:var(--sol-space-4);min-width:0;max-width:100%;overflow-x:auto;white-space:pre;overflow-wrap:normal;word-break:normal;border:0;border-radius:0;}
+.code-example pre:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:calc(-1 * var(--sol-space-1));}
+.code-example-footer {display:flex;align-items:center;flex-wrap:wrap;gap:var(--sol-space-3);padding:var(--sol-space-3) var(--sol-space-4);border-top:1px solid var(--sol-color-border);font-size:var(--sol-text-sm);}
+.code-example-footer a {display:inline-flex;align-items:center;min-height:var(--sol-control-height);}
 .vue-code-tab {display:inline-flex;align-items:center;min-height:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);border:0;border-bottom:2px solid transparent;background:transparent;color:var(--sol-color-muted);font:inherit;font-size:var(--sol-text-sm);cursor:pointer;}
 .vue-code-tab[aria-selected=true] {border-bottom-color:var(--sol-color-accent);color:var(--sol-color-text);font-weight:650;}
 .vue-code-tab:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:calc(-1 * var(--sol-space-1));}
-.vue-code-frame>[role=tabpanel] {min-width:0;padding-top:var(--sol-space-4);}
+.vue-code-frame>[role=tabpanel] {min-width:0;}
 .vue-code-examples pre {max-width:100%;overflow-x:auto;white-space:pre;overflow-wrap:normal;word-break:normal;}
-.code-panel-note,.code-example-link,.code-part-label {margin:0 var(--sol-space-4) var(--sol-space-3);font-size:var(--sol-text-sm);}
+.code-panel-note,.code-part-label {margin:0;padding:var(--sol-space-4) var(--sol-space-4) 0;font-size:var(--sol-text-sm);}
 .code-panel-note {color:var(--sol-color-muted);}
 .code-reference-part+.code-reference-part {margin-top:var(--sol-space-4);}
 @media(max-width:680px){.vue-code-tab{min-height:var(--sol-touch-target-min);}}
+.vue-live-stage {display:grid;gap:var(--sol-space-6);min-width:0;}
+.vue-live-part {min-width:0;}
+.vue-live-part>.document-alias-heading {margin:0 0 var(--sol-space-3);}
+.vue-recipe-frame {display:block;width:100%;border:0;background:var(--sol-color-surface);color-scheme:inherit;}

@@ -1,3 +1,5 @@
+import '@solyi/vue-ui/global';
+import {STooltip,SPopover,SAccordion,SBreadcrumbs,SFileInput,SAutocomplete,SAvatar,SStepper,SBarChart} from '@solyi/vue-ui';
 import {createApp,h,ref} from 'vue';
 import {createVuetify} from 'vuetify';
 import {VApp} from 'vuetify/components/VApp';
@@ -107,3 +109,14 @@ app.use(createVuetify()).use(SolyiUI).mount('#app');
 
 // @ts-expect-error Removed legacy component compatibility export.
 import type {SolButton as RemovedLegacyButton} from '@solyi/vue-ui';
+
+// Independent tarball consumers must receive global template types and typed dedicated APIs.
+const breadcrumbProps:InstanceType<typeof SBreadcrumbs>['$props']={items:[{id:'home',label:'Home',href:'#home'}]};
+const chartProps:InstanceType<typeof SBarChart>['$props']={id:'sample-chart',label:'Sample',items:[{id:'mon',label:'Mon',value:2}]};
+// @ts-expect-error File limits are numeric.
+const invalidFileProps:InstanceType<typeof SFileInput>['$props']={label:'Files',maxFiles:'three'};
+// @ts-expect-error Avatar requires an accessible label.
+const invalidAvatarProps:InstanceType<typeof SAvatar>['$props']={size:32};
+type GlobalFile=import('vue').GlobalComponents['SFileInput'];
+const globalFile:GlobalFile=SFileInput;
+void [STooltip,SPopover,SAccordion,SBreadcrumbs,SFileInput,SAutocomplete,SAvatar,SStepper,SBarChart,breadcrumbProps,chartProps,invalidFileProps,invalidAvatarProps,globalFile];

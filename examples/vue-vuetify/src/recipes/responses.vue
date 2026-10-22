@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, SSelect, SAlert, SBtn, SProgressLinear } from '@solyi/vue-ui';
+
 const state = ref<string | null>('ready');
 </script>
 <template>

@@ -1,6 +1,6 @@
-# 확장 Vue API · 0.3.0 preview
+# 선택·범위·동작·화면 분할
 
-기존14종에 아래6종을 추가합니다. 실제 import는 `@solyi/vue-ui`, 스타일은 같은 Core와 UI 패키지입니다. [실행 소비 소스](examples/vue-vuetify/src/AdvancedExamples.vue), [기존14종 API](VUE-API.md), [전체 전환표](VUE-MIGRATION.md), [설치·업데이트·롤백](LIBRARY.md)을 함께 참고하세요. 공개 npm 릴리스가 아닌 private local tarball입니다.
+선택·범위·메뉴·분할의 재사용 API입니다. [전역 등록과 타입 설정](DEDICATED-VUE-API.md)을 앱에서 한 번 적용합니다. 같은 Core/UI 스타일을 사용하며 실제 npm에는 게시하지 않았습니다.
 
 ## 공통 계약
 

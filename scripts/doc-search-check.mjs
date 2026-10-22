@@ -9,7 +9,7 @@ const sources=await Promise.all(moduleOrder.map(n=>read('docs/'+n+'.js'))),app=s
 function load(hash='#overview',saved){const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));const dom=new JSDOM(html,{url:'https://example.test/solyi-design-system/'+hash,runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc}),w=dom.window,d=w.document,mqs=new Map();
  w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.matchMedia=q=>{if(!mqs.has(q)){const m=new w.EventTarget();m.matches=false;mqs.set(q,m);}return mqs.get(q);};
  w.HTMLDialogElement.prototype.showModal=function(){this.open=true;this.querySelector('[autofocus]')?.focus();};w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};
- if(saved)w.localStorage.setItem('solyi-ds-prefs',JSON.stringify(saved));w.eval(prefs);for(const source of sources)w.eval(strip(source));w.eval(app+'\nwindow.__searchTest={index:buildDocumentSearchIndex,snippets:()=>JSON.stringify([...snippets])};');return{dom,w,d,errors,mqs};
+ if(saved)w.localStorage.setItem('solyi-ds-prefs',JSON.stringify(saved));w.eval(prefs);for(const source of sources)w.eval(strip(source));/* Search/index unit scope uses Core form fixtures; the real package-preview and leave bridge have their own integration test. */w.mountVuePreviews=()=>()=>{};w.eval(app+'\nwindow.__searchTest={index:buildDocumentSearchIndex,snippets:()=>JSON.stringify([...snippets])};');return{dom,w,d,errors,mqs};
 }
 const pause=()=>new Promise(r=>setTimeout(r,35));
 const {dom,w,d,errors,mqs}=load('#pattern/form'),input=d.querySelector('#document-search-query'),panel=d.querySelector('#document-search-dialog'),results=d.querySelector('#document-search-results');

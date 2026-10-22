@@ -2,19 +2,23 @@
 import {ref,watch,computed,onBeforeUnmount} from 'vue';
 import {useTheme} from 'vuetify';
 import {tokens as coreTokens,coreVersion} from '@solyi/core';
-import {SBtn,STextField,SDialog,SDataTable,uiVersion,applySolyiAppearance} from '@solyi/vue-ui';
+import { uiVersion, applySolyiAppearance } from '@solyi/vue-ui';
 import ProgressExamples from './ProgressExamples.vue';
 import RecipeExamples from './RecipeExamples.vue';
 import VuetifyExamples from './VuetifyExamples.vue';
 import LocaleExamples from './LocaleExamples.vue';
 import ExtendedExamples from './ExtendedExamples.vue';
 import AdvancedExamples from './AdvancedExamples.vue';
+import {recipeComponents,recipeLabels} from './recipe-registry';
 const embed=new URLSearchParams(window.location.search).get('view')==='progress';
 const recipeEmbed=new URLSearchParams(window.location.search).get('view')==='recipes';
-const theme=useTheme(),selected=ref('violet'),mode=ref(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+const params=new URLSearchParams(window.location.search),embeddedRecipe=recipeEmbed&&params.get('embed')==='1',recipeId=Object.hasOwn(recipeComponents,params.get('example'))?params.get('example'):'buttons',recipePart=params.get('part')||undefined;
+const recipeInstance=ref(null);
+defineExpose({confirmRecipeLeave:()=>recipeInstance.value?.confirmLeave?.()??Promise.resolve(true)});
+const theme=useTheme(),selected=ref(Object.hasOwn(coreTokens.themes,params.get('theme'))?params.get('theme'):'violet'),mode=ref(['light','dark'].includes(params.get('mode'))?params.get('mode'):matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
 const title=ref(''),error=ref(''),result=ref(''),dialog=ref(false),saving=ref(false);let saveTimer;
 onBeforeUnmount(()=>clearTimeout(saveTimer));
-watch([selected,mode],([name,appearance])=>{applySolyiAppearance(theme,{theme:name,mode:appearance});},{immediate:true});
+watch([selected,mode],([name,appearance])=>{applySolyiAppearance(theme,{theme:name,mode:appearance,density:params.get('density')==='compact'?'compact':'comfortable'});},{immediate:true});
 function save(){if(saving.value)return;const submittedTitle=title.value.trim();if(!submittedTitle||submittedTitle.length>30){error.value='제목을 1~30자로 입력해 주세요.';result.value='';document.querySelector('#starter-title')?.focus();return;}error.value='';result.value='';saving.value=true;saveTimer=setTimeout(()=>{saving.value=false;result.value=`✓ “${submittedTitle}” 가상 기록을 확인했어요. 서버에 전송하지 않습니다.`;},450);}
 const columns=[{key:'name',label:'이름',sortable:true},{key:'status',label:'상태',width:'96px'},{key:'date',label:'변경일',width:'128px',sortable:true}];
 const records=[{id:'r1',name:'작은 정원에서 관찰한 계절과 다시 읽고 싶은 아주 긴 가상 기록 제목',status:'진행 중',date:'2026-10-21'},{id:'r2',name:'저녁 책장',status:'초안',date:'2026-10-20'},{id:'r3',name:'주말 산책',status:'완료',date:'2026-10-19'},{id:'r4',name:'계절 관찰',status:'진행 중',date:'2026-10-18'},{id:'r5',name:'가상 노트',status:'초안',date:'2026-10-17'},{id:'r6',name:'작은 목표',status:'완료',date:'2026-10-16'}];
@@ -24,9 +28,9 @@ const pages=computed(()=>Math.max(1,Math.ceil(filtered.value.length/3))),rows=co
 watch([query,sort],()=>page.value=1);watch(pages,value=>page.value=Math.min(page.value,value));
 </script>
 <template>
-  <VApp><main class="starter-main"><ProgressExamples v-if="embed" /><template v-else-if="recipeEmbed"><div class="starter-settings"><label>테마<select v-model="selected"><option value="violet">Cool violet</option><option value="sage">Quiet sage</option><option value="sand">Warm sand</option></select></label><label>화면 모드<select v-model="mode"><option value="light">Light</option><option value="dark">Dark</option></select></label></div><RecipeExamples/></template><template v-else>
+  <VApp><main class="starter-main"><ProgressExamples v-if="embed" /><template v-else-if="recipeEmbed"><template v-if="embeddedRecipe"><h1 class="sol-ui-sr-only">{{recipeLabels[recipeId]}}</h1><component ref="recipeInstance" :is="recipeComponents[recipeId]" v-bind="recipePart ? {part:recipePart} : {}" /></template><template v-else><div class="starter-settings"><label>테마<select v-model="selected"><option value="violet">Cool violet</option><option value="sage">Quiet sage</option><option value="sand">Warm sand</option></select></label><label>화면 모드<select v-model="mode"><option value="light">Light</option><option value="dark">Dark</option></select></label></div><RecipeExamples/></template></template><template v-else>
     <a class="starter-link" href="https://choi-solyi.github.io/solyi-design-system/#theme/starter">← 디자인 시스템 문서</a>
-    <header><p class="starter-eyebrow">INSTALLED TARBALLS · Core {{coreVersion}} / Vue UI {{uiVersion}}</p><h1>같은 토큰, Vue의 부품.</h1><p>프로젝트에 바로 가져다 쓰는 컴포넌트와 사용 예제입니다. 다른 문서 예시는 아직 HTML/CSS 참고 구현입니다. 기존 앱에는 적용하지 않았습니다.</p><pre class="starter-code-sample" tabindex="0" aria-label="한영 주석 코드 글꼴 예시"><code>// English comment: fictional local data.
+    <header><p class="starter-eyebrow">INSTALLED TARBALLS · Core {{coreVersion}} / Vue UI {{uiVersion}}</p><h1>같은 토큰, Vue의 부품.</h1><p>프로젝트에 바로 가져다 쓰는 컴포넌트와 사용 예제입니다. 문서의 실행 예제도 같은 패키지와 정본 Vue 파일을 사용합니다. 기존 앱에는 적용하지 않았습니다.</p><pre class="starter-code-sample" tabindex="0" aria-label="한영 주석 코드 글꼴 예시"><code>// English comment: fictional local data.
 // 한글 주석: 외부 전송 없는 가상 자료입니다.
 const label = "가상 기록";
 const valid = count &gt;= 0 &amp;&amp; count !== null;</code></pre></header>

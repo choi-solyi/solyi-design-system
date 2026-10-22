@@ -1,5 +1,15 @@
 import {SCard,SAlert} from './surfaces';
 import {STree} from './tree';
+import {STooltip,SPopover,SAccordion} from './disclosures';
+import {SFileInput} from './files';
+import {SAutocomplete} from './autocomplete';
+import {SBreadcrumbs,SAvatar,SStepper,SBarChart} from './presentation';
+export {STooltip,SPopover,SAccordion,SFileInput,SAutocomplete,SBreadcrumbs,SAvatar,SStepper,SBarChart};
+export {validateSFiles,describeSFile} from './files';
+export type {SDisclosureCloseReason} from './disclosures';
+export type {SFileInputHandle,SFileLimits,SFileRejection,SFileRejectionCode} from './files';
+export type {SAutocompleteHandle} from './autocomplete';
+export type {SBreadcrumbItem,SStep,SBarChartItem} from './presentation';
 export {SCard,SAlert,STree};
 export type {STreeItem} from './tree';
 import {defineComponent, h, ref, watch, nextTick, onBeforeUnmount, onMounted, useId} from 'vue';
@@ -33,17 +43,18 @@ export type {SolOption,SolNumberInputHandle} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale,useSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate} from './locale';
 export type {SolLocale,SolLocaleSource,SolLocaleCode} from './locale';
 
-export const uiVersion='0.7.1';
+export const uiVersion='0.8.0';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
 }
 export type ButtonVariant='primary'|'secondary'|'subtle'|'inline';
+export type SButtonTone='accent'|'info'|'success'|'warning'|'danger';
 export const SBtn=defineComponent({
   name:'SBtn', inheritAttrs:false,
-  props:{variant:{type:String as PropType<ButtonVariant>,default:'secondary'},disabled:Boolean,loading:Boolean,type:{type:String as PropType<'button'|'submit'|'reset'>,default:'button'}},
+  props:{variant:{type:String as PropType<ButtonVariant>,default:'secondary'},tone:String as PropType<SButtonTone>,disabled:Boolean,loading:Boolean,type:{type:String as PropType<'button'|'submit'|'reset'>,default:'button'}},
   emits:{click:(_event:MouseEvent)=>true},
-  setup(props,{attrs,slots,emit}){return()=>{const unavailable=props.disabled||props.loading||attrs['aria-disabled']===true||attrs['aria-disabled']==='true';return h(VBtn as Component,{...attrs,class:['sol-ui-button','sol-ui-button--'+props.variant,attrs.class],type:props.type,disabled:props.disabled,'aria-disabled':unavailable?'true':attrs['aria-disabled'],'aria-busy':props.loading?'true':attrs['aria-busy'],ripple:false,variant:'flat',onClick:(e:MouseEvent)=>{if(unavailable){e.preventDefault();return;}emit('click',e);}},()=>[props.loading?h('span',{class:'sol-ui-busy','aria-hidden':'true'},'◷'):null,slots.default?.()]);};}
+  setup(props,{attrs,slots,emit}){return()=>{const unavailable=props.disabled||props.loading||attrs['aria-disabled']===true||attrs['aria-disabled']==='true';return h(VBtn as Component,{...attrs,'data-tone':props.tone||attrs['data-tone'],class:['sol-ui-button','sol-ui-button--'+props.variant,props.tone?'sol-tone':undefined,attrs.class],type:props.type,disabled:props.disabled,'aria-disabled':unavailable?'true':attrs['aria-disabled'],'aria-busy':props.loading?'true':attrs['aria-busy'],ripple:false,variant:'flat',onClick:(e:MouseEvent)=>{if(unavailable){e.preventDefault();return;}emit('click',e);}},()=>[props.loading?h('span',{class:'sol-ui-busy','aria-hidden':'true'},'◷'):null,slots.default?.()]);};}
 });
 
 export const STextField=defineComponent({
@@ -67,7 +78,7 @@ export const SDialog=defineComponent({
     const restore=()=>{const target=props.returnFocus||opener;if(target?.isConnected)target.focus({preventScroll:true});};
     watch(()=>props.modelValue,async(value,old)=>{if(value){opener=document.activeElement instanceof HTMLElement?document.activeElement:null;await nextTick();close.value?.$el?.focus();}else if(old){await nextTick();restore();emit('close');}},{immediate:true});
     onBeforeUnmount(()=>{if(props.modelValue)restore();});
-    return()=>h(VDialog as Component,{...attrs,modelValue:props.modelValue,'onUpdate:modelValue':(value:boolean)=>emit('update:modelValue',value),maxWidth:props.presentation==='drawer'?440:props.maxWidth,transition:false,'aria-labelledby':props.id+'-title',class:['sol-ui-overlay',props.presentation==='drawer'?'sol-ui-drawer-overlay':undefined,attrs.class]},()=>h('section',{class:'sol-ui-dialog',id:props.id},[
+    return():VNode=>h(VDialog as Component,{...attrs,modelValue:props.modelValue,'onUpdate:modelValue':(value:boolean)=>emit('update:modelValue',value),maxWidth:props.presentation==='drawer'?440:props.maxWidth,transition:false,'aria-labelledby':props.id+'-title',class:['sol-ui-overlay',props.presentation==='drawer'?'sol-ui-drawer-overlay':undefined,attrs.class]},()=>h('section',{class:'sol-ui-dialog',id:props.id},[
       h('div',{class:'sol-ui-dialog-heading'},[h('div',{class:'sol-surface-heading'},[props.eyebrow?h('span',{class:'eyebrow'},props.eyebrow):null,h('h2',{id:props.id+'-title'},props.title)]),h(SBtn,{id:props.id+'-close',ref:close,variant:'inline',autofocus:true,'aria-label':(props.closeLabel??l.value.close),onClick:()=>emit('update:modelValue',false)},()=>[(props.closeLabel??l.value.close),uiIcon('close')])]),
       h('div',{class:'sol-ui-dialog-body'},slots.default?.()),slots.actions?h('div',{class:'sol-ui-dialog-actions'},slots.actions()):null
     ]));
@@ -126,7 +137,7 @@ export const SDataTable=defineComponent({
 
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
-export const sComponents={SCard,SAlert,STree,SProgressLinear,SProgressCircular,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane};
+export const sComponents={SCard,SAlert,STree,SProgressLinear,SProgressCircular,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,STooltip,SPopover,SAccordion,SFileInput,SAutocomplete,SBreadcrumbs,SAvatar,SStepper,SBarChart};
 
 export interface SolyiOptions {locale?:SolLocaleSource}
 export function install(app:App,options:SolyiOptions={}){if(options.locale)provideSolLocale(app,options.locale);for(const [name,component]of Object.entries(sComponents))app.component(name,component);}

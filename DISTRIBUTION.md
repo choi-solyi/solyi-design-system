@@ -12,7 +12,7 @@
 npm install --save-exact https://choi-solyi.github.io/solyi-design-system/releases/0.9.1/solyi-core-0.4.1.tgz https://choi-solyi.github.io/solyi-design-system/releases/0.9.1/solyi-vue-ui-0.7.1.tgz vue@3.5.44 vuetify@4.3.0
 ```
 
-Node ^22.18.0 또는 >=24.12.0. 검증 조합은 Vue 3.5.44 / Vuetify 4.3.0입니다. 초기 CSS/폰트/theme 연결은 기존 [LIBRARY.md](LIBRARY.md), locale은 [LOCALE.md](LOCALE.md)를 따릅니다. 두 패키지 모두 private/UNLICENSED로 npm 미게시이며, 공개 다운로드가 포괄적인 재배포 라이선스 부여를 뜻하지 않습니다. 포함된 폰트의 OFL·출처와 의존성 고지는 유지합니다.
+Node ^22.18.0 또는 >=24.12.0. 검증 조합은 Vue 3.5.44 / Vuetify 4.3.0입니다. 초기 CSS/폰트/theme 연결은 기존 [LIBRARY.md](LIBRARY.md), locale은 [LOCALE.md](LOCALE.md)를 따릅니다. 두 패키지의 자체 재사용 코드는 MIT이며 private:true 게시 차단과 npm 미게시 상태를 유지합니다. 브랜드 자산은 제외하며 MIT가 브랜드 권리를 부여하지 않습니다. 포함된 폰트의 OFL·출처와 의존성 고지는 유지합니다.
 
 다운로드한 파일의 SHA-256을 같은 릴리스의 SHA256SUMS 및 manifest와 대조합니다. npm은 URL 설치 시 SHA-512 integrity를 lock에 저장합니다. `package.json`·`package-lock.json`을 함께 커밋하고 이후 `npm ci --ignore-scripts`를 사용하세요. manifest 해시는 손상 검사용이며 별도 서명·공급망 인증은 아닙니다.
 

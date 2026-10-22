@@ -1,7 +1,7 @@
 import {vueRecipes} from './vue-recipes-data.js';
 
 const compositions = new Set([
-  'help', 'accordion', 'navigation', 'identity-progress', 'chart-tree', 'inputs',
+  'navigation', 'identity-progress', 'chart-tree', 'inputs',
   'form', 'search', 'compare', 'empty', 'data', 'responses', 'composition',
   'layouts', 'workflow', 'error-summary', 'bulk-recovery',
 ]);
@@ -21,11 +21,16 @@ export function mountVueExamples(root, codeSample) {
     // Keep registered snippet IDs while removing nested disclosures.
     const source = document.createElement('div');
     source.innerHTML = codeSample('Vue 사용 예시', recipe.source);
-    const vueBody = source.querySelector('.code-body').innerHTML;
+    const vueBody = source.querySelector('pre').outerHTML;
+    const copyButton = source.querySelector('[data-copy-snippet]').cloneNode(true);
+    const vueCopyId = copyButton.dataset.copySnippet;
+    const htmlSource = document.createElement('div');
+    htmlSource.innerHTML = codeSample('HTML·CSS 참고', originals.map(detail => detail.querySelector('pre code').textContent).join('\n\n'));
+    const htmlCopyId = htmlSource.querySelector('[data-copy-snippet]').dataset.copySnippet;
     const htmlBody = originals.map(detail => `
       <div class="code-reference-part">
         <p class="code-part-label">${escapeHTML(detail.querySelector('summary').textContent)}</p>
-        ${detail.querySelector('.code-body').innerHTML}
+        ${detail.querySelector('pre').outerHTML}
       </div>`).join('');
     const id = `usage-${section.id}`;
     const isComposition = compositions.has(section.id);
@@ -36,19 +41,19 @@ export function mountVueExamples(root, codeSample) {
     host.innerHTML = `
       <summary>사용 코드</summary>
       <div class="vue-code-frame">
-        <div role="tablist" aria-label="${title} 사용 코드">
+        <div class="code-toolbar"><div role="tablist" aria-label="${title} 사용 코드">
           <button type="button" class="vue-code-tab" id="${id}-vue-tab"
             role="tab" aria-selected="true" aria-controls="${id}-vue">${vueLabel}</button>
           <button type="button" class="vue-code-tab" id="${id}-html-tab"
             role="tab" tabindex="-1" aria-selected="false"
             aria-controls="${id}-html">HTML·CSS 참고</button>
-        </div>
+        </div>${copyButton.outerHTML}</div>
         <div id="${id}-vue" role="tabpanel" aria-labelledby="${id}-vue-tab">
           <p class="code-panel-note">${isComposition
-            ? 'S 컴포넌트와 기본 HTML을 연결한 Vue 조합입니다. 모두 전용 컴포넌트 API로 제공되는 것은 아닙니다.'
-            : '실제 패키지에서 가져다 쓰는 S 컴포넌트 예제입니다.'}</p>
+            ? '전역 등록한 S 컴포넌트에 앱 상태와 데이터를 연결한 Vue 조합입니다.'
+            : 'S 컴포넌트 전역 등록을 한 번 설정한 프로젝트의 사용 예제입니다.'}</p>
           ${vueBody}
-          <p class="code-example-link"><a href="./starter/?view=recipes&example=${encodeURIComponent(section.id)}">이 Vue 예제 실행 →</a></p>
+          <footer class="code-example-footer"><a href="./starter/?view=recipes&example=${encodeURIComponent(section.id)}">이 Vue 예제 실행 →</a><a href="#theme/vue-components">전역 등록·타입 설정</a></footer>
         </div>
         <div id="${id}-html" role="tabpanel" aria-labelledby="${id}-html-tab" hidden>
           ${htmlBody}
@@ -58,12 +63,16 @@ export function mountVueExamples(root, codeSample) {
     originals.forEach(detail => detail.remove());
     const tabs = [...host.querySelectorAll('[role=tab]')];
     const panels = [...host.querySelectorAll('[role=tabpanel]')];
+    const copy = host.querySelector('.code-copy-button');
     function activate(index, focus = false) {
       tabs.forEach((tab, i) => {
         tab.setAttribute('aria-selected', String(i === index));
         tab.tabIndex = i === index ? 0 : -1;
         panels[i].hidden = i !== index;
       });
+      copy.dataset.copySnippet = index === 0 ? vueCopyId : htmlCopyId;
+      delete copy.dataset.copied;
+      copy.setAttribute('aria-label','현재 코드 복사');
       if (focus) tabs[index].focus();
     }
     tabs.forEach((tab, index) => {
@@ -82,4 +91,74 @@ export function mountVueExamples(root, codeSample) {
     });
   }
   return () => controller.abort();
+}
+
+/* The document canvas and standalone explorer execute identical canonical SFCs.
+   Native Core examples remain source references, not a second active canvas. */
+export function mountVuePreviews(root) {
+  const controller=new AbortController(),{signal}=controller,origin=location.origin,frames=new Set();
+  const pending=new Map();let requestId=0;
+  const parts={
+    inputs:[['date','단일 날짜와 기간','#extra-range-form'],['files','로컬 파일과 드롭','#extra-file-drop'],['autocomplete','자동완성 검색','#extra-autocomplete']],
+    'advanced-inputs':[['textarea','Textarea','#advanced-note'],['number','숫자 증감','#advanced-number-form'],['multiselect','다중 선택과 태그','#advanced-tags']],
+    'chart-tree':[['chart','차트와 표 대안','#chart-period'],['tree','트리 탐색','#example-tree']],
+    'identity-progress':[['avatar','Avatar와 사용자 메뉴','#avatar-menu-trigger'],['steps','진행 단계','#steps-form']]
+  };
+  const appearance=()=>({theme:document.documentElement.dataset.theme,mode:document.documentElement.dataset.mode,density:document.documentElement.dataset.density,motionPolicy:document.documentElement.dataset.motionPolicy});
+  const sync=frame=>frame.contentWindow?.postMessage({type:'solyi:appearance',appearance:appearance()},origin);
+  function canvas(section,id,part,label){
+    const box=document.createElement('div');box.className='vue-live-part';
+    const heading=part?section.querySelector('#'+part):null;
+    if(heading?.classList.contains('document-alias-heading'))box.append(heading);
+    const frame=document.createElement('iframe'),url=new URL('./starter/',location.href);
+    url.searchParams.set('view','recipes');url.searchParams.set('example',id);url.searchParams.set('embed','1');
+    if(part)url.searchParams.set('part',part);
+    for(const [key,value] of Object.entries(appearance()))if(value)url.searchParams.set(key,value);
+    frame.src=url.pathname+url.search;frame.className='vue-recipe-frame';frame.title=label+' · 실제 패키지 예제';frame.loading='lazy';frame.height='320';frame.dataset.recipe=id;if(part)frame.dataset.part=part;frame.setAttribute('aria-busy','true');
+    frame.addEventListener('load',()=>sync(frame),{signal});frames.add(frame);box.append(frame);
+    return box;
+  }
+  for(const section of root.querySelectorAll('section.section')){
+    const id=section.id,recipe=vueRecipes[id];if(!recipe)continue;
+    const demos=[...section.querySelectorAll('.demo')],assignments=new Map();
+    for(const spec of parts[id]||[]){const node=section.querySelector(spec[2]),demo=node?.closest('.demo');if(demo){if(!assignments.has(demo))assignments.set(demo,[]);assignments.get(demo).push(spec);}}
+    const aliases=[...section.querySelectorAll('.document-alias-heading')];let first;
+    for(const demo of demos){
+      if(!assignments.has(demo)&&first){demo.remove();continue;}
+      const stage=demo.querySelector('.demo-stage');if(!stage)continue;
+      const blocks=(assignments.get(demo)||[['',recipe.label,'']]).map(([part,label])=>canvas(section,id,part,label));
+      stage.replaceChildren(...blocks);stage.classList.add('vue-live-stage');first||=blocks[0];
+      const caption=demo.querySelector('.demo-header span');if(caption)caption.textContent='설치한 S 컴포넌트 · '+recipe.label;
+    }
+    if(!first){
+      const demo=document.createElement('div');demo.className='demo';const stage=document.createElement('div');stage.className='demo-stage vue-live-stage';first=canvas(section,id,'',recipe.label);stage.append(first);demo.append(stage);
+      const palette=[...section.children].find(child=>child.classList.contains('sol-stack')&&child.querySelector('.color-specimen'));
+      if(palette)palette.replaceWith(demo);else section.querySelector('.vue-code-examples')?.before(demo);
+      section.querySelector('#color-toast')?.remove();section.querySelector('#color-example-result')?.remove();
+    }
+    for(const heading of aliases)if(!heading.isConnected)first.prepend(heading);
+  }
+  window.addEventListener('message',event=>{
+    if(event.origin!==origin)return;const frame=[...frames].find(item=>item.contentWindow===event.source);if(!frame)return;
+    const request=pending.get(event.data?.id);
+    if(request?.frame===frame){
+      if(event.data.type==='solyi:recipe-leave-ready')clearTimeout(request.timer);
+      if(event.data.type==='solyi:recipe-leave-result'){clearTimeout(request.timer);pending.delete(event.data.id);request.resolve(event.data.allowed===true);}
+    }
+    if(event.data?.type==='solyi:recipe-ready'){frame.removeAttribute('aria-busy');sync(frame);}
+    if(event.data?.type==='solyi:recipe-height'&&Number.isFinite(event.data.height)){
+      const height=Math.max(128,Math.min(6000,Math.ceil(event.data.height)));if(frame.height!==String(height))frame.height=String(height);
+    }
+  },{signal});
+  const observer=new MutationObserver(()=>frames.forEach(sync));observer.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-mode','data-density','data-motion-policy']});frames.forEach(sync);
+  const cleanup=()=>{controller.abort();observer.disconnect();frames.clear();for(const item of pending.values()){clearTimeout(item.timer);item.resolve(false);}pending.clear();};
+  cleanup.requestLeave=async()=>{
+    for(const frame of frames){if(frame.dataset.recipe!=='workflow'||frame.hasAttribute('aria-busy'))continue;
+      const id='leave-'+Date.now()+'-'+(++requestId);
+      const allowed=await new Promise(resolve=>{const timer=setTimeout(()=>{pending.delete(id);resolve(false);},2000);pending.set(id,{frame,resolve,timer});frame.contentWindow?.postMessage({type:'solyi:recipe-leave',id},origin);});
+      if(!allowed)return false;
+    }
+    return true;
+  };
+  return cleanup;
 }

@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onBeforeUnmount } from 'vue';
-import {
-  SCard,
-  STextField,
-  SSelect,
-  SCheckbox,
-  SBtn,
-  SAlert,
-} from '@solyi/vue-ui';
+
 const name = ref(''),
   kind = ref<string | null>('note'),
   fail = ref(false),

@@ -1,0 +1,439 @@
+{
+  "documentVersion": "0.10.0",
+  "componentCount": 34,
+  "components": [
+    "SCard",
+    "SAlert",
+    "STree",
+    "SProgressLinear",
+    "SProgressCircular",
+    "SBtn",
+    "STextField",
+    "SDialog",
+    "SDataTable",
+    "SCheckbox",
+    "SRadioGroup",
+    "SSwitch",
+    "SSelect",
+    "STextarea",
+    "SNumberInput",
+    "STabs",
+    "SSnackbar",
+    "SDatePicker",
+    "STimePicker",
+    "SSegmentedControl",
+    "SMultiSelect",
+    "SRangeSlider",
+    "SSplitBtn",
+    "SContextMenu",
+    "SResizableSplitPane",
+    "STooltip",
+    "SPopover",
+    "SAccordion",
+    "SFileInput",
+    "SAutocomplete",
+    "SBreadcrumbs",
+    "SAvatar",
+    "SStepper",
+    "SBarChart"
+  ],
+  "examples": [
+    {
+      "id": "color-examples",
+      "route": "style",
+      "label": "의미색 UI 조합",
+      "source": "examples/vue-vuetify/src/recipes/color-examples.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBtn",
+        "SAlert",
+        "SSnackbar"
+      ]
+    },
+    {
+      "id": "writing",
+      "route": "style",
+      "label": "UI 문구 적용",
+      "source": "examples/vue-vuetify/src/recipes/writing.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextField",
+        "SBtn",
+        "SAlert"
+      ]
+    },
+    {
+      "id": "buttons",
+      "route": "component",
+      "label": "버튼 상태와 동작",
+      "source": "examples/vue-vuetify/src/recipes/buttons.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "fields",
+      "route": "component",
+      "label": "필드와 검증",
+      "source": "examples/vue-vuetify/src/recipes/fields.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextField",
+        "SBtn",
+        "SAlert"
+      ]
+    },
+    {
+      "id": "choices",
+      "route": "component",
+      "label": "체크·단일 선택·스위치",
+      "source": "examples/vue-vuetify/src/recipes/choices.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SCheckbox",
+        "SRadioGroup",
+        "SSelect"
+      ]
+    },
+    {
+      "id": "feedback",
+      "route": "component",
+      "label": "알림과 스낵바",
+      "source": "examples/vue-vuetify/src/recipes/feedback.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SAlert",
+        "SBtn",
+        "SSnackbar"
+      ]
+    },
+    {
+      "id": "dialog",
+      "route": "component",
+      "label": "대화상자 열기와 복귀",
+      "source": "examples/vue-vuetify/src/recipes/dialog.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBtn",
+        "SDialog"
+      ]
+    },
+    {
+      "id": "selection",
+      "route": "component",
+      "label": "선택과 검색",
+      "source": "examples/vue-vuetify/src/recipes/selection.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SCheckbox",
+        "SRadioGroup",
+        "SSwitch"
+      ]
+    },
+    {
+      "id": "help",
+      "route": "component",
+      "label": "설명과 추가 정보",
+      "source": "examples/vue-vuetify/src/recipes/help.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STooltip",
+        "SPopover"
+      ]
+    },
+    {
+      "id": "accordion",
+      "route": "component",
+      "label": "상세 펼치기",
+      "source": "examples/vue-vuetify/src/recipes/accordion.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SAccordion"
+      ]
+    },
+    {
+      "id": "navigation",
+      "route": "component",
+      "label": "경로·패널·알림",
+      "source": "examples/vue-vuetify/src/recipes/navigation.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBreadcrumbs",
+        "SBtn",
+        "SDialog",
+        "SSnackbar"
+      ]
+    },
+    {
+      "id": "advanced-inputs",
+      "route": "component",
+      "label": "여러 줄·숫자·다중 선택",
+      "source": "examples/vue-vuetify/src/recipes/advanced-inputs.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextarea",
+        "SNumberInput",
+        "SMultiSelect"
+      ]
+    },
+    {
+      "id": "content-tabs",
+      "route": "component",
+      "label": "탭과 패널",
+      "source": "examples/vue-vuetify/src/recipes/content-tabs.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STabs",
+        "STextField"
+      ]
+    },
+    {
+      "id": "action-menu",
+      "route": "component",
+      "label": "행동 메뉴",
+      "source": "examples/vue-vuetify/src/recipes/action-menu.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SSplitBtn",
+        "SContextMenu"
+      ]
+    },
+    {
+      "id": "identity-progress",
+      "route": "component",
+      "label": "사용자와 단계",
+      "source": "examples/vue-vuetify/src/recipes/identity-progress.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SAvatar",
+        "SSplitBtn",
+        "SStepper",
+        "SProgressLinear",
+        "STextField",
+        "SSelect",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "progress",
+      "route": "component",
+      "label": "진행 바와 원형 로딩",
+      "source": "examples/vue-vuetify/src/recipes/progress.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SSelect",
+        "SCheckbox",
+        "SProgressLinear",
+        "SProgressCircular"
+      ]
+    },
+    {
+      "id": "time",
+      "route": "component",
+      "label": "시간 선택",
+      "source": "examples/vue-vuetify/src/recipes/time.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STimePicker"
+      ]
+    },
+    {
+      "id": "chart-tree",
+      "route": "component",
+      "label": "차트와 트리",
+      "source": "examples/vue-vuetify/src/recipes/chart-tree.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SSelect",
+        "SBarChart",
+        "STree"
+      ]
+    },
+    {
+      "id": "form",
+      "route": "pattern",
+      "label": "폼 검증",
+      "source": "examples/vue-vuetify/src/recipes/form.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextField",
+        "SSelect",
+        "SCheckbox",
+        "SAlert",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "search",
+      "route": "pattern",
+      "label": "검색과 결과",
+      "source": "examples/vue-vuetify/src/recipes/search.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextField",
+        "SSelect",
+        "SBtn",
+        "SDialog"
+      ]
+    },
+    {
+      "id": "compare",
+      "route": "pattern",
+      "label": "카드 비교 선택",
+      "source": "examples/vue-vuetify/src/recipes/compare.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SRadioGroup"
+      ]
+    },
+    {
+      "id": "empty",
+      "route": "pattern",
+      "label": "빈 화면 복구",
+      "source": "examples/vue-vuetify/src/recipes/empty.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "data",
+      "route": "pattern",
+      "label": "정렬·필터·페이지",
+      "source": "examples/vue-vuetify/src/recipes/data.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextField",
+        "SSelect",
+        "SDataTable",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "inputs",
+      "route": "pattern",
+      "label": "날짜·파일·자동완성",
+      "source": "examples/vue-vuetify/src/recipes/inputs.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SSelect",
+        "SDatePicker",
+        "SFileInput",
+        "SAutocomplete"
+      ]
+    },
+    {
+      "id": "responses",
+      "route": "pattern",
+      "label": "로딩·오류·권한 상태",
+      "source": "examples/vue-vuetify/src/recipes/responses.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SSelect",
+        "SProgressLinear",
+        "SBtn",
+        "SAlert"
+      ]
+    },
+    {
+      "id": "composition",
+      "route": "pattern",
+      "label": "폼 정렬과 보조 행동",
+      "source": "examples/vue-vuetify/src/recipes/composition.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextField",
+        "SSelect",
+        "SAlert",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "layouts",
+      "route": "pattern",
+      "label": "화면틀 조합",
+      "source": "examples/vue-vuetify/src/recipes/layouts.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBtn",
+        "STextField"
+      ]
+    },
+    {
+      "id": "workflow",
+      "route": "pattern",
+      "label": "편집·삭제·되돌리기",
+      "source": "examples/vue-vuetify/src/recipes/workflow.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SAlert",
+        "SBtn",
+        "STextField",
+        "STextarea",
+        "SDialog"
+      ]
+    },
+    {
+      "id": "error-summary",
+      "route": "pattern",
+      "label": "오류 요약과 이동",
+      "source": "examples/vue-vuetify/src/recipes/error-summary.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SAlert",
+        "STextField",
+        "SNumberInput",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "bulk-recovery",
+      "route": "pattern",
+      "label": "일부 실패와 재시도",
+      "source": "examples/vue-vuetify/src/recipes/bulk-recovery.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SCheckbox",
+        "SBtn",
+        "SAlert"
+      ]
+    }
+  ],
+  "scope": "Component exports are separate from app-state compositions. Core CSS/icon helpers and the document shell are not all independent Vue components.",
+  "testTargets": [
+    "scripts/vue-dedicated-runtime-check.mjs",
+    "scripts/vue-recipes-runtime-check.mjs",
+    "scripts/vue-preview-integration-check.mjs"
+  ]
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, SBtn, SDialog } from '@solyi/vue-ui';
+
 const open = ref(false);
 </script>
 <template>

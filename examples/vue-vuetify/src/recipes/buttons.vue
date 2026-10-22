@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onBeforeUnmount } from 'vue';
-import { SCard, SBtn } from '@solyi/vue-ui';
+
 const busy = ref(false),
   result = ref('');
 let timer: ReturnType<typeof setTimeout>;

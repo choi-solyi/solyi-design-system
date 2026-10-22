@@ -5,7 +5,7 @@ import {VTextField} from 'vuetify/components/VTextField';
 import {VCard} from 'vuetify/components/VCard';
 import {VCardText} from 'vuetify/components/VCard';
 import {VDialog} from 'vuetify/components/VDialog';
-import {SBtn,STextField} from '@solyi/vue-ui';
+
 const sText=ref('S 가상 입력'),vText=ref('V 가상 입력'),open=ref(false),count=ref(0);
 </script>
 <template>

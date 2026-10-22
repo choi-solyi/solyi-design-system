@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { SCard, STextField, SSelect, SDataTable, SBtn } from '@solyi/vue-ui';
+
 import type { TableColumn, TableRow, TableSort } from '@solyi/vue-ui';
 const query = ref(''),
   page = ref(1),
@@ -35,9 +35,7 @@ const filtered = computed(() =>
     }),
 );
 const pages = computed(() => Math.max(1, Math.ceil(filtered.value.length / 2))),
-  rows = computed(() =>
-    filtered.value.slice((page.value - 1) * 2, page.value * 2),
-  );
+  rows = computed(() => filtered.value.slice((page.value - 1) * 2, page.value * 2));
 watch([query, sort], () => (page.value = 1));
 watch(pages, (p) => (page.value = Math.min(page.value, p)));
 </script>
@@ -73,9 +71,7 @@ watch(pages, (p) => (page.value = Math.min(page.value, p)));
       v-model:page="page"
       :page-count="pages"
       :loading="state === 'loading'"
-      :error="
-        state === 'error' ? '가상 오류입니다. 검색과 선택은 남습니다.' : ''
-      "
+      :error="state === 'error' ? '가상 오류입니다. 검색과 선택은 남습니다.' : ''"
       @retry="state = 'ready'"
     />
     <SBtn

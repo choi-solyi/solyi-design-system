@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onBeforeUnmount } from 'vue';
-import { SCard, SCheckbox, SBtn, SAlert } from '@solyi/vue-ui';
+
 type Row = {
   id: number;
   state: 'idle' | 'pending' | 'success' | 'error';
   attempts: number;
 };
-const rows = ref<Row[]>(
-    [1, 2, 3].map((id) => ({ id, state: 'idle', attempts: 0 })),
-  ),
+const rows = ref<Row[]>([1, 2, 3].map((id) => ({ id, state: 'idle', attempts: 0 }))),
   selected = ref<Record<number, boolean>>({ 1: true, 2: true, 3: true }),
   busy = ref(false),
   result = ref('');
@@ -38,8 +36,7 @@ function run(retry = false) {
       '개 · 실패 ' +
       rows.value.filter((r) => r.state === 'error').length +
       '개';
-    if (restore)
-      nextTick(() => document.getElementById('recipe-bulk-result')?.focus());
+    if (restore) nextTick(() => document.getElementById('recipe-bulk-result')?.focus());
   }, 350);
 }
 onBeforeUnmount(() => clearTimeout(timer));
@@ -49,9 +46,7 @@ onBeforeUnmount(() => clearTimeout(timer));
     :heading-level="2"
     title="일괄 작업의 일부 실패"
   >
-    <p>
-      처음에는 2번만 실패하는 가상 처리입니다. 외부 데이터를 바꾸지 않습니다.
-    </p>
+    <p>처음에는 2번만 실패하는 가상 처리입니다. 외부 데이터를 바꾸지 않습니다.</p>
     <div
       v-for="row in rows"
       :key="row.id"

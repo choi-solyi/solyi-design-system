@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { SCard, STextField, SSelect, SBtn, SDialog } from '@solyi/vue-ui';
+
 const query = ref(''),
   filter = ref<string | null>('all'),
   detail = ref(false),

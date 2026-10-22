@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue';
-import { SCard, SBtn, STextField } from '@solyi/vue-ui';
+
 const view = ref('list'),
   selected = ref('작은 정원'),
   name = ref('가상 기록함'),

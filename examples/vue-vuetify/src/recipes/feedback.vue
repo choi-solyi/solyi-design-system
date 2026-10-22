@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, SAlert, SSnackbar, SBtn } from '@solyi/vue-ui';
+
 const open = ref(false),
   recovered = ref(false);
 </script>

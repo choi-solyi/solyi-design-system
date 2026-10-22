@@ -1,5 +1,6 @@
 import tokens from './token-data.js';
-import {mountVueExamples} from './vue-examples.js';
+import {solIcon} from './icons.js';
+import {mountVueExamples,mountVuePreviews} from './vue-examples.js';
 import {mountOverflowText} from './overflow.js';
 import {presentTopics,scrollToDocumentSection,getDocumentSearchEntries} from './topics.js';
 import {mountDocumentSearch} from './doc-search.js';
@@ -19,6 +20,7 @@ let toastTimer;
 let headerPreferences=null;
 let returnFocus;
 let cleanupVueExamples=()=>{};
+let cleanupVuePreviews=()=>{};
 let cleanupOverflow = () => {}; let cleanupTopics = () => {}; let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
 const projects = [
@@ -34,7 +36,7 @@ const localNav = items => `<nav class="local-nav" aria-label="이 문서의 항�
 function codeSample(label, code) {
   const id = `snippet-${++snippetId}`;
   snippets.set(id, code);
-  return `<details class="code-example"><summary>${label}</summary><div class="code-body"><pre><code>${E(code)}</code></pre><div class="button-row"><button class="sol-button" data-copy-snippet="${id}">예시 복사</button></div></div></details>`;
+  return `<details class="code-example"><summary>${E(label)}</summary><div class="code-body"><div class="code-toolbar"><span class="code-language">${E(label)}</span><button class="sol-button subtle code-copy-button" type="button" data-copy-snippet="${id}" aria-label="현재 코드 복사" title="코드 복사"><span class="code-copy-glyph">${solIcon('copy',{size:16})}</span><span class="code-check-glyph">${solIcon('check',{size:16})}</span></button></div><pre tabindex="0" aria-label="${E(label)} 코드"><code>${E(code)}</code></pre></div></details>`;
 }
 const contract = (states, keys, mapping) => `<dl class="contract"><dt>상태</dt><dd>${states}</dd><dt>Keyboard</dt><dd>${keys}</dd><dt>Tokens</dt><dd>${mapping}</dd></dl>`;
 const demo = (name, content, note = 'LIVE · 가상 데이터') => `<div class="demo"><div class="demo-header"><span>${name}</span><span>${note}</span></div><div class="demo-stage">${content}</div></div>`;
@@ -86,7 +88,7 @@ function component() {
   section('fields','Field','레이블과 도움말은 자리를 지킵니다.',demo('Text field / Validation',`<div class="grid-2"><label class="sol-field"><span class="sol-label">프로젝트 이름</span><input class="sol-input" placeholder="예: 작은 정원 기록" aria-describedby="field-help"><span id="field-help" class="sol-hint">이름을 입력해 포커스와 hover를 확인해 보세요.</span></label><label class="sol-field"><span class="sol-label">프로젝트 이름 · 오류 예시</span><input class="sol-input" value="가" aria-invalid="true" aria-describedby="field-error"><span id="field-error" class="sol-error">이름을 3자 이상 입력해 주세요.</span></label><label class="sol-field"><span class="sol-label">공유 주소 · 비활성</span><input class="sol-input" disabled value="아직 만들 수 없어요" aria-describedby="disabled-help"><span id="disabled-help" class="sol-hint">프로젝트를 만든 뒤 주소가 생깁니다.</span></label><label class="sol-field"><span class="sol-label">프로젝트 이름 · 완료 예시</span><input class="sol-input" value="작은 정원 기록" aria-describedby="valid-help"><span id="valid-help" class="sol-hint"><span class="sol-success-text">✓ 사용할 수 있는 이름입니다.</span> <span>예시 입력값입니다.</span></span></label></div>`) + contract('기본·hover·focus·disabled·오류·유효한 입력 안내. 로딩은 입력 자체보다 제출 행동과 결과 영역에서 표시합니다.','<kbd>Tab</kbd>으로 필드 이동. 오류 후 값을 보존하고 첫 잘못된 입력으로 포커스를 이동합니다.','surface / text / muted / control-border / danger / focus') + codeSample('Field 사용 예시',`<label class="sol-field">\n  <span class="sol-label">프로젝트 이름</span>\n  <input class="sol-input" id="project-name" required\n    aria-describedby="name-hint name-error"\n    aria-invalid="true">\n  <span id="name-hint" class="sol-hint">3~40자로 입력해 주세요.</span>\n  <span id="name-error" class="sol-error">이름을 3자 이상 입력해 주세요.</span>\n</label>\n<!-- 검증 성공 시 aria-invalid 제거, 오류 문구 숨김.\n     레이블은 placeholder로 대체하지 않습니다. -->`)) +
   section('choices','Choice','익숙한 기본 조작을 유지합니다.',demo('Checkbox / Radio / Select',`<div class="grid-3"><div><label class="sol-choice"><input type="checkbox" checked>완료한 항목 포함</label><label class="sol-choice"><input type="checkbox">보관한 항목 포함</label><label class="sol-choice"><input type="checkbox" disabled>공유 항목 · 비활성 예시</label></div><fieldset class="choice-fieldset"><legend>보기 방식</legend><label class="sol-choice"><input type="radio" name="view-demo" value="list" checked>목록</label><label class="sol-choice"><input type="radio" name="view-demo" value="card">카드</label><label class="sol-choice"><input type="radio" name="view-demo" value="map" disabled>지도 · 비활성 예시</label></fieldset><label class="sol-field"><span class="sol-label">정렬 기준</span><select class="sol-select"><option>최근 변경순</option><option>이름순</option></select><span class="sol-hint">브라우저 기본 메뉴를 사용합니다.</span></label></div>`) + contract('체크·미체크·선택·hover·focus·disabled. 필수 그룹 오류는 그룹 설명과 연결합니다. 선택 자체에는 로딩을 넣지 않습니다.','체크박스 <kbd>Space</kbd>, 라디오는 <kbd>방향키</kbd>·<kbd>Space</kbd>. Select는 운영체제의 기본 키보드 동작을 따릅니다.','accent / control-border / focus / control-height') + codeSample('Choice 사용 예시',`<fieldset>\n  <legend>보기 방식</legend>\n  <label class="sol-choice">\n    <input type="radio" name="view" value="list" checked>목록\n  </label>\n  <label class="sol-choice">\n    <input type="radio" name="view" value="card">카드\n  </label>\n</fieldset>\n<label class="sol-choice">\n  <input type="checkbox">완료한 항목 포함\n</label>`)) +
   section('feedback','Feedback','무슨 일이 생겼고, 무엇을 할 수 있는지',demo('Status / Notice / Announcement',`<div class="button-row"><span class="sol-status">◷ 진행 중</span><span class="sol-status success">✓ 완료</span><span class="sol-status warning">! 확인 필요</span><span class="sol-status danger">! 저장 실패</span></div><div class="sol-notice" style="margin-top:20px"><strong>예시 안내</strong><br>이 화면은 가상 데이터로 구성되어 있습니다.</div><div class="sol-notice danger" style="margin-top:12px"><strong>저장하지 못했어요.</strong><br>입력 내용은 남아 있습니다. 연결을 확인하고 다시 시도해 주세요.<div class="sol-notice-actions"><button class="sol-button inline-action" type="button" data-action="retry-feedback">다시 시도</button></div></div><div id="retry-result" class="feedback-space" role="status"></div><button class="sol-button" data-action="toast-demo">복사 완료 안내 띄우기</button>`) + contract('정보·성공·확인·오류를 글자와 색으로 표시. 안내 표식은 비대화형이며 hover·disabled를 갖지 않습니다. 알림 내부 재시도는 inline-action을 사용합니다. 13px 밑줄 텍스트와 작은 좌우 여백으로 메시지보다 약하게 표시하고, 데스크톱 조작 높이 36px, 좁은 화면·터치 포인터 44px를 유지합니다. 포커스·로딩·중복 실행 방지는 Button 규칙을 따릅니다.','읽기용 상태는 Tab 순서에 넣지 않습니다. 다음 행동은 실제 버튼으로 제공합니다. 동적 결과는 role="status"로 알립니다.','info / success / warning / danger와 각 soft 역할. 등급·게임 수치와 분리.') + codeSample('Feedback 사용 예시',`<span class="sol-status success">✓ 완료</span>\n<div class="sol-notice danger">\n  <strong>저장하지 못했어요.</strong>\n  <p class="sol-notice-message">입력 내용은 남아 있습니다. 다시 시도해 주세요.</p>\n  <div class="sol-notice-actions">\n    <button class="sol-button inline-action" type="button">다시 시도</button>\n  </div>\n</div>\n<!-- 초기에는 비워 두고, 작업이 끝나면 내용을 넣습니다. -->\n<p role="status" aria-live="polite"></p>`)) +
-  section('dialog','Dialog','현재 맥락에서 잠깐 더 자세히',demo('Native dialog / Detail',`<h3>작은 정원 기록</h3><p class="small muted">짧은 상세는 대화상자로, 읽을 내용이 길면 별도 페이지로 연결합니다.</p><button class="sol-button" data-open-detail="0">프로젝트 상세 열기</button>`) + contract('닫힘·열림. 진입·닫기 버튼에 hover·focus 상태가 있습니다. 이 정적 상세 데모에는 로딩·오류·비활성 상태가 필요하지 않습니다.','열면 닫기 버튼에 초기 포커스. <kbd>Tab</kbd>은 모달 내부를 순환하며 <kbd>Escape</kbd>로 닫습니다. 닫으면 실행한 버튼으로 돌아갑니다. native dialog의 브라우저 동작을 사용합니다. 브라우저별 추가 확인이 필요합니다.','surface / text / muted / border / radius-panel / focus') + codeSample('Native HTML Dialog 사용 예시',`<button class="sol-button" id="open-detail" type="button">상세 열기</button>\n<dialog id="detail" aria-labelledby="detail-title">\n  <button class="sol-button inline-action" id="close-detail" type="button" autofocus>닫기</button>\n  <h2 id="detail-title">프로젝트 상세</h2>\n  <p>현재 항목에 대한 설명입니다.</p>\n</dialog>\n<script>\n  const opener = document.querySelector('#open-detail');\n  const detail = document.querySelector('#detail');\n  opener.addEventListener('click', () => detail.showModal());\n  document.querySelector('#close-detail').addEventListener('click', () => detail.close());\n  detail.addEventListener('close', () => opener.focus());\n</script>`) + codeSample('Vue 패키지 Dialog · SBtn',`<script setup>\nimport { ref } from 'vue';\nimport { SBtn, SDialog } from '@solyi/vue-ui';\nconst opened = ref(false);\n</script>\n<template>\n  <SBtn @click="opened = true">상세 열기</SBtn>\n  <SDialog id="record-detail" v-model="opened" title="프로젝트 상세">\n    <p>현재 항목의 설명입니다.</p>\n  </SDialog>\n</template>`));
+  section('dialog','Dialog','현재 맥락에서 잠깐 더 자세히',demo('Native dialog / Detail',`<h3>작은 정원 기록</h3><p class="small muted">짧은 상세는 대화상자로, 읽을 내용이 길면 별도 페이지로 연결합니다.</p><button class="sol-button" data-open-detail="0">프로젝트 상세 열기</button>`) + contract('닫힘·열림. 진입·닫기 버튼에 hover·focus 상태가 있습니다. 이 정적 상세 데모에는 로딩·오류·비활성 상태가 필요하지 않습니다.','열면 닫기 버튼에 초기 포커스. <kbd>Tab</kbd>은 모달 내부를 순환하며 <kbd>Escape</kbd>로 닫습니다. 닫으면 실행한 버튼으로 돌아갑니다. SDialog는 Vuetify의 모달과 초점 관리를 사용합니다. 실제 브라우저·보조 기술별 추가 확인이 필요합니다.','surface / text / muted / border / radius-panel / focus') + codeSample('Native HTML Dialog 사용 예시',`<button class="sol-button" id="open-detail" type="button">상세 열기</button>\n<dialog id="detail" aria-labelledby="detail-title">\n  <button class="sol-button inline-action" id="close-detail" type="button" autofocus>닫기</button>\n  <h2 id="detail-title">프로젝트 상세</h2>\n  <p>현재 항목에 대한 설명입니다.</p>\n</dialog>\n<script>\n  const opener = document.querySelector('#open-detail');\n  const detail = document.querySelector('#detail');\n  opener.addEventListener('click', () => detail.showModal());\n  document.querySelector('#close-detail').addEventListener('click', () => detail.close());\n  detail.addEventListener('close', () => opener.focus());\n</script>`) + codeSample('Vue 패키지 Dialog · SBtn',`<script setup>\nimport { ref } from 'vue';\nimport { SBtn, SDialog } from '@solyi/vue-ui';\nconst opened = ref(false);\n</script>\n<template>\n  <SBtn @click="opened = true">상세 열기</SBtn>\n  <SDialog id="record-detail" v-model="opened" title="프로젝트 상세">\n    <p>현재 항목의 설명입니다.</p>\n  </SDialog>\n</template>`));
 }
 
 function pattern() {
@@ -120,12 +122,13 @@ function buildDocumentSearchIndex(){
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'overview';
-  cleanupVueExamples(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
+  cleanupVueExamples(); cleanupVuePreviews(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
   main.innerHTML = pageMarkup(route);
   cleanupVueExamples=mountVueExamples(main,codeSample);
   document.title = `Solyi Design System · ${routes[route]}`;
   cleanupTopics = presentTopics(main,route,{section,demo,contract,codeSample});
+  cleanupVuePreviews = mountVuePreviews(main);
   document.querySelectorAll('[data-route]').forEach(link=>{
     if (link.dataset.route===route) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
   });
@@ -165,13 +168,20 @@ function notify(message) {
   toastTimer=setTimeout(()=>announcement.textContent='',4200);
 }
 async function copy(text) {
-  try {await navigator.clipboard.writeText(text); notify('복사했어요.');}
+  try {await navigator.clipboard.writeText(text); notify('복사했어요.');return true;}
   catch {
     const area=document.createElement('textarea'); area.value=text; area.setAttribute('aria-label','복사할 내용'); area.style.cssText='position:fixed;left:0;top:0;width:1px;height:1px;opacity:0';
     document.body.append(area); const previous=document.activeElement; area.select();
     const copied=document.execCommand?.('copy'); area.remove(); previous?.focus();
     notify(copied?'복사했어요.':'자동 복사를 사용할 수 없어요. 코드 또는 다운로드 파일에서 복사해 주세요.');
+    return !!copied;
   }
+}
+const codeCopyTimers=new WeakMap();
+function showCodeCopyResult(button,id){
+  if(!button.isConnected||button.dataset.copySnippet!==id)return;
+  clearTimeout(codeCopyTimers.get(button));button.dataset.copied='true';button.setAttribute('aria-label','코드 복사 완료');
+  codeCopyTimers.set(button,setTimeout(()=>{if(button.isConnected&&button.dataset.copySnippet===id){delete button.dataset.copied;button.setAttribute('aria-label','현재 코드 복사');}},1500));
 }
 function updateTokens() {
   const grid=document.querySelector('#token-grid'); if(!grid)return;
@@ -198,7 +208,7 @@ async function busyAction(button, callback, ms=700) {
 main.addEventListener('click',async event=>{
   const button=event.target.closest('button'); if(!button)return;
   if(button.dataset.copy) {await copy(button.dataset.copy);return;}
-  if(button.dataset.copySnippet) {await copy(snippets.get(button.dataset.copySnippet));return;}
+  if(button.dataset.copySnippet) {const id=button.dataset.copySnippet;const copied=await copy(snippets.get(id));if(copied&&button.classList.contains('code-copy-button'))showCodeCopyResult(button,id);return;}
   if(button.dataset.setTheme) {applyPreferences({theme:button.dataset.setTheme});return;}
   if(button.dataset.openDetail!==undefined) {openDetail(Number(button.dataset.openDetail),button);return;}
   const action=button.dataset.action;
@@ -299,7 +309,8 @@ window.addEventListener('hashchange',async()=>{
   const nextPage=nextHash.slice(1).split('/')[0]||'overview';
   if(nextPage===main.dataset.page){displayedHash=nextHash;scrollToDocumentSection(nextHash.split('/')[1]||'',{focus:true});return;}
   history.replaceState(null,'',displayedHash);
-  const allowed=await requestExpansionLeave();
+  const vueAllowed=await (cleanupVuePreviews.requestLeave?.()??true);
+  const allowed=vueAllowed&&await requestExpansionLeave();
   if(request!==navigationRequest||!allowed)return;
   history.replaceState(null,'',nextHash);displayedHash=nextHash;
   render({focus:true});

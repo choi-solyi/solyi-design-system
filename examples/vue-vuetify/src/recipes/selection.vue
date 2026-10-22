@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, SCheckbox, SRadioGroup, SSwitch } from '@solyi/vue-ui';
+
 const multiple = ref(false),
   single = ref<string | null>('brief'),
   immediate = ref(false);

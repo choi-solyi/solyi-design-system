@@ -25,7 +25,7 @@ const media=new Map();w.matchMedia=query=>{if(!media.has(query))media.set(query,
 const query=w.matchMedia('(min-width: 1100px)');const resize=matches=>{query.matches=matches;for(const fn of query.listeners)fn({matches,media:query.media});};
 const tick=async()=>{await nextTick();await nextTick();},$=selector=>{const el=d.querySelector(selector);assert.ok(el,selector);return el;};
 let app,vuetify;const warnings=[];
-async function mount(){app=createApp(RecipeExamples);app.config.warnHandler=msg=>warnings.push(msg);vuetify=createSolyiVuetify();app.use(vuetify);app.mount('#app');await tick();}
+async function mount(){app=createApp(RecipeExamples);app.config.warnHandler=msg=>warnings.push(msg);vuetify=createSolyiVuetify();app.use(vuetify).use({install:api.install});app.mount('#app');await tick();}
 function unmount(){app.unmount();vuetify.unmount();}
 w.history.replaceState(null,'','/starter/?view=recipes&example=time&keep=1#anchor');await mount();
 assert.equal(d.querySelectorAll('#recipe-navigation a').length,30);assert.equal(new Set([...d.querySelectorAll('#recipe-navigation a')].map(e=>e.id)).size,30);assert.equal(d.querySelectorAll('.recipe-nav-group').length,5);

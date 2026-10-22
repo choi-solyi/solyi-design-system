@@ -1,55 +1,107 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { SCard, SBtn, SAlert, SSnackbar, SSelect } from '@solyi/vue-ui';
+import { ref } from 'vue';
 import type { ToastTone } from '@solyi/vue-ui';
-const tone = ref<string | null>('info'),
-  open = ref(false);
-const resolved = computed(() => tone.value as ToastTone);
-const options = [
-  { value: 'info', label: '정보' },
-  { value: 'success', label: '완료' },
-  { value: 'warning', label: '확인' },
-  { value: 'danger', label: '오류' },
+const open = ref(false),
+  selected = ref<ToastTone>('info'),
+  message = ref('');
+const tones: { tone: ToastTone; label: string; icon: string; note: string }[] = [
+  {
+    tone: 'accent',
+    label: 'Accent',
+    icon: '✦',
+    note: '핵심 행동과 현재 선택을 절제해서 강조합니다.',
+  },
+  {
+    tone: 'info',
+    label: 'Information',
+    icon: 'ⓘ',
+    note: '설명과 중립적인 진행 안내입니다.',
+  },
+  {
+    tone: 'success',
+    label: 'Success',
+    icon: '✓',
+    note: '확인된 성공과 완료 결과를 안내합니다.',
+  },
+  {
+    tone: 'warning',
+    label: 'Warning',
+    icon: '!',
+    note: '진행 전 검토가 필요한 내용을 안내합니다.',
+  },
+  {
+    tone: 'danger',
+    label: 'Error',
+    icon: '!',
+    note: '중요한 오류는 이 화면에도 남기고 다음 행동을 안내합니다.',
+  },
 ];
+function show(tone: ToastTone, label: string) {
+  selected.value = tone;
+  message.value = label + ' · 가상 컬러 예시';
+  open.value = true;
+}
 </script>
 <template>
   <SCard
     :heading-level="2"
-    title="의미 색 적용"
+    title="의미색 UI 조합"
   >
-    <SSelect
-      id="recipe-tone"
-      v-model="tone"
-      label="알림 역할"
-      :options="options"
-      required
-    />
-    <SAlert
-      :tone="resolved"
-      title="색과 문구가 함께 전하는 가상 안내"
-    >
-      <p>버튼의 중요도와 의미색은 별도입니다.</p>
-      <template #actions>
-        <SBtn
-          variant="inline"
-          @click="open = true"
+    <div class="sol-stack">
+      <SCard
+        v-for="item in tones"
+        :key="item.tone"
+        :title="item.label"
+        class="sol-tone"
+        :data-tone="item.tone"
+      >
+        <span class="sol-status sol-tone-badge">{{ item.icon }} {{ item.label }}</span>
+        <div class="sol-actions">
+          <SBtn
+            variant="primary"
+            :tone="item.tone"
+            @click="show(item.tone, item.label)"
+            >다음 단계</SBtn
+          >
+          <SBtn
+            variant="subtle"
+            :tone="item.tone"
+            @click="show(item.tone, item.label)"
+            >옅은 배경</SBtn
+          >
+          <SBtn
+            :tone="item.tone"
+            @click="show(item.tone, item.label)"
+            >외곽선</SBtn
+          >
+          <SBtn
+            :tone="item.tone"
+            disabled
+            >비활성</SBtn
+          >
+        </div>
+        <SAlert
+          :tone="item.tone"
+          :title="item.icon + ' ' + item.label + ' 안내'"
         >
-          같은 역할의 스낵바 보기
-        </SBtn>
-      </template>
-    </SAlert>
-    <SBtn
-      variant="primary"
-      @click="open = true"
-    >
-      주요 행동
-    </SBtn>
+          <p>{{ item.note }}</p>
+          <template #actions
+            ><SBtn
+              variant="inline"
+              :tone="item.tone"
+              @click="show(item.tone, item.label)"
+              >스낵바 띄우기</SBtn
+            ></template
+          >
+        </SAlert>
+      </SCard>
+    </div>
     <SSnackbar
       id="recipe-tone-toast"
       v-model="open"
-      :tone="resolved"
-      message="의미 색을 비교하는 가상 안내"
-      :duration="resolved === 'danger' ? 0 : 4000"
+      :tone="selected"
+      :message="message"
+      :duration="selected === 'danger' ? 0 : 6000"
     />
   </SCard>
 </template>

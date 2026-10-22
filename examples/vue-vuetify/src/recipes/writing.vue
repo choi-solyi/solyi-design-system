@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { SCard, STextField, SBtn, SAlert } from '@solyi/vue-ui';
+
 const name = ref(''),
   checked = ref(false);
 const error = computed(() =>

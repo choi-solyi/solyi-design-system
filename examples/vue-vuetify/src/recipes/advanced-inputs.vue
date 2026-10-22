@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, STextarea, SNumberInput, SMultiSelect } from '@solyi/vue-ui';
+
+defineProps<{ part?: string }>();
 const note = ref(''),
   amount = ref<number | null>(2),
   tags = ref<string[]>([]);
@@ -13,15 +14,17 @@ const options = [
 <template>
   <SCard
     :heading-level="2"
-    title="여러 줄·숫자·태그"
+    :title="part ? undefined : '여러 줄·숫자·태그'"
   >
     <STextarea
+      v-if="!part || part === 'textarea'"
       id="recipe-note"
       v-model="note"
       label="가상 기록 설명"
       :maxlength="120"
     />
     <SNumberInput
+      v-if="!part || part === 'number'"
       id="recipe-amount"
       v-model="amount"
       label="가상 목표 개수"
@@ -30,12 +33,18 @@ const options = [
       :step="2"
     />
     <SMultiSelect
+      v-if="!part || part === 'multiselect'"
       id="recipe-tags"
       v-model="tags"
       label="가상 분류"
       :options="options"
       :max-selected="2"
     />
-    <p role="status">{{ amount }}개 · {{ tags.join(', ') || '선택 없음' }}</p>
+    <p
+      v-if="!part"
+      role="status"
+    >
+      {{ amount }}개 · {{ tags.join(', ') || '선택 없음' }}
+    </p>
   </SCard>
 </template>

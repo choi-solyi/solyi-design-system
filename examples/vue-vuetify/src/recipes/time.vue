@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, STimePicker } from '@solyi/vue-ui';
+
 const time = ref<string | null>('09:00');
 </script>
 <template>
@@ -18,8 +18,6 @@ const time = ref<string | null>('09:00');
       required
       help="HH:mm 또는 HHmm으로 입력하거나 Alt+↓로 패널을 엽니다."
     />
-    <p role="status">
-      완료값: {{ time || '없음' }} · 실제 알림을 예약하지 않습니다.
-    </p>
+    <p role="status">완료값: {{ time || '없음' }} · 실제 알림을 예약하지 않습니다.</p>
   </SCard>
 </template>

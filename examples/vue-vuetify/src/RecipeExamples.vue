@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
-import { SBtn } from '@solyi/vue-ui';
+
 import { solIconPaths } from '@solyi/core/icons';
 import { recipeComponents, recipeLabels } from './recipe-registry';
 

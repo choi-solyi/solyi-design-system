@@ -1,38 +1,53 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, SCheckbox, SRadioGroup, SSwitch } from '@solyi/vue-ui';
-const multiple = ref(false),
-  single = ref<string | null>('brief'),
-  immediate = ref(false);
+const include = ref(true),
+  archived = ref(false),
+  view = ref<string | null>('list'),
+  sort = ref<string | null>('recent');
 const options = [
-  { value: 'brief', label: '간단히' },
-  { value: 'full', label: '자세히' },
+  { value: 'list', label: '목록' },
+  { value: 'cards', label: '카드' },
+  { value: 'map', label: '지도 · 비활성', disabled: true },
 ];
 </script>
 <template>
   <SCard
     :heading-level="2"
-    title="선택의 의미"
+    title="익숙한 기본 선택"
   >
     <SCheckbox
-      id="recipe-multiple"
-      v-model="multiple"
-      label="자료 포함 · 다중 선택의 한 항목"
+      id="recipe-include"
+      v-model="include"
+      label="완료한 항목 포함"
+    />
+    <SCheckbox
+      id="recipe-archived"
+      v-model="archived"
+      label="보관한 항목 포함"
+    />
+    <SCheckbox
+      id="recipe-unavailable"
+      label="공유 항목 · 비활성"
+      disabled
     />
     <SRadioGroup
-      id="recipe-single"
-      v-model="single"
-      label="한 가지 표시 방식"
+      id="recipe-view"
+      v-model="view"
+      label="보기 방식"
       :options="options"
     />
-    <SSwitch
-      id="recipe-immediate"
-      v-model="immediate"
-      label="바꾸는 즉시 적용"
+    <SSelect
+      id="recipe-sort"
+      v-model="sort"
+      label="정렬 기준"
+      :options="[
+        { value: 'recent', label: '최근 변경순' },
+        { value: 'name', label: '이름순' },
+      ]"
     />
     <p role="status">
-      자료 {{ multiple ? '포함' : '제외' }} · {{ single }} · 즉시 설정
-      {{ immediate ? '켬' : '끔' }}
+      완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }} ·
+      {{ view }} · {{ sort }}
     </p>
   </SCard>
 </template>

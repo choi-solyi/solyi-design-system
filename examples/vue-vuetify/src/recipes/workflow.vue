@@ -1,13 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted, onBeforeUnmount } from 'vue';
-import {
-  SCard,
-  SBtn,
-  STextField,
-  STextarea,
-  SDialog,
-  SAlert,
-} from '@solyi/vue-ui';
+import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from 'vue';
+
 const saved = ref({ title: '작은 정원', note: '가상 기록입니다.' }),
   draft = ref({ ...saved.value }),
   editing = ref(false),
@@ -17,9 +10,27 @@ const saved = ref({ title: '작은 정원', note: '가상 기록입니다.' }),
   error = ref('');
 const dirty = computed(
   () =>
-    draft.value.title !== saved.value.title ||
-    draft.value.note !== saved.value.note,
+    draft.value.title !== saved.value.title || draft.value.note !== saved.value.note,
 );
+let answerLeave: ((allowed: boolean) => void) | undefined;
+let leavePromise: Promise<boolean> | undefined;
+function confirmLeave(): Promise<boolean> {
+  if (!editing.value || !dirty.value) return Promise.resolve(true);
+  if (leavePromise) return leavePromise;
+  kind.value = 'leave';
+  leavePromise = new Promise((resolve) => (answerLeave = resolve));
+  confirm.value = true;
+  return leavePromise;
+}
+watch(confirm, (value) => {
+  if (!value && answerLeave) {
+    const answer = answerLeave;
+    answerLeave = undefined;
+    leavePromise = undefined;
+    answer(false);
+  }
+});
+defineExpose({ confirmLeave });
 function edit() {
   draft.value = { ...saved.value };
   editing.value = true;
@@ -52,11 +63,15 @@ function undo() {
   nextTick(() => document.getElementById('recipe-edit')?.focus());
 }
 function decide() {
+  const answer = answerLeave;
+  answerLeave = undefined;
+  leavePromise = undefined;
   confirm.value = false;
   if (kind.value === 'delete') {
     deleted.value = true;
     nextTick(() => document.getElementById('recipe-undo')?.focus());
   } else cancel();
+  answer?.(true);
 }
 function before(e: BeforeUnloadEvent) {
   if (editing.value && dirty.value) {
@@ -65,7 +80,10 @@ function before(e: BeforeUnloadEvent) {
   }
 }
 onMounted(() => window.addEventListener('beforeunload', before));
-onBeforeUnmount(() => window.removeEventListener('beforeunload', before));
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', before);
+  answerLeave?.(false);
+});
 </script>
 <template>
   <SCard

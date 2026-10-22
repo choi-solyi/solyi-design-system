@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 v0.8.1 검토 초안입니다. 이번 UI 피드백과 실제 검증 범위는 [UI-FEEDBACK-PLAN.md](UI-FEEDBACK-PLAN.md)에 기록합니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 v0.10.0 검토 초안입니다. 전용 Vue API와 문서·실행 화면 연결 범위는 [DEDICATED-VUE-PLAN.md](DEDICATED-VUE-PLAN.md), 실제 검증 범위는 [QA.md](QA.md)에 기록합니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -14,9 +14,9 @@
 
 쿨 바이올렛 A안은 기본 출발점이며 모든 앱의 영구 규칙이 아닙니다. 브랜드 고유성은 정보 위계·타입·여백 리듬·밀도·절제된 강조에 둡니다. 게임 전투력·등급 색은 Core에 포함하지 않습니다.
 
-## 로컬 미게시 후속
+## 재사용 Vue 예제
 
-문서0.9.1 후보는 S 컴포넌트만 공개하며, 이전 Sol 컴포넌트 별칭을 제거합니다. Vue 사용 예제는 실제 패키지를 소비하는 정본 SFC에서 문서 코드와 실행 화면을 함께 만듭니다. [예제 전환 범위·미제공 API](VUE-EXAMPLES-PLAN.md) · [S API 계약](S-API.md). npm 게시와 다른 앱 연결은 포함하지 않습니다.
+34개 S 컴포넌트는 전역 등록 또는 개별 import로 사용할 수 있습니다. 문서의 작동 예제30개와 코드·별도 실행 화면은 동일한 정본 SFC 및 설치한 패키지를 사용합니다. 상태 흐름·화면 틀은 앱 조합으로 구분하며 문서 셸·Core CSS 전체가 독립 Vue 컴포넌트라는 뜻은 아닙니다. [전용 API](DEDICATED-VUE-API.md) · [전환 목록](vue-api-inventory.json) · [S API 계약](S-API.md). npm 미게시, 다른 앱 미연결입니다.
 
 ## 로컬 실행
 
@@ -52,7 +52,7 @@ QA.md                    완료한 검증과 미검증 범위
 
 `tokens.json`을 수정한 뒤 `npm run build`를 실행합니다. 생성된 `docs/tokens.css`, `docs/token-data.js`, `docs/tokens.json`을 직접 수정하지 않습니다. 문서·데모·다운로드가 같은 소스를 사용합니다.
 
-앱에서는 `tokens.css`를 가져오고 `--sol-color-surface`, `--sol-color-text`, `--sol-color-accent`처럼 역할로 연결합니다. `components.css`는 선택 사항이며 `docs.css`와 분리되어 있습니다. examples/vue-vuetify는 Button·Field·Dialog만 매핑한 독립 starter입니다. 다른 라이브러리·버전은 미검증입니다.
+앱에서는 `tokens.css`를 가져오고 `--sol-color-surface`, `--sol-color-text`, `--sol-color-accent`처럼 역할로 연결합니다. `components.css`는 선택 사항이며 `docs.css`와 분리되어 있습니다. examples/vue-vuetify는 실제 tarball 패키지와 전역 등록을 소비하는 독립 starter입니다. 다른 라이브러리·버전은 미검증입니다.
 
 ```html
 <html lang="ko" data-theme="violet" data-mode="light" data-density="comfortable">

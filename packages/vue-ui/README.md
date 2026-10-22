@@ -1,23 +1,30 @@
-# @solyi/vue-ui 0.7.1
+# @solyi/vue-ui 0.8.0
 
-Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.4.1. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
+Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.4.2. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
 
-```js
+```ts
+import {createApp} from 'vue';
+import {VApp} from 'vuetify/components/VApp';
+import SolyiUI, {createSolyiVuetify} from '@solyi/vue-ui';
 import 'vuetify/styles';
-import '@solyi/core/fonts.css'; // optional self-hosted official Wanted Sans/OFL
-import '@solyi/core/code-fonts.css'; // optional JetBrains Mono + Nanum Gothic Coding/OFL
+import '@solyi/core/fonts.css';
+import '@solyi/core/code-fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';
-import {SBtn, STextField, SDialog, SDataTable, SCheckbox, SRadioGroup, SSwitch,
-  SSelect, STextarea, SNumberInput, STabs, SSnackbar, SDatePicker, STimePicker, SSegmentedControl, SMultiSelect, SRangeSlider,
-  SSplitBtn, SContextMenu, SResizableSplitPane, SProgressLinear, SProgressCircular} from '@solyi/vue-ui';
-// Or app.use(SolyiUI) for global registration. Install createVuetify() once in the app.
+import '@solyi/vue-ui/global';
+import App from './App.vue';
+createApp(App).use(createSolyiVuetify({components:{VApp}})).use(SolyiUI).mount('#app');
 ```
+
+S components are globally registered once per app. Keep imports for Vue utilities and TypeScript types. For vue-tsc/Volar add `@solyi/vue-ui/global` to compilerOptions.types or reference it from an included env.d.ts. Named exports remain available for modular use. The global type module alone does not perform runtime registration.
+
+Reusable own code is MIT; see LICENSE. Fonts retain their OFL notices in Core. Logos, characters, favicon and personal content are excluded; MIT grants no brand-asset rights. private:true remains a publication guard, not the code license.
+
 
 | API | Contract |
 |---|---|
-| SBtn | variant primary/secondary/subtle/inline; type button/submit/reset; disabled; loading (keeps focus, aria-busy, blocks duplicate activation); click. Attributes and default slot forwarded. |
+| SBtn | variant primary/secondary/subtle/inline; optional tone accent/info/success/warning/danger; type button/submit/reset; disabled; loading (keeps focus, aria-busy, blocks duplicate activation); click. Attributes and default slot forwarded. |
 | STextField | required id + label; v-model string; help/error; required/disabled; supported single-line type; native input attributes forwarded. Label, help and errors linked. |
 | SDialog | required unique id + title; v-model boolean; maxWidth; closeLabel; optional returnFocus element; default/actions slots. Vuetify focus trap/Escape/backdrop; no transition; close focus + return focus. |
 | SDataTable | caption, columns, current-page rows with unique string id; selectable + v-model:selected IDs; v-model:sort {key,direction}; page/pageCount + update:page; loading/error/retry/emptyText; cell-key slots and rowAction notification. Fixed width columns, one flexible title column; mobile cards and shared full-text helper. |
@@ -39,3 +46,7 @@ SCheckbox, SRadioGroup, SSwitch, SSelect, STextarea, SNumberInput, STabs, SSnack
 SegmentedControl(string|null), MultiSelect(string[] with cancellable optional option loader), RangeSlider(readonly number pair), SplitButton and ContextMenu(flat action events/optional controlled open), ResizableSplitPane(percentage/keyboard/pointer/reflow) are actual typed exports. See ../../ADVANCED-VUE-API.md and the installed AdvancedExamples.vue consumer. The original14 remain. Other reference demos are not implicitly converted.
 
 Canonical components use S PascalCase: SBtn/STextField/SDialog/SDataTable/SSnackbar and the remaining input/navigation APIs, plus SProgressLinear/SProgressCircular. Only S-named components are exported and registered. Legacy Sol component aliases were removed in this draft. Native V components remain usable via createSolyiVuetify/applySolyiAppearance. Contracts differ from native Vuetify: see S-API.md in the repository. All supplied use shared Core tokens; unknown progress has no aria-valuenow/fake percentage ; indeterminate can animate, with a static reduced-motion fallback.
+
+## Dedicated common APIs
+
+STooltip, SPopover, SAccordion, SBreadcrumbs, SFileInput, SAutocomplete, SAvatar, SStepper and SBarChart are typed exports and global components. See the repository DEDICATED-VUE-API.md for values, slots, focus and async/file contracts. File processing is local metadata only. Business forms, routing, submission and persistence belong to the consumer.

@@ -1,6 +1,6 @@
 # 패키지 소비와 자동 검증
 
-현재 패키지 초안은 `@solyi/core@0.4.1` / `@solyi/vue-ui@0.7.1` (문서0.9.1 검토 초안)입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
+현재 패키지 초안은 `@solyi/core@0.4.2` / `@solyi/vue-ui@0.8.0` (문서0.10.0 검토 초안)입니다. 둘 다 `private:true`, 자체 코드 `MIT`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
 
 0.1.5의 접근성 보완: Field 외부 label의 ID와 입력의 aria-labelledby를 연결합니다. Table의 오류 재시도 버튼에 초점이 있는 채로 정상/로딩 상태로 바뀌면, 제거된 버튼 대신 지속되는 결과 요약에 초점을 둡니다. 사용자가 다른 조작부로 이동한 뒤 완료되면 그 초점을 유지합니다. API/색/타이포/반경은 유지합니다.
 
@@ -79,6 +79,8 @@ Import solIcon / solIconPaths from @solyi/core/icons to use the same 16/20/24 li
 
 ## 0.3.0 추가6종과 UI 폰트
 
-[ADVANCED-VUE-API.md](ADVANCED-VUE-API.md)는 새6종의 값/이벤트/키보드/async 계약을 설명합니다. 이전14종 API를 삭제하지 않습니다. Core의 `fonts.css` export와 동일 폴더의 원본 WOFF2/OFL/SOURCE.json이 실제 tarball에 포함됩니다. 소비 앱은 `import '@solyi/core/fonts.css'`를 한 번 추가하고, UI 토큰은 Wanted Sans와 시스템 fallback을 사용합니다. 글꼴은 OFL1.1이며 자체 소스의 UNLICENSED와 구분합니다. 코드 글꼴은 별도 `code-fonts.css` opt-in export로 JetBrains Mono → Nanum Gothic Coding → monospace를 사용합니다. 원본 WOFF2/TTF/OFL 및 고정 출처·해시를 함께 제공하며 자세한 용량·적용 범위는 FONT.md에 기록합니다. 설치·업데이트는 같은 lockfile/tarball 방식이며 공개 레지스트리와 다른 앱 자동배포를 연결하지 않습니다.
+[ADVANCED-VUE-API.md](ADVANCED-VUE-API.md)는 새6종의 값/이벤트/키보드/async 계약을 설명합니다. 이전14종 API를 삭제하지 않습니다. Core의 `fonts.css` export와 동일 폴더의 원본 WOFF2/OFL/SOURCE.json이 실제 tarball에 포함됩니다. 소비 앱은 `import '@solyi/core/fonts.css'`를 한 번 추가하고, UI 토큰은 Wanted Sans와 시스템 fallback을 사용합니다. 글꼴은 OFL1.1이며 자체 소스의 MIT와 구분합니다. 코드 글꼴은 별도 `code-fonts.css` opt-in export로 JetBrains Mono → Nanum Gothic Coding → monospace를 사용합니다. 원본 WOFF2/TTF/OFL 및 고정 출처·해시를 함께 제공하며 자세한 용량·적용 범위는 FONT.md에 기록합니다. 설치·업데이트는 같은 lockfile/tarball 방식이며 공개 레지스트리와 다른 앱 자동배포를 연결하지 않습니다.
 
 공통 언어 설정은 [LOCALE.md](LOCALE.md)를 따릅니다. 버전별 Pages 설치 경로와 해시·업데이트/롤백은 [DISTRIBUTION.md](DISTRIBUTION.md)를 따릅니다. 공개0.5/0.6 쌍과 로컬0.7 쌍은 유지하며 새0.9.1은 검수 수정 쌍입니다. 다른 앱의 자동 업데이트 연결과 npm 게시는 별도 단계입니다.
+
+기본 사용 방식은 [전역 등록과 공통 Vue API](DEDICATED-VUE-API.md)입니다. 실제 starter와 정본 SFC30개도 같은 등록을 사용하며 표시·복사·실행 원본을 공유합니다. [라이선스 범위](LICENSE-SCOPE.md)는 브랜드·폰트와 자체 코드의 경계를 설명합니다. npm 이름 sol-ui에는 삭제 이력이 있으므로 사용권이 확보됐다고 보지 않습니다. 현재 private 게시 차단은 유지합니다.

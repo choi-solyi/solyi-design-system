@@ -1,22 +1,23 @@
 # Vue 컴포넌트 API
 
+기본 예제는 앱에서 한 번 전역 등록한 뒤 S 태그를 사용합니다. [등록·타입·공통 API](DEDICATED-VUE-API.md)를 먼저 확인하세요. Vue 함수와 타입만 각 예제에서 import합니다.
+
 ## 표면·트리와 Vue 조합
 
 예제 주변의 버튼 묶음은 Core의 `sol-actions`(8px 간격·줄바꿈), 경로 목록은 `sol-breadcrumbs`로 배치합니다. Vue 컴포넌트 CSS와 함께 Core components.css도 설치 절차대로 가져와야 합니다.
 
 - `SCard`: `title`, `eyebrow`, `headingLevel:2|3|4`(기본3), 기본/actions 슬롯. 카드의 제목과 본문을 공통 간격으로 묶습니다.
-- `SAlert`: `tone:info|success|warning|danger`, `title`, `live:off|polite|assertive`(기본off), 기본/actions 슬롯. 정적 안내는 live를 켜지 않고, 같은 변화의 자동 안내는 한곳만 사용합니다.
+- `SAlert`: `tone:accent|info|success|warning|danger`, `title`, `live:off|polite|assertive`(기본off), 기본/actions 슬롯. 정적 안내는 live를 켜지 않고, 같은 변화의 자동 안내는 한곳만 사용합니다.
 - `STree`: 필수 `id/label/items:STreeItem[]`, `v-model:string|null`, `v-model:expanded:string[]`, `disabled/readonly`, `select(id)` 이벤트. 항목은 고유 id/label, 선택적 disabled/children입니다. 방향키·Home/End는 초점, Enter/Space는 선택입니다. 접힌 자식은 Tab 순서에서 제외합니다. readonly는 탐색·펼침을 허용하고 값 선택을 막습니다.
 - `SDialog presentation="drawer"`는 같은 열기/닫기·초점 계약을 오른쪽 패널로 표시합니다. `eyebrow`와 `title`은 같은 제목 묶음을 사용합니다.
 - `SRadioGroup layout="cards"`와 `options[].description`은 라벨 전체가 선택되는 비교 카드를 제공합니다. 값과 native radio의 키보드 동작은 기존 계약을 유지합니다.
 
-기본 사용 코드는 [정본 Vue 예제](examples/vue-vuetify/src/recipes/)에서 생성하고, 같은 파일을 `/starter/?view=recipes`에서 실행합니다. 문서의 HTML·CSS는 별도 참고 탭입니다. Tooltip/Popover·Accordion·Breadcrumb·Avatar·파일·단일 자동완성·차트는 전용 S export 없이 실제 S API와 semantic HTML/SVG를 연결한 Vue 조합입니다. [전체 전환표와 제한](VUE-EXAMPLES-PLAN.md)을 확인하세요.
+기본 사용 코드는 [정본 Vue 예제](examples/vue-vuetify/src/recipes/)에서 생성하고, 같은 파일을 `/starter/?view=recipes`에서 실행합니다. 문서의 HTML·CSS는 별도 참고 탭입니다. Tooltip/Popover·Accordion·Breadcrumb·Avatar·파일·단일 자동완성·차트도 전용 S API로 제공합니다. 폼·검색·편집 같은 업무 흐름은 부품을 연결한 Vue 조합입니다. [전체 전환표와 제한](VUE-EXAMPLES-PLAN.md)을 확인하세요.
 
 `@solyi/vue-ui`의 기본 사용 이름은 `SBtn`, `STextField`, `SDialog`, `SDataTable` 등 S 접두사 PascalCase입니다. 현재 컴포넌트 export와 plugin 등록은 S 이름만 제공합니다. 사용되지 않은 이전 Sol 컴포넌트 별칭은 이번 0.x에서 제거했습니다. 기존 릴리스 파일은 변경하지 않습니다.
 
 ```vue
 <script setup>
-import {SBtn, STextField} from '@solyi/vue-ui';
 import {VBtn} from 'vuetify/components/VBtn';
 </script>
 <template>

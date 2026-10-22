@@ -1,5 +1,10 @@
 # Current migration status
 
+현재 전환 후보: 문서0.10.0 / Core0.4.2 / Vue UI0.8.0. 실제 export34개와 전역 등록 예제30개의 목록은 [현재 기계 목록](vue-api-inventory.json), [전용 API·등록 방법](DEDICATED-VUE-API.md), [이번 진행표](DEDICATED-VUE-PLAN.md)를 따릅니다. 아래 버전별 표는 당시 기록이며 현행 완료 상태를 대신하지 않습니다.
+
+## 이전 단계 기록
+
+
 Current local0.7 candidate:22 unique S components (existing20 with identical Sol aliases +2 progress APIs). **The authoritative current per-example status is [REUSE-INVENTORY.md](REUSE-INVENTORY.md)**. Main-document progress now executes the actual package consumer; other reference HTML blocks are explicitly pending. The following phase2/3 notes are historical.
 
 # Vue migration inventory · phase 2

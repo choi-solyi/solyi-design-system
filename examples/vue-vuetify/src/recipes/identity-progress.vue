@@ -1,62 +1,149 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { SCard, SSplitBtn, SBtn, SProgressLinear } from '@solyi/vue-ui';
-const step = ref(1),
+import { computed, nextTick, ref } from 'vue';
+defineProps<{ part?: string }>();
+const stage = ref(0),
+  done = ref(false),
+  name = ref(''),
+  category = ref<string | null>(null),
+  error = ref(''),
   result = ref('');
 const items = [
   { id: 'profile', label: '가상 사용자 정보' },
   { id: 'settings', label: '가상 설정' },
 ];
+const steps = [
+  { id: 'name', label: '이름' },
+  { id: 'category', label: '분류' },
+  { id: 'review', label: '검토' },
+];
+const current = computed(() => steps[stage.value].id);
+const completed = computed(() =>
+  steps.slice(0, done.value ? 3 : stage.value).map((item) => item.id),
+);
+async function move(delta: number) {
+  error.value = '';
+  if (delta > 0 && stage.value === 0 && !name.value.trim())
+    error.value = '가상 이름을 입력해 주세요.';
+  if (delta > 0 && stage.value === 1 && !category.value)
+    error.value = '가상 분류를 선택해 주세요.';
+  if (!error.value) {
+    if (stage.value === 2 && delta > 0) done.value = true;
+    else {
+      stage.value = Math.max(0, Math.min(2, stage.value + delta));
+      done.value = false;
+    }
+  }
+  await nextTick();
+  document
+    .getElementById(
+      done.value
+        ? 'recipe-step-result'
+        : stage.value === 0
+          ? 'recipe-step-name'
+          : stage.value === 1
+            ? 'recipe-step-category'
+            : 'recipe-step-review',
+    )
+    ?.focus();
+}
+async function reset() {
+  stage.value = 0;
+  done.value = false;
+  name.value = '';
+  category.value = null;
+  error.value = '';
+  await nextTick();
+  document.getElementById('recipe-step-name')?.focus();
+}
 </script>
 <template>
   <SCard
     :heading-level="2"
-    title="가상 사용자와 단계"
+    :title="part ? undefined : '가상 사용자와 단계'"
   >
-    <div class="sol-actions">
-      <span
-        class="sol-avatar"
-        role="img"
-        aria-label="가상 사용자 솔"
-      >
-        솔
-      </span>
+    <div
+      v-if="!part || part === 'avatar'"
+      class="sol-actions"
+    >
+      <SAvatar
+        label="가상 사용자 민하"
+        initials="민"
+      />
       <SSplitBtn
         id="recipe-user"
-        label="가상 사용자"
+        label="민하 · 가상 사용자"
         :items="items"
         @primary="result = '가상 사용자 정보'"
         @select="result = $event"
       />
+      <p role="status">{{ result }}</p>
     </div>
-    <ol>
-      <li :aria-current="step === 1 ? 'step' : undefined">조건 확인</li>
-      <li :aria-current="step === 2 ? 'step' : undefined">내용 작성</li>
-      <li :aria-current="step === 3 ? 'step' : undefined">완료</li>
-    </ol>
-    <SProgressLinear
-      id="recipe-step-progress"
-      label="작성 단계"
-      :model-value="step"
-      :min="0"
-      :max="3"
-      :show-message="false"
-    />
-    <div class="sol-actions">
-      <SBtn
-        :disabled="step === 1"
-        @click="step--"
+    <template v-if="!part || part === 'steps'">
+      <SStepper
+        id="recipe-steps"
+        :model-value="current"
+        :items="steps"
+        :completed="completed"
+        label="가상 작성 단계"
+      />
+      <SProgressLinear
+        id="recipe-step-progress"
+        label="완료한 단계"
+        :model-value="done ? 3 : stage"
+        :min="0"
+        :max="3"
+        :show-message="false"
+      />
+      <template v-if="!done">
+        <STextField
+          v-if="stage === 0"
+          id="recipe-step-name"
+          v-model="name"
+          label="가상 프로젝트 이름"
+          :error="error"
+          required
+        />
+        <SSelect
+          v-else-if="stage === 1"
+          id="recipe-step-category"
+          v-model="category"
+          label="가상 분류"
+          :error="error"
+          :options="[
+            { value: 'notes', label: '기록' },
+            { value: 'books', label: '독서' },
+          ]"
+          required
+        />
+        <p
+          v-else
+          id="recipe-step-review"
+          tabindex="-1"
+        >
+          {{ name }} · {{ category }} · 서버에 저장하지 않는 가상 검토입니다.
+        </p>
+      </template>
+      <p
+        v-else
+        id="recipe-step-result"
+        role="status"
+        tabindex="-1"
       >
-        이전 단계
-      </SBtn>
-      <SBtn
-        :disabled="step === 3"
-        @click="step++"
-      >
-        다음 단계
-      </SBtn>
-      <SBtn @click="step = 1">처음부터</SBtn>
-    </div>
-    <p role="status">{{ result }}</p>
+        ✓ 가상 단계를 완료했어요. 실제 프로젝트는 만들지 않습니다.
+      </p>
+      <div class="sol-actions">
+        <SBtn
+          :disabled="stage === 0"
+          @click="move(-1)"
+          >이전 단계</SBtn
+        >
+        <SBtn
+          :disabled="done"
+          @click="move(1)"
+          >{{ stage === 2 ? '가상 완료' : '다음 단계' }}</SBtn
+        >
+        <SBtn @click="reset">처음부터</SBtn>
+      </div>
+    </template>
   </SCard>
 </template>

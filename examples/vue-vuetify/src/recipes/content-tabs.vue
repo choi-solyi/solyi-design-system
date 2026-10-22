@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, STabs, STextField } from '@solyi/vue-ui';
+
 const tab = ref('summary'),
   memo = ref('');
 const items = [

@@ -25,7 +25,8 @@ w.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open');this
 let clipboard='';
 Object.defineProperty(w.navigator,'clipboard',{value:{writeText:async value=>{clipboard=value;}}});
 for(const name of moduleOrder)w.eval(withoutImports(await readFile(new URL(`../docs/${name}.js`,import.meta.url),'utf8')).replace(/^export const /gm,'var ').replace(/^export /gm,''));
-w.eval(app);
+// Unit scope: native Core reference controllers/navigation; Vue canvases are checked separately.
+w.mountVuePreviews=()=>()=>{};w.eval(app);
 const $=selector=>{const result=d.querySelector(selector);assert.ok(result,selector);return result;};
 const fire=(element,type)=>element.dispatchEvent(new w.Event(type,{bubbles:true,cancelable:true}));
 const click=selector=>$(selector).click();
@@ -89,7 +90,7 @@ const noticeRetry=$('[data-action="retry-feedback"]');noticeRetry.focus();notice
 assert.equal(noticeRetry.getAttribute('aria-busy'),'true','Notice retry prevents duplicate execution while loading');
 await pause(760);assert.equal(noticeRetry.hasAttribute('aria-busy'),false);assert.match($('#retry-result').textContent,/성공/);
 assert.equal(d.activeElement,noticeRetry,'Notice retry retains keyboard focus after completion');
-click('#buttons .vue-code-examples>summary');click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/<SBtn/);assert.match(clipboard,/from '@solyi\/vue-ui'/);
+click('#buttons .vue-code-examples>summary');click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/<SBtn/);assert.match(clipboard,/from 'vue'/);assert.doesNotMatch(clipboard,/import\s*\{[^}]*\bSBtn\b[^}]*\}\s*from '@solyi\/vue-ui'/);
 assert.equal($('#usage-buttons-html').hidden,true);$('#usage-buttons-vue-tab').dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.equal($('#usage-buttons-html').hidden,false);assert.equal(d.activeElement.id,'usage-buttons-html-tab');click('#usage-buttons-vue-tab');assert.equal($('#usage-buttons-vue').hidden,false);
 // Only the app's dialog opening and return-focus wiring is checked; no native modal trap is simulated.
 const dialog=$('#detail-dialog');dialog.showModal=function(){this.setAttribute('open','');};dialog.close=function(){this.removeAttribute('open');fire(this,'close');};

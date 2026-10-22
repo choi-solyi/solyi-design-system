@@ -1,5 +1,17 @@
 # 검증 기록
 
+## 0.10.0 local candidate · dedicated Vue APIs / code panels (2026-10-22 UTC)
+
+- Core0.4.2 / UI0.8.0, nine additions: STooltip, SPopover, SAccordion, SBreadcrumbs, SFileInput, SAutocomplete, SAvatar, SStepper, SBarChart. Same canonical30 SFCs drive document canvases, visible/copyable code and the standalone explorer; global runtime registration and opt-in template declarations are installed in the real consumer.
+- PASS: library build/declarations/exports/licenses and two clean tarball installs, independent TypeScript/Vite build (including invalid-prop checks), vue-tsc for all30 SFCs, installed old/new runtime suites, real document-bootstrap/alias/ARIA/height/origin/appearance/leave guards, and versioned HTTP previous/update/rollback with integrity and corrupt/missing/overwrite guards. The full pipeline reached its last regression stage; stale reference-fixture assumptions (per-SFC import and17-icon count) were corrected and affected gates rerun. Final npm test rerun exited successfully after the fixture updates. Native Core controller/search unit tests explicitly isolate Vue preview mounting; the separate real-bootstrap integration keeps previews active.
+- PASS: 186 token contrast pairs;630 semantic button state/variant/theme combinations, minimum4.562:1. Official brand bytes and font/OFL/license consistency remain checked. SBtn tone variants use the same token foreground/background pairs. These automated checks do not certify WCAG conformance.
+- Actual user-PC Chrome, local candidate:1180×820CSS light code panel/header tabs/right copy icon/16px padding and separated footer inspected from successful screenshots;333×800CSS dark code panel inspected from a successful screenshot. Actual clipboard content matched the selected Vue/HTML tab, copied feedback was exposed, and the original clipboard was restored.
+- Actual Chrome interaction/DOM checks:333CSS dark popover close focus/Escape return, async autocomplete error → Tab-reachable retry → Enter response, safe fictional .txt selection plus unsupported-format rejection and clearing.720CSS light/dark: step error/name focus and next-category focus, accordion Enter/Space, chart previous-week values1/3/2/4 and total, sage theme and compact chart rows (~40.16CSSpx). These are functional/DOM observations, not screenshot verification of those states. User files were not used or transmitted.
+- BLOCKED before publication: subsequent screenshot calls returned Page.captureScreenshot timeouts for the standalone new-API screens and an open popover in the document iframe. The same failing captures were not retried indefinitely. New-component default/open/error pixel review and the complete PC/mobile/Fold-like × light/dark visual matrix remain incomplete; do not mark them passed. No candidate push/Pages deployment has occurred.
+- Not verified: actual Safari, physical Fold/touch, screen readers, all locale/long-copy pixel combinations, font-failure/CLS lab metrics. User device review remains separate. No OS preference was changed.
+- npm remains unpublished/private:true; sol-ui registry response is an unpublished-name tombstone, not proof of availability or ownership. Own reusable code is MIT; brand assets excluded and third-party font notices preserved. No1.0.0 or historical artifact deletion.
+
+
 ## 예제 탐색 개선 · 2026-10-22 · 문서 0.9.1 후속 수정
 
 - `starter/?view=recipes`의 필수 선택 필드를 제거하고 30개 예제를 5개 분류의 실제 링크로 제공합니다. 1100 CSS px 이상은 왼쪽 목록·오른쪽 예제이며, 좁은 폭에서는 `예제 목록`으로 같은 목록을 열고 닫습니다. 패키지 API·버전·고정 다운로드는 변경하지 않습니다.

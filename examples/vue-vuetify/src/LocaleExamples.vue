@@ -1,6 +1,6 @@
 <script setup>
 import {ref,computed} from 'vue';
-import {STextField,SBtn,SDialog,SDataTable,SNumberInput,SDatePicker,STimePicker,formatSolDate,formatSolNumber} from '@solyi/vue-ui';
+import { formatSolDate, formatSolNumber } from '@solyi/vue-ui';
 import {starterLanguage} from './locale-state.js';
 const number=ref(1234.5),date=ref('2026-10-21'),time=ref('09:30'),open=ref(false),text=ref(''),selection=ref([]),page=ref(1);
 const formatted=computed(()=>formatSolDate(date.value||'2026-10-21',starterLanguage.value)+' · '+formatSolNumber(number.value??0,starterLanguage.value));

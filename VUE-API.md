@@ -1,6 +1,6 @@
-# Vue UI API · 0.3.0 preview
+# Vue 입력·탐색 API
 
-This document preserves the first14 APIs. Six additional exports make20 total; see [the new API contracts](ADVANCED-VUE-API.md). Actual exports below: the existing **SBtn / STextField / SDialog / SDataTable** plus the ten components below. All are built and packed from TypeScript; Vue/Vuetify and Core stay external. This is a private local-tarball preview, not an npm release. See [inventory and remaining examples](VUE-MIGRATION.md), [installation/update/rollback](LIBRARY.md) and [the real consumer source](examples/vue-vuetify/src/ExtendedExamples.vue).
+아래 입력·탐색 부품은 현재 패키지에서 계속 제공합니다. 기본은 [한 번의 전역 등록](DEDICATED-VUE-API.md)이며 Vue 함수·타입 import는 유지합니다. 공통 부품 9개는 같은 문서의 전용 API 표를 확인하세요. 실제 npm에는 게시하지 않았습니다.
 
 ## Shared contracts
 

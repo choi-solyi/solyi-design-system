@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import {
-  SCard,
-  SProgressLinear,
-  SProgressCircular,
-  SSelect,
-  SCheckbox,
-} from '@solyi/vue-ui';
+
 import type { SProgressState } from '@solyi/vue-ui';
 const state = ref<string | null>('indeterminate'),
   animated = ref(true),
@@ -66,8 +60,8 @@ const options = [
       :show-message="showMessage"
     />
     <p>
-      알 수 없는 진행률에는 퍼센트를 만들지 않습니다. 움직임 줄이기 설정에서는
-      정적으로 표시합니다.
+      알 수 없는 진행률에는 퍼센트를 만들지 않습니다. 움직임 줄이기 설정에서는 정적으로
+      표시합니다.
     </p>
   </SCard>
 </template>

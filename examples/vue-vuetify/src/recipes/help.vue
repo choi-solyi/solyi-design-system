@@ -1,41 +1,7 @@
 <script setup lang="ts">
-import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue';
-import { SCard, SBtn } from '@solyi/vue-ui';
-const tooltip = ref(false),
-  open = ref(false),
-  root = ref<HTMLElement | null>(null);
-function close(restore = true) {
-  open.value = false;
-  if (restore)
-    nextTick(() => document.getElementById('recipe-popover-open')?.focus());
-}
-function toggle() {
-  if (open.value) close();
-  else {
-    open.value = true;
-    nextTick(() => document.getElementById('recipe-popover-close')?.focus());
-  }
-}
-function escape() {
-  tooltip.value = false;
-  if (open.value) close();
-}
-function focusout() {
-  nextTick(() => {
-    if (root.value && !root.value.contains(document.activeElement)) {
-      tooltip.value = false;
-      close(false);
-    }
-  });
-}
-function outside(e: Event) {
-  if (root.value && !root.value.contains(e.target as Node)) {
-    tooltip.value = false;
-    close(false);
-  }
-}
-onMounted(() => document.addEventListener('pointerdown', outside));
-onBeforeUnmount(() => document.removeEventListener('pointerdown', outside));
+import { ref } from 'vue';
+
+const open = ref(false);
 </script>
 <template>
   <SCard
@@ -43,58 +9,26 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside));
     title="짧은 설명과 추가 정보"
   >
     <p>
-      전용 Tooltip/Popover export 대신 SBtn과 SCard를 연결한 Vue 조합입니다.
+      짧은 설명에는 툴팁, 읽을 내용과 행동이 있는 추가 정보에는 팝오버를 사용합니다.
     </p>
-    <div
-      ref="root"
-      style="position: relative"
-      @focusout="focusout"
-      @keydown.esc.stop.prevent="escape"
-    >
-      <SBtn
-        aria-describedby="recipe-tooltip"
-        @mouseenter="tooltip = true"
-        @mouseleave="tooltip = false"
-        @focus="tooltip = true"
-        @blur="tooltip = false"
-        @click="tooltip = !tooltip"
-      >
-        짧은 설명
-      </SBtn>
-      <span
+    <div class="sol-actions">
+      <STooltip
         id="recipe-tooltip"
-        v-show="tooltip"
-        role="tooltip"
-        class="sol-tooltip"
-        @mouseenter="tooltip = true"
-        @mouseleave="tooltip = false"
-        style="position: absolute; top: calc(100% + 8px); left: 0"
-      >
-        가상 기록을 찾는 도구예요.
-      </span>
-      <SBtn
-        id="recipe-popover-open"
-        :aria-expanded="open"
-        aria-controls="recipe-popover"
-        @click="toggle"
-      >
-        추가 정보
-      </SBtn>
-      <SCard
+        label="짧은 설명"
+        text="가상 기록을 찾는 도구예요."
+      />
+      <SPopover
         id="recipe-popover"
-        v-show="open"
+        v-model="open"
+        label="추가 정보"
         title="추가 정보"
-        style="margin-top: 16px"
       >
         <p>읽을 내용과 닫기 행동이 있는 가상 정보입니다.</p>
-        <SBtn
-          id="recipe-popover-close"
-          variant="inline"
-          @click="close()"
-        >
-          정보 닫기
-        </SBtn>
-      </SCard>
+      </SPopover>
     </div>
+    <p class="sol-hint">
+      포커스·포인터·터치로 열고 Escape로 닫습니다. 팝오버는 닫기 버튼과 초점 복귀를
+      제공합니다.
+    </p>
   </SCard>
 </template>

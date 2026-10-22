@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SCard, SRadioGroup } from '@solyi/vue-ui';
+
 const choice = ref<string | null>('simple');
 const options = [
   {

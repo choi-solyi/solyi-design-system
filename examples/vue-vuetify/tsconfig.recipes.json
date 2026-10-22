@@ -13,7 +13,8 @@
     ],
     "noEmit": true,
     "types": [
-      "vite/client"
+      "vite/client",
+      "@solyi/vue-ui/global"
     ]
   },
   "vueCompilerOptions": {

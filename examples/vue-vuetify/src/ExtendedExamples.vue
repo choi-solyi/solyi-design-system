@@ -1,6 +1,6 @@
 <script setup>
 import {computed,ref,watch,nextTick} from 'vue';
-import {SBtn,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,koLocale,enLocale} from '@solyi/vue-ui';
+import { koLocale, enLocale } from '@solyi/vue-ui';
 const disabled=ref(false),readonly=ref(false),language=ref('inherit'),locale=computed(()=>language.value==='inherit'?undefined:language.value==='en'?enLocale:koLocale);
 const agreement=ref(false),kind=ref('note'),notifications=ref(true),category=ref(null),description=ref(''),count=ref(2),form=ref(null),formStatus=ref(''),errors=ref({});
 const options=[{value:'note',label:'기록'},{value:'plan',label:'계획'},{value:'archived',label:'보관 · 비활성 예시',disabled:true}];

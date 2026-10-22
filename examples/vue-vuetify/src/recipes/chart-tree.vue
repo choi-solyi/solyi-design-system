@@ -1,68 +1,63 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { SCard, STree, SDataTable } from '@solyi/vue-ui';
-import type { STreeItem, TableColumn, TableRow } from '@solyi/vue-ui';
+import { computed, ref } from 'vue';
+import type { STreeItem, SBarChartItem } from '@solyi/vue-ui';
+defineProps<{ part?: string }>();
 const selected = ref<string | null>(null),
-  expanded = ref(['records']);
+  expanded = ref<string[]>([]),
+  week = ref<string | null>('current');
 const items: STreeItem[] = [
   {
-    id: 'records',
+    id: 'notes',
     label: '기록',
     children: [
       { id: 'garden', label: '작은 정원' },
-      { id: 'books', label: '저녁 책장' },
+      { id: 'book', label: '저녁 책장' },
     ],
   },
-  {
-    id: 'archive',
-    label: '보관',
-    children: [{ id: 'walk', label: '주말 산책' }],
-  },
+  { id: 'archive', label: '보관', children: [{ id: 'walk', label: '주말 산책' }] },
 ];
-const columns: TableColumn[] = [
-  { key: 'day', label: '요일', width: '120px' },
-  { key: 'count', label: '기록 수', align: 'end' },
-];
-const rows: TableRow[] = [
-  { id: 'mon', day: '월요일', count: 1 },
-  { id: 'tue', day: '화요일', count: 3 },
-  { id: 'wed', day: '수요일', count: 2 },
-  { id: 'thu', day: '목요일', count: 4 },
-];
+const chart = computed<SBarChartItem[]>(() =>
+  ['월요일', '화요일', '수요일', '목요일'].map((label, index) => ({
+    id: String(index),
+    label,
+    value: (week.value === 'current' ? [2, 4, 0, 5] : [1, 3, 2, 4])[index],
+  })),
+);
+const total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0));
 </script>
 <template>
   <SCard
     :heading-level="2"
-    title="가상 자료의 차트와 계층"
+    :title="part ? undefined : '가상 자료의 차트와 계층'"
   >
-    <svg
-      viewBox="0 0 280 140"
-      role="img"
-      aria-labelledby="recipe-chart-title"
-    >
-      <title id="recipe-chart-title">월1·화3·수2·목4개의 가상 기록</title>
-      <rect
-        v-for="(row, i) in rows"
-        :key="row.id"
-        :x="20 + i * 65"
-        :y="120 - Number(row.count) * 25"
-        width="32"
-        :height="Number(row.count) * 25"
-        fill="var(--sol-color-accent)"
+    <template v-if="!part || part === 'chart'">
+      <SSelect
+        id="recipe-chart-week"
+        v-model="week"
+        label="가상 활동 주간"
+        :options="[
+          { value: 'current', label: '이번 주' },
+          { value: 'previous', label: '지난주' },
+        ]"
       />
-    </svg>
-    <SDataTable
-      caption="차트와 같은 가상 자료"
-      :columns="columns"
-      :rows="rows"
-    />
-    <STree
-      id="recipe-tree"
-      v-model="selected"
-      v-model:expanded="expanded"
-      label="가상 기록 폴더"
-      :items="items"
-    />
-    <p role="status">선택: {{ selected || '없음' }}</p>
+      <p role="status">총 {{ total }}개 기록 · 가상 자료</p>
+      <SBarChart
+        id="recipe-chart"
+        label="가상 활동 횟수 · 차트와 같은 자료"
+        :items="chart"
+        category-label="요일"
+        value-label="기록 수"
+      />
+    </template>
+    <template v-if="!part || part === 'tree'">
+      <STree
+        id="recipe-tree"
+        v-model="selected"
+        v-model:expanded="expanded"
+        label="가상 기록 폴더"
+        :items="items"
+      />
+      <p role="status">선택: {{ selected || '없음' }}</p>
+    </template>
   </SCard>
 </template>

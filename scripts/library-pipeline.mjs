@@ -33,11 +33,13 @@ node('7/10 Installed overflow locale','scripts/overflow-locale-check.mjs','--ins
 node('7/10 S public APIs and direct Vuetify bridge','scripts/s-api-runtime-check.mjs');
 node('7/10 Reusable progress','scripts/progress-runtime-check.mjs');
 node('7/10 Actual Vue documentation recipes','scripts/vue-recipes-runtime-check.mjs');
+node('7/10 Dedicated reusable Vue APIs','scripts/vue-dedicated-runtime-check.mjs');
 node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 if(process.argv.includes('--prepare-release'))node('9/10 Freeze the verified local package pair','scripts/releases.mjs',JSON.parse(readFileSync(new URL('package.json',root),'utf8')).version);
 node('9/10 Documentation build','scripts/build.mjs');
+node('9/10 Real document package previews','scripts/vue-preview-integration-check.mjs');
 node('9/10 Versioned delivery and real HTTP consumption','scripts/distribution-check.mjs');
 run('10/10 Existing checks','',npm,['run','check']);
 run('10/10 Existing + new UX regression','',npm,['test']);
