@@ -1,5 +1,17 @@
 # 검증 기록
 
+## 최신: 기존 예제의 Vue API 전환 (0.4.0) · 2026-10-22 UTC
+
+- Core/Vue UI0.2.0, 총14종(기존4+새10)의 실제 private tarball을 두 별도 소비 앱에 설치했습니다. strict 소스·생성 선언·정상/잘못된 API 타입, CSS/exports/순수 날짜 모듈 포함, Vue/Vuetify external import 및 단일 설치를 검사합니다. UI 자체 ES 약55.5kB이며 프레임워크를 묶지 않습니다. 레지스트리 미게시입니다.
+- 전체 library-pipeline --refresh 1차 및 수정 후 통합 실행 통과. 설치된 새10종의 controlled 값, label/error/required/disabled/readonly, 숫자 min/max/step·오류 보존, Textarea counter, locale, Tabs 자동/수동·비활성 건너뛰기·숨김 패널/값 유지, Toast 무초점탈취·타이머/hover/focus/문서숨김 정지·닫기/정리, 날짜·시간 완료값/부분값/역순/같은날/모드변경/윤년/연도 경계/직접입력/취소/바깥닫기를 검사했습니다. JSDOM의 dialog stub과 합성 키는 실제 브라우저 모달 트랩 증명과 다릅니다.
+- 기존 문서 검사:33개 public asset allowlist,186개 토큰 대비,630개 의미색 버튼·42개 pagination·42개 선택 메뉴 상태,49개 연속 앵커 및 기존 표/업로드/자동완성/폼/오류복구/모션 회귀. 기존4종 설치 런타임과 실제 starter SFC도 유지합니다.
+- 자체 리뷰 수정: 숫자·날짜·시간 validate()가 소비 앱의 외부 오류도 반영하도록 보완했습니다. 설정 시연 Select의 빈 옵션을 required 처리했습니다. 닫혀서 DOM에 없는 시간 패널의 aria-controls 참조를 제거하고 열릴 때만 연결합니다. 인접 월 날짜에 포인터 초점이 갔을 때 클릭 대상이 바뀌는 문제와 취소된 비동기 열기, 연도 경계 중복 날짜도 방지했습니다. 관련 회귀를 추가했습니다.
+- 사용자 PC Google Chrome155.0.8059.85, 실제 로컬 starter: 필수 오류의 첫 필드 초점, 값 수정/재제출, textarea13/120·약96px 높이, 숫자3 오류→4 성공, Tabs 자동 방향키/수동 Enter/메모 보존·비활성 건너뛰기, Toast 초점 보존/키보드 닫기/호출 버튼 반환 확인. 날짜 범위 첫 클릭은 기존 완료값 유지, 역순 두 번째 클릭으로 정렬 확정, ArrowRight/Escape 및 입력 복귀, single 모드 null 초기화·잘못된 날짜 오류, 한국어/영어 달력을 확인했습니다. 시간0930→09:30,18시 분00만 허용, 완료 및 Escape 복귀, readonly/disabled 변이 차단도 확인했습니다.
+- 실제 innerWidth1643 및333 CSS px에서3테마×light/dark를 전환하며 DOM 치수/가로 넘침/카드12px를 검사했습니다.333px scrollWidth316,320px scrollWidth303,중간833px scrollWidth816으로 페이지 가로 넘침이 없었습니다.333px 달력 약333px/시간 패널317px,320px 달력320px 안에서 표시됐습니다. 이는 물리 폴드·400% 확대 검증과 다릅니다. 콘솔 error/warn0.
+- 화면 캡처는 한 번 시도했으나 Page.captureScreenshot의5초 제한으로 실패했습니다. 반복하지 않았으며 픽셀 기반 전체 시각 검수 완료로 표기하지 않습니다. 날짜 모달의 모든 Tab 경계와 실제 화면낭독기,실기기,다른 브라우저,forced colors,400% 확대는 미검증입니다. 이번 릴리스에서 Lighthouse/독립 axe를 새로 실행했다고 주장하지 않으며 아래0.3.5 측정값과 구분합니다.
+- 이 절은 커밋 시점의 로컬 검증입니다. 기존 Pages CI 및 공개 자산 SHA·공개 키보드 확인은 게시 후 최종 보고에서 정확한 커밋/실행 URL과 함께 기록합니다.
+
+
 릴리스별 실제 실행 범위를 구분해 보존합니다. 기존 aion2page·solyi.kr는 변경하지 않았습니다.
 
 ## 최신: 표준 감사 수정 (0.3.5) · 2026-10-22 UTC

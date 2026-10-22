@@ -2,13 +2,13 @@ import assert from 'node:assert/strict';
 import {readFile,stat} from 'node:fs/promises';
 const root=new URL('../',import.meta.url),json=async file=>JSON.parse(await readFile(new URL(file,root),'utf8'));
 const packs=await json('artifacts/pack-report.json');
-for(const [name,minimum]of [['core',['dist/tokens.css','dist/components.css','dist/tokens.json','dist/index.js','dist/index.d.ts','dist/icons.js','dist/icons.d.ts']],['vue-ui',['dist/index.js','dist/index.d.ts','dist/styles.css']]]){
+for(const [name,minimum]of [['core',['dist/tokens.css','dist/components.css','dist/tokens.json','dist/index.js','dist/index.d.ts','dist/icons.js','dist/icons.d.ts','dist/date-only.js','dist/date-only.d.ts']],['vue-ui',['dist/index.js','dist/index.d.ts','dist/styles.css','dist/controls.d.ts','dist/navigation.d.ts','dist/date-time.d.ts','dist/locale.d.ts']]]){
  const pkg=await json('packages/'+name+'/package.json');assert.equal(pkg.private,true);assert.equal(pkg.license,'UNLICENSED');assert.ok(!pkg.scripts?.publish);const report=packs.find(p=>p.name===pkg.name);assert.ok(report);for(const file of minimum)assert.ok(report.files.some(f=>f.path===file),file+' included in pack');for(const value of Object.values(pkg.exports)){for(const target of typeof value==='string'?[value]:Object.values(value))assert.ok((await stat(new URL('packages/'+name+'/'+target,root))).isFile());}
  assert.ok(!report.files.some(f=>/node_modules|brand|favicon|\.env|\.git\//.test(f.path)));
  assert.ok(!Object.values(pkg.dependencies||{}).some(value=>String(value).startsWith('file:')),'No repository-source dependency in packed runtime '+name);
 }
-const library=await readFile(new URL('packages/vue-ui/dist/index.js',root),'utf8');assert.ok(/from ["']vue["']/.test(library));assert.ok(/from ["']vuetify\//.test(library));assert.ok(/@solyi\/core\/overflow/.test(library));assert.ok(library.length<40000,'No bundled framework runtime');
-const types=await readFile(new URL('packages/vue-ui/dist/index.d.ts',root),'utf8');for(const name of ['SolButton','SolField','SolDialog','SolTable','TableColumn','TableSort'])assert.ok(types.includes(name));
+const library=await readFile(new URL('packages/vue-ui/dist/index.js',root),'utf8');assert.ok(/from ["']vue["']/.test(library));assert.ok(/from ["']vuetify\//.test(library));assert.ok(/@solyi\/core\/overflow/.test(library));assert.ok(library.length<100000,'No bundled framework runtime');
+const types=await readFile(new URL('packages/vue-ui/dist/index.d.ts',root),'utf8');for(const name of ['SolButton','SolField','SolDialog','SolTable','TableColumn','TableSort','SolCheckbox','SolRadioGroup','SolSwitch','SolSelect','SolTextarea','SolNumberInput','SolTabs','SolToast','SolDatePicker','SolTimePicker','SolLocale','DateValue','SolPickerHandle'])assert.ok(types.includes(name));
 const styles=await readFile(new URL('packages/vue-ui/dist/styles.css',root),'utf8');assert.match(styles,/\.sol-ui-table \.sol-data-table\{[^}]*table-layout:fixed[^}]*width:100%/,'Package table keeps fixed layout at intermediate widths');
 assert.match(library,/@solyi\/core\/icons/,'Package icons use the shared icon source');
 assert.match(styles,/\.sol-ui-table \.sol-data-table caption\{[^}]*padding:var\(--sol-space-4\) var\(--sol-space-3\)/,'Caption has explicit block and inline spacing');
@@ -27,3 +27,6 @@ assert.match(styles,/\.sol-ui-table-desktop\{[^}]*border-radius:var\(--sol-radiu
 assert.deepEqual(await readFile(new URL('examples/vue-vuetify/src/core/tokens.json',root)),await readFile(new URL('tokens.json',root)),'Archived starter token snapshot stays consistent');
 assert.deepEqual(await readFile(new URL('examples/vue-vuetify/src/core/tokens.css',root)),await readFile(new URL('packages/core/dist/tokens.css',root)),'Archived starter CSS matches Core');
 console.log('PASS: private pack contents/typed exports/CSS, shared source bytes, external Vue/Vuetify/Core, two actual tarball consumers, locked registry integrity/licenses and one framework copy each.');
+
+assert.deepEqual(await readFile(new URL('packages/core/dist/date-only.js',root)),await readFile(new URL('site/date-only.js',root)));
+assert.match(library,/@solyi\/core\/date/,'Date math remains in shared external Core');

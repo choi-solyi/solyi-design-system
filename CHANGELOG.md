@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.4.0 — 2026-10-22
+
+- Core/Vue UI local pack0.2.0: 기존 Button/Field/Dialog/Table에 Checkbox, RadioGroup, Switch, Select, Textarea, NumberInput, Tabs, Toast, DatePicker, TimePicker의 typed Vue API를 추가했습니다. 실제 설치 starter와 별도 타입 소비자가 총14종을 가져옵니다.
+- 새 입력은 controlled v-model, 연결된 label/help/error, disabled/readonly와 locale 문구 확장을 지원합니다. 날짜는 단일/기간 완료값만, 시간은 유효한 HH:mm만 확정하며 직접 입력·키보드·초점 복귀를 유지합니다. Tabs는 roving/수동 활성화, Toast는 live region과 초점·포인터·문서 비활성 시 타이머 정지를 제공합니다.
+- 순수 date-only 연산을 Core /date export로 공유하고 문서의 기존 달력도 같은 함수를 씁니다. Vue는 자신이 렌더한 노드와 refs를 관리하며 문서 예시 DOM에 의존하지 않습니다.
+- 전체 예시 전환표 VUE-MIGRATION.md, 실제 API/사용 코드 VUE-API.md를 추가했습니다. 나머지 HTML 참고 예제와 다음 단계 신규6종은 전환 완료로 표시하지 않습니다. 색·폰트·공식 브랜드·반경6/10/12/16 및 기존 기능을 보존하고 npm 게시/다른 앱 연결은 하지 않았습니다.
+
+
 ## 0.3.5 — 2026-10-22
 
 - 공인 기준 감사에서 재현한 화면틀 선택 메뉴 대비, 시간 textbox ARIA 상태, 검색/빈 결과 제목 계층을 수정했습니다. 기존 색 토큰·타이포·반경6/10/12/16은 유지합니다.

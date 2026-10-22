@@ -26,3 +26,7 @@ radius-card는12px입니다. radius-lg 기초값20px와 새 radius-floating20px�
 ## 0.3.3 반경 체계
 
 현재 역할은 button/small6px, control/inset10px, card/floating12px, panel16px입니다. 기초 radius-lg도12px, radius-xl도16px로 맞췄으므로 기초값에 직접 의존한 소비자는 업데이트 전에 확인해야 합니다. 원형·알약형 상태 표식과 화면 가장자리에 붙는 패널의 연결된 모서리0px는 의도된 예외입니다. 색·패딩·타이포·높이·기능은 동일하며 Core/Vue UI local pack0.1.3은 이 문서 데모에서만 소비합니다. 다른 앱·레지스트리·권한은 변경하지 않습니다.
+
+## 0.4.0 Vue API 확장
+
+Core/Vue UI0.2.0은 private local tarball이며 총14종의 typed API를 제공합니다. 실제 설치 조합은 Vue3.5.44/Vuetify4.3.0/Vite8.3.4 그대로입니다. 새10종은 Vue 소유 DOM/native controls와 공통 CSS를 쓰며 별도 Vuetify wrapper로 위장하지 않습니다. 기존 SolField/Dialog는 Vuetify 기반입니다. 코어의 /date export는 시간대 변환 없는 순수 함수입니다. ko/en 내장 문구와 앱/컴포넌트 locale override는 확장 지점이며 문서 전체 번역/모든 언어 호환을 뜻하지 않습니다. 자세한 API/변경 정책은 VUE-API.md, 전체 전환 범위와 후속은 VUE-MIGRATION.md를 따릅니다. 기존 앱 자동 업데이트 및 공개 레지스트리 배포는 연결하지 않았습니다.

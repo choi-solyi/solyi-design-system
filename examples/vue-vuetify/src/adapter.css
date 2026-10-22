@@ -30,3 +30,13 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
 
 .starter-dialog {border-radius:var(--sol-radius-panel);}
+.starter-control-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sol-space-4);align-items:start;}
+.starter-example-nav {display:flex;flex-wrap:wrap;gap:var(--sol-space-2) var(--sol-space-4);}
+.starter-example-nav a {min-height:var(--sol-touch-target-min);display:inline-flex;align-items:center;}
+.starter-card h2 {scroll-margin-top:var(--sol-space-4);}
+.starter-native-form {display:grid;gap:var(--sol-space-4);}
+.starter-demo-settings {padding-block:var(--sol-space-3);align-items:start;}
+.starter-api-output pre {white-space:pre-wrap;overflow-wrap:anywhere;padding:var(--sol-space-3);background:var(--sol-color-surface-alt);border-radius:var(--sol-radius-inset);font-size:var(--sol-text-xs);}
+.starter-api-output summary {min-height:var(--sol-touch-target-min);align-content:center;cursor:pointer;}
+.starter-card>.sol-ui-tabs,.starter-card>.sol-field+.sol-ui-tabs {margin-top:var(--sol-space-4);}
+@media(max-width:680px){.starter-control-grid{grid-template-columns:minmax(0,1fr);}}

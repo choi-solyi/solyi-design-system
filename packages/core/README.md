@@ -1,4 +1,4 @@
-# @solyi/core 0.1.4
+# @solyi/core 0.2.0
 
 Local `npm pack` preview, private/UNLICENSED, not published. The source of truth is the repository's `tokens.json`, `site/components.css`, `site/overflow.js` and `site/icons.js`. Do not edit dist.
 
@@ -15,3 +15,5 @@ Set `data-theme="violet|sage|sand"` and `data-mode="light|dark"` on html. Compon
 `mountOverflowText(root)` enhances clipped `.sol-record-title/.sol-ellipsis` with a tooltip and full-text dialog. Call its returned cleanup function before unmounting. Existing interactive titles retain their click behavior.
 
 `solIcon('chevron', {size:20})` returns the shared 16/20/24px line icon markup. `solIconPaths` supports framework renderers using the same path source. These are UI symbols, separate from the official brand logo/favicon. Decorative icons need no duplicate spoken label; label the containing action button.
+
+`@solyi/core/date` exports typed dateISO/monthDays/parseDateOnly/weekday/shiftDay/shiftMonth/parseTimeOnly helpers. They have no DOM dependency and preserve date-only strings; no scheduling or timezone conversion API is implied.

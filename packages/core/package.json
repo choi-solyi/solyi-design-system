@@ -1,6 +1,6 @@
 {
   "name": "@solyi/core",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "license": "UNLICENSED",
@@ -26,6 +26,10 @@
     "./icons": {
       "types": "./dist/icons.d.ts",
       "import": "./dist/icons.js"
+    },
+    "./date": {
+      "types": "./dist/date-only.d.ts",
+      "import": "./dist/date-only.js"
     }
   },
   "sideEffects": [
