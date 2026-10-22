@@ -1,7 +1,7 @@
 <script setup>
 import {computed,ref,watch,nextTick} from 'vue';
 import {SolButton,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,koLocale,enLocale} from '@solyi/vue-ui';
-const disabled=ref(false),readonly=ref(false),language=ref('ko'),locale=computed(()=>language.value==='en'?enLocale:koLocale);
+const disabled=ref(false),readonly=ref(false),language=ref('inherit'),locale=computed(()=>language.value==='inherit'?undefined:language.value==='en'?enLocale:koLocale);
 const agreement=ref(false),kind=ref('note'),notifications=ref(true),category=ref(null),description=ref(''),count=ref(2),form=ref(null),formStatus=ref(''),errors=ref({});
 const options=[{value:'note',label:'기록'},{value:'plan',label:'계획'},{value:'archived',label:'보관 · 비활성 예시',disabled:true}];
 watch([agreement,category],()=>{if(errors.value.agreement&&agreement.value)errors.value.agreement='';if(errors.value.category&&category.value)errors.value.category='';});
@@ -21,7 +21,7 @@ function checkSchedule(){const dateValid=datePicker.value?.validate(),timeValid=
     <div class="starter-settings starter-demo-settings">
       <SolSwitch id="demo-disabled" v-model="disabled" label="입력 예시 비활성"/>
       <SolSwitch id="demo-readonly" v-model="readonly" label="입력 예시 읽기 전용"/>
-      <SolSelect id="demo-locale" required v-model="language" label="내장 문구 locale 시연" :options="[{value:'ko',label:'한국어'},{value:'en',label:'English'}]" help="컴포넌트 내장 문구와 날짜 형식을 바꿉니다. 문서 전체 번역은 아닙니다."/>
+      <SolSelect id="demo-locale" required v-model="language" label="내장 문구 locale 시연" :options="[{value:'inherit',label:'앱 공통 설정'},{value:'ko',label:'한국어'},{value:'en',label:'English'}]" help="컴포넌트 내장 문구와 날짜 형식을 바꿉니다. 문서 전체 번역은 아닙니다."/>
     </div>
     <form ref="form" class="starter-native-form" novalidate @submit.prevent="checkFields">
       <div class="starter-control-grid">

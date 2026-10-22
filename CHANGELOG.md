@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 0.6.0 · local candidate, not published
+
+- Preserve624bc43 exact document-name/alias ranking fix.
+- Core0.3.1 overflow labels and UI0.4.0 shared reactive ko/en locale for20 APIs, base wrappers, Intl date-only/number display and strict grouped-number input. Caller text and data contracts stay unchanged.
+- Actual installed locale starter and dedicated type/runtime/focus regressions; Pages distribution is the next local gate.
+
 ## 로컬 미게시 후속 · 검색 이름 우선순위 — 2026-10-22
 
 - 정확한 이름·ID·명시적 검색 별칭을 설명/본문보다 우선. Date Picker/날짜, Time Picker/시간 등의 첫 결과와 NFKC·일반 다중 단어 AND 검색 회귀 추가. 기존59개 목적지/앵커/헤더·폰트·토큰 유지.

@@ -1,8 +1,8 @@
 import {createApp,h,ref} from 'vue';
 import {createVuetify} from 'vuetify';
 import {VApp} from 'vuetify/components/VApp';
-import SolyiUI,{SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane,koLocale,uiVersion} from '@solyi/vue-ui';
-import type {DateValue,DateRange,SolOption,SolPickerHandle,SolNumberInputHandle,SolLocale,SolRangeValue,SolOptionLoader,SolMenuItem} from '@solyi/vue-ui';
+import SolyiUI,{provideSolLocale,formatSolNumber,formatSolDate,parseSolNumber,resolveSolLocale,SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane,koLocale,uiVersion} from '@solyi/vue-ui';
+import type {DateValue,DateRange,SolOption,SolPickerHandle,SolNumberInputHandle,SolLocale,SolLocaleSource,SolRangeValue,SolOptionLoader,SolMenuItem} from '@solyi/vue-ui';
 import type {TableColumn,TableRow,TableSort,ButtonVariant} from '@solyi/vue-ui';
 import {tokens,coreVersion} from '@solyi/core';
 import {solIcon,solIconPaths} from '@solyi/core/icons';
@@ -25,7 +25,7 @@ void validProps;void invalidVariant;void invalidSort;
 const choices:SolOption[]=[{value:'note',label:'기록'},{value:'plan',label:'계획',disabled:true}];
 const validRange:DateRange={start:'2026-10-21',end:'2026-10-24'};
 const picker=ref<SolPickerHandle|null>(null),numberHandle=ref<SolNumberInputHandle|null>(null);void picker;void numberHandle;
-const localeOverride:Partial<SolLocale>={code:'en-GB',firstDay:1,clear:'Reset'};void localeOverride;
+const localeOverride:Partial<SolLocale>={code:'en-US',firstDay:1,clear:'Reset'};void localeOverride;
 // @ts-expect-error Checkbox is boolean, not a string model.
 const badCheckbox:InstanceType<typeof SolCheckbox>['$props']={id:'bad',label:'bad',modelValue:'true'};
 // @ts-expect-error RadioGroup takes one string, not an array.
@@ -94,4 +94,10 @@ const app=createApp({setup(){const text=ref(''),open=ref(false),sort=ref<TableSo
   h(SolResizableSplitPane,{id:'consumer-pane',label:'Layout',primaryLabel:'A',secondaryLabel:'B',modelValue:ratio.value,'onUpdate:modelValue':v=>ratio.value=v},{primary:()=>h('p','A'),secondary:()=>h('p','B')}),
   h(SolTimePicker,{id:'consumer-time',label:'가상 시각',modelValue:time.value,min:'09:00',max:'18:00',step:15,'onUpdate:modelValue':v=>time.value=v})
 ]));}});
-app.use(createVuetify()).use(SolyiUI,{locale:koLocale}).mount('#app');
+const language=ref('en-US');
+const localeSource:SolLocaleSource=()=>({code:language.value});
+provideSolLocale(app,localeSource);
+void formatSolNumber(1234.5,language.value);void parseSolNumber('1,234.5','en');void formatSolDate('2026-10-21','en');void resolveSolLocale('en');
+// @ts-expect-error Locale source values must be a code or a partial pack.
+const invalidLocale:SolLocaleSource=42;void invalidLocale;
+app.use(createVuetify()).use(SolyiUI).mount('#app');

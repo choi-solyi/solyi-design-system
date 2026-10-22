@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.5.0 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.6.0 로컬 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -16,7 +16,7 @@
 
 ## 로컬 미게시 후속
 
-상단 문서 검색과 공유 헤더 설정은 b8648fa로 공개됐습니다. 현재 로컬 후속은 정확한 이름·별칭이 설명보다 먼저 나오는 검색 순위 보완이며 아직 공개 푸시하지 않습니다. [사용 방법과 범위](DOC-SEARCH.md) · [단계별 확인](DOC-SEARCH-PLAN.md) · [남은 locale·설치/업데이트 작업](NEXT-STEPS.md).
+상단 문서 검색과 공유 헤더 설정은 b8648fa로 공개됐습니다. 로컬 후속은 검색 이름·별칭 순위(624bc43), 공통 locale와 버전별 패키지 설치 경로입니다. 공개본은 v0.5.0이며 아직 후속을 푸시하지 않습니다. [공통 locale](LOCALE.md) · [단계별 계획](LOCALE-DISTRIBUTION-PLAN.md). [사용 방법과 범위](DOC-SEARCH.md) · [단계별 확인](DOC-SEARCH-PLAN.md) · [남은 locale·설치/업데이트 작업](NEXT-STEPS.md).
 
 ## 로컬 실행
 

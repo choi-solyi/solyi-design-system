@@ -7,5 +7,7 @@ import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';
 import './adapter.css';
+import {provideSolLocale} from '@solyi/vue-ui';
+import {starterLocale} from './locale-state.js';
 import App from './App.vue';
-createApp(App).use(createStarterVuetify()).mount('#app');
+const app=createApp(App);provideSolLocale(app,starterLocale);app.use(createStarterVuetify()).mount('#app');

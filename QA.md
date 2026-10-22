@@ -295,3 +295,11 @@ Textarea 필수/줄바꿈/카운트, 숫자 min/max/step와 증감 경계, 다�
 - 이름+설명/본문의 다중 단어(날짜 입력, 시간 입력, 파일 형식, 버튼 비활성)와 별칭+본문 단어, 빠진 단어의 제외를 검사합니다. AND 검색을 OR로 바꾸지 않습니다. 기존59개 목적지·입력/IME/초점·미저장 확인·헤더12조합 및 기존 회귀를 유지합니다.
 - 로컬 `build.mjs`, `check.mjs`, `npm test` 통과. 추가 순위/렌더 링크 검사는 `qa-output/doc-search-ranking-specific.log`, 전체 기록은 `qa-output/doc-search-ranking-check.log`와 `qa-output/doc-search-ranking-test.log`. 패키지/폰트/토큰/레이아웃은 변경하지 않아 별도 패키지 설치와 실제 브라우저·픽셀 검수는 반복하지 않았습니다. 이전 Chrome 결과를 이번 순위 수정의 새 실검수로 표시하지 않습니다.
 - 별도 로컬 커밋만 수행하며 공개 푸시·Pages·다른 앱·권한·레지스트리를 변경하지 않습니다. 기존 locale provider/ko·en와 이미 동작하는 local pack/Pages CI를 없는 기능으로 재구현하지 않도록 정확한 잔여 작업은 NEXT-STEPS.md에 기록합니다.
+
+## Local locale milestone · 2026-10-22 (unpublished)
+
+Core0.3.1/UI0.4.0/docs0.6.0. Full `library-pipeline --refresh` passed (qa-output/locale-pipeline-final.log): real packs/declarations/exports/CSS, two clean tarball consumers/types/build,20-component regression, dedicated locale fallback/partial/getter/update/error/draft/focus tests, source-derived60 search destinations,186 role contrasts and630 semantic button states. A first navigation-order failure exposed locale body/menu mismatch; fixed order then repeated the gate.
+
+User PC Chrome: actual local1643 and333 CSSpx, ko/en builtin/number/date display, custom override, invalid grouped-number feedback changing language without losing draft, Dialog close→opener, date calendar English labels/Escape, time panel Escape→trigger. 3 themes×2 modes×2 languages at333px: no document horizontal overflow. Desktop and333px sand-dark screenshots were obtained and visually reviewed in the tool. New demo used an undefined grid class initially; replaced with existing spaced responsive starter-control-grid and verified. Locale does not reset selection/page/models in synthetic runtime.
+
+No public push/deploy. Physical iPhone Safari/fold/touch/screen reader/hardware IME/400% zoom/forced colors/CLS and exhaustive browser pixel matrix remain unverified. Chrome emulated width and DOM tests do not replace them.

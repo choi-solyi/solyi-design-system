@@ -11,7 +11,7 @@ for(const file of ['components.css','overflow.js','icons.js','date-only.js'])awa
 const tokens=JSON.parse(await readFile(new URL('tokens.json',dist),'utf8'));
 await writeFile(new URL('index.js',dist),`export const coreVersion=${JSON.stringify(pkg.version)};\nexport const tokens=${JSON.stringify(tokens,null,2)};\n`);
 await writeFile(new URL('index.d.ts',dist),'export declare const coreVersion: "'+pkg.version+'";\nexport interface TokenTheme {label:string;description:string;light:Record<string,string>;dark:Record<string,string>}\nexport declare const tokens: {version:string;format:string;description:string;base:Record<string,string>;reference:Record<string,string>;themes:Record<"violet"|"sage"|"sand",TokenTheme>;density:Record<string,Record<string,string>>};\n');
-await writeFile(new URL('overflow.d.ts',dist),'export interface OverflowCleanup {():void;refresh():void}\nexport declare function mountOverflowText(root:HTMLElement):OverflowCleanup;\n');
+await writeFile(new URL('overflow.d.ts',dist),'export interface OverflowCleanup {():void;refresh():void}\nexport interface OverflowLabels {fullText:string;close:string;viewFullText:(text:string)=>string}\nexport declare function mountOverflowText(root:HTMLElement,options?:Partial<OverflowLabels>|(()=>Partial<OverflowLabels>)):OverflowCleanup;\n');
 await writeFile(new URL('icons.d.ts',dist),'export type SolIconName = '+solIconNames.map(name=>JSON.stringify(name)).join(' | ')+';\nexport declare const solIconNames: readonly SolIconName[];\nexport declare const solIconPaths: Readonly<Record<SolIconName,string>>;\nexport declare function solIcon(name:SolIconName,options?:{size?:16|20|24;label?:string}):string;\n');
 console.log('Built @solyi/core '+pkg.version+' from the shared source (no Vue dependency).');
 

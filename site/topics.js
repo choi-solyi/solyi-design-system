@@ -4,7 +4,7 @@ const documentSections={
  style:[['principles','Core 원칙'],['tokens','색 토큰'],['type','타이포그래피'],['space','간격·밀도·모서리'],['accessibility','접근성 기준'],['color-examples','컬러 적용 예시'],['motion','모션'],['icons','아이콘'],['layers','레이어와 그림자'],['writing','UI 문구']],
  component:[['buttons','버튼'],['fields','텍스트 필드'],['choices','선택 컨트롤 기본'],['feedback','상태 알림'],['dialog','대화상자'],['selection','체크·라디오·스위치'],['help','툴팁과 팝오버'],['accordion','아코디언'],['navigation','경로·패널·토스트'],['advanced-inputs','Textarea·숫자·다중 선택'],['content-tabs','탭 패널'],['action-menu','행동 메뉴'],['identity-progress','Avatar·단계'],['progress','Progress bar·circle'],['time','시간 선택'],['chart','차트와 표 대안'],['tree','트리 탐색']],
  pattern:[['form','폼 검증과 회복'],['search','검색과 상세'],['compare','비교 선택'],['empty','빈 상태'],['data','표와 목록'],['date','날짜 선택'],['files','파일 선택·드롭'],['autocomplete','자동완성 검색'],['responses','로딩·권한·오류'],['composition','조합 규칙'],['layouts','화면 템플릿'],['workflow','편집·이탈·삭제·Undo'],['error-summary','오류 요약'],['not-found','앱용 404'],['bulk-recovery','일괄 작업·부분 실패']],
- theme:[['themes','테마'],['density','밀도'],['adoption','CSS·JSON 도입'],['scope','범위와 출처'],['starter','Vue·Vuetify starter'],['advanced-vue','확장 Vue6종'],['vue-components','Vue API·전환표'],['versioning','버전과 폐기 정책']]
+ theme:[['themes','테마'],['density','밀도'],['adoption','CSS·JSON 도입'],['scope','범위와 출처'],['locale','공통 locale'],['starter','Vue·Vuetify starter'],['advanced-vue','확장 Vue6종'],['vue-components','Vue API·전환표'],['versioning','버전과 폐기 정책']]
 };
 const documentNames={overview:'Overview',style:'Style',component:'Component',pattern:'Pattern',theme:'Theme & adoption'};
 // Search-only names: these do not rename headings, alter menus or create new routes.
