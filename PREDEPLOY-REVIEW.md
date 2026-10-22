@@ -46,3 +46,14 @@ P2는 배포 전 수정할 중간 심각도, P3는 경미한 품질 문제입니
 최종 문서 check는 대비186쌍(가장 낮은 상대 여유: violet/light4.562:1, 기준4.5), allowlist/생성 파일/로컬 링크/공식 브랜드·설치 package·Wanted Sans/JetBrains Mono/Nanum Gothic Coding와 OFL 원문 해시 일치를 통과했습니다(`qa-output/predeploy-final-check.log`). 검색61개 목적지·키보드/빈값/초기화/IME/이탈 보호·12개 설정 조합 회귀도 통과했습니다(`qa-output/predeploy-final-search.log`). 관련 package/consumer 증거는 predeploy-package-resume.log와 predeploy-final-build.log입니다. 무관한 전체 대형 검사는 재실행하지 않았습니다.
 
 공개 push·Pages·npm 게시 보류는 유지합니다. 실행 환경에 대기 중 승인이나 거부된 필수 작업은 없습니다. 원격 CI/공개0.7.1 파일은 검사하지 않았으며 공개본0.6.0을 바꾸지 않았습니다.
+
+## 남은 화면·파일 후속 확인 (f3ce254 기준)
+
+대규모 검사·패키지 재빌드는 반복하지 않았습니다. 같은 사용자 PC Chrome에서 기존 localhost4175의 실제 문서를 사용했습니다.
+
+- **최종 파일 선택 완료:** 샘플 `review-fictional.txt`만 native chooser로 선택해 확장자TXT / 텍스트 문서(text/plain) / **28 B** 표시를 실제 DOM에서 확인했습니다. 개인 파일이나 서버 전송은 사용하지 않았습니다. 이전의 최종 chooser timeout 항목은 이번 성공으로 해소했습니다. 파일 영역의 픽셀 캡처는 별도의 아래 제한이 남습니다.
+- **추가 화면 확인:** 임시 localhost4176에서 동일한 생성 HTML/JS/CSS를 제공하고 관련 없는 main 섹션만 CSS display:none으로 가렸습니다. 이 마스크는 .tooling의 검수 서버에만 있으며 원본·배포 파일에는 없습니다. 333CSSpx 표의 검색/상태/정렬/선택 및 첫 모바일 카드의 실제 캡처를 얻어 간격·줄바꿈·제목/액션 배치·카드 경계를 확인했습니다. 전체 페이지 맥락이나 모든 카드/페이지의 시각 통과를 뜻하지 않습니다. 이미지는 도구 결과에만 표시됐으며 별도 파일로 저장되지 않았습니다.
+- **남은 캡처 차단:** 원본 표820×500, 파일293×372 부분 캡처와 섹션 분리 후 데스크톱1180px/페이지 이동 후 캡처에서도 `Page.captureScreenshot`이5000ms 제한에 걸렸습니다. 같은 실패의 반복은 중단했습니다. 데스크톱 표/페이지 footer, 스크롤된 폼·오버레이·날짜/시간·색 적용 및 패키지 중간 섹션의 남은 픽셀 검수는 **미완료**입니다. 기능·치수/DOM 통과를 이 시각 검수 대신 사용하지 않습니다. 다른 정상 캡처 환경이나 도구 복구가 필요하며 승인 부족 때문이 아닙니다.
+- **R2 후속 수정:**1643px에서만 보이던 헤더 badge에 v0.7.0이 남아 있었습니다. source/generated index를 v0.7.1로 맞추고 기존 check에 tokens.version과의 일치 guard를 추가했습니다. 관련 작은 버전 검사와 문서 재생성만 수행했으며 Chrome1643px에서 v0.7.1 Draft 및 가로 overflow 없음도 확인했습니다. 패키지·보존 archive·starter 바이트는 f3ce254와 동일합니다.
+
+전체 시각 검수 완료 판정은 계속 보류합니다. 실제 Safari·화면낭독기·물리 기기도 미검증입니다. 필수 작업의 거부나 대기 중 승인은 없고 공개 push·Pages·npm 게시는 수행하지 않았습니다.

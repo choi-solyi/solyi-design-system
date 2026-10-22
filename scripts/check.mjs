@@ -37,6 +37,8 @@ assert.deepEqual((await readdir(path.join(root,'docs/starter'))).sort(),[...star
 for(const name of starterFiles)assert.deepEqual(await readFile(path.join(root,'examples/vue-vuetify/dist',name)),await readFile(path.join(root,'docs/starter',name)),`Published starter ${name} is current`);
 for(const name of siteFiles) assert.deepEqual(await readFile(path.join(root,'site',name)),await readFile(path.join(root,'docs',name)),`${name} build is current`);
 assert.deepEqual(JSON.parse(await readFile(path.join(root,'docs/tokens.json'),'utf8')),tokens);
+const versionDom=new JSDOM(await readFile(path.join(root,'docs/index.html'),'utf8'));
+assert.equal(versionDom.window.document.querySelector('.version')?.textContent.trim().replace(/\s+/g,' '),`v${tokens.version} Draft`,'Wide header badge matches the documentation/token version');versionDom.window.close();
 const source=(await Promise.all(siteFiles.filter(name=>/\.(html|js|css)$/.test(name)).map(name=>readFile(path.join(root,'docs',name),'utf8')))).join('\n');
 assert.ok(!/\binfinite\b/.test(source),'No unbounded CSS animation');
 for(const match of source.matchAll(/(?:href|src)=["']\.\/([^"'#?]+)["']/g)) if(!match[1].includes('${'))assert.ok(expected.includes(match[1].replace(/\/$/,'')),`Local link ${match[1]} exists`);
