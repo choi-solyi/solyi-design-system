@@ -2,6 +2,8 @@
 
 ## 표면·트리와 Vue 조합
 
+예제 주변의 버튼 묶음은 Core의 `sol-actions`(8px 간격·줄바꿈), 경로 목록은 `sol-breadcrumbs`로 배치합니다. Vue 컴포넌트 CSS와 함께 Core components.css도 설치 절차대로 가져와야 합니다.
+
 - `SCard`: `title`, `eyebrow`, `headingLevel:2|3|4`(기본3), 기본/actions 슬롯. 카드의 제목과 본문을 공통 간격으로 묶습니다.
 - `SAlert`: `tone:info|success|warning|danger`, `title`, `live:off|polite|assertive`(기본off), 기본/actions 슬롯. 정적 안내는 live를 켜지 않고, 같은 변화의 자동 안내는 한곳만 사용합니다.
 - `STree`: 필수 `id/label/items:STreeItem[]`, `v-model:string|null`, `v-model:expanded:string[]`, `disabled/readonly`, `select(id)` 이벤트. 항목은 고유 id/label, 선택적 disabled/children입니다. 방향키·Home/End는 초점, Enter/Space는 선택입니다. 접힌 자식은 Tab 순서에서 제외합니다. readonly는 탐색·펼침을 허용하고 값 선택을 막습니다.

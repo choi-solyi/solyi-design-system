@@ -331,3 +331,11 @@ User PC Chrome local: actual1643/1180/720/333 CSSpx. Native ArrowRight theme sel
 - 사용자 PC의 연결 Chrome, CSS viewport332·333·720·960·1180px 대표 검사: 가로 넘침 없음, 메뉴 링크 펼침 전후 약44px·단일 스크롤·하위 폭 유지, 모바일 닫힘·앵커 오프셋, 트리 키보드 선택, 문서/패키지 drawer Escape·초점 반환. 공통 제목 gap약4px, 설치 외부 gap약16px.333px 원형 상태 문구 중심 오차약0.01px. 세 테마×light/dark 트리 예제 넘침 없음.
 - 현재 PC는 prefers-reduced-motion:reduce입니다. indeterminate 활성 상태에서도 computed animation:none을 확인했습니다. 정상 모션의 반복 규칙·시간 토큰·중단은 소스/상태 검사이며 실제 정상 회전의 픽셀 검수는 미완료입니다. 같은 Page.captureScreenshot 시간 초과를 반복하지 않았으므로 이번 전체 시각 검수 완료로 표시하지 않습니다.
 - 실제 Safari·Fold·터치·화면 낭독기, 모든 화면/옵션의 픽셀 시각 검수는 미검증입니다. 전용 API가 없는 Vue 조합 범위는 VUE-EXAMPLES-PLAN.md에 명시했습니다. 접근성 전체 준수 인증이나 모든 앱 호환 주장은 하지 않습니다.
+# 0.9.1 묶음 패치 · 2026-10-22
+
+- 묶음 변경만 검증했습니다. Vue SFC30개 포맷/미사용 import121개 제거, 단일 코드 접기·연결된 탭·활성 패널 복사, 조합용 주변 스타일, native sidepanel 폭, 진행률 부연 제거입니다.
+- Core0.4.1/UI0.7.1 새 tarball 두 소비 앱 설치·타입·빌드, Progress 옵션128조합, 예제30개 실행/ARIA/가상파일/초점, 기존 문서·메뉴·날짜·업로드·테마·대비·검색 및 코드 패널 검사를 통과했습니다. Vue 구문 검사에서 경로 예제의 중복 class 한 곳을 찾아 제거했고 재발 검사에 포함했습니다.
+- 사용자 PC Chrome의 실제 치수/동작:1180px 버튼 간격약8px, 카드 header margin24→0px/title margin16→0px.333px 예제 카드·선택창 가로 넘침 없음. Breadcrumb는 flex/list-style:none.400×606에 가까운 CSS viewport에서 native sidepanel left0/right383.33/width383.33px(client383px), padding16px이며 Escape는 실행 버튼으로 복귀합니다.717px 코드 영역은 내부 가로 스크롤을 쓰고 페이지 넘침은 없습니다.
+- 코드 패널은 접기 하나, Vue 기본, 화살표로 탭/초점 이동, Vue와 HTML의 실제 클립보드 원본을 각각 확인했습니다. 문자열 강제 줄바꿈을 제거했으며 표시·복사·실행이 정본 소스와 일치합니다. 진행 상태 문구는 두 형태 모두 ‘처리 중’이며 aria-valuenow는 없습니다.
+- 정상 indeterminate 모션1.4s/infinite 및 미상 aria-valuenow 없음은 부모 클라우드의 연속 캡처 검증을 수신해 재사용했습니다. 이 PC는 시스템 축소 모션이며 OS 설정을 바꾸지 않았습니다. 이번 전체 픽셀 검수·Safari·실기기 터치·화면 낭독기는 미검증입니다. 접근성 전체 적합성 인증을 주장하지 않습니다.
+

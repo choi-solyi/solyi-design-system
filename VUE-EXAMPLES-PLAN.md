@@ -27,3 +27,13 @@ Tooltip/Popover, Accordion, Breadcrumb, Avatar, 로컬 파일, 단일 자동완�
 - [x] 최종0.9.0 파일 고정·허용 목록·해시·실제 HTTP 설치/업데이트/0.8.1 롤백 검사. 원격 CI·Pages 성공과 공개 해시는 배포 후 보고 및 해당 커밋의 Actions 결과로 확인
 
 PC Chrome의 스크린샷은 이전 작업에서 시간 초과됐습니다. 치수/동작 검사와 픽셀 시각 검수를 구분하고, 정상 모션/축소 모션을 실제 확인하지 못한 경우 각각 미검증으로 남깁니다. 실제 Safari·Fold·화면 낭독기도 실행 가능한 환경이 있을 때만 완료로 표시합니다.
+
+## 0.9.1 묶음 패치
+
+- Vue SFC30개를 Prettier3.9.10(MIT)으로 정리하고 타입 검사에서 확인된 미사용 import121개를 제거했습니다. 표시·복사·실행은 같은 정본 파일을 유지합니다. 코드의 강제 줄바꿈 대신 가로 스크롤로 한글 문자열을 보존합니다.
+- 코드 탭을 하나의 접기 패널 안에 붙이고 Vue 기본 선택, 선택선·키보드 탐색·연결 패널·각 패널의 복사 대상을 유지합니다. 전용 API가 없는 예제의 탭 이름은 Vue 조합입니다.
+- 공개 Chrome 재현: 버튼 묶음은 block/gap0, 카드 header는 margin24px, 제목은 하단 margin16px였습니다. 경로 nav에는 공통 클래스가 없어 ordered list가 decimal/block이었습니다. SCard·SBtn의 배경과 버튼6px 반경은 정상이라 CSS 전체 미로드로 판정하지 않았습니다.
+- 30개 예제 주변 클래스 조사 후 문서 전용 button-row를 공통 sol-actions로 전환하고, breadcrumb 클래스를 연결합니다. starter의 광범위한 header/h2 여백을 공통 제목에서 제외하고 grid 최소 폭을 정리합니다. native sidepanel은 100vw 대신 가용100% 폭으로 제한합니다.
+- 요청한 ‘진행률을 아직 알 수 없어요’ 문구와 영어 대응 부연을 제거하고 기존 처리 중/Working 상태와 접근성 이름을 유지합니다. 부모의 클라우드 정상 모션1.4s infinite·aria-valuenow 없음 검증 결과를 수신했으며 같은 검사를 반복하지 않습니다.
+- 묶음 검사: 새 Core0.4.1/UI0.7.1 tarball을 두 소비 앱에 설치하고 타입/실행/빌드, SFC 구문/미사용 import, 코드 탭·복사·원본30개 일치 및 기존 문서 회귀를 통과했습니다. Chrome1180/333px 버튼 간격8px·header/title margin0, 카드/선택창 넘침 없음, breadcrumb flex/list-style:none을 확인했습니다.400px sidepanel은 client383px에 맞춰 left0·폭383.33px·padding16px이며 Escape 복귀를 유지합니다.717px 코드 패널 가로 넘침 없음, 패널별 실제 클립보드 확인 및 ‘처리 중’ 문구를 확인했습니다.
+- 실제 스크린샷/전체 픽셀 검수는 미완료이며 PC의 같은 캡처 시간 초과를 반복하지 않았습니다. 공개 CI·Pages·최종 해시 결과는 해당 커밋의 Actions와 배포 후 보고에서 확인합니다. 이전 고정 tarball은 변경하지 않습니다.

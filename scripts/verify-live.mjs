@@ -13,7 +13,7 @@ for(const name of files) {
   const response=await fetch(url,{signal:AbortSignal.timeout(15000),cache:'no-store'});
   assert.equal(response.status,200,`${url} HTTP 200`);
   const remote=Buffer.from(await response.arrayBuffer());
-  const local=ref?execFileSync('git',['show',`${ref}:docs/${name}`]):await readFile(new URL(`../docs/${name}`,import.meta.url));
+  const local=ref?execFileSync('git',['show',`${ref}:docs/${name}`],{maxBuffer:16*1024*1024}):await readFile(new URL(`../docs/${name}`,import.meta.url));
   assert.equal(hash(remote),hash(local),`${name} SHA-256 matches the checked source`);
   console.log(`PASS ${name}: HTTP 200, SHA-256 ${hash(remote).slice(0,16)}…`);
 }

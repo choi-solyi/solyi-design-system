@@ -1,8 +1,165 @@
 <script setup lang="ts">
-import {ref,computed,nextTick,onMounted,onBeforeUnmount,watch} from 'vue';
-import {SCard,SBtn,STextField,STextarea,SDialog,SAlert} from '@solyi/vue-ui';
-const saved=ref({title:'작은 정원',note:'가상 기록입니다.'}),draft=ref({...saved.value}),editing=ref(false),deleted=ref(false),confirm=ref(false),kind=ref<'leave'|'delete'>('leave'),error=ref('');const dirty=computed(()=>draft.value.title!==saved.value.title||draft.value.note!==saved.value.note);function edit(){draft.value={...saved.value};editing.value=true;nextTick(()=>document.getElementById('recipe-edit-title')?.focus());}function save(){if(!draft.value.title.trim()){error.value='기록 제목을 입력해 주세요.';nextTick(()=>document.getElementById('recipe-edit-name')?.focus());return;}saved.value={...draft.value};editing.value=false;error.value='';nextTick(()=>document.getElementById('recipe-edit')?.focus());}function leave(){if(dirty.value){kind.value='leave';confirm.value=true;}else cancel();}function cancel(){editing.value=false;error.value='';nextTick(()=>document.getElementById('recipe-edit')?.focus());}function undo(){deleted.value=false;nextTick(()=>document.getElementById('recipe-edit')?.focus());}function decide(){confirm.value=false;if(kind.value==='delete'){deleted.value=true;nextTick(()=>document.getElementById('recipe-undo')?.focus());}else cancel();}function before(e:BeforeUnloadEvent){if(editing.value&&dirty.value){e.preventDefault();e.returnValue='';}}onMounted(()=>window.addEventListener('beforeunload',before));onBeforeUnmount(()=>window.removeEventListener('beforeunload',before));
+import { ref, computed, nextTick, onMounted, onBeforeUnmount } from 'vue';
+import {
+  SCard,
+  SBtn,
+  STextField,
+  STextarea,
+  SDialog,
+  SAlert,
+} from '@solyi/vue-ui';
+const saved = ref({ title: '작은 정원', note: '가상 기록입니다.' }),
+  draft = ref({ ...saved.value }),
+  editing = ref(false),
+  deleted = ref(false),
+  confirm = ref(false),
+  kind = ref<'leave' | 'delete'>('leave'),
+  error = ref('');
+const dirty = computed(
+  () =>
+    draft.value.title !== saved.value.title ||
+    draft.value.note !== saved.value.note,
+);
+function edit() {
+  draft.value = { ...saved.value };
+  editing.value = true;
+  nextTick(() => document.getElementById('recipe-edit-title')?.focus());
+}
+function save() {
+  if (!draft.value.title.trim()) {
+    error.value = '기록 제목을 입력해 주세요.';
+    nextTick(() => document.getElementById('recipe-edit-name')?.focus());
+    return;
+  }
+  saved.value = { ...draft.value };
+  editing.value = false;
+  error.value = '';
+  nextTick(() => document.getElementById('recipe-edit')?.focus());
+}
+function leave() {
+  if (dirty.value) {
+    kind.value = 'leave';
+    confirm.value = true;
+  } else cancel();
+}
+function cancel() {
+  editing.value = false;
+  error.value = '';
+  nextTick(() => document.getElementById('recipe-edit')?.focus());
+}
+function undo() {
+  deleted.value = false;
+  nextTick(() => document.getElementById('recipe-edit')?.focus());
+}
+function decide() {
+  confirm.value = false;
+  if (kind.value === 'delete') {
+    deleted.value = true;
+    nextTick(() => document.getElementById('recipe-undo')?.focus());
+  } else cancel();
+}
+function before(e: BeforeUnloadEvent) {
+  if (editing.value && dirty.value) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+}
+onMounted(() => window.addEventListener('beforeunload', before));
+onBeforeUnmount(() => window.removeEventListener('beforeunload', before));
 </script>
 <template>
-<SCard :heading-level="2" title="수정과 복구"><SAlert v-if="deleted" title="가상 기록을 삭제했어요."><template #actions><SBtn variant="inline" id="recipe-undo" @click="undo">삭제 되돌리기</SBtn></template></SAlert><form v-else-if="editing" class="sol-stack" @submit.prevent="save" novalidate><h3 id="recipe-edit-title" tabindex="-1">가상 기록 수정</h3><STextField id="recipe-edit-name" v-model="draft.title" label="기록 제목" :error="error" required/><STextarea id="recipe-edit-note" v-model="draft.note" label="기록 설명"/><div class="button-row"><SBtn type="submit" variant="primary">저장</SBtn><SBtn @click="cancel">수정 취소</SBtn><SBtn @click="leave">다른 가상 화면으로</SBtn></div></form><template v-else><p>{{saved.title}} · {{saved.note}}</p><div class="button-row"><SBtn id="recipe-edit" @click="edit">수정</SBtn><SBtn variant="secondary" @click="kind='delete';confirm=true">가상 삭제</SBtn></div></template><SDialog id="recipe-edit-confirm" v-model="confirm" :title="kind==='delete'?'가상 기록 1개를 삭제할까요?':'저장하지 않은 변경이 있어요.'"><p>실제 파일과 서버에 연결되지 않습니다.</p><template #actions><SBtn @click="confirm=false">계속 작업</SBtn><SBtn variant="secondary" @click="decide">{{kind==='delete'?'가상 삭제':'변경 버리기'}}</SBtn></template></SDialog></SCard>
+  <SCard
+    :heading-level="2"
+    title="수정과 복구"
+  >
+    <SAlert
+      v-if="deleted"
+      title="가상 기록을 삭제했어요."
+    >
+      <template #actions>
+        <SBtn
+          variant="inline"
+          id="recipe-undo"
+          @click="undo"
+        >
+          삭제 되돌리기
+        </SBtn>
+      </template>
+    </SAlert>
+    <form
+      v-else-if="editing"
+      class="sol-stack"
+      @submit.prevent="save"
+      novalidate
+    >
+      <h3
+        id="recipe-edit-title"
+        tabindex="-1"
+      >
+        가상 기록 수정
+      </h3>
+      <STextField
+        id="recipe-edit-name"
+        v-model="draft.title"
+        label="기록 제목"
+        :error="error"
+        required
+      />
+      <STextarea
+        id="recipe-edit-note"
+        v-model="draft.note"
+        label="기록 설명"
+      />
+      <div class="sol-actions">
+        <SBtn
+          type="submit"
+          variant="primary"
+        >
+          저장
+        </SBtn>
+        <SBtn @click="cancel">수정 취소</SBtn>
+        <SBtn @click="leave">다른 가상 화면으로</SBtn>
+      </div>
+    </form>
+    <template v-else>
+      <p>{{ saved.title }} · {{ saved.note }}</p>
+      <div class="sol-actions">
+        <SBtn
+          id="recipe-edit"
+          @click="edit"
+        >
+          수정
+        </SBtn>
+        <SBtn
+          variant="secondary"
+          @click="
+            kind = 'delete';
+            confirm = true;
+          "
+        >
+          가상 삭제
+        </SBtn>
+      </div>
+    </template>
+    <SDialog
+      id="recipe-edit-confirm"
+      v-model="confirm"
+      :title="
+        kind === 'delete'
+          ? '가상 기록 1개를 삭제할까요?'
+          : '저장하지 않은 변경이 있어요.'
+      "
+    >
+      <p>실제 파일과 서버에 연결되지 않습니다.</p>
+      <template #actions>
+        <SBtn @click="confirm = false">계속 작업</SBtn>
+        <SBtn
+          variant="secondary"
+          @click="decide"
+        >
+          {{ kind === 'delete' ? '가상 삭제' : '변경 버리기' }}
+        </SBtn>
+      </template>
+    </SDialog>
+  </SCard>
 </template>
