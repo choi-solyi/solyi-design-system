@@ -1,3 +1,7 @@
+# Current migration status
+
+Current local0.7 candidate:22 unique S components (existing20 with identical Sol aliases +2 progress APIs). **The authoritative current per-example status is [REUSE-INVENTORY.md](REUSE-INVENTORY.md)**. Main-document progress now executes the actual package consumer; other reference HTML blocks are explicitly pending. The following phase2/3 notes are historical.
+
 # Vue migration inventory · phase 2
 
 Historical phase2 baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository and its existing Pages demo are in scope. Packages remain private local tarballs. Existing apps, registry publication, Figma and new credentials/permissions are excluded.

@@ -47,3 +47,5 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 
 /* Same opt-in code font token as Core; API output keeps its existing wrapping. */
 .starter-code-sample {max-width:100%;overflow-x:auto;white-space:pre;padding:var(--sol-space-3);background:var(--sol-color-surface-alt);border-radius:var(--sol-radius-inset);font-size:var(--sol-text-xs);}
+
+.starter-embed .v-application__wrap{min-height:0;}.starter-embed .starter-main{padding:0;max-width:none;}.starter-embed .starter-card{margin:0;border:0;padding:var(--sol-space-3);background:transparent;}.starter-embed .sol-progress-examples{margin-block:var(--sol-space-4);}

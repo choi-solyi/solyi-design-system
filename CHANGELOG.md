@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 0.7.0 · local candidate, publication held
+
+- Canonical S PascalCase API names with identical legacy Sol aliases/registrations; SBtn/STextField/SDataTable/SSnackbar retain their own contracts.
+- Shared createSolyiVuetify/applySolyiAppearance for token themes/defaults and direct native V usage.
+- SProgressLinear/SProgressCircular, real installed-package starter and same-origin document embed; complete document/example reuse inventory.
+- No package rename, license change, registry publication or other app connection.
+
 ## 0.6.0 · local candidate, not published
 
 - Preserve624bc43 exact document-name/alias ranking fix.

@@ -38,3 +38,7 @@ Core/UI0.3.0은 기존14+신규6의20종 typed API입니다. native popover를 �
 ## 0.6.0 local candidate
 
 Core0.3.1 + Vue UI0.4.0, Node22.23.3 / Vue3.5.44 / Vuetify4.3.0 / TS6.0.3. Existing20 exports/radii/fonts retained. Locale supports ko-KR/en-US LTR only, not article translation or RTL. ISO date-only/HH:mm storage remains stable; grouped number input and TableColumn.format are additive. Previous0.3.0 pair retained for rollback; locale-specific consuming code must roll back with package versions. URL-installed independent consumer and one Vue/Vuetify copy verified locally. Remote CI/Pages publication of this candidate is not yet run.
+
+## S API first phase (local0.7 candidate)
+
+Core0.3.2/UI0.5.0; same pinned Vue3.5.44/Vuetify4.3.0 toolchain and6/10/12/16 roles/fonts. Existing20 Sol exports remain identity aliases, including plugin registration. Canonical names do not imply full native Vuetify prop compatibility. Direct V theme/style bridge covers documented defaults; consumer overrides and unlisted components need separate review. Progress is read-only controlled display; invalid/unknown values have no fake percent. No new registry identity or license is selected.

@@ -34,7 +34,7 @@
 | #component/content-tabs · 탭 패널 | component · STabs | API 있음; 본문 HTML 참고 / 실제 starter 실행 |
 | #component/action-menu · 행동 메뉴 | component · SMenu (SSplitBtn / SContextMenu 내부 동작 재사용) | 후속 · 구현 완료 아님 |
 | #component/identity-progress · Avatar·단계 | component · SAvatar / SStepper | 후속 · 구현 완료 아님 |
-| #component/progress · Progress bar·circle | component · SProgressLinear / SProgressCircular | B 구현·검증 대기 |
+| #component/progress · Progress bar·circle | component · SProgressLinear / SProgressCircular | 실제 Vue 패키지 2종 · starter/문서 공통 실행 · 로컬 검증 완료 |
 | #component/time · 시간 선택 | component · STimePicker | API 있음; 본문 HTML 참고 / 실제 starter 실행 |
 | #component/chart · 차트와 표 대안 | component · SChart + SDataTable 대안 | 후속 · 구현 완료 아님 |
 | #component/tree · 트리 탐색 | component · STreeview | 후속 · 구현 완료 아님 |
@@ -90,7 +90,7 @@
 | component/content-tabs · Fictional record / local panels | STabs | API 있음; 본문 HTML 참고 / 실제 starter 실행 |
 | component/action-menu · Fictional record actions | SMenu (SSplitBtn / SContextMenu 내부 동작 재사용) | 후속 · 구현 완료 아님 |
 | component/identity-progress · Fictional identity and local wizard | SAvatar / SStepper | 후속 · 구현 완료 아님 |
-| component/progress · Manual fictional progress | SProgressLinear / SProgressCircular | B 구현·검증 대기 |
+| component/progress · Manual fictional progress | SProgressLinear / SProgressCircular | 실제 Vue 패키지 2종 · starter/문서 공통 실행 · 로컬 검증 완료 |
 | component/time · Local time-only value | STimePicker | API 있음; 본문 HTML 참고 / 실제 starter 실행 |
 | component/chart-tree · Fictional activity / visible text alternative | SChart + SDataTable 대안 | 후속 · 구현 완료 아님 |
 | component/chart-tree · Fictional folders / single-select tree | STreeview | 후속 · 구현 완료 아님 |

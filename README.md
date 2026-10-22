@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.6.0 로컬 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.7.0 로컬 검토 초안**입니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -16,7 +16,7 @@
 
 ## 로컬 미게시 후속
 
-상단 문서 검색과 공유 헤더 설정은 b8648fa로 공개됐습니다. 로컬 후속은 검색 이름·별칭 순위(624bc43), 공통 locale와 버전별 패키지 설치 경로입니다. 공개본은 v0.5.0이며 아직 후속을 푸시하지 않습니다. [공통 locale](LOCALE.md) · [단계별 계획](LOCALE-DISTRIBUTION-PLAN.md) · [고정 버전 설치·업데이트·롤백](DISTRIBUTION.md). 기존 Pages에 게시할 버전별 tarball과 SHA-256/SHA-512를 로컬 준비했으며 localhost URL 소비 검증을 완료했습니다. 공개 설치 URL은 아직 게시하지 않았습니다. [사용 방법과 범위](DOC-SEARCH.md) · [단계별 확인](DOC-SEARCH-PLAN.md) · [남은 locale·설치/업데이트 작업](NEXT-STEPS.md).
+공개 기준은 v0.6.0 /8d0b297입니다. 이번 로컬 후보는 S PascalCase 이름·Sol 호환 별칭, 공통 Vuetify 테마/defaults와 진행 표시2종을 추가합니다. [S API 계약](S-API.md) · [61개 목적지/34개 예제 전환표](REUSE-INVENTORY.md) · [단계별 계획](S-API-PLAN.md). 공개 push/Pages 배포, npm 이름 변경/게시와 다른 앱 적용은 보류합니다.
 
 ## 로컬 실행
 
@@ -157,4 +157,4 @@ Component → Progress bar·circle은 기존 sol-progress를 재사용하고 수
 
 현재 Vue API는 기존4종+입력6종·Tabs·Toast·DatePicker·TimePicker, 총14종입니다. [API와 코드](VUE-API.md), [예제 전체 전환표와 후속 범위](VUE-MIGRATION.md)를 구분해 보세요. 모든 문서 예제가 Vue로 전환된 것은 아닙니다.
 
-신규 재사용 API6종(SegmentedControl, MultiSelect, RangeSlider, SplitButton, ContextMenu, ResizableSplitPane)을 더해 실제 Vue export는20종입니다. [확장 API](ADVANCED-VUE-API.md)와 [진행 계획](VUE-EXPANSION-PLAN.md)을 참고하세요. 기본 UI는 공식 Wanted Sans1.0.3을 self-host하며 코드용 monospace는 유지합니다. [폰트 출처·범위](FONT.md)에서 OFL·fallback·검증 한계를 확인할 수 있습니다.
+신규 재사용 API6종(SegmentedControl, MultiSelect, RangeSlider, SplitButton, ContextMenu, ResizableSplitPane)을 더했고, 이번 후보에서 ProgressLinear/Circular 2종을 더해 실제 Vue 부품은22종입니다. S API·호환 별칭과 남은 전환은 [현재 범위](S-API.md), [전수 목록](REUSE-INVENTORY.md)을 참고하세요. [확장 API](ADVANCED-VUE-API.md)와 [진행 계획](VUE-EXPANSION-PLAN.md)을 참고하세요. 기본 UI는 공식 Wanted Sans1.0.3을 self-host하며 코드용 monospace는 유지합니다. [폰트 출처·범위](FONT.md)에서 OFL·fallback·검증 한계를 확인할 수 있습니다.

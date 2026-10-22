@@ -2,10 +2,15 @@
 .sol-vuetify,.sol-vuetify .v-application__wrap {font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}
 .sol-vuetify-btn.v-btn {font-family:var(--sol-font-sans);font-size:var(--sol-text-sm);font-weight:600;letter-spacing:normal;text-transform:none;min-width:0;height:var(--sol-button-height);padding-inline:var(--sol-space-3);box-shadow:none;}
 .sol-vuetify-btn.v-btn:not(.v-btn--icon){border-radius:var(--sol-radius-button);}
+.sol-vuetify-btn.v-btn--icon{width:var(--sol-button-height);padding:0;}
+.sol-vuetify-btn.v-btn .v-btn__overlay{opacity:0;}
+.sol-vuetify-btn.v-btn:hover{text-decoration:underline;text-underline-offset:3px;}
+.sol-vuetify-btn.v-btn.bg-primary:not(:disabled):not([aria-disabled=true]):hover,.sol-vuetify-btn.v-btn.bg-primary:not(:disabled):not([aria-disabled=true]):active{background-color:var(--sol-color-accent-hover)!important;}
 .sol-vuetify-btn.v-btn:focus-visible{outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
 .sol-vuetify-field {font-family:var(--sol-font-sans);font-size:var(--sol-text-sm);}
 .sol-vuetify-field .v-field{border-radius:var(--sol-radius-control);--v-input-control-height:var(--sol-control-height);}
 .sol-vuetify-field .v-field__input{font:inherit;min-height:var(--sol-control-height);}
+.sol-vuetify-field:has(input:focus-visible,textarea:focus-visible) .v-field{outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
 .sol-vuetify-field textarea.v-field__input{min-height:calc(3 * 1.5em + 16px);}
 .sol-vuetify-card.v-card{font-family:var(--sol-font-sans);border-radius:var(--sol-radius-card);}
 .sol-vuetify-dialog .v-overlay__content>.v-card{border-radius:var(--sol-radius-panel);}
@@ -181,3 +186,10 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 @media(max-width:680px),(pointer:coarse){.sol-ui-segment>span{min-height:var(--sol-touch-target-min);}.sol-ui-tags .sol-button{min-width:44px;min-height:44px;}.sol-ui-split-pane{--sol-split-handle-size:44px;}}
 
 .sol-ui-native-field,.sol-ui-tabs,.sol-ui-range,.sol-ui-split-button,.sol-ui-context,.sol-ui-split-pane,.sol-ui-toast,.sol-ui-time-panel {font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}
+
+.sol-ui-progress{display:grid;gap:var(--sol-space-2);min-width:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}
+.sol-ui-progress-linear{display:block;overflow:hidden;background:var(--sol-color-surface-alt);border-radius:var(--sol-radius-small);}
+.sol-ui-progress-fill{display:block;height:100%;background:var(--sol-progress-fill);border-radius:inherit;transition:width var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}
+.sol-ui-progress-circle{max-width:100%;height:auto;aspect-ratio:1;}
+.sol-ui-progress-status{margin:0;font-size:var(--sol-text-sm);min-height:3em;overflow-wrap:anywhere;}
+@media(prefers-reduced-motion:reduce){.sol-ui-progress-fill,.sol-ui-progress .sol-progress-arc{transition:none!important;}}

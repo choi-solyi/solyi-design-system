@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "UNLICENSED",
-  "description": "Twenty typed controlled Vue components with shared Core styles. Private local pack preview.",
+  "description": "Twenty-two unique typed Vue components (canonical S names plus legacy aliases) with shared Core styles. Private local pack preview.",
   "files": [
     "dist",
     "README.md"

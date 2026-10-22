@@ -242,7 +242,7 @@
       "title": "Progress bar & circle",
       "kind": "component",
       "target": "SProgressLinear / SProgressCircular",
-      "status": "B 구현·검증 대기"
+      "status": "실제 Vue 패키지 2종 · starter/문서 공통 실행 · 로컬 검증 완료"
     },
     {
       "route": "component",
@@ -717,7 +717,7 @@
       ],
       "kind": "component",
       "target": "SProgressLinear / SProgressCircular",
-      "status": "B 구현·검증 대기"
+      "status": "실제 Vue 패키지 2종 · starter/문서 공통 실행 · 로컬 검증 완료"
     },
     {
       "route": "component",

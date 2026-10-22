@@ -1,7 +1,7 @@
 import {createApp,h,ref} from 'vue';
 import {createVuetify} from 'vuetify';
 import {VApp} from 'vuetify/components/VApp';
-import SolyiUI,{provideSolLocale,formatSolNumber,formatSolDate,parseSolNumber,resolveSolLocale,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,koLocale,uiVersion} from '@solyi/vue-ui';
+import SolyiUI,{provideSolLocale,formatSolNumber,formatSolDate,parseSolNumber,resolveSolLocale,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,SProgressLinear,SProgressCircular,koLocale,uiVersion} from '@solyi/vue-ui';
 import type {DateValue,DateRange,SolOption,SolPickerHandle,SolNumberInputHandle,SolLocale,SolLocaleSource,SolRangeValue,SolOptionLoader,SolMenuItem} from '@solyi/vue-ui';
 import type {TableColumn,TableRow,TableSort,ButtonVariant} from '@solyi/vue-ui';
 import {tokens,coreVersion} from '@solyi/core';
@@ -71,6 +71,9 @@ const invalidIconTypeOnly=()=>{
   // @ts-expect-error Only the shared icon names are accepted.
   solIcon('unregistered-symbol');
 };void invalidIconTypeOnly;
+// @ts-expect-error Progress state is an explicit display contract.
+const badProgress:InstanceType<typeof SProgressLinear>['$props']={id:'bad-progress',label:'Bad',state:'uploading'};void badProgress;
+const progressProps:InstanceType<typeof SProgressCircular>['$props']={id:'circle',label:'Progress',modelValue:35,state:'determinate'};void progressProps;
 const app=createApp({setup(){const text=ref(''),open=ref(false),sort=ref<TableSort|null>(null),selected=ref<string[]>([]),checked=ref(false),choice=ref<string|null>('note'),amount=ref<number|null>(2),tab=ref('a'),toast=ref(false),dates=ref<DateValue>(validRange),time=ref<string|null>('09:00'),multi=ref<string[]>([]),range=ref<SolRangeValue>(rangeValue),ratio=ref(50);return()=>h(VApp,{},()=>h('main',{style:'padding:24px;font-family:var(--sol-font-sans)'},[
   h('h1',`Independent tarball consumer: ${coreVersion}/${uiVersion} (${tokens.version})`),
   h(STextField,{id:'consumer-title',label:'가상 제목',modelValue:text.value,'onUpdate:modelValue':value=>text.value=value}),

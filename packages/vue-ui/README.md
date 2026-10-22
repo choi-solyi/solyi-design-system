@@ -37,3 +37,5 @@ SCheckbox, SRadioGroup, SSwitch, SSelect, STextarea, SNumberInput, STabs, SSnack
 ## Six additional APIs (20 total)
 
 SegmentedControl(string|null), MultiSelect(string[] with cancellable optional option loader), RangeSlider(readonly number pair), SplitButton and ContextMenu(flat action events/optional controlled open), ResizableSplitPane(percentage/keyboard/pointer/reflow) are actual typed exports. See ../../ADVANCED-VUE-API.md and the installed AdvancedExamples.vue consumer. The original14 remain. Other reference demos are not implicitly converted.
+
+Canonical components use S PascalCase: SBtn/STextField/SDialog/SDataTable/SSnackbar and the remaining input/navigation APIs, plus SProgressLinear/SProgressCircular. Existing20 Sol exports and registrations remain identity aliases. Native V components remain usable via createSolyiVuetify/applySolyiAppearance. Contracts differ from native Vuetify: see S-API.md in the repository. All22 use shared Core tokens; unknown progress has no aria-valuenow/fake percentage or repeated animation.

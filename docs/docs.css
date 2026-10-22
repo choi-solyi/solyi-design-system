@@ -289,3 +289,5 @@ dialog > p {font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
 .shape-panel>.sol-card {margin-top:var(--sol-space-4);}
 .shape-samples {margin-block:var(--sol-space-6);}
 .shape-rules {margin-top:var(--sol-space-4);}
+
+.progress-package-frame{display:block;width:100%;max-width:100%;border:0;background:var(--sol-color-surface);border-radius:var(--sol-radius-card);}

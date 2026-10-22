@@ -11,6 +11,9 @@ import {SolTabs,SolToast} from './navigation';
 import {SolDatePicker,SolTimePicker} from './date-time';
 import {SolSegmentedControl,SolMultiSelect,SolRangeSlider} from './selection';
 import {SolSplitButton,SolContextMenu} from './actions';
+import {SProgressLinear,SProgressCircular} from './progress';
+export {SProgressLinear,SProgressCircular,resolveSProgress} from './progress';
+export type {SProgressState,SProgressOptions} from './progress';
 import {SolResizableSplitPane} from './split-pane';
 export {SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane};
 export type {SolOptionLoader,SolMultiSelectHandle,SolRangeValue} from './selection';
@@ -139,7 +142,7 @@ export const SContextMenu:typeof SolContextMenu=SolContextMenu;
 export const SResizableSplitPane:typeof SolResizableSplitPane=SolResizableSplitPane;
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
-export const sComponents={SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane};
+export const sComponents={SProgressLinear,SProgressCircular,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane};
 const compatibilityComponents={SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane};
 
 export interface SolyiOptions {locale?:SolLocaleSource}

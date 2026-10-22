@@ -9,15 +9,16 @@ const documentSections={
 const documentNames={overview:'Overview',style:'Style',component:'Component',pattern:'Pattern',theme:'Theme & adoption'};
 // Search-only names: these do not rename headings, alter menus or create new routes.
 const documentSearchNames={
- 'pattern/date':['Date Picker','DatePicker','날짜','날짜 선택기','기간 선택'],
- 'component/time':['Time Picker','TimePicker','시간','시각','시각 선택','시간 선택기'],
- 'component/buttons':['Button'], 'component/fields':['Field','Text Field','TextField','Input'],
- 'component/selection':['Checkbox','Radio Group','RadioGroup','Switch','체크박스','라디오','스위치'],
- 'component/dialog':['Dialog','Modal','모달'], 'component/help':['Tooltip','Popover','툴팁','팝오버'],
- 'component/accordion':['Accordion'], 'component/textarea':['Text Area','Textarea'],
- 'component/number':['Number Input','NumberInput'], 'component/content-tabs':['Tabs'],
- 'component/action-menu':['Action Menu'], 'component/progress':['Progress Bar','Progress Circle'],
+ 'pattern/date':['SDatePicker','SolDatePicker','Date Picker','DatePicker','날짜','날짜 선택기','기간 선택'],
+ 'component/time':['STimePicker','SolTimePicker','Time Picker','TimePicker','시간','시각','시각 선택','시간 선택기'],
+ 'component/buttons':['Button','SBtn','SolButton'], 'component/fields':['STextField','SolField','Field','Text Field','TextField','Input'],
+ 'component/selection':['SCheckbox','SRadioGroup','SSwitch','Checkbox','Radio Group','RadioGroup','Switch','체크박스','라디오','스위치'],
+ 'component/dialog':['SDialog','Dialog','Modal','모달'], 'component/help':['Tooltip','Popover','툴팁','팝오버'],
+ 'component/accordion':['Accordion'], 'component/textarea':['STextarea','Text Area','Textarea'],
+ 'component/number':['SNumberInput','Number Input','NumberInput'], 'component/content-tabs':['STabs','Tabs'],
+ 'component/action-menu':['Action Menu'], 'component/progress':['SProgressLinear','SProgressCircular','Progress Bar','Progress Circle'],
  'component/chart':['Chart'], 'component/tree':['Tree'],
+ 'component/choices':['SSelect'], 'component/navigation':['SSnackbar','SolToast'], 'pattern/data':['SDataTable','SolTable'], 'component/multiselect':['SMultiSelect'], 'theme/advanced-vue':['SSegmentedControl','SRangeSlider','SSplitBtn','SContextMenu','SResizableSplitPane'],
  'pattern/files':['File Upload','FileUploader','Drag and Drop'], 'pattern/autocomplete':['Autocomplete']
 };
 // v0.2.1 links keep their exact hashes and now target the original, continuous examples.

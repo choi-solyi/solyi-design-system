@@ -27,6 +27,8 @@ node('7/10 Component runtime','scripts/library-runtime-check.mjs');
 node('7/10 Extended controlled Vue runtime','scripts/vue-extended-runtime-check.mjs');
 node('7/10 Six new reusable Vue APIs','scripts/vue-expansion-runtime-check.mjs');
 node('7/10 Shared locale runtime','scripts/locale-runtime-check.mjs');
+node('7/10 S aliases and direct Vuetify bridge','scripts/s-api-runtime-check.mjs');
+node('7/10 Reusable progress','scripts/progress-runtime-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 if(process.argv.includes('--prepare-release'))node('9/10 Freeze the verified local package pair','scripts/releases.mjs',JSON.parse(readFileSync(new URL('package.json',root),'utf8')).version);

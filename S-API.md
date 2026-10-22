@@ -61,3 +61,11 @@ createApp(App).use(vuetify).use(SolyiUI).mount('#app');
 | SolSplitButton | SSplitBtn |
 | SolContextMenu | SContextMenu |
 | SolResizableSplitPane | SResizableSplitPane |
+
+## 진행 표시
+
+SProgressLinear와 SProgressCircular는 같은 읽기 전용 표시 계약입니다. id/label은 필수, modelValue=0/min=0/max=100, state는 determinate/indeterminate/complete/error입니다. 실제 작업·저장·타이머를 실행하지 않습니다. 범위 밖 값은 표시만 clamp하고 complete는 max를 표시합니다. 잘못된 수치/경계는 값을 만들지 않고 안내합니다. unknown은 aria-valuenow와 퍼센트를 제거하고 error는 마지막 확인 값과 지속 문구를 보입니다. message는 앱 문구, announce는 기본 false이며 같은 작업의 한곳만 polite로 켭니다. Circular size는48–256(기본96), Linear는 너비100%입니다. 공통 ko/en locale을 따릅니다.
+
+resolveSProgress는 같은 clamp/known/ratio를 계산하는 순수 helper입니다. 둘에 같은 모델을 전달해도 값을 emit하지 않습니다. 값 변경의 유한 transition만 있고 reduced-motion은 이를 제거합니다. unknown은 정적인 띠/호와 글자를 사용하며 무한 회전이나 가짜 처리 시간이 없습니다.
+
+문서 #component/progress는 같은 출처의 starter?view=progress를 삽입해 실제 tarball을 import한 같은 SFC를 실행합니다. 부모 테마·모드·밀도는 origin/source를 확인한 메시지로 동기화하고 ResizeObserver로 높이를 맞춥니다. 키보드 탐색과 starter 직접 링크를 유지합니다. 나머지 HTML 예제는 전환표에 표시한 후속 범위입니다.

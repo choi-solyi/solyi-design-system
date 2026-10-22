@@ -1,0 +1,36 @@
+/* The actual starter SFC + installed tarballs, in synthetic DOM. Not visual/native-keyboard QA. */
+import assert from 'node:assert/strict';
+import {writeFile,mkdir} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {JSDOM,VirtualConsole} from 'jsdom';
+const source=process.argv.includes('--source');
+const root=new URL('../',import.meta.url),consumer=new URL('examples/vue-vuetify/',root);
+const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+const dom=new JSDOM('<html><body><div id="app"></div></body></html>',{url:'https://example.test/',pretendToBeVisual:true,virtualConsole:vc}),w=dom.window,d=w.document;
+for(const key of ['window','document','Element','Node','HTMLElement','HTMLInputElement','SVGElement','ShadowRoot','Document','MutationObserver','Event','MouseEvent','KeyboardEvent','AbortController','getComputedStyle'])Object.defineProperty(globalThis,key,{value:key==='window'?w:key==='document'?d:w[key],configurable:true});
+globalThis.visualViewport=undefined;globalThis.requestAnimationFrame=w.requestAnimationFrame.bind(w);globalThis.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);globalThis.innerWidth=1000;globalThis.innerHeight=800;
+w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});globalThis.matchMedia=w.matchMedia;
+globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};w.ResizeObserver=globalThis.ResizeObserver;
+globalThis.CSS={supports:()=>false,escape:value=>String(value).replace(/[^\w-]/g,'')};w.CSS=globalThis.CSS;
+const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consumer));
+const {default:vue}=await import(new URL('node_modules/@vitejs/plugin-vue/dist/index.mjs',consumer));
+const entry=new URL('.runtime-test/progress-entry.js',consumer);await mkdir(new URL('./',entry),{recursive:true});
+await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';export * from '@solyi/vue-ui';export {default as ProgressExamples} from '../src/ProgressExamples.vue';`);
+const built=await build({root:fileURLToPath(consumer),configFile:false,plugins:[vue()],resolve:{dedupe:['vue','vuetify','@solyi/core','@solyi/vue-ui'],alias:source?[{find:/^@solyi\/vue-ui$/,replacement:fileURLToPath(new URL('packages/vue-ui/src/index.ts',root))}]:[]},logLevel:'error',build:{lib:{entry:fileURLToPath(entry),formats:['es']},write:false,minify:false,rolldownOptions:{external:['vue']}}});
+const chunks=(Array.isArray(built)?built:[built]).flatMap(r=>r.output).filter(x=>x.type==='chunk'),out=new URL('.runtime-test/progress-bundle/',consumer);await mkdir(out,{recursive:true});for(const chunk of chunks){assert.ok(!chunk.fileName.includes('..'));await mkdir(new URL('./',new URL(chunk.fileName,out)),{recursive:true});await writeFile(new URL(chunk.fileName,out),chunk.code);}
+const api=await import(new URL(chunks.find(c=>c.isEntry).fileName+'?progress='+Date.now(),out));
+const {createApp,h,ref,nextTick,SProgressLinear,SProgressCircular,resolveSProgress,provideSolLocale,createSolyiVuetify,ProgressExamples}=api;
+assert.equal(resolveSProgress({modelValue:15,min:10,max:20}).ratio,.5);assert.equal(resolveSProgress({modelValue:200}).value,100);assert.equal(resolveSProgress({modelValue:-10}).value,0);assert.equal(resolveSProgress({modelValue:NaN}).known,false);assert.equal(resolveSProgress({state:'complete',modelValue:NaN}).value,100);assert.equal(resolveSProgress({state:'indeterminate',modelValue:35}).value,undefined);assert.equal(resolveSProgress({min:10,max:10}).valid,false);
+const value=ref(35),state=ref('determinate'),maximum=ref(100),language=ref('ko'),message=ref(''),announce=ref(false);
+const app=createApp({render:()=>h('div',[h(SProgressLinear,{id:'bar',label:'Linear',modelValue:value.value,state:state.value,max:maximum.value,announce:announce.value,message:message.value}),h(SProgressCircular,{id:'circle',label:'Circle',modelValue:value.value,state:state.value,max:maximum.value})])});provideSolLocale(app,language);app.mount('#app');
+const tick=async()=>{await nextTick();await nextTick();},$=s=>{const e=d.querySelector(s);assert.ok(e,s);return e;};await tick();
+for(const id of ['bar','circle']){assert.equal($('#'+id).getAttribute('aria-valuenow'),'35');assert.equal($('#'+id).getAttribute('aria-valuemin'),'0');assert.equal($('#'+id).getAttribute('aria-valuemax'),'100');assert.equal($('#'+id).getAttribute('aria-labelledby'),id+'-label');}
+value.value=45;state.value='error';await tick();assert.match($('#bar-status').textContent,/오류.*45%/);state.value='indeterminate';await tick();for(const id of ['bar','circle'])assert.equal($('#'+id).hasAttribute('aria-valuenow'),false);assert.ok(!$('#circle').textContent.includes('%'));
+state.value='complete';await tick();assert.equal($('#bar').getAttribute('aria-valuenow'),'100');assert.match($('#circle').textContent,/✓.*100%/);language.value='en';await tick();assert.match($('#bar-status').textContent,/Complete/);state.value='error';await tick();assert.match($('#bar-status').textContent,/Error.*45%/);
+announce.value=true;message.value='Caller-owned error';await tick();assert.equal($('#bar-status').textContent,'Caller-owned error');assert.equal($('#bar-status').getAttribute('aria-live'),'polite');assert.equal($('#circle-status').hasAttribute('aria-live'),false);maximum.value=0;message.value='';await tick();assert.equal($('#bar').hasAttribute('aria-valuenow'),false);assert.ok(!d.querySelector('#app').innerHTML.includes('NaN'));maximum.value=100;value.value=0;state.value='determinate';await tick();assert.equal($('#circle .sol-progress-arc').style.visibility,'hidden');app.unmount();
+const demo=createApp(ProgressExamples),vuetify=createSolyiVuetify();demo.use(vuetify);demo.mount('#app');await tick();
+const change=(id,v,type='change')=>{const e=$('#'+id);e.value=v;e.dispatchEvent(new w.Event(type,{bubbles:true}));};
+change('s-progress-value','80','input');await tick();$('#s-progress-step').focus();$('#s-progress-step').click();await tick();assert.equal($('#s-progress-linear').getAttribute('aria-valuenow'),'90');$('#s-progress-step').click();await tick();assert.equal($('#s-progress-linear').getAttribute('aria-valuenow'),'100');assert.equal(d.activeElement.id,'s-progress-restart');
+$('#s-progress-restart').click();await tick();change('s-progress-value','45','input');await tick();change('s-progress-state','indeterminate');await tick();assert.equal($('#s-progress-linear').hasAttribute('aria-valuenow'),false);assert.equal(d.querySelector('#s-progress-value'),null);change('s-progress-state','error');await tick();assert.equal($('#s-progress-linear').getAttribute('aria-valuenow'),'45');$('#s-progress-retry').focus();$('#s-progress-retry').click();await tick();assert.equal($('#s-progress-linear').getAttribute('aria-valuenow'),'0');assert.equal(d.activeElement.id,'s-progress-restart');assert.equal(d.querySelectorAll('#s-progress-demo [aria-live=polite]').length,1);
+demo.unmount();vuetify.unmount();assert.deepEqual(errors,[]);dom.window.close();
+console.log('PASS: actual S progress APIs bounds/clamp/unknown/no fake percent/complete/error/locale/live/invalid data; real ProgressExamples controls, completion and retry focus. No timers/repeated animation; browser layout/reduced-motion are separate checks.');
