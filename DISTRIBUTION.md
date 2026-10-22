@@ -4,19 +4,19 @@
 
 다음 공개 경로를 준비합니다:
 
-- `https://choi-solyi.github.io/solyi-design-system/releases/0.7.0/solyi-core-0.3.2.tgz`
-- `https://choi-solyi.github.io/solyi-design-system/releases/0.7.0/solyi-vue-ui-0.5.0.tgz`
+- `https://choi-solyi.github.io/solyi-design-system/releases/0.7.1/solyi-core-0.3.3.tgz`
+- `https://choi-solyi.github.io/solyi-design-system/releases/0.7.1/solyi-vue-ui-0.5.1.tgz`
 - 롤백 쌍: `releases/0.6.0/solyi-core-0.3.1.tgz`, `solyi-vue-ui-0.4.0.tgz`
 
 ```sh
-npm install --save-exact https://choi-solyi.github.io/solyi-design-system/releases/0.7.0/solyi-core-0.3.2.tgz https://choi-solyi.github.io/solyi-design-system/releases/0.7.0/solyi-vue-ui-0.5.0.tgz vue@3.5.44 vuetify@4.3.0
+npm install --save-exact https://choi-solyi.github.io/solyi-design-system/releases/0.7.1/solyi-core-0.3.3.tgz https://choi-solyi.github.io/solyi-design-system/releases/0.7.1/solyi-vue-ui-0.5.1.tgz vue@3.5.44 vuetify@4.3.0
 ```
 
 Node ^22.18.0 또는 >=24.12.0. 검증 조합은 Vue 3.5.44 / Vuetify 4.3.0입니다. 초기 CSS/폰트/theme 연결은 기존 [LIBRARY.md](LIBRARY.md), locale은 [LOCALE.md](LOCALE.md)를 따릅니다. 두 패키지 모두 private/UNLICENSED로 npm 미게시이며, 공개 다운로드가 포괄적인 재배포 라이선스 부여를 뜻하지 않습니다. 포함된 폰트의 OFL·출처와 의존성 고지는 유지합니다.
 
 다운로드한 파일의 SHA-256을 같은 릴리스의 SHA256SUMS 및 manifest와 대조합니다. npm은 URL 설치 시 SHA-512 integrity를 lock에 저장합니다. `package.json`·`package-lock.json`을 함께 커밋하고 이후 `npm ci --ignore-scripts`를 사용하세요. manifest 해시는 손상 검사용이며 별도 서명·공급망 인증은 아닙니다.
 
-업데이트는 새로운 URL 쌍 설치 후 소비 앱 자체 타입·회귀·시각 검사를 통과시킨 뒤 그 앱의 승인된 배포 절차로 진행합니다. 문제가 생기면 두 URL을 모두 이전 버전으로 되돌려 설치하고 잠금 파일을 함께 보존합니다. 더 확실한 복원은 이전 package.json/lock을 복원한 뒤 npm ci입니다. 버전 간 locale 신규 API를 사용한 소비 코드는 이전 API에 맞추어 함께 롤백해야 합니다. core와 UI peer 조합을 임의로 섞지 않습니다.
+업데이트는 새로운 URL 쌍 설치 후 소비 앱 자체 타입·회귀·시각 검사를 통과시킨 뒤 그 앱의 승인된 배포 절차로 진행합니다. 문제가 생기면 두 URL을 모두 이전 버전으로 되돌려 설치하고 잠금 파일을 함께 보존합니다. 더 확실한 복원은 이전 package.json/lock을 복원한 뒤 npm ci입니다. 새 S 이름·Progress·locale 등 이전 버전에 없는 API를 사용한 소비 코드는 이전 API에 맞추어 함께 롤백해야 합니다. core와 UI peer 조합을 임의로 섞지 않습니다.
 
 ```sh
 npm install --save-exact https://choi-solyi.github.io/solyi-design-system/releases/0.6.0/solyi-core-0.3.1.tgz https://choi-solyi.github.io/solyi-design-system/releases/0.6.0/solyi-vue-ui-0.4.0.tgz vue@3.5.44 vuetify@4.3.0

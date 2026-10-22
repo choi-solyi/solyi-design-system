@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.7.0 로컬 검토 초안**입니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.7.1 로컬 검토 초안**입니다. 배포 전 검토 결과는 [PREDEPLOY-REVIEW.md](PREDEPLOY-REVIEW.md)에 기록합니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 

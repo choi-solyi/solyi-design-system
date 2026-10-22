@@ -207,7 +207,7 @@ assert.deepEqual(dateEvents,changes);instance.destroy();instance.destroy();secon
 const abortHost=d.createElement('div');d.body.append(abortHost);const dateAbort=new w.AbortController();w.createDatePicker(abortHost,{signal:dateAbort.signal});dateAbort.abort();assert.equal(abortHost.children.length,0);abortHost.remove();
 // File metadata only: explicit rejection, removal, same-file reselection and count cap.
 const fileInput=$('#extra-files');const attach=files=>{Object.defineProperty(fileInput,'files',{configurable:true,value:files});fire(fileInput,'change');};
-const fileA=new w.File(['sample'],'sample.txt',{type:'text/plain',lastModified:1});attach([fileA]);assert.equal(d.querySelectorAll('#extra-file-list li').length,1);assert.equal(fileInput.value,'');
+const fileA=new w.File(['sample'],'sample.txt',{type:'text/plain',lastModified:1});attach([fileA]);assert.equal(d.querySelectorAll('#extra-file-list li').length,1);assert.match($('#extra-file-list').textContent,/6 B/,'Small nonempty files display exact bytes rather than 0.0 KiB');assert.equal(fileInput.value,'');
 assert.match($('#extra-file-list').textContent,/확장자 TXT · 텍스트 문서/);
 attach([fileA]);assert.match($('#extra-file-errors').textContent,/이미 선택/);
 attach([new w.File(['x'],'bad.exe'),new w.File([new Uint8Array(2*1024*1024+1)],'large.pdf')]);assert.match($('#extra-file-errors').textContent,/지원하지 않는/);assert.match($('#extra-file-errors').textContent,/2MiB/);

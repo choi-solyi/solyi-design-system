@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {writeFile} from 'node:fs/promises';
+import {readFile,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {JSDOM,VirtualConsole} from 'jsdom';
 import {solIconPaths} from '../site/icons.js';
@@ -20,6 +20,7 @@ const result=await build({root:fileURLToPath(consumer),configFile:false,resolve:
 const output=result.output.find(x=>x.type==='chunk');assert.ok(output);
 await writeFile(new URL('.runtime-check.mjs',consumer),output.code);
 const api=await import(new URL('.runtime-check.mjs?s-api='+Date.now(),consumer));
+assert.equal(api.uiVersion,JSON.parse(await readFile(new URL('packages/vue-ui/package.json',root),'utf8')).version,'Runtime uiVersion matches the package and demo version');
 const aliases={"SolButton":"SBtn","SolField":"STextField","SolDialog":"SDialog","SolTable":"SDataTable","SolCheckbox":"SCheckbox","SolRadioGroup":"SRadioGroup","SolSwitch":"SSwitch","SolSelect":"SSelect","SolTextarea":"STextarea","SolNumberInput":"SNumberInput","SolTabs":"STabs","SolToast":"SSnackbar","SolDatePicker":"SDatePicker","SolTimePicker":"STimePicker","SolSegmentedControl":"SSegmentedControl","SolMultiSelect":"SMultiSelect","SolRangeSlider":"SRangeSlider","SolSplitButton":"SSplitBtn","SolContextMenu":"SContextMenu","SolResizableSplitPane":"SResizableSplitPane"};
 for(const [old,name]of Object.entries(aliases)){assert.equal(api[old],api[name],old+' identity alias');assert.equal(api[name].name,name);}
 const {createApp,h,ref,nextTick,VApp,VBtn,VTextField,SBtn,STextField,SolyiUI,createSolyiVuetify,applySolyiAppearance}=api;

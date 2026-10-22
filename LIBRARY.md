@@ -1,6 +1,6 @@
 # 패키지 소비와 자동 검증
 
-현재 패키지 초안은 `@solyi/core@0.3.2` / `@solyi/vue-ui@0.5.0` (문서0.7.0 로컬 후보)입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
+현재 패키지 초안은 `@solyi/core@0.3.3` / `@solyi/vue-ui@0.5.1` (문서0.7.1 로컬 검수 후보)입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
 
 0.1.5의 접근성 보완: Field 외부 label의 ID와 입력의 aria-labelledby를 연결합니다. Table의 오류 재시도 버튼에 초점이 있는 채로 정상/로딩 상태로 바뀌면, 제거된 버튼 대신 지속되는 결과 요약에 초점을 둡니다. 사용자가 다른 조작부로 이동한 뒤 완료되면 그 초점을 유지합니다. API/색/타이포/반경은 유지합니다.
 
@@ -10,7 +10,7 @@
 |---|---|
 | `tokens.json`, `site/components.css`, `site/overflow.js` | 프레임워크 독립 원본. Core dist로 생성/복사하며 수동 이중 편집하지 않음 |
 | `packages/core` | tokens.css, tokens.json, components.css, tokens/coreVersion JS+타입, overflow helper exports |
-| `packages/vue-ui` | 기존14종과 확장6종의20개 typed API. Vite ES library, TypeScript 선언, 별도 styles.css |
+| `packages/vue-ui` | 기존20종과 Progress2종의22개 typed API. Vite ES library, TypeScript 선언, 별도 styles.css |
 | `examples/package-consumer` | 소스 alias·workspace·심볼릭 링크 없이 두 `.tgz`를 설치하는 독립 타입/빌드/동작 검증 |
 | `examples/vue-vuetify` → `docs/starter` | 실제 tarball을 쓰는 공개 데모. 필드 검증, Dialog, 검색·정렬·선택·페이지 Table |
 | 나머지 `site/*` | 계속 사용할 수 있는 HTML/CSS/JS 참고 예제. **Vue 패키지로 전부 전환한 상태가 아님** |
@@ -28,7 +28,7 @@ npm run library:verify
 npm run library:refresh
 ```
 
-`library:verify`는 Core 생성 → library npm ci/build/declaration → 두 npm pack → 별도 소비자와 starter npm ci → 타입/소비 빌드/동작 → demo build → 문서 build/check/test 순서입니다. 실패하면 다음 단계로 가지 않습니다. tarball은 `artifacts/`에만 생성하며 Git·Pages 출력에서 제외합니다. 코드/README/dist가 바뀌면 tarball 무결성도 바뀌므로 잠금 파일의 기존 integrity 실패를 무시하지 말고 의도한 버전·변경을 확인한 뒤 refresh와 diff를 검토하세요.
+`library:verify`는 Core 생성 → library npm ci/build/declaration → 두 npm pack → 별도 소비자와 starter npm ci → 타입/소비 빌드/동작 → demo build → 문서 build/check/test 순서입니다. 실패하면 다음 단계로 가지 않습니다. 중간 tarball은 `artifacts/`에 생성합니다. 검증한 고정 쌍은 `release-assets/<버전>/`에 보존하고 `docs/releases/`로 복사합니다. 코드/README/dist가 바뀌면 tarball 무결성도 바뀌므로 잠금 파일의 기존 integrity 실패를 무시하지 말고 의도한 버전·변경을 확인한 뒤 refresh와 diff를 검토하세요.
 
 ```js
 import 'vuetify/styles';
@@ -81,4 +81,4 @@ Import solIcon / solIconPaths from @solyi/core/icons to use the same 16/20/24 li
 
 [ADVANCED-VUE-API.md](ADVANCED-VUE-API.md)는 새6종의 값/이벤트/키보드/async 계약을 설명합니다. 이전14종 API를 삭제하지 않습니다. Core의 `fonts.css` export와 동일 폴더의 원본 WOFF2/OFL/SOURCE.json이 실제 tarball에 포함됩니다. 소비 앱은 `import '@solyi/core/fonts.css'`를 한 번 추가하고, UI 토큰은 Wanted Sans와 시스템 fallback을 사용합니다. 글꼴은 OFL1.1이며 자체 소스의 UNLICENSED와 구분합니다. 코드 글꼴은 별도 `code-fonts.css` opt-in export로 JetBrains Mono → Nanum Gothic Coding → monospace를 사용합니다. 원본 WOFF2/TTF/OFL 및 고정 출처·해시를 함께 제공하며 자세한 용량·적용 범위는 FONT.md에 기록합니다. 설치·업데이트는 같은 lockfile/tarball 방식이며 공개 레지스트리와 다른 앱 자동배포를 연결하지 않습니다.
 
-공통 언어 설정은 [LOCALE.md](LOCALE.md)를 따릅니다. 버전별 Pages 설치 경로와 해시·업데이트/롤백은 [DISTRIBUTION.md](DISTRIBUTION.md)를 따릅니다. 이전0.3.0 쌍과 새0.3.1/0.4.0 쌍을 로컬 출력에 준비하고 실제 HTTP 소비까지 검증했습니다. 공개 푸시는 보류합니다.
+공통 언어 설정은 [LOCALE.md](LOCALE.md)를 따릅니다. 버전별 Pages 설치 경로와 해시·업데이트/롤백은 [DISTRIBUTION.md](DISTRIBUTION.md)를 따릅니다. 공개0.5/0.6 쌍과 로컬0.7 쌍은 유지하며 새0.7.1은 검수 수정 쌍입니다. 공개 푸시는 보류합니다.

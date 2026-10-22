@@ -141,7 +141,7 @@ export function mountExamples(root, announce=()=>{}) {
     const types={'text/plain':'텍스트 문서','image/png':'PNG 이미지','image/jpeg':'JPEG 이미지','application/pdf':'PDF 문서'};
     const extension=file=>{const index=file.name.lastIndexOf('.');return index>0?file.name.slice(index+1).toLowerCase():'';};
     const fileType=file=>{const ext=extension(file);return '확장자 '+(ext?ext.toUpperCase():'없음')+' · '+(types[file.type]||'알 수 없는 MIME')+(file.type?' ('+file.type+')':' (정보 없음)');};
-    const size=file=>(file.size/1024).toFixed(1)+' KiB';
+    const size=file=>file.size<1024?file.size+' B':(file.size/1024).toFixed(1)+' KiB';
     const renderFiles=()=>{
       $('#extra-file-list').innerHTML=files.map(item=>'<li><span>'+escape(item.file.name)+'<span class="sol-table-sub">'+escape(fileType(item.file))+' · '+size(item.file)+'</span></span><button class="sol-button subtle" type="button" data-extra-remove="'+item.id+'" aria-label="'+escape(item.file.name)+' 제거">제거</button></li>').join('');
       $('#extra-file-status').textContent=files.length?files.length+'/3개 선택 · 전송하지 않았습니다.':'선택한 파일이 없어요.';$('#extra-file-clear').disabled=!files.length;

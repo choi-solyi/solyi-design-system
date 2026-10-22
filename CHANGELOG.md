@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 0.7.1 · local predeployment review (unpublished)
+
+- Core overflow title actions now honor supplied locale/custom formatters on creation and refresh; preserved linked actions.
+- Small local files show exact bytes below1KiB. Corrected package versions/peer/count/theme wording and stale document scope copy.
+- Immutable0.7.0 artifacts remain unchanged; review fixes use Core0.3.3/UI0.5.1. See PREDEPLOY-REVIEW.md for evidence and visual/device limits.
+
 ## 0.7.0 · local candidate, publication held
 
 - Canonical S PascalCase API names with identical legacy Sol aliases/registrations; SBtn/STextField/SDataTable/SSnackbar retain their own contracts.
