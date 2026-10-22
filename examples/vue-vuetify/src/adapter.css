@@ -3,7 +3,7 @@
 html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}
 .v-application {background:var(--sol-color-canvas);color:var(--sol-color-text);font-family:var(--sol-font-sans);}
 .starter-main {width:100%;max-width:var(--sol-content-max);min-width:0;margin:auto;padding:var(--sol-space-6);}
-.starter-main header:not(.sol-surface-heading) {margin-block:var(--sol-space-6);max-width:var(--sol-reading-max);}
+.starter-main>header,.recipe-explorer>header {margin-block:var(--sol-space-6);max-width:var(--sol-reading-max);}
 .starter-main .sol-surface-heading>h2 {margin:0;}
 .starter-main h1 {font-size:clamp(1.75rem,5vw,2.5rem);line-height:var(--sol-line-heading);margin-block:var(--sol-space-3);}
 .starter-main h2 {font-size:var(--sol-text-lg);line-height:var(--sol-line-heading);margin-block:0 var(--sol-space-4);}

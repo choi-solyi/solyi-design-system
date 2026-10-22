@@ -1,6 +1,6 @@
 /* The actual starter SFC + installed tarballs, in synthetic DOM. Not visual/native-keyboard QA. */
 import assert from 'node:assert/strict';
-import {writeFile,mkdir} from 'node:fs/promises';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {JSDOM,VirtualConsole} from 'jsdom';
 const source=process.argv.includes('--source');
@@ -44,3 +44,5 @@ $('#recipe-menu-toggle').focus();resize(true);await tick();assert.equal(d.active
 const outside=d.createElement('button');outside.textContent='Outside';d.body.append(outside);outside.focus();await tick();assert.equal($('#recipe-navigation').style.display,'none');assert.equal(d.activeElement,outside);outside.remove();
 unmount();assert.equal(query.listeners.size,0);w.history.replaceState(null,'','/starter/?view=recipes&example=unknown&keep=1');await mount();assert.equal(new URL(w.location.href).searchParams.get('example'),'buttons');assert.equal(new URL(w.location.href).searchParams.get('keep'),'1');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-buttons');unmount();
 assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: actual recipe explorer, all30 unique grouped links, direct/invalid URL, preserved query/hash, same-item history, back/forward, current title/selection, narrow disclosure/Escape/outside focus, breakpoint focus preservation and cleanup. Real layout is checked separately.');
+
+const adapter=await readFile(new URL('src/adapter.css',consumer),'utf8');assert.match(adapter,/\.starter-main>header,\.recipe-explorer>header/,'Only page headers receive the adapter margin');assert.doesNotMatch(adapter,/\.starter-main\s+header:not/,'Page layout must not override a package popover header');

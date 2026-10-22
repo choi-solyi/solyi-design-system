@@ -50,6 +50,7 @@ const loader = computed<SolOptionLoader | undefined>(() => {
     :title="part ? undefined : '로컬 입력 조합'"
   >
     <SCard
+      :heading-level="part ? 2 : 3"
       v-if="!part || part === 'date'"
       title="단일 날짜와 기간"
     >
@@ -72,6 +73,7 @@ const loader = computed<SolOptionLoader | undefined>(() => {
       <p role="status">완료값: {{ JSON.stringify(date) }}</p>
     </SCard>
     <SCard
+      :heading-level="part ? 2 : 3"
       v-if="!part || part === 'files'"
       title="로컬 파일 선택과 드롭"
     >
@@ -86,6 +88,7 @@ const loader = computed<SolOptionLoader | undefined>(() => {
       />
     </SCard>
     <SCard
+      :heading-level="part ? 2 : 3"
       v-if="!part || part === 'autocomplete'"
       title="단일 자동완성"
     >
