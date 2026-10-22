@@ -1,3 +1,4 @@
+import {renderDistribution} from './distribution.js';
 import {renderRecovery,mountRecovery} from './recovery.js';
 import {renderFoundation,mountFoundation} from './foundation.js';
 import {renderLayouts,mountLayouts} from './layouts.js';
@@ -5,6 +6,6 @@ import {renderAdvancedInputs,mountAdvancedInputs} from './inputs.js';
 import {renderWorkflow,mountWorkflow,confirmWorkflowLeave} from './workflow.js';
 import {renderExtras,mountExtras} from './extras.js';
 import {renderAdoption} from './adoption.js';
-export function renderExpansion(route,h){return route==='style'?renderFoundation(h):route==='pattern'?renderLayouts(h)+renderWorkflow(h)+renderRecovery(h):route==='component'?renderAdvancedInputs(h)+renderExtras(h):route==='theme'?renderAdoption(h):'';}
+export function renderExpansion(route,h){return route==='style'?renderFoundation(h):route==='pattern'?renderLayouts(h)+renderWorkflow(h)+renderRecovery(h):route==='component'?renderAdvancedInputs(h)+renderExtras(h):route==='theme'?renderAdoption(h)+renderDistribution(h):'';}
 export function mountExpansion(root,announce){const cleanup=[mountRecovery(root),mountFoundation(root),mountLayouts(root),mountAdvancedInputs(root),mountWorkflow(root,announce),mountExtras(root)];return()=>cleanup.reverse().forEach(fn=>fn());}
 export function requestExpansionLeave(){return confirmWorkflowLeave();}

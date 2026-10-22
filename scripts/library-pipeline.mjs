@@ -29,7 +29,9 @@ node('7/10 Six new reusable Vue APIs','scripts/vue-expansion-runtime-check.mjs')
 node('7/10 Shared locale runtime','scripts/locale-runtime-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
+if(process.argv.includes('--prepare-release'))node('9/10 Freeze the verified local package pair','scripts/releases.mjs',JSON.parse(readFileSync(new URL('package.json',root),'utf8')).version);
 node('9/10 Documentation build','scripts/build.mjs');
+node('9/10 Versioned delivery and real HTTP consumption','scripts/distribution-check.mjs');
 run('10/10 Existing checks','',npm,['run','check']);
 run('10/10 Existing + new UX regression','',npm,['test']);
 console.log('\nPASS: packages → independent consumption → demo → all checks. No registry publish, external app update or deployment occurs in this script.');

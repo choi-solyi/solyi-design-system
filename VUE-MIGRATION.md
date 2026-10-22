@@ -67,3 +67,7 @@ Document-wide search and shared header appearance controls were published at b86
 - Locale-ready message objects and Intl formatting hooks are shared by new APIs; this is not a claim that the whole document has been translated. Korean remains the starter default. Wanted Sans is the newly approved default UI font; the separately approved code/pre stack is JetBrains Mono, Nanum Gothic Coding, monospace (FONT.md).
 - Date arithmetic is pure and shared with the existing calendar. Components use Vue-rendered owned nodes/refs and lifecycle cleanup, not document-example IDs or innerHTML mounting.
 - Existing compact desktop sizes, mobile44px targets and button6/field10/card-popup12/dialog16 radius roles remain.
+
+## Shared locale/delivery local follow-up
+
+All20 exported APIs inherit reactive ko/en defaults, including the original Field/Dialog/Table. LOCALE.md defines fallback/override/runtime changes and date/number display; DISTRIBUTION.md defines prepared Pages versioned tarballs/hash/install/update/rollback. The reference-only inventory above is unchanged: this work does not convert the remaining examples or create Figma assets. Publication is held.

@@ -4,7 +4,7 @@
 
 - Preserve624bc43 exact document-name/alias ranking fix.
 - Core0.3.1 overflow labels and UI0.4.0 shared reactive ko/en locale for20 APIs, base wrappers, Intl date-only/number display and strict grouped-number input. Caller text and data contracts stay unchanged.
-- Actual installed locale starter and dedicated type/runtime/focus regressions; Pages distribution is the next local gate.
+- Actual installed locale starter and dedicated type/runtime/focus regressions; Versioned Pages tarballs/SHA-256/SHA-512 and immutable package pairs prepared; clean HTTP previous→update→rollback/type/build tests passed. Public publication is held.
 
 ## 로컬 미게시 후속 · 검색 이름 우선순위 — 2026-10-22
 

@@ -16,7 +16,7 @@
 
 ## 로컬 미게시 후속
 
-상단 문서 검색과 공유 헤더 설정은 b8648fa로 공개됐습니다. 로컬 후속은 검색 이름·별칭 순위(624bc43), 공통 locale와 버전별 패키지 설치 경로입니다. 공개본은 v0.5.0이며 아직 후속을 푸시하지 않습니다. [공통 locale](LOCALE.md) · [단계별 계획](LOCALE-DISTRIBUTION-PLAN.md). [사용 방법과 범위](DOC-SEARCH.md) · [단계별 확인](DOC-SEARCH-PLAN.md) · [남은 locale·설치/업데이트 작업](NEXT-STEPS.md).
+상단 문서 검색과 공유 헤더 설정은 b8648fa로 공개됐습니다. 로컬 후속은 검색 이름·별칭 순위(624bc43), 공통 locale와 버전별 패키지 설치 경로입니다. 공개본은 v0.5.0이며 아직 후속을 푸시하지 않습니다. [공통 locale](LOCALE.md) · [단계별 계획](LOCALE-DISTRIBUTION-PLAN.md) · [고정 버전 설치·업데이트·롤백](DISTRIBUTION.md). 기존 Pages에 게시할 버전별 tarball과 SHA-256/SHA-512를 로컬 준비했으며 localhost URL 소비 검증을 완료했습니다. 공개 설치 URL은 아직 게시하지 않았습니다. [사용 방법과 범위](DOC-SEARCH.md) · [단계별 확인](DOC-SEARCH-PLAN.md) · [남은 locale·설치/업데이트 작업](NEXT-STEPS.md).
 
 ## 로컬 실행
 

@@ -81,4 +81,4 @@ Import solIcon / solIconPaths from @solyi/core/icons to use the same 16/20/24 li
 
 [ADVANCED-VUE-API.md](ADVANCED-VUE-API.md)는 새6종의 값/이벤트/키보드/async 계약을 설명합니다. 이전14종 API를 삭제하지 않습니다. Core의 `fonts.css` export와 동일 폴더의 원본 WOFF2/OFL/SOURCE.json이 실제 tarball에 포함됩니다. 소비 앱은 `import '@solyi/core/fonts.css'`를 한 번 추가하고, UI 토큰은 Wanted Sans와 시스템 fallback을 사용합니다. 글꼴은 OFL1.1이며 자체 소스의 UNLICENSED와 구분합니다. 코드 글꼴은 별도 `code-fonts.css` opt-in export로 JetBrains Mono → Nanum Gothic Coding → monospace를 사용합니다. 원본 WOFF2/TTF/OFL 및 고정 출처·해시를 함께 제공하며 자세한 용량·적용 범위는 FONT.md에 기록합니다. 설치·업데이트는 같은 lockfile/tarball 방식이며 공개 레지스트리와 다른 앱 자동배포를 연결하지 않습니다.
 
-공통 언어 설정은 [LOCALE.md](LOCALE.md)를 따릅니다. 버전별 Pages 설치 경로와 해시·업데이트/롤백은 다음 로컬 단계에서 준비하며 공개 푸시는 보류합니다.
+공통 언어 설정은 [LOCALE.md](LOCALE.md)를 따릅니다. 버전별 Pages 설치 경로와 해시·업데이트/롤백은 [DISTRIBUTION.md](DISTRIBUTION.md)를 따릅니다. 이전0.3.0 쌍과 새0.3.1/0.4.0 쌍을 로컬 출력에 준비하고 실제 HTTP 소비까지 검증했습니다. 공개 푸시는 보류합니다.

@@ -13,7 +13,8 @@
     "build:core": "node scripts/build.mjs --core-only",
     "sync:starter": "node scripts/sync-starter.mjs",
     "library:verify": "node scripts/library-pipeline.mjs",
-    "library:refresh": "node scripts/library-pipeline.mjs --refresh"
+    "library:refresh": "node scripts/library-pipeline.mjs --refresh",
+    "library:prepare": "node scripts/library-pipeline.mjs --refresh --prepare-release"
   },
   "devDependencies": {
     "jsdom": "^26.1.0",

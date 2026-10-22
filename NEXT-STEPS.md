@@ -4,7 +4,7 @@
 
 - [x] 공통 locale: 기존 provider 재사용, 한국어·영어20종 기본 문구, Field/Dialog/Table, 반응형 앱 설정/부분 override/fallback, Intl 날짜·숫자와 ISO/HH:mm 값 정책. [LOCALE.md](LOCALE.md), 로컬 Core0.3.1/UI0.4.0.
 - [x] 두 실제 tarball 소비 앱, 타입/20종 회귀 및 locale 전용 테스트. Chrome1643/333px와 언어×3테마×light/dark 대표 검수. 문서 전체 번역·RTL/추가 언어 지원은 포함하지 않음.
-- [ ] 기존 Pages의 버전별 tarball/manifest/해시·고정 설치/업데이트/롤백 및 HTTP 독립 소비 검증. [단계별 계획](LOCALE-DISTRIBUTION-PLAN.md). 현재 진행 단계이며 공개 URL 설치가 이미 가능하다는 뜻은 아님.
+- [x] 기존 Pages의 버전별 tarball/manifest/해시·고정 설치/업데이트/롤백 및 HTTP 독립 소비 검증. [단계별 계획](LOCALE-DISTRIBUTION-PLAN.md). 로컬 출력 준비와 HTTP 설치/업데이트/롤백까지 완료. 공개 URL 설치는 아직 불가하며 push가 보류된 상태임.
 - [ ] 위 로컬 단계와 검색 수정의 공개 push/Pages 배포. 이번 지시에서는 보류.
 
 별도 후속 범위:

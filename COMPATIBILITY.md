@@ -34,3 +34,7 @@ Core/Vue UI0.2.0은 private local tarball이며 총14종의 typed API를 제공�
 ## 0.5.0 신규6종과 기본 UI 글꼴
 
 Core/UI0.3.0은 기존14+신규6의20종 typed API입니다. native popover를 지원하면 메뉴 top layer를 쓰고, 없는 브라우저에서는 fixed fallback이므로 transform/clip 조상에서 추가 검증이 필요합니다. SplitPane은 ResizeObserver와 좁은 컨테이너의 세로 리플로우를 사용합니다. MultiSelect 공급자 함수의 실제 서버/인증은 라이브러리 범위 밖이며 데모는 타이머뿐입니다. Wanted Sans1.0.3 WOFF2/CSS/OFL은 원본 해시를 고정해 self-host합니다. 코드용 monospace와 나머지 색·반경은 유지합니다. iPhone Safari·실제 터치 화면낭독기와 모든 OS 렌더링을 검증한 것으로 해석하지 않습니다.
+
+## 0.6.0 local candidate
+
+Core0.3.1 + Vue UI0.4.0, Node22.23.3 / Vue3.5.44 / Vuetify4.3.0 / TS6.0.3. Existing20 exports/radii/fonts retained. Locale supports ko-KR/en-US LTR only, not article translation or RTL. ISO date-only/HH:mm storage remains stable; grouped number input and TableColumn.format are additive. Previous0.3.0 pair retained for rollback; locale-specific consuming code must roll back with package versions. URL-installed independent consumer and one Vue/Vuetify copy verified locally. Remote CI/Pages publication of this candidate is not yet run.
