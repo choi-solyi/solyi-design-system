@@ -7,7 +7,7 @@
 - A source build and strict declarations passed. 20 canonical S names preserve identity with Sol aliases; plugin registers both. Direct VBtn/VTextField, merged caller defaults, six shared themes, invalid-setting guard and retained drafts passed.
 - Real tarballs installed cleanly in two independent consumers. Own API declarations/exports/CSS, canonical S typed consumer build, existing 20 controlled-state/keyboard/async/locale regressions, new progress runtime and actual starter build passed (`qa-output/s-installed-preview.log`). Vue/Vuetify remain peers/external.
 - Progress normalization covers bounds/clamping, complete/unknown/error/invalid values, zero arc, locale/live status, and actual demo restart/retry/completion focus. The iframe bridge checks origin/source, finite height limits, appearance sync and cleanup.
-- Existing document DOM/navigation/state checks passed. Search inventory validates all61 destinations and canonical API names. One cross-realm test-array comparison was corrected; rerun passed. Header regression and final delivery/check results are recorded below when complete.
+- Existing document DOM/navigation/state checks passed. Search inventory validates all61 destinations and canonical API names. One cross-realm test-array comparison was corrected; rerun passed. Header regression passed72 text/check/focus/border contrast cases; final delivery/check results are below.
 - Review found the new native VDialog example lacked a Vuetify activator connection: Escape closed it but focus landed on BODY. Bound the real trigger; synthetic starter open/close regression and actual Chrome Escape/return-to-trigger passed. Corrected the starter's stale20-component description to22.
 
 ## Actual browser scope
@@ -27,4 +27,7 @@ An unrelated process-argument enumeration was rejected by automatic approval rev
 
 ## Final local delivery gate
 
-Pending: immutable0.7.0 archive/checksum preparation, localhost HTTP previous→update→rollback installation/type/build, regenerated documentation check. Public push remains held for parent review.
+- Prepared immutable0.7.0 pair from source commit6965d2e; Core0.3.2/UI0.5.0. Three archive pairs0.5/0.6/0.7 verify their hashes; old files unchanged. `docs/releases/0.7.0` matches `release-assets/0.7.0`.
+- Clean independent localhost HTTP consumer installed0.6.0→0.7.0→0.6.0, with declaration/Vite builds, locked integrity and one Vue/Vuetify each. Corrupt/missing/overwrite negative fixtures rejected. Log: `qa-output/s-release-delivery.log`.
+- Final regenerated-document check passed186 contrast pairs across3themes×2modes (tightest normal-text ratio4.562:1), allowlist/links/current outputs, brand hashes, exact installed tarballs and pinned font/license bytes. Log: `qa-output/s-final-check.log`.
+- Existing document DOM/navigation/button tests, targeted search/header/bridge tests, installed-package tests and the modified starter runtime were completed at the relevant stages rather than rerunning the full suite after documentation-only bookkeeping. Public CI, public0.7.0 URLs and deployment were intentionally not run; push remains held for parent review. Public site remains baseline0.6.0.
