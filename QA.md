@@ -269,3 +269,12 @@ Textarea 필수/줄바꿈/카운트, 숫자 min/max/step와 증감 경계, 다�
 - 사용자 PC Chrome:333px 모바일 정렬 항목+Tab/Enter 방향 전환·선택/페이지 유지,1644px 정렬·필터 전후 열 너비 변화0px.333px 자동완성 Home의 기본 caret0/닫힘·Tab 재시도·Escape 입력 복귀·Enter 성공 후 제안 선택을 확인했습니다. starter는 제출 후 입력을 비워도 검증한 원래 제목으로 응답합니다.
 - 1180px Theme 번호04는 text range2줄에서1줄, flex-shrink1에서0으로 복구.333px 메뉴 번호의 기존 숨김·앵커 이동 후 메뉴 닫힘/제목 초점 유지.1644/766/333px×3테마×2모드18조합에서 넘침 없음과 기존6/10/12/16 토큰을 유지하며 모바일 sort select/button 약44px가 일치했습니다.
 - 이번 새 버전의 전체 픽셀 시각 검수, 실기기/물리 폴드·화면 낭독기·Safari/Firefox·400%·forced colors·SSR은 미검증입니다. PC 캡처를 반복하지 않았습니다. CI·공개32자산 HTTP/SHA는 릴리스 최종 보고에 기록합니다. 다른 앱·레지스트리·권한 변경은 없습니다.
+## 코드 글꼴 로컬 후속 검증 · 2026-10-22
+
+- 범위: `9ee1faf`를 보존한 별도 로컬 코드폰트 변경. UI Wanted Sans/나머지 토큰/반경6·10·12·16 유지. 공개 푸시·Pages·CI·레지스트리 게시 없음. 아래는 공개 v0.4.0의 결과가 아닙니다.
+- `node scripts/library-pipeline.mjs --refresh` 통과: Core27파일/UI12파일 pack, 두 독립 tarball 소비자의 실제 설치·타입·빌드,20개 Vue API 및 기존 DOM/날짜/업로드/비동기/내비게이션 회귀. 폰트는 고정 커밋·Git blob·SHA-256·원문 OFL, Core/site/설치 소비 앱/starter 바이트 일치, 나눔2.000 name table/한영·기호 cmap를 검사했습니다. 로컬 로그 `qa-output/code-font-pipeline.log`.
+- 사용자 PC **Chrome** 확장 브라우저에서 `127.0.0.1:4173/#style/type` 및 `/starter/` 검수. 실제 관측 자산에 Wanted Sans, JetBrains Mono Regular, Nanum Gothic Coding Regular가 포함됐고 문서에서는 JetBrains Bold 요청도 관측했습니다. FontFaceSet.check의 영문/한글 요청 true, 코드 computed family는 승인 스택, UI는 Wanted Sans, ligatures는 기존 `normal`입니다. 이 API는 글리프별 실제 face 추적 도구가 아니므로 모든 문자·굵기 렌더링을 확정하지 않습니다.
+- starter 실제333 CSSpx에서3테마×light/dark: document.scrollWidth316px, 코드clientWidth285/scrollWidth359px로 페이지 대신 코드 안에서만 가로 스크롤. 문서 코드 샘플은 키보드 ArrowRight로 초점과 가로 스크롤 이동 확인. 버튼/필드43.99px. 폼 오류 제출 후 `starter-title`로 초점 유지.
+- 실제1422 CSSpx에서 버튼35.99/필드40px. Table 열 `[47.99,707.62,95.99,127.99,72]`px가 정렬·페이지 이동 전후 동일. 코드clientWidth/scrollWidth704px.
+- 별도 로컬 QA origin4174에서 WOFF2/TTF를 모두404 처리: FontFaceSet.check false로 실패 재현, 같은1422px의 표 열 너비 동일.333px에서 페이지넘침 없음(scrollWidth316), 코드285/324px·110px높이, 버튼/필드43.99px, 폼 오류 초점 정상. fallback 글꼴 모양·모든 OS·CLS 수치는 검증하지 않았습니다.
+- **화면 스크린샷은 CDP capture 5초 시간 초과로 실패**했습니다. 치수·DOM·자산·키보드 검사와 픽셀 시각 검토는 구분합니다. 실제 iPhone Safari/물리 터치/화면낭독기/다른 브라우저·OS/전체 글리프·굵기/실제 네트워크 성능·CLS는 미검증입니다. 리가처 설정/토글은 추가하지 않았습니다.

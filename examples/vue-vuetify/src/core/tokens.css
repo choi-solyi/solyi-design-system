@@ -1,7 +1,7 @@
 /* Generated from tokens.json. Run npm run build; do not edit. */
 :root {
   --sol-font-sans: "Wanted Sans Variable", "Wanted Sans", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-  --sol-font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --sol-font-mono: "JetBrains Mono", "Nanum Gothic Coding", monospace;
   --sol-text-xs: 0.8125rem;
   --sol-text-sm: 0.875rem;
   --sol-text-md: 1rem;

@@ -5,6 +5,7 @@ Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 /
 ```js
 import 'vuetify/styles';
 import '@solyi/core/fonts.css'; // optional self-hosted official Wanted Sans/OFL
+import '@solyi/core/code-fonts.css'; // optional JetBrains Mono + Nanum Gothic Coding/OFL
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';

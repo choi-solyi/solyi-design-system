@@ -1,0 +1,32 @@
+/* Opt-in code fonts. Unmodified font data and OFL/source records are adjacent. */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./jetbrains-mono/JetBrainsMono-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./jetbrains-mono/JetBrainsMono-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Nanum Gothic Coding";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./nanum-gothic-coding/NanumGothicCoding-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Nanum Gothic Coding";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./nanum-gothic-coding/NanumGothicCoding-Bold.ttf") format("truetype");
+}
+code, pre, kbd, samp {
+  font-family: var(--sol-font-mono, "JetBrains Mono", "Nanum Gothic Coding", monospace);
+}

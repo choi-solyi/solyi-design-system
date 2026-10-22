@@ -44,3 +44,6 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 /* Advanced examples arrange public components; component appearance stays in the package. */
 .starter-card>.sol-ui-split-button{justify-self:start;}
 .starter-card>.sol-ui-context{margin-top:var(--sol-space-4);}
+
+/* Same opt-in code font token as Core; API output keeps its existing wrapping. */
+.starter-code-sample {max-width:100%;overflow-x:auto;white-space:pre;padding:var(--sol-space-3);background:var(--sol-color-surface-alt);border-radius:var(--sol-radius-inset);font-size:var(--sol-text-xs);}

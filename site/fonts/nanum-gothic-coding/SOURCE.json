@@ -1,0 +1,44 @@
+{
+  "family": "Nanum Gothic Coding",
+  "version": "2.000",
+  "fontVersionName": "Version 2.000;PS 1;hotconv 1.0.49;makeotf.lib2.0.14853",
+  "cssFamily": "Nanum Gothic Coding (official Google Fonts CSS family; internal family NanumGothicCoding)",
+  "repository": "https://github.com/google/fonts",
+  "commit": "9cb22ac3b8e238d037c48f98ef521f818958e102",
+  "license": "OFL-1.1",
+  "modified": false,
+  "files": [
+    {
+      "local": "NanumGothicCoding-Regular.ttf",
+      "path": "ofl/nanumgothiccoding/NanumGothicCoding-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/9cb22ac3b8e238d037c48f98ef521f818958e102/ofl/nanumgothiccoding/NanumGothicCoding-Regular.ttf",
+      "bytes": 2315924,
+      "sha256": "787effd7efed2abca88ade231faa8191f4e9fcf85b1805a13ee1dc3724b72089",
+      "gitBlob": "ba77a9da2b85d24e75f95c7324ca7a69f33510bc"
+    },
+    {
+      "local": "NanumGothicCoding-Bold.ttf",
+      "path": "ofl/nanumgothiccoding/NanumGothicCoding-Bold.ttf",
+      "url": "https://raw.githubusercontent.com/google/fonts/9cb22ac3b8e238d037c48f98ef521f818958e102/ofl/nanumgothiccoding/NanumGothicCoding-Bold.ttf",
+      "bytes": 2246240,
+      "sha256": "77a6de97c176b76ef9a683b565a1e6f4ce40b499c72a2972c4b5bdf7c6b8e7a0",
+      "gitBlob": "9aa9ba2ad93bd8524d1996452e9f0ee6d099af92"
+    },
+    {
+      "local": "OFL.txt",
+      "path": "ofl/nanumgothiccoding/OFL.txt",
+      "url": "https://raw.githubusercontent.com/google/fonts/9cb22ac3b8e238d037c48f98ef521f818958e102/ofl/nanumgothiccoding/OFL.txt",
+      "bytes": 4534,
+      "sha256": "eeacf16032901d0ed0456876ec77b8f0fda6b3fecec7d972f8543eb602e6c30f",
+      "gitBlob": "69ff40157d0bba4c65e4ecf77564e1f01d0b02a5"
+    },
+    {
+      "local": "METADATA.pb",
+      "path": "ofl/nanumgothiccoding/METADATA.pb",
+      "url": "https://raw.githubusercontent.com/google/fonts/9cb22ac3b8e238d037c48f98ef521f818958e102/ofl/nanumgothiccoding/METADATA.pb",
+      "bytes": 986,
+      "sha256": "b8e8b14cc0f6034e473498a752c689f8dd1396522fe80d5d7073236a4c1319ea",
+      "gitBlob": "bd705f61cbb07d24bc5a567d2a3cca9893b84024"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import type {TableColumn,TableRow,TableSort,ButtonVariant} from '@solyi/vue-ui';
 import {tokens,coreVersion} from '@solyi/core';
 import {solIcon,solIconPaths} from '@solyi/core/icons';
 import '@solyi/core/fonts.css';
+import '@solyi/core/code-fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import 'vuetify/styles';

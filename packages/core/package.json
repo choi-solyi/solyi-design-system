@@ -31,7 +31,8 @@
       "types": "./dist/date-only.d.ts",
       "import": "./dist/date-only.js"
     },
-    "./fonts.css": "./dist/fonts/wanted-sans/WantedSansVariable.css"
+    "./fonts.css": "./dist/fonts/wanted-sans/WantedSansVariable.css",
+    "./code-fonts.css": "./dist/fonts/code-fonts.css"
   },
   "sideEffects": [
     "**/*.css"

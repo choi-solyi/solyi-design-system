@@ -1,0 +1,34 @@
+{
+  "family": "JetBrains Mono",
+  "version": "2.304",
+  "repository": "https://github.com/JetBrains/JetBrainsMono",
+  "commit": "cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9",
+  "license": "OFL-1.1",
+  "modified": false,
+  "files": [
+    {
+      "local": "JetBrainsMono-Regular.woff2",
+      "path": "fonts/webfonts/JetBrainsMono-Regular.woff2",
+      "url": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9/fonts/webfonts/JetBrainsMono-Regular.woff2",
+      "bytes": 92164,
+      "sha256": "a9cb1cd82332b23a47e3a1239d25d13c86d16c4220695e34b243effa999f45f2",
+      "gitBlob": "40da427651937ac3b65ea6842f9448a810f719c6"
+    },
+    {
+      "local": "JetBrainsMono-Bold.woff2",
+      "path": "fonts/webfonts/JetBrainsMono-Bold.woff2",
+      "url": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9/fonts/webfonts/JetBrainsMono-Bold.woff2",
+      "bytes": 94588,
+      "sha256": "c503cc5ec5f8b2c7666b7ecda1adf44bd45f2e6579b2eba0fc292150416588a2",
+      "gitBlob": "4917f43410757b48e4ad1eca81b868dfe405d25b"
+    },
+    {
+      "local": "OFL.txt",
+      "path": "OFL.txt",
+      "url": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9/OFL.txt",
+      "bytes": 4399,
+      "sha256": "30f0c136e3c88e422d0791acd97238870f9054a9729bc34cf2ff0d4ed8cac4ad",
+      "gitBlob": "8bee4148c1d54dbf5dae6d6c117fc80414266abb"
+    }
+  ]
+}

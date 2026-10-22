@@ -13,10 +13,11 @@ h1 {font-size: clamp(2rem, 3.9vw, 3rem); font-weight: 720; margin-bottom: 20px;}
 h2 {font-size: var(--sol-text-xl); font-weight: 700; margin-bottom: 12px;}
 h3 {font-size: var(--sol-text-lg); margin-bottom: 10px;}
 h4 {font-size: var(--sol-text-md); margin-bottom: 8px;}
-code, pre, kbd {font-family: var(--sol-font-mono); font-size: var(--sol-text-xs);}
+code, pre, kbd, samp {font-family: var(--sol-font-mono); font-size: var(--sol-text-xs);}
 code {overflow-wrap: anywhere;}
 :not(pre) > code {padding: 2px 5px; border-radius: 4px; background: var(--sol-color-surface-alt);}
 pre {white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; line-height: 1.8;}
+.code-font-sample {max-width:100%;overflow-x:auto;white-space:pre;overflow-wrap:normal;}
 kbd {border: 1px solid var(--sol-color-control-border); border-radius: 4px; padding: 2px 5px;}
 .small {font-size: var(--sol-text-sm);}
 .muted {color: var(--sol-color-muted);}

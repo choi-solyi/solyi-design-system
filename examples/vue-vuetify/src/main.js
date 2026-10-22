@@ -2,6 +2,7 @@ import {createApp} from 'vue';
 import {createStarterVuetify} from './vuetify.js';
 import 'vuetify/styles';
 import '@solyi/core/fonts.css';
+import '@solyi/core/code-fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';

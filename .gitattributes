@@ -6,3 +6,8 @@ docs/fonts/wanted-sans/OFL.txt -whitespace
 examples/vue-vuetify/THIRD-PARTY-NOTICES.txt -whitespace
 examples/vue-vuetify/public/THIRD-PARTY-NOTICES.txt -whitespace
 docs/starter/THIRD-PARTY-NOTICES.txt -whitespace
+
+site/fonts/jetbrains-mono/OFL.txt -whitespace
+site/fonts/nanum-gothic-coding/OFL.txt -whitespace
+docs/fonts/jetbrains-mono/OFL.txt -whitespace
+docs/fonts/nanum-gothic-coding/OFL.txt -whitespace

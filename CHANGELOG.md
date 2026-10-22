@@ -1,5 +1,10 @@
 # 변경 이력
 
+## 로컬 미게시 후속 — 2026-10-22
+
+- 9ee1faf를 보존한 별도 코드폰트 변경: JetBrains Mono2.304 → Nanum Gothic Coding2.000 → monospace. Core의 opt-in code-fonts.css, 공식 원본 Regular/Bold·OFL·고정 출처/해시, 실제 문서/설치 데모의 한영 주석 샘플과 검사 추가. Wanted Sans UI 및 리가처 설정은 유지.
+- 아직 게시하지 않은0.5.0/Core0.3.0 후보의 tarball/소비 lock을 로컬에서 갱신합니다. 공개 푸시·Pages 배포·레지스트리 게시 없음.
+
 ## 0.5.0 — 2026-10-22
 
 - Core/UI local pack0.3.0: SegmentedControl, 검색 가능한 MultiSelect, 양끝 RangeSlider, SplitButton, ContextMenu, ResizableSplitPane을 더해 실제 typed export20종을 제공합니다. 기존14종과 공개 링크/기능은 유지합니다.
