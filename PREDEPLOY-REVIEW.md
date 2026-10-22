@@ -41,4 +41,8 @@ P2는 배포 전 수정할 중간 심각도, P3는 경미한 품질 문제입니
 
 이전 S-API-QA.md/QA.md의 결과는 재사용 증거이고 위 실제 Chrome 상호작용은 이번 실행의 증거입니다. 별도의 Lighthouse/axe/Nu 점수를 이번 실행에서 만들거나 추정하지 않았습니다. 기본 모션의 실제 시각·폰트 실패/CLS·컨테이너만 변경되는 특수 레이아웃은 이번에 검증하지 않았습니다.
 
-최종 로컬 archive/hash/HTTP 업데이트·롤백/check 및 커밋은 아래에 완료 후 기록합니다. 공개 push·Pages·npm 게시 보류는 유지합니다. 실행 환경에 대기 중 승인이나 거부된 필수 작업은 없습니다.
+최종 로컬 gate 완료: 구현 소스7ad4ded를 가리키는0.7.1(Core0.3.3/UI0.5.1) archive 쌍을 새로 보존했습니다. 기존0.5/0.6/0.7 바이트는 그대로이며4개 immutable 쌍의 해시를 검증했습니다. localhost HTTP0.7→0.7.1→0.7 clean 설치·type/Vite build·integrity·단일 Vue/Vuetify·손상/누락/덮어쓰기 거절이 통과했습니다(`qa-output/predeploy-delivery.log`).
+
+최종 문서 check는 대비186쌍(가장 낮은 상대 여유: violet/light4.562:1, 기준4.5), allowlist/생성 파일/로컬 링크/공식 브랜드·설치 package·Wanted Sans/JetBrains Mono/Nanum Gothic Coding와 OFL 원문 해시 일치를 통과했습니다(`qa-output/predeploy-final-check.log`). 검색61개 목적지·키보드/빈값/초기화/IME/이탈 보호·12개 설정 조합 회귀도 통과했습니다(`qa-output/predeploy-final-search.log`). 관련 package/consumer 증거는 predeploy-package-resume.log와 predeploy-final-build.log입니다. 무관한 전체 대형 검사는 재실행하지 않았습니다.
+
+공개 push·Pages·npm 게시 보류는 유지합니다. 실행 환경에 대기 중 승인이나 거부된 필수 작업은 없습니다. 원격 CI/공개0.7.1 파일은 검사하지 않았으며 공개본0.6.0을 바꾸지 않았습니다.
