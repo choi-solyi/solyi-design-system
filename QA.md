@@ -338,4 +338,3 @@ User PC Chrome local: actual1643/1180/720/333 CSSpx. Native ArrowRight theme sel
 - 사용자 PC Chrome의 실제 치수/동작:1180px 버튼 간격약8px, 카드 header margin24→0px/title margin16→0px.333px 예제 카드·선택창 가로 넘침 없음. Breadcrumb는 flex/list-style:none.400×606에 가까운 CSS viewport에서 native sidepanel left0/right383.33/width383.33px(client383px), padding16px이며 Escape는 실행 버튼으로 복귀합니다.717px 코드 영역은 내부 가로 스크롤을 쓰고 페이지 넘침은 없습니다.
 - 코드 패널은 접기 하나, Vue 기본, 화살표로 탭/초점 이동, Vue와 HTML의 실제 클립보드 원본을 각각 확인했습니다. 문자열 강제 줄바꿈을 제거했으며 표시·복사·실행이 정본 소스와 일치합니다. 진행 상태 문구는 두 형태 모두 ‘처리 중’이며 aria-valuenow는 없습니다.
 - 정상 indeterminate 모션1.4s/infinite 및 미상 aria-valuenow 없음은 부모 클라우드의 연속 캡처 검증을 수신해 재사용했습니다. 이 PC는 시스템 축소 모션이며 OS 설정을 바꾸지 않았습니다. 이번 전체 픽셀 검수·Safari·실기기 터치·화면 낭독기는 미검증입니다. 접근성 전체 적합성 인증을 주장하지 않습니다.
-
