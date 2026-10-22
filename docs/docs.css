@@ -291,3 +291,26 @@ dialog > p {font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
 .shape-rules {margin-top:var(--sol-space-4);}
 
 .progress-package-frame{display:block;width:100%;max-width:100%;border:0;background:var(--sol-color-surface);border-radius:var(--sol-radius-card);}
+
+/* Comparison activation retains native radio keyboard behavior and a full-card focus cue. */
+.compare-card {cursor:pointer;}
+.compare-card:has(input:focus-visible) {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.dialog-head {margin-bottom:var(--sol-space-2);}
+.sol-search-loading {padding:var(--sol-space-4);}
+.sol-search-loading>p {margin:0;}
+
+/* Measured sticky-header offsets follow wrapping, density, font loading and viewport changes. */
+html {scroll-padding-top:var(--sol-document-offset,100px);}
+.section,.document-alias-heading {scroll-margin-top:var(--sol-document-offset,100px);}
+.sidebar {top:var(--sol-shell-header-height,76px);height:calc(100dvh - var(--sol-shell-header-height,76px));}
+.mobile-document-menu {width:44px;min-width:44px;min-height:44px;padding:0;display:inline-flex;align-items:center;justify-content:center;}
+@media(max-width:800px){.topbar{position:sticky;top:0;}.sidebar{position:sticky;top:var(--sol-shell-header-height,76px);height:auto;max-height:calc(100dvh - var(--sol-shell-header-height,76px) - 16px);z-index:var(--sol-layer-sticky);background:var(--sol-color-canvas);}.sidebar:has(>nav[hidden]){display:none;}}
+@media(max-width:680px){.appearance-wide{display:none;}}
+.theme-card {display:flex;flex-direction:column;}
+.theme-card-body {display:flex;flex-direction:column;align-items:flex-start;flex:1;}
+.theme-card-body>button {align-self:flex-end;margin-top:auto;}
+@media(min-width:521px) and (max-width:1180px){.theme-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);}}
+
+.dialog-heading-copy {display:grid;gap:var(--sol-space-1);min-width:0;}
+.dialog-heading-copy>h2 {margin:0;}
+.dialog-head {align-items:flex-start;margin-bottom:var(--sol-space-4);}

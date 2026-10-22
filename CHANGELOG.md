@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 0.8.1 · UI feedback follow-up
+
+- Core0.3.5 / Vue UI0.6.1: optional Progress visibility controls and semantic snackbar presentation, keeping existing defaults, component identities and geometry tokens.
+- Whole comparison-card selection, noninput editing entry focus, clearer error-summary links, shared time/tree/data spacing, aligned S/V labels, sticky mobile document menu and theme actions.
+- Original 24 screenshots were reviewed by the parent in a cloud environment; this Windows worker did not visually inspect their pixels. Local runtime/consumption and browser review evidence is tracked in UI-FEEDBACK-PLAN.md.
+
 ## 0.7.1 · local predeployment review (unpublished)
 
 - Core overflow title actions now honor supplied locale/custom formatters on creation and refresh; preserved linked actions.
@@ -13,7 +19,7 @@
 - SProgressLinear/SProgressCircular, real installed-package starter and same-origin document embed; complete document/example reuse inventory.
 - No package rename, license change, registry publication or other app connection.
 
-## 0.6.0 · local candidate, not published
+## 0.6.1 · local candidate, not published
 
 - Preserve624bc43 exact document-name/alias ranking fix.
 - Core0.3.1 overflow labels and UI0.4.0 shared reactive ko/en locale for20 APIs, base wrappers, Intl date-only/number display and strict grouped-number input. Caller text and data contracts stay unchanged.
@@ -57,7 +63,7 @@
 - SolField의 외부 레이블 ID를 Vuetify 입력 참조에 연결하고 Table 재시도 조작이 사라질 때 결과 요약으로 초점을 이어 줍니다. 사용자가 다른 곳으로 옮긴 초점은 보존합니다.
 - starter 메타 설명과 관련 회귀를 추가했습니다. Core/Vue UI local pack0.1.5, 레지스트리 미게시. 원본 HTML의 h1 경고는 렌더 후 정상인 SPA 셸의 한계로 기록하고 구조는 유지합니다.
 
-## 0.3.4 — 2026-10-21
+## 0.3.5 — 2026-10-21
 
 - 개발자 및 독립 리뷰의 재현 결함 수정: Vue 버튼 aria-disabled, Table 반응형 정렬과 부분 선택 갱신, starter 제출 시점 값, 전체 제목 접근성 이름 갱신.
 - 자동완성 Home/End 편집·Tab 재시도·문자열 렌더링, 사이드바04 번호 줄바꿈 보완. 반경6/10/12/16과 색·타이포 토큰 유지.

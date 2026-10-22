@@ -156,7 +156,7 @@
 .sol-side-panel::backdrop {background: var(--sol-backdrop-color);}
 .sol-side-panel-head {display: flex; justify-content: space-between; align-items: center; gap: var(--sol-space-3); margin-bottom: var(--sol-space-6);}
 .sol-side-panel-head button {flex: 0 0 auto; white-space: nowrap;}
-.sol-toast {position: fixed; inset-inline-end: max(16px,env(safe-area-inset-right)); inset-block-end: max(16px,env(safe-area-inset-bottom)); z-index: var(--sol-layer-toast); display: flex; align-items: center; gap: var(--sol-space-3); width: max-content; max-width: min(440px,calc(100vw - 32px)); padding: var(--sol-space-2) var(--sol-space-3) var(--sol-space-2) var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); color: var(--sol-color-text); background: var(--sol-color-surface); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
+.sol-toast {position: fixed; inset-inline-end: max(16px,env(safe-area-inset-right)); inset-block-end: max(16px,env(safe-area-inset-bottom)); z-index: var(--sol-layer-toast); display: flex; align-items: center; gap: var(--sol-space-3); width: max-content; max-width: min(440px,calc(100% - max(16px,env(safe-area-inset-left)) - max(16px,env(safe-area-inset-right)))); padding: var(--sol-space-2) var(--sol-space-3) var(--sol-space-2) var(--sol-space-4); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); color: var(--sol-color-text); background: var(--sol-color-surface); box-shadow: var(--sol-elevation-floating); font-size: var(--sol-text-sm);}
 .sol-toast .sol-button {flex-shrink: 0;}
 .sol-table-wrap {max-width: 100%; overflow: auto;}
 .sol-data-table {width: 100%; border-collapse: collapse; font-size: var(--sol-text-sm);line-height:1.4;}
@@ -326,5 +326,18 @@
 
 /* Nonmodal time panel; direct HH:mm input remains available. */
 .sol-time-entry{display:flex;gap:var(--sol-space-2);min-width:0;align-items:start;}.sol-time-entry>.sol-input{min-width:0;flex:1;}.sol-time-entry>.sol-button{height:var(--sol-control-height);flex:none;white-space:nowrap;}
-.sol-time-panel{position:fixed;z-index:var(--sol-layer-floating);width:min(320px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-floating);box-shadow:var(--sol-elevation-floating);padding:var(--sol-space-4);}.sol-time-panel h3{font-size:var(--sol-text-md);margin:0;}.sol-time-panel .row-between{align-items:center;margin-bottom:var(--sol-space-3);}.sol-time-panel .sol-time-options{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+.sol-time-panel{position:fixed;z-index:var(--sol-layer-floating);width:min(320px,calc(100% - 16px));max-height:calc(100dvh - 16px);overflow:auto;background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-floating);box-shadow:var(--sol-elevation-floating);padding:var(--sol-space-4);}.sol-time-panel h3{font-size:var(--sol-text-md);margin:0;}.sol-time-panel .row-between{align-items:center;margin-bottom:var(--sol-space-3);}.sol-time-panel .sol-time-options{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
 #summary-errors ul{margin-block:var(--sol-space-2);padding-left:24px;}#summary-errors a{color:var(--sol-color-danger);text-underline-offset:3px;}
+
+/* Give focus outlines breathing room before time help and the completion action. */
+.sol-time-panel .sol-time-options {padding-block:var(--sol-space-1);}
+.sol-time-panel .sol-time-options+.sol-hint {margin-block:var(--sol-space-3);}
+.sol-time-panel .sol-time-options+.sol-button {margin-top:var(--sol-space-3);}
+.sol-tree-disclosure {display:inline-flex;align-items:center;justify-content:center;flex:0 0 16px;width:16px;}
+.sol-tree [aria-expanded="false"]>.sol-tree-row .sol-tree-disclosure svg {transform:rotate(-90deg);}
+.sol-tree-state {display:none;}
+.sol-tree [aria-selected="true"]>.sol-tree-row::after {content:'✓';margin-inline-start:auto;}
+.sol-data-toolbar {margin-bottom:var(--sol-space-3);}
+.sol-data-footer {justify-content:flex-start;}
+@container(min-width:431px) and (max-width:600px){.sol-data-footer{display:flex;}}
+@media(min-width:441px) and (max-width:680px){.sol-data-footer{display:flex;}}

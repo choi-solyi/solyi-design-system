@@ -1,6 +1,6 @@
 # Solyi Design System
 
-솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 **v0.7.1 로컬 검토 초안**입니다. 배포 전 검토 결과는 [PREDEPLOY-REVIEW.md](PREDEPLOY-REVIEW.md)에 기록합니다.
+솔의 여러 앱에서 함께 사용할 독립적인 개인 디자인 시스템 v0.8.1 검토 초안입니다. 이번 UI 피드백과 실제 검증 범위는 [UI-FEEDBACK-PLAN.md](UI-FEEDBACK-PLAN.md)에 기록합니다.
 
 사이트: https://choi-solyi.github.io/solyi-design-system/
 
@@ -16,7 +16,7 @@
 
 ## 로컬 미게시 후속
 
-공개 기준은 v0.6.0 /8d0b297입니다. 이번 로컬 후보는 S PascalCase 이름·Sol 호환 별칭, 공통 Vuetify 테마/defaults와 진행 표시2종을 추가합니다. [S API 계약](S-API.md) · [61개 목적지/34개 예제 전환표](REUSE-INVENTORY.md) · [단계별 계획](S-API-PLAN.md). 공개 push/Pages 배포, npm 이름 변경/게시와 다른 앱 적용은 보류합니다.
+공개 기준은 v0.6.1 /8d0b297입니다. 이번 로컬 후보는 S PascalCase 이름·Sol 호환 별칭, 공통 Vuetify 테마/defaults와 진행 표시2종을 추가합니다. [S API 계약](S-API.md) · [61개 목적지/34개 예제 전환표](REUSE-INVENTORY.md) · [단계별 계획](S-API-PLAN.md). 공개 push/Pages 배포, npm 이름 변경/게시와 다른 앱 적용은 보류합니다.
 
 ## 로컬 실행
 

@@ -13,8 +13,8 @@
     "prebuild": "node ../../scripts/starter-notices.mjs"
   },
   "dependencies": {
-    "@solyi/core": "file:../../artifacts/solyi-core-0.3.3.tgz",
-    "@solyi/vue-ui": "file:../../artifacts/solyi-vue-ui-0.5.1.tgz",
+    "@solyi/core": "file:../../artifacts/solyi-core-0.3.5.tgz",
+    "@solyi/vue-ui": "file:../../artifacts/solyi-vue-ui-0.6.1.tgz",
     "vue": "3.5.44",
     "vuetify": "4.3.0"
   },

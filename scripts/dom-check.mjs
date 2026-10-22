@@ -111,6 +111,7 @@ click('[data-action="search-retry"]');assert.equal(d.querySelectorAll('#project-
 $('#project-filter').value='all';fire($('#project-filter'),'change');
 click('[data-action="search-failure"]');$('#project-search').value='정원';fire($('#project-search'),'input');await pause(760);assert.match($('#project-results').textContent,/작은 정원/);assert.ok(!$('#project-results').textContent.includes('불러오지 못'),'New query cancels stale failure');
 const radio=$('input[name="compare"][value="차근차근 정리"]');radio.checked=true;fire(radio,'change');assert.match($('#compare-result').textContent,/차근차근/);
+const firstCompare=$('input[name="compare"][value="가볍게 기록"]');firstCompare.closest('.compare-card').querySelector('h3').click();assert.equal(firstCompare.checked,true);assert.equal(d.activeElement,firstCompare);assert.match($('#compare-result').textContent,/가볍게 기록/);assert.equal(radio.checked,false);
 click('[data-action="empty-add"]');assert.match($('#empty-demo').textContent,/오늘의 첫 관찰/);assert.equal(d.activeElement.dataset.action,'empty-reset');
 click('[data-action="empty-reset"]');assert.match($('#empty-demo').textContent,/아직 기록/);assert.equal(d.activeElement.dataset.action,'empty-add');
 await route('theme');

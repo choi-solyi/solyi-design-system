@@ -15,8 +15,8 @@ watch([disabled,readonly],()=>{if(disabled.value||readonly.value)menuOpen.value=
 
 <template>
   <section class="starter-card" aria-labelledby="advanced-title">
-    <h2 id="advanced-title">확장 Vue API · 단일 선택</h2>
-    <p class="starter-hint">신규6종도 설치한 @solyi/vue-ui에서 가져옵니다. 아래 설정은 이 예제들에만 적용됩니다. 모든 데이터와 작업은 가상입니다.</p>
+    <h2 id="advanced-title">설정 하나 선택 · SSegmentedControl</h2>
+    <p class="starter-hint">선택·범위·메뉴·분할 부품을 설치한 @solyi/vue-ui에서 가져옵니다. 아래 설정은 이 예제들에만 적용됩니다. 모든 데이터와 작업은 가상입니다.</p>
     <div class="starter-settings starter-demo-settings"><SSwitch id="advanced-disabled" v-model="disabled" label="확장 예시 비활성"/><SSwitch id="advanced-readonly" v-model="readonly" label="확장 예시 읽기 전용"/></div>
     <SSegmentedControl id="advanced-segment" v-model="display" label="가상 표시 설정" :options="[{value:'brief',label:'간단히'},{value:'full',label:'자세히'},{value:'locked',label:'보관 · 비활성',disabled:true}]" :disabled="disabled" :readonly="readonly" help="설정 하나를 고릅니다. Tabs처럼 별도 패널을 전환하는 부품은 아닙니다."/>
     <p class="starter-result" role="status">{{display==='brief'?'가상 기록 4개':'가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정'}}</p>

@@ -69,3 +69,15 @@ SProgressLinear와 SProgressCircular는 같은 읽기 전용 표시 계약입니
 resolveSProgress는 같은 clamp/known/ratio를 계산하는 순수 helper입니다. 둘에 같은 모델을 전달해도 값을 emit하지 않습니다. 값 변경의 유한 transition만 있고 reduced-motion은 이를 제거합니다. unknown은 정적인 띠/호와 글자를 사용하며 무한 회전이나 가짜 처리 시간이 없습니다.
 
 문서 #component/progress는 같은 출처의 starter?view=progress를 삽입해 실제 tarball을 import한 같은 SFC를 실행합니다. 부모 테마·모드·밀도는 origin/source를 확인한 메시지로 동기화하고 ResizeObserver로 높이를 맞춥니다. 키보드 탐색과 starter 직접 링크를 유지합니다. 나머지 HTML 예제는 전환표에 표시한 후속 범위입니다.
+
+### Progress 표시 옵션
+
+두 Progress API는 `showLabel`, `showValue`, `showMessage`를 각각 Boolean(기본 true)으로 제공합니다. 원형 수치와 선형 상태 문구의 자동 퍼센트는 showValue=false로 숨깁니다. showMessage=false와 showValue=true 조합에서는 선형 바에 수치만 남습니다. 제목·문구를 숨겨도 접근성 이름, aria-valuenow(알려진 값만), aria-valuetext와 설명 연결은 유지합니다. 앱이 직접 전달한 message/label slot의 내용은 변경하지 않으므로 숫자 포함 여부는 앱이 정합니다. 주요 오류 설명을 숨길 때는 화면의 다른 지속 오류 안내를 함께 제공하세요. 실제 옵션 데모는 starter의 Progress 섹션입니다.
+
+`<SProgressLinear id="upload-progress" label="가상 작업" :model-value="35" :show-message="false" />`
+
+SSnackbar는 의미 배경과 공유 아이콘, 한국어/영어 상태 이름을 함께 표시합니다. 접근성 live 안내도 상태 이름과 message를 한 번 전달하며, 열릴 때 초점을 가져가지 않습니다.
+
+### 라벨 비교 기준
+
+STextField는 입력 위의 지속 라벨을 제공합니다. starter의 S/V 비교도 외부 `<label for>`를 사용해 두 컨트롤의 시작점을 맞춥니다. 직접 VTextField의 floating label API는 그대로 사용할 수 있습니다. 이는 Vuetify 방식이 잘못됐다는 판단이 아니라 이 예제의 비교 기준입니다. [W3C WAI 라벨 안내](https://www.w3.org/WAI/tutorials/forms/labels/)는 label과 control의 연결 및 가까운 시각적 관계를 설명하고, 위쪽 라벨의 모바일·축소 화면 이점을 안내합니다. 원본 [Vuetify Text field](https://vuetifyjs.com/en/components/text-fields/)의 API와 S API의 차이는 유지됩니다.

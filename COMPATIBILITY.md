@@ -1,6 +1,6 @@
 # 검증과 호환 범위
 
-현재 로컬 검수 후보는 문서0.7.1 / Core0.3.3 / Vue UI0.5.1이며 공개 push는 보류합니다. 공개본은0.6.0(8d0b297)입니다. 아래 버전별 절은 해당 시점의 이행 기록이며 현재 API 목록은 S-API.md와 REUSE-INVENTORY.md를 따릅니다.
+현재 후보: 문서0.8.1 / Core0.3.5 / Vue UI0.6.1. 기존 공개0.7.1 산출물은 보존합니다. 새 후보의 검증·배포 상태는 UI-FEEDBACK-PLAN.md를 따릅니다.
 
 - Core는 프레임워크 독립 CSS custom properties와 Solyi 단순 JSON export입니다. DTCG 포맷 준수나 모든 앱 호환을 표방하지 않습니다.
 - 문서 데모는 현대 브라우저의 ES modules·native dialog·AbortController·container queries를 사용합니다. 지원 브라우저의 최저 버전을 인증하지 않았습니다. 실제 검증 환경과 한계는 QA.md에 구분합니다.

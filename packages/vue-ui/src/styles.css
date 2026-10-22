@@ -123,7 +123,7 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-calendar-month {font-size:var(--sol-text-lg);font-weight:650;margin:0;}
 .sol-ui-picker-top {display:flex;align-items:center;justify-content:space-between;gap:var(--sol-space-2);}
 .sol-ui-picker-top>.sol-button {flex:none;white-space:nowrap;}
-.sol-ui-time-panel {width:min(320px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;}
+.sol-ui-time-panel {width:min(320px,calc(100% - 16px));max-height:calc(100dvh - 16px);overflow:auto;}
 .sol-ui-calendar .sol-calendar-top>.sol-button {white-space:nowrap;}
 .sol-ui-calendar .sol-calendar-top>strong,.sol-ui-picker-top>strong {min-width:0;overflow-wrap:anywhere;}
 .sol-ui-time-panel>.sol-button:last-child {margin-top:var(--sol-space-2);}
@@ -193,3 +193,8 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-progress-circle{max-width:100%;height:auto;aspect-ratio:1;}
 .sol-ui-progress-status{margin:0;font-size:var(--sol-text-sm);min-height:3em;overflow-wrap:anywhere;}
 @media(prefers-reduced-motion:reduce){.sol-ui-progress-fill,.sol-ui-progress .sol-progress-arc{transition:none!important;}}
+
+.sol-ui-progress-value {font-size:var(--sol-text-sm);font-variant-numeric:tabular-nums;}
+
+.sol-ui-toast-icon {flex:none;}
+.sol-ui-toast-tone {display:block;margin-bottom:var(--sol-space-1);}
