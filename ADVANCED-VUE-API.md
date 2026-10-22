@@ -11,12 +11,12 @@
 
 | Export | 값 / 이벤트 | 주요 설정과 용도 |
 |---|---|---|
-| SolSegmentedControl | string 또는 null, change(string) | options, name. 서로 배타적인 짧은 설정; 별도 콘텐츠 패널을 여는 Tabs와 구분 |
-| SolMultiSelect | readonly string[], change(string[]), search(query), open/close, invalid(message) | options 또는 loadOptions, maxSelected, placeholder, debounce(기본150ms), required. 검색+여러 항목 선택 |
-| SolRangeSlider | readonly [number,number], change([lower,upper]) | min0/max100/step1, lowerLabel/upperLabel, formatValue. 두 끝 사이 구간 |
-| SolSplitButton | primary(MouseEvent), select(itemId), update:open/open/close(reason) | items, menuLabel. 주 동작 하나와 대안 동작 목록 |
-| SolContextMenu | select(itemId), update:open/open/close(reason) | items, triggerLabel, default slot. 대상에 대한 동작과 항상 보이는 터치 대안 |
-| SolResizableSplitPane | number(%), change(number), reflow(boolean) | primaryLabel/secondaryLabel, min20/max80/step1, orientation, collapseBelow560. primary/secondary slots |
+| SSegmentedControl | string 또는 null, change(string) | options, name. 서로 배타적인 짧은 설정; 별도 콘텐츠 패널을 여는 Tabs와 구분 |
+| SMultiSelect | readonly string[], change(string[]), search(query), open/close, invalid(message) | options 또는 loadOptions, maxSelected, placeholder, debounce(기본150ms), required. 검색+여러 항목 선택 |
+| SRangeSlider | readonly [number,number], change([lower,upper]) | min0/max100/step1, lowerLabel/upperLabel, formatValue. 두 끝 사이 구간 |
+| SSplitBtn | primary(MouseEvent), select(itemId), update:open/open/close(reason) | items, menuLabel. 주 동작 하나와 대안 동작 목록 |
+| SContextMenu | select(itemId), update:open/open/close(reason) | items, triggerLabel, default slot. 대상에 대한 동작과 항상 보이는 터치 대안 |
+| SResizableSplitPane | number(%), change(number), reflow(boolean) | primaryLabel/secondaryLabel, min20/max80/step1, orientation, collapseBelow560. primary/secondary slots |
 
 SplitButton/ContextMenu의 `open`은 선택적 제어 prop입니다. 생략하면 내부 열림 상태를 쓰고, 앱이 제어하려면 `v-model:open`을 연결합니다. 데이터 값이 없는 동작에 가짜 modelValue를 요구하지 않습니다. 메뉴는 평면 목록이며 서브메뉴·체크 메뉴는 이번 API에 없습니다.
 
@@ -34,8 +34,8 @@ type SolMenuCloseReason = 'escape'|'outside'|'tab'|'select'|'disabled'|'programm
 ```vue
 <script setup lang="ts">
 import {ref} from 'vue';
-import {SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,
-  SolContextMenu,SolResizableSplitPane} from '@solyi/vue-ui';
+import {SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,
+  SContextMenu,SResizableSplitPane} from '@solyi/vue-ui';
 import type {SolRangeValue,SolMenuItem} from '@solyi/vue-ui';
 const view=ref<string|null>('brief'),tags=ref<string[]>([]);
 const range=ref<SolRangeValue>([20,80]),ratio=ref(40),result=ref('');
@@ -43,19 +43,19 @@ const options=[{value:'brief',label:'간단히'},{value:'full',label:'자세히'
 const actions:SolMenuItem[]=[{id:'copy',label:'복제 · 가상'}];
 </script>
 <template>
-  <SolSegmentedControl id="view" v-model="view" label="표시 설정" :options="options"/>
-  <SolMultiSelect id="tags" v-model="tags" label="분류" :options="options" :max-selected="3"/>
-  <SolRangeSlider id="range" v-model="range" label="가상 점수" :min="0" :max="100" :step="5"/>
-  <SolSplitButton id="export" label="가상 내보내기" :items="actions"
+  <SSegmentedControl id="view" v-model="view" label="표시 설정" :options="options"/>
+  <SMultiSelect id="tags" v-model="tags" label="분류" :options="options" :max-selected="3"/>
+  <SRangeSlider id="range" v-model="range" label="가상 점수" :min="0" :max="100" :step="5"/>
+  <SSplitBtn id="export" label="가상 내보내기" :items="actions"
     @primary="result='주 동작'" @select="result=$event"/>
-  <SolContextMenu id="record" label="가상 기록" :items="actions" @select="result=$event">
+  <SContextMenu id="record" label="가상 기록" :items="actions" @select="result=$event">
     <p>가상 기록 내용</p>
-  </SolContextMenu>
-  <SolResizableSplitPane id="layout" v-model="ratio" label="자료와 메모"
+  </SContextMenu>
+  <SResizableSplitPane id="layout" v-model="ratio" label="자료와 메모"
     primary-label="자료" secondary-label="메모" :min="25" :max="75">
     <template #primary><p>가상 자료</p></template>
     <template #secondary><p>가상 메모</p></template>
-  </SolResizableSplitPane>
+  </SResizableSplitPane>
   <p role="status">{{result}}</p>
 </template>
 ```

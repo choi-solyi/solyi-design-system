@@ -9,18 +9,18 @@ import '@solyi/core/code-fonts.css'; // optional JetBrains Mono + Nanum Gothic C
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';
-import {SolButton, SolField, SolDialog, SolTable, SolCheckbox, SolRadioGroup, SolSwitch,
-  SolSelect, SolTextarea, SolNumberInput, SolTabs, SolToast, SolDatePicker, SolTimePicker, SolSegmentedControl, SolMultiSelect, SolRangeSlider,
-  SolSplitButton, SolContextMenu, SolResizableSplitPane} from '@solyi/vue-ui';
+import {SBtn, STextField, SDialog, SDataTable, SCheckbox, SRadioGroup, SSwitch,
+  SSelect, STextarea, SNumberInput, STabs, SSnackbar, SDatePicker, STimePicker, SSegmentedControl, SMultiSelect, SRangeSlider,
+  SSplitBtn, SContextMenu, SResizableSplitPane} from '@solyi/vue-ui';
 // Or app.use(SolyiUI) for global registration. Install createVuetify() once in the app.
 ```
 
 | API | Contract |
 |---|---|
-| SolButton | variant primary/secondary/subtle/inline; type button/submit/reset; disabled; loading (keeps focus, aria-busy, blocks duplicate activation); click. Attributes and default slot forwarded. |
-| SolField | required id + label; v-model string; help/error; required/disabled; supported single-line type; native input attributes forwarded. Label, help and errors linked. |
-| SolDialog | required unique id + title; v-model boolean; maxWidth; closeLabel; optional returnFocus element; default/actions slots. Vuetify focus trap/Escape/backdrop; no transition; close focus + return focus. |
-| SolTable | caption, columns, current-page rows with unique string id; selectable + v-model:selected IDs; v-model:sort {key,direction}; page/pageCount + update:page; loading/error/retry/emptyText; cell-key slots and rowAction notification. Fixed width columns, one flexible title column; mobile cards and shared full-text helper. |
+| SBtn | variant primary/secondary/subtle/inline; type button/submit/reset; disabled; loading (keeps focus, aria-busy, blocks duplicate activation); click. Attributes and default slot forwarded. |
+| STextField | required id + label; v-model string; help/error; required/disabled; supported single-line type; native input attributes forwarded. Label, help and errors linked. |
+| SDialog | required unique id + title; v-model boolean; maxWidth; closeLabel; optional returnFocus element; default/actions slots. Vuetify focus trap/Escape/backdrop; no transition; close focus + return focus. |
+| SDataTable | caption, columns, current-page rows with unique string id; selectable + v-model:selected IDs; v-model:sort {key,direction}; page/pageCount + update:page; loading/error/retry/emptyText; cell-key slots and rowAction notification. Fixed width columns, one flexible title column; mobile cards and shared full-text helper. |
 
 Table is controlled: the app owns filtering/sorting/paging and off-page selection. Changing a query/sort resets page in the consumer; pass only current-page rows and a valid page count. Select-all is current page, existing off-page IDs remain. Never sort or mutate the supplied rows inside the component. Keep at least one column without width. Slots can opt out of ellipsis with column.ellipsis=false for genuinely multi-line/custom content. Don't put nested interactions inside an ellipsis span.
 
@@ -30,7 +30,7 @@ Button honors forwarded aria-disabled while retaining focus; disabled uses the n
 
 ## Additional typed exports (0.3.0)
 
-SolCheckbox, SolRadioGroup, SolSwitch, SolSelect, SolTextarea, SolNumberInput, SolTabs, SolToast, SolDatePicker and SolTimePicker are actual package components. Field controls share id/label/help/error/disabled/readonly and locale contracts; state is controlled by v-model. Dates emit complete single/range values, Time emits HH:mm, and Toast has persistent/pauseable timing. See the [complete API and ten usage examples](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-API.md) and [remaining reference-only inventory](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-MIGRATION.md).
+SCheckbox, SRadioGroup, SSwitch, SSelect, STextarea, SNumberInput, STabs, SSnackbar, SDatePicker and STimePicker are actual package components. Field controls share id/label/help/error/disabled/readonly and locale contracts; state is controlled by v-model. Dates emit complete single/range values, Time emits HH:mm, and Toast has persistent/pauseable timing. See the [complete API and ten usage examples](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-API.md) and [remaining reference-only inventory](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-MIGRATION.md).
 
 `provideSolLocale(app, ref('en-US'))`, a getter, or `app.use(SolyiUI,{locale:source})` supplies reactive defaults. All20 APIs including Field/Dialog/Table use the ko-KR/en-US LTR packs. Partial component overrides win; a different component code starts from that language pack. Unsupported codes fall back; caller content stays caller-owned. `formatSolNumber`, `parseSolNumber` and UTC date-only `formatSolDate` share the policy. See [locale contract](https://github.com/choi-solyi/solyi-design-system/blob/main/LOCALE.md). This does not translate application content or the documentation. Fixed versioned tarball pairs and checksums use the existing Pages releases path; see [installation and rollback](https://github.com/choi-solyi/solyi-design-system/blob/main/DISTRIBUTION.md). No registry publication or automatic update of other apps.
 

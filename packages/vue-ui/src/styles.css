@@ -1,3 +1,14 @@
+/* Opt-in classes supplied by createSolyiVuetify. Native Vuetify props/variants remain available. */
+.sol-vuetify,.sol-vuetify .v-application__wrap {font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}
+.sol-vuetify-btn.v-btn {font-family:var(--sol-font-sans);font-size:var(--sol-text-sm);font-weight:600;letter-spacing:normal;text-transform:none;min-width:0;height:var(--sol-button-height);padding-inline:var(--sol-space-3);box-shadow:none;}
+.sol-vuetify-btn.v-btn:not(.v-btn--icon){border-radius:var(--sol-radius-button);}
+.sol-vuetify-btn.v-btn:focus-visible{outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-vuetify-field {font-family:var(--sol-font-sans);font-size:var(--sol-text-sm);}
+.sol-vuetify-field .v-field{border-radius:var(--sol-radius-control);--v-input-control-height:var(--sol-control-height);}
+.sol-vuetify-field .v-field__input{font:inherit;min-height:var(--sol-control-height);}
+.sol-vuetify-field textarea.v-field__input{min-height:calc(3 * 1.5em + 16px);}
+.sol-vuetify-card.v-card{font-family:var(--sol-font-sans);border-radius:var(--sol-radius-card);}
+.sol-vuetify-dialog .v-overlay__content>.v-card{border-radius:var(--sol-radius-panel);}
 /* Vue/Vuetify adapter only. Import @solyi/core/tokens.css + components.css first. */
 .sol-ui-button.v-btn,.sol-ui-field,.sol-ui-dialog,.sol-ui-table {font-family:var(--sol-font-sans);}
 .sol-ui-field,.sol-ui-dialog,.sol-ui-table {line-height:var(--sol-line-body);}

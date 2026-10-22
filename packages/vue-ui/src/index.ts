@@ -26,21 +26,21 @@ export type {SolOption,SolNumberInputHandle} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale,useSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate} from './locale';
 export type {SolLocale,SolLocaleSource,SolLocaleCode} from './locale';
 
-export const uiVersion='0.4.0';
+export const uiVersion='0.5.0';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
 }
 export type ButtonVariant='primary'|'secondary'|'subtle'|'inline';
 export const SolButton=defineComponent({
-  name:'SolButton', inheritAttrs:false,
+  name:'SBtn', inheritAttrs:false,
   props:{variant:{type:String as PropType<ButtonVariant>,default:'secondary'},disabled:Boolean,loading:Boolean,type:{type:String as PropType<'button'|'submit'|'reset'>,default:'button'}},
   emits:{click:(_event:MouseEvent)=>true},
   setup(props,{attrs,slots,emit}){return()=>{const unavailable=props.disabled||props.loading||attrs['aria-disabled']===true||attrs['aria-disabled']==='true';return h(VBtn as Component,{...attrs,class:['sol-ui-button','sol-ui-button--'+props.variant,attrs.class],type:props.type,disabled:props.disabled,'aria-disabled':unavailable?'true':attrs['aria-disabled'],'aria-busy':props.loading?'true':attrs['aria-busy'],ripple:false,variant:'flat',onClick:(e:MouseEvent)=>{if(unavailable){e.preventDefault();return;}emit('click',e);}},()=>[props.loading?h('span',{class:'sol-ui-busy','aria-hidden':'true'},'◷'):null,slots.default?.()]);};}
 });
 
 export const SolField=defineComponent({
-  name:'SolField',inheritAttrs:false,
+  name:'STextField',inheritAttrs:false,
   props:{locale:Object as PropType<Partial<SolLocale>>,id:{type:String,required:true},label:{type:String,required:true},modelValue:{type:String,default:''},help:{type:String,default:''},error:{type:String,default:''},disabled:Boolean,required:Boolean,type:{type:String as PropType<'text'|'search'|'email'|'password'|'tel'|'url'>,default:'text'}},
   emits:{'update:modelValue':(_value:string)=>true},
   setup(props,{attrs,emit}){const l=useSolLocale(()=>props.locale);const field=ref<{focus?:()=>void}|null>(null);return()=>h('div',{class:'sol-ui-field'},[
@@ -52,7 +52,7 @@ export const SolField=defineComponent({
 });
 
 export const SolDialog=defineComponent({
-  name:'SolDialog',inheritAttrs:false,
+  name:'SDialog',inheritAttrs:false,
   props:{locale:Object as PropType<Partial<SolLocale>>,id:{type:String,required:true},title:{type:String,required:true},modelValue:Boolean,maxWidth:{type:[Number,String],default:480},closeLabel:String,returnFocus:{type:Object as PropType<HTMLElement|null>,default:null}},
   emits:{'update:modelValue':(_value:boolean)=>true,close:()=>true},
   setup(props,{attrs,slots,emit}){
@@ -71,7 +71,7 @@ export interface TableColumn {key:string;label:string;width?:string;align?:'star
 export interface TableRow {id:string;[key:string]:unknown}
 export interface TableSort {key:string;direction:'ascending'|'descending'}
 export const SolTable=defineComponent({
-  name:'SolTable',inheritAttrs:false,
+  name:'SDataTable',inheritAttrs:false,
   props:{locale:Object as PropType<Partial<SolLocale>>,columns:{type:Array as PropType<TableColumn[]>,required:true},rows:{type:Array as PropType<TableRow[]>,required:true},caption:{type:String,required:true},selected:{type:Array as PropType<string[]>,default:()=>[]},selectable:Boolean,sort:{type:Object as PropType<TableSort|null>,default:null},page:{type:Number,default:1},pageCount:{type:Number,default:1},loading:Boolean,error:{type:String,default:''},emptyText:String},
   emits:{'update:selected':(_ids:string[])=>true,'update:sort':(_sort:TableSort)=>true,'update:page':(_page:number)=>true,retry:()=>true,rowAction:(_row:TableRow)=>true},
   setup(props,{attrs,slots,emit}){
@@ -117,6 +117,31 @@ export const SolTable=defineComponent({
   }
 });
 
+export const SBtn:typeof SolButton=SolButton;
+export const STextField:typeof SolField=SolField;
+export const SDialog:typeof SolDialog=SolDialog;
+export const SDataTable:typeof SolTable=SolTable;
+export const SCheckbox:typeof SolCheckbox=SolCheckbox;
+export const SRadioGroup:typeof SolRadioGroup=SolRadioGroup;
+export const SSwitch:typeof SolSwitch=SolSwitch;
+export const SSelect:typeof SolSelect=SolSelect;
+export const STextarea:typeof SolTextarea=SolTextarea;
+export const SNumberInput:typeof SolNumberInput=SolNumberInput;
+export const STabs:typeof SolTabs=SolTabs;
+export const SSnackbar:typeof SolToast=SolToast;
+export const SDatePicker:typeof SolDatePicker=SolDatePicker;
+export const STimePicker:typeof SolTimePicker=SolTimePicker;
+export const SSegmentedControl:typeof SolSegmentedControl=SolSegmentedControl;
+export const SMultiSelect:typeof SolMultiSelect=SolMultiSelect;
+export const SRangeSlider:typeof SolRangeSlider=SolRangeSlider;
+export const SSplitBtn:typeof SolSplitButton=SolSplitButton;
+export const SContextMenu:typeof SolContextMenu=SolContextMenu;
+export const SResizableSplitPane:typeof SolResizableSplitPane=SolResizableSplitPane;
+export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
+export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
+export const sComponents={SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane};
+const compatibilityComponents={SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane};
+
 export interface SolyiOptions {locale?:SolLocaleSource}
-export function install(app:App,options:SolyiOptions={}){if(options.locale)provideSolLocale(app,options.locale);for(const component of [SolButton,SolField,SolDialog,SolTable,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolTabs,SolToast,SolDatePicker,SolTimePicker,SolSegmentedControl,SolMultiSelect,SolRangeSlider,SolSplitButton,SolContextMenu,SolResizableSplitPane])app.component(component.name!,component);}
+export function install(app:App,options:SolyiOptions={}){if(options.locale)provideSolLocale(app,options.locale);for(const [name,component]of Object.entries({...compatibilityComponents,...sComponents}))app.component(name,component);}
 export default {install};

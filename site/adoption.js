@@ -5,9 +5,9 @@ npm run library:verify
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';
-import {SolButton, SolField, SolDialog, SolTable,
-  SolCheckbox, SolRadioGroup, SolSwitch, SolSelect, SolTextarea,
-  SolNumberInput, SolTabs, SolToast, SolDatePicker, SolTimePicker} from '@solyi/vue-ui';
+import {SBtn, STextField, SDialog, SDataTable,
+  SCheckbox, SRadioGroup, SSwitch, SSelect, STextarea,
+  SNumberInput, STabs, SSnackbar, SDatePicker, STimePicker} from '@solyi/vue-ui';
 // 앱에서 createVuetify() 한 번, theme/data-mode 연결.
 // 라이브러리 외 예시는 계속 HTML/CSS 참고 구현입니다.`)}<p class="small muted"><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LIBRARY.md">패키지 API·고정 버전·CI·롤백 절차</a>. npm/GitHub Packages에는 게시하지 않았습니다. 다른 문서 예시를 전부 Vue 라이브러리로 전환한 상태가 아닙니다.</p><p class="small muted">공식 출처: <a href="https://vuejs.org/guide/quick-start.html">Vue Quick Start</a> · <a href="https://vuetifyjs.com/en/getting-started/installation/">Vuetify installation</a> · <a href="https://vite.dev/guide/">Vite guide</a>. 패키지 원본 라이선스는 starter의 THIRD-PARTY-NOTICES.txt를 보존합니다.</p>`) +
  h.section('advanced-vue','확장 Vue6종','선택·범위·동작·화면 분할을 실제 패키지로 제공합니다.',`<div class="sol-card"><h3>작지만 완결된 상호작용</h3><p>SegmentedControl은 단일 설정, MultiSelect는 검색과 태그 선택, RangeSlider는 양끝 구간을 다룹니다. SplitButton·ContextMenu는 공유 메뉴를 사용하고 SplitPane은 좁은 화면에서 두 내용을 세로로 유지합니다. 가상 비동기 검색의 오류·재시도와 키보드·disabled/readonly도 확인할 수 있습니다.</p><div class="button-row"><a class="sol-button primary" href="./starter/#advanced-title">확장6종 실행 →</a><a class="sol-button" href="https://github.com/choi-solyi/solyi-design-system/blob/main/ADVANCED-VUE-API.md">API·사용 코드 ↗</a></div><p class="sol-hint">나머지 참고 예제의 패키지화·Figma는 후속입니다. 새 권한·백엔드·다른 앱 연결은 없습니다.</p></div>`) +

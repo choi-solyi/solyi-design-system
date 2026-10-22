@@ -1,6 +1,6 @@
 <script setup>
 import {ref,computed} from 'vue';
-import {SolField,SolButton,SolDialog,SolTable,SolNumberInput,SolDatePicker,SolTimePicker,formatSolDate,formatSolNumber} from '@solyi/vue-ui';
+import {STextField,SBtn,SDialog,SDataTable,SNumberInput,SDatePicker,STimePicker,formatSolDate,formatSolNumber} from '@solyi/vue-ui';
 import {starterLanguage} from './locale-state.js';
 const number=ref(1234.5),date=ref('2026-10-21'),time=ref('09:30'),open=ref(false),text=ref(''),selection=ref([]),page=ref(1);
 const formatted=computed(()=>formatSolDate(date.value||'2026-10-21',starterLanguage.value)+' · '+formatSolNumber(number.value??0,starterLanguage.value));
@@ -14,14 +14,14 @@ const rows=[{id:'locale',name:'가상 자료 · 업무 라벨은 앱 소유',cou
  <label class="sol-field"><span class="sol-label">앱 언어 / App locale</span><select id="starter-locale" v-model="starterLanguage" class="sol-select"><option value="ko-KR">한국어 · ko-KR</option><option value="en-US">English · en-US</option></select></label>
  <p id="locale-formatted" role="status">{{formatted}}</p>
  <div class="starter-control-grid">
-  <SolField id="locale-field" label="제목 / Title" v-model="text" required />
-  <SolField id="locale-override" label="개별 설정 / Override" required :locale="{code:'en',required:'needed here'}" />
-  <SolNumberInput id="locale-number" label="수량 / Quantity" v-model="number" :step="0.5" :min="0" :max="10000" />
-  <SolDatePicker id="locale-date" label="날짜 / Date" v-model="date" />
-  <SolTimePicker id="locale-time" label="시각 / Time" v-model="time" min="09:00" max="18:00" :step="15" />
+  <STextField id="locale-field" label="제목 / Title" v-model="text" required />
+  <STextField id="locale-override" label="개별 설정 / Override" required :locale="{code:'en',required:'needed here'}" />
+  <SNumberInput id="locale-number" label="수량 / Quantity" v-model="number" :step="0.5" :min="0" :max="10000" />
+  <SDatePicker id="locale-date" label="날짜 / Date" v-model="date" />
+  <STimePicker id="locale-time" label="시각 / Time" v-model="time" min="09:00" max="18:00" :step="15" />
  </div>
- <SolButton id="locale-open" @click="open=true">Dialog</SolButton>
- <SolDialog id="locale-dialog" title="가상 상세 / Preview" v-model="open"><p>선택 값과 초점을 유지하며 공통 닫기 문구를 바꿉니다.</p></SolDialog>
- <SolTable caption="Locale table · 가상 자료" :columns="columns" :rows="rows" selectable v-model:selected="selection" v-model:page="page" :page-count="2" />
+ <SBtn id="locale-open" @click="open=true">Dialog</SBtn>
+ <SDialog id="locale-dialog" title="가상 상세 / Preview" v-model="open"><p>선택 값과 초점을 유지하며 공통 닫기 문구를 바꿉니다.</p></SDialog>
+ <SDataTable caption="Locale table · 가상 자료" :columns="columns" :rows="rows" selectable v-model:selected="selection" v-model:page="page" :page-count="2" />
 </section>
 </template>
