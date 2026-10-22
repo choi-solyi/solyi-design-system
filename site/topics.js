@@ -7,6 +7,19 @@ const documentSections={
  theme:[['themes','테마'],['density','밀도'],['adoption','CSS·JSON 도입'],['scope','범위와 출처'],['starter','Vue·Vuetify starter'],['advanced-vue','확장 Vue6종'],['vue-components','Vue API·전환표'],['versioning','버전과 폐기 정책']]
 };
 const documentNames={overview:'Overview',style:'Style',component:'Component',pattern:'Pattern',theme:'Theme & adoption'};
+// Search-only names: these do not rename headings, alter menus or create new routes.
+const documentSearchNames={
+ 'pattern/date':['Date Picker','DatePicker','날짜','날짜 선택기','기간 선택'],
+ 'component/time':['Time Picker','TimePicker','시간','시각','시각 선택','시간 선택기'],
+ 'component/buttons':['Button'], 'component/fields':['Field','Text Field','TextField','Input'],
+ 'component/selection':['Checkbox','Radio Group','RadioGroup','Switch','체크박스','라디오','스위치'],
+ 'component/dialog':['Dialog','Modal','모달'], 'component/help':['Tooltip','Popover','툴팁','팝오버'],
+ 'component/accordion':['Accordion'], 'component/textarea':['Text Area','Textarea'],
+ 'component/number':['Number Input','NumberInput'], 'component/content-tabs':['Tabs'],
+ 'component/action-menu':['Action Menu'], 'component/progress':['Progress Bar','Progress Circle'],
+ 'component/chart':['Chart'], 'component/tree':['Tree'],
+ 'pattern/files':['File Upload','FileUploader','Drag and Drop'], 'pattern/autocomplete':['Autocomplete']
+};
 // v0.2.1 links keep their exact hashes and now target the original, continuous examples.
 const documentAliases={
  pattern:[['date','단일 날짜와 기간','#extra-range-form'],['files','로컬 파일과 드롭','#extra-file-drop'],['autocomplete','자동완성 검색','#extra-autocomplete']],
@@ -25,7 +38,7 @@ export function getDocumentSearchEntries(root,route){
   const context=node.matches('section.section')?node:node.closest('.demo')||node.closest('section.section')||node;
   const summary=Array.from(context.querySelectorAll('.section-header>p,p,.sol-hint')).find(p=>plain(p)&&!p.closest('pre,[role="status"]'));
   const title=plain(context.querySelector('h2,h3,h4'))||label,text=plain(context),description=plain(summary)||label+' · '+title;
-  entries.push({route,id,group:documentNames[route],label,title,description:description.length>170?description.slice(0,169)+'…':description,text});
+  entries.push({route,id,group:documentNames[route],label,title,aliases:documentSearchNames[route+'/'+id]||[],description:description.length>170?description.slice(0,169)+'…':description,text});
  }
  return entries;
 }

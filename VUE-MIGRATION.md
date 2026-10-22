@@ -57,7 +57,7 @@ Historical phase2 baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository an
 
 SegmentedControl, searchable MultiSelect, two-ended RangeSlider, SplitButton, ContextMenu and ResizableSplitPane now have actual typed exports, standalone consumer usage and an installed starter. [Contracts](ADVANCED-VUE-API.md) and [phase3 release gates](VUE-EXPANSION-PLAN.md) distinguish source/installed/browser/public validation. The existing14 stay available.
 
-Document-wide search and shared header appearance controls now have a local implementation; see DOC-SEARCH.md for its unposted scope and checks. Complete shared-locale settings, distribution/update channels, Figma kit and broader real-device verification remain later work. The reference examples listed as follow-up above remain HTML/JS references; these six exports do not convert them all.
+Document-wide search and shared header appearance controls were published at b8648fa; their subsequent name-ranking refinement remains local (DOC-SEARCH.md). See NEXT-STEPS.md for the existing locale provider and the precise remaining global-locale/distribution work. Complete shared-locale settings, distribution/update channels, Figma kit and broader real-device verification remain later work. The reference examples listed as follow-up above remain HTML/JS references; these six exports do not convert them all.
 
 ## API decisions
 

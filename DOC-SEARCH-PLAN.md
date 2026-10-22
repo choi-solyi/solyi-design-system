@@ -9,3 +9,7 @@ Baseline: `38e67f7`, published docs0.5.0 / Core and Vue UI0.3.0. This phase chan
 - [x] Documentation and local validation complete. The separate commit is identified in the task result. No public push.
 
 Remaining overall expansion after this phase: site-wide shared locale settings; installation/update distribution channel (registry publication or other app automation still needs a separate decision); Figma kit; broader real-device/browser/assistive-technology verification. Existing HTML examples not yet exported as Vue APIs remain listed in VUE-MIGRATION.md; this search phase does not silently convert them. The20 typed Vue components and chosen fonts/tokens/navigation remain intact.
+
+## 후속 상태
+
+검색·헤더 본 구현은 b8648fa로 공개됐고 CI39727368722/공개55개 자산 검증이 완료됐습니다. 이후 정확한 이름·검색 별칭 우선순위 수정은 별도의 로컬 후속이며 아직 푸시하지 않습니다. Date/Time의 한영·공백·전각 이름 및 일반 다중 단어 회귀를 추가했고, 잔여 locale/설치·업데이트 범위는 NEXT-STEPS.md에 실제 기존 기능과 나눠 기록합니다.

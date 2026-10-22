@@ -19,7 +19,7 @@ Baseline: docs0.4.0 / Core and UI0.2.0, e04ba299. Only this repository and exist
 - SplitPane: percentage of available pane space; controlled number and change at completed adjustment. Capture pointer, clamp min/max, arrows/Home/End/Enter. Auto stack at narrow container widths; retain ratio and both mounted contents, hide separator from navigation while stacked.
 - WAI APG references are implementation guidance, not a conformance claim: https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/ ; https://www.w3.org/WAI/ARIA/apg/patterns/menubar/ ; https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/ ; https://www.w3.org/WAI/ARIA/apg/patterns/combobox/ . Multi-select is a documented extension, not APG's single-value example copied as-is.
 
-Document search and shared header appearance controls are now locally implemented (DOC-SEARCH-PLAN.md); they are not publicly posted in this phase. Full shared locale settings, distribution/update channels and Figma remain subsequent work. Existing reference autocomplete, files, progress, overlays and templates are not implicitly converted by these six APIs.
+Document search and shared header appearance controls were published at b8648fa (DOC-SEARCH-PLAN.md); only the subsequent search-ranking refinement remains local. Full shared locale settings, distribution/update channels and Figma remain subsequent work. Existing reference autocomplete, files, progress, overlays and templates are not implicitly converted by these six APIs.
 
 ## Subsequent approved additions
 
