@@ -1,6 +1,8 @@
 import tokens from './token-data.js';
 import {mountOverflowText} from './overflow.js';
-import {presentTopics,scrollToDocumentSection} from './topics.js';
+import {presentTopics,scrollToDocumentSection,getDocumentSearchEntries} from './topics.js';
+import {mountDocumentSearch} from './doc-search.js';
+import {mountHeaderPreferences} from './header-preferences.js';
 import {renderExpansion,mountExpansion,requestExpansionLeave} from './expansion.js';
 import {renderComponentExamples, renderPatternExamples, mountExamples} from './extended.js';
 import {renderGoalSpecimen, renderMotionSection, mountMotion} from './motion.js';
@@ -13,6 +15,7 @@ const dialog = document.querySelector('#detail-dialog');
 const routes = {overview:'Overview', style:'Style / Core', component:'Component', pattern:'Pattern', theme:'Theme & adoption'};
 let snippetId = 0;
 let toastTimer;
+let headerPreferences=null;
 let returnFocus;
 let cleanupOverflow = () => {}; let cleanupTopics = () => {}; let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
@@ -107,12 +110,17 @@ function theme() {
 }
 
 function currentRoute() {return location.hash.slice(1).split('/')[0] || 'overview';}
+function pageMarkup(route){return `<div class="breadcrumb"><span>Solyi</span><span aria-hidden="true">/</span><span>${routes[route]}</span></div>` + ({overview,style,component,pattern,theme}[route])() + (route==='component'?renderComponentExamples({section,demo,contract,codeSample}):route==='pattern'?renderPatternExamples({section,demo,contract,codeSample}):route==='style'?renderColorExamples({section,codeSample})+renderMotionSection({section,demo,codeSample,tokens}):'') + renderExpansion(route,{section,demo,contract,codeSample}) + footer();}
+function buildDocumentSearchIndex(){
+ const saved=new Map(snippets),savedId=snippetId;try {return Object.keys(routes).flatMap(route=>{const template=document.createElement('template');template.innerHTML=pageMarkup(route);return getDocumentSearchEntries(template.content,route);});}
+ finally {snippets.clear();for(const [key,value]of saved)snippets.set(key,value);snippetId=savedId;}
+}
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'overview';
   cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
-  main.innerHTML = `<div class="breadcrumb"><span>Solyi</span><span aria-hidden="true">/</span><span>${routes[route]}</span></div>` + ({overview,style,component,pattern,theme}[route])() + (route==='component'?renderComponentExamples({section,demo,contract,codeSample}):route==='pattern'?renderPatternExamples({section,demo,contract,codeSample}):route==='style'?renderColorExamples({section,codeSample})+renderMotionSection({section,demo,codeSample,tokens}):'') + renderExpansion(route,{section,demo,contract,codeSample}) + footer();
+  main.innerHTML = pageMarkup(route);
   document.title = `Solyi Design System · ${routes[route]}`;
   cleanupTopics = presentTopics(main,route,{section,demo,contract,codeSample});
   document.querySelectorAll('[data-route]').forEach(link=>{
@@ -129,6 +137,8 @@ function persistPreferences() {
   try {localStorage.setItem('solyi-ds-prefs',JSON.stringify({theme:root.dataset.theme,mode:root.dataset.mode,density:root.dataset.density}));} catch {}
 }
 function syncPreferences() {
+  headerPreferences?.sync();
+  document.querySelectorAll('input[name="density"]').forEach(input=>input.checked=input.value===root.dataset.density);
   const isDark = root.dataset.mode==='dark';
   const toggle = document.querySelector('#mode-toggle');
   toggle.textContent = isDark ? 'Light mode' : 'Dark mode';
@@ -138,11 +148,14 @@ function syncPreferences() {
   document.querySelectorAll('.theme-card').forEach(card=>card.dataset.mode=root.dataset.mode);
   document.querySelectorAll('[data-set-theme]').forEach(button=>{const selected=button.dataset.setTheme===root.dataset.theme; button.setAttribute('aria-label',`${tokens.themes[button.dataset.setTheme].label} 테마 사용`); button.setAttribute('aria-pressed',String(selected)); button.textContent=selected?'선택됨':'이 테마 사용';});
 }
-function toggleMode() {
-  root.dataset.mode = root.dataset.mode==='dark'?'light':'dark';
-  persistPreferences(); syncPreferences(); updateTokens();
-  notify(`${root.dataset.mode==='dark'?'다크':'라이트'} 모드로 전환했어요.`);
+function applyPreferences(next){
+ if(next.theme&&tokens.themes[next.theme])root.dataset.theme=next.theme;
+ if(['comfortable','compact'].includes(next.density))root.dataset.density=next.density;
+ if(['light','dark'].includes(next.mode))root.dataset.mode=next.mode;
+ persistPreferences();syncPreferences();updateTokens();
+ notify(`${tokens.themes[root.dataset.theme].label} · ${root.dataset.density==='compact'?'컴팩트':'기본'} · ${root.dataset.mode==='dark'?'다크':'라이트'}`);
 }
+function toggleMode(){applyPreferences({mode:root.dataset.mode==='dark'?'light':'dark'});}
 document.querySelector('#mode-toggle').addEventListener('click',toggleMode);
 function notify(message) {
   clearTimeout(toastTimer); announcement.textContent=message;
@@ -183,7 +196,7 @@ main.addEventListener('click',async event=>{
   const button=event.target.closest('button'); if(!button)return;
   if(button.dataset.copy) {await copy(button.dataset.copy);return;}
   if(button.dataset.copySnippet) {await copy(snippets.get(button.dataset.copySnippet));return;}
-  if(button.dataset.setTheme) {root.dataset.theme=button.dataset.setTheme;persistPreferences();syncPreferences();notify(`${tokens.themes[root.dataset.theme].label} 테마를 적용했어요.`);return;}
+  if(button.dataset.setTheme) {applyPreferences({theme:button.dataset.setTheme});return;}
   if(button.dataset.openDetail!==undefined) {openDetail(Number(button.dataset.openDetail),button);return;}
   const action=button.dataset.action;
   if(action==='toggle-mode')toggleMode();
@@ -244,7 +257,7 @@ function bindPageEvents() {
   document.querySelector('#project-search')?.addEventListener('input',updateSearch);
   document.querySelector('#project-filter')?.addEventListener('change',updateSearch);
   document.querySelectorAll('input[name="compare"]').forEach(input=>input.addEventListener('change',()=>document.querySelector('#compare-result').textContent=`선택: ${input.value}`));
-  document.querySelectorAll('input[name="density"]').forEach(input=>input.addEventListener('change',()=>{root.dataset.density=input.value;persistPreferences();notify(`${input.value==='compact'?'Compact':'Comfortable'} 밀도를 적용했어요.`);}));
+  document.querySelectorAll('input[name="density"]').forEach(input=>input.addEventListener('change',()=>applyPreferences({density:input.value})));
   const form=document.querySelector('#project-form');
   if(form) {
     const nameInput=form.elements.projectName;const error=document.querySelector('#project-name-error');const result=document.querySelector('#form-result');const submit=document.querySelector('#form-submit');
@@ -274,6 +287,8 @@ function bindPageEvents() {
     });
   }
 }
+headerPreferences=mountHeaderPreferences({themes:tokens.themes,getState:()=>root.dataset,apply:applyPreferences,toggleMode});
+mountDocumentSearch({getDocuments:buildDocumentSearchIndex,goToSection:scrollToDocumentSection});
 let displayedHash=location.hash||'#overview',navigationRequest=0;
 window.addEventListener('hashchange',async()=>{
   if(location.hash==='#main-content'){scrollToDocumentSection('',{focus:false});main.focus();return;}

@@ -20,7 +20,7 @@
   <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
   <header class="topbar">
     <a href="#overview" class="brand" aria-label="Solyi Design System 홈"><img class="brand-mark" src="./brand-sparkle.svg" width="32" height="32" alt=""><span>Solyi <span class="brand-detail">Design System</span></span></a>
-    <div class="header-actions"><span class="version">v0.5.0 <span>Draft</span></span><button type="button" id="mode-toggle" class="sol-button subtle" aria-pressed="false">Dark mode</button><a class="repo-link" href="https://github.com/choi-solyi/solyi-design-system" aria-label="GitHub 저장소">GitHub ↗</a></div>
+    <div class="header-actions"><span class="version">v0.5.0 <span>Draft</span></span><button type="button" id="document-search-open" aria-label="문서 검색" class="sol-button subtle" aria-haspopup="dialog" aria-controls="document-search-dialog"><span class="search-wide">문서 </span>검색</button><div id="appearance-inline" class="appearance-inline"><label><span>테마</span><select data-pref-theme aria-label="문서 테마"></select></label><label><span>밀도</span><select data-pref-density aria-label="문서 화면 밀도"><option value="comfortable">기본</option><option value="compact">컴팩트</option></select></label></div><button type="button" id="appearance-open" class="sol-button subtle" aria-haspopup="dialog" aria-controls="appearance-dialog">화면 설정</button><button type="button" id="mode-toggle" class="sol-button subtle" aria-pressed="false">Dark mode</button><a class="repo-link" href="https://github.com/choi-solyi/solyi-design-system" aria-label="GitHub 저장소">GitHub ↗</a></div>
   </header>
   <div class="app-layout">
     <aside class="sidebar">
@@ -38,6 +38,17 @@
   </div>
   <div id="announcement" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
   <dialog id="detail-dialog" aria-labelledby="detail-dialog-title"><div class="dialog-head"><span class="eyebrow">FICTIONAL PROJECT</span><button class="sol-button subtle" id="dialog-close" autofocus>닫기 <span aria-hidden="true">×</span></button></div><h2 id="detail-dialog-title">작은 정원 기록</h2><p>식물 관찰을 모아 두는 가상의 개인 프로젝트입니다. 모든 데모 데이터는 브라우저 안에서만 바뀝니다.</p><dl class="detail-list"><div><dt>상태</dt><dd>진행 중</dd></div><div><dt>다음 할 일</dt><dd>관찰 화면의 입력 흐름 정리</dd></div><div><dt>업데이트</dt><dd>방금 · 가상 데이터</dd></div></dl><p class="small muted">Escape로 닫기 · 닫은 뒤 실행한 버튼으로 포커스 복귀</p></dialog>
+  <dialog id="document-search-dialog" class="document-search-panel" aria-labelledby="document-search-title">
+    <div class="document-search-head"><h2 id="document-search-title">문서 검색</h2><button id="document-search-close" type="button" class="sol-button inline-action">닫기</button></div>
+    <form role="search" aria-label="디자인 시스템 문서 전체 검색"><label for="document-search-query">이름이나 설명</label><div class="document-search-field"><input id="document-search-query" type="search" placeholder="예: 버튼, DatePicker, 초점" maxlength="120" autocomplete="off" aria-describedby="document-search-help" aria-controls="document-search-results" autofocus><button id="document-search-clear" type="button" class="sol-button" disabled>초기화</button></div></form>
+    <p id="document-search-help" class="small muted">↓ 또는 Tab으로 결과 이동 · Enter로 열기 · Escape로 닫기. 입력칸의 Home/End는 커서를 이동합니다.</p>
+    <p id="document-search-status" class="small" role="status" aria-live="polite" aria-atomic="true"></p>
+    <div id="document-search-results" class="document-search-results" role="region" aria-label="검색 결과"></div>
+  </dialog>
+  <dialog id="appearance-dialog" class="appearance-panel" aria-labelledby="appearance-title">
+    <div class="document-search-head"><h2 id="appearance-title">화면 설정</h2><button id="appearance-close" class="sol-button inline-action" type="button">닫기</button></div>
+    <div class="appearance-grid"><label>테마<select data-pref-theme aria-label="화면 설정 테마"></select></label><label>밀도<select data-pref-density aria-label="화면 설정 밀도"><option value="comfortable">기본</option><option value="compact">컴팩트</option></select></label><button id="appearance-mode-toggle" type="button" class="sol-button">다크 모드로 전환</button></div><p class="small muted">선택은 기존 문서 설정과 함께 적용됩니다.</p>
+  </dialog>
   <noscript><div class="noscript">작동하는 예시와 문서 탐색에는 JavaScript가 필요합니다. <a href="./tokens.css">CSS 토큰</a>과 <a href="./tokens.json">JSON 토큰</a>은 바로 열 수 있습니다.</div></noscript>
   <script type="module" src="./app.js"></script>
 </body>

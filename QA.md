@@ -278,3 +278,13 @@ Textarea 필수/줄바꿈/카운트, 숫자 min/max/step와 증감 경계, 다�
 - 실제1422 CSSpx에서 버튼35.99/필드40px. Table 열 `[47.99,707.62,95.99,127.99,72]`px가 정렬·페이지 이동 전후 동일. 코드clientWidth/scrollWidth704px.
 - 별도 로컬 QA origin4174에서 WOFF2/TTF를 모두404 처리: FontFaceSet.check false로 실패 재현, 같은1422px의 표 열 너비 동일.333px에서 페이지넘침 없음(scrollWidth316), 코드285/324px·110px높이, 버튼/필드43.99px, 폼 오류 초점 정상. fallback 글꼴 모양·모든 OS·CLS 수치는 검증하지 않았습니다.
 - **화면 스크린샷은 CDP capture 5초 시간 초과로 실패**했습니다. 치수·DOM·자산·키보드 검사와 픽셀 시각 검토는 구분합니다. 실제 iPhone Safari/물리 터치/화면낭독기/다른 브라우저·OS/전체 글리프·굵기/실제 네트워크 성능·CLS는 미검증입니다. 리가처 설정/토글은 추가하지 않았습니다.
+## 문서 검색·헤더 화면 설정 로컬 후속 · 2026-10-22
+
+- 기준 `38e67f7` 이후 로컬 구현/별도 커밋 범위. 공개 main/Pages/레지스트리/다른 앱/권한은 변경하지 않습니다. 실제20종 Vue API·폰트 원본·토큰은 유지합니다.
+- 검색은 같은 원본 렌더러/메뉴/호환 앵커의59개 목적지입니다. 자동 검사에서 이름·설명/NFKC·붙인 이름, 빈 결과/초기화, IME/229, 입력 Home/End, 결과 화살표/Home/End, 한 번의 Escape·Tab 경계·초점, 기존 복사 맵·실제 입력 비색인, 전체 목적지/연속 내용/뒤로앞으로/미저장 확인을 검사합니다. 새 검사는 `npm test`에 포함합니다.
+- 헤더의 Cool violet/Quiet sage/Warm sand, 기본/컴팩트, 라이트/다크는 기존 data 속성·`solyi-ds-prefs`를 공유합니다.12조합의 재진입 복원, Theme 화면 버튼/라디오 동기화, 좁은 패널·폭 전환 초점 및 저장 불가 상태를 자동 검사합니다. 검색 기본/hover/placeholder 역할30쌍은3테마×2모드에서4.5:1 이상입니다. 이는 전체 화면 준수 인증이 아닙니다.
+- 실행 기록: `qa-output/doc-search-final-check.log`, `qa-output/doc-search-final-test.log`, `qa-output/doc-search-final-specific.log`. 원본/생성 파일 allowlist, 브랜드·폰트 원본 해시·설치 Core/starter 바이트 및 기존 문서 회귀도 확인합니다. 패키지 소스는 변경하지 않아 새 패키지 설치/타입 빌드는 반복하지 않았습니다.
+- 사용자 PC **Chrome**, localhost4173 실제 검수:1920px에서 헤더76px/선택40px,12설정 조합·새로고침 복원 확인.333px에서 문서scrollWidth316px/헤더76px, 모바일 검색·화면 설정 대상44px 이상, 선택44px 및12설정 조합 확인.720px(scrollWidth703px)과1333px(scrollWidth1316px)에서도 헤더 넘침 없음. 넓어져 설정 패널이 닫히면 테마 select로 초점 반환.
+- 최종 검색 패널은333px에서 약292.66×672px/좌우12px 여백, 검색 필드44px, 결과 영역clientWidth/scrollWidth266px. 키보드 결과 선택 후 `#pattern/files` 이동·제목 초점·메뉴 닫기·기존 입력 보존, 다른 문서로 이동 시 기존 미저장 dialog/확인 흐름 확인(취소와 값 보존은 자동 회귀에서도 검사). 검색 Tab/Shift+Tab 경계와 첫 Escape 닫기·검색 버튼 복귀·검색어 유지까지 최종 Chrome에서 확인했습니다. 경고/오류 로그 없음.
+- 자체 리뷰 수정: source 색인으로 복사 예시/초안 변경 방지; 빈 상태 문단 대신 읽을 수 있는 검색 요약 추출; 검색 hover와 placeholder에 대비가 확인된 역할 사용; 결과 focus 여백/모바일 최소44px 폭 보완; 브라우저 기본 dialog 최대 폭 대신 문서 여백 적용; `type=search`의 첫 Escape 지우기 및 Tab 경계에서 BODY로 빠지는 동작을 두 셸 dialog에서 보완했습니다.
+- **시각 검토 범위**: 중간 데스크톱 검색 창의 실제 캡처1장을 검토했습니다. 이후 최종 모바일·데스크톱 캡처는5초 시간 초과로 실패했으며 반복하지 않았습니다. 최종 전체 픽셀 검수를 통과했다고 표현하지 않습니다. 최종 치수/키보드/DOM 검사는 별도입니다. 실제 iPhone Safari/물리 폴드·터치/화면낭독기/하드웨어 한글 IME/OS별 폰트·가상 키보드/400%·forced colors/CLS는 미검증입니다.

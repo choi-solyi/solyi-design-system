@@ -18,6 +18,39 @@ code {overflow-wrap: anywhere;}
 :not(pre) > code {padding: 2px 5px; border-radius: 4px; background: var(--sol-color-surface-alt);}
 pre {white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; line-height: 1.8;}
 .code-font-sample {max-width:100%;overflow-x:auto;white-space:pre;overflow-wrap:normal;}
+/* Documentation shell additions use the existing role tokens and native controls. */
+.topbar .header-actions {flex-wrap:nowrap;gap:var(--sol-space-2);}
+.appearance-inline {display:flex;align-items:center;gap:var(--sol-space-2);}
+.appearance-inline label {display:flex;align-items:center;gap:var(--sol-space-2);white-space:nowrap;font-size:var(--sol-text-xs);}
+.appearance-inline select,.appearance-grid select,.document-search-field input {font:inherit;line-height:normal;min-width:0;height:var(--sol-control-height);min-height:var(--sol-control-height);color:var(--sol-color-text);background:var(--sol-color-surface);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-control);padding:var(--sol-space-2) var(--sol-space-3);}
+.appearance-inline select {max-width:160px;font-size:var(--sol-text-sm);}
+#appearance-open {display:none;}
+.document-search-panel,.appearance-panel {width:min(42rem,calc(100% - 32px));max-width:calc(100% - 32px);max-height:calc(100dvh - 32px);padding:var(--sol-space-4);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-panel);background:var(--sol-color-surface);color:var(--sol-color-text);}
+.document-search-panel[open] {display:flex;flex-direction:column;gap:var(--sol-space-3);overflow:hidden;max-height:min(42rem,calc(100dvh - 32px));}
+.document-search-head {display:flex;align-items:center;justify-content:space-between;gap:var(--sol-space-3);flex:none;}
+.document-search-head h2 {font-size:var(--sol-text-lg);margin:0;}
+.document-search-head button {flex:none;white-space:nowrap;min-width:var(--sol-touch-target-min);min-height:var(--sol-touch-target-min);}
+.document-search-panel form {margin:0;flex:none;}
+.document-search-panel form>label {display:block;font-size:var(--sol-text-sm);margin-bottom:var(--sol-space-2);}
+.document-search-field {display:flex;align-items:center;gap:var(--sol-space-2);}
+.document-search-field input {width:100%;}
+.document-search-field input::placeholder {color:var(--sol-color-muted);opacity:1;}
+.document-search-field button {flex:none;white-space:nowrap;}
+.document-search-panel>p {margin:0;flex:none;}
+.document-search-results {overflow-y:auto;min-height:0;padding:8px;margin:-8px;overscroll-behavior:contain;}
+.document-search-results ul {list-style:none;padding:0;margin:0;display:grid;gap:var(--sol-space-2);}
+.doc-search-result {display:block;min-height:44px;padding:var(--sol-space-3);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);text-decoration:none;color:var(--sol-color-text);font-size:var(--sol-text-sm);}
+.doc-search-result:hover {background:var(--sol-color-accent-soft);color:var(--sol-color-text);}
+.doc-search-result strong {display:block;margin-block:2px var(--sol-space-1);color:var(--sol-color-accent);}
+.doc-search-result>span {display:block;}
+.doc-search-result .doc-search-location {font-size:var(--sol-text-xs);color:var(--sol-color-muted);}
+.doc-search-empty {margin:var(--sol-space-3) 0;}
+.appearance-panel {width:min(26rem,calc(100% - 32px));}
+.appearance-grid {display:grid;gap:var(--sol-space-4);margin-top:var(--sol-space-4);}
+.appearance-grid label {display:grid;gap:var(--sol-space-2);font-size:var(--sol-text-sm);}
+.appearance-panel>p {margin:var(--sol-space-4) 0 0;}
+@media(max-width:1100px){.topbar .appearance-inline,.topbar #mode-toggle,.topbar .version {display:none;}#appearance-open {display:inline-flex;}}
+@media(max-width:680px){.topbar .header-actions {gap:4px;}.search-wide {display:none;}.topbar #document-search-open,.topbar #appearance-open {padding-inline:8px;min-width:var(--sol-touch-target-min);min-height:var(--sol-touch-target-min);}.document-search-panel,.appearance-panel {width:calc(100% - 24px);max-width:calc(100% - 24px);max-height:calc(100dvh - 24px);padding:var(--sol-space-3);}}
 kbd {border: 1px solid var(--sol-color-control-border); border-radius: 4px; padding: 2px 5px;}
 .small {font-size: var(--sol-text-sm);}
 .muted {color: var(--sol-color-muted);}

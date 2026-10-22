@@ -15,6 +15,20 @@ const documentAliases={
 const documentEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let activeDocumentNavigation=null;
 export function getTopicCatalogue(route){return[{group:documentNames[route]||route,items:(documentSections[route]||[]).map(([id,label])=>({id,label}))}];}
+// Detached markup only: no live demo values, event handlers or navigation mounts.
+export function getDocumentSearchEntries(root,route){
+ const plain=node=>(node?.textContent||'').replace(/\s+/g,' ').trim();
+ const intro=root.querySelector('.page-intro')||root;
+ const entries=[{route,id:'',group:documentNames[route],label:documentNames[route],title:plain(intro.querySelector('h1')),description:plain(intro.querySelector('p')),text:plain(intro)}];
+ const sections=[...(documentSections[route]||[])];for(const [id,label,selector]of documentAliases[route]||[])if(!sections.some(x=>x[0]===id))sections.push([id,label,selector]);
+ for(const [id,label,selector]of sections){const fallback=selector||(documentAliases[route]||[]).find(x=>x[0]===id)?.[2],node=root.querySelector('#'+id)||(fallback&&root.querySelector(fallback));if(!node)throw Error('Search destination missing: '+route+'/'+id);
+  const context=node.matches('section.section')?node:node.closest('.demo')||node.closest('section.section')||node;
+  const summary=Array.from(context.querySelectorAll('.section-header>p,p,.sol-hint')).find(p=>plain(p)&&!p.closest('pre,[role="status"]'));
+  const title=plain(context.querySelector('h2,h3,h4'))||label,text=plain(context),description=plain(summary)||label+' · '+title;
+  entries.push({route,id,group:documentNames[route],label,title,description:description.length>170?description.slice(0,169)+'…':description,text});
+ }
+ return entries;
+}
 export function scrollToDocumentSection(anchor,{focus=true}={}){return activeDocumentNavigation?.go(anchor,focus)||false;}
 export function presentTopics(root,route){
  root.dataset.page=route;root.removeAttribute('data-topic');root.querySelector(':scope > .local-nav')?.remove();

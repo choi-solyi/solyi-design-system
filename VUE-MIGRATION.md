@@ -57,13 +57,13 @@ Historical phase2 baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository an
 
 SegmentedControl, searchable MultiSelect, two-ended RangeSlider, SplitButton, ContextMenu and ResizableSplitPane now have actual typed exports, standalone consumer usage and an installed starter. [Contracts](ADVANCED-VUE-API.md) and [phase3 release gates](VUE-EXPANSION-PLAN.md) distinguish source/installed/browser/public validation. The existing14 stay available.
 
-Document-wide search, complete shared-locale settings, distribution/update channels, Figma kit and broader real-device verification remain later work. The reference examples listed as follow-up above remain HTML/JS references; these six exports do not convert them all.
+Document-wide search and shared header appearance controls now have a local implementation; see DOC-SEARCH.md for its unposted scope and checks. Complete shared-locale settings, distribution/update channels, Figma kit and broader real-device verification remain later work. The reference examples listed as follow-up above remain HTML/JS references; these six exports do not convert them all.
 
 ## API decisions
 
 - Required unique `id` and visible `label` for form controls; `help`/`error` link by ID. Consumers own business validation. Local parsing errors never erase typed input.
 - Controlled `modelValue` and `update:modelValue`; `change` carries committed values. Disabled uses native disabled where supported. Readonly keeps readable/focusable content and blocks mutations; no invented unsupported ARIA.
 - String-valued native Select/Radio options, boolean Checkbox/Switch, string Textarea, number-or-null NumberInput, string Tabs value, boolean Toast visibility, date-only single/range values and HH:mm-or-null Time values. No partial date/time value is emitted as a completed value.
-- Locale-ready message objects and Intl formatting hooks are shared by new APIs; this is not a claim that the whole document has been translated. Korean remains the starter default. Wanted Sans is the newly approved default UI font; code/pre monospace stays unchanged.
+- Locale-ready message objects and Intl formatting hooks are shared by new APIs; this is not a claim that the whole document has been translated. Korean remains the starter default. Wanted Sans is the newly approved default UI font; the separately approved code/pre stack is JetBrains Mono, Nanum Gothic Coding, monospace (FONT.md).
 - Date arithmetic is pure and shared with the existing calendar. Components use Vue-rendered owned nodes/refs and lifecycle cleanup, not document-example IDs or innerHTML mounting.
 - Existing compact desktop sizes, mobile44px targets and button6/field10/card-popup12/dialog16 radius roles remain.

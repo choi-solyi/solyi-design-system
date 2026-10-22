@@ -8,7 +8,7 @@ Baseline: docs0.4.0 / Core and UI0.2.0, e04ba299. Only this repository and exist
 - [x] C. Source milestone passed; final installed/browser gate remains D/E. ResizableSplitPane: pointer capture and keyboard, min/max, separator semantics, narrow container reflow and cleanup tests.
 - [x] D. API docs, actual installed starter, independent type consumer, pack/type/runtime/regression pipeline.
 - [x] E1. Local Chrome keyboard/pointer/theme/mobile and actual font404 fallback checks; limits and line-wrap differences in QA.md. Final rebuilt-candidate recheck was interrupted by browser transport closure; do not imply a final pixel/public browser pass.
-- [ ] E2. Commit-time pending: existing Pages CI, commit asset comparison and public runtime verification. Exact post-publication evidence belongs to the release report.
+- [x] E2. Phase3 published at38e67f7, CI39724470149 passed and52 public assets matched source hashes; public runtime/font checks are in the release report. The later document-search/header phase remains local and unpublished.
 
 ## Contracts decided before implementation
 
@@ -19,7 +19,7 @@ Baseline: docs0.4.0 / Core and UI0.2.0, e04ba299. Only this repository and exist
 - SplitPane: percentage of available pane space; controlled number and change at completed adjustment. Capture pointer, clamp min/max, arrows/Home/End/Enter. Auto stack at narrow container widths; retain ratio and both mounted contents, hide separator from navigation while stacked.
 - WAI APG references are implementation guidance, not a conformance claim: https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/ ; https://www.w3.org/WAI/ARIA/apg/patterns/menubar/ ; https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/ ; https://www.w3.org/WAI/ARIA/apg/patterns/combobox/ . Multi-select is a documented extension, not APG's single-value example copied as-is.
 
-Document search, full shared locale settings, distribution/update channels and Figma remain subsequent work. Existing reference autocomplete, files, progress, overlays and templates are not implicitly converted by these six APIs.
+Document search and shared header appearance controls are now locally implemented (DOC-SEARCH-PLAN.md); they are not publicly posted in this phase. Full shared locale settings, distribution/update channels and Figma remain subsequent work. Existing reference autocomplete, files, progress, overlays and templates are not implicitly converted by these six APIs.
 
 ## Subsequent approved additions
 
