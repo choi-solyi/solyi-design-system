@@ -1,3 +1,4 @@
+import './build-usage-examples.mjs';
 import {releaseCatalogue,releaseFiles} from './releases.mjs';
 import {readFile, writeFile, mkdir, copyFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';

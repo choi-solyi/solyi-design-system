@@ -321,3 +321,13 @@ Theme/density dropdowns replaced by compact native radio groups styled as button
 Targeted checks only: doc-search-check.mjs passed once (61 destinations plus real-app12 preference restore/sync/storage-denial/modal-focus cases); header-preferences-check.mjs passed native groups/token mapping and72 text/check/focus/border contrasts; npm run check passed generated output/allowlist/links/brand/fonts. Dedicated header check is included in future npm test. No repeat package builds or independent-consumer tests for this shell-only change.
 
 User PC Chrome local: actual1643/1180/720/333 CSSpx. Native ArrowRight theme selection, Tab into density, ArrowRight density, Space, Escape→settings trigger, modal Tab/Shift+Tab boundaries and reload restore verified. Light/dark faces use distinct palette backgrounds and readable ink; focus-visible outline solid. At1180px brand right217.53 < actions left550.05, actions right1131.34 < viewport1180; no overlap/overflow. At333px panel fits, all theme/density faces height43.99px (fractional scaling), last theme right272.85 < viewport333. No horizontal overflow at checked widths/modes. Header screenshot timed out after5s; no pixel-review pass. Physical devices/screen readers remain unverified. Public push held;624bc43/17defab/a87739d preserved.
+# 0.9.0 초안 검수 추가 · 2026-10-22
+
+기준0.8.1 대비 공통 제목/설치 간격, 메뉴 비축소, 트리, 진행 표시와 Vue 사용 예제 전환을 검사했습니다. 첨부3장·설치 간격 원본 픽셀은 부모의 클라우드 환경에서 확인했습니다. Windows 작업자가 이미지를 직접 열었다고 주장하지 않습니다.
+
+- 실제 tarball 두 독립 소비 앱 설치·타입·빌드, 패키지 export/선언/CSS/라이선스 계약, 기존 패키지 runtime8종 통과. Sol 컴포넌트20개 이전 이름은 namespace·plugin·타입에서 제거됐고 새 SCard/SAlert/STree를 포함해 S 컴포넌트25개를 제공합니다.
+- 정본 Vue SFC30개를 vue-tsc3.3.13/TypeScript5.9.3으로 검사하고 실제 설치 패키지와 실행합니다. Vue native fallthrough 속성은 허용하며 선언된 props/이벤트/필수 값은 검사합니다. 모든 예제 mount, 중복 ID·ARIA 참조, 트리/카드 라디오/가상 파일/자동완성 재시도/편집·일괄 작업 초점 회귀 통과. 파일은 합성 샘플만 사용했습니다.
+- Progress 두 형태의 state×animated×showLabel/Value/Message128조합을 합성 DOM에서 확인했습니다. 알 수 없는 값은 퍼센트·aria-valuenow를 표시하지 않고, 완료/오류/알려진 진행에는 반복이 없습니다.
+- 사용자 PC의 연결 Chrome, CSS viewport332·333·720·960·1180px 대표 검사: 가로 넘침 없음, 메뉴 링크 펼침 전후 약44px·단일 스크롤·하위 폭 유지, 모바일 닫힘·앵커 오프셋, 트리 키보드 선택, 문서/패키지 drawer Escape·초점 반환. 공통 제목 gap약4px, 설치 외부 gap약16px.333px 원형 상태 문구 중심 오차약0.01px. 세 테마×light/dark 트리 예제 넘침 없음.
+- 현재 PC는 prefers-reduced-motion:reduce입니다. indeterminate 활성 상태에서도 computed animation:none을 확인했습니다. 정상 모션의 반복 규칙·시간 토큰·중단은 소스/상태 검사이며 실제 정상 회전의 픽셀 검수는 미완료입니다. 같은 Page.captureScreenshot 시간 초과를 반복하지 않았으므로 이번 전체 시각 검수 완료로 표시하지 않습니다.
+- 실제 Safari·Fold·터치·화면 낭독기, 모든 화면/옵션의 픽셀 시각 검수는 미검증입니다. 전용 API가 없는 Vue 조합 범위는 VUE-EXAMPLES-PLAN.md에 명시했습니다. 접근성 전체 준수 인증이나 모든 앱 호환 주장은 하지 않습니다.

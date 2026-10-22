@@ -4,7 +4,7 @@ import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './cont
 import type {SolOption} from './controls';
 import {useSolLocale,formatSolNumber} from './locale';
 
-export const SolSegmentedControl=defineComponent({name:'SSegmentedControl',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,required:true},name:String},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true},setup(p,{attrs,slots,emit}){
+export const SSegmentedControl=defineComponent({name:'SSegmentedControl',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,required:true},name:String},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true},setup(p,{attrs,slots,emit}){
  const l=useSolLocale(()=>p.locale),inputs=new Map<string,HTMLInputElement>();
  const enabled=()=>p.options.filter(o=>!o.disabled),chosen=()=>enabled().find(o=>o.value===p.modelValue)||enabled()[0];
  function choose(value:string){if(p.disabled||p.readonly||!enabled().some(o=>o.value===value))return;if(value!==p.modelValue){emit('update:modelValue',value);emit('change',value);}}
@@ -14,7 +14,7 @@ export const SolSegmentedControl=defineComponent({name:'SSegmentedControl',inher
 
 export type SolOptionLoader=(query:string,signal:AbortSignal)=>Promise<readonly SolOption[]>;
 export interface SolMultiSelectHandle {focus():void;validate():boolean;clear():void}
-export const SolMultiSelect=defineComponent({name:'SMultiSelect',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as PropType<readonly string[]>,default:()=>[]},options:{type:Array as PropType<readonly SolOption[]>,default:()=>[]},loadOptions:Function as PropType<SolOptionLoader>,maxSelected:Number,placeholder:String,debounce:{type:Number,default:150}},emits:{'update:modelValue':(_v:string[])=>true,change:(_v:string[])=>true,search:(_q:string)=>true,open:()=>true,close:()=>true,invalid:(_m:string)=>true},setup(p,{attrs,slots,emit,expose}){
+export const SMultiSelect=defineComponent({name:'SMultiSelect',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as PropType<readonly string[]>,default:()=>[]},options:{type:Array as PropType<readonly SolOption[]>,default:()=>[]},loadOptions:Function as PropType<SolOptionLoader>,maxSelected:Number,placeholder:String,debounce:{type:Number,default:150}},emits:{'update:modelValue':(_v:string[])=>true,change:(_v:string[])=>true,search:(_q:string)=>true,open:()=>true,close:()=>true,invalid:(_m:string)=>true},setup(p,{attrs,slots,emit,expose}){
  const l=useSolLocale(()=>p.locale),host=ref<HTMLElement|null>(null),input=ref<HTMLInputElement|null>(null),query=ref(''),opened=ref(false),active=ref(''),items=ref<readonly SolOption[]>([]),busy=ref(false),loadError=ref(''),localError=ref('');const labels=new Map<string,string>();let composing=false,request=0,abort:AbortController|undefined,timer:ReturnType<typeof setTimeout>|undefined,disposed=false;
  const remember=(list:readonly SolOption[])=>{const seen=new Set<string>();return list.filter(o=>!!o.value&&!seen.has(o.value)&&!!seen.add(o.value)).map(o=>{labels.set(o.value,o.label);return o;});};
  watch(()=>p.options,value=>{const list=remember(value);if(!p.loadOptions)items.value=list;},{immediate:true,deep:true});
@@ -40,7 +40,7 @@ export const SolMultiSelect=defineComponent({name:'SMultiSelect',inheritAttrs:fa
 }});
 
 export type SolRangeValue=readonly [number,number];
-export const SolRangeSlider=defineComponent({name:'SRangeSlider',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as unknown as PropType<SolRangeValue>,required:true},min:{type:Number,default:0},max:{type:Number,default:100},step:{type:Number,default:1},lowerLabel:String,upperLabel:String,formatValue:Function as PropType<(value:number)=>string>},emits:{'update:modelValue':(_v:[number,number])=>true,change:(_v:[number,number])=>true},setup(p,{attrs,slots,emit}){
+export const SRangeSlider=defineComponent({name:'SRangeSlider',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as unknown as PropType<SolRangeValue>,required:true},min:{type:Number,default:0},max:{type:Number,default:100},step:{type:Number,default:1},lowerLabel:String,upperLabel:String,formatValue:Function as PropType<(value:number)=>string>},emits:{'update:modelValue':(_v:[number,number])=>true,change:(_v:[number,number])=>true},setup(p,{attrs,slots,emit}){
  const l=useSolLocale(()=>p.locale),track=ref<HTMLElement|null>(null),handles:HTMLElement[]=[];let drag:{id:number;index:number;start:SolRangeValue;last:SolRangeValue;target:HTMLElement}|null=null;
  const valid=()=>Number.isFinite(p.min)&&Number.isFinite(p.max)&&p.min<p.max&&Number.isFinite(p.step)&&p.step>0;
  const top=()=>valid()?Number((p.min+Math.floor((p.max-p.min)/p.step+1e-9)*p.step).toFixed(10)):1;

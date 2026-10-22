@@ -16,7 +16,7 @@
 
 ## 로컬 미게시 후속
 
-공개 기준은 v0.6.1 /8d0b297입니다. 이번 로컬 후보는 S PascalCase 이름·Sol 호환 별칭, 공통 Vuetify 테마/defaults와 진행 표시2종을 추가합니다. [S API 계약](S-API.md) · [61개 목적지/34개 예제 전환표](REUSE-INVENTORY.md) · [단계별 계획](S-API-PLAN.md). 공개 push/Pages 배포, npm 이름 변경/게시와 다른 앱 적용은 보류합니다.
+문서0.9.0 후보는 S 컴포넌트만 공개하며, 이전 Sol 컴포넌트 별칭을 제거합니다. Vue 사용 예제는 실제 패키지를 소비하는 정본 SFC에서 문서 코드와 실행 화면을 함께 만듭니다. [예제 전환 범위·미제공 API](VUE-EXAMPLES-PLAN.md) · [S API 계약](S-API.md). npm 게시와 다른 앱 연결은 포함하지 않습니다.
 
 ## 로컬 실행
 

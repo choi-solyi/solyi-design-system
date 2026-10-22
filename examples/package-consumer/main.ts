@@ -104,3 +104,6 @@ void formatSolNumber(1234.5,language.value);void parseSolNumber('1,234.5','en');
 // @ts-expect-error Locale source values must be a code or a partial pack.
 const invalidLocale:SolLocaleSource=42;void invalidLocale;
 app.use(createVuetify()).use(SolyiUI).mount('#app');
+
+// @ts-expect-error Removed legacy component compatibility export.
+import type {SolButton as RemovedLegacyButton} from '@solyi/vue-ui';

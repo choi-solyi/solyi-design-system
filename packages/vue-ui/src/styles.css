@@ -198,3 +198,32 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 
 .sol-ui-toast-icon {flex:none;}
 .sol-ui-toast-tone {display:block;margin-bottom:var(--sol-space-1);}
+
+.sol-ui-progress[data-shape=circular] {justify-items:center;text-align:center;min-width:0;}
+.sol-ui-progress[data-shape=circular]>.sol-ui-progress-status {width:100%;text-align:center;}
+.sol-ui-progress[data-animation=on] .sol-ui-progress-fill {animation:sol-progress-loading var(--sol-motion-duration-indeterminate) linear infinite;}
+.sol-ui-progress[data-animation=on] .sol-progress-circle>svg {animation:sol-progress-rotate var(--sol-motion-duration-indeterminate) linear infinite;}
+@keyframes sol-progress-loading {from{transform:translateX(-110%);}to{transform:translateX(310%);}}
+@keyframes sol-progress-rotate {from{transform:rotate(-90deg);}to{transform:rotate(270deg);}}
+@media(prefers-reduced-motion:reduce){.sol-ui-progress .sol-ui-progress-fill,.sol-ui-progress .sol-progress-circle>svg {animation:none!important;}}
+
+.sol-ui-card {display:grid;gap:var(--sol-space-4);}
+.sol-ui-card>:last-child {margin-bottom:0;}
+.sol-ui-card-actions {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);}
+.sol-ui-drawer-overlay>.v-overlay__content {position:fixed!important;inset:0 0 0 auto!important;margin:0!important;max-height:100dvh!important;height:100dvh;width:min(440px,100%)!important;}
+.sol-ui-drawer-overlay .sol-ui-dialog {height:100%;border-radius:var(--sol-radius-panel) 0 0 var(--sol-radius-panel);overflow:auto;}
+@media(max-width:440px){.sol-ui-drawer-overlay .sol-ui-dialog{border-radius:0;}}
+.sol-ui-tree [aria-disabled=true]>.sol-tree-row {color:var(--sol-color-muted);cursor:default;}
+
+.sol-ui-radio-card {padding:var(--sol-space-4);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-card);width:100%;}
+.sol-ui-radio-card:has(input:checked) {background:var(--sol-color-accent-soft);border-color:var(--sol-color-accent);}
+.sol-ui-radio-card:has(input:focus-visible) {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-ui-option-description {display:block;margin-top:var(--sol-space-1);}
+.sol-ui-card>p,.sol-ui-alert>p {margin:0;}
+.sol-ui-alert {display:grid;gap:var(--sol-space-1);}
+
+.sol-ui-radio-card .sol-hint {color:inherit;}
+.sol-ui-progress-linear {overflow:hidden;}
+.sol-progress-circle>svg {transform-origin:center;}
+[data-motion-policy="reduced"] .sol-ui-progress .sol-ui-progress-fill,
+[data-motion-policy="reduced"] .sol-ui-progress .sol-progress-circle>svg { animation:none!important; }

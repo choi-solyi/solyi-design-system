@@ -314,3 +314,19 @@ html {scroll-padding-top:var(--sol-document-offset,100px);}
 .dialog-heading-copy {display:grid;gap:var(--sol-space-1);min-width:0;}
 .dialog-heading-copy>h2 {margin:0;}
 .dialog-head {align-items:flex-start;margin-bottom:var(--sol-space-4);}
+
+/* The sidebar owns scrolling; its content and hit areas never shrink to fit the viewport. */
+.sidebar {scrollbar-gutter:stable;}
+.sidebar>* {flex-shrink:0;}
+.sidebar>nav {flex:0 0 auto;min-width:0;width:100%;grid-auto-rows:minmax(44px,auto);}
+.doc-nav-branch,.doc-nav-row {min-width:0;max-width:100%;}
+.sidebar .section-subnav {min-width:0;max-width:calc(100% - 20px);}
+.sidebar .section-subnav>a {min-width:0;max-width:100%;min-height:44px;overflow-wrap:anywhere;}
+
+.sol-install-card>.code-example{margin-block:var(--sol-space-3);}
+.sol-install-card>.sol-hint{margin-top:var(--sol-space-3);}
+
+.vue-code-examples {margin-top:var(--sol-space-4);min-width:0;}
+.vue-code-examples>[role=tablist] {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);}
+.vue-code-examples [role=tab][aria-selected=true] {background:var(--sol-color-accent-soft);color:var(--sol-color-text);border-color:var(--sol-color-accent);}
+.vue-code-examples>[role=tabpanel] {min-width:0;}

@@ -23,14 +23,16 @@ for(const project of ['examples/package-consumer/','examples/vue-vuetify/']){
  run('5/10 Clean install real tarballs: '+project,project,npm,['ci',...installArgs]);
 }
 run('6/10 Independent consumer typecheck + app build','examples/package-consumer/',npm,['run','build']);
+run('6/10 Typecheck actual Vue documentation examples','examples/vue-vuetify/',npm,['run','check:recipes']);
 node('7/10 Pack contracts and installed runtime tests','scripts/library-contract-check.mjs');
 node('7/10 Component runtime','scripts/library-runtime-check.mjs');
 node('7/10 Extended controlled Vue runtime','scripts/vue-extended-runtime-check.mjs');
 node('7/10 Six new reusable Vue APIs','scripts/vue-expansion-runtime-check.mjs');
 node('7/10 Shared locale runtime','scripts/locale-runtime-check.mjs');
 node('7/10 Installed overflow locale','scripts/overflow-locale-check.mjs','--installed');
-node('7/10 S aliases and direct Vuetify bridge','scripts/s-api-runtime-check.mjs');
+node('7/10 S public APIs and direct Vuetify bridge','scripts/s-api-runtime-check.mjs');
 node('7/10 Reusable progress','scripts/progress-runtime-check.mjs');
+node('7/10 Actual Vue documentation recipes','scripts/vue-recipes-runtime-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 if(process.argv.includes('--prepare-release'))node('9/10 Freeze the verified local package pair','scripts/releases.mjs',JSON.parse(readFileSync(new URL('package.json',root),'utf8')).version);

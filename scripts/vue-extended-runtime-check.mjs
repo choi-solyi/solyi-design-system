@@ -15,17 +15,17 @@ const entry=new URL('.runtime-extension-entry.ts',consumer);await writeFile(entr
 const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consumer));const built=await build({root:fileURLToPath(consumer),configFile:false,logLevel:'error',ssr:{noExternal:true},build:{ssr:fileURLToPath(entry),write:false,minify:false,rolldownOptions:{external:['vue']}}});
 await writeFile(new URL('.runtime-check.mjs',consumer),built.output.find(o=>o.type==='chunk').code);
 const api=await import(new URL('.runtime-check.mjs?extended='+Date.now(),consumer));
-const {createApp,h,ref,nextTick,SolCheckbox,SolRadioGroup,SolSwitch,SolSelect,SolTextarea,SolNumberInput,SolLocaleKey}=api;
+const {createApp,h,ref,nextTick,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,SolLocaleKey}=api;
 const readonly=ref(false),disabled=ref(false),check=ref(false),radio=ref('a'),toggle=ref(false),selected=ref(null),text=ref(''),number=ref(null),fieldError=ref(''),numberControl=ref(null);
 const options=[{value:'a',label:'Alpha'},{value:'b',label:'Unavailable',disabled:true},{value:'c',label:'Gamma'}];
 const common=id=>({id,label:id,help:'Help '+id,error:fieldError.value,readonly:readonly.value,disabled:disabled.value});
 const app=createApp({setup(){return()=>h('form',{novalidate:true},[
- h(SolCheckbox,{...common('check'),required:true,modelValue:check.value,'onUpdate:modelValue':v=>check.value=v}),
- h(SolRadioGroup,{...common('radio'),options,modelValue:radio.value,'onUpdate:modelValue':v=>radio.value=v}),
- h(SolSwitch,{...common('switch'),modelValue:toggle.value,'onUpdate:modelValue':v=>toggle.value=v}),
- h(SolSelect,{...common('select'),options,modelValue:selected.value,'onUpdate:modelValue':v=>selected.value=v}),
- h(SolTextarea,{...common('text'),maxlength:12,modelValue:text.value,'onUpdate:modelValue':v=>text.value=v}),
- h(SolNumberInput,{...common('number'),ref:numberControl,min:0,max:2,step:.5,modelValue:number.value,'onUpdate:modelValue':v=>number.value=v})
+ h(SCheckbox,{...common('check'),required:true,modelValue:check.value,'onUpdate:modelValue':v=>check.value=v}),
+ h(SRadioGroup,{...common('radio'),options,modelValue:radio.value,'onUpdate:modelValue':v=>radio.value=v}),
+ h(SSwitch,{...common('switch'),modelValue:toggle.value,'onUpdate:modelValue':v=>toggle.value=v}),
+ h(SSelect,{...common('select'),options,modelValue:selected.value,'onUpdate:modelValue':v=>selected.value=v}),
+ h(STextarea,{...common('text'),maxlength:12,modelValue:text.value,'onUpdate:modelValue':v=>text.value=v}),
+ h(SNumberInput,{...common('number'),ref:numberControl,min:0,max:2,step:.5,modelValue:number.value,'onUpdate:modelValue':v=>number.value=v})
  ]);}});app.provide(SolLocaleKey,{required:'required'});app.mount('#app');await nextTick();
 const $=s=>{const e=d.querySelector(s);assert.ok(e,s);return e;},fire=(e,type)=>e.dispatchEvent(new w.Event(type,{bubbles:true,cancelable:true})),key=(e,k,extra={})=>{let event=new w.KeyboardEvent('keydown',{key:k,bubbles:true,cancelable:true,...extra});e.dispatchEvent(event);return event;};
 $('#check').click();await nextTick();assert.equal(check.value,true);assert.equal($('#check').required,true);assert.match($('label[for=check]').textContent,/required/);
@@ -43,10 +43,10 @@ assert.equal(numberControl.value.validate(),false,'Explicit validate includes a 
 app.unmount();console.log('PASS: six native controlled fields, disabled/readonly, value types, range/step/draft recovery, counters, option guards, locale fallback and linked consumer errors.');
 const tick=async()=>{await nextTick();await nextTick();await nextTick();},wait=ms=>new Promise(r=>setTimeout(r,ms));
 {
- const {SolTabs,SolToast}=api,tab=ref('a'),activation=ref('automatic'),items=ref([{value:'a',label:'Alpha'},{value:'b',label:'Unavailable',disabled:true},{value:'c',label:'Gamma'}]),notice=ref(false),duration=ref(0),message=ref('Fictional notification'),reasons=[];
+ const {STabs,SSnackbar}=api,tab=ref('a'),activation=ref('automatic'),items=ref([{value:'a',label:'Alpha'},{value:'b',label:'Unavailable',disabled:true},{value:'c',label:'Gamma'}]),notice=ref(false),duration=ref(0),message=ref('Fictional notification'),reasons=[];
  const app=createApp({setup(){return()=>h('div',[
-  h(SolTabs,{id:'tabs',label:'Tabs',modelValue:tab.value,activation:activation.value,items:items.value,'onUpdate:modelValue':v=>tab.value=v},{'panel-a':()=>h('button',{id:'panel-a-action'},'A action'),'panel-c':()=>h('input',{id:'panel-c-input'})}),
-  h(SolToast,{id:'toast',modelValue:notice.value,message:message.value,duration:duration.value,'onUpdate:modelValue':v=>notice.value=v,onClose:v=>reasons.push(v)})
+  h(STabs,{id:'tabs',label:'Tabs',modelValue:tab.value,activation:activation.value,items:items.value,'onUpdate:modelValue':v=>tab.value=v},{'panel-a':()=>h('button',{id:'panel-a-action'},'A action'),'panel-c':()=>h('input',{id:'panel-c-input'})}),
+  h(SSnackbar,{id:'toast',modelValue:notice.value,message:message.value,duration:duration.value,'onUpdate:modelValue':v=>notice.value=v,onClose:v=>reasons.push(v)})
  ]);}});app.mount('#app');await tick();
  key($('#tabs-tab-0'),'ArrowRight');await tick();assert.equal(tab.value,'c');assert.equal(d.activeElement.id,'tabs-tab-2');assert.equal($('#tabs-panel-0').hidden,true);assert.equal($('#tabs-panel-2').hidden,false);assert.equal($('#tabs-tab-2').getAttribute('aria-selected'),'true');assert.equal($('#tabs-tab-1').disabled,true);
  key($('#tabs-tab-2'),'Home');await tick();assert.equal(tab.value,'a');activation.value='manual';await tick();key($('#tabs-tab-0'),'End');await tick();assert.equal(tab.value,'a');assert.equal(d.activeElement.id,'tabs-tab-2');key($('#tabs-tab-2'),'Enter');await tick();assert.equal(tab.value,'c');items.value.splice(2,1);await tick();assert.equal(tab.value,'a');assert.equal(d.activeElement.id,'tabs-tab-0');
@@ -60,11 +60,11 @@ const tick=async()=>{await nextTick();await nextTick();await nextTick();},wait=m
  console.log('PASS: Tabs roving/skip/manual activation/removed-item recovery/hidden panels; Toast live region/no focus grab/close return/pointer and focus pause/persistent duration/message/unmount.');
 }
 {
- const {SolDatePicker,SolTimePicker}=api,single=ref('2024-02-28'),range=ref({start:'2024-02-26',end:'2024-02-27'}),mode=ref('range'),time=ref('09:00'),locked=ref(false),dateChanges=[],externalError=ref(''),singleHandle=ref(null),timeHandle=ref(null);
+ const {SDatePicker,STimePicker}=api,single=ref('2024-02-28'),range=ref({start:'2024-02-26',end:'2024-02-27'}),mode=ref('range'),time=ref('09:00'),locked=ref(false),dateChanges=[],externalError=ref(''),singleHandle=ref(null),timeHandle=ref(null);
  const app=createApp({setup(){return()=>h('div',[
-  h(SolDatePicker,{id:'single',label:'Single',ref:singleHandle,error:externalError.value,mode:'single',locale:{...api.enLocale,firstDay:1},modelValue:single.value,readonly:locked.value,'onUpdate:modelValue':v=>single.value=v}),
-  h(SolDatePicker,{id:'range',label:'Range',mode:mode.value,modelValue:range.value,'onUpdate:modelValue':v=>range.value=v,onChange:v=>dateChanges.push(v)}),
-  h(SolTimePicker,{id:'time',label:'Time',ref:timeHandle,error:externalError.value,modelValue:time.value,min:'09:00',max:'18:00',step:15,readonly:locked.value,'onUpdate:modelValue':v=>time.value=v})
+  h(SDatePicker,{id:'single',label:'Single',ref:singleHandle,error:externalError.value,mode:'single',locale:{...api.enLocale,firstDay:1},modelValue:single.value,readonly:locked.value,'onUpdate:modelValue':v=>single.value=v}),
+  h(SDatePicker,{id:'range',label:'Range',mode:mode.value,modelValue:range.value,'onUpdate:modelValue':v=>range.value=v,onChange:v=>dateChanges.push(v)}),
+  h(STimePicker,{id:'time',label:'Time',ref:timeHandle,error:externalError.value,modelValue:time.value,min:'09:00',max:'18:00',step:15,readonly:locked.value,'onUpdate:modelValue':v=>time.value=v})
  ]);}});app.mount('#app');await tick();
  assert.equal($('#time').hasAttribute('aria-controls'),false,'Closed teleported time panel has no dangling ARIA reference');
  const singleOpen=$('[aria-controls="single-calendar"].sol-date-open');singleOpen.focus();singleOpen.click();await tick();assert.equal($('#single-calendar').open,true);assert.equal(d.activeElement.getAttribute('data-calendar-day'),'2024-02-28');key(d.activeElement,'ArrowRight');await tick();assert.equal(d.activeElement.getAttribute('data-calendar-day'),'2024-02-29');key(d.activeElement,'Enter');await tick();assert.equal(single.value,'2024-02-29');assert.equal($('#single-calendar').open,false);assert.equal(d.activeElement,singleOpen);

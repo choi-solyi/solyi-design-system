@@ -18,7 +18,7 @@ const result=await build({root:fileURLToPath(consumer),configFile:false,logLevel
 const output=result.output.find(x=>x.type==='chunk');assert.ok(output);
 await writeFile(new URL('.runtime-check.mjs',consumer),output.code);
 const api=await import(new URL('.runtime-check.mjs?locale='+Date.now(),consumer));
-const {createApp,h,ref,nextTick,createVuetify,VApp,SolField,SolDialog,SolTable,SolNumberInput,SolDatePicker,SolTimePicker,SolSelect,SolTextarea,SolToast,SolMultiSelect,provideSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate}=api;
+const {createApp,h,ref,nextTick,createVuetify,VApp,STextField,SDialog,SDataTable,SNumberInput,SDatePicker,STimePicker,SSelect,STextarea,SSnackbar,SMultiSelect,provideSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate}=api;
 assert.equal(resolveSolLocale('en').close,'Close');assert.equal(resolveSolLocale('fr').code,'ko-KR');assert.equal(resolveSolLocale('__proto__').code,'ko-KR');
 assert.equal(resolveSolLocale({code:'en',close:'Dismiss'},{required:'needed'}).close,'Dismiss');
 assert.equal(resolveSolLocale({code:'ko',close:'앱 닫기'},{code:'en'}).close,'Close');
@@ -30,16 +30,16 @@ assert.equal(formatSolDate('2026-10-21','en'),'Oct 21, 2026');assert.equal(forma
 const language=ref('ko'),dialog=ref(false),number=ref(1234.5),date=ref('2026-10-21'),time=ref('09:30'),selected=ref(['a']),page=ref(2),text=ref('draft');let changes=0;
 const cols=[{key:'name',label:'Name'},{key:'count',label:'Count',format:'number'},{key:'date',label:'Date',format:'date'}];
 const app=createApp({setup(){return()=>h(VApp,{},()=>h('main',[
- h(SolField,{id:'field',label:'Title',required:true,modelValue:text.value}),
- h(SolField,{id:'override',label:'Override',required:true,locale:{code:'en',required:'needed'}}),
- h(SolNumberInput,{id:'number',label:'Number',modelValue:number.value,step:.5,'onUpdate:modelValue':v=>number.value=v,onChange:()=>changes++}),
- h(SolDatePicker,{id:'date',label:'Date',modelValue:date.value,onChange:()=>changes++}),
- h(SolTimePicker,{id:'time',label:'Time',modelValue:time.value,min:'09:00',max:'18:00',step:15,onChange:()=>changes++}),
- h(SolSelect,{id:'select',label:'Select',options:[]}),h(SolTextarea,{id:'textarea',label:'Note',modelValue:'sample'}),
- h(SolMultiSelect,{id:'multi',label:'Tags',required:true,modelValue:[],options:[]}),
- h(SolToast,{id:'toast',message:'Caller message',modelValue:true}),
- h(SolDialog,{id:'dialog',title:'Caller title',modelValue:dialog.value,'onUpdate:modelValue':v=>dialog.value=v}),
- h(SolTable,{caption:'Caller caption',columns:cols,rows:[{id:'a',name:'Caller data',count:1234.5,date:'2026-10-21'}],selected:selected.value,selectable:true,page:page.value,pageCount:3})
+ h(STextField,{id:'field',label:'Title',required:true,modelValue:text.value}),
+ h(STextField,{id:'override',label:'Override',required:true,locale:{code:'en',required:'needed'}}),
+ h(SNumberInput,{id:'number',label:'Number',modelValue:number.value,step:.5,'onUpdate:modelValue':v=>number.value=v,onChange:()=>changes++}),
+ h(SDatePicker,{id:'date',label:'Date',modelValue:date.value,onChange:()=>changes++}),
+ h(STimePicker,{id:'time',label:'Time',modelValue:time.value,min:'09:00',max:'18:00',step:15,onChange:()=>changes++}),
+ h(SSelect,{id:'select',label:'Select',options:[]}),h(STextarea,{id:'textarea',label:'Note',modelValue:'sample'}),
+ h(SMultiSelect,{id:'multi',label:'Tags',required:true,modelValue:[],options:[]}),
+ h(SSnackbar,{id:'toast',message:'Caller message',modelValue:true}),
+ h(SDialog,{id:'dialog',title:'Caller title',modelValue:dialog.value,'onUpdate:modelValue':v=>dialog.value=v}),
+ h(SDataTable,{caption:'Caller caption',columns:cols,rows:[{id:'a',name:'Caller data',count:1234.5,date:'2026-10-21'}],selected:selected.value,selectable:true,page:page.value,pageCount:3})
  ]));}});provideSolLocale(app,()=>({code:language.value}));app.use(createVuetify());app.mount('#app');
 const tick=async()=>{await nextTick();await nextTick();},$=s=>{const el=d.querySelector(s);assert.ok(el,s);return el;},fire=(el,type)=>el.dispatchEvent(new w.Event(type,{bubbles:true,cancelable:true}));await tick();
 assert.match($('label[for=field]').textContent,/필수/);assert.match($('label[for=override]').textContent,/needed/);assert.equal($('#number').value,'1,234.5');

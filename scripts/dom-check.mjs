@@ -89,7 +89,8 @@ const noticeRetry=$('[data-action="retry-feedback"]');noticeRetry.focus();notice
 assert.equal(noticeRetry.getAttribute('aria-busy'),'true','Notice retry prevents duplicate execution while loading');
 await pause(760);assert.equal(noticeRetry.hasAttribute('aria-busy'),false);assert.match($('#retry-result').textContent,/성공/);
 assert.equal(d.activeElement,noticeRetry,'Notice retry retains keyboard focus after completion');
-click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/sol-button/);
+click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/<SBtn/);assert.match(clipboard,/from '@solyi\/vue-ui'/);
+assert.equal($('#usage-buttons-html').hidden,true);$('#usage-buttons-vue-tab').dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.equal($('#usage-buttons-html').hidden,false);assert.equal(d.activeElement.id,'usage-buttons-html-tab');click('#usage-buttons-vue-tab');assert.equal($('#usage-buttons-vue').hidden,false);
 // Only the app's dialog opening and return-focus wiring is checked; no native modal trap is simulated.
 const dialog=$('#detail-dialog');dialog.showModal=function(){this.setAttribute('open','');};dialog.close=function(){this.removeAttribute('open');fire(this,'close');};
 click('[data-open-detail]');assert.equal(dialog.open,true);click('#dialog-close');assert.equal(dialog.open,false);assert.equal(d.activeElement.dataset.openDetail,'0');

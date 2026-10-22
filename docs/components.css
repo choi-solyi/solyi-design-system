@@ -341,3 +341,14 @@
 .sol-data-footer {justify-content:flex-start;}
 @container(min-width:431px) and (max-width:600px){.sol-data-footer{display:flex;}}
 @media(min-width:441px) and (max-width:680px){.sol-data-footer{display:flex;}}
+
+/* Shared bilingual heading group: title and eyebrow stay together on every surface. */
+.sol-surface-heading {display:grid;gap:var(--sol-space-1);min-width:0;}
+.sol-surface-heading>:is(h2,h3,h4,p,span) {margin:0;}
+.sol-surface-heading>.eyebrow {font-size:var(--sol-text-xs);line-height:1.5;color:var(--sol-color-muted);letter-spacing:.12em;}
+.sol-side-panel-head {align-items:flex-start;margin-bottom:var(--sol-space-4);}
+.sol-tree,.sol-tree [role=treeitem] {min-width:0;}
+.sol-tree [role=group] {margin:4px 0 12px 20px;padding-inline-start:10px;border-inline-start:1px solid var(--sol-color-border);}
+.sol-tree-row {flex-wrap:nowrap;}
+.sol-tree-disclosure {order:2;margin-inline-start:auto;}
+.sol-tree [aria-selected="true"]>.sol-tree-row::after {content:none;}

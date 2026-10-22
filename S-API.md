@@ -1,6 +1,16 @@
-# S PascalCase APIs · local first phase
+# Vue 컴포넌트 API
 
-`@solyi/vue-ui`의 기본 사용 이름은 `SBtn`, `STextField`, `SDialog`, `SDataTable` 등 S 접두사 PascalCase입니다. 기존 `Sol*` export와 plugin 등록 이름은 같은 컴포넌트 객체를 가리키는 호환 별칭으로 유지합니다. 제거 예정은 없으며 기존 상태·이벤트·refs를 다시 감싸지 않습니다.
+## 표면·트리와 Vue 조합
+
+- `SCard`: `title`, `eyebrow`, `headingLevel:2|3|4`(기본3), 기본/actions 슬롯. 카드의 제목과 본문을 공통 간격으로 묶습니다.
+- `SAlert`: `tone:info|success|warning|danger`, `title`, `live:off|polite|assertive`(기본off), 기본/actions 슬롯. 정적 안내는 live를 켜지 않고, 같은 변화의 자동 안내는 한곳만 사용합니다.
+- `STree`: 필수 `id/label/items:STreeItem[]`, `v-model:string|null`, `v-model:expanded:string[]`, `disabled/readonly`, `select(id)` 이벤트. 항목은 고유 id/label, 선택적 disabled/children입니다. 방향키·Home/End는 초점, Enter/Space는 선택입니다. 접힌 자식은 Tab 순서에서 제외합니다. readonly는 탐색·펼침을 허용하고 값 선택을 막습니다.
+- `SDialog presentation="drawer"`는 같은 열기/닫기·초점 계약을 오른쪽 패널로 표시합니다. `eyebrow`와 `title`은 같은 제목 묶음을 사용합니다.
+- `SRadioGroup layout="cards"`와 `options[].description`은 라벨 전체가 선택되는 비교 카드를 제공합니다. 값과 native radio의 키보드 동작은 기존 계약을 유지합니다.
+
+기본 사용 코드는 [정본 Vue 예제](examples/vue-vuetify/src/recipes/)에서 생성하고, 같은 파일을 `/starter/?view=recipes`에서 실행합니다. 문서의 HTML·CSS는 별도 참고 탭입니다. Tooltip/Popover·Accordion·Breadcrumb·Avatar·파일·단일 자동완성·차트는 전용 S export 없이 실제 S API와 semantic HTML/SVG를 연결한 Vue 조합입니다. [전체 전환표와 제한](VUE-EXAMPLES-PLAN.md)을 확인하세요.
+
+`@solyi/vue-ui`의 기본 사용 이름은 `SBtn`, `STextField`, `SDialog`, `SDataTable` 등 S 접두사 PascalCase입니다. 현재 컴포넌트 export와 plugin 등록은 S 이름만 제공합니다. 사용되지 않은 이전 Sol 컴포넌트 별칭은 이번 0.x에서 제거했습니다. 기존 릴리스 파일은 변경하지 않습니다.
 
 ```vue
 <script setup>
@@ -37,36 +47,11 @@ createApp(App).use(vuetify).use(SolyiUI).mount('#app');
 
 실행: `starter/`의 S/V 비교 예제. 전체 문서 전환 상태는 `REUSE-INVENTORY.md`, 단계 검증은 `S-API-PLAN.md`를 따릅니다. 이번 변경은 로컬이며 공개 push/레지스트리/다른 앱 적용은 보류합니다.
 
-## 호환 이름 대응
-
-| 이전 이름 (계속 지원) | 기본 사용 이름 |
-|---|---|
-| SolButton | SBtn |
-| SolField | STextField |
-| SolDialog | SDialog |
-| SolTable | SDataTable |
-| SolCheckbox | SCheckbox |
-| SolRadioGroup | SRadioGroup |
-| SolSwitch | SSwitch |
-| SolSelect | SSelect |
-| SolTextarea | STextarea |
-| SolNumberInput | SNumberInput |
-| SolTabs | STabs |
-| SolToast | SSnackbar |
-| SolDatePicker | SDatePicker |
-| SolTimePicker | STimePicker |
-| SolSegmentedControl | SSegmentedControl |
-| SolMultiSelect | SMultiSelect |
-| SolRangeSlider | SRangeSlider |
-| SolSplitButton | SSplitBtn |
-| SolContextMenu | SContextMenu |
-| SolResizableSplitPane | SResizableSplitPane |
-
 ## 진행 표시
 
 SProgressLinear와 SProgressCircular는 같은 읽기 전용 표시 계약입니다. id/label은 필수, modelValue=0/min=0/max=100, state는 determinate/indeterminate/complete/error입니다. 실제 작업·저장·타이머를 실행하지 않습니다. 범위 밖 값은 표시만 clamp하고 complete는 max를 표시합니다. 잘못된 수치/경계는 값을 만들지 않고 안내합니다. unknown은 aria-valuenow와 퍼센트를 제거하고 error는 마지막 확인 값과 지속 문구를 보입니다. message는 앱 문구, announce는 기본 false이며 같은 작업의 한곳만 polite로 켭니다. Circular size는48–256(기본96), Linear는 너비100%입니다. 공통 ko/en locale을 따릅니다.
 
-resolveSProgress는 같은 clamp/known/ratio를 계산하는 순수 helper입니다. 둘에 같은 모델을 전달해도 값을 emit하지 않습니다. 값 변경의 유한 transition만 있고 reduced-motion은 이를 제거합니다. unknown은 정적인 띠/호와 글자를 사용하며 무한 회전이나 가짜 처리 시간이 없습니다.
+resolveSProgress는 같은 clamp/known/ratio를 계산하는 순수 helper입니다. 둘에 같은 모델을 전달해도 값을 emit하지 않습니다. 값 변경의 유한 transition만 있고 reduced-motion은 이를 제거합니다. state="indeterminate"는 animated=true(기본)일 때 반복 띠/호로 처리 중임을 나타냅니다. animated=false 또는 prefers-reduced-motion에서는 정적 표시를 유지합니다. 알려진 진행률을 가짜로 만들지 않으며 완료·오류·determinate에서는 반복하지 않습니다.
 
 문서 #component/progress는 같은 출처의 starter?view=progress를 삽입해 실제 tarball을 import한 같은 SFC를 실행합니다. 부모 테마·모드·밀도는 origin/source를 확인한 메시지로 동기화하고 ResizeObserver로 높이를 맞춥니다. 키보드 탐색과 starter 직접 링크를 유지합니다. 나머지 HTML 예제는 전환표에 표시한 후속 범위입니다.
 

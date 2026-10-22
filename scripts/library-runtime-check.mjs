@@ -17,15 +17,15 @@ const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consum
 const result=await build({root:fileURLToPath(consumer),configFile:false,logLevel:'error',ssr:{noExternal:true},build:{ssr:fileURLToPath(new URL('runtime-entry.ts',consumer)),write:false,minify:false,rolldownOptions:{external:['vue']}}});
 const output=result.output.find(x=>x.type==='chunk');assert.ok(output);
 await writeFile(new URL('.runtime-check.mjs',consumer),output.code);
-const {createApp,h,ref,nextTick,createVuetify,VApp,SolButton,SolField,SolDialog,SolTable}=await import(new URL('.runtime-check.mjs?check='+Date.now(),consumer));
+const {createApp,h,ref,nextTick,createVuetify,VApp,SBtn,STextField,SDialog,SDataTable}=await import(new URL('.runtime-check.mjs?check='+Date.now(),consumer));
 const text=ref(''),open=ref(false),loading=ref(false),selection=ref([]),sort=ref(null),page=ref(1),selectable=ref(true),ariaDisabled=ref(false);let clicks=0,retries=0;const state=ref('ready');
 const columns=[{key:'name',label:'이름',sortable:true},{key:'date',label:'날짜',width:'128px'}],rows=ref([{id:'a',name:'가상 자료',date:'2026-10-21'},{id:'b',name:'두 번째 자료',date:'2026-10-20'}]);
 const app=createApp({setup(){return()=>h(VApp,{},()=>h('main',[
- h(SolButton,{id:'package-button',loading:loading.value,'aria-disabled':ariaDisabled.value?'true':undefined,onClick:()=>clicks++},()=> '실행'),
- h(SolButton,{id:'package-open',onClick:()=>open.value=true},()=> '열기'),
- h(SolField,{id:'package-field',label:'가상 제목',modelValue:text.value,error:text.value.length===1?'두 자 이상 입력하세요.':'',help:'가상 값','onUpdate:modelValue':value=>text.value=value}),
- h(SolDialog,{id:'package-dialog',title:'가상 상세',modelValue:open.value,'onUpdate:modelValue':value=>open.value=value},()=>h('p','대화상자 내용')),
- h(SolTable,{caption:'패키지 검사 자료',columns,rows:rows.value,selectable:selectable.value,selected:selection.value,'onUpdate:selected':value=>selection.value=value,sort:sort.value,'onUpdate:sort':value=>sort.value=value,page:page.value,pageCount:3,'onUpdate:page':value=>page.value=value,loading:state.value==='loading',error:state.value==='error'?'가상 오류':'',onRetry:()=>retries++})
+ h(SBtn,{id:'package-button',loading:loading.value,'aria-disabled':ariaDisabled.value?'true':undefined,onClick:()=>clicks++},()=> '실행'),
+ h(SBtn,{id:'package-open',onClick:()=>open.value=true},()=> '열기'),
+ h(STextField,{id:'package-field',label:'가상 제목',modelValue:text.value,error:text.value.length===1?'두 자 이상 입력하세요.':'',help:'가상 값','onUpdate:modelValue':value=>text.value=value}),
+ h(SDialog,{id:'package-dialog',title:'가상 상세',modelValue:open.value,'onUpdate:modelValue':value=>open.value=value},()=>h('p','대화상자 내용')),
+ h(SDataTable,{caption:'패키지 검사 자료',columns,rows:rows.value,selectable:selectable.value,selected:selection.value,'onUpdate:selected':value=>selection.value=value,sort:sort.value,'onUpdate:sort':value=>sort.value=value,page:page.value,pageCount:3,'onUpdate:page':value=>page.value=value,loading:state.value==='loading',error:state.value==='error'?'가상 오류':'',onRetry:()=>retries++})
  ]));}});app.use(createVuetify());app.mount('#app');await nextTick();
 const $=s=>d.querySelector(s),click=s=>$(s).click(),pause=()=>new Promise(r=>setTimeout(r,50));
 for(const button of d.querySelectorAll('.sol-pagination .sol-ui-page-icon')){const svg=button.querySelector('svg');assert.ok(svg);assert.equal(svg.getAttribute('aria-hidden'),'true');assert.equal(svg.getAttribute('viewBox'),'0 0 24 24');assert.equal(svg.querySelector('path').getAttribute('d'),solIconPaths.chevron);assert.equal(button.querySelector('.v-btn__content').textContent,'');}

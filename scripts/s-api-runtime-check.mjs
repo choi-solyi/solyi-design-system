@@ -21,8 +21,7 @@ const output=result.output.find(x=>x.type==='chunk');assert.ok(output);
 await writeFile(new URL('.runtime-check.mjs',consumer),output.code);
 const api=await import(new URL('.runtime-check.mjs?s-api='+Date.now(),consumer));
 assert.equal(api.uiVersion,JSON.parse(await readFile(new URL('packages/vue-ui/package.json',root),'utf8')).version,'Runtime uiVersion matches the package and demo version');
-const aliases={"SolButton":"SBtn","SolField":"STextField","SolDialog":"SDialog","SolTable":"SDataTable","SolCheckbox":"SCheckbox","SolRadioGroup":"SRadioGroup","SolSwitch":"SSwitch","SolSelect":"SSelect","SolTextarea":"STextarea","SolNumberInput":"SNumberInput","SolTabs":"STabs","SolToast":"SSnackbar","SolDatePicker":"SDatePicker","SolTimePicker":"STimePicker","SolSegmentedControl":"SSegmentedControl","SolMultiSelect":"SMultiSelect","SolRangeSlider":"SRangeSlider","SolSplitButton":"SSplitBtn","SolContextMenu":"SContextMenu","SolResizableSplitPane":"SResizableSplitPane"};
-for(const [old,name]of Object.entries(aliases)){assert.equal(api[old],api[name],old+' identity alias');assert.equal(api[name].name,name);}
+const componentNames=Object.keys(api.sComponents);assert.equal(componentNames.length,25);const removed=["SolButton","SolField","SolDialog","SolTable","SolCheckbox","SolRadioGroup","SolSwitch","SolSelect","SolTextarea","SolNumberInput","SolTabs","SolToast","SolDatePicker","SolTimePicker","SolSegmentedControl","SolMultiSelect","SolRangeSlider","SolSplitButton","SolContextMenu","SolResizableSplitPane"];for(const name of componentNames){assert.match(name,/^S[A-Z]/);assert.equal(api[name].name,name);}for(const name of removed)assert.equal(api[name],undefined,name+' is not exported');
 const {createApp,h,ref,nextTick,VApp,VBtn,VTextField,SBtn,STextField,SolyiUI,createSolyiVuetify,applySolyiAppearance}=api;
 const vuetify=createSolyiVuetify({components:{VApp},defaults:{VBtn:{density:'compact'}}});
 assert.equal(vuetify.defaults.value.VBtn.class,'sol-vuetify-btn');assert.equal(vuetify.defaults.value.VBtn.density,'compact');
@@ -32,7 +31,7 @@ const app=createApp({render:()=>h(VApp,{},()=>[
  h(VBtn,{id:'v-btn',color:'primary',variant:'flat',disabled:disabled.value,onClick:()=>vClicks++},()=> 'V action'),
  h(STextField,{id:'s-field',label:'S field',modelValue:'S draft'}),
  h(VTextField,{id:'v-field',label:'V field',modelValue:'V draft'})
-])});app.use(vuetify).use(SolyiUI);for(const [old,name]of Object.entries(aliases)){assert.equal(app.component(old),app.component(name));}app.mount('#app');await nextTick();
+])});app.use(vuetify).use(SolyiUI);for(const name of componentNames)assert.equal(app.component(name),api[name]);for(const name of removed)assert.equal(app.component(name),undefined);app.mount('#app');await nextTick();
 assert.ok(d.querySelector('#s-btn.sol-ui-button'));assert.ok(d.querySelector('#v-btn.sol-vuetify-btn'));assert.ok(d.querySelector('.sol-vuetify-field'));assert.ok(d.querySelector('.v-application.sol-vuetify'));
 d.querySelector('#s-btn').click();d.querySelector('#v-btn').click();assert.equal(sClicks,1);assert.equal(vClicks,1);busy.value=true;await nextTick();d.querySelector('#s-btn').click();assert.equal(sClicks,1);busy.value=false;disabled.value=true;await nextTick();assert.equal(d.querySelector('#v-btn').disabled,true);assert.equal(d.querySelector('#s-btn').disabled,true);
 for(const theme of ['violet','sage','sand'])for(const mode of ['light','dark']){assert.equal(applySolyiAppearance(vuetify.theme,{theme,mode,density:'compact'}),true);await nextTick();await nextTick();assert.equal(d.documentElement.dataset.theme,theme);assert.equal(d.documentElement.dataset.mode,mode);assert.equal(vuetify.theme.global.name.value,theme+'-'+mode);assert.ok(d.querySelector('.v-theme--'+theme+'-'+mode));}

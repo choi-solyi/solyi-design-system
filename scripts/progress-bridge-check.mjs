@@ -9,5 +9,6 @@ assert.equal(sent[0].origin,w.location.origin);assert.equal(sent[0].data.appeara
 const message=(height,origin=w.location.origin,source=frame.contentWindow)=>w.dispatchEvent(new w.MessageEvent('message',{origin,source,data:{type:'solyi:progress-height',height}}));
 message(400,'https://wrong.test');assert.equal(frame.height,'620');message(400,w.location.origin,w);assert.equal(frame.height,'620');message(400);assert.equal(frame.height,'400');message(Infinity);assert.equal(frame.height,'400');message(-1);assert.equal(frame.height,'128');message(1e9);assert.equal(frame.height,'1600');
 d.documentElement.dataset.mode='dark';await new Promise(r=>setTimeout(r,0));assert.equal(sent.at(-1).data.appearance.mode,'dark');
+d.documentElement.dataset.motionPolicy='reduced';await new Promise(r=>setTimeout(r,0));assert.equal(sent.at(-1).data.appearance.motionPolicy,'reduced');
 cleanup();const count=sent.length;d.documentElement.dataset.mode='light';message(300);await new Promise(r=>setTimeout(r,0));assert.equal(sent.length,count);assert.equal(frame.height,'1600');dom.window.close();
 console.log('PASS: same-origin/source-only progress bridge, validated/clamped height, shared appearance sync and cleanup. Actual iframe rendering is a browser check.');

@@ -2,7 +2,7 @@
 import {ref,computed,nextTick,watch} from 'vue';
 import {SBtn,SSelect,SCheckbox,SProgressLinear,SProgressCircular,resolveSProgress} from '@solyi/vue-ui';
 const state=ref('determinate'),value=ref(35),restartButton=ref(null);
-const showLabel=ref(true),showValue=ref(true),showMessage=ref(true);
+const showLabel=ref(true),showValue=ref(true),showMessage=ref(true),animated=ref(true);
 const options=[{value:'determinate',label:'진행률을 아는 작업'},{value:'indeterminate',label:'처리 중 · 진행률 알 수 없음'},{value:'complete',label:'완료'},{value:'error',label:'오류 · 마지막 값 유지'}];
 const info=computed(()=>resolveSProgress({modelValue:value.value,state:state.value}));
 const summary=computed(()=>state.value==='indeterminate'?'처리 중 · 진행률을 아직 알 수 없습니다.':state.value==='complete'?'✓ 가상 작업 완료 · 100%':state.value==='error'?'! 가상 오류 · 마지막 확인 '+value.value+'%. 재시도할 수 있습니다.':value.value+'% · 수동으로 조절하는 가상 작업입니다.');
@@ -14,11 +14,11 @@ async function restart(){update(0);await nextTick();restartButton.value?.$el?.fo
 <template>
 <section class="starter-card" id="s-progress-demo" aria-labelledby="s-progress-title">
  <h2 id="s-progress-title">SProgressLinear / SProgressCircular</h2>
- <p class="starter-hint">실제 패키지의 읽기 전용 진행 표시입니다. 가상 값을 직접 조절하며 서버 전송·타이머·자동 증가·반복 회전은 없습니다.</p>
- <fieldset class="starter-progress-options"><legend>표시 옵션 · 두 예시에 함께 적용</legend><SCheckbox id="s-progress-show-label" v-model="showLabel" label="제목 표시"/><SCheckbox id="s-progress-show-value" v-model="showValue" label="수치 표시"/><SCheckbox id="s-progress-show-message" v-model="showMessage" label="상태 문구 표시"/></fieldset>
+ <p class="starter-hint">실제 패키지의 읽기 전용 진행 표시입니다. 가상 값을 직접 조절하며 서버 전송·작업값 자동 증가는 없습니다. 처리 중 상태는 반복 로딩 표시를 지원하며, 움직임 줄이기에서는 정적인 호·띠로 안내합니다.</p>
+ <fieldset class="starter-progress-options"><legend>표시 옵션 · 두 예시에 함께 적용</legend><SCheckbox id="s-progress-animated" v-model="animated" label="처리 중 반복 모션"/><SCheckbox id="s-progress-show-label" v-model="showLabel" label="제목 표시"/><SCheckbox id="s-progress-show-value" v-model="showValue" label="수치 표시"/><SCheckbox id="s-progress-show-message" v-model="showMessage" label="상태 문구 표시"/></fieldset>
  <div class="sol-progress-examples">
-  <SProgressLinear id="s-progress-linear" label="선형 진행" :model-value="value" :state="state" :show-label="showLabel" :show-value="showValue" :show-message="showMessage" />
-  <SProgressCircular id="s-progress-circular" label="원형 진행" :model-value="value" :state="state" :show-label="showLabel" :show-value="showValue" :show-message="showMessage" />
+  <SProgressLinear id="s-progress-linear" label="선형 진행" :animated="animated" :model-value="value" :state="state" :show-label="showLabel" :show-value="showValue" :show-message="showMessage" />
+  <SProgressCircular id="s-progress-circular" label="원형 진행" :animated="animated" :model-value="value" :state="state" :show-label="showLabel" :show-value="showValue" :show-message="showMessage" />
  </div>
  <div class="starter-native-form">
   <SSelect id="s-progress-state" v-model="state" label="가상 진행 상태" :options="options" required />

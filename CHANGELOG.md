@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 0.9.0 · Vue 사용 예제와 공통 패턴
+
+- Core0.4.0 / Vue UI0.7.0 초안. 새 버전의 이전 Sol 컴포넌트 호환 export·등록·선언을 제거하고 S 이름만 제공합니다. 역사적 배포 파일은 유지합니다.
+- SCard·SAlert·STree, SDialog의 drawer presentation과 카드형 SRadioGroup. 실제 tarball을 소비하는 정본 Vue SFC30개에서 문서의 기본 사용 코드와 실행 화면을 생성합니다. 전용 API가 없는 범위는 Vue 조합으로 표시합니다.
+- 공통 제목 간격, 설치 블록 간격, 메뉴 높이·너비, 트리 가이드선을 통일합니다. Progress 상태 문구 중앙 정렬과 indeterminate 반복 로딩/animated 옵션, 축소 모션의 정적 대안을 제공합니다.
+- 검증 및 미제공 API 범위는 VUE-EXAMPLES-PLAN.md와 QA.md에 기록합니다. 1.0.0 확정·이전 버전 삭제·npm 게시는 포함하지 않습니다.
+
 ## 0.8.1 · UI feedback follow-up
 
 - Core0.3.5 / Vue UI0.6.1: optional Progress visibility controls and semantic snackbar presentation, keeping existing defaults, component identities and geometry tokens.

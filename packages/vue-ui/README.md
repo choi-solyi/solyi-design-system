@@ -1,6 +1,6 @@
-# @solyi/vue-ui 0.6.1
+# @solyi/vue-ui 0.7.0
 
-Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.3.5. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
+Private local-pack preview, **not published**. Requires the consumer's Vue 3.5 / Vuetify 4.3 and @solyi/core 0.4.0. Only the exact installed Vue 3.5.44/Vuetify 4.3.0 combination has been tested. These are external imports in the library, not bundled runtimes.
 
 ```js
 import 'vuetify/styles';
@@ -28,14 +28,14 @@ Types are generated from TypeScript. Theme/default bridging is opt-in through cr
 
 Button honors forwarded aria-disabled while retaining focus; disabled uses the native disabled prop. Table exposes labeled column/direction sorting for its mobile card view using the same sort/update:sort contract. Selection updates support reactive in-place ID/row edits as well as array replacement.
 
-## Additional typed exports (0.3.0)
+## Inputs and navigation
 
 SCheckbox, SRadioGroup, SSwitch, SSelect, STextarea, SNumberInput, STabs, SSnackbar, SDatePicker and STimePicker are actual package components. Field controls share id/label/help/error/disabled/readonly and locale contracts; state is controlled by v-model. Dates emit complete single/range values, Time emits HH:mm, and Toast has persistent/pauseable timing. See the [complete API and ten usage examples](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-API.md) and [remaining reference-only inventory](https://github.com/choi-solyi/solyi-design-system/blob/main/VUE-MIGRATION.md).
 
-`provideSolLocale(app, ref('en-US'))`, a getter, or `app.use(SolyiUI,{locale:source})` supplies reactive defaults. All22 APIs including Field/Dialog/Table use the ko-KR/en-US LTR packs. Partial component overrides win; a different component code starts from that language pack. Unsupported codes fall back; caller content stays caller-owned. `formatSolNumber`, `parseSolNumber` and UTC date-only `formatSolDate` share the policy. See [locale contract](https://github.com/choi-solyi/solyi-design-system/blob/main/LOCALE.md). This does not translate application content or the documentation. Fixed versioned tarball pairs and checksums use the existing Pages releases path; see [installation and rollback](https://github.com/choi-solyi/solyi-design-system/blob/main/DISTRIBUTION.md). No registry publication or automatic update of other apps.
+`provideSolLocale(app, ref('en-US'))`, a getter, or `app.use(SolyiUI,{locale:source})` supplies reactive defaults. All supplied APIs including Field/Dialog/Table use the ko-KR/en-US LTR packs. Partial component overrides win; a different component code starts from that language pack. Unsupported codes fall back; caller content stays caller-owned. `formatSolNumber`, `parseSolNumber` and UTC date-only `formatSolDate` share the policy. See [locale contract](https://github.com/choi-solyi/solyi-design-system/blob/main/LOCALE.md). This does not translate application content or the documentation. Fixed versioned tarball pairs and checksums use the existing Pages releases path; see [installation and rollback](https://github.com/choi-solyi/solyi-design-system/blob/main/DISTRIBUTION.md). No registry publication or automatic update of other apps.
 
-## Six additional APIs (20 before Progress)
+## Selection, actions and layouts
 
 SegmentedControl(string|null), MultiSelect(string[] with cancellable optional option loader), RangeSlider(readonly number pair), SplitButton and ContextMenu(flat action events/optional controlled open), ResizableSplitPane(percentage/keyboard/pointer/reflow) are actual typed exports. See ../../ADVANCED-VUE-API.md and the installed AdvancedExamples.vue consumer. The original14 remain. Other reference demos are not implicitly converted.
 
-Canonical components use S PascalCase: SBtn/STextField/SDialog/SDataTable/SSnackbar and the remaining input/navigation APIs, plus SProgressLinear/SProgressCircular. Existing20 Sol exports and registrations remain identity aliases. Native V components remain usable via createSolyiVuetify/applySolyiAppearance. Contracts differ from native Vuetify: see S-API.md in the repository. All22 use shared Core tokens; unknown progress has no aria-valuenow/fake percentage or repeated animation.
+Canonical components use S PascalCase: SBtn/STextField/SDialog/SDataTable/SSnackbar and the remaining input/navigation APIs, plus SProgressLinear/SProgressCircular. Only S-named components are exported and registered. Legacy Sol component aliases were removed in this draft. Native V components remain usable via createSolyiVuetify/applySolyiAppearance. Contracts differ from native Vuetify: see S-API.md in the repository. All supplied use shared Core tokens; unknown progress has no aria-valuenow/fake percentage ; indeterminate can animate, with a static reduced-motion fallback.

@@ -1,0 +1,390 @@
+{
+  "baseline": "a6ad6bf",
+  "count": 44,
+  "examples": [
+    {
+      "route": "style",
+      "section": "tokens",
+      "label": "CSS 역할 매핑 보기",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "style",
+      "section": "color-examples",
+      "label": "의미색 UI 조합",
+      "kind": "vue-recipe",
+      "recipe": "color-examples.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "의미색 UI 조합"
+    },
+    {
+      "route": "style",
+      "section": "motion",
+      "label": "상태와 효과를 분리하는 기본 원칙",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "style",
+      "section": "icons",
+      "label": "아이콘 재사용",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "style",
+      "section": "layers",
+      "label": "레이어 재사용",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "style",
+      "section": "writing",
+      "label": "문구와 간격 적용",
+      "kind": "vue-recipe",
+      "recipe": "writing.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "UI 문구 적용"
+    },
+    {
+      "route": "component",
+      "section": "buttons",
+      "label": "Button 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "buttons.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "버튼 상태와 동작"
+    },
+    {
+      "route": "component",
+      "section": "fields",
+      "label": "Field 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "fields.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "필드와 검증"
+    },
+    {
+      "route": "component",
+      "section": "choices",
+      "label": "Choice 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "choices.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "체크·단일 선택·스위치"
+    },
+    {
+      "route": "component",
+      "section": "feedback",
+      "label": "Feedback 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "feedback.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "알림과 스낵바"
+    },
+    {
+      "route": "component",
+      "section": "dialog",
+      "label": "Native HTML Dialog 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "dialog.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "대화상자 열기와 복귀"
+    },
+    {
+      "route": "component",
+      "section": "dialog",
+      "label": "Vue 패키지 Dialog · SBtn",
+      "kind": "vue-recipe",
+      "recipe": "dialog.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "대화상자 열기와 복귀"
+    },
+    {
+      "route": "component",
+      "section": "selection",
+      "label": "구조와 연결 예시",
+      "kind": "vue-recipe",
+      "recipe": "selection.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "선택과 검색"
+    },
+    {
+      "route": "component",
+      "section": "help",
+      "label": "구조와 연결 예시",
+      "kind": "vue-recipe",
+      "recipe": "help.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "설명과 추가 정보"
+    },
+    {
+      "route": "component",
+      "section": "accordion",
+      "label": "구조와 연결 예시",
+      "kind": "vue-recipe",
+      "recipe": "accordion.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "상세 펼치기"
+    },
+    {
+      "route": "component",
+      "section": "navigation",
+      "label": "구조와 연결 예시",
+      "kind": "vue-recipe",
+      "recipe": "navigation.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "경로·패널·알림"
+    },
+    {
+      "route": "component",
+      "section": "advanced-inputs",
+      "label": "같은 예시 마크업과 상태 연결",
+      "kind": "vue-recipe",
+      "recipe": "advanced-inputs.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "여러 줄·숫자·다중 선택"
+    },
+    {
+      "route": "component",
+      "section": "content-tabs",
+      "label": "탭의 의미 연결",
+      "kind": "vue-recipe",
+      "recipe": "content-tabs.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "탭과 패널"
+    },
+    {
+      "route": "component",
+      "section": "action-menu",
+      "label": "메뉴 연결",
+      "kind": "vue-recipe",
+      "recipe": "action-menu.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "행동 메뉴"
+    },
+    {
+      "route": "component",
+      "section": "identity-progress",
+      "label": "사용자 메뉴와 진행 의미 구조",
+      "kind": "vue-recipe",
+      "recipe": "identity-progress.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "사용자와 단계"
+    },
+    {
+      "route": "component",
+      "section": "progress",
+      "label": "실제 Vue 패키지 사용",
+      "kind": "vue-recipe",
+      "recipe": "progress.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "진행 바와 원형 로딩"
+    },
+    {
+      "route": "component",
+      "section": "time",
+      "label": "같은 시간 입력과 로컬 연결",
+      "kind": "vue-recipe",
+      "recipe": "time.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "시간 선택"
+    },
+    {
+      "route": "component",
+      "section": "chart-tree",
+      "label": "차트와 트리 재사용",
+      "kind": "vue-recipe",
+      "recipe": "chart-tree.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "차트와 트리"
+    },
+    {
+      "route": "pattern",
+      "section": "form",
+      "label": "Form 흐름의 핵심",
+      "kind": "vue-recipe",
+      "recipe": "form.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "폼 검증"
+    },
+    {
+      "route": "pattern",
+      "section": "search",
+      "label": "Search 결과 구조",
+      "kind": "vue-recipe",
+      "recipe": "search.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "검색과 결과"
+    },
+    {
+      "route": "pattern",
+      "section": "compare",
+      "label": "Compare의 의미 구조",
+      "kind": "vue-recipe",
+      "recipe": "compare.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "카드 비교 선택"
+    },
+    {
+      "route": "pattern",
+      "section": "empty",
+      "label": "Empty state 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "empty.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "빈 화면 복구"
+    },
+    {
+      "route": "pattern",
+      "section": "data",
+      "label": "구조와 연결 예시",
+      "kind": "vue-recipe",
+      "recipe": "data.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "정렬·필터·페이지"
+    },
+    {
+      "route": "pattern",
+      "section": "inputs",
+      "label": "단일 / 기간 설정과 완료값 사용",
+      "kind": "vue-recipe",
+      "recipe": "inputs.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "날짜·파일·자동완성"
+    },
+    {
+      "route": "pattern",
+      "section": "inputs",
+      "label": "구조와 연결 예시",
+      "kind": "vue-recipe",
+      "recipe": "inputs.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "날짜·파일·자동완성"
+    },
+    {
+      "route": "pattern",
+      "section": "responses",
+      "label": "구조와 연결 예시",
+      "kind": "vue-recipe",
+      "recipe": "responses.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "로딩·오류·권한 상태"
+    },
+    {
+      "route": "pattern",
+      "section": "composition",
+      "label": "동일한 필드 시작점과 높이",
+      "kind": "vue-recipe",
+      "recipe": "composition.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "폼 정렬과 보조 행동"
+    },
+    {
+      "route": "pattern",
+      "section": "layouts",
+      "label": "설정·목록·상세의 공통 구조",
+      "kind": "vue-recipe",
+      "recipe": "layouts.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "화면틀 조합"
+    },
+    {
+      "route": "pattern",
+      "section": "workflow",
+      "label": "상태와 라우터 연결",
+      "kind": "vue-recipe",
+      "recipe": "workflow.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "편집·삭제·되돌리기"
+    },
+    {
+      "route": "pattern",
+      "section": "error-summary",
+      "label": "오류 요약 연결",
+      "kind": "vue-recipe",
+      "recipe": "error-summary.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "오류 요약과 이동"
+    },
+    {
+      "route": "pattern",
+      "section": "bulk-recovery",
+      "label": "부분 실패 모델",
+      "kind": "vue-recipe",
+      "recipe": "bulk-recovery.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "일부 실패와 재시도"
+    },
+    {
+      "route": "theme",
+      "section": "adoption",
+      "label": "기본 로드와 테마 설정",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "theme",
+      "section": "adoption",
+      "label": "앱별 테마와 도메인 토큰 분리",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "theme",
+      "section": "starter",
+      "label": "패키지 빌드와 실제 소비",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "theme",
+      "section": "packages",
+      "label": "0.8.1 고정 설치",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "theme",
+      "section": "packages",
+      "label": "0.7.1 고정 설치",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "theme",
+      "section": "packages",
+      "label": "0.7.0 고정 설치",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "theme",
+      "section": "packages",
+      "label": "0.6.0 고정 설치",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    },
+    {
+      "route": "theme",
+      "section": "packages",
+      "label": "0.5.0 고정 설치",
+      "kind": "technical",
+      "recipe": null,
+      "status": "technical-reference"
+    }
+  ]
+}

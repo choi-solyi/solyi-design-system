@@ -1,4 +1,5 @@
 import tokens from './token-data.js';
+import {mountVueExamples} from './vue-examples.js';
 import {mountOverflowText} from './overflow.js';
 import {presentTopics,scrollToDocumentSection,getDocumentSearchEntries} from './topics.js';
 import {mountDocumentSearch} from './doc-search.js';
@@ -17,6 +18,7 @@ let snippetId = 0;
 let toastTimer;
 let headerPreferences=null;
 let returnFocus;
+let cleanupVueExamples=()=>{};
 let cleanupOverflow = () => {}; let cleanupTopics = () => {}; let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
 const projects = [
@@ -118,9 +120,10 @@ function buildDocumentSearchIndex(){
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'overview';
-  cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
+  cleanupVueExamples(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
   main.innerHTML = pageMarkup(route);
+  cleanupVueExamples=mountVueExamples(main,codeSample);
   document.title = `Solyi Design System · ${routes[route]}`;
   cleanupTopics = presentTopics(main,route,{section,demo,contract,codeSample});
   document.querySelectorAll('[data-route]').forEach(link=>{

@@ -22,21 +22,21 @@ Historical phase2 baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository an
 
 | Current example / source | Actual Vue API before this phase | This release / remaining scope |
 |---|---|---|
-| Button / loading / disabled / hierarchy | SolButton | Preserve; state regressions |
-| Text field / validation | SolField | Preserve; label/error regressions |
-| Dialog / detail / full title | SolDialog; Table full-title dialog | Preserve |
-| Table / list / mobile / select-sort-filter-page | SolTable; consumer owns filtering | Preserve |
-| Checkbox | None | A: SolCheckbox |
-| Radio single choice | None | A: SolRadioGroup |
-| Switch immediate setting | None | A: SolSwitch |
-| Native select | None | A: SolSelect |
-| Multiline textarea / counter | None | A: SolTextarea |
-| Number min/max/step | None | A: SolNumberInput |
-| Content Tabs / panels | None | B: SolTabs |
-| Snackbar / Toast | None | B: SolToast |
-| Date single/range | None | C: SolDatePicker |
-| HH:mm direct entry / time panel | None | C: SolTimePicker |
-| Static multi-select tags | None | New SolMultiSelect API in phase3; original HTML example remains a reference |
+| Button / loading / disabled / hierarchy | SBtn | Preserve; state regressions |
+| Text field / validation | STextField | Preserve; label/error regressions |
+| Dialog / detail / full title | SDialog; Table full-title dialog | Preserve |
+| Table / list / mobile / select-sort-filter-page | SDataTable; consumer owns filtering | Preserve |
+| Checkbox | None | A: SCheckbox |
+| Radio single choice | None | A: SRadioGroup |
+| Switch immediate setting | None | A: SSwitch |
+| Native select | None | A: SSelect |
+| Multiline textarea / counter | None | A: STextarea |
+| Number min/max/step | None | A: SNumberInput |
+| Content Tabs / panels | None | B: STabs |
+| Snackbar / Toast | None | B: SSnackbar |
+| Date single/range | None | C: SDatePicker |
+| HH:mm direct entry / time panel | None | C: STimePicker |
+| Static multi-select tags | None | New SMultiSelect API in phase3; original HTML example remains a reference |
 | Autocomplete local/delayed/empty/error/retry | None | Follow-up; keep reference behavior |
 | Tooltip / interactive popover | None | Follow-up |
 | Accordion | None | Follow-up |
