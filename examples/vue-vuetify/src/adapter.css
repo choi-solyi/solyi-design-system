@@ -54,3 +54,25 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 
 .starter-progress-options {display:flex;flex-wrap:wrap;gap:var(--sol-space-3);padding:0;border:0;margin:var(--sol-space-4) 0;}
 .starter-progress-options legend {margin-bottom:var(--sol-space-2);font-size:var(--sol-text-sm);}
+
+/* Recipe navigation is a page layout; the selected example still uses package styles. */
+.recipe-explorer,.recipe-browser,.recipe-content {min-width:0;}
+.recipe-menu-toggle {min-height:var(--sol-touch-target-min)!important;margin-bottom:var(--sol-space-3);}
+.recipe-menu-toggle .v-btn__content {gap:var(--sol-space-2);}
+.recipe-menu-toggle svg {transform:rotate(-90deg);}
+.recipe-menu-toggle[aria-expanded=true] svg {transform:none;}
+.recipe-browser {display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sol-space-6);align-items:start;}
+.recipe-navigation {min-width:0;max-height:min(52dvh,480px);overflow-y:auto;scrollbar-gutter:stable;border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);padding:var(--sol-space-3);background:var(--sol-color-surface);}
+.recipe-navigation h2 {margin:0 0 var(--sol-space-4);font-size:var(--sol-text-sm);}
+.recipe-nav-group+.recipe-nav-group {margin-top:var(--sol-space-4);}
+.recipe-nav-group h3 {margin:0 0 var(--sol-space-2);padding-inline:var(--sol-space-3);font-size:var(--sol-text-xs);color:var(--sol-color-muted);}
+.recipe-nav-group ul {display:grid;grid-auto-rows:minmax(44px,auto);gap:2px;list-style:none;margin:0;padding:0;}
+.recipe-nav-group li {min-width:0;}
+.recipe-nav-group a {display:flex;align-items:center;min-height:44px;padding:var(--sol-space-2) var(--sol-space-3);border-radius:var(--sol-radius-button);font-size:var(--sol-text-sm);line-height:1.45;color:var(--sol-color-text);text-decoration:none;overflow-wrap:anywhere;}
+.recipe-nav-group a:hover {background:var(--sol-color-surface-alt);}
+.recipe-nav-group a[aria-current=page] {background:var(--sol-color-accent-soft);color:var(--sol-color-text);font-weight:650;box-shadow:inset 3px 0 var(--sol-color-accent);}
+.recipe-nav-group a:focus-visible {outline-offset:calc(-1 * var(--sol-space-1));}
+.recipe-current-heading {display:grid;gap:var(--sol-space-1);margin-bottom:var(--sol-space-4);}
+.recipe-current-heading>p,.recipe-current-heading>h2 {margin:0;}
+.recipe-current-heading h2 {scroll-margin-top:var(--sol-space-4);}
+@media(min-width:1100px){.recipe-browser{grid-template-columns:240px minmax(0,1fr);}.recipe-navigation{position:sticky;top:var(--sol-space-4);max-height:calc(100dvh - 32px);}}
