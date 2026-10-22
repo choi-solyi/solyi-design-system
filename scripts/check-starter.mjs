@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const base=new URL('../examples/vue-vuetify/',import.meta.url);
+const starterHtml=await readFile(new URL('dist/index.html',base),'utf8');assert.match(starterHtml,/<meta\s+name="description"\s+content="[^"]+"/,'Published starter includes an informative meta description');
 const pkg=JSON.parse(await readFile(new URL('package.json',base),'utf8')),lock=JSON.parse(await readFile(new URL('package-lock.json',base),'utf8'));
 const packageVersions=Object.fromEntries(await Promise.all(['core','vue-ui'].map(async name=>[name,JSON.parse(await readFile(new URL('../../packages/'+name+'/package.json',base),'utf8')).version])));
 assert.deepEqual(pkg.dependencies,{'@solyi/core':`file:../../artifacts/solyi-core-${packageVersions.core}.tgz`,'@solyi/vue-ui':`file:../../artifacts/solyi-vue-ui-${packageVersions['vue-ui']}.tgz`,vue:'3.5.44',vuetify:'4.3.0'});

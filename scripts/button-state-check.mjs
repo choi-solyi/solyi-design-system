@@ -55,4 +55,16 @@ for(const [theme,data]of Object.entries(tokens.themes))for(const mode of ['light
 }
 console.log('PASS: '+pageCount+' current-page button state contrasts, minimum '+pageMinimum.toFixed(3)+':1.');
 
+// A selected app-navigation action inherits a colored parent surface; test its
+// actual paired foreground/background, rather than accent on white in isolation.
+const appNav=d.createElement('nav'),navAction=d.createElement('button');appNav.className='sol-app-sidebar';navAction.className='sol-button subtle';navAction.setAttribute('aria-current','page');appNav.append(navAction);fixture.append(appNav);let navCount=0,navMinimum=Infinity;
+for(const [theme,data]of Object.entries(tokens.themes))for(const mode of ['light','dark'])for(const[state,pseudo]of Object.entries(states)){
+ roles=Object.fromEntries(Object.entries(data[mode]).map(([k,v])=>['--sol-color-'+k,v]));navAction.dataset.cssState=pseudo.join(' ');navAction.disabled=state==='disabled';navAction.setAttribute('aria-disabled',String(state==='aria-disabled'));
+ const background=value(navAction,'background');assert.equal(background,data[mode]['accent-soft'],`${theme}/${mode}/navigation/${state}: selection remains visible`);
+ const contrast=ratio(value(navAction,'color'),background);assert.ok(contrast>=4.5,`${theme}/${mode}/navigation/${state}: ${contrast}`);navMinimum=Math.min(navMinimum,contrast);navCount++;
+}
+console.log(`PASS: ${navCount} selected app-navigation text/background states, minimum ${navMinimum.toFixed(3)}:1.`);
+Object.assign(roles,Object.fromEntries(Object.entries(tokens.base).map(([k,v])=>['--sol-'+k,v])));
+const emptyHeading=d.createElement('div');emptyHeading.className='empty-state';emptyHeading.innerHTML='<article class="project-row"><div><h3>Fictional record</h3></div></article>';fixture.append(emptyHeading);
+assert.equal(value(emptyHeading.querySelector('h3'),'font-size'),tokens.base['text-sm'],'Corrected heading level preserves compact result typography');assert.equal(value(emptyHeading.querySelector('h3'),'margin'),'0 0 2px');
 dom.window.close();console.log(`PASS: ${count} semantic button state/variant/theme text contrasts (minimum ${minimum.toFixed(3)}:1); cascade specificity, paired ink/background, readable disabled and non-color interaction feedback.`);

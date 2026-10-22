@@ -51,7 +51,8 @@
 .sol-app-header {display:flex;align-items:center;justify-content:space-between;gap:var(--sol-space-3);padding:var(--sol-space-4);border-bottom:1px solid var(--sol-color-border);}
 .sol-app-body {display:grid;grid-template-columns:132px minmax(0,1fr);}
 .sol-app-sidebar {padding:var(--sol-space-3);display:flex;flex-direction:column;gap:var(--sol-space-2);border-right:1px solid var(--sol-color-border);background:var(--sol-color-surface-alt);}
-.sol-app-sidebar [aria-current="page"] {color:var(--sol-color-accent);background:var(--sol-color-accent-soft);}
+.sol-app-sidebar .sol-button[aria-current="page"],
+.sol-app-sidebar .sol-button[aria-current="page"]:is(:hover,:focus-visible,:active):not(:disabled):not([aria-disabled="true"]) {color:var(--sol-color-text);background:var(--sol-color-accent-soft);}
 .sol-app-mobile-nav {display:none;padding:var(--sol-space-3);border-bottom:1px solid var(--sol-color-border);}
 .sol-app-mobile-nav summary {min-height:var(--sol-touch-target-min);cursor:pointer;align-content:center;font-size:var(--sol-text-sm);}
 .sol-app-mobile-nav nav {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);padding-block:var(--sol-space-2);}

@@ -1,9 +1,20 @@
-# v0.3.0 검증 기록
+# 검증 기록
 
-검증일: 2026-10-21 UTC. 현재 기록은 6단계 확장과 독립 starter 기준이며 이전 검수 근거도 구분해 보존합니다. 기존 aion2page·solyi.kr는 변경하지 않았습니다.
+릴리스별 실제 실행 범위를 구분해 보존합니다. 기존 aion2page·solyi.kr는 변경하지 않았습니다.
+
+## 최신: 표준 감사 수정 (0.3.5) · 2026-10-22 UTC
+
+- 감사의 선택 메뉴 대비4.42, Time textbox의 지원되지 않는 aria-expanded, 검색 결과 h2→h4, Table 오류 재시도 후 BODY 초점, SolField의 끊어진 label 참조, starter 메타 설명 누락을 수정했습니다. 기존 색 토큰·공식 브랜드·타이포·반경6/10/12/16을 유지합니다.
+- 기존 전체 library-pipeline --refresh 통과: Core/Vue UI0.1.5 빌드·엄격한 자체 선언, private tarball, 두 독립 소비 앱 npm ci/type/build, 설치된 패키지와 실제 starter 런타임, 문서 check/test. registry 미게시이며 다른 앱과 연결하지 않았습니다. 초기 계약 검사에서 보관용 starter 토큰 버전 불일치를 잡아 같은 원본으로 동기화했습니다.
+- CSS 회귀:186개 토큰 대비,630개 의미색 버튼·42개 페이지 버튼·42개 선택 메뉴 상태의 실제 cascade 계약. 선택 메뉴는 전경text/배경accent-soft를 쌍으로 유지하며 최소9.315:1, 기존 의미색/페이지 최소4.562:1입니다. 합성 cascade 검사는 실제 hover 전수 시각 검수와 다릅니다.
+- 자체 리뷰 보완: 선택 메뉴 hover가 일반 버튼 배경으로 덮이지 않게 했습니다. 검색/빈 결과의 h3 변경 뒤 기존14px/650·행간·여백을 유지합니다. 빈 결과의 일반 h3 규칙이 글자를 키우는 회귀도 방지했습니다. 제거된 재시도 대신 요약에 초점을 줄 때 화면 안으로 스크롤되며, 다른 곳으로 옮긴 초점은 보존하는 설치 패키지 회귀를 추가했습니다.
+- 사용자 PC Google Chrome155.0.8059.85의 실제 로컬 화면: 데스크톱1920 CSS px에서3테마×light/dark의 선택 메뉴 전경·배경/가로 넘침 및 결과 제목14px 확인. 시간 Alt+↓로 시 선택 진입, textbox에 aria-expanded 없음/버튼 true→false, Escape 입력 복귀 확인.
+- 실제333 CSS px starter light/dark: 오류 재시도 Enter 후 결과 요약(P)에 초점/포커스 외곽선, y약439px로900px 화면 안에 위치, BODY 초점 소실 해소. scrollWidth316≤333, 끊어진 label 참조0, 도움말/오류 연결 유지, primary 높이약44px·button6/field10/card12px. Dialog16px·초기 닫기·Escape 후 starter-open 복귀 확인. 기존 form/날짜/파일/정렬/선택/페이지/async/reduced-motion은 전체 DOM 회귀 통과 범위와 구분합니다.
+- Nu 원본 HTML의 h1 경고는 JS 이전 셸과 숨겨진 dialog 마크업에 대한 경고입니다. 실제 렌더 h1이 있고 그 구조는 유지합니다. 경고만 없애려 숨긴 h1을 추가하지 않았습니다.
+- 이 절은 커밋 전 로컬 검증 기록입니다. 기존 Pages CI와 공개 자산 비교·해당 경로 Lighthouse 재측정·공개 키보드 결과는 게시 이후 최종 릴리스 보고에서 별도로 제시합니다. Lighthouse 점수는 WCAG 인증이 아니며 독립 axe/실제 화면낭독기/실기기·400% 확대·모든 상태의 완전 준수는 주장하지 않습니다.
 
 
-## 최신: 패키지 소비와 승인된 UX (0.3.0)
+## 패키지 소비와 승인된 UX (0.3.0)
 
 - Core/Vue UI 0.1.0은 private/UNLICENSED local pack입니다. Core9개·UI5개 파일의 실제 tarball에 CSS/JSON/ES모듈/선언이 포함됐습니다. 브랜드/개인 파일/node_modules는 포함하지 않습니다. Vite library ES의 Vue/Vuetify/Core helper external import와 약11.5kB UI 코드, 두 소비 lock의 tarball SHA512·소스 alias/link 부재·각 소비자의 Vue/Vuetify 한 벌을 확인했습니다.
 - TypeScript6.0.3의 자체 strict 소스·생성 선언·독립 소비 앱 build와 유효/잘못된 variant/sort 타입 검사를 통과했습니다. Vuetify 선택 서비스 선언과 TS6 오류 때문에 skipLibCheck=true이며 외부 d.ts 전체 검증과 구분합니다. 타입/CSS exports·단일 원본·라이선스 원문 보존·레지스트리 미게시·기존 앱 미연결을 검사했습니다.

@@ -165,7 +165,7 @@ main:focus {outline: none;}
 .form-demo legend, .choice-fieldset legend {font-weight: 650; font-size: var(--sol-text-sm); margin-bottom: 6px;}
 .project-list {margin-top:var(--sol-space-4);}
 .project-row {border-radius:0;}
-.project-row h4 {margin:0 0 2px;font-size:var(--sol-text-sm);line-height:1.4;font-weight:650;}
+.project-row h3, .empty-state .project-row h3 {margin:0 0 2px;font-size:var(--sol-text-sm);line-height:1.4;font-weight:650;}
 .project-row p {font-size:var(--sol-text-xs);line-height:1.35;color:var(--sol-color-muted);margin:0;}
 .empty-state {padding: 32px 16px; text-align: center; background: var(--sol-color-canvas); border: 1px dashed var(--sol-color-control-border); border-radius:var(--sol-radius-inset); margin-top: 16px;}
 .empty-state h3 {font-size: 19px; margin: 12px 0 8px;}

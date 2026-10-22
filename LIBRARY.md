@@ -1,6 +1,8 @@
 # 패키지 소비와 자동 검증
 
-첫 패키지 초안은 `@solyi/core@0.1.4` / `@solyi/vue-ui@0.1.4`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
+첫 패키지 초안은 `@solyi/core@0.1.5` / `@solyi/vue-ui@0.1.5`입니다. 둘 다 `private:true`, `UNLICENSED`이며 **npm/GitHub Packages에 게시하지 않았습니다**. 기존 브랜드 자산의 권리 조건도 그대로입니다.
+
+0.1.5의 접근성 보완: Field 외부 label의 ID와 입력의 aria-labelledby를 연결합니다. Table의 오류 재시도 버튼에 초점이 있는 채로 정상/로딩 상태로 바뀌면, 제거된 버튼 대신 지속되는 결과 요약에 초점을 둡니다. 사용자가 다른 조작부로 이동한 뒤 완료되면 그 초점을 유지합니다. API/색/타이포/반경은 유지합니다.
 
 ## 구조와 적용 범위
 

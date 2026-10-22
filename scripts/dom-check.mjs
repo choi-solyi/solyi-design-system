@@ -104,6 +104,7 @@ $('#simulate-failure').checked=false;fire($('#project-form'),'submit');await pau
 $('#project-form').reset();assert.equal($('#project-name').value,'');assert.equal($('#project-name').hasAttribute('aria-invalid'),false);
 $('#project-search').value='없는검색';fire($('#project-search'),'input');assert.match($('#project-results').textContent,/조건에 맞는 항목/);
 click('[data-action="search-clear"]');assert.equal(d.querySelectorAll('.project-row').length,3);
+assert.equal(d.querySelectorAll('#project-results h3').length,3,'Search results follow their h2 section with h3 headings');assert.equal(d.querySelectorAll('#project-results h4').length,0);
 $('#project-filter').value='초안';fire($('#project-filter'),'change');assert.equal(d.querySelectorAll('#project-results .project-row').length,1);
 click('[data-action="search-failure"]');assert.equal($('#project-results').getAttribute('aria-busy'),'true');await pause(760);assert.match($('#project-results').textContent,/불러오지 못/);
 click('[data-action="search-retry"]');assert.equal(d.querySelectorAll('#project-results .project-row').length,1,'Filter retained on retry');

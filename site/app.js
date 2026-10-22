@@ -33,7 +33,7 @@ function codeSample(label, code) {
 }
 const contract = (states, keys, mapping) => `<dl class="contract"><dt>상태</dt><dd>${states}</dd><dt>Keyboard</dt><dd>${keys}</dd><dt>Tokens</dt><dd>${mapping}</dd></dl>`;
 const demo = (name, content, note = 'LIVE · 가상 데이터') => `<div class="demo"><div class="demo-header"><span>${name}</span><span>${note}</span></div><div class="demo-stage">${content}</div></div>`;
-const footer = () => `<footer class="site-footer"><p>Solyi Design System · v0.3.4 <span aria-hidden="true">/</span> 2026.10</p><p><a href="#theme/scope">범위와 검증</a> · <a href="https://github.com/choi-solyi/solyi-design-system">Source ↗</a></p></footer>`;
+const footer = () => `<footer class="site-footer"><p>Solyi Design System · v0.3.5 <span aria-hidden="true">/</span> 2026.10</p><p><a href="#theme/scope">범위와 검증</a> · <a href="https://github.com/choi-solyi/solyi-design-system">Source ↗</a></p></footer>`;
 
 function overview() {
   return `<div class="overview-hero"><div class="page-intro"><span class="eyebrow">A PERSONAL DESIGN FOUNDATION</span><h1 class="intro-title" tabindex="-1">같은 결,<br><span class="accent">다른 표정.</span></h1><p>솔의 여러 앱이 함께 쓰는 작은 기준.<br>읽기 좋은 위계와 적당한 밀도를 바탕으로,<br>각 앱에 어울리는 색과 성격을 더합니다.</p><div class="button-row"><a class="sol-button primary" href="#style">Style 둘러보기 <span aria-hidden="true">→</span></a><a class="sol-button" href="#component">예시 사용하기</a></div></div><div>${renderGoalSpecimen()}<div class="hero-caption"><span>역할 기반 색</span><span>또렷한 위계</span><span>4px 간격 리듬</span></div></div></div>
@@ -90,7 +90,7 @@ function pattern() {
 }
 
 function projectRows(items) {
-  return items.map(item=>`<article class="project-row sol-record-row"><div><h4><span class="sol-record-title">${E(item.title)}</span></h4><p>${E(item.type)} · ${E(item.status)}</p></div><button class="sol-button subtle sol-row-action" data-open-detail="${projects.indexOf(item)}" aria-label="${E(item.title)} 상세 보기">상세</button></article>`).join('');
+  return items.map(item=>`<article class="project-row sol-record-row"><div><h3><span class="sol-record-title">${E(item.title)}</span></h3><p>${E(item.type)} · ${E(item.status)}</p></div><button class="sol-button subtle sol-row-action" data-open-detail="${projects.indexOf(item)}" aria-label="${E(item.title)} 상세 보기">상세</button></article>`).join('');
 }
 
 function theme() {
@@ -193,7 +193,7 @@ main.addEventListener('click',async event=>{
   if(action==='search-retry')updateSearch();
   if(action==='search-clear'){document.querySelector('#project-search').value='';document.querySelector('#project-filter').value='all';updateSearch();document.querySelector('#project-search').focus();}
   if(action==='empty-add'){
-    document.querySelector('#empty-demo').innerHTML=`<article class="project-row sol-record-row"><div><h4>오늘의 첫 관찰</h4><p>잎이 한 장 더 자랐어요. · 가상 기록</p></div><button class="sol-button" data-action="empty-reset">기록 초기화</button></article>`;
+    document.querySelector('#empty-demo').innerHTML=`<article class="project-row sol-record-row"><div><h3>오늘의 첫 관찰</h3><p>잎이 한 장 더 자랐어요. · 가상 기록</p></div><button class="sol-button" data-action="empty-reset">기록 초기화</button></article>`;
     document.querySelector('#empty-result').textContent='✓ 첫 가상 기록을 추가했어요.';document.querySelector('[data-action="empty-reset"]').focus();
   }
   if(action==='empty-reset'){
