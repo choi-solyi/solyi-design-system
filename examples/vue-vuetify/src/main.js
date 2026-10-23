@@ -12,9 +12,11 @@ import 'solyi-ui/global';
 import {mountProgressEmbed} from './progress-embed.js';
 import {starterLocale} from './locale-state.js';
 import App from './App.vue';
+import {revealStarter} from './boot.js';
 const app=createApp(App);provideSolLocale(app,starterLocale);const vuetify=createStarterVuetify();const mounted=app.use(vuetify).use(SolyiUI).mount('#app');
 if(new URLSearchParams(location.search).get('view')==='progress')mountProgressEmbed(vuetify.theme);
 if(['recipes','advanced'].includes(new URLSearchParams(location.search).get('view'))&&new URLSearchParams(location.search).get('embed')==='1'){
  document.documentElement.dataset.motionPolicy=new URLSearchParams(location.search).get('motionPolicy')==='reduced'?'reduced':'system';
  mountProgressEmbed(vuetify.theme,'recipe',()=>mounted.confirmRecipeLeave());
 }
+void revealStarter();

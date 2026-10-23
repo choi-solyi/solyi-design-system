@@ -1,4 +1,6 @@
-# @solyi/core 0.4.7
+# @solyi/core 0.4.8
+
+선택 행은 `components.css`의 `.sol-choice-row`를 label 또는 Vue 체크박스/목록형 라디오 wrapper에 선택적으로 사용합니다. 기본 컨트롤 자체에는 여백을 강제하지 않습니다. 선택 바탕·전경·테두리·표시선은 `--sol-color-selected-surface`, `--sol-color-selected-text`, `--sol-color-selected-border`, `--sol-color-selected-indicator` 역할이며, `accent-soft`와 구분합니다.
 
 프레임워크 독립 토큰·CSS·helper의 **로컬 npm pack 초안**입니다. `private:true`로 실제 npm 게시를 막고 있으며 레지스트리에 게시하지 않았습니다. 자체 코드는 MIT, 포함한 폰트와 외부 자산은 원래 라이선스입니다.
 

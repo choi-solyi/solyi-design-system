@@ -1,1 +1,94 @@
-<!doctype html><html lang="ko" data-theme="violet" data-mode="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="프레임워크 독립 토큰과 실제 설치한 Vue UI 패키지의 Button·Field·Dialog·Table을 확인하는 가상 데이터 데모입니다."><meta name="color-scheme" content="light dark"><title>Solyi · Vue/Vuetify starter</title></head><body><div id="app"></div><script type="module" src="/src/main.js"></script></body></html>
+<!doctype html>
+<html lang="ko" data-theme="violet" data-mode="light" data-starter-boot="loading">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="공통 토큰과 실제 설치한 solyi-ui의 컴포넌트·폼·조합을 확인하는 Vue 실행 예제입니다.">
+  <meta name="color-scheme" content="light dark">
+  <title>Solyi · Vue 실행 예제</title>
+  <style>
+    :root{--boot-bg:#F5F6FA;--boot-text:#202330;--boot-accent:#7560B5;--boot-border:#818596;background:var(--boot-bg);color:var(--boot-text);color-scheme:light;}
+    body{margin:0;background:var(--boot-bg);}
+    html[data-starter-boot="loading"] #app,html[data-starter-boot="failed"] #app{visibility:hidden;}
+    #starter-boot{position:fixed;inset:0;z-index:9999;display:grid;place-content:center;justify-items:center;gap:16px;padding:24px;background:var(--boot-bg);color:var(--boot-text);text-align:center;font:14px/1.6 system-ui,-apple-system,sans-serif;}
+    #starter-boot[hidden]{display:none;}
+    #starter-boot p{margin:0;max-width:30rem;}
+    .starter-boot-circle{box-sizing:border-box;width:32px;height:32px;border:3px solid var(--boot-border);border-inline-start-color:var(--boot-accent);border-radius:50%;animation:starter-boot-spin 1.2s linear infinite;}
+    html[data-starter-boot="failed"] .starter-boot-circle{display:none;}
+    #starter-boot button,#starter-boot a{box-sizing:border-box;min-height:44px;padding:8px 12px;border:1px solid var(--boot-border);border-radius:6px;background:var(--boot-bg);color:var(--boot-text);font:inherit;cursor:pointer;}
+    #starter-boot a{display:inline-flex;align-items:center;justify-content:center;text-decoration:underline;text-underline-offset:3px;}
+    #starter-boot button:focus-visible,#starter-boot a:focus-visible{outline:2px solid var(--boot-accent);outline-offset:3px;}
+    #starter-boot-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+    #starter-boot-actions[hidden]{display:none;}
+    @keyframes starter-boot-spin{to{transform:rotate(360deg);}}
+    @media(prefers-reduced-motion:reduce){.starter-boot-circle{animation:none;}}
+    html[data-motion-policy="reduced"] .starter-boot-circle{animation:none;}
+  </style>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const themes = ['violet', 'sage', 'sand'], modes = ['light', 'dark'], densities = ['comfortable', 'compact'];
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem('solyi-ds-prefs') || '{}') || {}; } catch {}
+      const query = new URLSearchParams(location.search);
+      const pick = (key, allowed, fallback) => allowed.includes(query.get(key)) ? query.get(key) : allowed.includes(saved[key]) ? saved[key] : fallback;
+      const appearance = {
+        theme: pick('theme', themes, 'violet'),
+        mode: pick('mode', modes, matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+        density: pick('density', densities, 'comfortable'),
+      };
+      Object.assign(root.dataset, appearance);
+      if (query.get('motionPolicy') === 'reduced') root.dataset.motionPolicy = 'reduced';
+      const palettes = /*__SOLYI_BOOT_PALETTES__*/ {};
+      const colors = palettes[appearance.theme]?.[appearance.mode];
+      if (colors) ['bg', 'text', 'accent', 'border'].forEach((role, index) => root.style.setProperty('--boot-' + role, colors[index]));
+      root.style.colorScheme = appearance.mode;
+      let state = 'loading';
+      const finish = next => {
+        if (state !== 'loading') return;
+        state = next; root.dataset.starterBoot = next; clearTimeout(deadline);
+        const paint = () => {
+        const app = document.getElementById('app'), panel = document.getElementById('starter-boot');
+        app?.setAttribute('aria-busy', 'false');
+        if (next === 'ready') {
+          app?.removeAttribute('inert'); app?.removeAttribute('aria-hidden'); app?.setAttribute('aria-busy', 'false');
+          if (panel) panel.hidden = true;
+        } else {
+          const message = document.getElementById('starter-boot-message'), actions = document.getElementById('starter-boot-actions');
+          if (message) message.textContent = '화면을 불러오지 못했어요. 연결을 확인하고 다시 시도해 주세요.';
+          if (panel) { panel.setAttribute('role', 'alert'); panel.setAttribute('aria-live', 'assertive'); }
+          if (actions) actions.hidden = false;
+        }
+        };
+        if (document.getElementById('starter-boot')) paint();
+        else addEventListener('DOMContentLoaded', paint, {once: true});
+      };
+      // Deadline only offers an escape from a failed/hung resource; no minimum delay.
+      const deadline = setTimeout(() => finish('failed'), 30000);
+      globalThis.__solyiStarterBoot = {appearance, ready: () => finish('ready'), fail: () => finish('failed')};
+      addEventListener('error', event => {
+        const target = event.target;
+        if (target === window || target?.tagName === 'SCRIPT' || target?.tagName === 'LINK' && (target.rel === 'stylesheet' || target.as === 'style')) finish('failed');
+      }, true);
+      addEventListener('unhandledrejection', () => finish('failed'));
+      addEventListener('vite:preloadError', () => finish('failed'));
+    })();
+  </script>
+</head>
+<body>
+  <div id="starter-boot" role="status" aria-live="polite" aria-atomic="true">
+    <span class="starter-boot-circle" aria-hidden="true"></span>
+    <p id="starter-boot-message">화면을 준비하고 있어요.</p>
+    <div id="starter-boot-actions" hidden>
+      <button type="button" onclick="location.reload()">다시 시도</button>
+      <a href="../">문서로 돌아가기</a>
+    </div>
+  </div>
+  <div id="app" aria-busy="true" aria-hidden="true" inert></div>
+  <noscript>
+    <style>#starter-boot,#app{display:none!important;}</style>
+    <p style="padding:24px;font:14px/1.6 system-ui,sans-serif">이 실행 예제에는 JavaScript가 필요합니다. JavaScript를 켠 뒤 새로고침하거나 <a href="../">문서로 돌아가세요.</a></p>
+  </noscript>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

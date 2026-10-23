@@ -14,6 +14,22 @@ let header;header=mountHeaderPreferences({themes:tokens.themes,getState:()=>d.do
 assert.equal(d.querySelectorAll('#appearance-inline select,#appearance-dialog select').length,0);
 assert.equal(d.querySelectorAll('[data-pref-theme]').length,6);assert.equal(d.querySelectorAll('[data-pref-density]').length,0);assert.equal(d.querySelectorAll('[data-pref-density-toggle]').length,2);
 for(const container of ['#appearance-inline','#appearance-dialog']){assert.equal(d.querySelectorAll(container+' [data-pref-theme]:checked').length,1);assert.equal(d.querySelectorAll(container+' [data-pref-density-toggle]').length,1);}
+// Model the confirmed Chrome failure: native clipped-radio focus can scroll
+// before change, so the label and keyboard handlers must explicitly prevent it.
+let focusScroll=334,focusOptions=[],changes=0;
+const nativeFocus=w.HTMLElement.prototype.focus;
+w.HTMLElement.prototype.focus=function(options){if(this.matches('[data-pref-theme]')){focusOptions.push(options);if(!options?.preventScroll)focusScroll=0;}return nativeFocus.call(this,options);};
+const keyboardGroup=d.querySelector('#appearance-inline [data-pref-theme-group]'),keyboardInputs=Array.from(keyboardGroup.querySelectorAll('[data-pref-theme]'));
+keyboardGroup.addEventListener('change',()=>changes++);
+keyboardInputs[1].parentElement.querySelector('.appearance-choice-name').click();
+assert.equal(d.documentElement.dataset.theme,'sage');assert.equal(d.activeElement,keyboardInputs[1]);assert.equal(focusScroll,334);assert.deepEqual(focusOptions.at(-1),{preventScroll:true});assert.equal(changes,1,'Label activation emits one native change');
+for(const [key,index]of [['ArrowRight',2],['ArrowRight',0],['ArrowLeft',2],['ArrowUp',1],['ArrowDown',2],['Home',0],['End',2]]){
+ const event=new w.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true});d.activeElement.dispatchEvent(event);assert.equal(event.defaultPrevented,true);assert.equal(d.activeElement,keyboardInputs[index]);assert.equal(d.documentElement.dataset.theme,keyboardInputs[index].value);assert.equal(focusScroll,334);assert.deepEqual(focusOptions.at(-1),{preventScroll:true});
+}
+keyboardGroup.style.direction='rtl';d.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));assert.equal(d.activeElement,keyboardInputs[1]);keyboardGroup.style.direction='';
+const modified=new w.KeyboardEvent('keydown',{key:'ArrowLeft',ctrlKey:true,bubbles:true,cancelable:true});d.activeElement.dispatchEvent(modified);assert.equal(modified.defaultPrevented,false);
+assert.equal(d.querySelectorAll('#appearance-dialog [data-pref-theme]:checked').length,1,'The other control surface stays synchronized');
+w.HTMLElement.prototype.focus=nativeFocus;d.documentElement.dataset.theme='violet';header.sync();
 for(const mode of ['light','dark']){d.documentElement.dataset.mode=mode;header.sync();for(const input of d.querySelectorAll('[data-pref-theme]')){const colors=tokens.themes[input.value][mode],style=input.parentElement.style;assert.equal(style.getPropertyValue('--pref-accent'),colors.accent);assert.equal(style.getPropertyValue('--pref-soft'),colors['accent-soft']);assert.equal(style.getPropertyValue('--pref-ink'),colors.text);assert.equal(input.getAttribute('aria-label'),tokens.themes[input.value].label);assert.equal(input.type,'radio');}for(const button of d.querySelectorAll('.appearance-mode')){assert.ok(button.querySelector('svg[aria-hidden=true]'));assert.equal(button.dataset.modeTarget,mode==='light'?'dark':'light');assert.equal(button.querySelector('span').textContent,mode==='light'?'Dark':'Light');assert.ok(button.getAttribute('aria-label').includes(button.querySelector('span').textContent),'Visible mode action is included in accessible name');}}
 assert.notEqual(d.querySelector('#appearance-inline [data-pref-theme]').name,d.querySelector('#appearance-dialog [data-pref-theme]').name);
 d.documentElement.dataset.density='comfortable';header.sync();d.querySelector('#header-density-toggle').click();assert.equal(d.documentElement.dataset.density,'compact');for(const button of d.querySelectorAll('[data-pref-density-toggle]')){assert.equal(button.getAttribute('aria-pressed'),'true');assert.match(button.textContent,/컴팩트/);assert.ok(button.getAttribute('aria-label').includes(button.querySelector('span').textContent),'Visible density label is included in accessible name');assert.ok(d.getElementById(button.getAttribute('aria-describedby')));}
@@ -45,4 +61,4 @@ const saved=JSON.parse(aw.localStorage.getItem('solyi-ds-prefs'));assert.deepEqu
 // A synchronous CSS/layout scroll adjustment is restored without changing the route or panel.
 aw.eval('updateTokens=()=>window.scrollTo({top:120});');aw.__applyAppearance({theme:'sand'});assert.equal(aw.scrollY,640);assert.equal(aw.location.hash,hash);assert.equal(main.firstElementChild,first);
 assert.deepEqual(errors,[]);appDom.window.close();
-console.log('PASS: shared native theme radios, single density swap per surface, icon/action mode buttons, neutral contrast, mobile focus, '+checks+' color pairs, CSS build allowlist; actual app route/history/API selection/input identity/scroll/storage retained. Browser geometry and native keyboard remain separate.');
+console.log('PASS: shared native theme radios; label and Arrow/Home/End activation use preventScroll with one native change, wrapping and RTL; single density swap, mode buttons, mobile focus, '+checks+' color pairs, CSS allowlist; actual app route/history/API/input/scroll/storage retained. Chrome geometry and trusted keyboard remain separate.');

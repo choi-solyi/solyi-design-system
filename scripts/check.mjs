@@ -14,12 +14,13 @@ let checked = 0;
 let minimum = {ratio:Infinity};
 for(const [name,theme] of Object.entries(tokens.themes)) {
   for(const mode of ['light','dark']) {
-    assert.equal(Object.keys(theme[mode]).length,20,`${name}/${mode}: 20 roles`);
+    assert.equal(Object.keys(theme[mode]).length,24,`${name}/${mode}: 24 roles including selected-state semantics`);
     for(const [a,b,min] of [
       ['accent','surface-alt',3],['success','surface-alt',3],['danger','surface-alt',3],
       ['text','canvas',4.5],['text','surface',4.5],['text','surface-alt',4.5],['text','accent-soft',4.5],['muted','accent-soft',4.5],
       ['muted','canvas',4.5],['muted','surface',4.5],['muted','surface-alt',4.5],
       ['accent','surface',4.5],['accent','accent-soft',4.5],
+      ['selected-text','selected-surface',4.5],['selected-border','selected-surface',3],['selected-border','surface',3],['selected-indicator','selected-surface',3],['focus','selected-surface',3],
       ['on-accent','accent',4.5],['on-accent','accent-hover',4.5],
       ['success','success-soft',4.5],['success','surface',4.5],['warning','surface',4.5],['danger','surface',4.5],['info','surface',4.5],['warning','warning-soft',4.5],['danger','danger-soft',4.5],['info','info-soft',4.5],
       ['control-border','surface',3],['focus','surface',3],['focus','canvas',3],['focus','accent-soft',3],['focus','danger-soft',3],['focus','info-soft',3],['focus','success-soft',3],['focus','warning-soft',3]

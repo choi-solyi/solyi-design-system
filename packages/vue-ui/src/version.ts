@@ -1,2 +1,2 @@
 // Generated from package.json; do not edit.
-export const uiVersion = "0.10.1";
+export const uiVersion = "0.10.2";

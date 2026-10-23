@@ -1,6 +1,6 @@
 {
   "name": "solyi-ui",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "**/*.css"
   ],
   "peerDependencies": {
-    "@solyi/core": "0.4.7",
+    "@solyi/core": "0.4.8",
     "vue": ">=3.5.44 <3.6.0",
     "vuetify": ">=4.3.0 <4.4.0"
   },

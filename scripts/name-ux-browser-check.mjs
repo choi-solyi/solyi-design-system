@@ -1,0 +1,53 @@
+/* Local, isolated Chrome. No user profile, uploads, deployment or external data. */
+import assert from 'node:assert/strict';
+import http from 'node:http';
+import path from 'node:path';
+import {readFile,mkdir,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {componentExampleSources} from '../site/component-api-data.js';
+const root=new URL('../',import.meta.url),docs=path.resolve(fileURLToPath(new URL('docs/',root))),out=new URL('qa-output/name-ux/',root);
+const {chromium}=await import(new URL('.tooling/browser-qa/node_modules/playwright-core/index.mjs',root));
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.woff2':'font/woff2','.ttf':'font/ttf','.svg':'image/svg+xml','.ico':'image/x-icon'};
+const server=http.createServer(async(req,res)=>{try{let name=decodeURIComponent(new URL(req.url,'http://local').pathname);if(name.endsWith('/'))name+='index.html';const file=path.resolve(docs,'.'+name);if(!file.startsWith(docs+path.sep))return res.writeHead(403).end();res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream'}).end(await readFile(file));}catch{res.writeHead(404).end();}});
+await mkdir(out,{recursive:true});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin='http://127.0.0.1:'+server.address().port,records=[];let browser;
+try{
+ browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,chromiumSandbox:true});
+ for(const width of (process.env.SOLYI_QA_WIDTHS||'1180,720,333').split(',').map(Number))for(const mode of (process.env.SOLYI_QA_MODES||'light,dark').split(',')){
+  const context=await browser.newContext({viewport:{width,height:900},locale:'ko-KR',hasTouch:width<=720,reducedMotion:'reduce'});
+  await context.grantPermissions(['clipboard-read','clipboard-write'],{origin});
+  await context.addInitScript(mode=>localStorage.setItem('solyi-ds-prefs',JSON.stringify({theme:'violet',mode,density:'comfortable'})),mode);
+  const page=await context.newPage(),errors=[];page.setDefaultTimeout(12000);page.on('pageerror',e=>errors.push(e.message));
+  await page.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
+  const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const position=async locator=>{await locator.evaluate(el=>scrollTo({top:el.getBoundingClientRect().top+scrollY-document.querySelector('.topbar').getBoundingClientRect().height-16,behavior:'instant'}));await settle();};
+  async function shot(name){assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),'No horizontal overflow '+name);const file=`${width}-${mode}-${name}.png`;await page.screenshot({path:fileURLToPath(new URL(file,out)),animations:'disabled',timeout:12000});return file;}
+  await page.goto(origin+'/#start',{waitUntil:'domcontentloaded'});await page.locator('[data-goal-row]').first().waitFor();await page.evaluate(()=>document.fonts.ready);
+  const rows=page.locator('[data-goal-row]'),insets=await rows.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el),input=el.querySelector('input').getBoundingClientRect(),marker=el.querySelector('.goal-marker').getBoundingClientRect();return{left:input.left-r.left,paddingX:parseFloat(s.paddingLeft),paddingY:parseFloat(s.paddingTop),height:r.height,right:r.right-marker.right};}));
+  for(const row of insets){assert.equal(row.paddingX,12);assert.equal(row.paddingY,8);assert.ok(row.height>=44);assert.ok(row.left>=12);assert.ok(row.right>=12);}
+  assert.ok(insets.every(row=>Math.abs(row.left-insets[0].left)<.1&&Math.abs(row.right-insets[0].right)<.1));
+  const checked=await rows.first().locator('input').isChecked();await rows.first().click({position:{x:4,y:20}});assert.equal(await rows.first().locator('input').isChecked(),!checked);
+  await rows.first().locator('input').focus();await page.keyboard.press('Space');assert.equal(await rows.first().locator('input').isChecked(),checked);assert.ok(parseFloat(await rows.first().evaluate(el=>getComputedStyle(el).outlineWidth))>=2);
+  await position(page.locator('.goal-specimen'));const goalShot=await shot('goal');
+
+  await page.goto(origin+'/#component/sbtn',{waitUntil:'domcontentloaded'});const card=page.locator('#sbtn');await card.waitFor();
+  const frame=card.frameLocator('iframe');await frame.locator('.sol-ui-button').first().waitFor();await card.locator('iframe').waitFor();await page.waitForFunction(()=>!document.querySelector('#sbtn iframe').hasAttribute('aria-busy'));
+  assert.equal(await card.locator('#sbtn-api').evaluate(el=>el.hidden),true);assert.equal(await card.locator('.code-example').evaluate(el=>el.open),false);
+  await position(card);const examplesShot=await shot('examples');const before=await page.evaluate(()=>scrollY);await card.getByRole('tab',{name:'API',exact:true}).click();assert.equal(await card.locator('#sbtn-api').evaluate(el=>el.hidden),false);assert.ok(Math.abs(await page.evaluate(()=>scrollY)-before)<=1,'Tab switches in place');
+  const hash=await page.evaluate(()=>location.hash);await card.evaluate(el=>el.dataset.qaIdentity='keep');
+  const scope=width<=1100?'#appearance-dialog':'#appearance-inline';if(width<=1100)await page.locator('#appearance-open').click();
+  const currentY=await page.evaluate(()=>{window.__appearanceTrace=[];for(const type of ['pointerdown','focusin','change'])document.addEventListener(type,e=>{if(e.target.closest('.topbar'))window.__appearanceTrace.push({type,y:scrollY,target:e.target.outerHTML.slice(0,130)});},true);return scrollY;});
+  for(const theme of ['sage','sand','violet']){const target=page.locator(scope+' [data-pref-theme][value='+theme+']').locator('..'),box=await target.boundingBox();if(process.env.SOLYI_QA_DEBUG)console.log(JSON.stringify({before:await page.evaluate(()=>({y:scrollY,headerY:document.querySelector('.topbar').getBoundingClientRect().top,headerPosition:getComputedStyle(document.querySelector('.topbar')).position})),box}));await page.mouse.click(box.x+box.width/2,box.y+box.height/2);await settle();assert.equal(await page.evaluate(()=>location.hash),hash);assert.equal(await card.locator('#sbtn-api').evaluate(el=>el.hidden),false);assert.equal(await card.getAttribute('data-qa-identity'),'keep');const afterY=await page.evaluate(()=>scrollY);assert.ok(Math.abs(afterY-currentY)<=1,'Theme preserves viewport '+JSON.stringify({theme,currentY,afterY,trace:await page.evaluate(()=>window.__appearanceTrace)}));}
+  const density=page.locator(scope+' [data-pref-density-toggle]');await density.click();assert.equal(await page.locator('html').getAttribute('data-density'),'compact');await density.click();assert.equal(await page.locator('html').getAttribute('data-density'),'comfortable');
+  assert.equal(await page.evaluate(()=>location.hash),hash);const modeButton=page.locator(width<=1100?'#appearance-mode-toggle':'#mode-toggle');assert.match(await modeButton.textContent(),/Dark|Light/);await modeButton.click();await modeButton.click();assert.equal(await page.locator('html').getAttribute('data-mode'),mode);
+  const headerShot=await shot('settings');if(width<=1100){await page.keyboard.press('Escape');assert.equal(await page.evaluate(()=>document.activeElement.id),'appearance-open');}
+  await card.getByRole('tab',{name:'API',exact:true}).focus();await page.keyboard.press('Home');assert.equal(await card.getByRole('tab',{name:'Examples',exact:true}).getAttribute('aria-selected'),'true');
+  await page.goBack();await page.waitForFunction(()=>!document.querySelector('#sbtn-api').hidden);await page.goForward();await page.waitForFunction(()=>!document.querySelector('#sbtn-examples').hidden);
+  const code=card.locator('.code-example');await code.locator('summary').click();await code.locator('[data-copy-snippet]').click();assert.equal((await page.evaluate(()=>navigator.clipboard.readText())).replace(/\r\n/g,'\n'),componentExampleSources.buttons.replace(/\r\n/g,'\n'));
+  await position(card);const codeShot=await shot('code');
+  await page.goto(origin+'/#component/sbtn-api',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!document.querySelector('#sbtn-api').hidden);assert.equal(await page.locator('#sbtn-api-tab').getAttribute('aria-selected'),'true');
+
+  await page.goto(origin+'/#component/sradio-group',{waitUntil:'domcontentloaded'});const selection=page.locator('#sradio-group').frameLocator('iframe');await selection.locator('.sol-choice-row>.sol-choice').first().waitFor();const choicePad=await selection.locator('.sol-choice-row>.sol-choice').evaluateAll(nodes=>nodes.map(el=>({paddingX:parseFloat(getComputedStyle(el).paddingLeft),height:el.getBoundingClientRect().height})));assert.ok(choicePad.every(row=>row.paddingX===12&&row.height>=44));
+  assert.deepEqual(errors,[]);records.push({width,mode,touchEmulation:width<=720,goalInsets:insets,choicePad,screenshots:[goalShot,examplesShot,headerShot,codeShot],copy:true,deepLink:true,history:true,themeRouteAndScroll:true});await context.close();console.log(`PASS ${width}/${mode}: shared row hit area/focus, inline Examples/API/history, canonical copy, theme+swap+mode persistence of route/state/viewport.`);
+ }
+ await writeFile(new URL('report.json',out),JSON.stringify({completedAt:new Date().toISOString(),browser:browser.version(),headless:true,userProfile:false,records},null,2)+'\n');
+}finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

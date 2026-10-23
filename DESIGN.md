@@ -33,6 +33,8 @@ UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
 
 ## 3. 토큰·테마·밀도
 
+- 선택 영역은 --sol-color-selected-surface/text/border/indicator 역할을 사용합니다. 배경색만 바꾸지 말고 체크·표시선·굵기 등 상태 단서를 함께 유지합니다. `accent-soft`는 옅은 강조 바탕이므로 선택 역할 전체를 대신한다고 가정하지 않습니다. '현재 진행 작업'과 '사용자가 보고 있는 항목'은 앱에서 별도 상태로 관리합니다.
+
 - 색은 원시 팔레트보다 역할 토큰을 우선합니다. --sol-color-canvas, --sol-color-surface, --sol-color-text, --sol-color-muted, --sol-color-accent와 의미 색을 용도에 맞게 연결합니다. 성공·주의·오류를 색만으로 전달하지 않습니다.
 - 간격은 --sol-space-* 토큰을 사용합니다. 검색 입력·선택창의 컨트롤 높이와 시작선을 맞추고 라벨·설명·오류·행동 사이 간격을 유지합니다. 알림의 보조 행동은 메시지보다 강조하지 않습니다.
 - 기본 반경은 버튼6px, 입력10px, 카드·작은 팝업12px, 다이얼로그·큰 패널16px입니다. --sol-radius-button/control/card/floating/panel을 사용하고 의도된 원형 아바타·상태점은 유지합니다.

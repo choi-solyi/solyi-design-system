@@ -26,7 +26,7 @@
 .sol-tree [role="group"][hidden] {display:none;}
 .sol-tree-row {box-sizing:border-box;display:flex;align-items:center;flex-wrap:wrap;gap:var(--sol-space-2);min-height:var(--sol-control-height);padding:var(--sol-space-2);border-radius:var(--sol-radius-small);font-size:var(--sol-text-sm);cursor:pointer;}
 .sol-tree-state {color:var(--sol-color-muted);font-size:var(--sol-text-xs);margin-inline-start:auto;}
-.sol-tree [aria-selected="true"]>.sol-tree-row {background:var(--sol-color-accent-soft);color:var(--sol-color-accent);font-weight:700;}
+.sol-tree [aria-selected="true"]>.sol-tree-row {color:var(--sol-color-selected-text);--sol-color-muted:var(--sol-color-selected-text);background:var(--sol-color-selected-surface);color:var(--sol-color-selected-text);font-weight:700;}
 .sol-tree [role="treeitem"]:focus-visible {outline:none;}
 .sol-tree [role="treeitem"]:focus-visible>.sol-tree-row {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
 .sol-dialog {box-sizing:border-box;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 48px);overflow:auto;padding:var(--sol-space-6);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-panel);background:var(--sol-color-surface);color:var(--sol-color-text);}
@@ -38,7 +38,7 @@
 .sol-tags {list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--sol-space-2);margin-block:var(--sol-space-3);}
 .sol-tags li {display:flex;align-items:center;gap:var(--sol-space-1);padding-inline:var(--sol-space-3) var(--sol-space-1);border:1px solid var(--sol-color-border);background:var(--sol-color-accent-soft);border-radius:var(--sol-radius-small);font-size:var(--sol-text-sm);}
 .sol-tabs [role="tablist"] {display:flex;flex-wrap:wrap;gap:var(--sol-space-1);border-bottom:1px solid var(--sol-color-border);padding-bottom:var(--sol-space-2);}
-.sol-tabs [role="tab"][aria-selected="true"] {color:var(--sol-color-accent);background:var(--sol-color-accent-soft);border-bottom-color:var(--sol-color-accent);}
+.sol-tabs [role="tab"][aria-selected="true"] {color:var(--sol-color-selected-text);--sol-color-muted:var(--sol-color-selected-text);color:var(--sol-color-selected-text);background:var(--sol-color-selected-surface);border-bottom-color:var(--sol-color-selected-border);}
 .sol-tabs [role="tabpanel"] {padding-block:var(--sol-space-4);}
 .sol-tabs [role="tabpanel"][hidden] {display:none;}
 .sol-menu {box-sizing:border-box;position:fixed;z-index:var(--sol-layer-floating);width:max-content;min-width:200px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow:auto;padding:var(--sol-space-2);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-floating);background:var(--sol-color-surface);color:var(--sol-color-text);box-shadow:var(--sol-elevation-floating);}
@@ -118,9 +118,12 @@
    checkbox itself. SCheckbox/SRadioGroup may receive this wrapper class;
    existing radio cards keep their own card inset. */
 .sol-choice.sol-choice-row,.sol-choice-row>.sol-choice:not(.sol-ui-radio-card) {box-sizing:border-box;width:100%;min-height:var(--sol-touch-target-min);padding:var(--sol-space-2) var(--sol-space-3);gap:var(--sol-space-3);margin:0;border:1px solid transparent;border-radius:var(--sol-radius-small);}
-.sol-choice.sol-choice-row:has(input:checked),.sol-choice-row>.sol-choice:not(.sol-ui-radio-card):has(input:checked) {background:var(--sol-color-accent-soft);border-color:var(--sol-color-accent);}
+.sol-choice.sol-choice-row:has(input:checked),.sol-choice-row>.sol-choice:not(.sol-ui-radio-card):has(input:checked) {color:var(--sol-color-selected-text);--sol-color-muted:var(--sol-color-selected-text);background:var(--sol-color-selected-surface);border-color:var(--sol-color-selected-border);}
 .sol-choice.sol-choice-row:has(input:focus-visible),.sol-choice-row>.sol-choice:not(.sol-ui-radio-card):has(input:focus-visible) {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
 .sol-choice.sol-choice-row>span,.sol-choice-row>.sol-choice:not(.sol-ui-radio-card)>span {min-width:0;overflow-wrap:anywhere;}
+.sol-choice.sol-choice-row:not(:has(input:disabled)):not(:has(input:checked)):hover,.sol-choice-row>.sol-choice:not(.sol-ui-radio-card):not(:has(input:disabled)):not(:has(input:checked)):hover {background:var(--sol-color-surface-alt);}
+.sol-choice.sol-choice-row:has(input:checked),.sol-choice-row>.sol-choice:not(.sol-ui-radio-card):has(input:checked) {box-shadow:inset 3px 0 var(--sol-color-selected-indicator);}
+.sol-tree [aria-selected="true"]>.sol-tree-row,.sol-data-table tbody tr:has(input:checked),.sol-combobox-menu [role=option][aria-selected=true] {box-shadow:inset 3px 0 var(--sol-color-selected-indicator);}
 .sol-status {display: inline-flex; align-items: center; gap: var(--sol-space-1); padding: 3px 8px; border-radius:var(--sol-radius-small); font-size: var(--sol-text-xs); font-weight: 600; color: var(--sol-color-info); background: var(--sol-color-info-soft); white-space: nowrap;}
 .sol-status.success {color: var(--sol-color-success); background: var(--sol-color-success-soft);}
 .sol-status.warning {color: var(--sol-color-warning); background: var(--sol-color-warning-soft);}
@@ -179,11 +182,11 @@
 .sol-chart-table th,.sol-chart-table td {padding:var(--sol-space-2) var(--sol-space-3);}
 .sol-chart-table td {font-variant-numeric:tabular-nums;}
 .sol-data-table .sol-choice {justify-content:center;min-height:var(--sol-button-height);}
-.sol-data-table tbody tr:has(input:checked) {background: var(--sol-color-accent-soft);}
+.sol-data-table tbody tr:has(input:checked) {color:var(--sol-color-selected-text);--sol-color-muted:var(--sol-color-selected-text);background: var(--sol-color-selected-surface);}
 .sol-table-sub {display: block; margin-top: 2px;line-height:1.35; color: var(--sol-color-muted); font-size: var(--sol-text-xs);}
 .sol-record-cards {display: none; list-style: none; padding: 0; margin: var(--sol-space-4) 0; gap: var(--sol-space-3);}
 .sol-record-cards li {padding: var(--sol-space-4); border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-card);}
-.sol-record-cards li:has(input:checked) {border-color: var(--sol-color-accent); background: var(--sol-color-accent-soft);}
+.sol-record-cards li:has(input:checked) {color:var(--sol-color-selected-text);--sol-color-muted:var(--sol-color-selected-text);border-color: var(--sol-color-selected-border); background: var(--sol-color-selected-surface);}
 .sol-record-cards dl {margin: var(--sol-space-2) 0; font-size: var(--sol-text-xs);}
 .sol-record-cards dl div {display: grid; grid-template-columns: 60px minmax(0,1fr); gap: var(--sol-space-2);}
 .sol-record-cards dt {color: var(--sol-color-muted);}
@@ -210,7 +213,7 @@
 .sol-combobox-menu {max-height: 240px; overflow: auto; margin-top: var(--sol-space-1); border: 1px solid var(--sol-color-control-border); border-radius:var(--sol-radius-floating); background: var(--sol-color-surface);}
 .sol-combobox-menu ul {padding: 0; margin: 0; list-style: none;}
 .sol-combobox-menu [role="option"] {display: flex; align-items: center; min-height: var(--sol-control-height); padding: var(--sol-space-2) var(--sol-space-3); font-size: var(--sol-text-sm); cursor: pointer;}
-.sol-combobox-menu [role="option"][aria-selected="true"] {background: var(--sol-color-accent-soft); color: var(--sol-color-accent); font-weight: 600;}
+.sol-combobox-menu [role="option"][aria-selected="true"] {color:var(--sol-color-selected-text);--sol-color-muted:var(--sol-color-selected-text);background: var(--sol-color-selected-surface); color: var(--sol-color-selected-text); font-weight: 600;}
 .sol-combobox-menu p {margin: 0; padding: var(--sol-space-3); font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
 .sol-motion-stage {min-height: 12rem; display: grid; align-items: start;}
 .sol-date-field {display: flex; align-items: stretch; gap: var(--sol-space-2); min-width: 0;}

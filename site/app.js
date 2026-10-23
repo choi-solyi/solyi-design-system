@@ -8,12 +8,14 @@ import {mountOverflowText} from './overflow.js';
 import {presentTopics,scrollToDocumentSection,getDocumentSearchEntries,resolveDocumentLocation} from './topics.js';
 import {mountDocumentSearch} from './doc-search.js';
 import {mountHeaderPreferences} from './header-preferences.js';
+import {resolveAppearance,persistAppearance} from './appearance-state.js';
 import {renderExpansion,mountExpansion,requestExpansionLeave} from './expansion.js';
 import {renderComponentExamples, renderPatternExamples, mountExamples} from './extended.js';
 import {renderGoalSpecimen, renderMotionSection, mountMotion} from './motion.js';
 import {renderColorExamples, mountColorExamples} from './palette.js';
 
 const root = document.documentElement;
+Object.assign(root.dataset,resolveAppearance());
 const main = document.querySelector('main');
 const announcement = document.querySelector('#announcement');
 const dialog = document.querySelector('#detail-dialog');
@@ -66,6 +68,7 @@ const colorRoles = {
   accent:['Accent','주요 행동과 선택'], 'accent-hover':['Accent hover','주요 행동에 포인터가 있을 때'], 'accent-soft':['Accent soft','선택된 영역의 바탕'], 'on-accent':['On accent','주요 행동 위의 글자'],
   focus:['Focus','키보드 탐색의 현재 위치'], success:['Success','완료·성공 안내'], 'success-soft':['Success soft','성공 안내 바탕'], warning:['Warning','행동 전 확인 안내'], 'warning-soft':['Warning soft','확인 안내 바탕'], danger:['Danger','오류·위험 안내'], 'danger-soft':['Danger soft','오류 안내 바탕'], info:['Info','중립적 진행 안내'], 'info-soft':['Info soft','진행 안내 바탕']
 };
+Object.assign(colorRoles,{'selected-surface':['Selected surface','선택한 행과 항목의 바탕'],'selected-text':['Selected text','선택 영역의 본문과 보조 글자'],'selected-border':['Selected border','선택을 식별하는 테두리'],'selected-indicator':['Selected indicator','선택 표시선과 체크 강조']});
 function tokenCards(query='') {
   const theme = tokens.themes[root.dataset.theme];
   const colors = theme[root.dataset.mode];
@@ -75,7 +78,7 @@ function style() {
   return intro('01 / STYLE · CORE','보기 좋은 화면의 기본값','색의 이름 대신 역할로 연결합니다. 앱이 달라져도 읽는 순서, 간격의 관계, 상태를 알리는 방식은 이어집니다.') +
   localNav([['principles','Principles'],['tokens','Color tokens'],['color-examples','컬러 적용 예시'],['type','Typography'],['space','Space & density'],['accessibility','Accessibility'],['motion','Motion'],['icons','Icons'],['layers','Layers'],['writing','UI writing']]) +
   section('principles','Core의 경계','공통 규칙과 앱의 언어를 나눕니다.',`<div class="grid-2"><div class="sol-card"><h3>함께 가져가는 것</h3><ul class="rule-list"><li>제목 → 설명 → 행동의 정보 위계</li><li>16px 본문과 여유 있는 행간, 4px 기반 간격</li><li>역할 기반 색, 키보드 포커스, 오류·완료 안내</li><li>조밀한 화면에도 유지하는 터치 목표와 의미 구조</li></ul></div><div class="sol-card"><h3>앱에서 결정하는 것</h3><ul class="rule-list"><li>앱의 강조색·의미 색·목록 밀도</li><li>도메인의 정보 구조와 특수 시각화</li><li>게임의 전투력·등급·희귀도 색은 앱 전용 토큰</li><li>특정 프레임워크의 컴포넌트·라우터·상태 관리</li></ul></div></div>`) +
-  section('tokens','역할로 연결하는 색','카드를 누르면 현재 CSS 선언이 복사됩니다.',`<div class="token-toolbar"><label class="sol-label" for="token-search">토큰 찾기</label><input class="sol-input" type="search" id="token-search" placeholder="역할, 설명, HEX로 검색" aria-describedby="token-search-help"><div class="token-actions"><a class="sol-button" href="#theme/themes">테마 바꾸기 →</a><a class="sol-button" href="./tokens.css" download>전체 CSS ↓</a><a class="sol-button" href="./tokens.json" download>JSON ↓</a></div><p id="token-search-help" class="sol-hint">현재 테마와 라이트·다크 모드의 값을 보여줍니다.</p></div><p id="token-count" class="small muted" role="status">20개 토큰 · ${E(tokens.themes[root.dataset.theme].label)} / ${root.dataset.mode}</p><div id="token-grid" class="token-grid">${tokenCards()}</div><p class="small muted" style="margin-top:16px"><code>border</code>는 구획용입니다. 입력처럼 경계 인지가 필요한 곳에는 더 뚜렷한 <code>control-border</code>를 씁니다. 상태 색은 UI의 의미이며 등급 색이 아닙니다.</p>${codeSample('CSS 역할 매핑 보기',`.app-panel {\n  background: var(--sol-color-surface);\n  color: var(--sol-color-text);\n  border: 1px solid var(--sol-color-border);\n  padding: var(--sol-space-6);\n  border-radius: var(--sol-radius-card);\n}\n.app-primary {\n  background: var(--sol-color-accent);\n  color: var(--sol-color-on-accent);\n}`)}`) +
+  section('tokens','역할로 연결하는 색','카드를 누르면 현재 CSS 선언이 복사됩니다.',`<div class="token-toolbar"><label class="sol-label" for="token-search">토큰 찾기</label><input class="sol-input" type="search" id="token-search" placeholder="역할, 설명, HEX로 검색" aria-describedby="token-search-help"><div class="token-actions"><a class="sol-button" href="#theme/themes">테마 바꾸기 →</a><a class="sol-button" href="./tokens.css" download>전체 CSS ↓</a><a class="sol-button" href="./tokens.json" download>JSON ↓</a></div><p id="token-search-help" class="sol-hint">현재 테마와 라이트·다크 모드의 값을 보여줍니다.</p></div><p id="token-count" class="small muted" role="status">${Object.keys(tokens.themes[root.dataset.theme][root.dataset.mode]).length}개 토큰 · ${E(tokens.themes[root.dataset.theme].label)} / ${root.dataset.mode}</p><div id="token-grid" class="token-grid">${tokenCards()}</div><p class="small muted" style="margin-top:16px"><code>border</code>는 구획용입니다. 입력처럼 경계 인지가 필요한 곳에는 더 뚜렷한 <code>control-border</code>를 씁니다. 상태 색은 UI의 의미이며 등급 색이 아닙니다.</p>${codeSample('CSS 역할 매핑 보기',`.app-panel {\n  background: var(--sol-color-surface);\n  color: var(--sol-color-text);\n  border: 1px solid var(--sol-color-border);\n  padding: var(--sol-space-6);\n  border-radius: var(--sol-radius-card);\n}\n.app-primary {\n  background: var(--sol-color-accent);\n  color: var(--sol-color-on-accent);\n}`)}`) +
   section('type','크기보다 먼저, 읽는 순서','Wanted Sans 1.0.3 · 같은 사이트에서 로드 · 코드 글꼴은 별도',`<dl><div class="type-sample"><dt>Display · 48 / 1.25<br>--sol-text-display</dt><dd style="font-size:clamp(2rem,4vw,3rem);font-weight:720;line-height:1.25;letter-spacing:-.04em">같은 결, 다른 표정.</dd></div><div class="type-sample"><dt>Section · 28 / 1.25<br>--sol-text-xl</dt><dd style="font-size:1.75rem;font-weight:700;line-height:1.25">읽는 순서가 보이게</dd></div><div class="type-sample"><dt>Title · 20 / 1.25<br>--sol-text-lg</dt><dd style="font-size:1.25rem;font-weight:650;line-height:1.25">오늘의 작은 기록</dd></div><div class="type-sample"><dt>Body · 16 / 1.65<br>--sol-text-md</dt><dd>중요한 정보는 먼저, 부가 설명은 다음에 둡니다. 한 문장에 하나의 뜻을 담습니다.</dd></div><div class="type-sample"><dt>Label · 14 / 1.65<br>--sol-text-sm</dt><dd class="small">레이블은 무엇을 입력할지, 안내는 왜 필요한지 설명합니다.</dd></div><div class="type-sample"><dt>Meta · 13 / 1.65<br>--sol-text-xs</dt><dd style="font-size:.8125rem" class="muted">초안 · 가상 프로젝트 · 방금 업데이트</dd></div></dl><p class="small muted">UI는 공식 Wanted Sans Variable을 self-host합니다. 로드 중에는 시스템 폰트로 표시하며 코드·pre·kbd·samp는 JetBrains Mono → Nanum Gothic Coding → monospace를 사용합니다. 한글은 글리프별로 보조 글꼴을 사용하며 UI 글꼴과 구분합니다. <a href="./fonts/wanted-sans/OFL.txt">OFL 원문</a> · <a href="./fonts/wanted-sans/SOURCE.json">고정 출처와 해시</a>. 본문은 60~70자 안팎의 줄 길이를 목표로 합니다. 표·메타 정보를 줄이기 전에 덜 중요한 정보를 접거나 나눕니다. 한국어 제목은 어절을 지키되 좁은 폭에서는 줄바꿈을 허용합니다.</p><pre class="code-font-sample" tabindex="0" aria-label="한영 주석 코드 글꼴 예시"><code>// English comment: keep the last valid value.
 // 한글 주석: 유효한 마지막 값을 유지합니다.
 const label = "가상 기록";
@@ -170,7 +173,7 @@ function render({focus=false}={}) {
   else if (focus) scrollToDocumentSection('',{focus:true});
 }
 function persistPreferences() {
-  try {localStorage.setItem('solyi-ds-prefs',JSON.stringify({theme:root.dataset.theme,mode:root.dataset.mode,density:root.dataset.density}));} catch {}
+  persistAppearance(root.dataset);
 }
 function syncPreferences() {
   headerPreferences?.sync();

@@ -28,6 +28,7 @@ export function renderComponentReferences(h) {
           ${code}
         </div>
         <div id="${id}-api" class="component-api" role="tabpanel" aria-labelledby="${id}-api-tab" hidden><h4>API</h4>
+          ${component.passthrough?`<p class="sol-hint">반응형 레이아웃의 속성·슬롯·이벤트는 <a href="https://vuetifyjs.com/en/api/${component.passthrough.replace(/^V/,'v-').replace(/([a-z])([A-Z])/g,'$1-$2').toLowerCase()}/">기반 레이아웃 API</a>를 사용합니다. <a href="#start/vue-components">설치와 기본 설정</a>을 함께 확인하세요.</p>`:''}
           <h5>Props</h5>${apiTable(name+' props',['이름 / 필수','타입 · 허용값','기본값','설명'],component.props.map(prop=>`<tr><th scope="row"><code>${apiEscape(prop.name)}</code>${prop.required?'<span class="api-required">필수</span>':''}</th><td><code>${apiEscape(prop.type)}</code>${prop.values.length?`<span class="sol-hint">${prop.values.map(apiEscape).join(' · ')}</span>`:''}</td><td><code>${apiEscape(prop.default)}</code></td><td>${apiEscape(prop.description)}</td></tr>`))}
           <h5>Slots</h5>${apiTable(name+' slots',['이름','전달 인자 타입','설명'],component.slots.map(slot=>`<tr><th scope="row"><code>${apiEscape(slot.name)}</code></th><td><code>${apiEscape(slot.scope)}</code></td><td>${apiEscape(slot.description)}</td></tr>`))}
           <h5>Events</h5>${apiTable(name+' events',['이름','인자 타입','설명'],component.events.map(event=>`<tr><th scope="row"><code>${apiEscape(event.name)}</code></th><td><code>${apiEscape(event.signature)}</code></td><td>${apiEscape(event.description)}</td></tr>`))}
