@@ -1,7 +1,7 @@
 // Generated from CHANGELOG.md.
 export const releaseNotes={
   "date": "2026-10-23",
-  "version": "0.14.2",
+  "version": "0.14.3",
   "entries": [
     "Vue 3용 `solyi-ui`에 컴포넌트와 Core 토큰·CSS·helper·타입을 함께 제공합니다.",
     "버튼·입력·폼 검증·레이아웃·표·선택·탐색·알림·오버레이·날짜/시간·파일·차트·트리·진행 표시를 S 컴포넌트로 사용할 수 있습니다.",

@@ -29,7 +29,7 @@ UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
 - 실제 공개 S 컴포넌트를 우선 사용합니다. 예를 들어 SBtn, STextField, SSelect, SForm, SCard, SDialog, SDataTable을 목적에 맞게 사용합니다. 명명은 S 접두사 PascalCase입니다.
 - SContainer·SRow·SCol은 Vuetify 레이아웃을 재사용합니다. SCard의 actions 슬롯은 카드의 행동을 배치할 때 사용하고, 시각적 그룹과 간격은 명시적으로 구성합니다.
 - S API가 없는 기능은 조합 가능한 기존 컴포넌트와 의미 있는 HTML로 구현하고, 전용 API가 있는 것처럼 설명하지 않습니다. 직접 V 컴포넌트가 필요하면 createSolyiVuetify의 공통 테마·defaults 연결을 유지합니다.
-- 문서 사이트의 docs.css를 소비 앱에 가져오지 않습니다. solyi-ui/tokens.css·components.css·styles.css 등 실제 패키지 스타일을 앱 진입점에서 한 번 불러옵니다.
+- 문서 사이트의 docs.css는 소비 앱에 복사하지 않습니다. solyi-ui/all.css로 Vuetify·폰트·토큰·컴포넌트 스타일을 앱 진입점에서 한 번 불러옵니다. 개별 스타일 export도 유지되며 코드 폰트는 solyi-ui/code-fonts.css로 별도 선택합니다.
 
 ## 3. 토큰·테마·밀도
 

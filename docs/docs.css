@@ -252,7 +252,20 @@ dialog > p {font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
 .detail-list div {display: grid; grid-template-columns: 100px minmax(0,1fr); border-top: 1px solid var(--sol-color-border); padding: 12px 0; gap: 12px;}
 .detail-list dt {color: var(--sol-color-muted);}
 .detail-list dd {margin: 0;}
-.noscript {padding: 24px; background: var(--sol-color-surface); border: 1px solid var(--sol-color-control-border); margin: 24px;}
+.noscript {
+  padding: var(--sol-space-6);
+  background: var(--sol-color-surface);
+  border: 1px solid var(--sol-color-control-border);
+  margin: 0;
+}
+.noscript > h1 {
+  margin: 0 0 var(--sol-space-3);
+  font-size: var(--sol-text-xl);
+  line-height: var(--sol-line-heading);
+}
+.noscript > p {
+  margin: 0;
+}
 @media (min-width: 1600px) {.topbar {padding-inline: max(32px,calc((100% - 1472px)/2));}}
 @media (max-width: 1180px) {.grid-4 {grid-template-columns: repeat(2,minmax(0,1fr));}.overview-hero {grid-template-columns: 1fr; gap: 24px;}.specimen {max-width: 600px;}.token-grid {grid-template-columns: repeat(2,minmax(0,1fr));}.grid-3 {grid-template-columns: 1fr;}.theme-card {display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);}.theme-card-body p {min-height: 0;}}
 @media (max-width: 800px) {
@@ -391,6 +404,21 @@ html {scroll-padding-top:var(--sol-document-offset,100px);}
 .code-reference-part+.code-reference-part {margin-top:var(--sol-space-4);}
 @media(max-width:680px){.vue-code-tab{min-height:var(--sol-touch-target-min);}}
 .vue-live-stage {display:grid;gap:var(--sol-space-6);min-width:0;}
-.vue-live-part {min-width:0;}
-.vue-live-part>.document-alias-heading {margin:0 0 var(--sol-space-3);}
+.vue-live-part {
+  position: relative;
+  min-width: 0;
+}
+/* The iframe keeps its own visible heading; retain the document anchor and heading for navigation. */
+.vue-live-part > .document-alias-heading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
 .vue-recipe-frame {display:block;width:100%;border:0;background:var(--sol-color-surface);color-scheme:inherit;}

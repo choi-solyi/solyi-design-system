@@ -1,7 +1,61 @@
 // Generated verified release catalogue.
 export const packageReleases={
-  "current": "0.14.1",
+  "current": "0.14.3",
   "releases": [
+    {
+      "release": "0.14.3",
+      "sourceRef": "80679e28c1afe41a238d22f1b5dbc6679f4ca85e",
+      "compatibility": {
+        "node": "^22.18.0 || >=24.12.0",
+        "vue": "3.5.44",
+        "vuetify": "4.3.0"
+      },
+      "packages": [
+        {
+          "name": "@solyi/core",
+          "version": "0.4.15",
+          "file": "solyi-core-0.4.15.tgz",
+          "bytes": 5873863,
+          "sha256": "338339d2af7182557bbf2daedc5db209be41d3265c8ff96821747d6ff99384fe",
+          "integrity": "sha512-Ps2cXxWgd9PD2sjZ+7YG64IJ6jpbO+81xoM1MaCRKASa7I70ALmlzvPJZC+OdVHjxB+g6J3KB+fr74LayBKqQA=="
+        },
+        {
+          "name": "solyi-ui",
+          "version": "0.11.6",
+          "file": "solyi-ui-0.11.6.tgz",
+          "bytes": 5928615,
+          "sha256": "a738cf348763b33894ec21dd932acef731306bb28541428c584135dafe2933c2",
+          "integrity": "sha512-uxGtOgoclKsHd/heUdS/Au/V39bV/NyVzFnu2hgfA1JJcEr2MH68Cns8CYlJJhQbU2Hy1I0JH6ppEMFTx34AXA=="
+        }
+      ]
+    },
+    {
+      "release": "0.14.2",
+      "sourceRef": "0e8a5b1b23af7b27f335e3466f5ee7810accea5b",
+      "compatibility": {
+        "node": "^22.18.0 || >=24.12.0",
+        "vue": "3.5.44",
+        "vuetify": "4.3.0"
+      },
+      "packages": [
+        {
+          "name": "@solyi/core",
+          "version": "0.4.14",
+          "file": "solyi-core-0.4.14.tgz",
+          "bytes": 5873867,
+          "sha256": "5230677b3e6e12bb8b16fcafdbfe533e225dc3f1af434c5110dd203bf1e0e778",
+          "integrity": "sha512-qUsiPnQoU6reATKhCHP7uOC2rro61K/tqG+S6cky3VfB5jrRtGaZZ78HQN5jo/aqX6VTvnKoDN0Fa/XrEgW+jg=="
+        },
+        {
+          "name": "solyi-ui",
+          "version": "0.11.5",
+          "file": "solyi-ui-0.11.5.tgz",
+          "bytes": 5928615,
+          "sha256": "70914d75560c95e8b237f7a212d5d4c6d2750cb99ef14d1c1df2e717451ed93a",
+          "integrity": "sha512-R23zVzFw+fNECgkriq9bFZE0Y/PhPWlkxLuWvGy3k4EtAINLKq01QrwQJ4OoXOCoqD6L2a59Wgsm+G6Opc9k0A=="
+        }
+      ]
+    },
     {
       "release": "0.14.1",
       "sourceRef": "1b2d8ae3f24f6d509546694c7f3e489e9dc6d920",

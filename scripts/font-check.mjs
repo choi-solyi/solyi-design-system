@@ -110,8 +110,16 @@ assert.match(
   (await read('site/index.html')).toString(),
   /rel="stylesheet" href="\.\/fonts\/wanted-sans\/WantedSansVariable.css"/,
 )
-for (const path of ['examples/vue-vuetify/src/main.js', 'examples/package-consumer/main.ts'])
-  assert.ok((await read(path)).toString().includes("import 'solyi-ui/fonts.css'"))
+for (const path of ['examples/vue-vuetify/src/main.js', 'examples/package-consumer/main.ts']) {
+  const entry = (await read(path)).toString()
+  if (entry.includes("import 'solyi-ui/all.css'")) {
+    assert.match(
+      (await read('packages/vue-ui/src/all.css')).toString(),
+      /@import '\.\/core\/fonts\/wanted-sans\/WantedSansVariable\.css';/,
+      'The combined entry includes the same UI font stylesheet',
+    )
+  } else assert.ok(entry.includes("import 'solyi-ui/fonts.css'"), path + ': UI font import')
+}
 if (!sourceOnly) {
   for (const name of wantedSansSiteFiles) {
     const bytes = await read('site/' + name)

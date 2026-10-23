@@ -67,6 +67,7 @@ export function presentTopics(root,route){
  const entries=documentSections[route]||[];
  const sidebar=document.querySelector('.sidebar'),primary=sidebar.querySelector(':scope > nav'),parentLink=primary.querySelector(`[data-route="${route}"]`);
  const controller=new AbortController(),signal=controller.signal,media=matchMedia('(max-width: 800px)');let frame=0,activeId='';
+  let navigationPosition = null
  for(const [id,label,selector]of documentAliases[route]||[]){const node=root.querySelector(selector);if(!node||root.querySelector('#'+id))continue;const target=id==='multiselect'?node.closest('fieldset'):['avatar','chart','tree','date','files','autocomplete'].includes(id)?node.closest('.demo'):node;const heading=document.createElement('h3');heading.id=id;heading.className='document-alias-heading';heading.tabIndex=-1;heading.textContent=label;if(target.matches('form,fieldset'))target.prepend(heading);else target.before(heading);}
  const byId=id=>{const node=document.getElementById(id);return node&&root.contains(node)?node:null;};
  const targets=entries.map(([id,label])=>({id,label,node:byId(id)})).filter(x=>x.node);
@@ -88,8 +89,57 @@ export function presentTopics(root,route){
  function setActive(id){const node=byId(id),section=node?.closest('section.section');const canonical=targets.some(t=>t.id===id)?id:targets.filter(t=>t.node.contains(node)).at(-1)?.id||targets.find(t=>section?.contains(t.node))?.id||targets[0]?.id;activeId=canonical||'';for(const a of nav.querySelectorAll('a')){if(a.dataset.sectionLink===activeId)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');}}
  function offset(){const header=document.querySelector('.topbar');return header&&['fixed','sticky'].includes(getComputedStyle(header).position)?Math.max(0,header.getBoundingClientRect().height)+16:16;}
  function closeMobile(restore=false){if(!media.matches)return;const inside=primary.contains(document.activeElement);primary.hidden=true;mobileButton.setAttribute('aria-expanded','false');if(restore&&inside)mobileButton.focus();}
- function go(anchor,focus){if(anchor)revealComponentTarget(root,anchor);const node=anchor?byId(anchor):root.querySelector('h1');if(!node){closeMobile();setActive('');return false;}closeMobile();document.documentElement.style.setProperty('--sol-document-offset',offset()+'px');const heading=node.matches('h1,h2,h3')?node:node.querySelector('h2,h3')||node;heading.setAttribute('tabindex','-1');window.scrollTo({top:Math.max(0,heading.getBoundingClientRect().top+scrollY-offset()),behavior:'auto'});if(focus)heading.focus({preventScroll:true});setActive(anchor);return true;}
- function track(){frame=0;const positioned=targets.filter(t=>{const rect=t.node.getBoundingClientRect();return rect.height>0||rect.width>0;});if(!positioned.length)return;const edge=offset()+24;let reading=positioned[0];for(const t of positioned){if(t.node.getBoundingClientRect().top<=edge)reading=t;}if(document.documentElement.scrollHeight>innerHeight&&scrollY+innerHeight>=document.documentElement.scrollHeight-2)reading=positioned.at(-1);if(reading&&reading.id!==activeId)setActive(reading.id);}
+  function go(anchor, focus) {
+    if (anchor) revealComponentTarget(root, anchor)
+    const node = anchor ? byId(anchor) : root.querySelector('h1')
+    if (!node) {
+      navigationPosition = null
+      closeMobile()
+      setActive('')
+      return false
+    }
+    closeMobile()
+    document.documentElement.style.setProperty('--sol-document-offset', offset() + 'px')
+    const heading = node.matches('h1,h2,h3') ? node : node.querySelector('h2,h3') || node
+    heading.setAttribute('tabindex', '-1')
+    window.scrollTo({
+      top: Math.max(0, heading.getBoundingClientRect().top + scrollY - offset()),
+      behavior: 'auto',
+    })
+    if (focus) heading.focus({ preventScroll: true })
+    setActive(anchor)
+    navigationPosition = { id: activeId, y: scrollY }
+    return true
+  }
+
+  function track() {
+    frame = 0
+    const positioned = targets.filter(target => {
+      const rect = target.node.getBoundingClientRect()
+      return rect.height > 0 || rect.width > 0
+    })
+    if (!positioned.length) return
+    // A short page may clamp an explicit anchor to the bottom. Keep that selection until scrolling.
+    if (navigationPosition) {
+      if (Math.abs(scrollY - navigationPosition.y) <= 2) {
+        setActive(navigationPosition.id)
+        return
+      }
+      navigationPosition = null
+    }
+    const edge = offset() + 24
+    let reading = positioned[0]
+    for (const target of positioned) {
+      if (target.node.getBoundingClientRect().top <= edge) reading = target
+    }
+    if (
+      document.documentElement.scrollHeight > innerHeight &&
+      scrollY + innerHeight >= document.documentElement.scrollHeight - 2
+    ) {
+      reading = positioned.at(-1)
+    }
+    if (reading && reading.id !== activeId) setActive(reading.id)
+  }
  function queueTrack(){if(!frame)frame=requestAnimationFrame(track);}
  function responsive(){const focused=document.activeElement,inside=primary.contains(focused);mobileButton.hidden=!media.matches;primary.hidden=media.matches;mobileButton.setAttribute('aria-expanded','false');syncBranches();if(media.matches&&inside)mobileButton.focus();else if(!media.matches){const item=branches.find(item=>item.button===focused);item?.link.focus({preventScroll:true});}document.documentElement.style.setProperty('--sol-document-offset',offset()+'px');}
  toggle.addEventListener('click',()=>{desktopExpanded=!desktopExpanded;syncBranches();toggle.setAttribute('aria-label',`${documentNames[route]} 목차 ${desktopExpanded?'접기':'펼치기'}`);},{signal});
