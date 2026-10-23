@@ -1,0 +1,6 @@
+@layer vuetify-core;
+@import 'vuetify/styles';
+@import './core/fonts/wanted-sans/WantedSansVariable.css';
+@import './core/tokens.css';
+@import './core/components.css';
+@import './styles.css';

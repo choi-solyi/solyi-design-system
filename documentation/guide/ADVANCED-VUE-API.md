@@ -21,11 +21,18 @@
 SplitButton/ContextMenu의 `open`은 선택적 제어 prop입니다. 생략하면 내부 열림 상태를 쓰고, 앱이 제어하려면 `v-model:open`을 연결합니다. 데이터 값이 없는 동작에 가짜 modelValue를 요구하지 않습니다. 메뉴는 평면 목록이며 서브메뉴·체크 메뉴는 이번 API에 없습니다.
 
 ```ts
+import type { SolOption } from 'solyi-ui'
+
 // Public type shapes; import these names from solyi-ui in an app.
-type SolRangeValue = readonly [number, number];
-type SolOptionLoader = (query:string, signal:AbortSignal) => Promise<readonly SolOption[]>;
-interface SolMenuItem {id:string;label:string;disabled?:boolean;danger?:boolean}
-type SolMenuCloseReason = 'escape'|'outside'|'tab'|'select'|'disabled'|'programmatic';
+type SolRangeValue = readonly [number, number]
+type SolOptionLoader = (query: string, signal: AbortSignal) => Promise<readonly SolOption[]>
+interface SolMenuItem {
+  id: string
+  label: string
+  disabled?: boolean
+  danger?: boolean
+}
+type SolMenuCloseReason = 'escape' | 'outside' | 'tab' | 'select' | 'disabled' | 'programmatic'
 // MultiSelect handle: focus(), validate():boolean, clear().
 ```
 
@@ -33,30 +40,55 @@ type SolMenuCloseReason = 'escape'|'outside'|'tab'|'select'|'disabled'|'programm
 
 ```vue
 <script setup lang="ts">
-import {ref} from 'vue';
-import {SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,
-  SContextMenu,SResizableSplitPane} from 'solyi-ui';
-import type {SolRangeValue,SolMenuItem} from 'solyi-ui';
-const view=ref<string|null>('brief'),tags=ref<string[]>([]);
-const range=ref<SolRangeValue>([20,80]),ratio=ref(40),result=ref('');
-const options=[{value:'brief',label:'간단히'},{value:'full',label:'자세히'}];
-const actions:SolMenuItem[]=[{id:'copy',label:'복제 · 가상'}];
+import { ref } from 'vue'
+import {
+  SSegmentedControl,
+  SMultiSelect,
+  SRangeSlider,
+  SSplitBtn,
+  SContextMenu,
+  SResizableSplitPane,
+} from 'solyi-ui'
+import type { SolRangeValue, SolMenuItem } from 'solyi-ui'
+
+const view = ref<string | null>('brief'),
+  tags = ref<string[]>([])
+const range = ref<SolRangeValue>([20, 80]),
+  ratio = ref(40),
+  result = ref('')
+const options = [
+  { value: 'brief', label: '간단히' },
+  { value: 'full', label: '자세히' },
+]
+const actions: SolMenuItem[] = [{ id: 'copy', label: '복제 · 가상' }]
 </script>
 <template>
-  <SSegmentedControl id="view" v-model="view" label="표시 설정" :options="options"/>
-  <SMultiSelect id="tags" v-model="tags" label="분류" :options="options" :max-selected="3"/>
-  <SRangeSlider id="range" v-model="range" label="가상 점수" :min="0" :max="100" :step="5"/>
-  <SSplitBtn id="export" label="가상 내보내기" :items="actions"
-    @primary="result='주 동작'" @select="result=$event"/>
-  <SContextMenu id="record" label="가상 기록" :items="actions" @select="result=$event">
+  <SSegmentedControl id="view" v-model="view" label="표시 설정" :options="options" />
+  <SMultiSelect id="tags" v-model="tags" label="분류" :options="options" :max-selected="3" />
+  <SRangeSlider id="range" v-model="range" label="가상 점수" :min="0" :max="100" :step="5" />
+  <SSplitBtn
+    id="export"
+    label="가상 내보내기"
+    :items="actions"
+    @primary="result = '주 동작'"
+    @select="result = $event"
+  />
+  <SContextMenu id="record" label="가상 기록" :items="actions" @select="result = $event">
     <p>가상 기록 내용</p>
   </SContextMenu>
-  <SResizableSplitPane id="layout" v-model="ratio" label="자료와 메모"
-    primary-label="자료" secondary-label="메모" :min="25" :max="75">
+  <SResizableSplitPane
+    id="layout"
+    v-model="ratio"
+    label="자료와 메모"
+    primary-label="자료"
+    secondary-label="메모"
+    :min="25"
+    :max="75"
+  >
     <template #primary><p>가상 자료</p></template>
     <template #secondary><p>가상 메모</p></template>
   </SResizableSplitPane>
-  <p role="status">{{result}}</p>
+  <p role="status">{{ result }}</p>
 </template>
 ```
 
@@ -72,7 +104,7 @@ const actions:SolMenuItem[]=[{id:'copy',label:'복제 · 가상'}];
 
 **두 메뉴**는 Down/Up·Home/End·문자 탐색과 native Enter/Space를 사용합니다. 비활성 동작은 실행하지 않습니다. Escape·선택은 실행 위치로 돌아오되 소비 앱이 새 Dialog 등으로 옮긴 초점은 빼앗지 않습니다. Tab은 닫으며 문서 탐색을 계속하고, 외부 클릭/초점은 목적지를 보존합니다. 메뉴는 DOM 순서를 유지하고 지원 브라우저에서는 native popover top layer로 올립니다. 지원하지 않는 브라우저의 fixed fallback은 변형/클리핑 조상 컨테이너에서 별도 검증이 필요합니다. ContextMenu는 우클릭·Shift+F10·ContextMenu 키·보이는 버튼을 지원하며, 입력칸/textarea/contenteditable의 기본 편집 메뉴를 가로채지 않습니다.
 
-**SplitPane**의 값은 핸들 너비를 제외한 두 영역 중 primary의 백분율입니다. 포인터 캡처로 조절하고 키보드 방향키/Shift/Home/End/Enter(최소↔직전 크기)도 같은 경계를 씁니다. update는 조절 중, change는 완료 때 발생합니다. orientation은 horizontal=좌우/세로 separator, vertical=위아래/가로 separator입니다. 기본 높이320px은 `--sol-split-height`로 조정할 수 있습니다. collapseBelow보다 컨테이너가 좁으면 두 내용은 마운트된 채 세로 배치되고 separator는 Tab 순서에서도 사라집니다. 그때 separator에 있던 초점만 primary로 옮기고, 저장 비율은 바꾸지 않습니다. 0/100%를 허용하는 설정은 접힌 영역을 inert 처리합니다. 자식 입력의 disabled/readonly는 소비 앱이 별도로 전달합니다.
+**SplitPane**의 값은 핸들 너비를 제외한 두 영역 중 primary의 백분율입니다. 포인터 캡처로 조절하고 키보드 방향키/Shift/Home/End/Enter(최소↔직전 크기)도 같은 경계를 씁니다. update는 조절 중, change는 완료 때 발생합니다. orientation은 horizontal=좌우/세로 separator, vertical=위아래/가로 separator입니다. 기본 높이320px은 `--sol-split-height`로 조정할 수 있습니다. collapseBelow보다 컨테이너가 좁으면 두 슬롯과 저장 비율을 유지한 채 위아래로 배치하며, separator로 높이 비율을 계속 조절할 수 있습니다. 이때 separator는 수평이며 위/아래 화살표를 사용합니다. 터치 핸들 바깥의 영역은 스크롤할 수 있고, 드래그 취소나 축 전환 시 포인터 캡처를 해제합니다. 취소 전 update는 유지하지만 완료 change는 발생하지 않습니다. 0/100%를 허용하는 설정은 접힌 영역을 inert 처리합니다. 자식 입력의 disabled/readonly는 소비 앱이 별도로 전달합니다.
 
 ## 검증 근거와 한계
 

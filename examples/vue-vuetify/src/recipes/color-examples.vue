@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { ToastTone } from 'solyi-ui';
+import type { ToastTone } from 'solyi-ui'
+
 const open = ref(false),
   selected = ref<ToastTone>('info'),
-  message = ref('');
+  message = ref('')
 const tones: { tone: ToastTone; label: string; icon: string; note: string }[] = [
   {
     tone: 'accent',
@@ -34,44 +35,43 @@ const tones: { tone: ToastTone; label: string; icon: string; note: string }[] = 
     icon: '!',
     note: '중요한 오류는 이 화면에도 남기고 다음 행동을 안내합니다.',
   },
-];
+]
 function show(tone: ToastTone, label: string) {
-  selected.value = tone;
-  message.value = label + ' · 가상 컬러 예시';
-  open.value = true;
+  selected.value = tone
+  message.value = label + ' · 가상 컬러 예시'
+  open.value = true
 }
 </script>
 <template>
-  <SCard :heading-level="2" title="의미색 UI 조합">
-    <div class="sol-stack">
-      <SCard
-        v-for="item in tones"
-        :key="item.tone"
-        :title="item.label"
-        class="sol-tone"
-        :data-tone="item.tone"
-      >
-        <span class="sol-status sol-tone-badge">{{ item.icon }} {{ item.label }}</span>
-        <div class="sol-actions">
-          <SBtn variant="primary" :tone="item.tone" @click="show(item.tone, item.label)"
-            >다음 단계</SBtn
-          >
-          <SBtn variant="subtle" :tone="item.tone" @click="show(item.tone, item.label)"
-            >옅은 배경</SBtn
-          >
-          <SBtn :tone="item.tone" @click="show(item.tone, item.label)">외곽선</SBtn>
-          <SBtn :tone="item.tone" disabled>비활성</SBtn>
-        </div>
-        <SAlert :tone="item.tone" :title="item.icon + ' ' + item.label + ' 안내'">
-          <p>{{ item.note }}</p>
-          <template #actions
-            ><SBtn variant="inline" :tone="item.tone" @click="show(item.tone, item.label)"
-              >스낵바 띄우기</SBtn
-            ></template
-          >
-        </SAlert>
-      </SCard>
-    </div>
+  <div class="sol-stack">
+    <SCard
+      v-for="item in tones"
+      :key="item.tone"
+      :title="item.label"
+      :heading-level="2"
+      class="sol-tone"
+      :data-tone="item.tone"
+    >
+      <span class="sol-status sol-tone-badge">{{ item.icon }} {{ item.label }}</span>
+      <div class="sol-actions">
+        <SBtn variant="primary" :tone="item.tone" @click="show(item.tone, item.label)"
+          >다음 단계</SBtn
+        >
+        <SBtn variant="subtle" :tone="item.tone" @click="show(item.tone, item.label)"
+          >옅은 배경</SBtn
+        >
+        <SBtn :tone="item.tone" @click="show(item.tone, item.label)">외곽선</SBtn>
+        <SBtn :tone="item.tone" disabled>비활성</SBtn>
+      </div>
+      <SAlert :tone="item.tone" :title="item.icon + ' ' + item.label + ' 안내'">
+        <p>{{ item.note }}</p>
+        <template #actions
+          ><SBtn variant="inline" :tone="item.tone" @click="show(item.tone, item.label)"
+            >스낵바 띄우기</SBtn
+          ></template
+        >
+      </SAlert>
+    </SCard>
     <SSnackbar
       id="recipe-tone-toast"
       v-model="open"
@@ -79,5 +79,5 @@ function show(tone: ToastTone, label: string) {
       :message="message"
       :duration="selected === 'danger' ? 0 : 6000"
     />
-  </SCard>
+  </div>
 </template>

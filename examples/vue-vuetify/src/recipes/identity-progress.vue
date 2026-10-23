@@ -1,54 +1,52 @@
 <script setup lang="ts">
-defineProps<{ part?: string }>();
-const nameField = useTemplateRef<{ focus(): void }>('nameField');
-const categoryField = useTemplateRef<{ focus(): void }>('categoryField');
-const review = useTemplateRef<HTMLElement>('review');
-const finalResult = useTemplateRef<HTMLElement>('finalResult');
+defineProps<{ part?: string }>()
+const nameField = useTemplateRef<{ focus(): void }>('nameField')
+const categoryField = useTemplateRef<{ focus(): void }>('categoryField')
+const review = useTemplateRef<HTMLElement>('review')
+const finalResult = useTemplateRef<HTMLElement>('finalResult')
 const stage = ref(0),
   done = ref(false),
   name = ref(''),
   category = ref<string | null>(null),
   error = ref(''),
-  result = ref('');
+  result = ref('')
 const items = [
   { id: 'profile', label: '가상 사용자 정보' },
   { id: 'settings', label: '가상 설정' },
-];
+]
 const steps = [
   { id: 'name', label: '이름' },
   { id: 'category', label: '분류' },
   { id: 'review', label: '검토' },
-];
-const current = computed(() => steps[stage.value].id);
-const completed = computed(() =>
-  steps.slice(0, done.value ? 3 : stage.value).map((item) => item.id),
-);
+]
+const current = computed(() => steps[stage.value].id)
+const completed = computed(() => steps.slice(0, done.value ? 3 : stage.value).map(item => item.id))
 async function move(delta: number) {
-  error.value = '';
+  error.value = ''
   if (delta > 0 && stage.value === 0 && !name.value.trim())
-    error.value = '가상 이름을 입력해 주세요.';
-  if (delta > 0 && stage.value === 1 && !category.value) error.value = '가상 분류를 선택해 주세요.';
+    error.value = '가상 이름을 입력해 주세요.'
+  if (delta > 0 && stage.value === 1 && !category.value) error.value = '가상 분류를 선택해 주세요.'
   if (!error.value) {
-    if (stage.value === 2 && delta > 0) done.value = true;
+    if (stage.value === 2 && delta > 0) done.value = true
     else {
-      stage.value = Math.max(0, Math.min(2, stage.value + delta));
-      done.value = false;
+      stage.value = Math.max(0, Math.min(2, stage.value + delta))
+      done.value = false
     }
   }
-  await nextTick();
-  if (done.value) finalResult.value?.focus();
-  else if (stage.value === 0) nameField.value?.focus();
-  else if (stage.value === 1) categoryField.value?.focus();
-  else review.value?.focus();
+  await nextTick()
+  if (done.value) finalResult.value?.focus()
+  else if (stage.value === 0) nameField.value?.focus()
+  else if (stage.value === 1) categoryField.value?.focus()
+  else review.value?.focus()
 }
 async function reset() {
-  stage.value = 0;
-  done.value = false;
-  name.value = '';
-  category.value = null;
-  error.value = '';
-  await nextTick();
-  nameField.value?.focus();
+  stage.value = 0
+  done.value = false
+  name.value = ''
+  category.value = null
+  error.value = ''
+  await nextTick()
+  nameField.value?.focus()
 }
 </script>
 <template>

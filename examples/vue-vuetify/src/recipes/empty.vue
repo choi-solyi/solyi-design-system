@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const added = ref(false);
+const added = ref(false)
 </script>
 <template>
   <SCard :heading-level="2" :title="added ? '오늘의 첫 관찰' : '아직 기록이 없어요.'">

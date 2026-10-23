@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const drawer = ref(false),
   toast = ref(false),
-  detail = ref(false);
+  detail = ref(false)
 const path = computed(() => [
   { id: 'home', label: '기록함' },
   { id: 'current', label: detail.value ? '기록 상세' : '기록 목록' },
-]);
+])
 </script>
 <template>
   <SCard :heading-level="2" title="현재 위치와 짧은 상세">

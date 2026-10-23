@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile, readdir, mkdir, writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {ESLint} from 'eslint';
-import {check as checkFormat, resolveConfig} from 'prettier';
+import { formatPublicSample } from './public-sample-format.mjs'
 import {createVueAutoImport} from '../examples/vue-vuetify/auto-import.config.js';
 
 const root = new URL('../', import.meta.url);
@@ -31,22 +31,9 @@ for (const [dir, declaration] of [['vue-vuetify', 'src/auto-imports.d.ts'], ['pa
   }
 }
 const recipes = new URL('src/recipes/', starter);
-const formatOptions = await resolveConfig(fileURLToPath(new URL('form.vue', recipes)));
-const currentFormatOptions = {
-  ...formatOptions,
-  semi: false,
-  singleQuote: true,
-  tabWidth: 2,
-  trailingComma: 'all',
-  printWidth: 100,
-  arrowParens: 'avoid',
-}
 for (const name of await readdir(recipes)) if (name.endsWith('.vue')) {
   const text = await readFile(new URL(name, recipes), 'utf8');
-  // Preserve untouched examples while enforcing a formatter for both supported conventions.
-  const formatted = await checkFormat(text, { ...currentFormatOptions, filepath: name }) ||
-    await checkFormat(text, { ...formatOptions, filepath: name })
-  assert.ok(formatted, name + ': consistent readable SFC formatting')
+  assert.equal(text, await formatPublicSample(text, 'vue'), name + ': canonical public SFC formatting')
   assert.doesNotMatch(text, /^import\s+(?!type\b)[^;]+\bfrom\s*['"]vue['"]/m, name + ': Vue preset imports are omitted');
   assert.doesNotMatch(text, /document\.getElementById/, name + ': component focus uses template refs');
 }

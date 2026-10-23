@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const multiple = ref(false),
   single = ref<string | null>('brief'),
-  immediate = ref(false);
+  immediate = ref(false)
 const options = [
   { value: 'brief', label: '간단히' },
   { value: 'full', label: '자세히' },
-];
+]
 </script>
 <template>
   <SCard :heading-level="2" title="선택의 의미">

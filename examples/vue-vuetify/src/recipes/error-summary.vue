@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { sRules } from 'solyi-ui';
-import type { SFormSubmitEvent } from 'solyi-ui';
+import { sRules } from 'solyi-ui'
+import type { SFormSubmitEvent } from 'solyi-ui'
 
-const summary = useTemplateRef<{ $el: HTMLElement }>('summary');
-const nameField = useTemplateRef<{ focus(): void }>('nameField');
-const countField = useTemplateRef<{ focus(): void }>('countField');
-const name = ref('');
-const count = ref<number | null>(null);
-const submitted = ref(false);
+const summary = useTemplateRef<{ $el: HTMLElement }>('summary')
+const nameField = useTemplateRef<{ focus(): void }>('nameField')
+const countField = useTemplateRef<{ focus(): void }>('countField')
+const name = ref('')
+const count = ref<number | null>(null)
+const submitted = ref(false)
 const nameRules = [
   sRules.required('이름을 입력해 주세요.'),
   sRules.minLength(3, '이름을 3자 이상 입력해 주세요.'),
-];
+]
 const errors = computed(() =>
   submitted.value
     ? [
@@ -31,15 +31,15 @@ const errors = computed(() =>
               : '',
           focus: () => countField.value?.focus(),
         },
-      ].filter((item) => item.message)
+      ].filter(item => item.message)
     : [],
-);
+)
 
 async function submit(event: SFormSubmitEvent) {
-  submitted.value = true;
-  const result = await event;
-  await nextTick();
-  if (!result?.valid) summary.value?.$el.focus();
+  submitted.value = true
+  const result = await event
+  await nextTick()
+  if (!result?.valid) summary.value?.$el.focus()
 }
 </script>
 

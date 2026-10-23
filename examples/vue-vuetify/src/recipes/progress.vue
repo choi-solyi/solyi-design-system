@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import type { SProgressState } from 'solyi-ui';
+import type { SProgressState } from 'solyi-ui'
+
 const state = ref<string | null>('indeterminate'),
   animated = ref(true),
   showValue = ref(true),
-  showMessage = ref(true);
-const resolved = computed(() => state.value as SProgressState);
+  showMessage = ref(true)
+const resolved = computed(() => state.value as SProgressState)
 const options = [
   { value: 'determinate', label: '35% 진행' },
   { value: 'indeterminate', label: '진행률을 모르는 처리 중' },
   { value: 'complete', label: '완료' },
   { value: 'error', label: '오류' },
-];
+]
 </script>
 <template>
   <SCard :heading-level="2" title="값을 아는 진행과 처리 중 표시">

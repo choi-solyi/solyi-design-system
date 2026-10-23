@@ -1,47 +1,48 @@
 <script setup lang="ts">
-import type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';
-defineProps<{ part?: string }>();
+import type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui'
+
+defineProps<{ part?: string }>()
 const mode = ref<string | null>('range'),
-  date = ref<DateValue>(null);
-const dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'));
-watch(dateMode, () => (date.value = null));
+  date = ref<DateValue>(null)
+const dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'))
+watch(dateMode, () => (date.value = null))
 const files = ref<File[]>([]),
   selected = ref<string | null>(null),
-  scenario = ref<string | null>('local');
-const options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({
+  scenario = ref<string | null>('local')
+const options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map(label => ({
   value: label,
   label,
-}));
-let failNext = true;
+}))
+let failNext = true
 watch(scenario, () => {
-  failNext = true;
-  selected.value = null;
-});
+  failNext = true
+  selected.value = null
+})
 const loader = computed<SolOptionLoader | undefined>(() => {
-  const responseMode = scenario.value;
-  if (responseMode === 'local') return undefined;
+  const responseMode = scenario.value
+  if (responseMode === 'local') return undefined
   return (query, signal) =>
     new Promise<readonly SolOption[]>((resolve, reject) => {
       const cancel = () => {
-        clearTimeout(timer);
-        reject(new DOMException('Cancelled', 'AbortError'));
-      };
+        clearTimeout(timer)
+        reject(new DOMException('Cancelled', 'AbortError'))
+      }
       const timer = setTimeout(
         () => {
-          signal.removeEventListener('abort', cancel);
+          signal.removeEventListener('abort', cancel)
           if (responseMode === 'error' && failNext) {
-            failNext = false;
-            reject(new Error('Simulated response'));
-            return;
+            failNext = false
+            reject(new Error('Simulated response'))
+            return
           }
-          resolve(options.filter((item) => item.label.includes(query.trim())));
+          resolve(options.filter(item => item.label.includes(query.trim())))
         },
         query.includes('느림') ? 450 : 150,
-      );
-      signal.addEventListener('abort', cancel, { once: true });
-      if (signal.aborted) cancel();
-    });
-});
+      )
+      signal.addEventListener('abort', cancel, { once: true })
+      if (signal.aborted) cancel()
+    })
+})
 </script>
 <template>
   <section class="sol-stack" :aria-labelledby="part ? undefined : 'recipe-inputs-title'">

@@ -2,6 +2,10 @@
 
 문서 캔버스·샘플 코드·복사·별도 실행 화면은 `examples/vue-vuetify/src/recipes/*.vue`의 같은 원본을 사용합니다. S 컴포넌트를 각 SFC에서 반복 import하지 않으며 런타임 앱에서 한 번 전역 등록합니다. 일반 HTML은 의미 구조와 접근성에 필요한 범위에서 유지합니다.
 
+공개 JS·TS·Vue 샘플은 `scripts/public-sample-format.mjs`의 단일 설정을 사용합니다. Prettier 3.9.10, 세미콜론 생략, 두 칸 들여쓰기, 작은따옴표, 가능한 모든 후행 쉼표, 100자 줄 너비, 단일 화살표 인자 괄호 생략을 적용하며 import 묶음 뒤에는 빈 줄을 둡니다. Vue 인라인 이벤트의 여러 문장 구분과 ASI 안전에 필요한 세미콜론, CSS 선언의 세미콜론은 유지합니다.
+
+`node scripts/public-sample-check.mjs`는 README·가이드·사이트의 실행 샘플과 공개 SFC 원본을 검사합니다. 실제 Vue SFC 파싱·템플릿 컴파일, import·스크립트 이름의 선언 검사와 잘못된 import·미선언 이름의 실패 사례도 확인합니다. 빌드 생성기는 원본의 형식을 확인한 뒤 문서로 복사합니다.
+
 ## 자동 import 설정
 
 실행 앱과 별도 소비 프로젝트는 `unplugin-auto-import` 21.1.0의 Vue preset을 사용합니다. 공식 npm 패키지의 MIT 라이선스와 기존 잠금 파일의 무결성을 보존합니다.

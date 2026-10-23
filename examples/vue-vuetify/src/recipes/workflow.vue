@@ -1,98 +1,98 @@
 <script setup lang="ts">
-const editTitle = useTemplateRef<HTMLElement>('editTitle');
-const nameField = useTemplateRef<{ focus(): void }>('nameField');
-const editButton = useTemplateRef<{ $el: HTMLElement }>('editButton');
-const undoButton = useTemplateRef<{ $el: HTMLElement }>('undoButton');
+const editTitle = useTemplateRef<HTMLElement>('editTitle')
+const nameField = useTemplateRef<{ focus(): void }>('nameField')
+const editButton = useTemplateRef<{ $el: HTMLElement }>('editButton')
+const undoButton = useTemplateRef<{ $el: HTMLElement }>('undoButton')
 const saved = ref({ title: '작은 정원', note: '가상 기록입니다.' }),
   draft = ref({ ...saved.value }),
   editing = ref(false),
   deleted = ref(false),
   confirm = ref(false),
   kind = ref<'leave' | 'delete'>('leave'),
-  error = ref('');
+  error = ref('')
 const dirty = computed(
   () => draft.value.title !== saved.value.title || draft.value.note !== saved.value.note,
-);
-let answerLeave: ((allowed: boolean) => void) | undefined;
-let leavePromise: Promise<boolean> | undefined;
+)
+let answerLeave: ((allowed: boolean) => void) | undefined
+let leavePromise: Promise<boolean> | undefined
 function confirmLeave(): Promise<boolean> {
-  if (!editing.value || !dirty.value) return Promise.resolve(true);
-  if (leavePromise) return leavePromise;
-  kind.value = 'leave';
-  leavePromise = new Promise((resolve) => (answerLeave = resolve));
-  confirm.value = true;
-  return leavePromise;
+  if (!editing.value || !dirty.value) return Promise.resolve(true)
+  if (leavePromise) return leavePromise
+  kind.value = 'leave'
+  leavePromise = new Promise(resolve => (answerLeave = resolve))
+  confirm.value = true
+  return leavePromise
 }
-watch(confirm, (value) => {
+watch(confirm, value => {
   if (!value && answerLeave) {
-    const answer = answerLeave;
-    answerLeave = undefined;
-    leavePromise = undefined;
-    answer(false);
+    const answer = answerLeave
+    answerLeave = undefined
+    leavePromise = undefined
+    answer(false)
   }
-});
-defineExpose({ confirmLeave });
+})
+defineExpose({ confirmLeave })
 function edit() {
-  draft.value = { ...saved.value };
-  editing.value = true;
-  nextTick(() => editTitle.value?.focus());
+  draft.value = { ...saved.value }
+  editing.value = true
+  nextTick(() => editTitle.value?.focus())
 }
 function save() {
   if (!draft.value.title.trim()) {
-    error.value = '기록 제목을 입력해 주세요.';
-    nextTick(() => nameField.value?.focus());
-    return;
+    error.value = '기록 제목을 입력해 주세요.'
+    nextTick(() => nameField.value?.focus())
+    return
   }
-  saved.value = { ...draft.value };
-  editing.value = false;
-  error.value = '';
-  nextTick(() => editButton.value?.$el.focus());
+  saved.value = { ...draft.value }
+  editing.value = false
+  error.value = ''
+  nextTick(() => editButton.value?.$el.focus())
 }
 function leave() {
   if (dirty.value) {
-    kind.value = 'leave';
-    confirm.value = true;
-  } else cancel();
+    kind.value = 'leave'
+    confirm.value = true
+  } else cancel()
 }
 function cancel() {
-  editing.value = false;
-  error.value = '';
-  nextTick(() => editButton.value?.$el.focus());
+  editing.value = false
+  error.value = ''
+  nextTick(() => editButton.value?.$el.focus())
 }
 function undo() {
-  deleted.value = false;
-  nextTick(() => editButton.value?.$el.focus());
+  deleted.value = false
+  nextTick(() => editButton.value?.$el.focus())
 }
 function requestDelete() {
-  kind.value = 'delete';
-  confirm.value = true;
+  kind.value = 'delete'
+  confirm.value = true
 }
 function decide() {
-  const answer = answerLeave;
-  answerLeave = undefined;
-  leavePromise = undefined;
-  confirm.value = false;
+  const answer = answerLeave
+  answerLeave = undefined
+  leavePromise = undefined
+  confirm.value = false
   if (kind.value === 'delete') {
-    deleted.value = true;
-    nextTick(() => undoButton.value?.$el.focus());
+    deleted.value = true
+    nextTick(() => undoButton.value?.$el.focus())
   } else if (answer) {
     // The explorer owns the destination focus after an approved navigation.
-    editing.value = false;
-    error.value = '';
-  } else cancel();
-  answer?.(true);
+    editing.value = false
+    error.value = ''
+  } else cancel()
+  answer?.(true)
 }
 function before(e: BeforeUnloadEvent) {
   if (editing.value && dirty.value) {
-    e.preventDefault();
-    e.returnValue = '';
+    e.preventDefault()
+    e.returnValue = ''
   }
 }
-onMounted(() => window.addEventListener('beforeunload', before));
+onMounted(() => window.addEventListener('beforeunload', before))
 onBeforeUnmount(() => {
-  window.removeEventListener('beforeunload', before);
-  answerLeave?.(false);
-});
+  window.removeEventListener('beforeunload', before)
+  answerLeave?.(false)
+})
 </script>
 <template>
   <SCard :heading-level="2" title="수정과 복구">

@@ -25,22 +25,20 @@ npm 7 이상은 기본 설정에서 필요한 peer를 자동 설치합니다. pn
 ## 앱에 연결
 
 ```ts
-import {createApp} from 'vue';
-import {VApp} from 'vuetify/components/VApp';
-import SolyiUI, {createSolyiVuetify} from 'solyi-ui';
-import 'vuetify/styles';
-import 'solyi-ui/fonts.css';
-import 'solyi-ui/tokens.css';
-import 'solyi-ui/components.css';
-import 'solyi-ui/styles.css';
-import 'solyi-ui/global';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { VApp } from 'vuetify/components/VApp'
+import SolyiUI, { createSolyiVuetify } from 'solyi-ui'
+import 'solyi-ui/all.css'
+import 'solyi-ui/global'
+import App from './App.vue'
 
 createApp(App)
-  .use(createSolyiVuetify({components: {VApp}}))
+  .use(createSolyiVuetify({ components: { VApp } }))
   .use(SolyiUI)
-  .mount('#app');
+  .mount('#app')
 ```
+
+`solyi-ui/all.css`는 Vuetify 스타일·Wanted Sans·토큰·컴포넌트 스타일을 포함합니다. 코드 폰트는 필요한 앱에서 `solyi-ui/code-fonts.css`로 별도 선택합니다.
 
 등록 후 템플릿에서 S 접두사의 PascalCase 컴포넌트를 사용합니다.
 

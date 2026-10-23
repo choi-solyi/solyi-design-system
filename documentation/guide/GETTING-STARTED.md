@@ -34,31 +34,26 @@ npm install -D vite@8.3.4 @vitejs/plugin-vue@6.0.10 typescript@5.9.3 vue-tsc@3.3
 
 ## 2. 전역 등록과 CSS·폰트
 
-다음은 main.ts입니다. Vuetify 스타일, solyi-ui의 토큰·컴포넌트 CSS, UI CSS를 순서대로 불러옵니다. `fonts.css`는 Wanted Sans, `code-fonts.css`는 JetBrains Mono와 한글 폴백 나눔고딕코딩을 self-host합니다. 코드 폰트는 일반 UI와 분리됩니다. 폰트를 생략하면 앱의 시스템 폴백을 사용합니다.
+main.ts에서 `solyi-ui/all.css`를 한 번 불러오면 Vuetify 스타일, Wanted Sans, 토큰과 컴포넌트 스타일이 정해진 순서로 적용됩니다. 코드 폰트가 필요한 앱은 `solyi-ui/code-fonts.css`를 별도로 불러옵니다. 폰트 로딩에 실패하면 시스템 폰트를 사용합니다.
 
 ```ts
-import { createApp } from 'vue';
-import { VApp } from 'vuetify/components/VApp';
-import SolyiUI, { createSolyiVuetify, applySolyiAppearance } from 'solyi-ui';
-import 'solyi-ui/global';
-import 'vuetify/styles';
-import 'solyi-ui/fonts.css';
-import 'solyi-ui/code-fonts.css';
-import 'solyi-ui/tokens.css';
-import 'solyi-ui/components.css';
-import 'solyi-ui/styles.css';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { VApp } from 'vuetify/components/VApp'
+import SolyiUI, { createSolyiVuetify, applySolyiAppearance } from 'solyi-ui'
+import 'solyi-ui/global'
+import 'solyi-ui/all.css'
+import App from './App.vue'
 
-const vuetify = createSolyiVuetify({ components: { VApp } });
-const app = createApp(App);
+const vuetify = createSolyiVuetify({ components: { VApp } })
+const app = createApp(App)
 
-app.use(vuetify).use(SolyiUI);
+app.use(vuetify).use(SolyiUI)
 applySolyiAppearance(vuetify.theme, {
   theme: 'violet',
   mode: 'light',
   density: 'comfortable',
-});
-app.mount('#app');
+})
+app.mount('#app')
 ```
 
 `app.use(SolyiUI)`는 런타임 전역 등록입니다. `solyi-ui/global`은 Volar/vue-tsc가 S 컴포넌트를 이해하도록 하는 타입 진입점이며, 타입 import만으로 컴포넌트가 런타임 등록되지는 않습니다. 각 SFC에서 SBtn·STextField를 개별 import할 필요는 없습니다. 문서 전용 `docs.css`는 소비 앱에 추가하지 않습니다.
@@ -68,9 +63,9 @@ app.mount('#app');
 S 컴포넌트 등록과 Vue 함수 자동 import는 별개입니다. 다음 Vite 설정은 `ref`, `computed`, `useTemplateRef`, `onBeforeUnmount` 같은 Vue 함수를 SFC에 자동 import합니다. Vue preset 밖의 함수와 TypeScript 타입은 직접 import합니다.
 
 ```ts
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import AutoImport from 'unplugin-auto-import/vite';
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
   plugins: [
@@ -86,10 +81,12 @@ export default defineConfig({
       },
     }),
   ],
-});
+})
 ```
 
 Vite 실행 시 `src/auto-imports.d.ts`와 `.eslintrc-auto-import.json`이 생성됩니다. 기존 tsconfig 옵션을 유지하면서 전역 컴포넌트 타입과 생성 파일을 포함합니다.
+
+전역 컴포넌트 타입은 앞의 main.ts에서 `solyi-ui/global`을 이미 불러왔으므로 tsconfig에 다시 추가하지 않습니다.
 
 ```json
 {
@@ -100,7 +97,7 @@ Vite 실행 시 `src/auto-imports.d.ts`와 `.eslintrc-auto-import.json`이 생�
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["vite/client", "solyi-ui/global"]
+    "types": ["vite/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "src/auto-imports.d.ts"]
 }
@@ -121,23 +118,25 @@ npm install -D eslint@10.13.0 vue-eslint-parser@10.4.1 @typescript-eslint/parser
 다음은 Vue SFC의 script 영역을 검사하는 최소 eslint.config.mjs입니다. 브라우저 전역·매크로·팀 규칙은 기존 앱 설정과 병합합니다.
 
 ```js
-import { readFileSync } from 'node:fs';
-import vueParser from 'vue-eslint-parser';
-import tsParser from '@typescript-eslint/parser';
+import { readFileSync } from 'node:fs'
+import vueParser from 'vue-eslint-parser'
+import tsParser from '@typescript-eslint/parser'
 
 const { globals } = JSON.parse(
   readFileSync(new URL('./.eslintrc-auto-import.json', import.meta.url), 'utf8'),
-);
+)
 
-export default [{
-  files: ['src/**/*.vue'],
-  languageOptions: {
-    parser: vueParser,
-    parserOptions: { parser: tsParser, ecmaVersion: 'latest', sourceType: 'module' },
-    globals,
+export default [
+  {
+    files: ['src/**/*.vue'],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: { parser: tsParser, ecmaVersion: 'latest', sourceType: 'module' },
+      globals,
+    },
+    rules: { 'no-undef': 'error', 'no-global-assign': 'error' },
   },
-  rules: { 'no-undef': 'error', 'no-global-assign': 'error' },
-}];
+]
 ```
 
 생성 파일을 먼저 준비한 뒤 타입과 lint를 검사합니다.
@@ -156,30 +155,30 @@ npm exec eslint -- "src/**/*.vue"
 
 ```vue
 <script setup lang="ts">
-import { sRules } from 'solyi-ui';
-import type { SFormHandle, SFormSubmitEvent } from 'solyi-ui';
+import { sRules } from 'solyi-ui'
+import type { SFormHandle, SFormSubmitEvent } from 'solyi-ui'
 
-const form = useTemplateRef<SFormHandle>('form');
-const name = ref('');
-const serverError = ref('');
-const message = ref('');
-const rules = [sRules.required(), sRules.minLength(3)];
+const form = useTemplateRef<SFormHandle>('form')
+const name = ref('')
+const serverError = ref('')
+const message = ref('')
+const rules = [sRules.required(), sRules.minLength(3)]
 
 async function submit(event: SFormSubmitEvent) {
-  message.value = '';
-  const result = await event;
-  if (result.cancelled) return;
+  message.value = ''
+  const result = await event
+  if (result.cancelled) return
   if (!result.valid) {
-    form.value?.focus();
-    return;
+    form.value?.focus()
+    return
   }
-  message.value = '입력을 확인했어요.';
+  message.value = '입력을 확인했어요.'
 }
 
 function clearValidation() {
-  serverError.value = '';
-  message.value = '';
-  form.value?.resetValidation();
+  serverError.value = ''
+  message.value = ''
+  form.value?.resetValidation()
 }
 </script>
 

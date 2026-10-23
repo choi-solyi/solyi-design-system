@@ -98,9 +98,10 @@ for (const file of ['GETTING-STARTED','DISTRIBUTION','COMPATIBILITY']) {
   assert.doesNotMatch(markdown, /solyi-ui@latest/);
   assert.doesNotMatch(markdown, /\.\.\/(?:plans|quality)\/|COMPATIBILITY-HISTORY|MOVED-DOCUMENTS|releases\/packages|미게시|게시 예정|게시예정|초안|준비 중|준비중/);
 }
-for (const name of ['fonts.css','code-fonts.css','tokens.css','components.css']) assert.ok(snippets.registration.includes(`'solyi-ui/${name}'`));
-assert.ok(snippets.registration.indexOf("'vuetify/styles'") < snippets.registration.indexOf("'solyi-ui/tokens.css'"));
-assert.ok(snippets.registration.indexOf("'solyi-ui/components.css'") < snippets.registration.indexOf("'solyi-ui/styles.css'"));
+assert.equal((snippets.registration.match(/^import 'solyi-ui\/all\.css'$/gm) || []).length, 1);
+assert.equal((snippets.registration.match(/^import 'solyi-ui\/global'$/gm) || []).length, 1);
+assert.doesNotMatch(snippets.registration, /vuetify\/styles|solyi-ui\/(?:fonts|code-fonts|tokens|components|styles)\.css/);
+assert.deepEqual(JSON.parse(snippets.types).compilerOptions.types, ['vite/client'], 'main.ts opts into global template types once');
 assert.doesNotMatch(html, /@solyi\/core|Core\/UI|Core CSS/);
 assert.doesNotMatch(guide, /@solyi\/core|Core\/UI|Core CSS/);
 assert.doesNotMatch(snippets.registration, /docs\.css/);
@@ -121,7 +122,7 @@ await mkdir(fixture, {recursive: true});
 await writeFile(new URL('App.vue', fixture), snippets.form);
 await writeFile(new URL('main.ts', fixture), snippets.registration);
 await writeFile(new URL('tsconfig.json', fixture), JSON.stringify({
-  extends: '../../tsconfig.recipes.json',
+  ...JSON.parse(snippets.types),
   include: ['App.vue','main.ts',fileURLToPath(new URL('src/auto-imports.d.ts', starter))],
 }, null, 2));
 execFileSync(process.execPath, [fileURLToPath(new URL('node_modules/vue-tsc/bin/vue-tsc.js', starter)), '-p', fileURLToPath(new URL('tsconfig.json', fixture))], {cwd: fileURLToPath(starter), stdio: 'pipe'});

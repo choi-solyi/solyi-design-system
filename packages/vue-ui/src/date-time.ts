@@ -5,7 +5,7 @@ import {dateISO,parseDateOnly,weekday,shiftDay,shiftMonth,parseTimeOnly} from '@
 import type {DateParts} from '@solyi/core/date';
 import {solIconPaths} from '@solyi/core/icons';
 import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './controls';
-import {useSolLocale} from './locale';
+import { useSolLocale, withVisibleNumberLabel } from './locale'
 
 export type DateMode='single'|'range';
 export interface DateRange {start:string;end:string}
@@ -19,6 +19,17 @@ const format=(mode:DateMode,v:DateValue)=>v===null?'':mode==='single'&&typeof v=
 export function isDateValue(mode:DateMode,value:unknown):value is DateValue{return value===null||(mode==='single'?typeof value==='string'&&!!parseDateOnly(value):typeof value==='object'&&!!value&&'start' in value&&'end' in value&&typeof value.start==='string'&&typeof value.end==='string'&&!!parseDateOnly(value.start)&&!!parseDateOnly(value.end)&&value.start<=value.end);}
 function utc(v:DateParts){const d=new Date(0);d.setUTCHours(0,0,0,0);d.setUTCFullYear(v.y,v.m-1,v.d);return d;}
 function dateFormatter(code:string,options:Intl.DateTimeFormatOptions){try{return new Intl.DateTimeFormat(code,{...options,calendar:'gregory',timeZone:'UTC'});}catch{return new Intl.DateTimeFormat('ko-KR',{...options,calendar:'gregory',timeZone:'UTC'});}}
+function calendarDayLabel(formatter: Intl.DateTimeFormat, day: DateParts): string {
+  const full = formatter
+    .formatToParts(utc(day))
+    .map(part => (part.type === 'day' ? ` ${part.value} ` : part.value))
+    .join('')
+    .replace(/\s+/g, ' ')
+    .replace(/\s+([,.;])/g, '$1')
+    .trim()
+  return withVisibleNumberLabel(full, String(day.d))
+}
+
 function icon(name:'calendar'|'chevron',direction?:'previous'|'next'){return h('svg',{class:['sol-icon','sol-ui-picker-icon',direction?'sol-ui-picker-icon--'+direction:undefined],width:20,height:20,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));}
 
 export const SDatePicker=defineComponent({name:'SDatePicker',inheritAttrs:false,props:{...commonFieldProps,mode:{type:String as PropType<DateMode>,default:'single'},modelValue:{type:[String,Object] as PropType<DateValue>,default:null}},emits:{'update:modelValue':(_v:DateValue)=>true,change:(_v:DateChange)=>true,invalid:(_v:string)=>true,open:()=>true,close:(_why:PickerCloseReason)=>true},setup(p,{attrs,slots,emit,expose}){
@@ -48,7 +59,7 @@ export const SDatePicker=defineComponent({name:'SDatePicker',inheritAttrs:false,
  h('div',{class:'sol-calendar-top'},[h('strong',{id:p.id+'-title'},p.mode==='single'?l.value.singleDate:l.value.dateRange),h('button',{type:'button',class:'sol-button inline-action',onClick:()=>close()},l.value.close)]),
  h('p',{class:'sol-hint sol-calendar-status',role:'status','aria-live':'polite'},p.mode==='range'?draftStart.value?l.value.chooseEnd:l.value.chooseStart:l.value.singleDate),
  h('div',{class:'sol-calendar-heading'},[h('button',{type:'button',class:'sol-button subtle','aria-label':l.value.previousMonth,onClick:()=>{active.value=shiftMonth(view.value,-1);view.value=active.value;}},icon('chevron','previous')),h('p',{id:p.id+'-month',class:'sol-ui-calendar-month','aria-live':'polite'},month.format(utc(view.value))),h('button',{type:'button',class:'sol-button subtle','aria-label':l.value.nextMonth,onClick:()=>{active.value=shiftMonth(view.value,1);view.value=active.value;}},icon('chevron','next'))]),
- h('table',{class:'sol-calendar-grid',role:'grid','aria-labelledby':p.id+'-month'},[h('thead',h('tr',Array.from({length:7},(_,i)=>h('th',{scope:'col'},short.format(utc(shiftDay({y:2026,m:10,d:18},i+weekStart()))))))),h('tbody',Array.from({length:6},(_,row)=>h('tr',cells.slice(row*7,row*7+7).map(day=>{if(!day)return h('td',{role:'gridcell'});const iso=dateISO(day),inside=!!range&&range.start<=iso&&iso<=range.end,endpoint=!!range&&(iso===range.start||iso===range.end),label=[long.format(utc(day)),p.mode==='single'&&inside?l.value.selected:range?.start===iso?l.value.start:'',p.mode==='range'&&!draftStart.value&&range?.end===iso?l.value.end:''].filter(Boolean).join(', ');return h('td',{role:'gridcell','aria-selected':String(inside)},h('button',{ref:(el:unknown)=>{if(el)dayButtons.set(iso,el as HTMLButtonElement);else dayButtons.delete(iso);},type:'button',class:'sol-calendar-day','data-calendar-day':iso,'data-outside':String(day.m!==view.value.m),'data-range':String(inside),'data-endpoint':String(endpoint),'data-preview':String(!!preview&&preview[0]<=iso&&iso<=preview[1]),'aria-label':label,'aria-current':iso===todayISO?'date':undefined,tabindex:iso===candidate?0:-1,onClick:()=>choose(day),onFocus:()=>{active.value=day;}},[day.d,iso===todayISO?h('span',{class:'sol-calendar-dot','aria-hidden':'true'}):null]));}))))]),
+ h('table',{class:'sol-calendar-grid',role:'grid','aria-labelledby':p.id+'-month'},[h('thead',h('tr',Array.from({length:7},(_,i)=>h('th',{scope:'col'},short.format(utc(shiftDay({y:2026,m:10,d:18},i+weekStart()))))))),h('tbody',Array.from({length:6},(_,row)=>h('tr',cells.slice(row*7,row*7+7).map(day=>{if(!day)return h('td',{role:'gridcell'});const iso=dateISO(day),inside=!!range&&range.start<=iso&&iso<=range.end,endpoint=!!range&&(iso===range.start||iso===range.end),label=[calendarDayLabel(long,day),p.mode==='single'&&inside?l.value.selected:range?.start===iso?l.value.start:'',p.mode==='range'&&!draftStart.value&&range?.end===iso?l.value.end:''].filter(Boolean).join(', ');return h('td',{role:'gridcell','aria-selected':String(inside)},h('button',{ref:(el:unknown)=>{if(el)dayButtons.set(iso,el as HTMLButtonElement);else dayButtons.delete(iso);},type:'button',class:'sol-calendar-day','data-calendar-day':iso,'data-outside':String(day.m!==view.value.m),'data-range':String(inside),'data-endpoint':String(endpoint),'data-preview':String(!!preview&&preview[0]<=iso&&iso<=preview[1]),'aria-label':label,'aria-current':iso===todayISO?'date':undefined,tabindex:iso===candidate?0:-1,onClick:()=>choose(day),onFocus:()=>{active.value=day;}},[day.d,iso===todayISO?h('span',{class:'sol-calendar-dot','aria-hidden':'true'}):null]));}))))]),
  h('div',{class:'sol-calendar-footer'},[h('button',{type:'button',class:'sol-button inline-action',onClick:()=>{active.value=today();view.value=active.value;void focusDay();}},l.value.today),h('button',{type:'button',class:'sol-button inline-action',onClick:()=>{commit(null,'clear');close('select');}},l.value.clear)]),h('p',{id:p.id+'-keys',class:'sol-hint sol-calendar-keys'},l.value.calendarKeys)
  ])]);};
 }});

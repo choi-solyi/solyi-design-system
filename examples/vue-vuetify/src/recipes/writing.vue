@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const name = ref(''),
-  checked = ref(false);
+  checked = ref(false)
 const error = computed(() =>
   checked.value && !name.value.trim() ? '기록 이름을 입력해 주세요.' : '',
-);
+)
 </script>
 <template>
   <SCard :heading-level="2" title="구체적인 문구와 가까운 도움말">

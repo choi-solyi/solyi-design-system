@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const heading = useTemplateRef<HTMLElement>('heading');
-const view = ref('list');
-const selected = ref('작은 정원');
-const name = ref('가상 사용자');
-const result = ref('');
+const heading = useTemplateRef<HTMLElement>('heading')
+const view = ref('list')
+const selected = ref('작은 정원')
+const name = ref('가상 사용자')
+const result = ref('')
 
 function move(next: string) {
-  view.value = next;
-  nextTick(() => heading.value?.focus());
+  view.value = next
+  nextTick(() => heading.value?.focus())
 }
 </script>
 

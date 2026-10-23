@@ -3,31 +3,26 @@ import {packageReleases} from './release-data.js';
 // The site and guide contract test read the same copyable source strings.
 export const gettingStartedSnippets = Object.freeze({
   tooling: `npm install -D vite@8.3.4 @vitejs/plugin-vue@6.0.10 typescript@5.9.3 vue-tsc@3.3.13 unplugin-auto-import@21.1.0`,
-  registration: `import { createApp } from 'vue';
-import { VApp } from 'vuetify/components/VApp';
-import SolyiUI, { createSolyiVuetify, applySolyiAppearance } from 'solyi-ui';
-import 'solyi-ui/global';
-import 'vuetify/styles';
-import 'solyi-ui/fonts.css';
-import 'solyi-ui/code-fonts.css';
-import 'solyi-ui/tokens.css';
-import 'solyi-ui/components.css';
-import 'solyi-ui/styles.css';
-import App from './App.vue';
+  registration: `import { createApp } from 'vue'
+import { VApp } from 'vuetify/components/VApp'
+import SolyiUI, { createSolyiVuetify, applySolyiAppearance } from 'solyi-ui'
+import 'solyi-ui/global'
+import 'solyi-ui/all.css'
+import App from './App.vue'
 
-const vuetify = createSolyiVuetify({ components: { VApp } });
-const app = createApp(App);
+const vuetify = createSolyiVuetify({ components: { VApp } })
+const app = createApp(App)
 
-app.use(vuetify).use(SolyiUI);
+app.use(vuetify).use(SolyiUI)
 applySolyiAppearance(vuetify.theme, {
   theme: 'violet',
   mode: 'light',
   density: 'comfortable',
-});
-app.mount('#app');`,
-  vite: `import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import AutoImport from 'unplugin-auto-import/vite';
+})
+app.mount('#app')`,
+  vite: `import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
   plugins: [
@@ -43,7 +38,7 @@ export default defineConfig({
       },
     }),
   ],
-});`,
+})`,
   types: `{
   "compilerOptions": {
     "target": "ES2022",
@@ -52,56 +47,58 @@ export default defineConfig({
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["vite/client", "solyi-ui/global"]
+    "types": ["vite/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "src/auto-imports.d.ts"]
 }`,
   lintInstall: `npm install -D eslint@10.13.0 vue-eslint-parser@10.4.1 @typescript-eslint/parser@8.72.0`,
-  lint: `import { readFileSync } from 'node:fs';
-import vueParser from 'vue-eslint-parser';
-import tsParser from '@typescript-eslint/parser';
+  lint: `import { readFileSync } from 'node:fs'
+import vueParser from 'vue-eslint-parser'
+import tsParser from '@typescript-eslint/parser'
 
 const { globals } = JSON.parse(
   readFileSync(new URL('./.eslintrc-auto-import.json', import.meta.url), 'utf8'),
-);
+)
 
-export default [{
-  files: ['src/**/*.vue'],
-  languageOptions: {
-    parser: vueParser,
-    parserOptions: { parser: tsParser, ecmaVersion: 'latest', sourceType: 'module' },
-    globals,
+export default [
+  {
+    files: ['src/**/*.vue'],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: { parser: tsParser, ecmaVersion: 'latest', sourceType: 'module' },
+      globals,
+    },
+    rules: { 'no-undef': 'error', 'no-global-assign': 'error' },
   },
-  rules: { 'no-undef': 'error', 'no-global-assign': 'error' },
-}];`,
+]`,
   verify: `npm exec vite build
 npm exec vue-tsc -- --noEmit -p tsconfig.json
 npm exec eslint -- "src/**/*.vue"`,
   form: `<script setup lang="ts">
-import { sRules } from 'solyi-ui';
-import type { SFormHandle, SFormSubmitEvent } from 'solyi-ui';
+import { sRules } from 'solyi-ui'
+import type { SFormHandle, SFormSubmitEvent } from 'solyi-ui'
 
-const form = useTemplateRef<SFormHandle>('form');
-const name = ref('');
-const serverError = ref('');
-const message = ref('');
-const rules = [sRules.required(), sRules.minLength(3)];
+const form = useTemplateRef<SFormHandle>('form')
+const name = ref('')
+const serverError = ref('')
+const message = ref('')
+const rules = [sRules.required(), sRules.minLength(3)]
 
 async function submit(event: SFormSubmitEvent) {
-  message.value = '';
-  const result = await event;
-  if (result.cancelled) return;
+  message.value = ''
+  const result = await event
+  if (result.cancelled) return
   if (!result.valid) {
-    form.value?.focus();
-    return;
+    form.value?.focus()
+    return
   }
-  message.value = '입력을 확인했어요.';
+  message.value = '입력을 확인했어요.'
 }
 
 function clearValidation() {
-  serverError.value = '';
-  message.value = '';
-  form.value?.resetValidation();
+  serverError.value = ''
+  message.value = ''
+  form.value?.resetValidation()
 }
 </script>
 
@@ -197,9 +194,9 @@ export function renderGettingStarted(h) {
   return h.section('install', '설치', '기존 Vite + Vue 프로젝트에 solyi-ui를 설치합니다.',
     `<div class="sol-stack"><p><code>solyi-ui</code> 하나로 S 컴포넌트와 공통 스타일·토큰·폰트를 사용합니다. 아래 안내는 기존 Vite + Vue 프로젝트를 기준으로 합니다.</p>${install}<p>처음 구성하는 앱이라면 아래 개발 도구도 설치합니다.</p>${h.codeSample('터미널 · 개발 도구 설치', gettingStartedSnippets.tooling)}<p class="sol-hint">Node는 <code>^22.18.0 || &gt;=24.12.0</code> 범위를 사용합니다.</p></div>`) +
     h.section('registration', '스타일과 전역 등록', 'main.ts에서 한 번 등록하면 각 SFC에서 S 컴포넌트를 개별 import하지 않습니다.',
-      `<div class="sol-stack"><p>Vuetify 스타일 → solyi-ui 폰트·토큰·컴포넌트 CSS → UI CSS 순서로 불러옵니다. <code>fonts.css</code>는 Wanted Sans, <code>code-fonts.css</code>는 JetBrains Mono와 한글 폴백 나눔고딕코딩을 self-host합니다. 코드 폰트는 일반 UI 폰트와 분리됩니다. 폰트를 생략하면 앱의 시스템 폴백을 사용합니다.</p>${h.codeSample('main.ts · 전역 등록', gettingStartedSnippets.registration)}<p><code>app.use(SolyiUI)</code>는 런타임 S 컴포넌트를 등록하고 <code>solyi-ui/global</code>은 Volar/vue-tsc의 전역 컴포넌트 타입을 제공합니다. 타입 import만으로 런타임 등록되지는 않습니다. 문서 사이트 전용 <code>docs.css</code>는 소비 앱에 추가하지 않습니다.</p></div>`) +
+      `<div class="sol-stack"><p><code>solyi-ui/all.css</code> 한 줄로 Vuetify 스타일·Wanted Sans·토큰·컴포넌트 스타일을 정해진 순서로 불러옵니다. 코드 폰트는 필요한 앱에서 <code>solyi-ui/code-fonts.css</code>로 별도 선택합니다. 폰트 로딩에 실패하면 시스템 폰트를 사용합니다.</p>${h.codeSample('main.ts · 전역 등록', gettingStartedSnippets.registration)}<p><code>app.use(SolyiUI)</code>는 런타임 S 컴포넌트를 등록하고 <code>solyi-ui/global</code>은 Volar/vue-tsc의 전역 컴포넌트 타입을 제공합니다. 타입 import만으로 런타임 등록되지는 않습니다. 문서 사이트 전용 <code>docs.css</code>는 소비 앱에 추가하지 않습니다.</p></div>`) +
     h.section('auto-import', 'Vue 자동 import와 타입 검사', 'S 컴포넌트 등록과 Vue 함수 자동 import는 서로 다른 설정입니다.',
-      `<div class="sol-stack"><p><code>unplugin-auto-import</code>의 Vue preset을 설정하면 <code>ref</code>, <code>computed</code>, <code>useTemplateRef</code>, <code>onBeforeUnmount</code> 같은 Vue 함수를 SFC에서 반복 import하지 않아도 됩니다. TypeScript 타입과 <code>sRules</code> 같은 라이브러리 함수는 직접 import합니다.</p>${h.codeSample('vite.config.ts · Vue 자동 import', gettingStartedSnippets.vite)}<p>Vite를 실행하면 <code>src/auto-imports.d.ts</code>와 <code>.eslintrc-auto-import.json</code>이 생성됩니다. 기존 tsconfig의 옵션을 유지하면서 전역 타입과 생성 파일을 포함하세요.</p>${h.codeSample('tsconfig.json · 전역 타입', gettingStartedSnippets.types)}<p><code>strict</code>는 앱 소스와 S 컴포넌트 사용 타입을 검사합니다. <code>skipLibCheck</code>는 지원 Vuetify·선택 어댑터의 외부 선언 충돌을 소비 앱 검사에서 제외합니다. solyi-ui 자체 공개 선언은 별도로 <code>skipLibCheck: false</code>에서 검사하며, 외부 의존성의 모든 선언까지 통과한다고 뜻하지 않습니다.</p><p>ESLint를 사용한다면 생성된 readonly globals를 실제 lint 설정에도 연결합니다. 다음은 Vue SFC의 script 영역을 검사하는 최소 설정입니다. 브라우저 전역·매크로·팀 규칙은 앱의 기존 lint 설정과 병합하세요.</p>${h.codeSample('터미널 · 선택 도구 ESLint 설치', gettingStartedSnippets.lintInstall)}${h.codeSample('eslint.config.mjs · 생성 globals 연결', gettingStartedSnippets.lint)}<p>생성 파일을 먼저 준비한 뒤 타입·lint를 검사합니다. 자동 import가 없는 앱에서는 Vue 함수를 직접 import해야 합니다.</p>${h.codeSample('터미널 · 빌드와 타입·lint 검사', gettingStartedSnippets.verify)}</div>`) +
+      `<div class="sol-stack"><p><code>unplugin-auto-import</code>의 Vue preset을 설정하면 <code>ref</code>, <code>computed</code>, <code>useTemplateRef</code>, <code>onBeforeUnmount</code> 같은 Vue 함수를 SFC에서 반복 import하지 않아도 됩니다. TypeScript 타입과 <code>sRules</code> 같은 라이브러리 함수는 직접 import합니다.</p>${h.codeSample('vite.config.ts · Vue 자동 import', gettingStartedSnippets.vite)}<p>Vite를 실행하면 <code>src/auto-imports.d.ts</code>와 <code>.eslintrc-auto-import.json</code>이 생성됩니다. 기존 tsconfig의 옵션을 유지하면서 전역 타입과 생성 파일을 포함하세요.</p><p>전역 컴포넌트 타입은 앞의 main.ts에서 <code>solyi-ui/global</code>을 이미 불러왔으므로 tsconfig에 다시 추가하지 않습니다.</p>${h.codeSample('tsconfig.json · 전역 타입', gettingStartedSnippets.types)}<p><code>strict</code>는 앱 소스와 S 컴포넌트 사용 타입을 검사합니다. <code>skipLibCheck</code>는 지원 Vuetify·선택 어댑터의 외부 선언 충돌을 소비 앱 검사에서 제외합니다. solyi-ui 자체 공개 선언은 별도로 <code>skipLibCheck: false</code>에서 검사하며, 외부 의존성의 모든 선언까지 통과한다고 뜻하지 않습니다.</p><p>ESLint를 사용한다면 생성된 readonly globals를 실제 lint 설정에도 연결합니다. 다음은 Vue SFC의 script 영역을 검사하는 최소 설정입니다. 브라우저 전역·매크로·팀 규칙은 앱의 기존 lint 설정과 병합하세요.</p>${h.codeSample('터미널 · 선택 도구 ESLint 설치', gettingStartedSnippets.lintInstall)}${h.codeSample('eslint.config.mjs · 생성 globals 연결', gettingStartedSnippets.lint)}<p>생성 파일을 먼저 준비한 뒤 타입·lint를 검사합니다. 자동 import가 없는 앱에서는 Vue 함수를 직접 import해야 합니다.</p>${h.codeSample('터미널 · 빌드와 타입·lint 검사', gettingStartedSnippets.verify)}</div>`) +
     h.section('forms', '첫 폼 만들기', 'rules, 서버 오류, template ref를 구분해 입력 상태를 관리합니다.',
       `<div class="sol-stack"><p>아래 App.vue는 앞의 전역 등록·자동 import 설정을 사용합니다. <code>SForm</code>의 submit 이벤트를 기다려 결과를 받고 <code>form.value?.focus()</code>로 첫 오류 입력에 이동합니다. DOM ID로 입력을 찾아 조작하지 않습니다.</p>${h.codeSample('App.vue · rules와 template ref', gettingStartedSnippets.form)}<p><code>rules</code>는 동기 검증입니다. 서버 응답은 앱이 처리한 뒤 <code>server-error</code> 또는 <code>error-messages</code>로 전달합니다. <code>resetValidation()</code>은 입력값과 외부 서버 오류를 자동 삭제하지 않으므로 필요한 값은 앱에서 명시적으로 초기화합니다.</p><p><code>STabs</code>는 탐색, <code>SResizableSplitPane</code>는 레이아웃 컴포넌트입니다. 이 둘은 폼 검증 <code>rules</code>·<code>required</code>·서버 오류 props를 받지 않으며 <code>SForm</code>의 필드 상태를 상속하지 않습니다. 필요한 경우 각각의 <code>disabled</code>·<code>readonly</code>와 표시용 <code>error</code>를 직접 지정합니다.</p><div class="button-row"><a class="sol-button" href="./starter/?view=recipes&amp;example=form">실행 예제</a><a href="#component/sform">SForm Examples / API</a><a href="#component/stext-field">STextField Examples / API</a></div></div>`) +
     h.section('appearance', '테마와 밀도 연결', '공통 CSS와 Vuetify를 같은 상태로 갱신합니다.',

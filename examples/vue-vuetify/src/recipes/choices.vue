@@ -2,12 +2,12 @@
 const include = ref(true),
   archived = ref(false),
   view = ref<string | null>('list'),
-  sort = ref<string | null>('recent');
+  sort = ref<string | null>('recent')
 const options = [
   { value: 'list', label: '목록' },
   { value: 'cards', label: '카드' },
   { value: 'map', label: '지도 · 비활성', disabled: true },
-];
+]
 </script>
 <template>
   <SCard :heading-level="2" title="익숙한 기본 선택">

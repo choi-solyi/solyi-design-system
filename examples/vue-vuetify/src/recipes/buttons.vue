@@ -1,16 +1,16 @@
 <script setup lang="ts">
 const busy = ref(false),
-  result = ref('');
-let timer: ReturnType<typeof setTimeout>;
+  result = ref('')
+let timer: ReturnType<typeof setTimeout>
 function run() {
-  if (busy.value) return;
-  busy.value = true;
+  if (busy.value) return
+  busy.value = true
   timer = setTimeout(() => {
-    result.value = '가상 확인을 마쳤어요.';
-    busy.value = false;
-  }, 500);
+    result.value = '가상 확인을 마쳤어요.'
+    busy.value = false
+  }, 500)
 }
-onBeforeUnmount(() => clearTimeout(timer));
+onBeforeUnmount(() => clearTimeout(timer))
 </script>
 <template>
   <SCard :heading-level="2" title="버튼 사용">

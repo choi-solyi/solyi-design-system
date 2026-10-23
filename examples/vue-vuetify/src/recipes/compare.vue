@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const choice = ref<string | null>('simple');
+const choice = ref<string | null>('simple')
 const options = [
   {
     value: 'simple',
@@ -11,7 +11,7 @@ const options = [
     label: '차근차근 정리',
     description: '이름 + 메모 + 분류 · 작은 자료실',
   },
-];
+]
 </script>
 <template>
   <SCard :heading-level="2" title="같은 속성의 선택">

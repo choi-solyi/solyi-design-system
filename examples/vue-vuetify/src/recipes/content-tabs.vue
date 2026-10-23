@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const tab = ref('summary'),
-  memo = ref('');
+  memo = ref('')
 const items = [
   { value: 'summary', label: '요약' },
   { value: 'detail', label: '상세' },
   { value: 'blocked', label: '비활성', disabled: true },
-];
+]
 </script>
 <template>
   <SCard :heading-level="2" title="같은 맥락의 탭">

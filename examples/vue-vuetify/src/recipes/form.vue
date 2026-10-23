@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { sRules } from 'solyi-ui';
-import type { SFormHandle, SFormSubmitEvent } from 'solyi-ui';
+import { sRules } from 'solyi-ui'
+import type { SFormHandle, SFormSubmitEvent } from 'solyi-ui'
 
-const form = useTemplateRef<SFormHandle>('form');
-const name = ref('');
-const kind = ref<string | null>('note');
-const fail = ref(false);
-const busy = ref(false);
-const done = ref(false);
-const serverError = ref('');
+const form = useTemplateRef<SFormHandle>('form')
+const name = ref('')
+const kind = ref<string | null>('note')
+const fail = ref(false)
+const busy = ref(false)
+const done = ref(false)
+const serverError = ref('')
 const nameRules = [
   sRules.required('이름을 입력해 주세요.'),
   sRules.minLength(3, '이름을 3자 이상 입력해 주세요.'),
-];
-let timer: ReturnType<typeof setTimeout>;
+]
+let timer: ReturnType<typeof setTimeout>
 
 async function save(event: SFormSubmitEvent) {
-  if (busy.value) return;
-  done.value = false;
-  serverError.value = '';
-  const result = await event;
+  if (busy.value) return
+  done.value = false
+  serverError.value = ''
+  const result = await event
   if (!result?.valid) {
-    form.value?.focus();
-    return;
+    form.value?.focus()
+    return
   }
-  busy.value = true;
+  busy.value = true
   timer = setTimeout(() => {
-    busy.value = false;
+    busy.value = false
     if (fail.value)
       serverError.value =
-        '가상 요청 실패입니다. 입력값은 유지됩니다. 실패 옵션을 끄고 다시 확인하세요.';
-    else done.value = true;
-  }, 400);
+        '가상 요청 실패입니다. 입력값은 유지됩니다. 실패 옵션을 끄고 다시 확인하세요.'
+    else done.value = true
+  }, 400)
 }
-onBeforeUnmount(() => clearTimeout(timer));
+onBeforeUnmount(() => clearTimeout(timer))
 </script>
 
 <template>

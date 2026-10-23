@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { STreeItem, SBarChartItem } from 'solyi-ui';
-defineProps<{ part?: string }>();
+import type { STreeItem, SBarChartItem } from 'solyi-ui'
+
+defineProps<{ part?: string }>()
 const selected = ref<string | null>(null),
   expanded = ref<string[]>([]),
-  week = ref<string | null>('current');
+  week = ref<string | null>('current')
 const items: STreeItem[] = [
   {
     id: 'notes',
@@ -14,15 +15,15 @@ const items: STreeItem[] = [
     ],
   },
   { id: 'archive', label: '보관', children: [{ id: 'walk', label: '주말 산책' }] },
-];
+]
 const chart = computed<SBarChartItem[]>(() =>
   ['월요일', '화요일', '수요일', '목요일'].map((label, index) => ({
     id: String(index),
     label,
     value: (week.value === 'current' ? [2, 4, 0, 5] : [1, 3, 2, 4])[index],
   })),
-);
-const total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0));
+)
+const total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0))
 </script>
 <template>
   <SCard :heading-level="2" :title="part ? undefined : '가상 자료의 차트와 계층'">

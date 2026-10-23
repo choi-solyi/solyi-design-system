@@ -1,70 +1,70 @@
 <script setup lang="ts">
-const resultPanel = useTemplateRef<{ $el: HTMLElement }>('resultPanel');
-const runButton = useTemplateRef<{ $el: HTMLElement }>('runButton');
-const retryButton = useTemplateRef<{ $el: HTMLElement }>('retryButton');
+const resultPanel = useTemplateRef<{ $el: HTMLElement }>('resultPanel')
+const runButton = useTemplateRef<{ $el: HTMLElement }>('runButton')
+const retryButton = useTemplateRef<{ $el: HTMLElement }>('retryButton')
 type Row = {
-  id: number;
-  state: 'idle' | 'pending' | 'success' | 'error';
-  attempts: number;
-};
-const rows = ref<Row[]>([1, 2, 3].map((id) => ({ id, state: 'idle', attempts: 0 }))),
+  id: number
+  state: 'idle' | 'pending' | 'success' | 'error'
+  attempts: number
+}
+const rows = ref<Row[]>([1, 2, 3].map(id => ({ id, state: 'idle', attempts: 0 }))),
   selected = ref<Record<number, boolean>>({ 1: true, 2: true, 3: true }),
   busy = ref(false),
-  result = ref('');
-let timer: ReturnType<typeof setTimeout>;
-let stopFocusWatch: (() => void) | undefined;
-let disposed = false;
-const failed = computed(() => rows.value.some((r) => r.state === 'error'));
+  result = ref('')
+let timer: ReturnType<typeof setTimeout>
+let stopFocusWatch: (() => void) | undefined
+let disposed = false
+const failed = computed(() => rows.value.some(r => r.state === 'error'))
 function run(retry = false) {
-  if (busy.value) return;
-  const targets = rows.value.filter((r) =>
+  if (busy.value) return
+  const targets = rows.value.filter(r =>
     retry ? r.state === 'error' : selected.value[r.id] && r.state === 'idle',
-  );
-  if (!targets.length) return;
-  const owner = document.activeElement;
-  let mayRestore = owner === runButton.value?.$el || owner === retryButton.value?.$el;
+  )
+  if (!targets.length) return
+  const owner = document.activeElement
+  let mayRestore = owner === runButton.value?.$el || owner === retryButton.value?.$el
   const movedFocus = (event: FocusEvent) => {
-    if (event.target !== owner && event.target !== document.body) mayRestore = false;
-  };
+    if (event.target !== owner && event.target !== document.body) mayRestore = false
+  }
   const movedPointer = (event: PointerEvent) => {
-    if (!owner?.contains(event.target as Node)) mayRestore = false;
-  };
+    if (!owner?.contains(event.target as Node)) mayRestore = false
+  }
   const releaseFocusWatch = () => {
-    document.removeEventListener('focusin', movedFocus, true);
-    document.removeEventListener('pointerdown', movedPointer, true);
-  };
-  document.addEventListener('focusin', movedFocus, true);
-  document.addEventListener('pointerdown', movedPointer, true);
-  stopFocusWatch = releaseFocusWatch;
-  busy.value = true;
-  result.value = '가상 항목 처리 중…';
-  targets.forEach((r) => {
-    r.state = 'pending';
-    r.attempts++;
-  });
+    document.removeEventListener('focusin', movedFocus, true)
+    document.removeEventListener('pointerdown', movedPointer, true)
+  }
+  document.addEventListener('focusin', movedFocus, true)
+  document.addEventListener('pointerdown', movedPointer, true)
+  stopFocusWatch = releaseFocusWatch
+  busy.value = true
+  result.value = '가상 항목 처리 중…'
+  targets.forEach(r => {
+    r.state = 'pending'
+    r.attempts++
+  })
   timer = setTimeout(() => {
-    targets.forEach((r) => (r.state = r.id === 2 && r.attempts === 1 ? 'error' : 'success'));
-    busy.value = false;
+    targets.forEach(r => (r.state = r.id === 2 && r.attempts === 1 ? 'error' : 'success'))
+    busy.value = false
     result.value =
       '완료 ' +
-      rows.value.filter((r) => r.state === 'success').length +
+      rows.value.filter(r => r.state === 'success').length +
       '개 · 실패 ' +
-      rows.value.filter((r) => r.state === 'error').length +
-      '개';
+      rows.value.filter(r => r.state === 'error').length +
+      '개'
     nextTick(() => {
-      const active = document.activeElement;
+      const active = document.activeElement
       if (!disposed && mayRestore && (active === owner || active === document.body || !active))
-        resultPanel.value?.$el.focus({ preventScroll: true });
-      releaseFocusWatch();
-      if (stopFocusWatch === releaseFocusWatch) stopFocusWatch = undefined;
-    });
-  }, 350);
+        resultPanel.value?.$el.focus({ preventScroll: true })
+      releaseFocusWatch()
+      if (stopFocusWatch === releaseFocusWatch) stopFocusWatch = undefined
+    })
+  }, 350)
 }
 onBeforeUnmount(() => {
-  disposed = true;
-  clearTimeout(timer);
-  stopFocusWatch?.();
-});
+  disposed = true
+  clearTimeout(timer)
+  stopFocusWatch?.()
+})
 </script>
 <template>
   <SCard :heading-level="2" title="일괄 작업의 일부 실패">

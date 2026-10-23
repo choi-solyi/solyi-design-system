@@ -2,6 +2,7 @@ import {readFile, readdir, writeFile} from 'node:fs/promises';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
+import { formatPublicSample } from './public-sample-format.mjs'
 
 // Read the implementation rather than maintaining a second, fictional V* API.
 const root = new URL('../', import.meta.url);
@@ -197,6 +198,7 @@ for (const ref of references) {assert.equal(new Set(ref.props.map(x=>x.name)).si
 const versions=Object.fromEntries(await Promise.all(['core','vue-ui'].map(async name=>[name,JSON.parse(await readFile(new URL('packages/'+name+'/package.json',root),'utf8')).version])));
 const recipeFiles={date:'inputs',files:'inputs',autocomplete:'inputs',chart:'chart-tree',tree:'chart-tree'};
 const exampleSources=Object.fromEntries(await Promise.all([...new Set(references.map(ref=>ref.example))].map(async example=>[example,await readFile(new URL(example==='advanced-vue'?'examples/vue-vuetify/src/AdvancedExamples.vue':'examples/vue-vuetify/src/recipes/'+(recipeFiles[example]||example)+'.vue',root),'utf8')])));
+for(const [example,source] of Object.entries(exampleSources))assert.equal(source,await formatPublicSample(source,'vue'),example+': component examples retain the canonical public SFC format');
 const code='// Generated from packages/vue-ui/src by scripts/build-component-api.mjs.\nexport const componentReferences='+JSON.stringify(references,null,2)+';\nexport const componentReferenceVersions='+JSON.stringify(versions)+';\nexport const componentExampleSources='+JSON.stringify(exampleSources,null,2)+';\n';
 if(process.argv.includes('--check'))assert.ok((await readFile(new URL('site/component-api-data.js',root),'utf8'))===code,'Component reference changed; regenerate from the current implementation');
 else await writeFile(new URL('site/component-api-data.js',root),code);

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-defineProps<{ part?: string }>();
+defineProps<{ part?: string }>()
 const note = ref(''),
   amount = ref<number | null>(2),
-  tags = ref<string[]>([]);
+  tags = ref<string[]>([])
 const options = [
   { value: 'garden', label: '정원' },
   { value: 'book', label: '책장' },
   { value: 'walk', label: '산책' },
-];
+]
 </script>
 <template>
   <SCard :heading-level="2" :title="part ? undefined : '여러 줄·숫자·태그'">

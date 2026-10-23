@@ -5,27 +5,22 @@
 ## 앱에서 한 번 설정
 
 ```ts
-import {createApp} from 'vue';
-import {VApp} from 'vuetify/components/VApp';
-import SolyiUI, {createSolyiVuetify} from 'solyi-ui';
-import 'vuetify/styles';
-import 'solyi-ui/tokens.css';
-import 'solyi-ui/components.css';
-import 'solyi-ui/fonts.css';
-import 'solyi-ui/code-fonts.css';
-import 'solyi-ui/styles.css';
-import 'solyi-ui/global';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { VApp } from 'vuetify/components/VApp'
+import SolyiUI, { createSolyiVuetify } from 'solyi-ui'
+import 'solyi-ui/all.css'
+import 'solyi-ui/global'
+import App from './App.vue'
 
 createApp(App)
-  .use(createSolyiVuetify({components: {VApp}}))
+  .use(createSolyiVuetify({ components: { VApp } }))
   .use(SolyiUI)
-  .mount('#app');
+  .mount('#app')
 ```
 
 `SBtn` 등을 각 SFC에서 import하지 않습니다. 이 저장소의 실행 예제는 `unplugin-auto-import` Vue preset을 함께 설정하므로 `ref`, `computed`, `nextTick` 같은 Vue 함수를 반복 import하지 않습니다. 다른 앱에서 이 빌드 설정을 사용하지 않으면 Vue 함수 import를 유지합니다. `DateValue` 같은 TypeScript 타입 import는 필요한 곳에 남깁니다. 정확한 전제는 [처음 시작하기](GETTING-STARTED.md)를 따릅니다. Vue/Vuetify는 앱에 한 벌만 설치하며 Vuetify 플러그인을 두 번 설치하지 않습니다. 전역 등록 대신 개별 컴포넌트 export를 가져오는 방식도 계속 지원합니다.
 
-Volar/vue-tsc에는 `tsconfig`의 `compilerOptions.types`에 `solyi-ui/global`을 추가하거나 포함되는 `env.d.ts`에 다음을 적습니다. 실제 등록은 위 `app.use(SolyiUI)`이며 타입 설정만으로 런타임 컴포넌트가 등록되지는 않습니다.
+앞의 `import 'solyi-ui/global'`이 Volar/vue-tsc의 전역 컴포넌트 타입을 추가합니다. main.ts에서 불러오지 않는 경우에만 tsconfig의 `compilerOptions.types` 또는 아래 env.d.ts 선언 중 하나를 대신 사용합니다. 런타임 등록에는 `app.use(SolyiUI)`가 필요합니다.
 
 ```ts
 /// <reference types="solyi-ui/global" />
@@ -33,7 +28,7 @@ Volar/vue-tsc에는 `tsconfig`의 `compilerOptions.types`에 `solyi-ui/global`�
 
 ```vue
 <script setup lang="ts">
-const name = ref('');
+const name = ref('')
 </script>
 
 <template>

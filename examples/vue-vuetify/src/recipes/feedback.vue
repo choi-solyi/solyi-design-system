@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const open = ref(false),
-  recovered = ref(false);
+  recovered = ref(false)
 </script>
 <template>
   <SCard :heading-level="2" title="상태와 다음 행동">

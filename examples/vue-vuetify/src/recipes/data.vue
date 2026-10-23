@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import type { TableColumn, TableRow, TableSort } from 'solyi-ui';
+import type { TableColumn, TableRow, TableSort } from 'solyi-ui'
+
 const query = ref(''),
   page = ref(1),
   selected = ref<string[]>([]),
   sort = ref<TableSort | null>({ key: 'date', direction: 'descending' }),
-  state = ref<string | null>('ready');
+  state = ref<string | null>('ready')
 const columns: TableColumn[] = [
   { key: 'name', label: '이름', sortable: true },
   { key: 'status', label: '상태', width: '96px' },
   { key: 'date', label: '변경일', width: '128px', sortable: true },
-];
+]
 const all: TableRow[] = [
   {
     id: '1',
@@ -20,22 +21,22 @@ const all: TableRow[] = [
   { id: '2', name: '저녁 책장', status: '초안', date: '2026-10-21' },
   { id: '3', name: '주말 산책', status: '완료', date: '2026-10-20' },
   { id: '4', name: '계절 관찰', status: '진행 중', date: '2026-10-19' },
-];
+]
 const filtered = computed(() =>
   all
-    .filter((r) => String(r.name).includes(query.value.trim()))
+    .filter(r => String(r.name).includes(query.value.trim()))
     .sort((a, b) => {
-      const s = sort.value;
+      const s = sort.value
       return s
         ? String(a[s.key]).localeCompare(String(b[s.key]), 'ko') *
             (s.direction === 'ascending' ? 1 : -1)
-        : 0;
+        : 0
     }),
-);
+)
 const pages = computed(() => Math.max(1, Math.ceil(filtered.value.length / 2))),
-  rows = computed(() => filtered.value.slice((page.value - 1) * 2, page.value * 2));
-watch([query, sort], () => (page.value = 1));
-watch(pages, (p) => (page.value = Math.min(page.value, p)));
+  rows = computed(() => filtered.value.slice((page.value - 1) * 2, page.value * 2))
+watch([query, sort], () => (page.value = 1))
+watch(pages, p => (page.value = Math.min(page.value, p)))
 </script>
 <template>
   <SCard :heading-level="2" title="선택·정렬·페이지">

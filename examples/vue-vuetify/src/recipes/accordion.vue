@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const expanded = ref(false);
+const expanded = ref(false)
 </script>
 <template>
   <SCard :heading-level="2" title="상세 펼침">

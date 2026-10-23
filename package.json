@@ -1,6 +1,6 @@
 {
   "name": "solyi-design-system",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "private": true,
   "type": "module",
   "description": "Solyi design system documentation and reusable Vue 3 UI components.",

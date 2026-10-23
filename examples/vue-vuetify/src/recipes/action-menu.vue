@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const result = ref('');
+const result = ref('')
 const items = [
   { id: 'copy', label: '가상 복제' },
   { id: 'archive', label: '가상 보관' },
   { id: 'disabled', label: '비활성', disabled: true },
-];
+]
 </script>
 <template>
   <SCard :heading-level="2" title="더 많은 동작">

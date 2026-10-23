@@ -11,6 +11,7 @@ const installArgs=['--ignore-scripts','--no-audit','--no-fund','--registry=https
 node('1/10 Internal shared Core','scripts/build-packages.mjs','--core');
 run('2/10 Library locked development dependencies','packages/vue-ui/',npm,['ci',...installArgs]);
 run('3/10 Vite library + strict own-source declarations','packages/vue-ui/',npm,['run','build']);
+node('3/10 Combined and individual stylesheet contracts', 'scripts/package-style-entry-check.mjs')
 node('4/10 Pack local artifacts','scripts/pack-packages.mjs');
 node('4/10 Plain npm pack lifecycle','scripts/prepack-check.mjs');
 for(const project of ['examples/package-consumer/','examples/vue-vuetify/']){
@@ -30,6 +31,7 @@ node('7/10 Pack contracts and installed runtime tests','scripts/library-contract
 node('7/10 Component runtime','scripts/library-runtime-check.mjs');
 node('7/10 Extended controlled Vue runtime','scripts/vue-extended-runtime-check.mjs');
 node('7/10 Six new reusable Vue APIs','scripts/vue-expansion-runtime-check.mjs');
+node('7/10 Responsive split pane touch and capture recovery', 'scripts/split-pane-touch-check.mjs')
 node('7/10 Shared locale runtime','scripts/locale-runtime-check.mjs');
 node('7/10 Installed overflow locale','scripts/overflow-locale-check.mjs','--installed');
 node('7/10 S public APIs and direct Vuetify bridge','scripts/s-api-runtime-check.mjs');
@@ -42,6 +44,8 @@ node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.m
 node('7/10 Unsaved navigation and retry focus recovery','scripts/recipe-recovery-check.mjs');
 node('7/10 Floating preview size','scripts/embed-height-check.mjs');
 node('7/10 Decimal number steps','scripts/number-input-step-check.mjs');
+node('7/10 Loading, drag and calendar feedback', 'scripts/component-feedback-runtime-check.mjs')
+node('7/10 Visible numeric accessibility labels', 'scripts/numeric-label-check.mjs')
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 if(process.argv.includes('--packages-only')){
@@ -52,6 +56,8 @@ if(process.argv.includes('--prepare-release'))node('9/10 Freeze verified local a
 node('9/10 Documentation build','scripts/build.mjs');
 node('9/10 Installed getting-started examples','scripts/getting-started-check.mjs');
 node('9/10 Real document package previews','scripts/vue-preview-integration-check.mjs');
+node('9/10 Short documents, embedded headings and fallback', 'scripts/document-followup-check.mjs')
+node('9/10 Public sample formatting and actual syntax', 'scripts/public-sample-check.mjs')
 node('9/10 Versioned delivery and real HTTP consumption','scripts/distribution-check.mjs');
 run('10/10 Existing checks','',npm,['run','check']);
 run('10/10 Existing + new UX regression','',npm,['test']);

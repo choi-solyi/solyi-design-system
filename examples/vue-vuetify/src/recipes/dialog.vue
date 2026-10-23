@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const open = ref(false);
+const open = ref(false)
 </script>
 <template>
   <SCard :heading-level="2" title="상세 대화상자">

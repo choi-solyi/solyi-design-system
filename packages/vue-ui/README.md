@@ -5,31 +5,26 @@ Vue 3용 S 컴포넌트를 제공하는 UI 라이브러리입니다. Vue 3.5 / V
 ## 한 번 등록
 
 ```ts
-import {createApp} from 'vue';
-import {VApp} from 'vuetify/components/VApp';
-import SolyiUI, {createSolyiVuetify} from 'solyi-ui';
-import 'vuetify/styles';
-import 'solyi-ui/fonts.css';
-import 'solyi-ui/code-fonts.css';
-import 'solyi-ui/tokens.css';
-import 'solyi-ui/components.css';
-import 'solyi-ui/styles.css';
-import 'solyi-ui/global';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { VApp } from 'vuetify/components/VApp'
+import SolyiUI, { createSolyiVuetify } from 'solyi-ui'
+import 'solyi-ui/all.css'
+import 'solyi-ui/global'
+import App from './App.vue'
 
 createApp(App)
-  .use(createSolyiVuetify({components: {VApp}}))
+  .use(createSolyiVuetify({ components: { VApp } }))
   .use(SolyiUI)
-  .mount('#app');
+  .mount('#app')
 ```
 
-전역 S 등록은 각 앱에서 한 번 합니다. Volar/vue-tsc에는 `solyi-ui/global`을 compilerOptions.types 또는 포함되는 env.d.ts에 연결합니다. 타입 모듈만 가져와서는 런타임 등록이 되지 않습니다. 개별 named export도 사용할 수 있습니다.
+전역 S 등록은 각 앱에서 한 번 합니다. 위의 `solyi-ui/global` import는 Volar/vue-tsc의 전역 컴포넌트 타입을 연결합니다. `compilerOptions.types`에 중복으로 추가할 필요는 없습니다. 타입 모듈만 가져와서는 런타임 등록이 되지 않습니다. 개별 named export도 사용할 수 있으며, 로컬 등록만 사용하는 앱에서는 global import를 생략합니다.
 
-실행 예제는 `unplugin-auto-import` Vue preset과 생성 TypeScript/lint globals를 함께 설정해 SFC의 반복 Vue 함수 import를 생략합니다. 자동 import를 설정하지 않은 앱에서는 Vue 함수 import를 유지해야 합니다. TypeScript 타입 import는 별도입니다. [정확한 시작 절차](https://github.com/choi-solyi/solyi-design-system/blob/main/documentation/guide/GETTING-STARTED.md)를 참고하세요.
+실행 예제는 `unplugin-auto-import` Vue preset과 생성 TypeScript/lint globals를 함께 설정해 SFC의 반복 Vue 함수 import를 생략합니다. 자동 import를 설정하지 않은 앱에서는 Vue 함수 import를 유지해야 합니다. TypeScript 타입 import는 별도입니다. [정확한 시작 절차](https://ui.solyi.kr/#start/install)를 참고하세요.
 
 ## API와 책임
 
-실제 Props·Slots·Events·Methods의 타입·기본값·허용값은 [컴포넌트별 문서](https://choi-solyi.github.io/solyi-design-system/#component)와 생성한 `dist/index.d.ts`가 기준입니다. 문서의 샘플 코드는 같은 실제 패키지로 실행합니다.
+실제 Props·Slots·Events·Methods의 타입·기본값·허용값은 [컴포넌트별 문서](https://ui.solyi.kr/#component)와 생성한 `dist/index.d.ts`가 기준입니다. 문서의 샘플 코드는 같은 실제 패키지로 실행합니다.
 
 - SBtn은 primary/secondary/subtle/inline 역할 변형과 tone을 제공합니다. loading은 중복 실행을 막고 초점을 유지합니다.
 - STextField와 입력 컴포넌트는 label·help·규칙 오류·서버 오류의 연결을 담당하고, 값과 제출 데이터는 앱이 소유합니다. SForm과 메서드는 실제 타입 계약을 따릅니다.
@@ -44,9 +39,9 @@ createApp(App)
 
 ## 스타일·라이선스·게시 경계
 
-solyi-ui의 tokens.css·components.css·styles.css를 한 번 가져옵니다. 문서 셸용 docs.css는 가져오지 않습니다. 테마·defaults 브리지는 `createSolyiVuetify/applySolyiAppearance`로 연결하며 원본 V API와 S API의 차이를 유지합니다. 반경은 버튼 6·입력 10·카드/작은 팝업 12·다이얼로그/큰 패널 16px입니다.
+`solyi-ui/all.css` 한 줄로 Vuetify 스타일, UI 폰트, 토큰, 공통 컴포넌트와 S 컴포넌트 스타일을 순서대로 가져옵니다. 기존 개별 CSS 경로도 선택적으로 사용할 수 있으며 통합 진입점과 중복해서 가져오지는 않습니다. 코드 폰트가 필요한 앱은 `solyi-ui/code-fonts.css`를 추가합니다. 문서 셸용 docs.css는 가져오지 않습니다. 테마·defaults 브리지는 `createSolyiVuetify/applySolyiAppearance`로 연결하며 원본 V API와 S API의 차이를 유지합니다. 반경은 버튼 6·입력 10·카드/작은 팝업 12·다이얼로그/큰 패널 16px입니다.
 
-자체 재사용 코드는 MIT이며 Core 폰트는 원문 OFL을 유지합니다. 로고·캐릭터·favicon·개인 콘텐츠는 제외하며 MIT로 브랜드 권리를 부여하지 않습니다. [설치·업데이트·롤백](https://github.com/choi-solyi/solyi-design-system/blob/main/documentation/guide/DISTRIBUTION.md)을 확인하세요. 패키지 업데이트와 배포는 소비 앱의 절차에 맞게 관리합니다.
+자체 재사용 코드는 MIT이며 Core 폰트는 원문 OFL을 유지합니다. 로고·캐릭터·favicon·개인 콘텐츠는 제외하며 MIT로 브랜드 권리를 부여하지 않습니다. [설치·업데이트](https://ui.solyi.kr/#start/install)를 확인하세요. 패키지 업데이트와 배포는 소비 앱의 절차에 맞게 관리합니다.
 
 ## 소비 프로젝트 AI 지침
 

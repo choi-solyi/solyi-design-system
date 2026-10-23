@@ -2,18 +2,18 @@
 const query = ref(''),
   filter = ref<string | null>('all'),
   detail = ref(false),
-  chosen = ref('');
+  chosen = ref('')
 const rows = [
   { name: '작은 정원', status: '진행 중' },
   { name: '저녁 책장', status: '초안' },
   { name: '주말 산책', status: '진행 중' },
-];
+]
 const visible = computed(() =>
   rows.filter(
-    (r) =>
+    r =>
       r.name.includes(query.value.trim()) && (filter.value === 'all' || r.status === filter.value),
   ),
-);
+)
 </script>
 <template>
   <SCard :heading-level="2" title="검색과 상세">

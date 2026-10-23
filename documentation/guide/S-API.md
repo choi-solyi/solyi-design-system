@@ -4,7 +4,7 @@
 
 ## 표면·트리와 Vue 조합
 
-예제 주변의 버튼 묶음은 Core의 `sol-actions`(8px 간격·줄바꿈), 경로 목록은 `sol-breadcrumbs`로 배치합니다. Vue 컴포넌트 CSS와 함께 Core components.css도 설치 절차대로 가져와야 합니다.
+예제 주변의 버튼 묶음은 Core의 `sol-actions`(8px 간격·줄바꿈), 경로 목록은 `sol-breadcrumbs`로 배치합니다. `solyi-ui/all.css`가 Vue 컴포넌트와 Core 배치 스타일을 함께 불러옵니다.
 
 - `SCard`: `title`, `eyebrow`, `headingLevel:2|3|4`(기본3), 기본/actions 슬롯. 카드의 제목과 본문을 공통 간격으로 묶습니다.
 - `SAlert`: `tone:accent|info|success|warning|danger`, `title`, `live:off|polite|assertive`(기본off), 기본/actions 슬롯. 정적 안내는 live를 켜지 않고, 같은 변화의 자동 안내는 한곳만 사용합니다.
@@ -18,7 +18,7 @@
 
 ```vue
 <script setup>
-import {VBtn} from 'vuetify/components/VBtn';
+import { VBtn } from 'vuetify/components/VBtn'
 </script>
 <template>
   <SBtn variant="primary">저장</SBtn>
@@ -31,17 +31,16 @@ S 이름은 Vuetify와 완전히 동일한 API라는 뜻이 아닙니다. `SBtn`
 ## 공통 테마와 기본 스타일
 
 ```ts
-import {createApp} from 'vue';
-import {VApp} from 'vuetify/components/VApp';
-import SolyiUI, {createSolyiVuetify, applySolyiAppearance} from 'solyi-ui';
-import 'vuetify/styles';
-import 'solyi-ui/fonts.css';
-import 'solyi-ui/tokens.css';
-import 'solyi-ui/components.css';
-import 'solyi-ui/styles.css';
-const vuetify = createSolyiVuetify({components:{VApp}});
-applySolyiAppearance(vuetify.theme,{theme:'violet',mode:'light',density:'comfortable'});
-createApp(App).use(vuetify).use(SolyiUI).mount('#app');
+import { createApp } from 'vue'
+import { VApp } from 'vuetify/components/VApp'
+import SolyiUI, { createSolyiVuetify, applySolyiAppearance } from 'solyi-ui'
+import 'solyi-ui/all.css'
+import 'solyi-ui/global'
+import App from './App.vue'
+
+const vuetify = createSolyiVuetify({ components: { VApp } })
+applySolyiAppearance(vuetify.theme, { theme: 'violet', mode: 'light', density: 'comfortable' })
+createApp(App).use(vuetify).use(SolyiUI).mount('#app')
 ```
 
 공식 설치된 Vue3.5.44/Vuetify4.3.0 API를 사용합니다. factory는 Core 토큰에서6개 테마와 기본 VApp/VBtn/VTextField/VSelect/VTextarea/VCard/VDialog 클래스를 만듭니다. `applySolyiAppearance`는 같은 앱 상태를 Core의 data-theme/mode/density와 Vuetify에 반영합니다. 저장은 소비 앱 소유이며 DOM 없는 SSR에서는 defaultTheme/서버 HTML 속성을 설정한 뒤 클라이언트에서 연결합니다. 지원하지 않는 값은 false로 거절합니다.

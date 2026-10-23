@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const open = ref(false);
+const open = ref(false)
 </script>
 <template>
   <SCard :heading-level="2" title="짧은 설명과 추가 정보">

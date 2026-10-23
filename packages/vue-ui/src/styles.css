@@ -26,6 +26,7 @@
 .sol-ui-button--inline.v-btn {font-size:var(--sol-text-xs);padding-inline:4px;text-decoration:underline;text-underline-offset:3px;}
 .sol-ui-button.v-btn:disabled,.sol-ui-button.v-btn[aria-disabled=true] {opacity:1;color:var(--sol-color-muted);background:var(--sol-color-disabled);border-color:var(--sol-color-border);text-decoration:none;cursor:default;}
 .sol-ui-button.v-btn:disabled .v-btn__content {opacity:1;}
+.sol-ui-button.v-btn--loading .v-btn__content {opacity:0;}
 .sol-ui-button .v-btn__content {display:inline-flex;align-items:center;justify-content:center;gap:var(--sol-space-2);line-height:1.3;white-space:nowrap;}
 .sol-ui-icon {display:block;flex:none;width:20px;height:20px;pointer-events:none;}
 .sol-ui-icon--small {width:16px;height:16px;}
@@ -119,7 +120,8 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 .sol-ui-picker-clear {justify-self:start;}
 .sol-ui-picker-icon {display:block;flex:none;}
-.sol-ui-picker-icon--previous {transform:rotate(180deg);}
+.sol-ui-calendar .sol-ui-picker-icon--previous {transform:rotate(90deg);}
+.sol-ui-calendar .sol-ui-picker-icon--next {transform:rotate(-90deg);}
 .sol-ui-calendar-month {font-size:var(--sol-text-lg);font-weight:650;margin:0;}
 .sol-ui-picker-top {display:flex;align-items:center;justify-content:space-between;gap:var(--sol-space-2);}
 .sol-ui-picker-top>.sol-button {flex:none;white-space:nowrap;}
@@ -181,8 +183,7 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-separator[aria-disabled=true] {cursor:default;}
 .sol-ui-pane-layout[data-orientation=vertical]>.sol-ui-separator {cursor:ns-resize;}
 .sol-ui-pane-layout[data-orientation=vertical]>.sol-ui-separator>span {height:4px;width:40px;}
-.sol-ui-pane-layout.is-stacked {grid-template-columns:minmax(0,1fr);height:auto;min-height:0;}
-.sol-ui-pane-layout.is-stacked>.sol-ui-pane+.sol-ui-pane {border-top:1px solid var(--sol-color-border);}
+.sol-ui-pane-layout.is-stacked {grid-template-columns:minmax(0,1fr);}
 @media(max-width:680px),(pointer:coarse){.sol-ui-segment>span{min-height:var(--sol-touch-target-min);}.sol-ui-tags .sol-button{min-width:44px;min-height:44px;}.sol-ui-split-pane{--sol-split-handle-size:44px;}}
 
 .sol-ui-native-field,.sol-ui-tabs,.sol-ui-range,.sol-ui-split-button,.sol-ui-context,.sol-ui-split-pane,.sol-ui-toast,.sol-ui-time-panel {font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}

@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ part: { type: String, default: '' } });
+const props = defineProps({ part: { type: String, default: '' } })
 const supportedParts = [
   'segmented',
   'multiselect',
@@ -7,75 +7,75 @@ const supportedParts = [
   'split-button',
   'context-menu',
   'split-pane',
-];
-const part = computed(() => (supportedParts.includes(props.part) ? props.part : ''));
-const show = (...parts) => !part.value || parts.includes(part.value);
+]
+const part = computed(() => (supportedParts.includes(props.part) ? props.part : ''))
+const show = (...parts) => !part.value || parts.includes(part.value)
 const disabled = ref(false),
   readonly = ref(false),
   display = ref('brief'),
   selected = ref(['garden']),
   scenario = ref('local'),
-  requests = ref(0);
+  requests = ref(0)
 const choices = [
   { value: 'garden', label: '정원' },
   { value: 'book', label: '책장' },
   { value: 'walk', label: '산책' },
   { value: 'season', label: '계절 관찰' },
   { value: 'locked', label: '보관 · 선택 불가', disabled: true },
-];
+]
 const loader = computed(() => {
-  const mode = scenario.value;
-  if (mode === 'local') return undefined;
+  const mode = scenario.value
+  if (mode === 'local') return undefined
   return async (query, signal) => {
-    const attempt = ++requests.value;
+    const attempt = ++requests.value
     await new Promise((resolve, reject) => {
       const timer = setTimeout(
         () => {
-          signal.removeEventListener('abort', abort);
-          resolve();
+          signal.removeEventListener('abort', abort)
+          resolve()
         },
         query.includes('느림') ? 600 : 180,
-      );
+      )
       const abort = () => {
-        clearTimeout(timer);
-        reject(new DOMException('Cancelled', 'AbortError'));
-      };
-      signal.addEventListener('abort', abort, { once: true });
-      if (signal.aborted) abort();
-    });
-    if (mode === 'retry' && attempt === 1) throw new Error('가상 실패');
-    return choices.filter((o) => o.label.includes(query.trim()));
-  };
-});
-watch(scenario, () => (requests.value = 0));
+        clearTimeout(timer)
+        reject(new DOMException('Cancelled', 'AbortError'))
+      }
+      signal.addEventListener('abort', abort, { once: true })
+      if (signal.aborted) abort()
+    })
+    if (mode === 'retry' && attempt === 1) throw new Error('가상 실패')
+    return choices.filter(o => o.label.includes(query.trim()))
+  }
+})
+watch(scenario, () => (requests.value = 0))
 const range = ref([20, 80]),
   action = ref('아직 실행하지 않았어요.'),
   primaryCount = ref(0),
-  menuOpen = ref(false);
+  menuOpen = ref(false)
 const actions = [
   { id: 'json', label: 'JSON으로 내보내기 · 가상' },
   { id: 'csv', label: 'CSV로 내보내기 · 가상' },
   { id: 'blocked', label: '예약 · 비활성', disabled: true },
-];
+]
 const contextItems = [
   { id: 'pin', label: '자료 고정 · 가상' },
   { id: 'copy', label: '복제 · 가상' },
   { id: 'archive', label: '보관 · 비활성', disabled: true },
-];
+]
 function chosenAction(id) {
   action.value =
     '✓ ' +
-    [...actions, ...contextItems].find((i) => i.id === id)?.label +
-    ' 동작을 확인했습니다. 외부 작업은 없습니다.';
+    [...actions, ...contextItems].find(i => i.id === id)?.label +
+    ' 동작을 확인했습니다. 외부 작업은 없습니다.'
 }
 const ratio = ref(40),
   direction = ref('horizontal'),
   memo = ref('화면 폭을 바꾸어도 이 가상 메모는 유지됩니다.'),
   stacked = ref(false),
-  resized = ref('');
+  resized = ref('')
 watch([disabled, readonly], () => {
-  if (disabled.value || readonly.value) menuOpen.value = false;
-});
+  if (disabled.value || readonly.value) menuOpen.value = false
+})
 </script>
 
 <template>
@@ -308,7 +308,7 @@ watch([disabled, readonly], () => {
       /></template>
     </SResizableSplitPane>
     <p class="starter-hint" role="status">
-      저장 비율 {{ ratio }}% · {{ stacked ? '좁은 폭: 세로 순서 표시' : '크기 조절 가능' }} ·
+      저장 비율 {{ ratio }}% · {{ stacked ? '좁은 폭: 위아래 높이 조절' : '크기 조절 가능' }} ·
       {{ resized }}
     </p>
   </section>

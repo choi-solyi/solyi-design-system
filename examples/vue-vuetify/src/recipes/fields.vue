@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const field = useTemplateRef<{ focus(): void }>('field');
-const serverRejected = ref(false);
+const field = useTemplateRef<{ focus(): void }>('field')
+const serverRejected = ref(false)
 const value = ref(''),
-  submitted = ref(false);
+  submitted = ref(false)
 const error = computed(() =>
   submitted.value && value.value.trim().length < 3 ? '3자 이상 입력해 주세요.' : '',
-);
+)
 function check() {
-  submitted.value = true;
-  if (error.value) nextTick(() => field.value?.focus());
+  submitted.value = true
+  if (error.value) nextTick(() => field.value?.focus())
 }
 </script>
 <template>
