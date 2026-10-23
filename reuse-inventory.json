@@ -938,6 +938,14 @@
       "kind": "component",
       "target": "SAvatar",
       "status": "후속 · 구현 완료 아님"
+    },
+    {
+      "route": "start",
+      "id": "ai-guide",
+      "label": "AI guide",
+      "kind": "documentation",
+      "target": "DESIGN.md 소비 프로젝트 지침",
+      "status": "단일 원본 보기·복사·다운로드·패키지 포함"
     }
   ],
   "demos": [

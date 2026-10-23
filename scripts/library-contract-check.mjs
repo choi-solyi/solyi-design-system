@@ -2,6 +2,13 @@ import assert from 'node:assert/strict';
 import {readFile,stat} from 'node:fs/promises';
 const root=new URL('../',import.meta.url),json=async file=>JSON.parse(await readFile(new URL(file,root),'utf8'));
 const packs=await json('artifacts/pack-report.json');
+const designGuideBytes=await readFile(new URL('DESIGN.md',root));
+for(const name of ['core','vue-ui']){
+ const report=packs.find(pack=>pack.name==='@solyi/'+name);
+ assert.ok(report.files.some(file=>file.path==='DESIGN.md'),'Canonical consumer guide is packed: '+name);
+ assert.deepEqual(await readFile(new URL('packages/'+name+'/DESIGN.md',root)),designGuideBytes);
+ for(const project of ['examples/package-consumer','examples/vue-vuetify'])assert.deepEqual(await readFile(new URL(project+'/node_modules/@solyi/'+name+'/DESIGN.md',root)),designGuideBytes,'Real installed consumer guide matches: '+project+'/'+name);
+}
 for(const [name,minimum]of [['core',['dist/tokens.css','dist/components.css','dist/tokens.json','dist/index.js','dist/index.d.ts','dist/icons.js','dist/icons.d.ts','dist/date-only.js','dist/date-only.d.ts']],['vue-ui',['dist/index.js','dist/index.d.ts','dist/styles.css','dist/controls.d.ts','dist/navigation.d.ts','dist/date-time.d.ts','dist/locale.d.ts','dist/selection.d.ts','dist/actions.d.ts','dist/split-pane.d.ts','dist/progress.d.ts','dist/vuetify.d.ts','dist/surfaces.d.ts','dist/tree.d.ts']]]){
  const pkg=await json('packages/'+name+'/package.json');assert.equal(pkg.private,true,'Publication remains guarded');assert.equal(pkg.license,'MIT');assert.ok(!pkg.scripts?.publish);const report=packs.find(p=>p.name===pkg.name);assert.ok(report);assert.ok(report.files.some(f=>f.path==='LICENSE'),'Scoped MIT notice included');for(const file of minimum)assert.ok(report.files.some(f=>f.path===file),file+' included in pack');for(const value of Object.values(pkg.exports)){for(const target of typeof value==='string'?[value]:Object.values(value))assert.ok((await stat(new URL('packages/'+name+'/'+target,root))).isFile());}
  if(name==='vue-ui'){const readme=await readFile(new URL('packages/vue-ui/README.md',root),'utf8');assert.ok(readme.startsWith('# @solyi/vue-ui '+pkg.version+'\n'),'Packed README version matches actual API package');assert.ok(readme.includes('@solyi/core '+pkg.peerDependencies['@solyi/core']),'Packed README declares the actual Core peer');}

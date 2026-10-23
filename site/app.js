@@ -121,7 +121,7 @@ function themeSections(){const template=document.createElement('template');templ
 function start(){
  const original=document.createElement('template');original.innerHTML=overview();
  const legacy=themeSections();
- const order=['vue-components','starter','adoption','themes','density','locale','advanced-vue','scope'];
+ const order=['vue-components','ai-guide','starter','adoption','themes','density','locale','advanced-vue','scope'];
  const steps=section('start-here','작은 화면 하나부터 시작하기','설치 → 공통 설정 → 첫 부품 → 앱의 상태 순서로 익힙니다.',
  '<ol class="adoption-steps"><li><div><h3>권장 패키지 쌍을 설치합니다.</h3><p>현재 Pages에서 제공하는 고정 URL과 lockfile을 사용합니다. npm 게시나 생성 CLI는 아직 준비 중입니다.</p><a href="#releases/packages">설치·업데이트 안내 →</a></div></li><li><div><h3>스타일·전역 등록·자동 import를 설정합니다.</h3><p>UI 토큰과 폰트를 로드하고 S 컴포넌트를 한 번 등록합니다. Vue 함수 자동 import는 Vite의 Vue preset 설정이 별도로 필요합니다.</p><a href="#start/vue-components">프로젝트 설정 →</a></div></li><li><div><h3>한 부품을 조합해 확인합니다.</h3><p>컴포넌트별 Examples와 API에서 실제 허용값과 상태를 확인하고, 폼·검색 같은 흐름은 Patterns에서 이어갑니다.</p><div class="button-row"><a href="#component/sbtn">SBtn →</a><a href="#pattern/form">폼 흐름 →</a></div></div></li></ol>');
  return original.content.querySelector('.overview-hero').outerHTML+steps+order.map(id=>legacy.querySelector('#'+id)?.outerHTML||'').join('')+original.content.querySelector('#principles').outerHTML;

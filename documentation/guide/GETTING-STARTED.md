@@ -39,3 +39,7 @@ Core 토큰·컴포넌트 CSS와 Vue UI CSS를 명시적으로 한 번 불러옵
 [문서 샘플](https://choi-solyi.github.io/solyi-design-system/starter/?view=recipes)에서 기본·열림·오류 상태와 키보드 흐름을 확인합니다. 수정 전후의 모바일 폭·테마·다크 모드와 자신의 실제 데이터 길이를 검사합니다. 지원한다고 명시하지 않은 브라우저·화면 낭독기·다른 Vuetify 버전은 별도 검증이 필요합니다.
 
 [검증·호환 범위](COMPATIBILITY.md), [언어 설정](LOCALE.md), [라이선스 범위](../../LICENSE-SCOPE.md)를 함께 읽습니다.
+
+## 7. AI 작업 지침 연결
+
+[소비 프로젝트 DESIGN.md](../../DESIGN.md)를 앱 루트에 복사하고 사용하는 AI 도구의 프로젝트 지침에서 참조하세요. 사이트의 Getting started → AI guide에서 같은 원본과 짧은 시작 프롬프트를 보기·복사·다운로드할 수 있습니다. 두 패키지에도 동일한 DESIGN.md가 포함됩니다. 이 파일명 자체가 모든 도구의 자동 로딩을 보장하지 않습니다.

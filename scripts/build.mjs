@@ -26,6 +26,8 @@ await copyFile(path.join(root, 'tokens.json'), path.join(out, 'tokens.json'));
 if(process.argv.includes('--core-only')) {console.log('Generated shared Core tokens only.');process.exit(0);}
 await import('./build-component-api.mjs');
 await import('./build-code-highlight.mjs');
+await import('./build-design-guide.mjs');
+await copyFile(path.join(root,'DESIGN.md'),path.join(out,'DESIGN.md'));
 for (const name of siteFiles) {await mkdir(path.dirname(path.join(out,name)),{recursive:true});if(name==='index.html')await writeFile(path.join(out,name),(await readFile(path.join(root,'site',name),'utf8')).replaceAll('__SOLYI_DOCUMENT_VERSION__',tokens.version));else await copyFile(path.join(root, 'site', name), path.join(out, name));}
 const catalogue=await releaseCatalogue();
 await writeFile(path.join(out,'release-data.js'),'// Generated verified release catalogue.\nexport const packageReleases='+JSON.stringify(catalogue,null,2)+';\n');

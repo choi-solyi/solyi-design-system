@@ -1,8 +1,9 @@
 import {componentReferenceVersions} from './component-api-data.js';
+import {renderAiGuide} from './ai-guide.js';
 
 export function renderAdoption(h) {
   const guide='https://github.com/choi-solyi/solyi-design-system/blob/main/documentation/guide/';
-  return h.section('locale','공통 locale','한국어·영어 문구와 날짜·숫자 표시를 같은 provider로 바꿉니다.',
+  return renderAiGuide(h)+h.section('locale','공통 locale','한국어·영어 문구와 날짜·숫자 표시를 같은 provider로 바꿉니다.',
     `<div class="sol-card"><p>provideSolLocale은 ref/getter와 부분 override를 지원합니다. 입력·대화상자·표·날짜는 같은 설정을 사용하고 앱이 제공한 이름·자료·오류는 임의 번역하지 않습니다. ko-KR/en-US의 왼쪽에서 오른쪽으로 읽는 방향만 지원합니다. 날짜 값은 ISO, 시간은 HH:mm을 유지합니다.</p><div class="button-row"><a class="sol-button" href="./starter/#locale-demo">실제 locale 예제 →</a><a href="${guide}LOCALE.md">fallback·override·표시 계약</a></div></div>`) +
   h.section('starter','실제 패키지로 실행하기','별도 설치 프로젝트가 제공하는 API와 문서 예제를 함께 확인합니다.',
     `<div class="sol-card"><h3>독립 Vue 프로젝트</h3><p>@solyi/core ${componentReferenceVersions.core}와 @solyi/vue-ui ${componentReferenceVersions['vue-ui']}의 고정 tarball을 설치합니다. Vue·Vuetify는 peer로 분리하며 중복 번들링하지 않습니다.</p><div class="button-row"><a class="sol-button primary" href="./starter/">실제 starter 열기 →</a><a class="sol-button" href="./starter/?view=recipes">분류별 샘플 실행 →</a><a href="#releases/packages">현재 권장 조합 설치</a></div><p class="sol-hint">검증 조합: Vue 3.5.44 · Vuetify 4.3.0 · Vite 8.3.4. 실제 앱·다른 버전의 호환성을 자동으로 보장하지 않습니다. 기존 개인 앱에는 연결하지 않았습니다.</p></div>`) +

@@ -4,6 +4,7 @@
 
 - [문서 사이트](https://choi-solyi.github.io/solyi-design-system/)
 - [실제 패키지를 사용하는 예제](https://choi-solyi.github.io/solyi-design-system/starter/?view=recipes)
+- [소비 프로젝트 AI 지침](DESIGN.md)
 - [처음 시작하기](documentation/guide/GETTING-STARTED.md)
 - [설치·업데이트·롤백](documentation/guide/DISTRIBUTION.md)
 - [검증·호환 범위](documentation/guide/COMPATIBILITY.md)
