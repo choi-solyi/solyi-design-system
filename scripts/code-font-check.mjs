@@ -17,6 +17,8 @@ for(const [dir,e] of Object.entries(expected)){
 const css=(await read('site/fonts/code-fonts.css')).toString();assert.equal((css.match(/font-display: swap/g)||[]).length,4);assert.ok(!/https?:\/\/|font-feature-settings|font-variant-ligatures/.test(css));assert.match(css,/code, pre, kbd, samp/);assert.deepEqual(await read('site/fonts/code-fonts.css'),await read('packages/core/dist/fonts/code-fonts.css'));
 const pkg=JSON.parse(await read('packages/core/package.json'));assert.equal(pkg.exports['./code-fonts.css'],'./dist/fonts/code-fonts.css');
 const tokens=JSON.parse(await read('tokens.json'));assert.equal(tokens.base['font-mono'],'"JetBrains Mono", "Nanum Gothic Coding", monospace');assert.match(tokens.base['font-sans'],/^"Wanted Sans Variable"/);
-for(const p of ['examples/package-consumer/main.ts','examples/vue-vuetify/src/main.js'])assert.ok((await read(p)).toString().includes("import 'solyi-ui/code-fonts.css'"));
-assert.ok((await read('site/index.html')).toString().includes('href="./fonts/code-fonts.css"'));
+assert.ok((await read('examples/package-consumer/main.ts')).toString().includes("import 'solyi-ui/code-fonts.css'"));
+assert.ok((await read('examples/vue-vuetify/src/main.js')).toString().includes("import('solyi-ui/code-fonts.css')"));
+assert.ok((await read('site/index.html')).toString().includes('src="./deferred-code-fonts.js"'));
+assert.ok(!(await read('site/index.html')).toString().includes('href="./fonts/code-fonts.css"'));
 console.log('PASS: pinned unmodified code font/OFL hashes, Nanum 2.000 cmap/version, package/site/two installed consumers/starter bytes, opt-in self-hosted CSS and exact approved fallback stack. Actual rendered font/failure/layout are separate browser checks.');

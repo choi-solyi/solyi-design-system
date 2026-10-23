@@ -43,5 +43,28 @@ await mount('inputs');const input=$('input[type=file]');const file=new w.File(['
 const mode=$('#recipe-autocomplete-mode');mode.value='error';mode.dispatchEvent(new w.Event('change',{bubbles:true}));await tick();const combo=$('#recipe-autocomplete');combo.click();await wait(180);await tick();combo.focus();combo.setSelectionRange(0,0);const home=new w.KeyboardEvent('keydown',{key:'Home',bubbles:true,cancelable:true});combo.dispatchEvent(home);assert.equal(home.defaultPrevented,false);key(combo,'Tab');await tick();const retry=[...d.querySelectorAll('button')].find(x=>x.textContent.includes('검색 다시 시도'));assert.ok(retry);retry.focus();retry.click();await wait(180);await tick();key(combo,'Enter');await tick();assert.equal(combo.value,'기록');assert.equal(d.activeElement,combo);await unmount();
 await mount('workflow');$('#recipe-edit').click();await tick();assert.equal(d.activeElement.id,'recipe-edit-title');const cancel=[...d.querySelectorAll('button')].find(x=>x.textContent.includes('수정 취소'));cancel.click();await tick();assert.equal(d.activeElement.id,'recipe-edit');await unmount();
 await mount('bulk-recovery');[...d.querySelectorAll('button')].find(x=>x.textContent.includes('선택한 가상')).click();await wait(380);await tick();assert.match($('#recipe-bulk-result').textContent,/실패 1개/);const retryBulk=$('#recipe-bulk-retry');retryBulk.focus();retryBulk.click();await wait(380);await tick();assert.match($('#recipe-bulk-result').textContent,/실패 0개/);assert.equal(d.activeElement.id,'recipe-bulk-result');await unmount();
+await mount('inputs')
+const inputsRegion = $('section.sol-stack')
+assert.equal(inputsRegion.getAttribute('aria-labelledby'), 'recipe-inputs-title')
+assert.equal(d.querySelectorAll('#recipe-inputs-title').length, 1)
+assert.equal(inputsRegion.querySelectorAll(':scope > article.sol-ui-card').length, 3)
+assert.equal(
+  inputsRegion.querySelectorAll('article.sol-ui-card article.sol-ui-card').length,
+  0,
+  'Input sections have one card padding boundary rather than nested card padding',
+)
+const dateInput = $('#recipe-date')
+dateInput.value = '2026-10-23 ~ 2026-10-24'
+dateInput.dispatchEvent(new w.Event('input', { bubbles: true }))
+key(dateInput, 'Enter')
+await tick()
+assert.match(inputsRegion.textContent, /"start":"2026-10-23","end":"2026-10-24"/)
+const dateMode = $('#recipe-date-mode')
+dateMode.value = 'single'
+dateMode.dispatchEvent(new w.Event('change', { bubbles: true }))
+await tick()
+assert.equal(dateInput.value, '')
+assert.equal(dateInput.placeholder, 'YYYY-MM-DD')
+await unmount()
 for(const part of ['date','files','autocomplete']){await mount('inputs',{part});assert.equal(d.querySelectorAll('h2').length,1,'Standalone part keeps heading level2: '+part);assert.equal(d.querySelectorAll('h3').length,0);await unmount();}
 assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: all 30 actual package-consuming Vue SFCs mount, ARIA references and IDs; tree keyboard/collapse/selection, whole-card radio, synthetic local file select/drop/reselect/remove, autocomplete edit/retry/selection, workflow and bulk focus. Synthetic DOM is not visual or native keyboard QA.');

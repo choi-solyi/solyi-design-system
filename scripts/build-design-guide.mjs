@@ -9,7 +9,7 @@ export function renderDesignGuide(markdown){
  const inline=text=>escapeGuide(text).replace(/`([^`]+)`/g,'<code>$1</code>');
  const flush=()=>{if(prose.length){out.push('<p>'+inline(prose.join(' '))+'</p>');prose=[];}if(list){out.push('</ul>');list=false;}};
  for(const line of lines){
-  if(line.startsWith('```')){flush();if(fence!==null){out.push('<pre tabindex="0" aria-label="시작 프롬프트"><code>'+escapeGuide(code.join('\n'))+'</code></pre>');fence=null;code=[];}else fence=line.slice(3);continue;}
+  if(line.startsWith('```')){flush();if(fence!==null){out.push('<pre tabindex="0" role="group" aria-label="시작 프롬프트"><code>'+escapeGuide(code.join('\n'))+'</code></pre>');fence=null;code=[];}else fence=line.slice(3);continue;}
   if(fence!==null){code.push(line);continue;}
   if(!line.trim()){flush();continue;}
   const heading=line.match(/^(#{1,3}) (.+)$/);

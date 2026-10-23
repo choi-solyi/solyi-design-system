@@ -77,5 +77,141 @@ for(const [name,value]of [['SDatePicker','2026-10-23'],['STimePicker','09:30']])
   const input=$('#contract-'+name);input.value=value;input.dispatchEvent(new w.Event('input',{bubbles:true}));
   assert.equal(handles.get(name).validate(),true,name+' validates the typed draft without waiting for a parent render');
 }
-contractApp.unmount();dom.window.close();
+contractApp.unmount();
+
+// Audit API-001: blocked number nudges do not turn a valid boundary into an invalid draft.
+const boundary = ref(10), boundaryStep = ref(1), boundaryChanges = []
+const boundaryApp = createApp({
+  setup() {
+    return () => h(api.SNumberInput, {
+      id: 'boundary-number',
+      label: 'Boundary',
+      min: 0,
+      max: 10,
+      step: boundaryStep.value,
+      modelValue: boundary.value,
+      'onUpdate:modelValue': value => {
+        boundary.value = value
+        boundaryChanges.push(value)
+      },
+    })
+  },
+})
+boundaryApp.use(api.createSolyiVuetify()).mount('#app')
+await tick()
+const nudgeKey = key => $('#boundary-number').dispatchEvent(
+  new w.KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }),
+)
+assert.equal($('[aria-label="Boundary ' + api.koLocale.increase + '"]').disabled, true)
+nudgeKey('ArrowUp')
+await tick()
+assert.equal($('#boundary-number').value, '10')
+assert.equal(d.querySelector('#boundary-number-error'), null)
+assert.deepEqual(boundaryChanges, [])
+boundary.value = 0
+await tick()
+assert.equal($('[aria-label="Boundary ' + api.koLocale.decrease + '"]').disabled, true)
+nudgeKey('ArrowDown')
+await tick()
+assert.equal($('#boundary-number').value, '0')
+assert.equal(d.querySelector('#boundary-number-error'), null)
+assert.deepEqual(boundaryChanges, [])
+boundary.value = 9.5
+boundaryStep.value = 0.5
+await tick()
+nudgeKey('ArrowUp')
+await tick()
+nudgeKey('ArrowUp')
+await tick()
+assert.equal(boundary.value, 10)
+assert.equal($('#boundary-number').value, '10')
+assert.deepEqual(boundaryChanges, [10])
+assert.equal(d.querySelector('#boundary-number-error'), null)
+boundaryApp.unmount()
+
+// Audit API-002: navigation/layout are not form fields. Supported error text and ARIA agree.
+for (const name of ['STabs', 'SResizableSplitPane']) {
+  for (const prop of ['rules', 'required', 'serverError', 'errorMessages']) {
+    assert.equal(Object.hasOwn(api[name].props, prop), false, name + ' does not advertise ' + prop)
+  }
+}
+const navigationForm = ref(null), tabError = ref('Tab explanation'), paneError = ref('Pane explanation')
+const paneMinimum = ref(20)
+const navigationApp = createApp({
+  setup() {
+    return () => h(api.SForm, { ref: navigationForm }, () => [
+      h(api.STabs, {
+        id: 'audit-tabs',
+        label: 'Navigation',
+        modelValue: 'a',
+        items: [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }],
+        error: tabError.value,
+      }),
+      h(api.SResizableSplitPane, {
+        id: 'audit-pane',
+        label: 'Layout',
+        modelValue: 50,
+        min: paneMinimum.value,
+        max: 80,
+        primaryLabel: 'Primary',
+        secondaryLabel: 'Secondary',
+        error: paneError.value,
+      }),
+    ])
+  },
+})
+navigationApp.use(api.createSolyiVuetify()).mount('#app')
+await tick()
+assert.equal((await navigationForm.value.validate()).valid, true, 'UI explanations are not field validation')
+assert.equal($('#audit-tabs-error').textContent, 'Tab explanation')
+assert.equal($('#audit-pane-error').textContent, 'Pane explanation')
+assert.ok($('[role="tablist"]').getAttribute('aria-describedby').includes('audit-tabs-error'))
+assert.ok($('[role="separator"]').getAttribute('aria-describedby').includes('audit-pane-error'))
+const assertDescriptions = () => {
+  for (const element of d.querySelectorAll('#app [aria-describedby]')) {
+    for (const id of element.getAttribute('aria-describedby').split(' ')) {
+      assert.ok(d.getElementById(id), 'Existing description ' + id)
+    }
+  }
+}
+assertDescriptions()
+tabError.value = ''
+paneError.value = ''
+await tick()
+assert.equal(d.querySelector('#audit-tabs-error'), null)
+assert.equal(d.querySelector('#audit-pane-error'), null)
+assertDescriptions()
+paneMinimum.value = 90
+await tick()
+assert.ok($('#audit-pane-error').textContent)
+assert.ok($('#audit-pane').getAttribute('aria-describedby').includes('audit-pane-error'))
+assertDescriptions()
+paneMinimum.value = 20
+await tick()
+assert.equal(d.querySelector('#audit-pane-error'), null)
+assertDescriptions()
+navigationApp.unmount()
+
+// Audit A11Y-001: the shared desktop/mobile detail action name includes its visible label.
+const tableApp = createApp({
+  setup() {
+    return () => h(api.SDataTable, {
+      columns: [{ key: 'name', label: 'Name' }],
+      rows: [{ id: 'fictional', name: 'Fictional record' }],
+      caption: 'Name check',
+    })
+  },
+})
+tableApp.use(api.createSolyiVuetify()).mount('#app')
+await tick()
+const detailActions = [...d.querySelectorAll('.sol-ui-table [aria-label]')]
+  .filter(element => element.tagName === 'BUTTON' && element.textContent.trim() === api.koLocale.details)
+assert.equal(detailActions.length, 2, 'Both responsive detail actions are checked')
+for (const action of detailActions) {
+  assert.ok(action.getAttribute('aria-label').includes(action.textContent.trim()))
+  assert.ok(action.getAttribute('aria-label').includes('Fictional record'))
+}
+tableApp.unmount()
+dom.window.close();
 console.log('PASS: exact typed grid aliases; VForm + native S validation, rules/required/range, error/ARIA, template-ref focus, reset/server distinction, disabled/readonly, unregister, submit promise, direct V coexistence and common input handles.');
+console.log('PASS: bounded number keys match buttons; navigation/layout reject unsupported validation props, display error/ARIA stay linked through cleanup/config errors; table detail names include the visible label.');

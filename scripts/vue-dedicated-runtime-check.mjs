@@ -11,7 +11,27 @@ for(const key of ['window','document','Element','Node','HTMLElement','HTMLInputE
 globalThis.visualViewport=undefined;
 globalThis.requestAnimationFrame=w.requestAnimationFrame.bind(w);globalThis.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);globalThis.innerWidth=1000;globalThis.innerHeight=800;
 w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});globalThis.matchMedia=w.matchMedia;
-globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};w.ResizeObserver=globalThis.ResizeObserver;
+const resizeObservers = []
+globalThis.ResizeObserver = class {
+  constructor(callback) {
+    this.callback = callback
+    this.targets = new Set()
+    resizeObservers.push(this)
+  }
+  observe(target) {
+    this.targets.add(target)
+  }
+  unobserve(target) {
+    this.targets.delete(target)
+  }
+  disconnect() {
+    this.targets.clear()
+  }
+  resize(width) {
+    this.callback([...this.targets].map((target) => ({ target, contentRect: { width } })))
+  }
+}
+w.ResizeObserver = globalThis.ResizeObserver
 globalThis.CSS={supports:()=>false,escape:value=>String(value).replace(/[^\w-]/g,'')};w.CSS=globalThis.CSS;
 w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};
 await writeFile(new URL('.runtime-extension-entry.ts',consumer),`export {createApp,h,ref,nextTick} from 'vue';export {VApp} from 'vuetify/components/VApp';export {VBtn} from 'vuetify/components/VBtn';export {VTextField} from 'vuetify/components/VTextField';export * from ${JSON.stringify(source?'../../packages/vue-ui/src/index':'solyi-ui')};export {default as SolyiUI} from ${JSON.stringify(source?'../../packages/vue-ui/src/index':'solyi-ui')};`);
@@ -36,7 +56,72 @@ const expanded=ref(false),readonly=ref(false);await mount(()=>h(SAccordion,{id:'
 let navigation='';await mount(()=>h(SBreadcrumbs,{items:[{id:'home',label:'Home'},{id:'blocked',label:'Unavailable',disabled:true},{id:'current',label:'Current'}],onNavigate:item=>navigation=item.id}));$('.sol-breadcrumbs button').click();assert.equal(navigation,'home');assert.equal($('[aria-current=page]').textContent,'Current');assert.equal(d.querySelectorAll('.sol-breadcrumbs button').length,1);await unmount();
 await mount(()=>h(SAvatar,{label:'Fictional person',src:'data:image/png;base64,broken',initials:'FP',size:32}));$('.sol-avatar img').dispatchEvent(new w.Event('error'));await tick();assert.equal(d.querySelector('.sol-avatar img'),null);assert.equal($('.sol-avatar').textContent,'FP');assert.equal($('.sol-avatar').getAttribute('aria-label'),'Fictional person');await unmount();
 const step=ref('a'),stepReadonly=ref(false);await mount(()=>h(SStepper,{id:'steps',items:[{id:'a',label:'One'},{id:'b',label:'Two'},{id:'c',label:'Blocked',disabled:true}],modelValue:step.value,completed:['a'],interactive:true,readonly:stepReadonly.value,'onUpdate:modelValue':v=>step.value=v}));const steps=[...d.querySelectorAll('.sol-ui-stepper button')];steps[1].click();await tick();assert.equal(step.value,'b');assert.equal($('[aria-current=step]').textContent.includes('Two'),true);stepReadonly.value=true;await tick();steps[0].click();assert.equal(step.value,'b');assert.equal(steps[2].disabled,true);await unmount();
-const chart=ref([{id:'a',label:'Monday',value:1},{id:'b',label:'Tuesday',value:3}]),showTable=ref(true);await mount(()=>h(SBarChart,{id:'chart',label:'Fictional chart',items:chart.value,showTable:showTable.value}),'en-US');assert.equal(d.querySelectorAll('svg rect').length,2);assert.deepEqual([...d.querySelectorAll('tbody td')].map(x=>x.textContent),['1','3']);showTable.value=false;await tick();assert.ok($('table').classList.contains('sol-ui-sr-only'));chart.value=[{id:'bad',label:'Bad',value:NaN}];await tick();assert.ok($('[role=alert]').textContent.includes('nonnegative'));assert.equal(d.querySelector('svg'),null);await unmount();
+const chart = ref([
+  { id: 'a', label: 'Monday', value: 1 },
+  { id: 'b', label: 'Tuesday', value: 3 },
+])
+const showTable = ref(true)
+const chartLoading = ref(false)
+await mount(
+  () =>
+    h(SBarChart, {
+      id: 'chart',
+      label: 'Fictional chart',
+      items: chart.value,
+      showTable: showTable.value,
+      loading: chartLoading.value,
+    }),
+  'en-US',
+)
+assert.equal(d.querySelectorAll('svg rect').length, 2)
+assert.deepEqual([...d.querySelectorAll('tbody td')].map((x) => x.textContent), ['1', '3'])
+chart.value = [
+  { id: 'a', label: '월요일', value: 2 },
+  { id: 'b', label: '화요일', value: 4 },
+  { id: 'c', label: '수요일', value: 0 },
+  { id: 'd', label: '아주 긴 목요일 이름', value: 5 },
+]
+await tick()
+const chartSvg = $('#chart svg')
+const chartObserver = resizeObservers.find((observer) => observer.targets.has(chartSvg))
+assert.ok(chartObserver, 'The chart observes its own content width')
+chartObserver.resize(251)
+await tick()
+assert.equal(chartSvg.getAttribute('viewBox'), '0 0 251 200', 'Narrow coordinates use CSS pixels')
+assert.deepEqual(
+  [...d.querySelectorAll('.sol-ui-chart-label')].map((x) => x.textContent),
+  ['월요일', '화요일', '수요일', '아주…'],
+  'Readable labels fit narrow columns without shrinking the text',
+)
+assert.equal($('#chart tbody tr:last-child th').textContent, '아주 긴 목요일 이름')
+assert.deepEqual([...d.querySelectorAll('tbody td')].map((x) => x.textContent), ['2', '4', '0', '5'])
+chartObserver.resize(0)
+await tick()
+assert.equal(chartSvg.getAttribute('viewBox'), '0 0 251 200', 'Hidden charts keep a valid width')
+chartObserver.resize(800)
+await tick()
+assert.equal(chartSvg.getAttribute('viewBox'), '0 0 800 200', 'Resize keeps a one-to-one text scale')
+chartLoading.value = true
+await tick()
+assert.equal(d.querySelector('#chart svg'), null)
+assert.equal(chartObserver.targets.size, 0, 'Loading removes the old geometry observer')
+chartLoading.value = false
+await tick()
+const restoredSvg = $('#chart svg')
+const restoredObserver = resizeObservers.find((observer) => observer.targets.has(restoredSvg))
+assert.ok(restoredObserver)
+restoredObserver.resize(251)
+await tick()
+assert.equal(restoredSvg.getAttribute('viewBox'), '0 0 251 200')
+showTable.value = false
+await tick()
+assert.ok($('table').classList.contains('sol-ui-sr-only'))
+chart.value = [{ id: 'bad', label: 'Bad', value: NaN }]
+await tick()
+assert.ok($('[role=alert]').textContent.includes('nonnegative'))
+assert.equal(d.querySelector('svg'), null)
+assert.equal(restoredObserver.targets.size, 0)
+await unmount()
 
 const file=(name,size=1,type='text/plain')=>new w.File(['x'.repeat(size)],name,{type,lastModified:1});
 const good=file('sample.txt'),unknown=file('archive.abc',1,''),big=file('big.txt',5);

@@ -44,10 +44,9 @@ link.dispatchEvent(new x.window.Event('load'));
 assert.equal(link.rel, 'stylesheet');
 assert.equal(link.dataset.starterCss, 'pending');
 link.dispatchEvent(new x.window.Event('load'));
-await Promise.resolve();await Promise.resolve();
-assert.equal(x.document.documentElement.dataset.starterBoot, 'loading', 'Fonts still pending; app stays inert');
-assert.ok(x.document.getElementById('app').hasAttribute('inert'));
-finishFonts();await ready;
+await ready
+assert.equal(x.document.documentElement.dataset.starterBoot, 'ready', 'Optional fonts cannot block a styled, mounted app')
+finishFonts()
 assert.equal(x.document.documentElement.dataset.starterBoot, 'ready');
 assert.equal(x.document.getElementById('app').getAttribute('aria-busy'), 'false');
 assert.equal(x.document.getElementById('app').hasAttribute('inert'), false);
@@ -74,4 +73,4 @@ assert.equal(fontFallback.document.documentElement.dataset.starterBoot, 'ready',
 assert.match(source, /prefers-reduced-motion:reduce/);
 assert.match(source, /<noscript>/);
 assert.equal((source.match(/setTimeout\(/g) || []).length, 1, 'Only the failure escape timer exists');
-console.log('PASS: token-derived12 appearance combinations, URL/storage denial, CSS apply + font readiness gating, inert/busy cleanup, JS/CSS/failure-timeout retry escape, font fallback, noscript/reduced-motion source. Real slow-network paint remains browser QA.');
+console.log('PASS: token-derived12 appearance combinations, URL/storage denial, required CSS readiness without font blocking, inert/busy cleanup, JS/CSS/failure-timeout retry escape, font fallback, noscript/reduced-motion source. Real slow-network paint remains browser QA.')

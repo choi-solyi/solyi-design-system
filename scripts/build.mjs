@@ -4,6 +4,7 @@ import {readFile, writeFile, mkdir, copyFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {siteFiles,starterFiles} from './site-manifest.mjs';
+import {documentShell} from './document-shell.mjs'
 const root = fileURLToPath(new URL('../', import.meta.url));
 const tokens = JSON.parse(await readFile(path.join(root, 'tokens.json'), 'utf8'));
 const declarations = (entries, prefix = '') => Object.entries(entries).map(([key, value]) => `  --sol-${prefix}${key}: ${value};`).join('\n');
@@ -29,7 +30,16 @@ await import('./build-release-notes.mjs');
 await import('./build-code-highlight.mjs');
 await import('./build-design-guide.mjs');
 await copyFile(path.join(root,'DESIGN.md'),path.join(out,'DESIGN.md'));
-for (const name of siteFiles) {await mkdir(path.dirname(path.join(out,name)),{recursive:true});if(name==='index.html')await writeFile(path.join(out,name),(await readFile(path.join(root,'site',name),'utf8')).replaceAll('__SOLYI_DOCUMENT_VERSION__',tokens.version));else await copyFile(path.join(root, 'site', name), path.join(out, name));}
+for (const name of siteFiles) {
+  await mkdir(path.dirname(path.join(out, name)), { recursive: true })
+  if (name === 'index.html') {
+    const shell = await documentShell(await readFile(path.join(root, 'site', name), 'utf8'), tokens.version)
+    await writeFile(path.join(out, name), shell.html)
+    await writeFile(path.join(out, 'shell.css'), shell.css)
+  } else {
+    await copyFile(path.join(root, 'site', name), path.join(out, name))
+  }
+}
 const catalogue=await releaseCatalogue();
 await writeFile(path.join(out,'release-data.js'),'// Generated verified release catalogue.\nexport const packageReleases='+JSON.stringify(catalogue,null,2)+';\n');
 for(const name of await releaseFiles()){await mkdir(path.dirname(path.join(out,name)),{recursive:true});await copyFile(path.join(root,'release-assets',name.slice('releases/'.length)),path.join(out,name));}

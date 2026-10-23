@@ -63,6 +63,10 @@ function undo() {
   deleted.value = false;
   nextTick(() => editButton.value?.$el.focus());
 }
+function requestDelete() {
+  kind.value = 'delete';
+  confirm.value = true;
+}
 function decide() {
   const answer = answerLeave;
   answerLeave = undefined;
@@ -71,6 +75,10 @@ function decide() {
   if (kind.value === 'delete') {
     deleted.value = true;
     nextTick(() => undoButton.value?.$el.focus());
+  } else if (answer) {
+    // The explorer owns the destination focus after an approved navigation.
+    editing.value = false;
+    error.value = '';
   } else cancel();
   answer?.(true);
 }
@@ -116,15 +124,7 @@ onBeforeUnmount(() => {
       <p>{{ saved.title }} · {{ saved.note }}</p>
       <div class="sol-actions">
         <SBtn id="recipe-edit" ref="editButton" @click="edit"> 수정 </SBtn>
-        <SBtn
-          variant="secondary"
-          @click="
-            kind = 'delete';
-            confirm = true;
-          "
-        >
-          가상 삭제
-        </SBtn>
+        <SBtn variant="secondary" @click="requestDelete"> 가상 삭제 </SBtn>
       </div>
     </template>
     <SDialog

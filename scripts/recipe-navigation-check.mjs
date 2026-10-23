@@ -28,19 +28,35 @@ const tick=async()=>{await nextTick();await nextTick();},$=selector=>{const el=d
 let app,vuetify;const warnings=[];
 async function mount(){app=createApp(RecipeExamples);app.config.warnHandler=msg=>warnings.push(msg);vuetify=createSolyiVuetify();app.use(vuetify).use({install:api.install});app.mount('#app');await tick();}
 function unmount(){app.unmount();vuetify.unmount();}
+// Navigation now awaits the active recipe's leave contract before its render/focus tick.
+// Two Vue ticks alone can observe the new URL before the async focus step finishes.
+async function navigationTo(id) {
+  const deadline = Date.now() + 1200
+  while (Date.now() < deadline) {
+    await tick()
+    if (new URL(w.location.href).searchParams.get('example') === id &&
+      d.querySelector('#recipe-navigation [aria-current=page]')?.id === 'recipe-link-' + id &&
+      d.activeElement.id === 'recipe-current-title') return
+    await new Promise(resolve => setTimeout(resolve, 5))
+  }
+  assert.fail('Navigation did not settle at ' + id + ': ' + JSON.stringify({
+    url: w.location.href, selected: d.querySelector('#recipe-navigation [aria-current=page]')?.id,
+    focus: d.activeElement.id,
+  }))
+}
 w.history.replaceState(null,'','/starter/?view=recipes&example=time&keep=1#anchor');await mount();
 assert.equal(d.querySelectorAll('#recipe-navigation a').length,30);assert.equal(new Set([...d.querySelectorAll('#recipe-navigation a')].map(e=>e.id)).size,30);assert.equal(d.querySelectorAll('.recipe-nav-group').length,5);
 assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-time');assert.equal($('#recipe-current-title').textContent,'시간 선택');assert.equal(d.querySelector('#recipe-menu-toggle'),null);assert.notEqual($('#recipe-navigation').style.display,'none');
-$('#recipe-link-buttons').click();await tick();assert.equal(new URL(w.location.href).searchParams.get('example'),'buttons');assert.equal(new URL(w.location.href).searchParams.get('keep'),'1');assert.equal(w.location.hash,'#anchor');assert.equal(d.activeElement.id,'recipe-current-title');
+$('#recipe-link-buttons').click();await navigationTo('buttons');assert.equal(new URL(w.location.href).searchParams.get('example'),'buttons');assert.equal(new URL(w.location.href).searchParams.get('keep'),'1');assert.equal(w.location.hash,'#anchor');assert.equal(d.activeElement.id,'recipe-current-title');
 const length=w.history.length;$('#recipe-link-buttons').click();await tick();assert.equal(w.history.length,length,'Selecting the current example does not add history');
-async function travel(direction){await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('No popstate')),1000);w.addEventListener('popstate',()=>{clearTimeout(timer);resolve();},{once:true});w.history[direction]();});await tick();}
-await travel('back');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-time');await travel('forward');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-buttons');
+async function travel(direction,id){w.history[direction]();await navigationTo(id);}
+await travel('back','time');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-time');await travel('forward','buttons');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-buttons');
 resize(false);await tick();assert.equal($('#recipe-navigation').style.display,'none');assert.equal($('#recipe-menu-toggle').getAttribute('aria-expanded'),'false');$('#recipe-menu-toggle').click();await tick();assert.notEqual($('#recipe-navigation').style.display,'none');$('#recipe-link-time').focus();$('#recipe-link-time').dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));await tick();assert.equal($('#recipe-navigation').style.display,'none');assert.equal(d.activeElement.id,'recipe-menu-toggle');
 $('#recipe-menu-toggle').click();await tick();
 for(const key of ['Tab','Enter','ArrowDown']){const event=new w.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true});$('#recipe-link-dialog').dispatchEvent(event);await tick();assert.equal(event.defaultPrevented,false,key+' keeps its native action');assert.notEqual($('#recipe-navigation').style.display,'none',key+' cannot dismiss the list');}
 $('#recipe-link-buttons').focus();$('#recipe-link-fields').focus();await tick();assert.equal(d.activeElement.id,'recipe-link-fields');assert.notEqual($('#recipe-navigation').style.display,'none','Moving focus between links preserves the list');
 $('#recipe-link-fields').dispatchEvent(new w.FocusEvent('focusout',{bubbles:true,relatedTarget:null}));await tick();assert.notEqual($('#recipe-navigation').style.display,'none','An unavailable next focus cannot hide a keyboard target');
-$('#recipe-link-dialog').click();await tick();assert.equal($('#recipe-navigation').style.display,'none');assert.equal(d.activeElement.id,'recipe-current-title');assert.equal($('#recipe-current-title').textContent,'대화상자 열기와 복귀');
+$('#recipe-link-dialog').click();await navigationTo('dialog');assert.equal($('#recipe-navigation').style.display,'none');assert.equal(d.activeElement.id,'recipe-current-title');assert.equal($('#recipe-current-title').textContent,'대화상자 열기와 복귀');
 $('#recipe-menu-toggle').focus();resize(true);await tick();assert.equal(d.activeElement.id,'recipe-link-dialog');resize(false);await tick();assert.notEqual($('#recipe-navigation').style.display,'none','A breakpoint cannot hide the focused item');assert.equal(d.activeElement.id,'recipe-link-dialog');
 const outside=d.createElement('button');outside.textContent='Outside';d.body.append(outside);outside.focus();await tick();assert.equal($('#recipe-navigation').style.display,'none');assert.equal(d.activeElement,outside);outside.remove();
 unmount();assert.equal(query.listeners.size,0);w.history.replaceState(null,'','/starter/?view=recipes&example=unknown&keep=1');await mount();assert.equal(new URL(w.location.href).searchParams.get('example'),'buttons');assert.equal(new URL(w.location.href).searchParams.get('keep'),'1');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-buttons');unmount();

@@ -121,7 +121,15 @@ export const SDataTable=defineComponent({
     watch(()=>[props.selectable,props.rows.map(row=>[row.id,props.selected.includes(row.id)])],async()=>{await nextTick();for(const input of [all.value,allMobile.value])if(input)input.indeterminate=props.rows.some(r=>props.selected.includes(r.id))&&!props.rows.every(r=>props.selected.includes(r.id));},{immediate:true});
     onBeforeUnmount(()=>cleanup());
     const cell=(row:TableRow,c:TableColumn):VNode=>h('span',{class:c.ellipsis===false?'':'sol-ellipsis sol-ui-cell-clip'},slots['cell-'+c.key]?.({row,value:row[c.key]})||display(row,c));
-    const action=(row:TableRow)=>h(SBtn,{variant:'inline','aria-label':l.value.viewFullText(String(row[props.columns[0]?.key]??l.value.record)),onClick:(e:MouseEvent)=>{previewOpener.value=e.currentTarget as HTMLElement;preview.value=row;emit('rowAction',row);}},()=> l.value.details);
+    const action = (row: TableRow) => h(SBtn, {
+      variant: 'inline',
+      'aria-label': l.value.details + ' · ' + String(row[props.columns[0]?.key] ?? l.value.record),
+      onClick: (event: MouseEvent) => {
+        previewOpener.value = event.currentTarget as HTMLElement
+        preview.value = row
+        emit('rowAction', row)
+      },
+    }, () => l.value.details)
     const busy=()=>props.loading||!!props.error;
     return()=>{const safePage=Math.max(1,Math.min(props.page,Math.max(1,props.pageCount))),count=Math.max(1,props.pageCount);const pageNumbers=[...new Set([1,safePage-1,safePage,safePage+1,count])].filter(n=>n>0&&n<=count).sort((a,b)=>a-b);return h('div',{...attrs,ref:host,class:['sol-ui-table',attrs.class],'aria-busy':String(props.loading)},[
       h('div',{class:'sol-ui-table-desktop'},h('table',{class:'sol-data-table'},[
@@ -148,7 +156,86 @@ export const SDataTable=defineComponent({
 
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
-export const sComponents={SForm,SContainer,SRow,SCol,SCard,SAlert,STree,SProgressLinear,SProgressCircular,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,STooltip,SPopover,SAccordion,SFileInput,SAutocomplete,SBreadcrumbs,SAvatar,SStepper,SBarChart};
+export interface SComponents {
+  SForm: typeof SForm
+  SContainer: typeof SContainer
+  SRow: typeof SRow
+  SCol: typeof SCol
+  SCard: typeof SCard
+  SAlert: typeof SAlert
+  STree: typeof STree
+  SProgressLinear: typeof SProgressLinear
+  SProgressCircular: typeof SProgressCircular
+  SBtn: typeof SBtn
+  STextField: typeof STextField
+  SDialog: typeof SDialog
+  SDataTable: typeof SDataTable
+  SCheckbox: typeof SCheckbox
+  SRadioGroup: typeof SRadioGroup
+  SSwitch: typeof SSwitch
+  SSelect: typeof SSelect
+  STextarea: typeof STextarea
+  SNumberInput: typeof SNumberInput
+  STabs: typeof STabs
+  SSnackbar: typeof SSnackbar
+  SDatePicker: typeof SDatePicker
+  STimePicker: typeof STimePicker
+  SSegmentedControl: typeof SSegmentedControl
+  SMultiSelect: typeof SMultiSelect
+  SRangeSlider: typeof SRangeSlider
+  SSplitBtn: typeof SSplitBtn
+  SContextMenu: typeof SContextMenu
+  SResizableSplitPane: typeof SResizableSplitPane
+  STooltip: typeof STooltip
+  SPopover: typeof SPopover
+  SAccordion: typeof SAccordion
+  SFileInput: typeof SFileInput
+  SAutocomplete: typeof SAutocomplete
+  SBreadcrumbs: typeof SBreadcrumbs
+  SAvatar: typeof SAvatar
+  SStepper: typeof SStepper
+  SBarChart: typeof SBarChart
+}
+export const sComponents: SComponents = {
+  SForm,
+  SContainer,
+  SRow,
+  SCol,
+  SCard,
+  SAlert,
+  STree,
+  SProgressLinear,
+  SProgressCircular,
+  SBtn,
+  STextField,
+  SDialog,
+  SDataTable,
+  SCheckbox,
+  SRadioGroup,
+  SSwitch,
+  SSelect,
+  STextarea,
+  SNumberInput,
+  STabs,
+  SSnackbar,
+  SDatePicker,
+  STimePicker,
+  SSegmentedControl,
+  SMultiSelect,
+  SRangeSlider,
+  SSplitBtn,
+  SContextMenu,
+  SResizableSplitPane,
+  STooltip,
+  SPopover,
+  SAccordion,
+  SFileInput,
+  SAutocomplete,
+  SBreadcrumbs,
+  SAvatar,
+  SStepper,
+  SBarChart,
+}
 
 export interface SolyiOptions {locale?:SolLocaleSource}
 export function install(app:App,options:SolyiOptions={}){if(options.locale)provideSolLocale(app,options.locale);for(const [name,component]of Object.entries(sComponents))app.component(name,component);}

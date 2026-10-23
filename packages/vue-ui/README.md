@@ -1,4 +1,4 @@
-# solyi-ui 0.10.4
+# solyi-ui
 
 Vue 3용 S 컴포넌트를 제공하는 UI 라이브러리입니다. Vue 3.5 / Vuetify 4.3을 peer로 사용합니다. Core 토큰·CSS·helper·폰트는 이 패키지에 포함되어 @solyi/core를 따로 설치하지 않습니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
 

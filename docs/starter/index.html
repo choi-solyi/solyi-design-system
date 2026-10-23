@@ -7,6 +7,9 @@
   <meta name="color-scheme" content="light dark">
   <title>Solyi · Vue 실행 예제</title>
   <style>:root{--boot-bg:#f5f6fa;--boot-text:#202330;--boot-accent:#7560b5;--boot-border:#818596;background:var(--boot-bg);color:var(--boot-text);--lightningcss-light:initial;--lightningcss-dark: ;color-scheme:light}body{background:var(--boot-bg);margin:0}html[data-starter-boot=loading] #app,html[data-starter-boot=failed] #app{visibility:hidden}#starter-boot{z-index:9999;background:var(--boot-bg);color:var(--boot-text);text-align:center;place-content:center;justify-items:center;gap:16px;padding:24px;font:14px/1.6 system-ui,-apple-system,sans-serif;display:grid;position:fixed;inset:0}#starter-boot[hidden]{display:none}#starter-boot p{max-width:30rem;margin:0}.starter-boot-circle{box-sizing:border-box;border:3px solid var(--boot-border);border-inline-start-color:var(--boot-accent);border-radius:50%;width:32px;height:32px;animation:1.2s linear infinite starter-boot-spin}html[data-starter-boot=failed] .starter-boot-circle{display:none}#starter-boot button,#starter-boot a{box-sizing:border-box;border:1px solid var(--boot-border);background:var(--boot-bg);min-height:44px;color:var(--boot-text);font:inherit;cursor:pointer;border-radius:6px;padding:8px 12px}#starter-boot a{text-underline-offset:3px;justify-content:center;align-items:center;text-decoration:underline;display:inline-flex}#starter-boot button:focus-visible,#starter-boot a:focus-visible{outline:2px solid var(--boot-accent);outline-offset:3px}#starter-boot-actions{flex-wrap:wrap;justify-content:center;gap:8px;display:flex}#starter-boot-actions[hidden]{display:none}@keyframes starter-boot-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.starter-boot-circle{animation:none}}html[data-motion-policy=reduced] .starter-boot-circle{animation:none}</style>
+  <noscript>
+    <style>#starter-boot,#app{display:none!important}</style>
+  </noscript>
   <script>
     (() => {
       const root = document.documentElement;
@@ -71,7 +74,6 @@
   </div>
   <div id="app" aria-busy="true" aria-hidden="true" inert></div>
   <noscript>
-    <style>#starter-boot,#app{display:none!important}</style>
     <p style="padding:24px;font:14px/1.6 system-ui,sans-serif">이 실행 예제에는 JavaScript가 필요합니다. JavaScript를 켠 뒤 새로고침하거나 <a href="../">문서로 돌아가세요.</a></p>
   </noscript>
 </body>

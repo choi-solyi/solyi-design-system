@@ -44,7 +44,8 @@ const loader = computed<SolOptionLoader | undefined>(() => {
 });
 </script>
 <template>
-  <SCard :heading-level="2" :title="part ? undefined : '로컬 입력 조합'">
+  <section class="sol-stack" :aria-labelledby="part ? undefined : 'recipe-inputs-title'">
+    <h2 v-if="!part" id="recipe-inputs-title">로컬 입력 조합</h2>
     <SCard :heading-level="part ? 2 : 3" v-if="!part || part === 'date'" title="단일 날짜와 기간">
       <SSelect
         id="recipe-date-mode"
@@ -102,5 +103,5 @@ const loader = computed<SolOptionLoader | undefined>(() => {
       />
       <p role="status">선택값: {{ selected || '없음' }}</p>
     </SCard>
-  </SCard>
+  </section>
 </template>

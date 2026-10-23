@@ -6,6 +6,7 @@ import {JSDOM} from 'jsdom';
 import {renderGettingStarted} from '../docs/getting-started.js';
 import {siteFiles,generatedFiles,starterFiles} from './site-manifest.mjs';
 import {checkDocumentVersions} from './document-version-check.mjs';
+import {documentShell} from './document-shell.mjs'
 const root = fileURLToPath(new URL('../',import.meta.url));
 const tokens = JSON.parse(await readFile(path.join(root,'tokens.json'),'utf8'));
 const luminance = hex => hex.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((s,x,i)=>s+x*[.2126,.7152,.0722][i],0);
@@ -37,7 +38,12 @@ async function walk(dir,prefix=''){const result=[];for(const item of await readd
 assert.deepEqual((await walk(path.join(root,'docs'))).sort(),[...siteFiles,...generatedFiles,...starterFiles.map(n=>'starter/'+n)].sort(),'Only intended public site files, including licensed font assets');
 assert.deepEqual((await readdir(path.join(root,'docs/starter'))).sort(),[...starterFiles].sort(),'Only intended standalone starter files');
 for(const name of starterFiles)assert.deepEqual(await readFile(path.join(root,'examples/vue-vuetify/dist',name)),await readFile(path.join(root,'docs/starter',name)),`Published starter ${name} is current`);
-for(const name of siteFiles) {const source=await readFile(path.join(root,'site',name));assert.deepEqual(name==='index.html'?Buffer.from(source.toString('utf8').replaceAll('__SOLYI_DOCUMENT_VERSION__',tokens.version)):source,await readFile(path.join(root,'docs',name)),`${name} build is current`);}
+for (const name of siteFiles) {
+  const source = await readFile(path.join(root, 'site', name))
+  const shell = name === 'index.html' ? await documentShell(source.toString('utf8'), tokens.version) : null
+  assert.deepEqual(shell ? Buffer.from(shell.html) : source, await readFile(path.join(root, 'docs', name)), `${name} build is current`)
+  if (shell) assert.equal(await readFile(path.join(root, 'docs/shell.css'), 'utf8'), shell.css)
+}
 assert.deepEqual(JSON.parse(await readFile(path.join(root,'docs/tokens.json'),'utf8')),tokens);
 await checkDocumentVersions();
 const source=(await Promise.all(siteFiles.filter(name=>/\.(html|js|css)$/.test(name)).map(name=>readFile(path.join(root,'docs',name),'utf8')))).join('\n');

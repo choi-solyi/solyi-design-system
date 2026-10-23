@@ -19,9 +19,9 @@ export async function revealStarter(document = globalThis.document, boot = globa
   if (!boot) return; // Synthetic component tests intentionally do not load the HTML shell.
   try {
     await waitForStarterStyles(document);
-    // Layout requests the fonts used by the mounted, visibility-hidden content.
-    document.getElementById('app')?.getBoundingClientRect();
-    try {await document.fonts?.ready;} catch { /* Failed fonts use the existing system fallback. */ }
+    // Required CSS and the mounted app determine readiness. Optional swap fonts
+    // must not keep a usable interface behind the loading screen on slow networks.
+    document.getElementById('app')?.getBoundingClientRect()
     boot.ready();
   } catch {boot.fail();}
 }

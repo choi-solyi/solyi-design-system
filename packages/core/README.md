@@ -1,4 +1,4 @@
-# @solyi/core 0.4.10
+# @solyi/core
 
 `solyi-ui`에 포함하는 프레임워크 독립 토큰·CSS·helper의 내부 개발 패키지입니다. 소비 프로젝트는 `solyi-ui`만 설치하며 `@solyi/core`를 따로 추가하지 않습니다.
 

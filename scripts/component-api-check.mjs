@@ -11,7 +11,9 @@ import {getTopicCatalogue,resolveDocumentLocation} from '../site/topics.js';
 const root=new URL('../',import.meta.url);
 execFileSync(process.execPath,['scripts/build-component-api.mjs','--check'],{cwd:fileURLToPath(root),stdio:'inherit'});
 const source=await readFile(new URL('packages/vue-ui/src/index.ts',root),'utf8');
-const names=/export const sComponents=\{([^}]+)\}/.exec(source)[1].split(',').map(name=>name.trim());
+const registry = /export const sComponents(?:\s*:\s*SComponents)?\s*=\s*\{([^}]+)\}/.exec(source)
+assert.ok(registry, 'The actual component registry is present')
+const names = registry[1].split(',').map(name => name.trim()).filter(Boolean)
 assert.deepEqual(componentReferences.map(component=>component.name).sort(),names.sort());
 assert.deepEqual(Object.keys(componentConceptNames).sort(),names.sort(),'Every actual API has a concept name');
 for(const group of componentCatalogue()){assert.match(group.group,/^[A-Za-z &]+$/);assert.deepEqual(group.items.map(item=>item.label),group.items.map(item=>item.label).sort((a,b)=>a.localeCompare(b,'en')),'Concept ABC order inside '+group.group);}

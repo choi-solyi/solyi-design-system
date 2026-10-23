@@ -98,12 +98,19 @@ Vite 실행 시 `src/auto-imports.d.ts`와 `.eslintrc-auto-import.json`이 생�
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "strict": true,
+    "skipLibCheck": true,
     "noEmit": true,
     "types": ["vite/client", "solyi-ui/global"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "src/auto-imports.d.ts"]
 }
 ```
+
+`strict`는 앱 소스와 S 컴포넌트 사용 타입을 검사합니다. `skipLibCheck`는 지원 버전의
+Vuetify와 선택적 어댑터가 제공하는 외부 선언 파일의 충돌을 소비 앱 검사에서 제외합니다.
+`solyi-ui` 자체 공개 선언의 오류를 이 옵션으로 숨기지는 않으며, 패키지 검증에서
+`skipLibCheck: false`로 자체 선언 진단이 없는지 별도로 검사합니다. 이 설정이 외부
+의존성의 모든 선언까지 엄격 검사를 통과한다는 뜻은 아닙니다.
 
 ESLint를 사용한다면 생성된 readonly globals를 실제 lint 설정과 연결합니다.
 
@@ -225,3 +232,10 @@ npm exec vite build
 ```
 
 라이브러리를 변경해도 다른 앱이 자동 배포되지는 않습니다. 지원 범위는 [버전과 호환](COMPATIBILITY.md), 권리는 [라이선스 범위](../../LICENSE-SCOPE.md), AI와 공유할 앱 규칙은 [DESIGN.md](../../DESIGN.md)를 참고합니다.
+
+### 탐색·레이아웃과 폼 검증의 구분
+
+`STabs`는 탐색, `SResizableSplitPane`는 레이아웃 컴포넌트입니다. 이 둘은
+`rules`·`required`·`serverError`·`errorMessages`를 제공하지 않고 `SForm`의 필드 상태를
+상속하지 않습니다. 각각의 `disabled`·`readonly`와 표시용 `error`를 직접 지정합니다.
+실제 입력 컴포넌트의 동기 검증·서버 오류 계약은 그대로 사용합니다.

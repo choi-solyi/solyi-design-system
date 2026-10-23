@@ -295,19 +295,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -520,19 +520,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -680,19 +680,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -886,19 +886,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -1195,19 +1195,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -1423,19 +1423,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -1612,19 +1612,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -1798,19 +1798,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -2005,19 +2005,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -2180,19 +2180,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -2360,19 +2360,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -2515,19 +2515,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -2699,19 +2699,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -2874,19 +2874,19 @@ export const componentReferences=[
         "values": []
       },
       {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
-        "values": []
-      },
-      {
         "name": "locale",
         "type": "Partial<SolLocale>",
         "required": false,
         "default": "undefined",
         "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -3365,30 +3365,6 @@ export const componentReferences=[
     "source": "packages/vue-ui/src/navigation.ts",
     "props": [
       {
-        "name": "rules",
-        "type": "readonly SRule<any>[]",
-        "required": false,
-        "default": "[]",
-        "description": "순서대로 실행할 공통 검증 규칙입니다. true·false 또는 오류 문구를 반환합니다.",
-        "values": []
-      },
-      {
-        "name": "errorMessages",
-        "type": "string | readonly string[]",
-        "required": false,
-        "default": "''",
-        "description": "외부에서 제공하는 오류 문구입니다.",
-        "values": []
-      },
-      {
-        "name": "serverError",
-        "type": "string",
-        "required": false,
-        "default": "''",
-        "description": "서버 응답 오류입니다. 로컬 규칙 오류와 구분하여 소비 앱에서 갱신합니다.",
-        "values": []
-      },
-      {
         "name": "id",
         "type": "string",
         "required": true,
@@ -3434,14 +3410,6 @@ export const componentReferences=[
         "required": false,
         "default": "false",
         "description": "현재 값은 보여 주고 사용자 변경을 막습니다.",
-        "values": []
-      },
-      {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -3530,10 +3498,6 @@ export const componentReferences=[
       {
         "name": "SolTab",
         "source": "interface SolTab {value:string;label:string;disabled?:boolean}"
-      },
-      {
-        "name": "SRule",
-        "source": "type SRule<T = unknown> = (value: T, locale: SolLocale) => boolean | string;"
       }
     ],
     "passthrough": null
@@ -4586,7 +4550,7 @@ export const componentReferences=[
     "types": [
       {
         "name": "SBarChartItem",
-        "source": "interface SBarChartItem {id:string;label:string;value:number}"
+        "source": "interface SBarChartItem {\n  id: string\n  label: string\n  value: number\n}"
       }
     ],
     "passthrough": null
@@ -4847,30 +4811,6 @@ export const componentReferences=[
     "source": "packages/vue-ui/src/split-pane.ts",
     "props": [
       {
-        "name": "rules",
-        "type": "readonly SRule<any>[]",
-        "required": false,
-        "default": "[]",
-        "description": "순서대로 실행할 공통 검증 규칙입니다. true·false 또는 오류 문구를 반환합니다.",
-        "values": []
-      },
-      {
-        "name": "errorMessages",
-        "type": "string | readonly string[]",
-        "required": false,
-        "default": "''",
-        "description": "외부에서 제공하는 오류 문구입니다.",
-        "values": []
-      },
-      {
-        "name": "serverError",
-        "type": "string",
-        "required": false,
-        "default": "''",
-        "description": "서버 응답 오류입니다. 로컬 규칙 오류와 구분하여 소비 앱에서 갱신합니다.",
-        "values": []
-      },
-      {
         "name": "id",
         "type": "string",
         "required": true,
@@ -4916,14 +4856,6 @@ export const componentReferences=[
         "required": false,
         "default": "false",
         "description": "현재 값은 보여 주고 사용자 변경을 막습니다.",
-        "values": []
-      },
-      {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "default": "false",
-        "description": "필수 입력 의미와 해당 컴포넌트의 검증에 사용합니다.",
         "values": []
       },
       {
@@ -5042,12 +4974,7 @@ export const componentReferences=[
       }
     ],
     "methods": [],
-    "types": [
-      {
-        "name": "SRule",
-        "source": "type SRule<T = unknown> = (value: T, locale: SolLocale) => boolean | string;"
-      }
-    ],
+    "types": [],
     "passthrough": null
   },
   {
@@ -5066,14 +4993,14 @@ export const componentReferences=[
     "passthrough": "VRow"
   }
 ];
-export const componentReferenceVersions={"core":"0.4.10","vue-ui":"0.10.4"};
+export const componentReferenceVersions={"core":"0.4.12","vue-ui":"0.11.1"};
 export const componentExampleSources={
   "buttons": "<script setup lang=\"ts\">\nconst busy = ref(false),\n  result = ref('');\nlet timer: ReturnType<typeof setTimeout>;\nfunction run() {\n  if (busy.value) return;\n  busy.value = true;\n  timer = setTimeout(() => {\n    result.value = '가상 확인을 마쳤어요.';\n    busy.value = false;\n  }, 500);\n}\nonBeforeUnmount(() => clearTimeout(timer));\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"버튼 사용\">\n    <div class=\"sol-actions\">\n      <SBtn variant=\"primary\" :loading=\"busy\" @click=\"run\"> 확인 </SBtn>\n      <SBtn @click=\"result = '보조 동작을 눌렀어요.'\">보조 동작</SBtn>\n      <SBtn variant=\"inline\" @click=\"result = ''\"> 초기화 </SBtn>\n      <SBtn disabled>비활성</SBtn>\n    </div>\n    <p role=\"status\">{{ result }}</p>\n  </SCard>\n</template>\n",
   "action-menu": "<script setup lang=\"ts\">\nconst result = ref('');\nconst items = [\n  { id: 'copy', label: '가상 복제' },\n  { id: 'archive', label: '가상 보관' },\n  { id: 'disabled', label: '비활성', disabled: true },\n];\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"더 많은 동작\">\n    <SSplitBtn\n      id=\"recipe-actions\"\n      label=\"가상 내보내기\"\n      :items=\"items\"\n      @primary=\"result = '주 동작 확인'\"\n      @select=\"result = $event\"\n    />\n    <SContextMenu id=\"recipe-context\" label=\"가상 기록\" :items=\"items\" @select=\"result = $event\">\n      <p>우클릭·Shift+F10 또는 표시된 동작 버튼으로 엽니다.</p>\n    </SContextMenu>\n    <p role=\"status\">{{ result }}</p>\n  </SCard>\n</template>\n",
-  "autocomplete": "<script setup lang=\"ts\">\nimport type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';\ndefineProps<{ part?: string }>();\nconst mode = ref<string | null>('range'),\n  date = ref<DateValue>(null);\nconst dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'));\nwatch(dateMode, () => (date.value = null));\nconst files = ref<File[]>([]),\n  selected = ref<string | null>(null),\n  scenario = ref<string | null>('local');\nconst options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({\n  value: label,\n  label,\n}));\nlet failNext = true;\nwatch(scenario, () => {\n  failNext = true;\n  selected.value = null;\n});\nconst loader = computed<SolOptionLoader | undefined>(() => {\n  const responseMode = scenario.value;\n  if (responseMode === 'local') return undefined;\n  return (query, signal) =>\n    new Promise<readonly SolOption[]>((resolve, reject) => {\n      const cancel = () => {\n        clearTimeout(timer);\n        reject(new DOMException('Cancelled', 'AbortError'));\n      };\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', cancel);\n          if (responseMode === 'error' && failNext) {\n            failNext = false;\n            reject(new Error('Simulated response'));\n            return;\n          }\n          resolve(options.filter((item) => item.label.includes(query.trim())));\n        },\n        query.includes('느림') ? 450 : 150,\n      );\n      signal.addEventListener('abort', cancel, { once: true });\n      if (signal.aborted) cancel();\n    });\n});\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '로컬 입력 조합'\">\n    <SCard :heading-level=\"part ? 2 : 3\" v-if=\"!part || part === 'date'\" title=\"단일 날짜와 기간\">\n      <SSelect\n        id=\"recipe-date-mode\"\n        v-model=\"mode\"\n        label=\"개발 설정 시연\"\n        :options=\"[\n          { value: 'single', label: '단일 날짜' },\n          { value: 'range', label: '기간' },\n        ]\"\n        required\n      />\n      <SDatePicker id=\"recipe-date\" v-model=\"date\" label=\"가상 일정\" :mode=\"dateMode\" />\n      <p role=\"status\">완료값: {{ JSON.stringify(date) }}</p>\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'files'\"\n      title=\"로컬 파일 선택과 드롭\"\n    >\n      <SFileInput\n        id=\"recipe-files\"\n        v-model=\"files\"\n        label=\"가상 첨부 파일\"\n        accept=\".txt,.png,.jpg,.jpeg,.pdf\"\n        :max-files=\"3\"\n        :max-file-size=\"2 * 1024 * 1024\"\n        help=\"파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다.\"\n      />\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'autocomplete'\"\n      title=\"단일 자동완성\"\n    >\n      <SSelect\n        id=\"recipe-autocomplete-mode\"\n        v-model=\"scenario\"\n        label=\"가상 응답\"\n        :options=\"[\n          { value: 'local', label: '즉시 로컬' },\n          { value: 'async', label: '지연 응답' },\n          { value: 'error', label: '오류 후 재시도' },\n        ]\"\n        required\n      />\n      <SAutocomplete\n        id=\"recipe-autocomplete\"\n        v-model=\"selected\"\n        label=\"가상 분류 검색\"\n        :options=\"options\"\n        :load-options=\"loader\"\n        :debounce=\"0\"\n        :locale=\"{ retry: '검색 다시 시도' }\"\n        help=\"방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다.\"\n      />\n      <p role=\"status\">선택값: {{ selected || '없음' }}</p>\n    </SCard>\n  </SCard>\n</template>\n",
+  "autocomplete": "<script setup lang=\"ts\">\nimport type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';\ndefineProps<{ part?: string }>();\nconst mode = ref<string | null>('range'),\n  date = ref<DateValue>(null);\nconst dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'));\nwatch(dateMode, () => (date.value = null));\nconst files = ref<File[]>([]),\n  selected = ref<string | null>(null),\n  scenario = ref<string | null>('local');\nconst options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({\n  value: label,\n  label,\n}));\nlet failNext = true;\nwatch(scenario, () => {\n  failNext = true;\n  selected.value = null;\n});\nconst loader = computed<SolOptionLoader | undefined>(() => {\n  const responseMode = scenario.value;\n  if (responseMode === 'local') return undefined;\n  return (query, signal) =>\n    new Promise<readonly SolOption[]>((resolve, reject) => {\n      const cancel = () => {\n        clearTimeout(timer);\n        reject(new DOMException('Cancelled', 'AbortError'));\n      };\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', cancel);\n          if (responseMode === 'error' && failNext) {\n            failNext = false;\n            reject(new Error('Simulated response'));\n            return;\n          }\n          resolve(options.filter((item) => item.label.includes(query.trim())));\n        },\n        query.includes('느림') ? 450 : 150,\n      );\n      signal.addEventListener('abort', cancel, { once: true });\n      if (signal.aborted) cancel();\n    });\n});\n</script>\n<template>\n  <section class=\"sol-stack\" :aria-labelledby=\"part ? undefined : 'recipe-inputs-title'\">\n    <h2 v-if=\"!part\" id=\"recipe-inputs-title\">로컬 입력 조합</h2>\n    <SCard :heading-level=\"part ? 2 : 3\" v-if=\"!part || part === 'date'\" title=\"단일 날짜와 기간\">\n      <SSelect\n        id=\"recipe-date-mode\"\n        v-model=\"mode\"\n        label=\"개발 설정 시연\"\n        :options=\"[\n          { value: 'single', label: '단일 날짜' },\n          { value: 'range', label: '기간' },\n        ]\"\n        required\n      />\n      <SDatePicker id=\"recipe-date\" v-model=\"date\" label=\"가상 일정\" :mode=\"dateMode\" />\n      <p role=\"status\">완료값: {{ JSON.stringify(date) }}</p>\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'files'\"\n      title=\"로컬 파일 선택과 드롭\"\n    >\n      <SFileInput\n        id=\"recipe-files\"\n        v-model=\"files\"\n        label=\"가상 첨부 파일\"\n        accept=\".txt,.png,.jpg,.jpeg,.pdf\"\n        :max-files=\"3\"\n        :max-file-size=\"2 * 1024 * 1024\"\n        help=\"파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다.\"\n      />\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'autocomplete'\"\n      title=\"단일 자동완성\"\n    >\n      <SSelect\n        id=\"recipe-autocomplete-mode\"\n        v-model=\"scenario\"\n        label=\"가상 응답\"\n        :options=\"[\n          { value: 'local', label: '즉시 로컬' },\n          { value: 'async', label: '지연 응답' },\n          { value: 'error', label: '오류 후 재시도' },\n        ]\"\n        required\n      />\n      <SAutocomplete\n        id=\"recipe-autocomplete\"\n        v-model=\"selected\"\n        label=\"가상 분류 검색\"\n        :options=\"options\"\n        :load-options=\"loader\"\n        :debounce=\"0\"\n        :locale=\"{ retry: '검색 다시 시도' }\"\n        help=\"방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다.\"\n      />\n      <p role=\"status\">선택값: {{ selected || '없음' }}</p>\n    </SCard>\n  </section>\n</template>\n",
   "choices": "<script setup lang=\"ts\">\nconst include = ref(true),\n  archived = ref(false),\n  view = ref<string | null>('list'),\n  sort = ref<string | null>('recent');\nconst options = [\n  { value: 'list', label: '목록' },\n  { value: 'cards', label: '카드' },\n  { value: 'map', label: '지도 · 비활성', disabled: true },\n];\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"익숙한 기본 선택\">\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-include\"\n      v-model=\"include\"\n      label=\"완료한 항목 포함\"\n    />\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-archived\"\n      v-model=\"archived\"\n      label=\"보관한 항목 포함\"\n    />\n    <SCheckbox class=\"sol-choice-row\" id=\"recipe-unavailable\" label=\"공유 항목 · 비활성\" disabled />\n    <SRadioGroup\n      class=\"sol-choice-row\"\n      id=\"recipe-view\"\n      v-model=\"view\"\n      label=\"보기 방식\"\n      :options=\"options\"\n    />\n    <SSelect\n      id=\"recipe-sort\"\n      v-model=\"sort\"\n      label=\"정렬 기준\"\n      :options=\"[\n        { value: 'recent', label: '최근 변경순' },\n        { value: 'name', label: '이름순' },\n      ]\"\n    />\n    <p role=\"status\">\n      완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }} · {{ view }} ·\n      {{ sort }}\n    </p>\n  </SCard>\n</template>\n",
-  "date": "<script setup lang=\"ts\">\nimport type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';\ndefineProps<{ part?: string }>();\nconst mode = ref<string | null>('range'),\n  date = ref<DateValue>(null);\nconst dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'));\nwatch(dateMode, () => (date.value = null));\nconst files = ref<File[]>([]),\n  selected = ref<string | null>(null),\n  scenario = ref<string | null>('local');\nconst options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({\n  value: label,\n  label,\n}));\nlet failNext = true;\nwatch(scenario, () => {\n  failNext = true;\n  selected.value = null;\n});\nconst loader = computed<SolOptionLoader | undefined>(() => {\n  const responseMode = scenario.value;\n  if (responseMode === 'local') return undefined;\n  return (query, signal) =>\n    new Promise<readonly SolOption[]>((resolve, reject) => {\n      const cancel = () => {\n        clearTimeout(timer);\n        reject(new DOMException('Cancelled', 'AbortError'));\n      };\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', cancel);\n          if (responseMode === 'error' && failNext) {\n            failNext = false;\n            reject(new Error('Simulated response'));\n            return;\n          }\n          resolve(options.filter((item) => item.label.includes(query.trim())));\n        },\n        query.includes('느림') ? 450 : 150,\n      );\n      signal.addEventListener('abort', cancel, { once: true });\n      if (signal.aborted) cancel();\n    });\n});\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '로컬 입력 조합'\">\n    <SCard :heading-level=\"part ? 2 : 3\" v-if=\"!part || part === 'date'\" title=\"단일 날짜와 기간\">\n      <SSelect\n        id=\"recipe-date-mode\"\n        v-model=\"mode\"\n        label=\"개발 설정 시연\"\n        :options=\"[\n          { value: 'single', label: '단일 날짜' },\n          { value: 'range', label: '기간' },\n        ]\"\n        required\n      />\n      <SDatePicker id=\"recipe-date\" v-model=\"date\" label=\"가상 일정\" :mode=\"dateMode\" />\n      <p role=\"status\">완료값: {{ JSON.stringify(date) }}</p>\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'files'\"\n      title=\"로컬 파일 선택과 드롭\"\n    >\n      <SFileInput\n        id=\"recipe-files\"\n        v-model=\"files\"\n        label=\"가상 첨부 파일\"\n        accept=\".txt,.png,.jpg,.jpeg,.pdf\"\n        :max-files=\"3\"\n        :max-file-size=\"2 * 1024 * 1024\"\n        help=\"파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다.\"\n      />\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'autocomplete'\"\n      title=\"단일 자동완성\"\n    >\n      <SSelect\n        id=\"recipe-autocomplete-mode\"\n        v-model=\"scenario\"\n        label=\"가상 응답\"\n        :options=\"[\n          { value: 'local', label: '즉시 로컬' },\n          { value: 'async', label: '지연 응답' },\n          { value: 'error', label: '오류 후 재시도' },\n        ]\"\n        required\n      />\n      <SAutocomplete\n        id=\"recipe-autocomplete\"\n        v-model=\"selected\"\n        label=\"가상 분류 검색\"\n        :options=\"options\"\n        :load-options=\"loader\"\n        :debounce=\"0\"\n        :locale=\"{ retry: '검색 다시 시도' }\"\n        help=\"방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다.\"\n      />\n      <p role=\"status\">선택값: {{ selected || '없음' }}</p>\n    </SCard>\n  </SCard>\n</template>\n",
-  "files": "<script setup lang=\"ts\">\nimport type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';\ndefineProps<{ part?: string }>();\nconst mode = ref<string | null>('range'),\n  date = ref<DateValue>(null);\nconst dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'));\nwatch(dateMode, () => (date.value = null));\nconst files = ref<File[]>([]),\n  selected = ref<string | null>(null),\n  scenario = ref<string | null>('local');\nconst options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({\n  value: label,\n  label,\n}));\nlet failNext = true;\nwatch(scenario, () => {\n  failNext = true;\n  selected.value = null;\n});\nconst loader = computed<SolOptionLoader | undefined>(() => {\n  const responseMode = scenario.value;\n  if (responseMode === 'local') return undefined;\n  return (query, signal) =>\n    new Promise<readonly SolOption[]>((resolve, reject) => {\n      const cancel = () => {\n        clearTimeout(timer);\n        reject(new DOMException('Cancelled', 'AbortError'));\n      };\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', cancel);\n          if (responseMode === 'error' && failNext) {\n            failNext = false;\n            reject(new Error('Simulated response'));\n            return;\n          }\n          resolve(options.filter((item) => item.label.includes(query.trim())));\n        },\n        query.includes('느림') ? 450 : 150,\n      );\n      signal.addEventListener('abort', cancel, { once: true });\n      if (signal.aborted) cancel();\n    });\n});\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '로컬 입력 조합'\">\n    <SCard :heading-level=\"part ? 2 : 3\" v-if=\"!part || part === 'date'\" title=\"단일 날짜와 기간\">\n      <SSelect\n        id=\"recipe-date-mode\"\n        v-model=\"mode\"\n        label=\"개발 설정 시연\"\n        :options=\"[\n          { value: 'single', label: '단일 날짜' },\n          { value: 'range', label: '기간' },\n        ]\"\n        required\n      />\n      <SDatePicker id=\"recipe-date\" v-model=\"date\" label=\"가상 일정\" :mode=\"dateMode\" />\n      <p role=\"status\">완료값: {{ JSON.stringify(date) }}</p>\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'files'\"\n      title=\"로컬 파일 선택과 드롭\"\n    >\n      <SFileInput\n        id=\"recipe-files\"\n        v-model=\"files\"\n        label=\"가상 첨부 파일\"\n        accept=\".txt,.png,.jpg,.jpeg,.pdf\"\n        :max-files=\"3\"\n        :max-file-size=\"2 * 1024 * 1024\"\n        help=\"파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다.\"\n      />\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'autocomplete'\"\n      title=\"단일 자동완성\"\n    >\n      <SSelect\n        id=\"recipe-autocomplete-mode\"\n        v-model=\"scenario\"\n        label=\"가상 응답\"\n        :options=\"[\n          { value: 'local', label: '즉시 로컬' },\n          { value: 'async', label: '지연 응답' },\n          { value: 'error', label: '오류 후 재시도' },\n        ]\"\n        required\n      />\n      <SAutocomplete\n        id=\"recipe-autocomplete\"\n        v-model=\"selected\"\n        label=\"가상 분류 검색\"\n        :options=\"options\"\n        :load-options=\"loader\"\n        :debounce=\"0\"\n        :locale=\"{ retry: '검색 다시 시도' }\"\n        help=\"방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다.\"\n      />\n      <p role=\"status\">선택값: {{ selected || '없음' }}</p>\n    </SCard>\n  </SCard>\n</template>\n",
+  "date": "<script setup lang=\"ts\">\nimport type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';\ndefineProps<{ part?: string }>();\nconst mode = ref<string | null>('range'),\n  date = ref<DateValue>(null);\nconst dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'));\nwatch(dateMode, () => (date.value = null));\nconst files = ref<File[]>([]),\n  selected = ref<string | null>(null),\n  scenario = ref<string | null>('local');\nconst options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({\n  value: label,\n  label,\n}));\nlet failNext = true;\nwatch(scenario, () => {\n  failNext = true;\n  selected.value = null;\n});\nconst loader = computed<SolOptionLoader | undefined>(() => {\n  const responseMode = scenario.value;\n  if (responseMode === 'local') return undefined;\n  return (query, signal) =>\n    new Promise<readonly SolOption[]>((resolve, reject) => {\n      const cancel = () => {\n        clearTimeout(timer);\n        reject(new DOMException('Cancelled', 'AbortError'));\n      };\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', cancel);\n          if (responseMode === 'error' && failNext) {\n            failNext = false;\n            reject(new Error('Simulated response'));\n            return;\n          }\n          resolve(options.filter((item) => item.label.includes(query.trim())));\n        },\n        query.includes('느림') ? 450 : 150,\n      );\n      signal.addEventListener('abort', cancel, { once: true });\n      if (signal.aborted) cancel();\n    });\n});\n</script>\n<template>\n  <section class=\"sol-stack\" :aria-labelledby=\"part ? undefined : 'recipe-inputs-title'\">\n    <h2 v-if=\"!part\" id=\"recipe-inputs-title\">로컬 입력 조합</h2>\n    <SCard :heading-level=\"part ? 2 : 3\" v-if=\"!part || part === 'date'\" title=\"단일 날짜와 기간\">\n      <SSelect\n        id=\"recipe-date-mode\"\n        v-model=\"mode\"\n        label=\"개발 설정 시연\"\n        :options=\"[\n          { value: 'single', label: '단일 날짜' },\n          { value: 'range', label: '기간' },\n        ]\"\n        required\n      />\n      <SDatePicker id=\"recipe-date\" v-model=\"date\" label=\"가상 일정\" :mode=\"dateMode\" />\n      <p role=\"status\">완료값: {{ JSON.stringify(date) }}</p>\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'files'\"\n      title=\"로컬 파일 선택과 드롭\"\n    >\n      <SFileInput\n        id=\"recipe-files\"\n        v-model=\"files\"\n        label=\"가상 첨부 파일\"\n        accept=\".txt,.png,.jpg,.jpeg,.pdf\"\n        :max-files=\"3\"\n        :max-file-size=\"2 * 1024 * 1024\"\n        help=\"파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다.\"\n      />\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'autocomplete'\"\n      title=\"단일 자동완성\"\n    >\n      <SSelect\n        id=\"recipe-autocomplete-mode\"\n        v-model=\"scenario\"\n        label=\"가상 응답\"\n        :options=\"[\n          { value: 'local', label: '즉시 로컬' },\n          { value: 'async', label: '지연 응답' },\n          { value: 'error', label: '오류 후 재시도' },\n        ]\"\n        required\n      />\n      <SAutocomplete\n        id=\"recipe-autocomplete\"\n        v-model=\"selected\"\n        label=\"가상 분류 검색\"\n        :options=\"options\"\n        :load-options=\"loader\"\n        :debounce=\"0\"\n        :locale=\"{ retry: '검색 다시 시도' }\"\n        help=\"방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다.\"\n      />\n      <p role=\"status\">선택값: {{ selected || '없음' }}</p>\n    </SCard>\n  </section>\n</template>\n",
+  "files": "<script setup lang=\"ts\">\nimport type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';\ndefineProps<{ part?: string }>();\nconst mode = ref<string | null>('range'),\n  date = ref<DateValue>(null);\nconst dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'));\nwatch(dateMode, () => (date.value = null));\nconst files = ref<File[]>([]),\n  selected = ref<string | null>(null),\n  scenario = ref<string | null>('local');\nconst options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({\n  value: label,\n  label,\n}));\nlet failNext = true;\nwatch(scenario, () => {\n  failNext = true;\n  selected.value = null;\n});\nconst loader = computed<SolOptionLoader | undefined>(() => {\n  const responseMode = scenario.value;\n  if (responseMode === 'local') return undefined;\n  return (query, signal) =>\n    new Promise<readonly SolOption[]>((resolve, reject) => {\n      const cancel = () => {\n        clearTimeout(timer);\n        reject(new DOMException('Cancelled', 'AbortError'));\n      };\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', cancel);\n          if (responseMode === 'error' && failNext) {\n            failNext = false;\n            reject(new Error('Simulated response'));\n            return;\n          }\n          resolve(options.filter((item) => item.label.includes(query.trim())));\n        },\n        query.includes('느림') ? 450 : 150,\n      );\n      signal.addEventListener('abort', cancel, { once: true });\n      if (signal.aborted) cancel();\n    });\n});\n</script>\n<template>\n  <section class=\"sol-stack\" :aria-labelledby=\"part ? undefined : 'recipe-inputs-title'\">\n    <h2 v-if=\"!part\" id=\"recipe-inputs-title\">로컬 입력 조합</h2>\n    <SCard :heading-level=\"part ? 2 : 3\" v-if=\"!part || part === 'date'\" title=\"단일 날짜와 기간\">\n      <SSelect\n        id=\"recipe-date-mode\"\n        v-model=\"mode\"\n        label=\"개발 설정 시연\"\n        :options=\"[\n          { value: 'single', label: '단일 날짜' },\n          { value: 'range', label: '기간' },\n        ]\"\n        required\n      />\n      <SDatePicker id=\"recipe-date\" v-model=\"date\" label=\"가상 일정\" :mode=\"dateMode\" />\n      <p role=\"status\">완료값: {{ JSON.stringify(date) }}</p>\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'files'\"\n      title=\"로컬 파일 선택과 드롭\"\n    >\n      <SFileInput\n        id=\"recipe-files\"\n        v-model=\"files\"\n        label=\"가상 첨부 파일\"\n        accept=\".txt,.png,.jpg,.jpeg,.pdf\"\n        :max-files=\"3\"\n        :max-file-size=\"2 * 1024 * 1024\"\n        help=\"파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다.\"\n      />\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'autocomplete'\"\n      title=\"단일 자동완성\"\n    >\n      <SSelect\n        id=\"recipe-autocomplete-mode\"\n        v-model=\"scenario\"\n        label=\"가상 응답\"\n        :options=\"[\n          { value: 'local', label: '즉시 로컬' },\n          { value: 'async', label: '지연 응답' },\n          { value: 'error', label: '오류 후 재시도' },\n        ]\"\n        required\n      />\n      <SAutocomplete\n        id=\"recipe-autocomplete\"\n        v-model=\"selected\"\n        label=\"가상 분류 검색\"\n        :options=\"options\"\n        :load-options=\"loader\"\n        :debounce=\"0\"\n        :locale=\"{ retry: '검색 다시 시도' }\"\n        help=\"방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다.\"\n      />\n      <p role=\"status\">선택값: {{ selected || '없음' }}</p>\n    </SCard>\n  </section>\n</template>\n",
   "form": "<script setup lang=\"ts\">\nimport { sRules } from 'solyi-ui';\nimport type { SFormHandle, SFormSubmitEvent } from 'solyi-ui';\n\nconst form = useTemplateRef<SFormHandle>('form');\nconst name = ref('');\nconst kind = ref<string | null>('note');\nconst fail = ref(false);\nconst busy = ref(false);\nconst done = ref(false);\nconst serverError = ref('');\nconst nameRules = [\n  sRules.required('이름을 입력해 주세요.'),\n  sRules.minLength(3, '이름을 3자 이상 입력해 주세요.'),\n];\nlet timer: ReturnType<typeof setTimeout>;\n\nasync function save(event: SFormSubmitEvent) {\n  if (busy.value) return;\n  done.value = false;\n  serverError.value = '';\n  const result = await event;\n  if (!result?.valid) {\n    form.value?.focus();\n    return;\n  }\n  busy.value = true;\n  timer = setTimeout(() => {\n    busy.value = false;\n    if (fail.value)\n      serverError.value =\n        '가상 요청 실패입니다. 입력값은 유지됩니다. 실패 옵션을 끄고 다시 확인하세요.';\n    else done.value = true;\n  }, 400);\n}\nonBeforeUnmount(() => clearTimeout(timer));\n</script>\n\n<template>\n  <SCard :heading-level=\"2\" title=\"입력과 검증·복구\">\n    <SForm ref=\"form\" class=\"sol-stack\" @submit.prevent=\"save\">\n      <SRow>\n        <SCol cols=\"12\" md=\"8\">\n          <STextField\n            id=\"recipe-form-name\"\n            v-model=\"name\"\n            label=\"가상 프로젝트 이름\"\n            :rules=\"nameRules\"\n            required\n          />\n        </SCol>\n        <SCol cols=\"12\" md=\"4\">\n          <SSelect\n            id=\"recipe-form-kind\"\n            v-model=\"kind\"\n            label=\"프로젝트 종류\"\n            :options=\"[\n              { value: 'note', label: '기록' },\n              { value: 'search', label: '탐색' },\n            ]\"\n            required\n          />\n        </SCol>\n      </SRow>\n      <SCheckbox id=\"recipe-form-fail\" v-model=\"fail\" label=\"실패를 흉내 내기\" />\n      <SAlert v-if=\"serverError\" tone=\"danger\" :title=\"serverError\" live=\"polite\" />\n      <SAlert v-if=\"done\" tone=\"success\" title=\"✓ 가상 입력을 확인했어요.\" live=\"polite\" />\n      <div class=\"sol-actions\">\n        <SBtn type=\"submit\" variant=\"primary\" :loading=\"busy\">프로젝트 확인</SBtn>\n        <SBtn @click=\"form?.resetValidation()\">검증 표시 지우기</SBtn>\n      </div>\n    </SForm>\n  </SCard>\n</template>\n",
   "advanced-inputs": "<script setup lang=\"ts\">\ndefineProps<{ part?: string }>();\nconst note = ref(''),\n  amount = ref<number | null>(2),\n  tags = ref<string[]>([]);\nconst options = [\n  { value: 'garden', label: '정원' },\n  { value: 'book', label: '책장' },\n  { value: 'walk', label: '산책' },\n];\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '여러 줄·숫자·태그'\">\n    <STextarea\n      v-if=\"!part || part === 'textarea'\"\n      id=\"recipe-note\"\n      v-model=\"note\"\n      label=\"가상 기록 설명\"\n      :maxlength=\"120\"\n    />\n    <SNumberInput\n      v-if=\"!part || part === 'number'\"\n      id=\"recipe-amount\"\n      v-model=\"amount\"\n      label=\"가상 목표 개수\"\n      :min=\"0\"\n      :max=\"10\"\n      :step=\"2\"\n    />\n    <SMultiSelect\n      v-if=\"!part || part === 'multiselect'\"\n      id=\"recipe-tags\"\n      v-model=\"tags\"\n      label=\"가상 분류\"\n      :options=\"options\"\n      :max-selected=\"2\"\n    />\n    <p v-if=\"!part\" role=\"status\">{{ amount }}개 · {{ tags.join(', ') || '선택 없음' }}</p>\n  </SCard>\n</template>\n",
   "selection": "<script setup lang=\"ts\">\nconst multiple = ref(false),\n  single = ref<string | null>('brief'),\n  immediate = ref(false);\nconst options = [\n  { value: 'brief', label: '간단히' },\n  { value: 'full', label: '자세히' },\n];\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"선택의 의미\">\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-multiple\"\n      v-model=\"multiple\"\n      label=\"자료 포함 · 다중 선택의 한 항목\"\n    />\n    <SRadioGroup\n      class=\"sol-choice-row\"\n      id=\"recipe-single\"\n      v-model=\"single\"\n      label=\"한 가지 표시 방식\"\n      :options=\"options\"\n    />\n    <SSwitch id=\"recipe-immediate\" v-model=\"immediate\" label=\"바꾸는 즉시 적용\" />\n    <p role=\"status\">\n      자료 {{ multiple ? '포함' : '제외' }} · {{ single }} · 즉시 설정\n      {{ immediate ? '켬' : '끔' }}\n    </p>\n  </SCard>\n</template>\n",

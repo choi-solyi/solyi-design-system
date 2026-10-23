@@ -38,7 +38,7 @@ watch([query,sort],()=>page.value=1);watch(pages,value=>page.value=Math.min(page
 <template>
   <VApp><main class="starter-main"><AppearanceSettings v-if="!settingsHidden" :state="appearance" :themes="coreTokens.themes" @change="updateAppearance" /><ProgressExamples v-if="embed" /><template v-else-if="advancedView"><h1 v-if="params.get('embed')==='1'" class="sol-ui-sr-only">Vue 컴포넌트 실행 예제</h1><AdvancedExamples :part="advancedPart" /></template><template v-else-if="recipeEmbed"><template v-if="embeddedRecipe"><h1 class="sol-ui-sr-only">{{recipeLabels[recipeId]}}</h1><component ref="recipeInstance" :is="recipeComponents[recipeId]" v-bind="recipePart ? {part:recipePart} : {}" /></template><template v-else><RecipeExamples/></template></template><template v-else>
     <a class="starter-link" href="https://choi-solyi.github.io/solyi-design-system/#theme/starter">← 디자인 시스템 문서</a>
-    <header><p class="starter-eyebrow">INSTALLED TARBALLS · Core {{coreVersion}} / Vue UI {{uiVersion}}</p><h1>같은 토큰, Vue의 부품.</h1><p>프로젝트에 바로 가져다 쓰는 컴포넌트와 사용 예제입니다. 문서의 실행 예제도 같은 패키지와 정본 Vue 파일을 사용합니다. 기존 앱에는 적용하지 않았습니다.</p><pre class="starter-code-sample" tabindex="0" aria-label="한영 주석 코드 글꼴 예시"><code>// English comment: fictional local data.
+    <header><p class="starter-eyebrow">INSTALLED TARBALLS · Core {{coreVersion}} / Vue UI {{uiVersion}}</p><h1>같은 토큰, Vue의 부품.</h1><p>프로젝트에 바로 가져다 쓰는 컴포넌트와 사용 예제입니다. 문서의 실행 예제도 같은 패키지와 정본 Vue 파일을 사용합니다. 기존 앱에는 적용하지 않았습니다.</p><pre class="starter-code-sample" tabindex="0" role="group" aria-label="한영 주석 코드 글꼴 예시"><code>// English comment: fictional local data.
 // 한글 주석: 외부 전송 없는 가상 자료입니다.
 const label = "가상 기록";
 const valid = count &gt;= 0 &amp;&amp; count !== null;</code></pre></header>

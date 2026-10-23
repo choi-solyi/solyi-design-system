@@ -6,8 +6,25 @@ import {validationProps,useSFieldValidation,fieldError,fieldDisabled,fieldReadon
 
 export interface SolOption {value:string;label:string;description?:string;disabled?:boolean}
 export interface SolNumberInputHandle {focus():void;validate():boolean;resetValidation():void}
-export const commonFieldProps={...validationProps,id:{type:String,required:true as const},label:{type:String,required:true as const},help:{type:String,default:''},error:{type:String,default:''},disabled:Boolean,readonly:Boolean,required:Boolean,locale:Object as PropType<Partial<SolLocale>>};
-type Field={id:string;label:string;help:string;error:string;disabled:boolean;readonly:boolean;required:boolean};
+export const displayFieldProps = {
+  id: {type: String, required: true as const},
+  label: {type: String, required: true as const},
+  help: {type: String, default: ''},
+  error: {type: String, default: ''},
+  disabled: Boolean,
+  readonly: Boolean,
+  locale: Object as PropType<Partial<SolLocale>>,
+}
+export const commonFieldProps = {...validationProps, ...displayFieldProps, required: Boolean}
+type Field = {
+  id: string
+  label: string
+  help: string
+  error: string
+  disabled: boolean
+  readonly: boolean
+  required?: boolean
+}
 export function fieldDescription(p:Field,slots:Slots,error=fieldError(p),external?:unknown){return [p.help||slots.help?p.id+'-help':'',error?p.id+'-error':'',external].filter(Boolean).join(' ')||undefined;}
 export function fieldMessages(p:Field,slots:Slots,error=fieldError(p)){return [p.help||slots.help?h('div',{id:p.id+'-help',class:'sol-hint'},slots.help?.()||p.help):null,error?h('p',{id:p.id+'-error',class:'sol-error',role:'alert'},error):null];}
 export function fieldLabel(p:Field,slots:Slots,required:string){return h('label',{id:p.id+'-label',for:p.id,class:'sol-label'},[slots.label?.()||p.label,p.required?` (${required})`:'']);}
@@ -34,8 +51,23 @@ export const SNumberInput=defineComponent({name:'SNumberInput',inheritAttrs:fals
  function message(){const value=numeric();if(value===null)return p.required?l.value.invalidNumber:'';if(!Number.isFinite(value)||!Number.isFinite(p.step)||p.step<=0||p.min!==undefined&&p.max!==undefined&&p.min>p.max)return l.value.invalidNumber;if(p.min!==undefined&&value<p.min||p.max!==undefined&&value>p.max)return l.value.numberRange;const steps=(value-(p.min??0))/p.step;return Math.abs(steps-Math.round(steps))>1e-7?l.value.numberStep:'';}
  function syncValidity(){input.value?.setCustomValidity(fieldError(p)||message());}
  function commit(){if(fieldReadonly(p)||fieldDisabled(p))return !fieldError(p)&&!message();const error=message();localError.value=error;if(error){emit('invalid',error);syncValidity();return false;}const value=numeric();draft.value=value===null?'':formatSolNumber(value,l.value);if(value!==p.modelValue){emit('update:modelValue',value);emit('change',value);}return !p.error&&!p.serverError&&!p.errorMessages.length;}
- function nudge(direction:number){if(fieldDisabled(p)||fieldReadonly(p))return;const base=p.modelValue??p.min??0,next=Number((base+(p.modelValue===null?0:direction*p.step)).toFixed(10));draft.value=String(next);commit();input.value?.focus();}
+ function nudgeValue(direction: number): number | null {
+  if (!Number.isFinite(p.step) || p.step <= 0) return null
+  const base = p.modelValue ?? p.min ?? 0
+  const next = Number((base + (p.modelValue === null ? 0 : direction * p.step)).toFixed(10))
+  if (!Number.isFinite(next) || p.min !== undefined && next < p.min ||
+    p.max !== undefined && next > p.max) return null
+  return next
+ }
+ function nudge(direction: number) {
+  if (fieldDisabled(p) || fieldReadonly(p)) return
+  const next = nudgeValue(direction)
+  if (next === null) return
+  draft.value = formatSolNumber(next, l.value)
+  commit()
+  input.value?.focus()
+ }
  const validation=useSFieldValidation(p,numeric,{focus:()=>input.value?.focus(),validateIntrinsic:commit,intrinsicError:()=>localError.value,resetIntrinsic:()=>{localError.value='';}});
  watch(()=>p.modelValue,v=>{draft.value=v===null?'':formatSolNumber(v,l.value);localError.value='';});watch(()=>[draft.value,fieldError(p),p.required,p.min,p.max,p.step],()=>nextTick(syncValidity));watch(l,()=>{if(localError.value)localError.value=message();if(document.activeElement!==input.value&&!message())draft.value=p.modelValue===null?'':formatSolNumber(p.modelValue,l.value);void nextTick(syncValidity);});onMounted(syncValidity);expose(validation);
- return()=>{const error=fieldError(p)||localError.value,value=numeric();return h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('div',{class:'sol-ui-number'},[h('button',{type:'button',class:'sol-button',disabled:fieldDisabled(p)||fieldReadonly(p)||p.modelValue!==null&&p.min!==undefined&&p.modelValue-p.step<p.min,'aria-label':p.label+' '+l.value.decrease,onClick:()=>nudge(-1)},'−'),h('input',{...attrs,ref:input,id:p.id,type:'text',inputmode:'decimal',class:['sol-input',attrs.class],value:draft.value,disabled:fieldDisabled(p),readonly:fieldReadonly(p),required:p.required,role:'spinbutton','aria-valuemin':p.min,'aria-valuemax':p.max,'aria-valuenow':value!==null&&Number.isFinite(value)&&!message()?value:undefined,'aria-invalid':error?'true':undefined,'aria-describedby':fieldDescription(p,slots,error,[p.id+'-constraints',attrs['aria-describedby']].filter(Boolean).join(' ')),onInput:(e:Event)=>{if(fieldReadonly(p)||fieldDisabled(p))return;draft.value=(e.target as HTMLInputElement).value;if(localError.value)localError.value=message();},onBlur:(e:FocusEvent)=>{if(!fieldReadonly(p)&&!fieldDisabled(p))validation.validate();emit('blur',e);},onInvalid:(e:Event)=>{e.preventDefault();commit();input.value?.focus();},onKeydown:(e:KeyboardEvent)=>{if(e.isComposing||fieldReadonly(p)||fieldDisabled(p))return;if(e.key==='Enter'){e.preventDefault();commit();}else if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();nudge(e.key==='ArrowUp'?1:-1);}}}),h('button',{type:'button',class:'sol-button',disabled:fieldDisabled(p)||fieldReadonly(p)||p.modelValue!==null&&p.max!==undefined&&p.modelValue+p.step>p.max,'aria-label':p.label+' '+l.value.increase,onClick:()=>nudge(1)},'+')]),h('span',{id:p.id+'-constraints',class:'sol-hint'},l.value.numberHelp(p.min,p.max,p.step)),...fieldMessages(p,slots,error)]);};
+ return()=>{const error=fieldError(p)||localError.value,value=numeric();return h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('div',{class:'sol-ui-number'},[h('button',{type:'button',class:'sol-button',disabled:fieldDisabled(p)||fieldReadonly(p)||nudgeValue(-1)===null,'aria-label':p.label+' '+l.value.decrease,onClick:()=>nudge(-1)},'−'),h('input',{...attrs,ref:input,id:p.id,type:'text',inputmode:'decimal',class:['sol-input',attrs.class],value:draft.value,disabled:fieldDisabled(p),readonly:fieldReadonly(p),required:p.required,role:'spinbutton','aria-valuemin':p.min,'aria-valuemax':p.max,'aria-valuenow':value!==null&&Number.isFinite(value)&&!message()?value:undefined,'aria-invalid':error?'true':undefined,'aria-describedby':fieldDescription(p,slots,error,[p.id+'-constraints',attrs['aria-describedby']].filter(Boolean).join(' ')),onInput:(e:Event)=>{if(fieldReadonly(p)||fieldDisabled(p))return;draft.value=(e.target as HTMLInputElement).value;if(localError.value)localError.value=message();},onBlur:(e:FocusEvent)=>{if(!fieldReadonly(p)&&!fieldDisabled(p))validation.validate();emit('blur',e);},onInvalid:(e:Event)=>{e.preventDefault();commit();input.value?.focus();},onKeydown:(e:KeyboardEvent)=>{if(e.isComposing||fieldReadonly(p)||fieldDisabled(p))return;if(e.key==='Enter'){e.preventDefault();commit();}else if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();nudge(e.key==='ArrowUp'?1:-1);}}}),h('button',{type:'button',class:'sol-button',disabled:fieldDisabled(p)||fieldReadonly(p)||nudgeValue(1)===null,'aria-label':p.label+' '+l.value.increase,onClick:()=>nudge(1)},'+')]),h('span',{id:p.id+'-constraints',class:'sol-hint'},l.value.numberHelp(p.min,p.max,p.step)),...fieldMessages(p,slots,error)]);};
 }});

@@ -8,7 +8,7 @@ export function componentCatalogue(){return componentConceptCatalogue(componentR
 function componentSampleCode(h,component){
  const source=componentExampleSources[component.example];
  const registered=h.codeSample?.('Vue · SFC',source);
- const body=registered?registered.replace(/^<details\b[^>]*>[\s\S]*?<\/summary>/,'').replace(/<\/details>\s*$/,''):`<div class="code-body"><div class="code-toolbar"><span class="code-language">Vue · SFC</span></div><pre tabindex="0" aria-label="${apiEscape(componentConcept(component))} Vue SFC"><code>${highlightSample(source,'Vue · SFC')}</code></pre></div>`;
+ const body=registered?registered.replace(/^<details\b[^>]*>[\s\S]*?<\/summary>/,'').replace(/<\/details>\s*$/,''):`<div class="code-body"><div class="code-toolbar"><span class="code-language">Vue · SFC</span></div><pre tabindex="0" role="group" aria-label="${apiEscape(componentConcept(component))} Vue SFC"><code>${highlightSample(source,'Vue · SFC')}</code></pre></div>`;
  const preview=componentPreview(component),params=new URLSearchParams({view:preview.view,example:preview.recipe});if(preview.part)params.set('part',preview.part);
  return `<div class="code-example component-sample-source">${body}<footer class="code-example-footer"><a href="${apiEscape('./starter/?'+params)}">이 예제 실행 ↗</a><a href="#start/registration">공통 등록·타입 설정</a></footer></div>`;
 }
@@ -41,7 +41,7 @@ export function renderComponentReferences(h) {
           <h5>Slots</h5>${apiTable(name+' slots',['이름','전달 인자 타입','설명'],component.slots.map(slot=>`<tr><th scope="row"><code>${apiEscape(slot.name)}</code></th><td><code>${apiEscape(slot.scope)}</code></td><td>${apiEscape(slot.description)}</td></tr>`))}
           <h5>Events</h5>${apiTable(name+' events',['이름','인자 타입','설명'],component.events.map(event=>`<tr><th scope="row"><code>${apiEscape(event.name)}</code></th><td><code>${apiEscape(event.signature)}</code></td><td>${apiEscape(event.description)}</td></tr>`))}
           <h5>Methods</h5>${apiTable(name+' methods',['이름','공개 핸들 타입','설명'],component.methods.map(method=>`<tr><th scope="row"><code>${apiEscape(method.name)}</code></th><td><code>${apiEscape(method.signature)}</code></td><td>${apiEscape(method.description)}</td></tr>`))}
-          ${component.types?.length?`<details class="api-type-definitions"><summary>자료·핸들 타입 정의</summary><pre tabindex="0" aria-label="${name} 자료 타입"><code>${highlightSample(component.types.map(type=>type.source).join('\n\n'),'TypeScript')}</code></pre></details>`:''}
+          ${component.types?.length?`<details class="api-type-definitions"><summary>자료·핸들 타입 정의</summary><pre tabindex="0" role="group" aria-label="${name} 자료 타입"><code>${highlightSample(component.types.map(type=>type.source).join('\n\n'),'TypeScript')}</code></pre></details>`:''}
           ${component.name==='SCard'?'<p class="sol-hint">제목·본문·actions 슬롯으로 내용을 묶는 article 카드입니다. 위 표에 있는 옵션을 사용하세요.</p>':''}
           <p class="sol-hint">설치한 버전에서 사용할 수 있는 속성·슬롯·이벤트와 메서드입니다.</p>
         </div>

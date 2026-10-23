@@ -32,25 +32,167 @@ export const SStepper=defineComponent({name:'SStepper',inheritAttrs:false,props:
   })));
 }});
 
-export interface SBarChartItem {id:string;label:string;value:number}
-export const SBarChart=defineComponent({name:'SBarChart',inheritAttrs:false,props:{id:{type:String,required:true},label:{type:String,required:true},items:{type:Array as PropType<readonly SBarChartItem[]>,required:true},max:Number,loading:Boolean,showTable:{type:Boolean,default:true},categoryLabel:String,valueLabel:String,locale:Object as PropType<Partial<SolLocale>>},setup(p,{attrs}){
-  const l=useSolLocale(()=>p.locale),limit=computed(()=>p.max??Math.max(1,...p.items.map(item=>item.value))),valid=computed(()=>Number.isFinite(limit.value)&&limit.value>0&&p.items.every(item=>Number.isFinite(item.value)&&item.value>=0&&item.value<=limit.value));
-  return()=>h('figure',{...attrs,id:p.id,class:['sol-ui-bar-chart',attrs.class],'aria-labelledby':p.id+'-caption','aria-busy':String(p.loading)},[
-    h('figcaption',{id:p.id+'-caption'},p.label),
-    p.loading?h('p',{role:'status'},l.value.tableLoading):!valid.value?h('p',{role:'alert'},l.value.chartInvalid):!p.items.length?h('p',{role:'status'},l.value.tableEmpty):[
-      h('svg',{viewBox:'0 0 480 200',role:'img','aria-labelledby':p.id+'-svg-title',preserveAspectRatio:'xMidYMid meet'},[
-        h('title',{id:p.id+'-svg-title'},p.label),
-        h('line',{x1:16,y1:164,x2:464,y2:164,stroke:'var(--sol-color-control-border)'}),
-        ...p.items.map((item,index)=>{const step=448/p.items.length,width=Math.min(48,step*.6),x=16+step*(index+.5),height=140*item.value/limit.value;return h('g',{key:item.id},[
-          h('rect',{x:x-width/2,y:164-height,width,height,fill:'var(--sol-color-accent)'}),
-          h('text',{x,y:Math.max(14,156-height),'text-anchor':'middle',class:'sol-ui-chart-value'},formatSolNumber(item.value,l.value)),
-          h('text',{x,y:188,'text-anchor':'middle',class:'sol-ui-chart-label'},Array.from(item.label).length>8?Array.from(item.label).slice(0,7).join('')+'…':item.label)
-        ]);})
-      ]),
-      h('table',{class:['sol-ui-chart-table',p.showTable?'':'sol-ui-sr-only']},[
-        h('caption',p.label),h('thead',h('tr',[h('th',{scope:'col'},p.categoryLabel||l.value.chartCategory),h('th',{scope:'col'},p.valueLabel||l.value.chartValue)])),
-        h('tbody',p.items.map(item=>h('tr',{key:item.id},[h('th',{scope:'row'},item.label),h('td',formatSolNumber(item.value,l.value))])))
-      ])
-    ]
-  ]);
-}});
+export interface SBarChartItem {
+  id: string
+  label: string
+  value: number
+}
+
+export const SBarChart = defineComponent({
+  name: 'SBarChart',
+  inheritAttrs: false,
+  props: {
+    id: { type: String, required: true },
+    label: { type: String, required: true },
+    items: { type: Array as PropType<readonly SBarChartItem[]>, required: true },
+    max: Number,
+    loading: Boolean,
+    showTable: { type: Boolean, default: true },
+    categoryLabel: String,
+    valueLabel: String,
+    locale: Object as PropType<Partial<SolLocale>>,
+  },
+  setup(p, { attrs }) {
+    const l = useSolLocale(() => p.locale)
+    const chart = ref<SVGSVGElement | null>(null)
+    const chartWidth = ref(480)
+    const limit = computed(() => p.max ?? Math.max(1, ...p.items.map((item) => item.value)))
+    const valid = computed(
+      () =>
+        Number.isFinite(limit.value) &&
+        limit.value > 0 &&
+        p.items.every(
+          (item) => Number.isFinite(item.value) && item.value >= 0 && item.value <= limit.value,
+        ),
+    )
+
+    watch(
+      chart,
+      (element, _previous, onCleanup) => {
+        if (!element) return
+        const resize = (width: number) => {
+          if (width > 0) chartWidth.value = width
+        }
+        resize(element.getBoundingClientRect().width)
+        if (typeof ResizeObserver === 'undefined') return
+        const observer = new ResizeObserver(([entry]) => {
+          if (entry) resize(entry.contentRect.width)
+        })
+        observer.observe(element)
+        onCleanup(() => observer.disconnect())
+      },
+      { flush: 'post' },
+    )
+
+    return () => {
+      const plotWidth = Math.max(0, chartWidth.value - 32)
+      const step = plotWidth / p.items.length
+      const labelLimit = Math.max(1, Math.min(8, Math.floor((step - 8) / 12)))
+
+      return h(
+        'figure',
+        {
+          ...attrs,
+          id: p.id,
+          class: ['sol-ui-bar-chart', attrs.class],
+          'aria-labelledby': p.id + '-caption',
+          'aria-busy': String(p.loading),
+        },
+        [
+          h('figcaption', { id: p.id + '-caption' }, p.label),
+          p.loading
+            ? h('p', { role: 'status' }, l.value.tableLoading)
+            : !valid.value
+              ? h('p', { role: 'alert' }, l.value.chartInvalid)
+              : !p.items.length
+                ? h('p', { role: 'status' }, l.value.tableEmpty)
+                : [
+                    h(
+                      'svg',
+                      {
+                        ref: chart,
+                        viewBox: `0 0 ${chartWidth.value} 200`,
+                        role: 'img',
+                        'aria-labelledby': p.id + '-svg-title',
+                        preserveAspectRatio: 'xMidYMid meet',
+                      },
+                      [
+                        h('title', { id: p.id + '-svg-title' }, p.label),
+                        h('line', {
+                          x1: 16,
+                          y1: 164,
+                          x2: 16 + plotWidth,
+                          y2: 164,
+                          stroke: 'var(--sol-color-control-border)',
+                        }),
+                        ...p.items.map((item, index) => {
+                          const width = Math.min(48, step * 0.6)
+                          const x = 16 + step * (index + 0.5)
+                          const height = (140 * item.value) / limit.value
+                          const characters = Array.from(item.label)
+                          const label =
+                            characters.length > labelLimit
+                              ? characters.slice(0, labelLimit - 1).join('') + '…'
+                              : item.label
+
+                          return h('g', { key: item.id }, [
+                            h('rect', {
+                              x: x - width / 2,
+                              y: 164 - height,
+                              width,
+                              height,
+                              fill: 'var(--sol-color-accent)',
+                            }),
+                            h(
+                              'text',
+                              {
+                                x,
+                                y: Math.max(14, 156 - height),
+                                'text-anchor': 'middle',
+                                class: 'sol-ui-chart-value',
+                              },
+                              formatSolNumber(item.value, l.value),
+                            ),
+                            h(
+                              'text',
+                              {
+                                x,
+                                y: 188,
+                                'text-anchor': 'middle',
+                                class: 'sol-ui-chart-label',
+                              },
+                              label,
+                            ),
+                          ])
+                        }),
+                      ],
+                    ),
+                    h(
+                      'table',
+                      { class: ['sol-ui-chart-table', p.showTable ? '' : 'sol-ui-sr-only'] },
+                      [
+                        h('caption', p.label),
+                        h(
+                          'thead',
+                          h('tr', [
+                            h('th', { scope: 'col' }, p.categoryLabel || l.value.chartCategory),
+                            h('th', { scope: 'col' }, p.valueLabel || l.value.chartValue),
+                          ]),
+                        ),
+                        h(
+                          'tbody',
+                          p.items.map((item) =>
+                            h('tr', { key: item.id }, [
+                              h('th', { scope: 'row' }, item.label),
+                              h('td', formatSolNumber(item.value, l.value)),
+                            ]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+        ],
+      )
+    }
+  },
+})

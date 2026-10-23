@@ -24,6 +24,9 @@
     @media(prefers-reduced-motion:reduce){.starter-boot-circle{animation:none;}}
     html[data-motion-policy="reduced"] .starter-boot-circle{animation:none;}
   </style>
+  <noscript>
+    <style>#starter-boot,#app{display:none!important;}</style>
+  </noscript>
   <script>
     (() => {
       const root = document.documentElement;
@@ -86,7 +89,6 @@
   </div>
   <div id="app" aria-busy="true" aria-hidden="true" inert></div>
   <noscript>
-    <style>#starter-boot,#app{display:none!important;}</style>
     <p style="padding:24px;font:14px/1.6 system-ui,sans-serif">이 실행 예제에는 JavaScript가 필요합니다. JavaScript를 켠 뒤 새로고침하거나 <a href="../">문서로 돌아가세요.</a></p>
   </noscript>
   <script type="module" src="/src/main.js"></script>

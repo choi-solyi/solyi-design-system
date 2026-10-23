@@ -33,10 +33,12 @@ node('7/10 Shared locale runtime','scripts/locale-runtime-check.mjs');
 node('7/10 Installed overflow locale','scripts/overflow-locale-check.mjs','--installed');
 node('7/10 S public APIs and direct Vuetify bridge','scripts/s-api-runtime-check.mjs');
 node('7/10 Shared form validation and Vuetify grid','scripts/form-api-runtime-check.mjs');
+node('7/10 Installed public declaration contracts','scripts/declaration-contract-check.mjs','--installed');
 node('7/10 Reusable progress','scripts/progress-runtime-check.mjs');
 node('7/10 Actual Vue documentation recipes','scripts/vue-recipes-runtime-check.mjs');
 node('7/10 Dedicated reusable Vue APIs','scripts/vue-dedicated-runtime-check.mjs');
 node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.mjs');
+node('7/10 Unsaved navigation and retry focus recovery','scripts/recipe-recovery-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 if(process.argv.includes('--packages-only')){
