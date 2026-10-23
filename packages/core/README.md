@@ -1,4 +1,4 @@
-# @solyi/core 0.4.4
+# @solyi/core 0.4.5
 
 프레임워크 독립 토큰·CSS·helper의 **로컬 npm pack 초안**입니다. `private:true`로 실제 npm 게시를 막고 있으며 레지스트리에 게시하지 않았습니다. 자체 코드는 MIT, 포함한 폰트와 외부 자산은 원래 라이선스입니다.
 

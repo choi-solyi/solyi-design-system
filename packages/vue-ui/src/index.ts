@@ -49,7 +49,7 @@ export type {SolOption,SolNumberInputHandle} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale,useSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate} from './locale';
 export type {SolLocale,SolLocaleSource,SolLocaleCode} from './locale';
 
-export const uiVersion='0.9.0';
+export {uiVersion} from './version';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));

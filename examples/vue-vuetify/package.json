@@ -14,8 +14,8 @@
     "check:recipes": "vue-tsc -p tsconfig.recipes.json"
   },
   "dependencies": {
-    "@solyi/core": "file:../../artifacts/solyi-core-0.4.4.tgz",
-    "@solyi/vue-ui": "file:../../artifacts/solyi-vue-ui-0.9.1.tgz",
+    "@solyi/core": "file:../../artifacts/solyi-core-0.4.5.tgz",
+    "@solyi/vue-ui": "file:../../artifacts/solyi-vue-ui-0.9.2.tgz",
     "vue": "3.5.44",
     "vuetify": "4.3.0"
   },

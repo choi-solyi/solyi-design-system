@@ -1,6 +1,6 @@
-# @solyi/vue-ui 0.9.1
+# @solyi/vue-ui 0.9.2
 
-실제 Vue S 컴포넌트를 제공하는 **로컬 tarball 초안**입니다. npm에 게시하지 않았습니다. Vue 3.5 / Vuetify 4.3과 @solyi/core 0.4.4을 소비 앱에 설치합니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
+실제 Vue S 컴포넌트를 제공하는 **로컬 tarball 초안**입니다. npm에 게시하지 않았습니다. Vue 3.5 / Vuetify 4.3과 @solyi/core 0.4.5을 소비 앱에 설치합니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
 
 ## 한 번 등록
 
