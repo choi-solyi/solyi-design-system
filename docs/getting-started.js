@@ -133,12 +133,8 @@ npm exec vue-tsc -- --noEmit -p tsconfig.json
 npm exec vite build`,
 });
 
-export function currentInstallCommand(catalogue = packageReleases) {
-  const release = catalogue.releases.find(item => item.release === catalogue.current);
-  const ui = release?.packages.find(item => item.name === 'solyi-ui');
-  if (!ui) return '';
-  const peer = release.compatibility;
-  return `npm install --save-exact ${ui.name}@${ui.version} vue@${peer.vue} vuetify@${peer.vuetify}`;
+export function currentInstallCommand() {
+  return 'npm install solyi-ui';
 }
 
 export function currentTarballInstallCommand(catalogue = packageReleases) {
@@ -149,13 +145,59 @@ export function currentTarballInstallCommand(catalogue = packageReleases) {
   return `npm install --save-exact https://ui.solyi.kr/releases/${release.release}/${ui.file} vue@${peer.vue} vuetify@${peer.vuetify}`;
 }
 
+function installCommands(h) {
+  const managers = [
+    {name: 'pnpm', code: currentInstallCommand().replace('npm install', 'pnpm add')},
+    {name: 'npm', code: currentInstallCommand()},
+  ];
+  const source = (label, code) => h.codeSample(label, code)
+    .replace(/^<details\b[^>]*>[\s\S]*?<\/summary>/, '')
+    .replace(/<\/details>\s*$/, '');
+  return `<div class="install-commands code-example" data-install-command-group><div class="install-command-tabs" role="tablist" aria-label="패키지 관리자">${managers.map((manager, index) => `<button class="install-command-tab" type="button" role="tab" id="install-${manager.name}-tab" data-install-manager="${manager.name}" aria-controls="install-${manager.name}-panel" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">${manager.name}</button>`).join('')}</div>${managers.map((manager, index) => `<div class="install-command-panel" role="tabpanel" id="install-${manager.name}-panel" data-install-panel="${manager.name}" aria-labelledby="install-${manager.name}-tab"${index ? ' hidden' : ''}><div class="install-command-source">${source(`터미널 · ${manager.name}으로 설치`, manager.code)}</div>${manager.name === 'pnpm' ? `<div class="install-peer-guidance"><p class="sol-hint">이미 호환되는 Vue·Vuetify가 있는 앱은 위 명령을 사용합니다. 새 앱은 직접 import할 Vue·Vuetify를 함께 추가하세요.</p>${source('터미널 · pnpm 앱에서 직접 import할 때', 'pnpm add solyi-ui vue vuetify')}</div>` : ''}</div>`).join('')}</div>`;
+}
+
+export function mountGettingStarted(root) {
+  const Controller = root.ownerDocument?.defaultView?.AbortController || globalThis.AbortController;
+  const controller = new Controller();
+  for (const group of root.querySelectorAll('[data-install-command-group]')) {
+    const tabs = [...group.querySelectorAll('[data-install-manager]')];
+    const panels = [...group.querySelectorAll('[data-install-panel]')];
+    const select = (target, focus = false) => {
+      for (const tab of tabs) {
+        const active = tab === target;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+      }
+      for (const panel of panels) panel.hidden = panel.dataset.installPanel !== target.dataset.installManager;
+      if (focus) target.focus();
+    };
+    group.addEventListener('click', event => {
+      const tab = event.target.closest('[data-install-manager]');
+      if (tabs.includes(tab)) select(tab);
+    }, {signal: controller.signal});
+    group.addEventListener('keydown', event => {
+      const index = tabs.indexOf(event.target);
+      if (index < 0) return;
+      let next;
+      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      select(tabs[next], true);
+    }, {signal: controller.signal});
+  }
+  return () => controller.abort();
+}
+
 export function renderGettingStarted(h) {
   const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const release = packageReleases.releases.find(item => item.release === packageReleases.current);
   const ui = release?.packages.find(item => item.name === 'solyi-ui');
-  const install = ui ? `<div class="sol-card sol-stack"><h3>현재 권장 버전</h3><p><code>${escape(ui.name)} ${escape(ui.version)}</code> · Vue ${escape(release.compatibility.vue)} / Vuetify ${escape(release.compatibility.vuetify)}</p>${h.codeSample('터미널 · npm으로 설치', currentInstallCommand())}${h.codeSample('터미널 · pnpm으로 설치', currentInstallCommand().replace('npm install', 'pnpm add'))}<p class="sol-hint">공통 스타일과 폰트는 solyi-ui에 포함됩니다. Vue와 Vuetify는 앱에서 함께 사용하는 peer dependency입니다. package.json과 lockfile을 함께 저장하세요.</p><details><summary>tarball로 직접 설치·검증하기</summary><div class="sol-stack"><div class="button-row"><a class="sol-button" href="./releases/${escape(release.release)}/${escape(ui.file)}" download>solyi-ui 다운로드</a><a href="./releases/${escape(release.release)}/manifest.json">Manifest</a><a href="./releases/${escape(release.release)}/SHA256SUMS">SHA-256</a></div>${h.codeSample('터미널 · tarball 직접 설치', currentTarballInstallCommand())}<p class="sol-hint">체크섬은 파일 손상 확인에 사용하며 라이선스나 공급망 안전성 전체를 보증하지 않습니다.</p></div></details></div>` : '<p class="sol-notice warning">설치 파일 정보를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</p>';
+  const install = ui ? `<div class="sol-card sol-stack">${installCommands(h)}<p class="sol-hint">공통 스타일과 폰트는 solyi-ui에 포함됩니다. npm(7 이상)과 pnpm의 기본 설정은 필요한 peer를 자동 다운로드합니다. 다만 pnpm 격리 구조에서 앱이 Vue·Vuetify를 직접 import하려면 명시적인 앱 의존성이 필요합니다. package.json과 lockfile을 함께 저장하세요.</p><p class="sol-hint">버전을 생략하면 설치 시점의 최신 배포를 선택합니다. 이후 같은 설치를 재현할 때는 lockfile과 npm ci를 사용합니다.</p><details class="install-compatibility"><summary>호환과 검증한 버전</summary><div class="sol-stack"><p><code>${escape(ui.name)} ${escape(ui.version)}</code> · Vue ${escape(release.compatibility.vue)} / Vuetify ${escape(release.compatibility.vuetify)} · Vite 8.3.4</p><p>이 조합으로 화면과 타입을 검증했습니다. 모든 peer 허용 버전의 동작을 보장하지 않습니다.</p></div></details><details><summary>peer 자동 다운로드를 끈 환경</summary><div class="sol-stack"><p>앱에서 peer를 별도로 관리하거나 자동 다운로드를 껐다면 Vue·Vuetify를 직접 설치하세요. 아래는 검증한 버전입니다.</p>${h.codeSample('터미널 · Vue와 Vuetify 직접 설치', `npm install vue@${release.compatibility.vue} vuetify@${release.compatibility.vuetify}`)}</div></details><details><summary>특정 버전으로 고정하기</summary><div class="sol-stack"><p>--save-exact는 package.json에 ^·~ 범위를 붙이지 않는 선택 옵션입니다. 설치한 정확한 버전과 lockfile을 함께 저장합니다.</p>${h.codeSample('터미널 · 특정 버전 고정', `npm install --save-exact ${ui.name}@${ui.version}`)}</div></details><details><summary>tarball로 직접 설치·검증하기</summary><div class="sol-stack"><div class="button-row"><a class="sol-button" href="./releases/${escape(release.release)}/${escape(ui.file)}" download>solyi-ui 다운로드</a><a href="./releases/${escape(release.release)}/manifest.json">Manifest</a><a href="./releases/${escape(release.release)}/SHA256SUMS">SHA-256</a></div>${h.codeSample('터미널 · tarball 직접 설치', currentTarballInstallCommand())}<p class="sol-hint">체크섬은 파일 손상 확인에 사용하며 라이선스나 공급망 안전성 전체를 보증하지 않습니다.</p></div></details></div>` : '<p class="sol-notice warning">설치 파일 정보를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.</p>';
   return h.section('install', '설치', '기존 Vite + Vue 프로젝트에 solyi-ui를 설치합니다.',
-    `<div class="sol-stack"><p><code>solyi-ui</code> 하나로 S 컴포넌트와 공통 스타일·토큰·폰트를 사용합니다. 아래 안내는 기존 Vite + Vue 프로젝트를 기준으로 합니다.</p>${install}<p>처음 구성하는 앱이라면 아래 개발 도구도 설치합니다.</p>${h.codeSample('터미널 · 개발 도구 설치', gettingStartedSnippets.tooling)}<p class="sol-hint">현재 확인한 도구는 Vite 8.3.4, Vue 3.5.44, Vuetify 4.3.0입니다. Node는 <code>^22.18.0 || &gt;=24.12.0</code> 범위를 사용합니다.</p></div>`) +
+    `<div class="sol-stack"><p><code>solyi-ui</code> 하나로 S 컴포넌트와 공통 스타일·토큰·폰트를 사용합니다. 아래 안내는 기존 Vite + Vue 프로젝트를 기준으로 합니다.</p>${install}<p>처음 구성하는 앱이라면 아래 개발 도구도 설치합니다.</p>${h.codeSample('터미널 · 개발 도구 설치', gettingStartedSnippets.tooling)}<p class="sol-hint">Node는 <code>^22.18.0 || &gt;=24.12.0</code> 범위를 사용합니다.</p></div>`) +
     h.section('registration', '스타일과 전역 등록', 'main.ts에서 한 번 등록하면 각 SFC에서 S 컴포넌트를 개별 import하지 않습니다.',
       `<div class="sol-stack"><p>Vuetify 스타일 → solyi-ui 폰트·토큰·컴포넌트 CSS → UI CSS 순서로 불러옵니다. <code>fonts.css</code>는 Wanted Sans, <code>code-fonts.css</code>는 JetBrains Mono와 한글 폴백 나눔고딕코딩을 self-host합니다. 코드 폰트는 일반 UI 폰트와 분리됩니다. 폰트를 생략하면 앱의 시스템 폴백을 사용합니다.</p>${h.codeSample('main.ts · 전역 등록', gettingStartedSnippets.registration)}<p><code>app.use(SolyiUI)</code>는 런타임 S 컴포넌트를 등록하고 <code>solyi-ui/global</code>은 Volar/vue-tsc의 전역 컴포넌트 타입을 제공합니다. 타입 import만으로 런타임 등록되지는 않습니다. 문서 사이트 전용 <code>docs.css</code>는 소비 앱에 추가하지 않습니다.</p></div>`) +
     h.section('auto-import', 'Vue 자동 import와 타입 검사', 'S 컴포넌트 등록과 Vue 함수 자동 import는 서로 다른 설정입니다.',

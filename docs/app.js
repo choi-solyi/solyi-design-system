@@ -2,7 +2,7 @@ import tokens from './token-data.js';
 import {solIcon} from './icons.js';
 import {highlightSample} from './code-highlight.js';
 import {renderComponentReferences,mountComponentReferences} from './component-api.js';
-import {renderGettingStarted} from './getting-started.js';
+import {renderGettingStarted,mountGettingStarted} from './getting-started.js';
 import {renderReleases} from './releases.js';
 import {mountVueExamples,mountVuePreviews} from './vue-examples.js';
 import {mountOverflowText} from './overflow.js';
@@ -28,6 +28,7 @@ let returnFocus;
 let cleanupVueExamples=()=>{};
 let cleanupVuePreviews=()=>{};
 let cleanupComponentReferences=()=>{};
+let cleanupGettingStarted=()=>{};
 let cleanupOverflow = () => {}; let cleanupTopics = () => {}; let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
 const projects = [
@@ -146,7 +147,7 @@ function buildDocumentSearchIndex(){
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'start';
-  cleanupVueExamples(); cleanupVuePreviews(); cleanupComponentReferences(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
+  cleanupVueExamples(); cleanupVuePreviews(); cleanupComponentReferences(); cleanupGettingStarted(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
   main.innerHTML = pageMarkup(route);
   cleanupVueExamples=mountVueExamples(main,codeSample);
@@ -154,6 +155,7 @@ function render({focus=false}={}) {
   cleanupTopics = presentTopics(main,route,{section,demo,contract,codeSample});
   cleanupVuePreviews = mountVuePreviews(main);
   cleanupComponentReferences=mountComponentReferences(main,{onNavigate:hash=>{displayedHash=hash;}});
+  cleanupGettingStarted=mountGettingStarted(main);
   document.querySelectorAll('[data-route]').forEach(link=>{
     if (link.dataset.route===route) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
   });

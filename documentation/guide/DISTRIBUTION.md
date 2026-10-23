@@ -2,15 +2,21 @@
 
 ## 현재 설치 경로
 
-[Getting started의 설치](https://ui.solyi.kr/#start/install)는 **현재 권장 solyi-ui 버전**의 npm·pnpm 명령과 다운로드를 제공합니다. 버전과 tarball URL은 릴리스 카탈로그로부터 생성되므로 이 문서에 별도 버전 숫자를 반복하지 않습니다.
+[Getting started의 설치](https://ui.solyi.kr/#start/install)는 최신 버전을 설치하는 npm·pnpm 명령과 검증한 버전의 다운로드를 제공합니다. 정확한 tarball 버전·URL·해시는 릴리스 카탈로그를 기준으로 합니다.
 
 공통 스타일·토큰·폰트가 포함된 `solyi-ui`를 설치합니다. Vue와 Vuetify는 peer dependency이며 UI 번들 안에 중복 포함하지 않습니다. Node·Vue·Vuetify 범위는 [호환 안내](COMPATIBILITY.md)를 확인합니다.
 
 ```sh
-npm install --save-exact solyi-ui vue@3.5.44 vuetify@4.3.0
+npm install solyi-ui
 ```
 
-pnpm을 사용하는 앱은 `pnpm add --save-exact`에 같은 패키지 조합을 전달합니다. Vue·Vuetify는 앱과 공유하는 peer dependency로 유지합니다.
+pnpm을 사용하는 앱은 `pnpm add solyi-ui`를 사용합니다. 기본 설정의 npm(7 이상)과 pnpm은 필요한 Vue·Vuetify peer dependency를 자동 다운로드합니다. pnpm의 격리 구조에서는 다운로드된 peer가 앱의 직접 import 경로에 노출되지 않을 수 있습니다. 새 앱은 다음처럼 직접 사용할 Vue·Vuetify를 함께 추가합니다.
+
+```sh
+pnpm add solyi-ui vue vuetify
+```
+
+앱의 기존 호환 버전은 유지할 수 있습니다. 자동 peer 다운로드를 끈 환경도 Vue·Vuetify를 직접 설치합니다. 검증한 조합은 Vue 3.5.44·Vuetify 4.3.0입니다. 버전을 생략하면 설치 시점의 최신 배포를 선택합니다. 선택적으로 `--save-exact`를 사용하면 package.json에 ^·~ 범위를 붙이지 않고 특정 버전을 고정합니다. 어느 방법이든 반복 설치는 lockfile로 재현합니다.
 
 ## 무결성과 반복 설치
 

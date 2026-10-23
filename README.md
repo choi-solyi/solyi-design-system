@@ -4,11 +4,19 @@ Vue 3와 Vuetify를 사용하는 프로젝트를 위한 UI 라이브러리입니
 
 ## 설치
 
-`solyi-ui`와 peer인 Vue·Vuetify를 설치합니다. Core 토큰·CSS·helper는 `solyi-ui`에 포함되어 별도 설치하지 않습니다.
+Core 토큰·CSS·helper가 포함된 `solyi-ui`를 설치합니다. 호환되는 Vue·Vuetify가 있는 프로젝트에서는 다음 명령을 사용합니다.
 
 ```sh
-pnpm add solyi-ui@0.10.4 vue@3.5.44 vuetify@4.3.0
+pnpm add solyi-ui
 ```
+
+새 앱에서는 프레임워크도 한 명령으로 함께 설치합니다. Vue·Vuetify는 외부 peer 의존성이며 라이브러리 내부에 중복 번들하지 않습니다.
+
+```sh
+pnpm add solyi-ui vue vuetify
+```
+
+npm 7 이상은 기본 설정에서 필요한 peer를 자동 설치합니다. pnpm의 격리 구조에서는 앱이 직접 import할 Vue·Vuetify를 앱 의존성으로 명시하세요.
 
 자세한 설치·업데이트 절차는 [설치 안내](https://ui.solyi.kr/#start/install)를 확인하세요.
 

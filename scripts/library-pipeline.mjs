@@ -9,7 +9,6 @@ const node=(label,file,...args)=>run(label,'',process.execPath,[file,...args]);
 const packageTarballs=['../../artifacts/'+packageTarball(packageMetadata('vue-ui'))];
 const installArgs=['--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org'];
 node('1/10 Internal shared Core','scripts/build-packages.mjs','--core');
-node('1/10 Refresh archived starter token snapshot','scripts/sync-starter.mjs');
 run('2/10 Library locked development dependencies','packages/vue-ui/',npm,['ci',...installArgs]);
 run('3/10 Vite library + strict own-source declarations','packages/vue-ui/',npm,['run','build']);
 node('4/10 Pack local artifacts','scripts/pack-packages.mjs');

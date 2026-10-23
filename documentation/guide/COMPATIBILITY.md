@@ -4,6 +4,8 @@
 
 현재 권장 solyi-ui 버전은 [Getting started의 설치](https://ui.solyi.kr/#start/install)에 표시됩니다. 정확한 버전과 파일은 [릴리스 카탈로그](https://ui.solyi.kr/releases/index.json)를 기준으로 합니다. 공통 스타일·토큰·폰트는 solyi-ui에 포함되며 Vue·Vuetify는 peer dependency로 함께 사용합니다.
 
+기본 설치는 `npm install solyi-ui` 또는 `pnpm add solyi-ui`입니다. npm(7 이상)과 pnpm의 기본 설정은 필요한 peer를 자동 다운로드하지만 pnpm의 격리 구조에서 앱이 Vue·Vuetify를 직접 import하는 데 충분하다는 뜻은 아닙니다. 새 pnpm 앱에서 직접 import하려면 `pnpm add solyi-ui vue vuetify`처럼 앱 의존성에 명시합니다. 기존 호환 버전은 유지할 수 있으며 자동 peer 다운로드를 끈 환경도 직접 설치해야 합니다.
+
 - 포함된 토큰은 프레임워크 독립 CSS custom properties와 단순 JSON export입니다. DTCG 적합성이나 모든 앱 호환을 표방하지 않습니다.
 - 확인한 소비 환경은 Vue 3.5.44, Vuetify 4.3.0, Vite 8.3.4입니다. Node 요구 범위는 `^22.18.0 || >=24.12.0`이며 검증에 사용한 Node는 22.23.3입니다. peer 범위 내 모든 버전과 Vuetify 3·React를 검증했다는 뜻은 아닙니다.
 - Vue 함수 자동 import에는 소비 앱의 unplugin-auto-import Vue preset·TypeScript·lint 설정이 필요합니다. S 컴포넌트 전역 등록만으로 Vue 함수가 자동 import되지는 않습니다.

@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {JSDOM} from 'jsdom';
+import {presentTopics,getTopicCatalogue} from '../site/topics.js';
+const names=['start','style','component','pattern','releases','licensing'];
+const dom=new JSDOM(`<header class="topbar"><div class="header-actions"></div></header><aside class="sidebar"><nav>${names.map((name,i)=>`<a href="#${name}" data-route="${name}"><span class="nav-index">0${i+1}</span>${name}</a>`).join('')}</nav></aside><main>${getTopicCatalogue('start').flatMap(group=>group.items).map(item=>`<section class="section" id="${item.id}"><h2>${item.label}</h2></section>`).join('')}</main>`,{url:'https://example.test/#start/install',pretendToBeVisual:true});
+const w=dom.window,d=w.document,mq=new w.EventTarget();mq.matches=true;
+Object.assign(globalThis,{window:w,document:d,location:w.location,AbortController:w.AbortController,matchMedia:()=>mq,getComputedStyle:w.getComputedStyle.bind(w),requestAnimationFrame:w.requestAnimationFrame.bind(w),cancelAnimationFrame:w.cancelAnimationFrame.bind(w),scrollY:0,innerHeight:800});w.scrollTo=()=>{};
+const main=d.querySelector('main'),cleanup=presentTopics(main,'start'),menu=d.querySelector('#mobile-document-menu'),primary=d.querySelector('#document-primary-nav');
+assert.equal(primary.hidden,true);menu.click();assert.equal(primary.hidden,false);
+const parents=[...primary.querySelectorAll('.doc-parent-toggle')];assert.equal(parents.length,6);
+for(const button of parents){assert.equal(button.tagName,'BUTTON');assert.ok(d.getElementById(button.getAttribute('aria-controls')));assert.equal(button.hidden,false);}
+const component=parents.find(button=>button.getAttribute('aria-controls')==='document-section-nav-component'),start=parents.find(button=>button.getAttribute('aria-controls')==='document-section-nav'),componentNav=d.getElementById('document-section-nav-component'),hash=w.location.hash;
+const sidebar=d.querySelector('.sidebar');sidebar.scrollTop=200;sidebar.getBoundingClientRect=()=>({top:70,bottom:600});component.getBoundingClientRect=()=>({top:10,bottom:54});
+component.focus();component.click();assert.equal(sidebar.scrollTop,140,'The sidebar is the sole scroll owner and keeps the clicked parent in view');assert.equal(primary.scrollTop,0);assert.equal(globalThis.scrollY,0);delete sidebar.getBoundingClientRect;delete component.getBoundingClientRect;
+assert.equal(w.location.hash,hash);assert.equal(d.querySelector('main'),main);assert.equal(d.activeElement,component);assert.equal(component.getAttribute('aria-expanded'),'true');assert.equal(componentNav.hidden,false);assert.equal(start.getAttribute('aria-expanded'),'false');assert.equal(componentNav.querySelectorAll('a').length,38);
+component.click();assert.equal(component.getAttribute('aria-expanded'),'false');assert.equal(componentNav.hidden,true);component.click();
+componentNav.querySelector('[data-nav-anchor="sbtn"]').click();await new Promise(resolve=>setTimeout(resolve,15));assert.equal(w.location.hash,'#component/sbtn','Only a child link navigates');
+primary.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));assert.equal(primary.hidden,true);assert.equal(d.activeElement,menu);
+menu.click();component.focus();mq.matches=false;mq.dispatchEvent(new w.Event('change'));assert.equal(primary.hidden,false);assert.ok(parents.every(button=>button.hidden));assert.equal(d.activeElement,d.querySelector('[data-route="component"]'));assert.equal(d.querySelector('#document-section-nav').hidden,false);assert.equal(componentNav.hidden,true);
+cleanup();assert.equal(primary.querySelectorAll('.doc-parent-toggle,.section-subnav').length,0);assert.equal(primary.querySelectorAll(':scope>a').length,6);assert.ok([...primary.querySelectorAll('a')].every(link=>!link.hidden));dom.window.close();
+console.log('PASS: six native mobile disclosure parents, no parent route/scroll/draft change, independent expanded/current states,38 component links, child-only navigation, Escape/resize focus, desktop link preservation and cleanup. Trusted keys/layout are checked in Chrome.');

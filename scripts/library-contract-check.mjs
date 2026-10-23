@@ -82,8 +82,6 @@ assert.deepEqual(await readFile(new URL('packages/core/dist/icons.js',root)),awa
 assert.deepEqual(await readFile(new URL('packages/core/dist/tokens.json',root)),await readFile(new URL('tokens.json',root)));
 assert.match(styles,/\.sol-ui-dialog\{[^}]*border-radius:var\(--sol-radius-panel\)/,'Vue Dialog consumes the shared panel radius');
 assert.match(styles,/\.sol-ui-table-desktop\{[^}]*border-radius:var\(--sol-radius-card\)/,'Vue Table consumes the shared card radius');
-assert.deepEqual(await readFile(new URL('examples/vue-vuetify/src/core/tokens.json',root)),await readFile(new URL('tokens.json',root)),'Archived starter token snapshot stays consistent');
-assert.deepEqual(await readFile(new URL('examples/vue-vuetify/src/core/tokens.css',root)),await readFile(new URL('packages/core/dist/tokens.css',root)),'Archived starter CSS matches Core');
 console.log('PASS: private single-package contents/typed exports/CSS/fonts, embedded Core source bytes, external Vue/Vuetify, two UI-only tarball consumers without separate Core, locked registry integrity/licenses and one framework copy each.');
 
 assert.deepEqual(await readFile(new URL('packages/core/dist/date-only.js',root)),await readFile(new URL('site/date-only.js',root)));
