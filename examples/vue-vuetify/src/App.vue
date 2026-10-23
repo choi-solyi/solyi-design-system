@@ -1,7 +1,7 @@
 <script setup>
 import {useTheme} from 'vuetify';
 import {tokens as coreTokens,coreVersion} from '@solyi/core';
-import { uiVersion, applySolyiAppearance } from '@solyi/vue-ui';
+import { uiVersion, applySolyiAppearance } from 'solyi-ui';
 import ProgressExamples from './ProgressExamples.vue';
 import RecipeExamples from './RecipeExamples.vue';
 import VuetifyExamples from './VuetifyExamples.vue';

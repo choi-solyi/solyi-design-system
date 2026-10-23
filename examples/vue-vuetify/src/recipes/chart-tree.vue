@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { STreeItem, SBarChartItem } from '@solyi/vue-ui';
+import type { STreeItem, SBarChartItem } from 'solyi-ui';
 defineProps<{ part?: string }>();
 const selected = ref<string | null>(null),
   expanded = ref<string[]>([]),

@@ -4,13 +4,13 @@
 
 ## 현재 권장 조합
 
-이번 통합 후보는 문서 **0.11.2 / Core 0.4.5 / Vue UI 0.9.2**입니다. 정확한 공개 상태는 해당 커밋의 Actions 최종 결과와 [공개 카탈로그](https://ui.solyi.kr/releases/index.json)로 확인합니다. 이 안내 파일을 작성한 것만으로 URL이 배포됐다고 판단하지 않습니다.
+이번 통합 후보는 문서 **0.12.0 / Core 0.4.6 / Vue UI 0.10.0**입니다. 정확한 공개 상태는 해당 커밋의 Actions 최종 결과와 [공개 카탈로그](https://ui.solyi.kr/releases/index.json)로 확인합니다. 이 안내 파일을 작성한 것만으로 URL이 배포됐다고 판단하지 않습니다.
 
 ```sh
-npm install --save-exact https://ui.solyi.kr/releases/0.11.2/solyi-core-0.4.5.tgz https://ui.solyi.kr/releases/0.11.2/solyi-vue-ui-0.9.2.tgz vue@3.5.44 vuetify@4.3.0
+npm install --save-exact https://ui.solyi.kr/releases/0.12.0/solyi-core-0.4.6.tgz https://ui.solyi.kr/releases/0.12.0/solyi-ui-0.10.0.tgz vue@3.5.44 vuetify@4.3.0
 ```
 
-패키지 이름은 여전히 `@solyi/core`와 `@solyi/vue-ui`이며 **npm/GitHub Packages에는 게시하지 않았습니다**. `private:true`는 실수로 게시하는 것을 막는 설정입니다. `sol-ui` 이름 사용권·소유권은 미확인이고 새 프로젝트 생성 명령도 출시하지 않았습니다.
+패키지 이름은 `@solyi/core`와 `solyi-ui`이며 **npm/GitHub Packages에는 게시하지 않았습니다**. `private:true`는 실수로 게시하는 것을 막는 설정입니다. 선택한 `solyi-ui`의 이름 사용권·소유권은 미확인이고 새 프로젝트 생성 명령도 출시하지 않았습니다.
 
 검증 도구의 기준은 Node 22.23.3, Vue 3.5.44, Vuetify 4.3.0입니다. Node 요구 범위는 `^22.18.0 || >=24.12.0`입니다. 실제 조합과 한계는 [COMPATIBILITY.md](COMPATIBILITY.md), 최초 설정은 [GETTING-STARTED.md](GETTING-STARTED.md)를 참고합니다.
 
@@ -36,3 +36,7 @@ npm install --save-exact https://ui.solyi.kr/releases/0.11.2/solyi-core-0.4.5.tg
 이미 존재하는 문서 버전이나 패키지 버전에 다른 바이트를 쓰는 작업은 거절합니다. 실패를 피하려고 과거 파일을 삭제하거나 덮어쓰지 않습니다. 승인된 main 푸시 뒤 기존 validate → Pages deploy를 이용하며 새 registry·credential·권한은 만들지 않습니다.
 
 이전 설치 경로와 변경 사항을 조사해야 할 때는 보존된 카탈로그·manifest·[변경 이력](../../CHANGELOG.md)을 이용합니다. 사용자 최종 승인 전에는 1.0.0을 만들지 않습니다.
+
+## Core 의존성과 npm 게시 전 결정
+
+Vue 3용 `solyi-ui`는 현재 `@solyi/core`를 peer로 사용합니다. 로컬에서는 두 tarball을 한 명령에 명시해 함께 설치합니다. UI 이름 변경이 Core 이름 변경이나 npm 스코프 사용 권한 확보를 뜻하지 않습니다. 레지스트리에서 `npm install solyi-ui`만으로 설치하려면 Core 게시·스코프 권한 또는 배포 구조를 별도로 결정해야 합니다. 이번에는 이름을 임의 변경하거나 npm에 게시하지 않습니다.

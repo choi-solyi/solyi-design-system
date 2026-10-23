@@ -21,7 +21,7 @@
 SplitButton/ContextMenu의 `open`은 선택적 제어 prop입니다. 생략하면 내부 열림 상태를 쓰고, 앱이 제어하려면 `v-model:open`을 연결합니다. 데이터 값이 없는 동작에 가짜 modelValue를 요구하지 않습니다. 메뉴는 평면 목록이며 서브메뉴·체크 메뉴는 이번 API에 없습니다.
 
 ```ts
-// Public type shapes; import these names from @solyi/vue-ui in an app.
+// Public type shapes; import these names from solyi-ui in an app.
 type SolRangeValue = readonly [number, number];
 type SolOptionLoader = (query:string, signal:AbortSignal) => Promise<readonly SolOption[]>;
 interface SolMenuItem {id:string;label:string;disabled?:boolean;danger?:boolean}
@@ -35,8 +35,8 @@ type SolMenuCloseReason = 'escape'|'outside'|'tab'|'select'|'disabled'|'programm
 <script setup lang="ts">
 import {ref} from 'vue';
 import {SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,
-  SContextMenu,SResizableSplitPane} from '@solyi/vue-ui';
-import type {SolRangeValue,SolMenuItem} from '@solyi/vue-ui';
+  SContextMenu,SResizableSplitPane} from 'solyi-ui';
+import type {SolRangeValue,SolMenuItem} from 'solyi-ui';
 const view=ref<string|null>('brief'),tags=ref<string[]>([]);
 const range=ref<SolRangeValue>([20,80]),ratio=ref(40),result=ref('');
 const options=[{value:'brief',label:'간단히'},{value:'full',label:'자세히'}];

@@ -1,10 +1,11 @@
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {readFileSync,writeFileSync} from 'node:fs';
+import {packageMetadata,packageTarball} from './package-identity.mjs';
 const root=new URL('../',import.meta.url),npm=process.platform==='win32'?'npm.cmd':'npm';
 const run=(label,dir,command,args)=>{console.log('\n'+label);execFileSync(command,args,{cwd:fileURLToPath(new URL(dir,root)),stdio:'inherit',shell:process.platform==='win32'&&command===npm});};
 const node=(label,file,...args)=>run(label,'',process.execPath,[file,...args]);
-const packageTarballs=['core','vue-ui'].map(name=>'../../artifacts/solyi-'+name+'-'+JSON.parse(readFileSync(new URL('packages/'+name+'/package.json',root),'utf8')).version+'.tgz');
+const packageTarballs=['core','vue-ui'].map(role=>'../../artifacts/'+packageTarball(packageMetadata(role)));
 const installArgs=['--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org'];
 node('1/10 Shared Core','scripts/build-packages.mjs','--core');
 node('1/10 Refresh archived starter token snapshot','scripts/sync-starter.mjs');
@@ -16,7 +17,7 @@ for(const project of ['examples/package-consumer/','examples/vue-vuetify/']){
   // A local preview tarball may be rebuilt before its version is committed.
   // Resolve only our package records afresh; preserve all third-party pins.
   const lockPath=new URL(project+'package-lock.json',root),lock=JSON.parse(readFileSync(lockPath,'utf8'));
-  for(const name of ['core','vue-ui'])delete lock.packages['node_modules/@solyi/'+name];
+  for(const name of ['@solyi/core','@solyi/vue-ui','solyi-ui'])delete lock.packages['node_modules/'+name];
   writeFileSync(lockPath,JSON.stringify(lock,null,2)+'\n');
   run('5/10 Refresh tarball lock: '+project,project,npm,['install','--package-lock-only',...installArgs,...packageTarballs]);
  }

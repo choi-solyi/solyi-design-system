@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { sRules } from '@solyi/vue-ui';
-import type { SFormSubmitEvent } from '@solyi/vue-ui';
+import { sRules } from 'solyi-ui';
+import type { SFormSubmitEvent } from 'solyi-ui';
 
 const summary = useTemplateRef<{ $el: HTMLElement }>('summary');
 const nameField = useTemplateRef<{ focus(): void }>('nameField');

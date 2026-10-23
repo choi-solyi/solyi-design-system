@@ -14,7 +14,7 @@
 
 기본 사용 코드는 [정본 Vue 예제](../../examples/vue-vuetify/src/recipes)에서 생성하고, 같은 파일을 `/starter/?view=recipes`에서 실행합니다. 문서의 HTML·CSS는 별도 참고 탭입니다. Tooltip/Popover·Accordion·Breadcrumb·Avatar·파일·단일 자동완성·차트도 전용 S API로 제공합니다. 폼·검색·편집 같은 업무 흐름은 부품을 연결한 Vue 조합입니다. [전체 전환표와 제한](../plans/VUE-EXAMPLES-PLAN.md)을 확인하세요.
 
-`@solyi/vue-ui`의 기본 사용 이름은 `SBtn`, `STextField`, `SDialog`, `SDataTable` 등 S 접두사 PascalCase입니다. 현재 컴포넌트 export와 plugin 등록은 S 이름만 제공합니다. 사용되지 않은 이전 Sol 컴포넌트 별칭은 이번 0.x에서 제거했습니다. 기존 릴리스 파일은 변경하지 않습니다.
+`solyi-ui`의 기본 사용 이름은 `SBtn`, `STextField`, `SDialog`, `SDataTable` 등 S 접두사 PascalCase입니다. 현재 컴포넌트 export와 plugin 등록은 S 이름만 제공합니다. 사용되지 않은 이전 Sol 컴포넌트 별칭은 이번 0.x에서 제거했습니다. 기존 릴리스 파일은 변경하지 않습니다.
 
 ```vue
 <script setup>
@@ -33,12 +33,12 @@ S 이름은 Vuetify와 완전히 동일한 API라는 뜻이 아닙니다. `SBtn`
 ```ts
 import {createApp} from 'vue';
 import {VApp} from 'vuetify/components/VApp';
-import SolyiUI, {createSolyiVuetify, applySolyiAppearance} from '@solyi/vue-ui';
+import SolyiUI, {createSolyiVuetify, applySolyiAppearance} from 'solyi-ui';
 import 'vuetify/styles';
 import '@solyi/core/fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
-import '@solyi/vue-ui/styles.css';
+import 'solyi-ui/styles.css';
 const vuetify = createSolyiVuetify({components:{VApp}});
 applySolyiAppearance(vuetify.theme,{theme:'violet',mode:'light',density:'comfortable'});
 createApp(App).use(vuetify).use(SolyiUI).mount('#app');

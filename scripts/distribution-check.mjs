@@ -5,6 +5,7 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {fileURLToPath} from 'node:url';
 import {verifyRelease,releaseCatalogue,digest,assertImmutableRelease,assertPackageVersions} from './releases.mjs';
+import {releasePackage,historicalUiName} from './package-identity.mjs';
 const root=new URL('../',import.meta.url),docs=new URL('docs/',root),fixture=new URL('.tooling/http-consumer-'+Date.now()+'/',root),exec=promisify(execFile);
 const catalogue=await releaseCatalogue();assert.ok(catalogue.releases.length>=2,'A real previous pair is required');
 const current=catalogue.releases.find(r=>r.release===catalogue.current),old=catalogue.releases.find(r=>r.release!==catalogue.current);
@@ -29,9 +30,10 @@ try{
  await copyFile(new URL('examples/package-consumer/env.d.ts',root),new URL('env.d.ts',fixture));
  const names=['SBtn','STextField','SDialog','SDataTable','SCheckbox','SRadioGroup','SSwitch','SSelect','STextarea','SNumberInput','STabs','SSnackbar','SDatePicker','STimePicker','SSegmentedControl','SMultiSelect','SRangeSlider','SSplitBtn','SContextMenu','SResizableSplitPane'];
  for(const [label,release]of [['previous',old],['update',current],['rollback',old]]){
-  const dependencies={...template.dependencies};for(const p of release.packages)dependencies[p.name]=base+release.release+'/'+p.file;
+  const uiName=releasePackage(release,'vue-ui').name;
+  const dependencies={...template.dependencies};delete dependencies[historicalUiName];delete dependencies['solyi-ui'];for(const p of release.packages)dependencies[p.name]=base+release.release+'/'+p.file;
   await writeFile(new URL('package.json',fixture),JSON.stringify({...template,name:'solyi-http-release-check',dependencies},null,2));
-  await writeFile(new URL('main.ts',fixture),`import {createApp,h} from 'vue';import {createVuetify} from 'vuetify';import SolyiUI,{${names.join(',')}${label==='update'?',formatSolDate,formatSolNumber,provideSolLocale':''}} from '@solyi/vue-ui';import '@solyi/core/tokens.css';import '@solyi/core/components.css';import '@solyi/vue-ui/styles.css';void [${names.join(',')}];const app=createApp({render:()=>h(STextField,{id:'check',label:'Check',required:true})});${label==='update'?"provideSolLocale(app,'en');void formatSolDate('2026-10-21','en');void formatSolNumber(1234.5,'en');":''}app.use(createVuetify()).use(SolyiUI).mount('#app');`);
+  await writeFile(new URL('main.ts',fixture),`import {createApp,h} from 'vue';import {createVuetify} from 'vuetify';import SolyiUI,{${names.join(',')}${label==='update'?',formatSolDate,formatSolNumber,provideSolLocale':''}} from '${uiName}';import '@solyi/core/tokens.css';import '@solyi/core/components.css';import '${uiName}/styles.css';void [${names.join(',')}];const app=createApp({render:()=>h(STextField,{id:'check',label:'Check',required:true})});${label==='update'?"provideSolLocale(app,'en');void formatSolDate('2026-10-21','en');void formatSolNumber(1234.5,'en');":''}app.use(createVuetify()).use(SolyiUI).mount('#app');`);
   console.log('HTTP '+label+': '+release.release);
   await command(['install','--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org']);
   const lock=JSON.parse(await readFile(new URL('package-lock.json',fixture),'utf8'));

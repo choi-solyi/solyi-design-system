@@ -62,3 +62,5 @@ npm run verify-live -- <공개된 커밋 SHA>
 [참고 가이드](https://design.yeolyi.com/)에서는 정보 구조와 공유 UI·문서 셸 분리 개념만 참고했습니다. 원문·시각 디자인은 복제하지 않았습니다. 이 저장소는 가상 데이터와 독창적인 문서·데모만 포함하며 기존 비공개 앱 소스나 개인 파일을 게시하지 않습니다.
 
 사용자의 최종 승인 전에는 **1.0.0을 만들지 않으며**, 기존 릴리스 파일과 Git 기록을 삭제하거나 변조하지 않습니다. 이전 상세 README는 [이력 부록](documentation/development/README-HISTORY.md)에 보존합니다.
+
+`solyi-ui`는 Vue 3용 UI 라이브러리의 선택한 이름입니다. 컴포넌트는 SBtn·SCard 등 기존 S API를 유지합니다. Core는 프레임워크 독립 패키지 `@solyi/core`로 남으며 현재는 두 로컬 tarball을 함께 설치합니다. npm 이름 확보나 게시 완료를 뜻하지 않습니다.

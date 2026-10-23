@@ -13,7 +13,7 @@ globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};
 globalThis.CSS={supports:()=>false,escape:value=>String(value)};w.CSS=globalThis.CSS;
 w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
 const entry=new URL('.runtime-form-entry.ts',consumer);
-await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';\nexport {VTextField} from 'vuetify/components/VTextField';\nexport {VContainer,VRow,VCol} from 'vuetify/components/VGrid';\nexport * from ${JSON.stringify(source?'../../packages/vue-ui/src/index':'@solyi/vue-ui')};\n`);
+await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';\nexport {VTextField} from 'vuetify/components/VTextField';\nexport {VContainer,VRow,VCol} from 'vuetify/components/VGrid';\nexport * from ${JSON.stringify(source?'../../packages/vue-ui/src/index':'solyi-ui')};\n`);
 const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consumer));
 const built=await build({root:fileURLToPath(consumer),configFile:false,logLevel:'error',ssr:{noExternal:true},build:{ssr:fileURLToPath(entry),write:false,minify:false,rolldownOptions:{external:['vue']}}});
 const module=new URL('.runtime-form-check.mjs',consumer);await writeFile(module,built.output.find(item=>item.type==='chunk').code);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ToastTone } from '@solyi/vue-ui';
+import type { ToastTone } from 'solyi-ui';
 const open = ref(false),
   selected = ref<ToastTone>('info'),
   message = ref('');

@@ -1,6 +1,6 @@
 # Sol UI 소비 프로젝트 디자인 지침
 
-이 문서는 Sol UI를 사용하는 앱의 UI 구현 지침입니다. 디자인 시스템 저장소 자체의 개발·기여 규칙이나 API 명세를 대신하지 않습니다. 사용자의 명시적 요구와 소비 프로젝트의 기존 규칙을 먼저 확인하고, 예외가 필요하면 적용 범위와 이유를 기록하세요.
+이 문서는 Vue 3용 UI 라이브러리 solyi-ui를 사용하는 앱의 UI 구현 지침입니다. 디자인 시스템 저장소 자체의 개발·기여 규칙이나 API 명세를 대신하지 않습니다. 사용자의 명시적 요구와 소비 프로젝트의 기존 규칙을 먼저 확인하고, 예외가 필요하면 적용 범위와 이유를 기록하세요.
 
 ## AI 도구에 연결하기
 
@@ -12,7 +12,7 @@ DESIGN.md라는 파일명만으로 모든 AI 도구가 자동으로 읽는 것�
 
 ```text
 UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
-설치된 @solyi/core·@solyi/vue-ui의 버전, 공개 타입·API, 기존 앱 설정을 먼저 확인하세요.
+설치된 @solyi/core·solyi-ui의 버전, 공개 타입·API, 기존 앱 설정을 먼저 확인하세요.
 실제 S 컴포넌트와 역할 토큰을 우선 사용하고 없는 API는 추측하지 마세요.
 기존 기능·접근성·앱별 예외를 보존하며, 변경 범위의 반응형·라이트/다크·키보드 동작을 확인하고 미검증을 구분해 보고하세요.
 ```
@@ -21,7 +21,7 @@ UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
 
 - package.json과 lockfile, 설치된 패키지의 package.json·exports·타입을 기준으로 작업합니다. 문서 버전과 Core/UI 패키지 버전은 서로 다를 수 있습니다.
 - 현재 권장 Core/UI 조합과 UI의 Core peer 버전을 확인합니다. URL과 integrity를 고정하고, 업데이트·롤백 때 package.json과 lockfile을 함께 관리합니다.
-- 아직 npm 레지스트리에 게시되지 않은 초안이므로 npm install sol-ui나 생성 CLI가 제공된다고 안내하지 않습니다. 프로젝트가 사용하는 실제 설치 경로를 확인합니다.
+- 아직 npm 레지스트리에 게시되지 않은 초안이므로 npm install solyi-ui나 생성 CLI가 제공된다고 안내하지 않습니다. 프로젝트가 사용하는 실제 설치 경로를 확인합니다.
 - 사용할 props·slots·events·methods를 설치 버전에서 확인합니다. SCard가 모든 VCard 옵션을 전달한다고 가정하거나, 존재하지 않는 S 태그·메서드를 만들지 않습니다.
 
 ## 2. 컴포넌트와 레이아웃
@@ -42,7 +42,7 @@ UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
 
 ## 4. 전역 등록과 자동 import의 전제
 
-- S 컴포넌트는 앱에서 SolyiUI 플러그인을 한 번 등록하고, @solyi/vue-ui/global의 전역 템플릿 타입도 연결합니다. 타입 선언만으로 런타임 컴포넌트가 등록되지는 않습니다.
+- S 컴포넌트는 앱에서 SolyiUI 플러그인을 한 번 등록하고, solyi-ui/global의 전역 템플릿 타입도 연결합니다. 타입 선언만으로 런타임 컴포넌트가 등록되지는 않습니다.
 - 샘플의 ref/computed/onBeforeUnmount 등 생략된 Vue import는 unplugin-auto-import의 Vue preset이 설정된 프로젝트를 전제로 합니다. TypeScript 선언과 lint globals도 같은 설정에 연결합니다.
 - 자동 import를 설정하지 않은 앱에서는 실제 사용하는 Vue 함수를 직접 import합니다. 패키지 helper와 TypeScript 타입까지 자동 import된다고 가정하지 않습니다.
 

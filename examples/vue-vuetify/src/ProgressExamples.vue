@@ -1,5 +1,5 @@
 <script setup>
-import { resolveSProgress } from '@solyi/vue-ui';
+import { resolveSProgress } from 'solyi-ui';
 const state=ref('determinate'),value=ref(35),restartButton=ref(null);
 const showLabel=ref(true),showValue=ref(true),showMessage=ref(true),animated=ref(true);
 const options=[{value:'determinate',label:'진행률을 아는 작업'},{value:'indeterminate',label:'처리 중 · 진행률 알 수 없음'},{value:'complete',label:'완료'},{value:'error',label:'오류 · 마지막 값 유지'}];

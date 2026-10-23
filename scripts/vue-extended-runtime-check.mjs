@@ -11,7 +11,7 @@ globalThis.visualViewport=undefined;globalThis.requestAnimationFrame=w.requestAn
 w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});globalThis.matchMedia=w.matchMedia;globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};w.ResizeObserver=globalThis.ResizeObserver;
 globalThis.CSS={supports:()=>false,escape:v=>String(v).replace(/[^\w-]/g,'')};w.CSS=globalThis.CSS;
 w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};
-const entry=new URL('.runtime-extension-entry.ts',consumer);await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';\nexport * from ${JSON.stringify(source?'../../packages/vue-ui/src/index':'@solyi/vue-ui')};\n`);
+const entry=new URL('.runtime-extension-entry.ts',consumer);await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';\nexport * from ${JSON.stringify(source?'../../packages/vue-ui/src/index':'solyi-ui')};\n`);
 const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consumer));const built=await build({root:fileURLToPath(consumer),configFile:false,logLevel:'error',ssr:{noExternal:true},build:{ssr:fileURLToPath(entry),write:false,minify:false,rolldownOptions:{external:['vue']}}});
 await writeFile(new URL('.runtime-check.mjs',consumer),built.output.find(o=>o.type==='chunk').code);
 const api=await import(new URL('.runtime-check.mjs?extended='+Date.now(),consumer));

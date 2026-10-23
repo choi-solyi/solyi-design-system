@@ -1,4 +1,4 @@
-import {applySolyiAppearance} from '@solyi/vue-ui';
+import {applySolyiAppearance} from 'solyi-ui';
 export function mountProgressEmbed(theme,channel='progress',confirmLeave=()=>Promise.resolve(true)){
  document.body.classList.add('starter-embed');
  if(window.parent===window)return()=>{};

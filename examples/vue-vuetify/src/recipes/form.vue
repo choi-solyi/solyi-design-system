@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { sRules } from '@solyi/vue-ui';
-import type { SFormHandle, SFormSubmitEvent } from '@solyi/vue-ui';
+import { sRules } from 'solyi-ui';
+import type { SFormHandle, SFormSubmitEvent } from 'solyi-ui';
 
 const form = useTemplateRef<SFormHandle>('form');
 const name = ref('');

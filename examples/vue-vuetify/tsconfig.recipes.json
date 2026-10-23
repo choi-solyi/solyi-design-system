@@ -14,7 +14,7 @@
     "noEmit": true,
     "types": [
       "vite/client",
-      "@solyi/vue-ui/global"
+      "solyi-ui/global"
     ]
   },
   "vueCompilerOptions": {

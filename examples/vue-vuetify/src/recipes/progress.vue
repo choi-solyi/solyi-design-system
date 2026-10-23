@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SProgressState } from '@solyi/vue-ui';
+import type { SProgressState } from 'solyi-ui';
 const state = ref<string | null>('indeterminate'),
   animated = ref(true),
   showValue = ref(true),

@@ -1,5 +1,5 @@
 <script setup>
-import { koLocale, enLocale } from '@solyi/vue-ui';
+import { koLocale, enLocale } from 'solyi-ui';
 const disabled=ref(false),readonly=ref(false),language=ref('inherit'),locale=computed(()=>language.value==='inherit'?undefined:language.value==='en'?enLocale:koLocale);
 const agreement=ref(false),kind=ref('note'),notifications=ref(true),category=ref(null),description=ref(''),count=ref(2),form=ref(null),formStatus=ref(''),errors=ref({});
 const options=[{value:'note',label:'기록'},{value:'plan',label:'계획'},{value:'archived',label:'보관 · 비활성 예시',disabled:true}];
@@ -16,7 +16,7 @@ function checkSchedule(){const dateValid=datePicker.value?.validate(),timeValid=
 <template>
   <section class="starter-card" aria-labelledby="extended-title">
     <h2 id="extended-title">실제 패키지 입력 6종</h2>
-    <p class="starter-hint">아래 부품은 문서 DOM을 복사하지 않고 @solyi/vue-ui에서 import합니다. 모든 값은 가상이며 현재 페이지 메모리에만 남습니다.</p>
+    <p class="starter-hint">아래 부품은 문서 DOM을 복사하지 않고 solyi-ui에서 import합니다. 모든 값은 가상이며 현재 페이지 메모리에만 남습니다.</p>
     <div class="starter-settings starter-demo-settings">
       <SSwitch id="demo-disabled" v-model="disabled" label="입력 예시 비활성"/>
       <SSwitch id="demo-readonly" v-model="readonly" label="입력 예시 읽기 전용"/>

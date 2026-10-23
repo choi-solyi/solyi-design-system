@@ -1,20 +1,20 @@
-# @solyi/vue-ui 0.9.2
+# solyi-ui 0.10.0
 
-실제 Vue S 컴포넌트를 제공하는 **로컬 tarball 초안**입니다. npm에 게시하지 않았습니다. Vue 3.5 / Vuetify 4.3과 @solyi/core 0.4.5을 소비 앱에 설치합니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
+실제 Vue S 컴포넌트를 제공하는 **로컬 tarball 초안**입니다. npm에 게시하지 않았습니다. Vue 3.5 / Vuetify 4.3과 @solyi/core 0.4.6을 소비 앱에 설치합니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
 
 ## 한 번 등록
 
 ```ts
 import {createApp} from 'vue';
 import {VApp} from 'vuetify/components/VApp';
-import SolyiUI, {createSolyiVuetify} from '@solyi/vue-ui';
+import SolyiUI, {createSolyiVuetify} from 'solyi-ui';
 import 'vuetify/styles';
 import '@solyi/core/fonts.css';
 import '@solyi/core/code-fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
-import '@solyi/vue-ui/styles.css';
-import '@solyi/vue-ui/global';
+import 'solyi-ui/styles.css';
+import 'solyi-ui/global';
 import App from './App.vue';
 
 createApp(App)
@@ -23,7 +23,7 @@ createApp(App)
   .mount('#app');
 ```
 
-전역 S 등록은 각 앱에서 한 번 합니다. Volar/vue-tsc에는 `@solyi/vue-ui/global`을 compilerOptions.types 또는 포함되는 env.d.ts에 연결합니다. 타입 모듈만 가져와서는 런타임 등록이 되지 않습니다. 개별 named export도 사용할 수 있습니다.
+전역 S 등록은 각 앱에서 한 번 합니다. Volar/vue-tsc에는 `solyi-ui/global`을 compilerOptions.types 또는 포함되는 env.d.ts에 연결합니다. 타입 모듈만 가져와서는 런타임 등록이 되지 않습니다. 개별 named export도 사용할 수 있습니다.
 
 실행 예제는 `unplugin-auto-import` Vue preset과 생성 TypeScript/lint globals를 함께 설정해 SFC의 반복 Vue 함수 import를 생략합니다. 자동 import를 설정하지 않은 앱에서는 Vue 함수 import를 유지해야 합니다. TypeScript 타입 import는 별도입니다. [정확한 시작 절차](https://github.com/choi-solyi/solyi-design-system/blob/main/documentation/guide/GETTING-STARTED.md)를 참고하세요.
 
@@ -51,3 +51,7 @@ Core 토큰과 CSS, Vue UI CSS를 한 번 가져옵니다. 문서 셸용 docs.cs
 ## 소비 프로젝트 AI 지침
 
 패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 두 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.
+
+## Core 의존성과 npm 게시 전 결정
+
+Vue 3용 `solyi-ui`는 현재 `@solyi/core`를 peer로 사용합니다. 로컬에서는 두 tarball을 한 명령에 명시해 함께 설치합니다. UI 이름 변경이 Core 이름 변경이나 npm 스코프 사용 권한 확보를 뜻하지 않습니다. 레지스트리에서 `npm install solyi-ui`만으로 설치하려면 Core 게시·스코프 권한 또는 배포 구조를 별도로 결정해야 합니다. 이번에는 이름을 임의 변경하거나 npm에 게시하지 않습니다.

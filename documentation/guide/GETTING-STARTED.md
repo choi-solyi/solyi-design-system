@@ -8,7 +8,7 @@
 
 ## 2. 앱에서 한 번 등록
 
-실행 가능한 [starter의 진입점](../../examples/vue-vuetify/src/main.js)이 기준입니다. Vuetify 플러그인은 한 번만 설치하고 S 컴포넌트는 `app.use(SolyiUI)`로 전역 등록합니다. `@solyi/vue-ui/global`은 Volar/vue-tsc의 전역 템플릿 타입을 제공합니다. 타입 설정만으로 런타임 컴포넌트가 등록되지는 않습니다.
+실행 가능한 [starter의 진입점](../../examples/vue-vuetify/src/main.js)이 기준입니다. Vuetify 플러그인은 한 번만 설치하고 S 컴포넌트는 `app.use(SolyiUI)`로 전역 등록합니다. `solyi-ui/global`은 Volar/vue-tsc의 전역 템플릿 타입을 제공합니다. 타입 설정만으로 런타임 컴포넌트가 등록되지는 않습니다.
 
 Core 토큰·컴포넌트 CSS와 Vue UI CSS를 명시적으로 한 번 불러옵니다. Wanted Sans와 코드 폰트는 별도의 self-host CSS export이므로 사용할 앱에서 선택합니다. `docs.css`는 문서 셸 전용이며 소비 앱에 가져오지 않습니다.
 

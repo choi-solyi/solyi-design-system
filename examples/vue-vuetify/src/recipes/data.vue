@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TableColumn, TableRow, TableSort } from '@solyi/vue-ui';
+import type { TableColumn, TableRow, TableSort } from 'solyi-ui';
 const query = ref(''),
   page = ref(1),
   selected = ref<string[]>([]),

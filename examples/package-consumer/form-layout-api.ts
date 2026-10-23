@@ -1,6 +1,6 @@
-import { SForm, STextField, SContainer, SRow, SCol, sRules } from '@solyi/vue-ui';
+import { SForm, STextField, SContainer, SRow, SCol, sRules } from 'solyi-ui';
 import { VContainer } from 'vuetify/components/VGrid';
-import type { SFormHandle, SFormResult, SFieldHandle, SRule } from '@solyi/vue-ui';
+import type { SFormHandle, SFormResult, SFieldHandle, SRule } from 'solyi-ui';
 
 type FormProps = InstanceType<typeof SForm>['$props'];
 type FieldProps = InstanceType<typeof STextField>['$props'];

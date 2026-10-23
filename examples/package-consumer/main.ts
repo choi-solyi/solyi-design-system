@@ -1,11 +1,11 @@
-import '@solyi/vue-ui/global';
-import {STooltip,SPopover,SAccordion,SBreadcrumbs,SFileInput,SAutocomplete,SAvatar,SStepper,SBarChart} from '@solyi/vue-ui';
+import 'solyi-ui/global';
+import {STooltip,SPopover,SAccordion,SBreadcrumbs,SFileInput,SAutocomplete,SAvatar,SStepper,SBarChart} from 'solyi-ui';
 import {createApp,h} from 'vue';
 import {createVuetify} from 'vuetify';
 import {VApp} from 'vuetify/components/VApp';
-import SolyiUI,{provideSolLocale,formatSolNumber,formatSolDate,parseSolNumber,resolveSolLocale,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,SProgressLinear,SProgressCircular,koLocale,uiVersion} from '@solyi/vue-ui';
-import type {DateValue,DateRange,SolOption,SolPickerHandle,SolNumberInputHandle,SolLocale,SolLocaleSource,SolRangeValue,SolOptionLoader,SolMenuItem} from '@solyi/vue-ui';
-import type {TableColumn,TableRow,TableSort,ButtonVariant} from '@solyi/vue-ui';
+import SolyiUI,{provideSolLocale,formatSolNumber,formatSolDate,parseSolNumber,resolveSolLocale,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,SProgressLinear,SProgressCircular,koLocale,uiVersion} from 'solyi-ui';
+import type {DateValue,DateRange,SolOption,SolPickerHandle,SolNumberInputHandle,SolLocale,SolLocaleSource,SolRangeValue,SolOptionLoader,SolMenuItem} from 'solyi-ui';
+import type {TableColumn,TableRow,TableSort,ButtonVariant} from 'solyi-ui';
 import {tokens,coreVersion} from '@solyi/core';
 import {solIcon,solIconPaths} from '@solyi/core/icons';
 import '@solyi/core/fonts.css';
@@ -13,7 +13,7 @@ import '@solyi/core/code-fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import 'vuetify/styles';
-import '@solyi/vue-ui/styles.css';
+import 'solyi-ui/styles.css';
 const columns:TableColumn[]=[{key:'name',label:'이름',sortable:true},{key:'date',label:'변경일',width:'128px'}];
 const rows:TableRow[]=[{id:'a',name:'가상 기록',date:'2026-10-21'}];
 const variant:ButtonVariant='primary';
@@ -108,7 +108,7 @@ const invalidLocale:SolLocaleSource=42;void invalidLocale;
 app.use(createVuetify()).use(SolyiUI).mount('#app');
 
 // @ts-expect-error Removed legacy component compatibility export.
-import type {SolButton as RemovedLegacyButton} from '@solyi/vue-ui';
+import type {SolButton as RemovedLegacyButton} from 'solyi-ui';
 
 // Independent tarball consumers must receive global template types and typed dedicated APIs.
 const breadcrumbProps:InstanceType<typeof SBreadcrumbs>['$props']={items:[{id:'home',label:'Home',href:'#home'}]};

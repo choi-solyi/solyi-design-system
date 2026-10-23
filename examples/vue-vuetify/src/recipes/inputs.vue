@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DateValue, SolOption, SolOptionLoader } from '@solyi/vue-ui';
+import type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui';
 defineProps<{ part?: string }>();
 const mode = ref<string | null>('range'),
   date = ref<DateValue>(null);

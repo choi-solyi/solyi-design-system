@@ -2,6 +2,7 @@ import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
+import {releasePackage,packageTarball} from './package-identity.mjs';
 const root=new URL('../',import.meta.url),assets=new URL('release-assets/',root);
 const json=async url=>JSON.parse(await readFile(url,'utf8'));
 const semver=value=>typeof value==='string'&&/^\d+\.\d+\.\d+$/.test(value);
@@ -12,8 +13,8 @@ export async function verifyRelease(directory){
  const manifest=await json(new URL('manifest.json',directory));
  if(!semver(manifest.release)||manifest.packages?.length!==2)throw Error('Invalid release manifest');
  for(const name of ['core','vue-ui']){
-  const pkg=manifest.packages.find(p=>p.name==='@solyi/'+name);
-  if(!pkg||!semver(pkg.version)||pkg.file!==`solyi-${name}-${pkg.version}.tgz`)throw Error('Invalid package record');
+  const pkg=releasePackage(manifest,name);
+  if(!semver(pkg.version)||pkg.file!==packageTarball(pkg))throw Error('Invalid package record');
   const bytes=await readFile(new URL(pkg.file,directory)),hash=digest(bytes);
   if(bytes.length!==pkg.bytes||hash.sha256!==pkg.sha256||hash.integrity!==pkg.integrity)throw Error('Package checksum mismatch: '+pkg.file);
  }
@@ -37,7 +38,7 @@ if(process.argv[1]===fileURLToPath(import.meta.url)){
   const reports=await json(new URL('artifacts/pack-report.json',root)),packages=[];
   for(const name of ['core','vue-ui']){
    const pkg=await json(new URL('packages/'+name+'/package.json',root)),report=reports.find(p=>p.name===pkg.name&&p.version===pkg.version);if(!report)throw Error('Run package pipeline first');
-   const file=`solyi-${name}-${pkg.version}.tgz`,bytes=await readFile(new URL('artifacts/'+file,root)),hash=digest(bytes);if(hash.integrity!==report.integrity)throw Error('Pack report does not match '+file);
+   const file=packageTarball(pkg),bytes=await readFile(new URL('artifacts/'+file,root)),hash=digest(bytes);if(hash.integrity!==report.integrity)throw Error('Pack report does not match '+file);
    packages.push({name:pkg.name,version:pkg.version,file,bytes:bytes.length,...hash});
   }
   assertPackageVersions([...(await releaseCatalogue()).releases,{packages}]);

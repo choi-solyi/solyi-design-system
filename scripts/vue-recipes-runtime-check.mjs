@@ -16,8 +16,8 @@ const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consum
 const {default:vue}=await import(new URL('node_modules/@vitejs/plugin-vue/dist/index.mjs',consumer));
 const {createVueAutoImport}=await import(new URL('auto-import.config.js',consumer));
 const entry=new URL('.runtime-test/recipes-entry.js',consumer);await mkdir(new URL('./',entry),{recursive:true});
-await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';export * from '@solyi/vue-ui';export {recipeComponents} from '../src/recipe-registry.ts';`);
-const built=await build({root:fileURLToPath(consumer),configFile:false,plugins:[vue(),createVueAutoImport({generate:false})],resolve:{dedupe:['vue','vuetify','@solyi/core','@solyi/vue-ui'],alias:source?[{find:/^@solyi\/vue-ui$/,replacement:fileURLToPath(new URL('packages/vue-ui/src/index.ts',root))}]:[]},logLevel:'error',build:{lib:{entry:fileURLToPath(entry),formats:['es']},write:false,minify:false,rolldownOptions:{external:['vue']}}});
+await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';export * from 'solyi-ui';export {recipeComponents} from '../src/recipe-registry.ts';`);
+const built=await build({root:fileURLToPath(consumer),configFile:false,plugins:[vue(),createVueAutoImport({generate:false})],resolve:{dedupe:['vue','vuetify','@solyi/core','solyi-ui'],alias:source?[{find:/^solyi-ui$/,replacement:fileURLToPath(new URL('packages/vue-ui/src/index.ts',root))}]:[]},logLevel:'error',build:{lib:{entry:fileURLToPath(entry),formats:['es']},write:false,minify:false,rolldownOptions:{external:['vue']}}});
 const chunks=(Array.isArray(built)?built:[built]).flatMap(r=>r.output).filter(x=>x.type==='chunk'),out=new URL('.runtime-test/recipes-bundle/',consumer);await mkdir(out,{recursive:true});for(const chunk of chunks){assert.ok(!chunk.fileName.includes('..'));await mkdir(new URL('./',new URL(chunk.fileName,out)),{recursive:true});await writeFile(new URL(chunk.fileName,out),chunk.code);}
 const api=await import(new URL(chunks.find(c=>c.isEntry).fileName+'?progress='+Date.now(),out));
 const {createApp,h,ref,nextTick,recipeComponents,createSolyiVuetify,STree,SRadioGroup}=api;

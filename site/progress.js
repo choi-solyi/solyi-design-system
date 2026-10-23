@@ -1,6 +1,6 @@
 /* The canonical example executes the real installed Vue package in the same-origin starter. */
 export function renderProgress(h){return h.section('progress','Progress bar & circle','설치한 SProgressLinear·SProgressCircular 예제를 직접 실행합니다.',h.demo('Actual package / fictional manual progress',`<iframe id="progress-package-frame" class="progress-package-frame" src="./starter/?view=progress" title="실제 패키지 진행 표시 예제" loading="lazy" height="620"></iframe><p class="sol-hint">이 프레임은 같은 사이트의 실제 패키지 소비 예제입니다. <a href="./starter/#s-progress-title">전체 starter에서 열기 →</a></p>`)+h.contract('Determinate, indeterminate, complete, error. Unknown에는 퍼센트/aria-valuenow가 없으며 오류는 마지막 값을 보존합니다.','프레임 안의 상태·범위·버튼은 Tab/방향키로 사용합니다. 완료·재시도 후 초점 복귀를 유지합니다.','같은 Core progress CSS / accent·success·danger / motion-duration-indeterminate / reduced-motion')+h.codeSample('실제 Vue 패키지 사용',`<script setup>
-import {SProgressLinear, SProgressCircular} from '@solyi/vue-ui';
+import {SProgressLinear, SProgressCircular} from 'solyi-ui';
 </script>
 <SProgressLinear id="task-bar" label="작업 진행" :model-value="35" :show-value="true" :show-message="false" />
 <SProgressCircular id="task-circle" label="파일 처리" state="indeterminate" />

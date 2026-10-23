@@ -4,7 +4,7 @@
 
 ```ts
 import {createApp, ref} from 'vue';
-import {provideSolLocale} from '@solyi/vue-ui';
+import {provideSolLocale} from 'solyi-ui';
 const language = ref('ko-KR');
 const app = createApp(App);
 provideSolLocale(app, () => ({code: language.value, tableRetry: '다시 불러오기'}));
@@ -23,7 +23,7 @@ provideSolLocale(app, () => ({code: language.value, tableRetry: '다시 불러�
 20종의 내장 선택·로딩·오류·메뉴·패널·필수·닫기·표 정렬·선택·페이지·전체 내용 문구가 이 설정을 따릅니다. 언어를 바꿔도 값·정렬·선택·페이지·열린 패널·초점을 초기화하거나 change를 보내지 않습니다. 표시 중인 내장 숫자/날짜/시간/다중선택 오류와 native customValidity도 갱신합니다. `label`, 업무 데이터, slot, 사용자 제공 error/help/알림 message는 앱 소유이므로 번역하지 않습니다. 소비 앱이 전체 화면의 `lang`과 업무 번역을 관리합니다. 문서 사이트 전체 번역이나 언어 영구 저장 기능은 포함하지 않습니다.
 
 ```ts
-import {formatSolNumber, parseSolNumber, formatSolDate} from '@solyi/vue-ui';
+import {formatSolNumber, parseSolNumber, formatSolDate} from 'solyi-ui';
 formatSolNumber(1234.5, 'en'); // "1,234.5"
 parseSolNumber('1,234.5', 'ko'); // 1234.5; 잘못된 "1,2"는 null
 formatSolDate('2026-10-21', 'ko'); // "2026년 10월 21일"
