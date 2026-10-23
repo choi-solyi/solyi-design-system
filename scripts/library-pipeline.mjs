@@ -14,6 +14,7 @@ const node=(label,file,...args)=>run(label,'',process.execPath,[file,...args]);
 // Core is an internal build unit; a new consumer installs only the UI tarball.
 const packageTarballs=['../../artifacts/'+packageTarball(packageMetadata('vue-ui'))];
 const installArgs=['--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org'];
+node('1/10 Framework-independent clean bootstrap', 'scripts/core-bootstrap-check.mjs')
 node('1/10 Internal shared Core','scripts/build-packages.mjs','--core');
 run('2/10 Library locked development dependencies','packages/vue-ui/',npm,['ci',...installArgs]);
 run('3/10 Vite library + strict own-source declarations','packages/vue-ui/',npm,['run','build']);

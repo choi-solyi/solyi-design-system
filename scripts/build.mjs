@@ -1,4 +1,3 @@
-import './build-usage-examples.mjs';
 import {releaseCatalogue,releaseFiles} from './releases.mjs';
 import {readFile, writeFile, mkdir, copyFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
@@ -25,6 +24,7 @@ await writeFile(path.join(out, 'tokens.css'), css);
 await writeFile(path.join(out, 'token-data.js'), `// Generated from tokens.json.\nexport default ${JSON.stringify(tokens, null, 2)};\n`);
 await copyFile(path.join(root, 'tokens.json'), path.join(out, 'tokens.json'));
 if(process.argv.includes('--core-only')) {console.log('Generated shared Core tokens only.');process.exit(0);}
+await import('./build-usage-examples.mjs')
 await import('./build-component-api.mjs');
 await import('./build-release-notes.mjs');
 await import('./build-code-highlight.mjs');
