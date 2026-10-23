@@ -41,10 +41,11 @@ const E = escapeHTML;
 const section = (id, title, subtitle, content) => `<section id="${id}" class="section" aria-labelledby="${id}-title"><div class="section-header"><h2 id="${id}-title">${title}</h2>${subtitle ? `<p>${subtitle}</p>` : ''}</div>${content}</section>`;
 const intro = (kicker, title, description) => `<div class="page-intro"><span class="eyebrow">${kicker}</span><h1 tabindex="-1">${title}</h1><p>${description}</p></div>`;
 const localNav = items => `<nav class="local-nav" aria-label="이 문서의 항목">${items.map(([id,label])=>`<a href="#${currentRoute()}/${id}">${label} ↓</a>`).join('')}</nav>`;
-function codeSample(label, code) {
+function codeSample(label, code, {collapsible=true}={}) {
   const id = `snippet-${++snippetId}`;
   snippets.set(id, code);
-  return `<details class="code-example"><summary>${E(label)}</summary><div class="code-body"><div class="code-toolbar"><span class="code-language">${E(label)}</span><button class="sol-button subtle code-copy-button" type="button" data-copy-snippet="${id}" aria-label="현재 코드 복사" title="코드 복사"><span class="code-copy-glyph">${solIcon('copy',{size:16})}</span><span class="code-check-glyph">${solIcon('check',{size:16})}</span></button></div><pre tabindex="0" aria-label="${E(label)} 코드"><code>${highlightSample(code,label)}</code></pre></div></details>`;
+  const body=`<div class="code-body"><div class="code-toolbar"><span class="code-language">${E(label)}</span><button class="sol-button subtle code-copy-button" type="button" data-copy-snippet="${id}" aria-label="현재 코드 복사" title="코드 복사"><span class="code-copy-glyph">${solIcon('copy',{size:16})}</span><span class="code-check-glyph">${solIcon('check',{size:16})}</span></button></div><pre tabindex="0" aria-label="${E(label)} 코드"><code>${highlightSample(code,label)}</code></pre></div>`;
+  return collapsible?`<details class="code-example"><summary>${E(label)}</summary>${body}</details>`:`<div class="code-example" data-code-static>${body}</div>`;
 }
 const contract = (states, keys, mapping) => `<dl class="contract"><dt>상태</dt><dd>${states}</dd><dt>Keyboard</dt><dd>${keys}</dd><dt>Tokens</dt><dd>${mapping}</dd></dl>`;
 const demo = (name, content, note = 'LIVE · 가상 데이터') => `<div class="demo"><div class="demo-header"><span>${name}</span><span>${note}</span></div><div class="demo-stage">${content}</div></div>`;

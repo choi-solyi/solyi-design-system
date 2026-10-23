@@ -17,10 +17,11 @@ const copied = [];
 const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const html = renderGettingStarted({
   section: (id, title, subtitle, content) => `<section id="${id}"><h2>${title}</h2><p>${subtitle}</p>${content}</section>`,
-  codeSample: (label, code) => {
+  codeSample: (label, code, {collapsible=true}={}) => {
     const id = 'guide-snippet-' + (copied.length + 1);
     copied.push({label, code, id});
-    return `<details class="code-example"><summary>${escape(label)}</summary><div class="code-body"><div class="code-toolbar"><span class="code-language">${escape(label)}</span><button type="button" data-copy-snippet="${id}">복사</button></div><pre tabindex="0" aria-label="${escape(label)}"><code>${escape(code)}</code></pre></div></details>`;
+    const body=`<div class="code-body"><div class="code-toolbar"><span class="code-language">${escape(label)}</span><button type="button" data-copy-snippet="${id}">복사</button></div><pre tabindex="0" aria-label="${escape(label)}"><code>${escape(code)}</code></pre></div>`;
+    return collapsible?`<details class="code-example"><summary>${escape(label)}</summary>${body}</details>`:`<div class="code-example" data-code-static>${body}</div>`;
   },
 });
 const dom = new JSDOM(html, {url: 'https://example.test/#start/install'}), {document} = dom.window;
@@ -60,15 +61,20 @@ function active(manager) {
   assert.equal(panel.getAttribute('aria-labelledby'), tab.id);
   assert.equal(group.querySelectorAll('[role="tab"][tabindex="0"]').length, 1);
   assert.equal([...group.querySelectorAll('[role="tabpanel"]')].filter(node => !node.hidden).length, 1);
-  const copy = panel.querySelector('[data-copy-snippet]');
-  const entry = copied.find(item => item.id === copy.dataset.copySnippet);
-  assert.equal(panel.querySelector('code').textContent, entry.code, 'Visible panel and registered copy target are identical');
-  assert.equal(entry.code, manager === 'pnpm' ? 'pnpm add solyi-ui' : 'npm install solyi-ui');
+  const cards=[...panel.querySelectorAll(':scope > .code-example[data-code-static]')];
+  assert.equal(cards.length,2,'Both project cases use the same standalone code card');
+  assert.deepEqual(cards.map(card=>card.querySelector('.code-language').textContent),['새 프로젝트','기존 프로젝트']);
+  cards.forEach((card,index)=>{
+    const copy=card.querySelector('[data-copy-snippet]');
+    const entry=copied.find(item=>item.id===copy.dataset.copySnippet);
+    assert.equal(card.querySelector('code').textContent,entry.code,'Every code card has its own exact copy target');
+    assert.equal(entry.code,(manager==='pnpm'?'pnpm add':'npm install')+' solyi-ui'+(index===0?' vue vuetify':''));
+    assert.equal(card.querySelector('p'),null,'Guidance stays outside the code cards');
+    assert.equal(card.querySelectorAll('.code-toolbar').length,1);
+  });
 }
-const peerGuidance = group.querySelector('[data-install-panel="pnpm"] .install-peer-guidance');
-assert.ok(peerGuidance.textContent.includes('직접 import'));
-assert.equal(peerGuidance.querySelector('code').textContent, 'pnpm add solyi-ui vue vuetify');
-assert.equal(copied.find(item => item.id === peerGuidance.querySelector('[data-copy-snippet]').dataset.copySnippet).code, 'pnpm add solyi-ui vue vuetify');
+assert.equal(group.classList.contains('code-example'),false,'The tabs do not turn the entire installation area into a tinted code box');
+assert.equal(group.querySelector('.install-peer-guidance,.install-command-source'),null,'No nested case-specific indentation or code framing');
 const compatibility = document.querySelector('.install-compatibility');
 assert.ok(compatibility.querySelector('summary'));
 assert.ok(compatibility.textContent.includes(current.packages.find(item => item.name === 'solyi-ui').version), 'Version details remain available inside a disclosure');
