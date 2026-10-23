@@ -11,3 +11,7 @@ site/fonts/jetbrains-mono/OFL.txt -whitespace
 site/fonts/nanum-gothic-coding/OFL.txt -whitespace
 docs/fonts/jetbrains-mono/OFL.txt -whitespace
 docs/fonts/nanum-gothic-coding/OFL.txt -whitespace
+
+# Preserve the validated record bytes in reproducible package builds on every OS.
+site/fonts/wanted-sans/SPLIT-VALIDATION.json -text
+docs/fonts/wanted-sans/SPLIT-VALIDATION.json -text
