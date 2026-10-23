@@ -2,7 +2,13 @@ import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {readFileSync,writeFileSync} from 'node:fs';
 import {packageMetadata,packageTarball} from './package-identity.mjs';
+import assert from 'node:assert/strict'
 const root=new URL('../',import.meta.url),npm=process.platform==='win32'?'npm.cmd':'npm';
+assert.equal(
+  JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).version,
+  JSON.parse(readFileSync(new URL('tokens.json', root), 'utf8')).version,
+  'Synchronize document and token versions before creating immutable package artifacts',
+)
 const run=(label,dir,command,args)=>{console.log('\n'+label);execFileSync(command,args,{cwd:fileURLToPath(new URL(dir,root)),stdio:'inherit',shell:process.platform==='win32'&&command===npm});};
 const node=(label,file,...args)=>run(label,'',process.execPath,[file,...args]);
 // Core is an internal build unit; a new consumer installs only the UI tarball.
