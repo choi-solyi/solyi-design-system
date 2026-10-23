@@ -1,5 +1,14 @@
 # 전용 Vue API와 문서 실행 원본 통일
 
+## Current checkpoint · 2026-10-23 UTC
+
+- Local implementation, two real tarball consumers, typed/global APIs,30 shared SFCs, regression and the remaining actual Chrome visual review are complete. See QA.md for exact states/333·720CSS iframe widths, earlier1180CSS code-panel evidence and device limitations.
+- STooltip / SPopover / SAccordion / SBreadcrumbs / SFileInput / SAutocomplete / SAvatar / SStepper / SBarChart are the nine additions. Transient loading pixels use a separate actual-package pending-loader QA consumer; the canonical demo remains unchanged.
+- The capture/hold notes below record earlier checkpoints. They do not describe the current local visual-review status.
+- Publishing evidence is commit-specific: [GitHub Actions](https://github.com/choi-solyi/solyi-design-system/actions) plus the final public-asset hash report. This document is committed before that execution and does not predict its result.
+- Public npm publication,1.0.0, historical deletion and other-project changes remain excluded. sol-ui ownership/availability is unconfirmed; reusable own code is MIT and brand assets are excluded.
+
+
 기준: 문서 0.9.1 / `a1a2be8`, Core0.4.1 / Vue UI0.7.1. 0.x 초안이며 1.0.0·npm 게시·이전 산출물 삭제·다른 앱·계정/권한 변경은 하지 않습니다.
 
 ## 순서
@@ -33,9 +42,9 @@
 
 - [x] 기존 export/30개 예제 조사, 공식 registry 삭제 이력 확인
 - [x]9개 typed API 및 상태/키보드/locale 검사
-- [ ] 정본 SFC/문서 실행 연결, 테마/밀도/초점·직접 링크 회귀
-- [ ] 두 독립 tarball 소비 앱과 패키지 파일/선언/스타일 검증
-- [ ] 묶음 CI/Pages 및 공개 파일 확인
+- [x] 정본 SFC/문서 실행 연결, 테마/밀도/초점·직접 링크 회귀
+- [x] 두 독립 tarball 소비 앱과 패키지 파일/선언/스타일 검증
+- 배포 결과는 위의 커밋별 GitHub Actions와 최종 공개 파일 검증 기록에서 확인합니다.
 - [ ] 사용자 Fold/Safari 피드백: 대기
 
 ## 전역 등록·공통 코드 패널·연결 후속
