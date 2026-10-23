@@ -20,7 +20,7 @@ UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
 ## 1. 설치 버전과 실제 API
 
 - package.json과 lockfile, 설치된 패키지의 package.json·exports·타입을 기준으로 작업합니다. 문서 버전과 패키지 버전은 서로 다를 수 있습니다.
-- 설치된 solyi-ui와 Vue/Vuetify peer 버전을 확인합니다. 버전과 integrity를 고정하고 업데이트·롤백 때 package.json과 lockfile을 함께 관리합니다.
+- 설치된 solyi-ui와 Vue/Vuetify peer 버전을 확인합니다. 버전과 integrity를 고정하고 패키지를 변경할 때 package.json과 lockfile을 함께 관리합니다.
 - solyi-ui를 설치하고 프로젝트의 Vue/Vuetify peer 조합을 확인합니다. Core 토큰·CSS·helper는 solyi-ui 안에 포함되므로 @solyi/core를 별도 설치하지 않습니다. 제공하지 않는 생성 CLI나 설치 옵션을 임의로 안내하지 않습니다.
 - 사용할 props·slots·events·methods를 설치 버전에서 확인합니다. SCard가 모든 VCard 옵션을 전달한다고 가정하거나, 존재하지 않는 S 태그·메서드를 만들지 않습니다.
 

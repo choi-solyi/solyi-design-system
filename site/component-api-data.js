@@ -4993,7 +4993,7 @@ export const componentReferences=[
     "passthrough": "VRow"
   }
 ];
-export const componentReferenceVersions={"core":"0.4.15","vue-ui":"0.11.6"};
+export const componentReferenceVersions={"core":"1.0.0","vue-ui":"1.0.0"};
 export const componentExampleSources={
   "buttons": "<script setup lang=\"ts\">\nconst busy = ref(false),\n  result = ref('')\nlet timer: ReturnType<typeof setTimeout>\nfunction run() {\n  if (busy.value) return\n  busy.value = true\n  timer = setTimeout(() => {\n    result.value = '가상 확인을 마쳤어요.'\n    busy.value = false\n  }, 500)\n}\nonBeforeUnmount(() => clearTimeout(timer))\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"버튼 사용\">\n    <div class=\"sol-actions\">\n      <SBtn variant=\"primary\" :loading=\"busy\" @click=\"run\"> 확인 </SBtn>\n      <SBtn @click=\"result = '보조 동작을 눌렀어요.'\">보조 동작</SBtn>\n      <SBtn variant=\"inline\" @click=\"result = ''\"> 초기화 </SBtn>\n      <SBtn disabled>비활성</SBtn>\n    </div>\n    <p role=\"status\">{{ result }}</p>\n  </SCard>\n</template>\n",
   "action-menu": "<script setup lang=\"ts\">\nconst result = ref('')\nconst items = [\n  { id: 'copy', label: '가상 복제' },\n  { id: 'archive', label: '가상 보관' },\n  { id: 'disabled', label: '비활성', disabled: true },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"더 많은 동작\">\n    <SSplitBtn\n      id=\"recipe-actions\"\n      label=\"가상 내보내기\"\n      :items=\"items\"\n      @primary=\"result = '주 동작 확인'\"\n      @select=\"result = $event\"\n    />\n    <SContextMenu id=\"recipe-context\" label=\"가상 기록\" :items=\"items\" @select=\"result = $event\">\n      <p>우클릭·Shift+F10 또는 표시된 동작 버튼으로 엽니다.</p>\n    </SContextMenu>\n    <p role=\"status\">{{ result }}</p>\n  </SCard>\n</template>\n",
