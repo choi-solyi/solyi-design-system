@@ -1,4 +1,4 @@
-# @solyi/core 0.4.8
+# @solyi/core 0.4.9
 
 선택 행은 `components.css`의 `.sol-choice-row`를 label 또는 Vue 체크박스/목록형 라디오 wrapper에 선택적으로 사용합니다. 기본 컨트롤 자체에는 여백을 강제하지 않습니다. 선택 바탕·전경·테두리·표시선은 `--sol-color-selected-surface`, `--sol-color-selected-text`, `--sol-color-selected-border`, `--sol-color-selected-indicator` 역할이며, `accent-soft`와 구분합니다.
 

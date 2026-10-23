@@ -138,7 +138,7 @@
 .sol-progress::-webkit-progress-value {background: var(--sol-color-accent); border-radius: 99px;}
 .sol-progress::-moz-progress-bar {background: var(--sol-color-accent); border-radius: 99px;}
 .sol-divider {border: 0; border-top: 1px solid var(--sol-color-border); margin: var(--sol-space-4) 0;}
-.sol-stack {display: grid; gap: var(--sol-space-4); min-width: 0;}
+.sol-stack {display:grid;gap:var(--sol-content-gap);min-width:0;}
 .sol-actions {display:flex;flex-wrap:wrap;align-items:center;gap:var(--sol-space-2);min-width:0;}
 .sol-filterbar {display: grid; grid-template-columns: minmax(0,1fr) minmax(150px,.6fr); align-items: start; gap: var(--sol-space-4);}
 .sol-filterbar.three {grid-template-columns: minmax(0,1.4fr) minmax(130px,.7fr) minmax(150px,.8fr);}

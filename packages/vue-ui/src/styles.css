@@ -207,7 +207,7 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 @keyframes sol-progress-rotate {from{transform:rotate(-90deg);}to{transform:rotate(270deg);}}
 @media(prefers-reduced-motion:reduce){.sol-ui-progress .sol-ui-progress-fill,.sol-ui-progress .sol-progress-circle>svg {animation:none!important;}}
 
-.sol-ui-card {display:grid;gap:var(--sol-space-4);}
+.sol-ui-card {display:grid;gap:var(--sol-content-gap);}
 .sol-ui-card>:last-child {margin-bottom:0;}
 .sol-ui-card-actions {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);}
 .sol-ui-drawer-overlay>.v-overlay__content {position:fixed!important;inset:0 0 0 auto!important;margin:0!important;max-height:100dvh!important;height:100dvh;width:min(440px,100%)!important;}

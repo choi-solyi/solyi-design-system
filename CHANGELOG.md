@@ -1,6 +1,6 @@
 # 변경 이력
 
-## 0.12.2 로컬 후보
+## 0.12.3 로컬 후보
 
 - Vue 3용 패키지 이름을 `solyi-ui`로 통일하고 `@solyi/core`와 두 tarball 설치를 검증합니다. S 컴포넌트 이름은 유지합니다.
 - 공통 선택 행과 Warm Sand의 selected 색 역할을 제공하고, 기존 Violet/Sage 색 값은 유지합니다.

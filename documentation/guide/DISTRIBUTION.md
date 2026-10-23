@@ -4,10 +4,10 @@
 
 ## 현재 권장 조합
 
-이번 통합 후보는 문서 **0.12.2 / Core 0.4.8 / Vue UI 0.10.2**입니다. 정확한 공개 상태는 해당 커밋의 Actions 최종 결과와 [공개 카탈로그](https://ui.solyi.kr/releases/index.json)로 확인합니다. 이 안내 파일을 작성한 것만으로 URL이 배포됐다고 판단하지 않습니다.
+이번 통합 후보는 문서 **0.12.3 / Core 0.4.9 / Vue UI 0.10.3**입니다. 정확한 공개 상태는 해당 커밋의 Actions 최종 결과와 [공개 카탈로그](https://ui.solyi.kr/releases/index.json)로 확인합니다. 이 안내 파일을 작성한 것만으로 URL이 배포됐다고 판단하지 않습니다.
 
 ```sh
-npm install --save-exact https://ui.solyi.kr/releases/0.12.2/solyi-core-0.4.8.tgz https://ui.solyi.kr/releases/0.12.2/solyi-ui-0.10.2.tgz vue@3.5.44 vuetify@4.3.0
+npm install --save-exact https://ui.solyi.kr/releases/0.12.3/solyi-core-0.4.9.tgz https://ui.solyi.kr/releases/0.12.3/solyi-ui-0.10.3.tgz vue@3.5.44 vuetify@4.3.0
 ```
 
 패키지 이름은 `@solyi/core`와 `solyi-ui`이며 **npm/GitHub Packages에는 게시하지 않았습니다**. `private:true`는 실수로 게시하는 것을 막는 설정입니다. 선택한 `solyi-ui`의 이름 사용권·소유권은 미확인이고 새 프로젝트 생성 명령도 출시하지 않았습니다.
