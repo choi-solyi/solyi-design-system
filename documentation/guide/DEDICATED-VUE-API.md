@@ -1,6 +1,6 @@
 # 공통 Vue 부품과 전역 등록
 
-0.x 검토 초안입니다. 실제 패키지명은 아직 `@solyi/core` / `solyi-ui`이며 npm에는 게시하지 않았습니다. Vue 3.5.44 / Vuetify 4.3.0 조합을 사용합니다.
+`solyi-ui`에 컴포넌트와 Core 토큰·CSS·helper가 함께 포함됩니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0입니다.
 
 ## 앱에서 한 번 설정
 
@@ -9,10 +9,10 @@ import {createApp} from 'vue';
 import {VApp} from 'vuetify/components/VApp';
 import SolyiUI, {createSolyiVuetify} from 'solyi-ui';
 import 'vuetify/styles';
-import '@solyi/core/tokens.css';
-import '@solyi/core/components.css';
-import '@solyi/core/fonts.css';
-import '@solyi/core/code-fonts.css';
+import 'solyi-ui/tokens.css';
+import 'solyi-ui/components.css';
+import 'solyi-ui/fonts.css';
+import 'solyi-ui/code-fonts.css';
 import 'solyi-ui/styles.css';
 import 'solyi-ui/global';
 import App from './App.vue';
@@ -58,7 +58,7 @@ const name = ref('');
 | `SStepper` | 필수 id/items, modelValue:`string|null`, completed:`string[]`, interactive(false), disabled/readonly | update:modelValue/change | 단계 표시와 시간 진행률은 다릅니다. 기본은 읽기용 목록. interactive에서만 버튼을 만들며 검증·이동 허용은 앱이 관리합니다. |
 | `SBarChart` | 필수 id/label/items, max?, loading, showTable(true), categoryLabel/valueLabel | 표시 전용 | 작은 단일 계열 막대 비교입니다. 0 이상 유한 값만 표시하며 전체 텍스트 표는 항상 유지합니다. showTable=false는 시각적으로만 숨깁니다. 복잡한 분석·다중 계열·시간축을 지원한다고 주장하지 않습니다. |
 
-모든 새 부품의 문구는 기존 ko/en provider와 컴포넌트별 `locale` override를 따릅니다. 입력 label·데이터 이름·설명은 앱이 제공합니다. RTL 및 다른 언어의 완전 지원은 검증하지 않았습니다.
+내장 문구는 ko/en provider와 컴포넌트별 `locale` override를 따릅니다. 입력 label·데이터 이름·설명은 앱이 제공합니다. RTL 및 다른 언어의 완전 지원은 검증하지 않았습니다.
 
 ### 상태와 초점
 
@@ -71,7 +71,7 @@ const name = ref('');
 
 ## 조합과 문서 실행
 
-`src/recipes/*.vue` 30개 정본 SFC가 문서 표시·복사·실행 화면을 함께 만듭니다. 전역 등록은 실제 starter에서도 사용합니다. 문서 실행 면은 같은 origin의 패키지 소비 프레임이며 테마·밀도·모션 정책을 동기화합니다. 긴 대화상자나 독립 화면은 코드 footer의 `이 Vue 예제 실행`으로 크게 볼 수 있습니다.
+`src/recipes/*.vue`의 같은 SFC가 문서 표시·복사·실행 화면을 함께 만듭니다. 전역 등록은 실제 starter에서도 사용합니다. 문서 실행 면은 같은 origin의 패키지 소비 프레임이며 테마·밀도·모션 정책을 동기화합니다. 긴 대화상자나 독립 화면은 코드 footer의 `이 Vue 예제 실행`으로 크게 볼 수 있습니다.
 
 폼/검색/비교/편집/일괄 재시도/화면틀은 이 부품에 앱 상태를 연결한 **조합 예제**입니다. 모든 업무 흐름을 독립 컴포넌트 API로 제공한다는 뜻이 아닙니다. workflow 예제의 `confirmLeave()` 노출 메서드는 앱 라우터가 호출하는 연결 예시이며 라우터 전체가 자동 설치되는 기능이 아닙니다. 문서의 상위 경로 이탈은 해당 실행 면의 확인 응답을 기다립니다.
 
@@ -79,4 +79,4 @@ const name = ref('');
 
 재사용 패키지의 자체 코드·CSS·토큰·패키지 문서는 MIT입니다. 각 패키지의 LICENSE를 함께 배포합니다. 브랜드 로고·캐릭터·favicon·개인 콘텐츠는 패키지에서 제외하며 MIT가 이 자산의 사용권을 부여하지 않습니다. 포함 폰트는 원래 OFL·저작권·출처를 보존합니다.
 
-`private:true`는 실제 npm 게시를 막기 위해 유지합니다. 이름 `sol-ui`에는 삭제 이력이 있어 사용 가능이나 소유권 확보로 확정하지 않습니다. npm 게시·새 인증 설정·1.0.0·과거 버전 삭제는 이번 작업에 포함하지 않습니다.
+현재 패키지와 Vue/Vuetify 조합·업데이트 방법은 [설치 안내](DISTRIBUTION.md)를 따릅니다.

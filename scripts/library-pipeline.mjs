@@ -5,9 +5,10 @@ import {packageMetadata,packageTarball} from './package-identity.mjs';
 const root=new URL('../',import.meta.url),npm=process.platform==='win32'?'npm.cmd':'npm';
 const run=(label,dir,command,args)=>{console.log('\n'+label);execFileSync(command,args,{cwd:fileURLToPath(new URL(dir,root)),stdio:'inherit',shell:process.platform==='win32'&&command===npm});};
 const node=(label,file,...args)=>run(label,'',process.execPath,[file,...args]);
-const packageTarballs=['core','vue-ui'].map(role=>'../../artifacts/'+packageTarball(packageMetadata(role)));
+// Core is an internal build unit; a new consumer installs only the UI tarball.
+const packageTarballs=['../../artifacts/'+packageTarball(packageMetadata('vue-ui'))];
 const installArgs=['--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org'];
-node('1/10 Shared Core','scripts/build-packages.mjs','--core');
+node('1/10 Internal shared Core','scripts/build-packages.mjs','--core');
 node('1/10 Refresh archived starter token snapshot','scripts/sync-starter.mjs');
 run('2/10 Library locked development dependencies','packages/vue-ui/',npm,['ci',...installArgs]);
 run('3/10 Vite library + strict own-source declarations','packages/vue-ui/',npm,['run','build']);
@@ -21,7 +22,7 @@ for(const project of ['examples/package-consumer/','examples/vue-vuetify/']){
   writeFileSync(lockPath,JSON.stringify(lock,null,2)+'\n');
   run('5/10 Refresh tarball lock: '+project,project,npm,['install','--package-lock-only',...installArgs,...packageTarballs]);
  }
- run('5/10 Clean install real tarballs: '+project,project,npm,['ci',...installArgs]);
+ run('5/10 Clean install the single UI tarball: '+project,project,npm,['ci',...installArgs]);
 }
 run('6/10 Independent consumer typecheck + app build','examples/package-consumer/',npm,['run','build']);
 run('6/10 Typecheck actual Vue documentation examples','examples/vue-vuetify/',npm,['run','check:recipes']);
@@ -39,8 +40,13 @@ node('7/10 Dedicated reusable Vue APIs','scripts/vue-dedicated-runtime-check.mjs
 node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
-if(process.argv.includes('--prepare-release'))node('9/10 Freeze the verified local package pair','scripts/releases.mjs',JSON.parse(readFileSync(new URL('package.json',root),'utf8')).version);
+if(process.argv.includes('--packages-only')){
+ console.log('\nPASS: UI tarball, both consumers, runtime contracts and public demo. Documentation and release delivery checks are deferred.');
+ process.exit(0);
+}
+if(process.argv.includes('--prepare-release'))node('9/10 Freeze verified local artifacts and release history','scripts/releases.mjs',JSON.parse(readFileSync(new URL('package.json',root),'utf8')).version);
 node('9/10 Documentation build','scripts/build.mjs');
+node('9/10 Installed getting-started examples','scripts/getting-started-check.mjs');
 node('9/10 Real document package previews','scripts/vue-preview-integration-check.mjs');
 node('9/10 Versioned delivery and real HTTP consumption','scripts/distribution-check.mjs');
 run('10/10 Existing checks','',npm,['run','check']);

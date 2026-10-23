@@ -1,6 +1,6 @@
-# solyi-ui 0.10.3
+# solyi-ui 0.10.4
 
-실제 Vue S 컴포넌트를 제공하는 **로컬 tarball 초안**입니다. npm에 게시하지 않았습니다. Vue 3.5 / Vuetify 4.3과 @solyi/core 0.4.9을 소비 앱에 설치합니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
+Vue 3용 S 컴포넌트를 제공하는 UI 라이브러리입니다. Vue 3.5 / Vuetify 4.3을 peer로 사용합니다. Core 토큰·CSS·helper·폰트는 이 패키지에 포함되어 @solyi/core를 따로 설치하지 않습니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
 
 ## 한 번 등록
 
@@ -9,10 +9,10 @@ import {createApp} from 'vue';
 import {VApp} from 'vuetify/components/VApp';
 import SolyiUI, {createSolyiVuetify} from 'solyi-ui';
 import 'vuetify/styles';
-import '@solyi/core/fonts.css';
-import '@solyi/core/code-fonts.css';
-import '@solyi/core/tokens.css';
-import '@solyi/core/components.css';
+import 'solyi-ui/fonts.css';
+import 'solyi-ui/code-fonts.css';
+import 'solyi-ui/tokens.css';
+import 'solyi-ui/components.css';
 import 'solyi-ui/styles.css';
 import 'solyi-ui/global';
 import App from './App.vue';
@@ -44,14 +44,10 @@ createApp(App)
 
 ## 스타일·라이선스·게시 경계
 
-Core 토큰과 CSS, Vue UI CSS를 한 번 가져옵니다. 문서 셸용 docs.css는 가져오지 않습니다. 테마·defaults 브리지는 `createSolyiVuetify/applySolyiAppearance`로 연결하며 원본 V API와 S API의 차이를 유지합니다. 반경은 버튼 6·입력 10·카드/작은 팝업 12·다이얼로그/큰 패널 16px입니다.
+solyi-ui의 tokens.css·components.css·styles.css를 한 번 가져옵니다. 문서 셸용 docs.css는 가져오지 않습니다. 테마·defaults 브리지는 `createSolyiVuetify/applySolyiAppearance`로 연결하며 원본 V API와 S API의 차이를 유지합니다. 반경은 버튼 6·입력 10·카드/작은 팝업 12·다이얼로그/큰 패널 16px입니다.
 
-자체 재사용 코드는 MIT이며 Core 폰트는 원문 OFL을 유지합니다. 로고·캐릭터·favicon·개인 콘텐츠는 제외하며 MIT로 브랜드 권리를 부여하지 않습니다. `private:true`는 게시 차단 장치이지 코드 라이선스가 아닙니다. [설치·업데이트·롤백](https://github.com/choi-solyi/solyi-design-system/blob/main/documentation/guide/DISTRIBUTION.md)을 확인하세요. 다른 앱 자동 업데이트와 npm 게시를 연결하지 않았습니다.
+자체 재사용 코드는 MIT이며 Core 폰트는 원문 OFL을 유지합니다. 로고·캐릭터·favicon·개인 콘텐츠는 제외하며 MIT로 브랜드 권리를 부여하지 않습니다. [설치·업데이트·롤백](https://github.com/choi-solyi/solyi-design-system/blob/main/documentation/guide/DISTRIBUTION.md)을 확인하세요. 패키지 업데이트와 배포는 소비 앱의 절차에 맞게 관리합니다.
 
 ## 소비 프로젝트 AI 지침
 
-패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 두 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.
-
-## Core 의존성과 npm 게시 전 결정
-
-Vue 3용 `solyi-ui`는 현재 `@solyi/core`를 peer로 사용합니다. 로컬에서는 두 tarball을 한 명령에 명시해 함께 설치합니다. UI 이름 변경이 Core 이름 변경이나 npm 스코프 사용 권한 확보를 뜻하지 않습니다. 레지스트리에서 `npm install solyi-ui`만으로 설치하려면 Core 게시·스코프 권한 또는 배포 구조를 별도로 결정해야 합니다. 이번에는 이름을 임의 변경하거나 npm에 게시하지 않습니다.
+패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.

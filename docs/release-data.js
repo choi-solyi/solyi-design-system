@@ -1,7 +1,34 @@
 // Generated verified release catalogue.
 export const packageReleases={
-  "current": "0.12.3",
+  "current": "0.13.0",
   "releases": [
+    {
+      "release": "0.13.0",
+      "sourceRef": "af510cc0eed8d2cc74830d3c19e0c249485495db",
+      "compatibility": {
+        "node": "^22.18.0 || >=24.12.0",
+        "vue": "3.5.44",
+        "vuetify": "4.3.0"
+      },
+      "packages": [
+        {
+          "name": "@solyi/core",
+          "version": "0.4.10",
+          "file": "solyi-core-0.4.10.tgz",
+          "bytes": 3535417,
+          "sha256": "c39bbd77ded555488e2edb3a1d27cf22107f629c195cfbb9c6f03ce34805d040",
+          "integrity": "sha512-BIHg0hxdv51/kBYRdzFnzulDbKCJuRCwLUnstDkUrU4ltT41l/a+bA7HxCXrNEDfgM6DFYCTDfZr918zfwba+w=="
+        },
+        {
+          "name": "solyi-ui",
+          "version": "0.10.4",
+          "file": "solyi-ui-0.10.4.tgz",
+          "bytes": 3596896,
+          "sha256": "40d9b3b7d17aea3b94a7e07310286275cb7ccdb7a5c9e8a450d172bc6b200eb9",
+          "integrity": "sha512-biHQ66mwY+6TVvT7RAjpvALsTEaS38rK6QhtsFEPanK0h5I3yRl4H0Lqm4wBNgBBjbVjjqvFzIggkShQZCYZPQ=="
+        }
+      ]
+    },
     {
       "release": "0.12.3",
       "sourceRef": "062fbf26c10b672420c7bed9934b96ac5e525cad",

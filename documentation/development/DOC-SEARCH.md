@@ -1,6 +1,6 @@
 # 문서 검색과 헤더 화면 설정
 
-문서의 검색·메뉴·본문은 같은 목적지 카탈로그를 공유합니다. 현행 목적지 수와 실제 동작 검사는 소스와 최종 검사 기록을 기준으로 하며 고정된 과거 숫자를 지원 선언으로 사용하지 않습니다. 이전 구현 경위는 [이력 부록](DOC-SEARCH-HISTORY.md)에 보존합니다.
+문서의 검색·메뉴·본문은 같은 목적지 카탈로그를 공유합니다. 목적지를 추가할 때 같은 카탈로그와 실제 본문 앵커를 함께 갱신합니다.
 
 ## 검색 계약
 
@@ -14,4 +14,4 @@
 
 작은 화면은 화면 설정 패널에 같은 컨트롤을 묶습니다. 라이트·다크 전환과 기존 저장·복원을 공유하고 저장이 제한돼도 현재 페이지에서 조작할 수 있습니다. 외부 서비스·새 권한·다른 앱 동기화는 추가하지 않습니다.
 
-관련 원본은 `site/doc-search.js`, `site/topics.js`, `site/app.js`, `site/header-preferences.js`입니다. 자동 검사와 실제 화면 검수의 범위는 [QA.md](../quality/QA.md)에 구분합니다.
+관련 원본은 `site/doc-search.js`, `site/topics.js`, `site/app.js`, `site/header-preferences.js`입니다. `scripts/doc-search-check.mjs`와 `scripts/header-preferences-check.mjs`에서 검색·설정 동작을 검사하고 실제 화면·기기 검수와 구분합니다.

@@ -1,9 +1,9 @@
 {
   "name": "solyi-design-system",
-  "version": "0.12.3",
+  "version": "0.13.0",
   "private": true,
   "type": "module",
-  "description": "Solyi's independent, framework-neutral design system draft.",
+  "description": "Solyi design system documentation and reusable Vue 3 UI components.",
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",

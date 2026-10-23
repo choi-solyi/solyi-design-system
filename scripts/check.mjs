@@ -3,7 +3,7 @@ import {readFile,readdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {JSDOM} from 'jsdom';
-import {renderDistribution} from '../docs/distribution.js';
+import {renderGettingStarted} from '../docs/getting-started.js';
 import {siteFiles,generatedFiles,starterFiles} from './site-manifest.mjs';
 import {checkDocumentVersions} from './document-version-check.mjs';
 const root = fileURLToPath(new URL('../',import.meta.url));
@@ -44,10 +44,10 @@ const source=(await Promise.all(siteFiles.filter(name=>/\.(html|js|css)$/.test(n
 assert.ok(!/\binfinite\b/.test(source),'No unbounded CSS animation');
 for(const match of source.matchAll(/(?:href|src)=["']\.\/([^"'#?]+)["']/g)) if(!match[1].includes('${'))assert.ok(expected.includes(match[1].replace(/\/$/,'')),`Local link ${match[1]} exists`);
 // JavaScript template placeholders are not filenames. Validate actual rendered release links too.
-const releaseMarkup=renderDistribution({section:(_id,_title,_description,body)=>body,codeSample:(_label,code)=>'<pre>'+code.replaceAll('&','&amp;').replaceAll('<','&lt;')+'</pre>'});
+const releaseMarkup=renderGettingStarted({section:(_id,_title,_description,body)=>body,codeSample:(_label,code)=>'<pre>'+code.replaceAll('&','&amp;').replaceAll('<','&lt;')+'</pre>'});
 const releaseDom=new JSDOM(releaseMarkup);
-for(const link of releaseDom.window.document.querySelectorAll('a[href^="./"]'))assert.ok(expected.includes(link.getAttribute('href').slice(2)),`Rendered release link ${link.href} exists`);
-assert.ok(releaseDom.window.document.querySelectorAll('a[download]').length===2,'Only the current recommended package pair is displayed');releaseDom.window.close();
+for(const link of releaseDom.window.document.querySelectorAll('a[href^="./"]')){const target=new URL(link.getAttribute('href'),'https://example.test/').pathname.replace(/^\/|\/$/g,'');assert.ok(expected.includes(target),`Rendered guide link ${link.getAttribute('href')} exists`);}
+assert.ok(releaseDom.window.document.querySelectorAll('a[download]').length===1,'Only the current self-contained UI package is displayed');releaseDom.window.close();
 assert.ok(!/\b(?:AIza[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,})\b/.test(source),'No known credential pattern');
 assert.ok(!/analytics|googletagmanager|google-analytics|supabase\.co|fetch\(/i.test(source),'No analytics or external data request');
 const css=await readFile(path.join(root,'docs/tokens.css'),'utf8');

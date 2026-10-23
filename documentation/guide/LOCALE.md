@@ -1,6 +1,6 @@
-# 공통 locale · Core 0.3.2 / Vue UI 0.5.0
+# 공통 언어 설정
 
-기존 `provideSolLocale`를 그대로 사용합니다. 내장 문구 팩은 `ko-KR`, `en-US` 두 LTR 언어이며 `ko`, `en`도 받습니다. 다른 언어·지역·RTL 번역/레이아웃은 지원하지 않습니다. 지원하지 않는 앱 코드는 한국어로, 지원하지 않는 개별 코드는 앱 언어로 돌아갑니다.
+`provideSolLocale`로 앱의 공통 언어를 설정합니다. 내장 문구 팩은 `ko-KR`, `en-US` 두 LTR 언어이며 `ko`, `en`도 받습니다. 다른 언어·지역·RTL 번역/레이아웃은 지원하지 않습니다. 지원하지 않는 앱 코드는 한국어로, 지원하지 않는 개별 코드는 앱 언어로 돌아갑니다.
 
 ```ts
 import {createApp, ref} from 'vue';
@@ -20,7 +20,7 @@ provideSolLocale(app, () => ({code: language.value, tableRetry: '다시 불러�
 <SDataTable :columns="columns" :rows="rows" caption="Records" />
 ```
 
-20종의 내장 선택·로딩·오류·메뉴·패널·필수·닫기·표 정렬·선택·페이지·전체 내용 문구가 이 설정을 따릅니다. 언어를 바꿔도 값·정렬·선택·페이지·열린 패널·초점을 초기화하거나 change를 보내지 않습니다. 표시 중인 내장 숫자/날짜/시간/다중선택 오류와 native customValidity도 갱신합니다. `label`, 업무 데이터, slot, 사용자 제공 error/help/알림 message는 앱 소유이므로 번역하지 않습니다. 소비 앱이 전체 화면의 `lang`과 업무 번역을 관리합니다. 문서 사이트 전체 번역이나 언어 영구 저장 기능은 포함하지 않습니다.
+내장 선택·로딩·오류·메뉴·패널·필수·닫기·표 정렬·선택·페이지·전체 내용 문구가 이 설정을 따릅니다. 언어를 바꿔도 값·정렬·선택·페이지·열린 패널·초점을 초기화하거나 change를 보내지 않습니다. 표시 중인 내장 숫자/날짜/시간/다중선택 오류와 native customValidity도 갱신합니다. `label`, 업무 데이터, slot, 사용자 제공 error/help/알림 message는 앱 소유이므로 번역하지 않습니다. 소비 앱이 전체 화면의 `lang`과 업무 번역을 관리합니다. 문서 사이트 전체 번역이나 언어 영구 저장 기능은 포함하지 않습니다.
 
 ```ts
 import {formatSolNumber, parseSolNumber, formatSolDate} from 'solyi-ui';

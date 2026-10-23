@@ -2,22 +2,24 @@
 import {solIcon} from './icons.js';
 import {componentCatalogue,revealComponentTarget} from './component-api.js';
 import {componentReferences} from './component-api-data.js';
-const componentExampleSections=[['buttons','버튼'],['fields','텍스트 필드'],['choices','선택 컨트롤 기본'],['feedback','상태 알림'],['dialog','대화상자'],['selection','체크·라디오·스위치'],['help','툴팁과 팝오버'],['accordion','아코디언'],['navigation','경로·패널·토스트'],['advanced-inputs','Textarea·숫자·다중 선택'],['content-tabs','탭 패널'],['action-menu','행동 메뉴'],['identity-progress','Avatar·단계'],['progress','Progress bar·circle'],['time','시간 선택'],['chart','차트와 표 대안'],['tree','트리 탐색']];
+import {componentLegacyAnchors} from './component-catalog.js';
 const documentSections={
- start:[['start-here','시작 순서'],['vue-components','공통 등록·자동 import'],['ai-guide','AI guide'],['starter','실제 패키지 실행'],['adoption','CSS·JSON 적용'],['themes','테마'],['density','밀도'],['locale','공통 locale'],['advanced-vue','선택·동작·분할'],['scope','검증·출처'],['principles','시스템 원칙']],
+ start:[['start-here','시작 순서'],['install','설치'],['registration','공통 등록'],['auto-import','자동 import'],['forms','폼 검증'],['appearance','테마·화면 설정'],['update','업데이트'],['ai-guide','AI guide'],['starter','실제 패키지 실행'],['adoption','CSS·JSON 적용'],['themes','테마'],['density','밀도'],['locale','공통 locale'],['advanced-vue','선택·동작·분할'],['scope','검증·출처'],['principles','시스템 원칙']],
  style:[['principles','Core 원칙'],['tokens','색 토큰'],['type','타이포그래피'],['space','간격·밀도·모서리'],['accessibility','접근성 기준'],['color-examples','컬러 적용 예시'],['motion','모션'],['icons','아이콘'],['layers','레이어와 그림자'],['writing','UI 문구']],
- component:[...componentReferences.map(component=>[component.id,component.name]),...componentExampleSections],
+ component:componentCatalogue().flatMap(group=>group.items.map(item=>[item.id,item.label])),
  pattern:[['form','폼 검증과 회복'],['search','검색과 상세'],['compare','비교 선택'],['empty','빈 상태'],['data','표와 목록'],['date','날짜 선택'],['files','파일 선택·드롭'],['autocomplete','자동완성 검색'],['responses','로딩·권한·오류'],['composition','조합 규칙'],['layouts','화면 템플릿'],['workflow','편집·이탈·삭제·Undo'],['error-summary','오류 요약'],['not-found','앱용 404'],['bulk-recovery','일괄 작업·부분 실패']],
- releases:[['packages','설치·업데이트'],['versioning','변경·호환 정책']],
+ releases:[['changelog','변경 이력']],
  licensing:[['code-license','코드 · MIT'],['brand-license','브랜드 제외'],['third-party-license','폰트·아이콘·외부 고지']]
 };
 const documentNames={start:'Getting started',style:'Style',component:'Components',pattern:'Patterns',releases:'Releases',licensing:'Licensing'};
 export function resolveDocumentLocation(hash){
  const [requested='',anchor='']=String(hash||'').replace(/^#/,'').split('/');
- if(requested==='overview'||!requested)return {route:'start',anchor};
- if(requested==='theme')return {route:['packages','versioning'].includes(anchor)?'releases':'start',anchor};
- const route=({components:'component',patterns:'pattern','getting-started':'start'})[requested]||requested;
- return {route:documentNames[route]?route:'start',anchor:documentNames[route]?anchor:''};
+ let route=({overview:'start',theme:'start',components:'component',patterns:'pattern','getting-started':'start'})[requested]||requested||'start',target=anchor;
+ if((requested==='theme'||route==='releases')&&anchor==='packages'){route='start';target='install';}
+ else if((requested==='theme'||route==='releases')&&anchor==='versioning'){route='releases';target='changelog';}
+ else if(route==='start')target=({'vue-components':'registration',installation:'install'})[anchor]||anchor;
+ else if(route==='component')target=componentLegacyAnchors[anchor]||anchor;
+ return {route:documentNames[route]?route:'start',anchor:documentNames[route]?target:''};
 }
 const documentSearchNames={
  'start/ai-guide':['DESIGN.md','AI guide','AI prompt','프롬프트','AI 지침'],
@@ -40,11 +42,10 @@ const componentSearchNames={
 };
 const documentAliases={
  pattern:[['date','단일 날짜와 기간','#extra-range-form'],['files','로컬 파일과 드롭','#extra-file-drop'],['autocomplete','자동완성 검색','#extra-autocomplete']],
- component:[['textarea','Textarea','#advanced-note'],['number','숫자 증감','#advanced-number-form'],['multiselect','다중 선택과 태그','#advanced-tags'],['avatar','Avatar와 사용자 메뉴','#avatar-menu-trigger'],['progress','진행률과 단계','#steps-form'],['chart','차트와 표 대안','#chart-period'],['tree','트리 탐색','#example-tree']]
 };
 const documentEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let activeDocumentNavigation=null;
-export function getTopicCatalogue(route){return route==='component'?[...componentCatalogue(),{group:'공통 모양·상태 예제',items:componentExampleSections.map(([id,label])=>({id,label}))}]:[{group:documentNames[route]||route,items:(documentSections[route]||[]).map(([id,label])=>({id,label}))}];}
+export function getTopicCatalogue(route){return route==='component'?componentCatalogue():[{group:documentNames[route]||route,items:(documentSections[route]||[]).map(([id,label])=>({id,label}))}];}
 // Detached markup only: no live demo values, event handlers or navigation mounts.
 export function getDocumentSearchEntries(root,route){
  const plain=node=>(node?.textContent||'').replace(/\s+/g,' ').trim();

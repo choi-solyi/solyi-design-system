@@ -2,7 +2,7 @@
 import {useTheme} from 'vuetify';
 import AppearanceSettings from './AppearanceSettings.vue';
 import {resolveAppearance,persistAppearance} from '../../../site/appearance-state.js';
-import {tokens as coreTokens,coreVersion} from '@solyi/core';
+import {tokens as coreTokens,coreVersion} from 'solyi-ui';
 import { uiVersion, applySolyiAppearance } from 'solyi-ui';
 import ProgressExamples from './ProgressExamples.vue';
 import RecipeExamples from './RecipeExamples.vue';

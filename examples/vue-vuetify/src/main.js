@@ -1,10 +1,10 @@
 import {createApp} from 'vue';
 import {createStarterVuetify} from './vuetify.js';
 import 'vuetify/styles';
-import '@solyi/core/fonts.css';
-import '@solyi/core/code-fonts.css';
-import '@solyi/core/tokens.css';
-import '@solyi/core/components.css';
+import 'solyi-ui/fonts.css';
+import 'solyi-ui/code-fonts.css';
+import 'solyi-ui/tokens.css';
+import 'solyi-ui/components.css';
 import 'solyi-ui/styles.css';
 import './adapter.css';
 import SolyiUI, {provideSolLocale} from 'solyi-ui';

@@ -1,10 +1,10 @@
 {
   "name": "solyi-ui",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "private": true,
   "type": "module",
   "license": "MIT",
-  "description": "Vue 3 UI library with typed S components and shared Solyi design tokens. Unpublished local tarball preview.",
+  "description": "Vue 3용 S 컴포넌트, 디자인 토큰, CSS 및 공통 도구를 제공하는 UI 라이브러리.",
   "files": [
     "dist",
     "README.md",
@@ -22,13 +22,33 @@
       "types": "./dist/global.d.ts",
       "import": "./dist/global.js"
     },
-    "./DESIGN.md": "./DESIGN.md"
+    "./DESIGN.md": "./DESIGN.md",
+    "./tokens": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./tokens.css": "./dist/core/tokens.css",
+    "./tokens.json": "./dist/core/tokens.json",
+    "./components.css": "./dist/core/components.css",
+    "./fonts.css": "./dist/core/fonts/wanted-sans/WantedSansVariable.css",
+    "./code-fonts.css": "./dist/core/fonts/code-fonts.css",
+    "./date": {
+      "types": "./dist/core/date-only.d.ts",
+      "import": "./dist/core/date-only.js"
+    },
+    "./icons": {
+      "types": "./dist/core/icons.d.ts",
+      "import": "./dist/core/icons.js"
+    },
+    "./overflow": {
+      "types": "./dist/core/overflow.d.ts",
+      "import": "./dist/core/overflow.js"
+    }
   },
   "sideEffects": [
     "**/*.css"
   ],
   "peerDependencies": {
-    "@solyi/core": "0.4.9",
     "vue": ">=3.5.44 <3.6.0",
     "vuetify": ">=4.3.0 <4.4.0"
   },

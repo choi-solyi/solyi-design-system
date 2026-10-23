@@ -5,36 +5,62 @@ import {fileURLToPath} from 'node:url';
 import {JSDOM} from 'jsdom';
 import {componentReferences,componentExampleSources} from '../site/component-api-data.js';
 import {componentCatalogue,renderComponentReferences,mountComponentReferences,revealComponentTarget} from '../site/component-api.js';
+import {componentConcept,componentConceptNames,componentLegacyAnchors} from '../site/component-catalog.js';
+import {getTopicCatalogue,resolveDocumentLocation} from '../site/topics.js';
 
 const root=new URL('../',import.meta.url);
 execFileSync(process.execPath,['scripts/build-component-api.mjs','--check'],{cwd:fileURLToPath(root),stdio:'inherit'});
 const source=await readFile(new URL('packages/vue-ui/src/index.ts',root),'utf8');
 const names=/export const sComponents=\{([^}]+)\}/.exec(source)[1].split(',').map(name=>name.trim());
 assert.deepEqual(componentReferences.map(component=>component.name).sort(),names.sort());
-for(const group of componentCatalogue())assert.deepEqual(group.items.map(item=>item.label),group.items.map(item=>item.label).sort((a,b)=>a.localeCompare(b,'en')),'ABC order inside '+group.group);
-const dom=new JSDOM(renderComponentReferences({section:(id,title,description,body)=>`<section id="${id}" class="section"><h2>${title}</h2><p>${description}</p>${body}</section>`}),{url:'https://example.test/#component/sbtn'}),document=dom.window.document;
+assert.deepEqual(Object.keys(componentConceptNames).sort(),names.sort(),'Every actual API has a concept name');
+for(const group of componentCatalogue()){assert.match(group.group,/^[A-Za-z &]+$/);assert.deepEqual(group.items.map(item=>item.label),group.items.map(item=>item.label).sort((a,b)=>a.localeCompare(b,'en')),'Concept ABC order inside '+group.group);}
+assert.deepEqual(getTopicCatalogue('component'),componentCatalogue(),'No duplicate common-state menu');
+assert.equal(componentCatalogue()[0].items.find(item=>item.id==='sbtn').label,'Button');
+for(const [old,canonical]of Object.entries(componentLegacyAnchors))assert.deepEqual(resolveDocumentLocation('#component/'+old),{route:'component',anchor:canonical});
+for(const [hash,route,anchor]of [['#releases/packages','start','install'],['#theme/packages','start','install'],['#releases/versioning','releases','changelog'],['#theme/versioning','releases','changelog'],['#start/vue-components','start','registration'],['#start/installation','start','install']])assert.deepEqual(resolveDocumentLocation(hash),{route,anchor});
+assert.deepEqual(getTopicCatalogue('start')[0].items.slice(0,7).map(item=>item.id),['start-here','install','registration','auto-import','forms','appearance','update']);
+assert.deepEqual(getTopicCatalogue('releases')[0].items.map(item=>item.id),['changelog']);
+const copySources=new Map();let copyId=0;
+const escape=value=>value.replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
+const dom=new JSDOM(renderComponentReferences({section:(id,title,description,body)=>`<section id="${id}" class="section"><h2>${title}</h2><p>${description}</p>${body}</section>`,codeSample(label,source){const id='sample-'+(++copyId);copySources.set(id,source);return `<details class="code-example"><summary>${label}</summary><div class="code-body"><div class="code-toolbar"><span>${label}</span><button type="button" data-copy-snippet="${id}">복사</button></div><pre><code>${escape(source)}</code></pre></div></details>`;}}),{url:'https://example.test/#component/sbtn'}),document=dom.window.document;
 const seenIds=[...document.querySelectorAll('[id]')].map(element=>element.id);assert.equal(new Set(seenIds).size,seenIds.length);
 const mapping={date:'inputs',files:'inputs',autocomplete:'inputs',chart:'chart-tree',tree:'chart-tree'};
 const advanced=await readFile(new URL('examples/vue-vuetify/src/AdvancedExamples.vue',root),'utf8');
 for(const component of componentReferences){
   const card=document.getElementById(component.id);assert.ok(card,component.name+' reference');
-  assert.ok(document.getElementById(component.id+'-examples'));assert.ok(document.getElementById(component.id+'-api'));
+  assert.ok(document.getElementById(component.id+'-examples'));assert.ok(document.getElementById(component.id+'-code'));assert.ok(document.getElementById(component.id+'-api'));
+  assert.equal(card.querySelector('h3').textContent,componentConcept(component));assert.equal(card.querySelector('.component-api-name').textContent,component.name);
+  assert.deepEqual([...card.querySelectorAll('[data-component-tab]')].map(tab=>tab.textContent),['Examples','Sample Code','API']);
   for(const title of ['Props','Slots','Events','Methods'])assert.ok([...card.querySelectorAll('h5')].some(heading=>heading.textContent===title));
   const example=component.example==='advanced-vue'?advanced:await readFile(new URL('examples/vue-vuetify/src/recipes/'+(mapping[component.example]||component.example)+'.vue',root),'utf8');
   assert.equal(componentExampleSources[component.example],example,'Visible/copy source is the running consumer SFC');
   assert.equal(document.getElementById(component.id+'-api').hidden,true,'API is initially hidden');
   assert.equal(document.getElementById(component.id+'-examples').hidden,false,'Examples is initially visible');
+  assert.equal(document.getElementById(component.id+'-code').hidden,true,'Sample Code is initially hidden');
   assert.ok(card.querySelector('[data-component-example]'),'Inline sample exists without a second link');
-  assert.equal(card.querySelector('.code-example').open,false,'Source is initially collapsed');
+  assert.equal(card.querySelector('#'+component.id+'-examples .code-example'),null,'Examples only contains the running canvas');
+  const code=document.getElementById(component.id+'-code');assert.equal(code.querySelector('details,summary'),null,'Sample Code has no nested accordion');
+  assert.equal(code.querySelector('pre code').textContent,example,'Visible code is the canonical SFC');
+  assert.equal(copySources.get(code.querySelector('[data-copy-snippet]').dataset.copySnippet),example,'Copy uses the same canonical SFC');
+  assert.ok(code.querySelector('.code-example-footer a[href^="./starter/"]'),'Standalone consumer link stays with the code');
   assert.equal(card.querySelector('a[href*="blob/main/"]'),null,'No source link in the basic component view');
   assert.ok(new RegExp('<'+component.name+'(?:\\s|>)').test(example),component.name+' appears in its linked, actual package-consuming example');
   for(const prop of component.props){assert.ok(prop.type);assert.ok(prop.description);assert.ok(typeof prop.default==='string');}
 }
 globalThis.AbortController=dom.window.AbortController;globalThis.location=dom.window.location;globalThis.history=dom.window.history;
 const clean=mountComponentReferences(document.body),btn=document.getElementById('sbtn'),tabs=[...btn.querySelectorAll('[data-component-tab]')];
-tabs[1].click();assert.equal(tabs[1].getAttribute('aria-selected'),'true');assert.equal(document.getElementById('sbtn-api').hidden,false);assert.equal(document.getElementById('sbtn-examples').hidden,true);
-tabs[1].dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true,cancelable:true}));assert.equal(document.activeElement,tabs[0]);assert.equal(document.getElementById('sbtn-api').hidden,true);
-revealComponentTarget(document.body,'sdate-picker-api');assert.equal(document.getElementById('sdate-picker-api').hidden,false);assert.equal(revealComponentTarget(document.body,'invalid['),null);clean();
+const canvas=btn.querySelector('[data-component-example]'),frame=document.createElement('iframe');canvas.append(frame);frame.contentDocument.body.innerHTML='<input value="KEEP">';const draft=frame.contentDocument.querySelector('input');draft.value='LIVE INPUT';
+tabs[2].click();assert.equal(tabs[2].getAttribute('aria-selected'),'true');assert.equal(document.getElementById('sbtn-api').hidden,false);assert.equal(document.getElementById('sbtn-examples').hidden,true);assert.equal(location.hash,'#component/sbtn-api');
+tabs[2].dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true,cancelable:true}));assert.equal(document.activeElement,tabs[1]);assert.equal(document.getElementById('sbtn-code').hidden,false);assert.equal(document.getElementById('sbtn-api').hidden,true);assert.equal(location.hash,'#component/sbtn-code');
+tabs[1].dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'Home',bubbles:true,cancelable:true}));assert.equal(document.activeElement,tabs[0]);assert.equal(document.getElementById('sbtn-examples').hidden,false);assert.equal(canvas.querySelector('iframe'),frame);assert.equal(frame.contentDocument.querySelector('input'),draft);assert.equal(draft.value,'LIVE INPUT','Tab switching never replaces the actual sample');
+tabs[0].dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true,cancelable:true}));assert.equal(document.activeElement,tabs[2],'Three-tab arrow navigation wraps');
+tabs[2].dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));assert.equal(document.activeElement,tabs[0]);
+tabs[0].dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'End',bubbles:true,cancelable:true}));assert.equal(document.activeElement,tabs[2]);
+revealComponentTarget(document.body,'sdate-picker-api');assert.equal(document.getElementById('sdate-picker-api').hidden,false);
+revealComponentTarget(document.body,'sdate-picker-code');assert.equal(document.getElementById('sdate-picker-code').hidden,false);assert.equal(document.getElementById('sdate-picker-api').hidden,true);
+revealComponentTarget(document.body,'sdate-picker-examples');assert.equal(document.getElementById('sdate-picker-examples').hidden,false);
+revealComponentTarget(document.body,'sdate-picker');assert.equal(document.getElementById('sdate-picker-examples').hidden,false);assert.equal(revealComponentTarget(document.body,'invalid['),null);clean();
 const card=componentReferences.find(component=>component.name==='SCard');
 assert.deepEqual(card.props.map(prop=>prop.name).sort(),['eyebrow','headingLevel','id','title']);
 assert.deepEqual(card.slots.map(slot=>slot.name).sort(),['actions','default']);assert.deepEqual(card.events,[]);assert.equal(card.passthrough,null);
@@ -46,4 +72,4 @@ for(const name of ['STextField','STextarea','SCheckbox','SSelect','SNumberInput'
  for(const prop of ['rules','serverError','errorMessages'])assert.ok(component.props.some(item=>item.name===prop),name+' actual validation prop '+prop);
 }
 assert.deepEqual(componentReferences.find(component=>component.name==='SBtn').props.find(prop=>prop.name==='variant').values,['primary','secondary','subtle','inline']);
-dom.window.close();console.log(`PASS: ${names.length} public S components match generated Props/Slots/Events/Methods, actual package examples, ABC groups, grid passthrough and shared form contracts.`);
+dom.window.close();console.log(`PASS: ${names.length} real API contracts and concept headings/badges; English concept-ABC groups without duplicate legacy menu; canonical Examples/Sample Code/API panels, unchanged SFC copy, no nested code accordion, roving keys/deep links and preserved iframe/draft; grid passthrough and form contracts.`);

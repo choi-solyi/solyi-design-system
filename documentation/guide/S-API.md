@@ -1,6 +1,6 @@
 # Vue 컴포넌트 API
 
-기본 예제는 앱에서 한 번 전역 등록한 뒤 S 태그를 사용합니다. [등록·타입·공통 API](DEDICATED-VUE-API.md)를 먼저 확인하세요. Vue 함수와 타입만 각 예제에서 import합니다.
+기본 예제는 앱에서 한 번 전역 등록한 뒤 S 태그를 사용합니다. [등록·타입·공통 API](DEDICATED-VUE-API.md)를 먼저 확인하세요. Vue 함수 자동 import는 소비 프로젝트의 별도 빌드 설정이며 TypeScript 타입과 패키지 helper import는 유지합니다.
 
 ## 표면·트리와 Vue 조합
 
@@ -12,9 +12,9 @@
 - `SDialog presentation="drawer"`는 같은 열기/닫기·초점 계약을 오른쪽 패널로 표시합니다. `eyebrow`와 `title`은 같은 제목 묶음을 사용합니다.
 - `SRadioGroup layout="cards"`와 `options[].description`은 라벨 전체가 선택되는 비교 카드를 제공합니다. 값과 native radio의 키보드 동작은 기존 계약을 유지합니다.
 
-기본 사용 코드는 [정본 Vue 예제](../../examples/vue-vuetify/src/recipes)에서 생성하고, 같은 파일을 `/starter/?view=recipes`에서 실행합니다. 문서의 HTML·CSS는 별도 참고 탭입니다. Tooltip/Popover·Accordion·Breadcrumb·Avatar·파일·단일 자동완성·차트도 전용 S API로 제공합니다. 폼·검색·편집 같은 업무 흐름은 부품을 연결한 Vue 조합입니다. [전체 전환표와 제한](../plans/VUE-EXAMPLES-PLAN.md)을 확인하세요.
+기본 사용 코드는 [정본 Vue 예제](../../examples/vue-vuetify/src/recipes)에서 생성하고, 같은 파일을 `/starter/?view=recipes`에서 실행합니다. 문서의 HTML·CSS는 별도 참고 탭입니다. Tooltip/Popover·Accordion·Breadcrumb·Avatar·파일·단일 자동완성·차트도 전용 S API로 제공합니다. 폼·검색·편집 같은 업무 흐름은 부품을 연결한 Vue 조합입니다. 각 부품의 지원 범위는 [컴포넌트 문서](https://ui.solyi.kr/#component)에서 확인하세요.
 
-`solyi-ui`의 기본 사용 이름은 `SBtn`, `STextField`, `SDialog`, `SDataTable` 등 S 접두사 PascalCase입니다. 현재 컴포넌트 export와 plugin 등록은 S 이름만 제공합니다. 사용되지 않은 이전 Sol 컴포넌트 별칭은 이번 0.x에서 제거했습니다. 기존 릴리스 파일은 변경하지 않습니다.
+`solyi-ui`의 기본 사용 이름은 `SBtn`, `STextField`, `SDialog`, `SDataTable` 등 S 접두사 PascalCase입니다. 컴포넌트 export와 plugin 등록은 S 이름을 사용합니다.
 
 ```vue
 <script setup>
@@ -35,9 +35,9 @@ import {createApp} from 'vue';
 import {VApp} from 'vuetify/components/VApp';
 import SolyiUI, {createSolyiVuetify, applySolyiAppearance} from 'solyi-ui';
 import 'vuetify/styles';
-import '@solyi/core/fonts.css';
-import '@solyi/core/tokens.css';
-import '@solyi/core/components.css';
+import 'solyi-ui/fonts.css';
+import 'solyi-ui/tokens.css';
+import 'solyi-ui/components.css';
 import 'solyi-ui/styles.css';
 const vuetify = createSolyiVuetify({components:{VApp}});
 applySolyiAppearance(vuetify.theme,{theme:'violet',mode:'light',density:'comfortable'});
@@ -48,7 +48,7 @@ createApp(App).use(vuetify).use(SolyiUI).mount('#app');
 
 라이트·다크 색과 Wanted Sans, 버튼6/필드10/카드12/다이얼로그16 토큰을 공유합니다. 원형 icon 버튼과 직접 V 사용을 유지합니다. native variant/color를 사용할 수 있지만 브리지 클래스는 기본 높이·폰트를 토큰으로 고정합니다. native size/density가 동일한 치수로 표현된다는 계약은 없으며, 크기를 바꿀 때는 app defaults 클래스나 명시적 style을 함께 검토합니다. 임의의 모든 Vuetify 컴포넌트를 S API로 변환하거나 동일한 레이아웃·키보드 동작을 보증하지 않습니다. app defaults/theme 추가 설정으로 확장할 수 있으며 해당 클래스의 교체는 기본 스타일 적용을 해제할 수 있습니다.
 
-실행: `starter/`의 S/V 비교 예제. 전체 문서 전환 상태는 `REUSE-INVENTORY.md`, 단계 검증은 `S-API-PLAN.md`를 따릅니다. 정확한 공개 상태는 해당 SHA의 CI·Pages 확인 결과를 따릅니다. npm 게시와 다른 앱 적용은 연결하지 않습니다.
+실행은 `starter/`의 S/V 비교 예제에서 확인합니다. 실제 Props·Slots·Events·Methods는 생성된 타입과 각 컴포넌트 문서를 기준으로 합니다.
 
 ## 진행 표시
 

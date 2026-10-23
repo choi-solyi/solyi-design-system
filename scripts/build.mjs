@@ -25,6 +25,7 @@ await writeFile(path.join(out, 'token-data.js'), `// Generated from tokens.json.
 await copyFile(path.join(root, 'tokens.json'), path.join(out, 'tokens.json'));
 if(process.argv.includes('--core-only')) {console.log('Generated shared Core tokens only.');process.exit(0);}
 await import('./build-component-api.mjs');
+await import('./build-release-notes.mjs');
 await import('./build-code-highlight.mjs');
 await import('./build-design-guide.mjs');
 await copyFile(path.join(root,'DESIGN.md'),path.join(out,'DESIGN.md'));

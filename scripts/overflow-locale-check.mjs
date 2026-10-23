@@ -8,7 +8,7 @@ for(const name of ['document','window','AbortController','MutationObserver'])Obj
 globalThis.requestAnimationFrame=w.requestAnimationFrame.bind(w);globalThis.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);globalThis.innerWidth=720;globalThis.innerHeight=800;
 w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};
 for(const node of d.querySelectorAll('.sol-ellipsis')){Object.defineProperty(node,'scrollWidth',{value:200});Object.defineProperty(node,'clientWidth',{value:40});node.getClientRects=()=>[{width:40,height:20}];}
-let entry=new URL('site/overflow.js',root);if(installed){entry=new URL('examples/package-consumer/.runtime-overflow.mjs',root);await writeFile(entry,"export {mountOverflowText} from '@solyi/core/overflow';\n");}
+let entry=new URL('site/overflow.js',root);if(installed){entry=new URL('examples/package-consumer/.runtime-overflow.mjs',root);await writeFile(entry,"export {mountOverflowText} from 'solyi-ui/overflow';\n");}
 const {mountOverflowText}=await import(entry);
 let locale={fullText:'Full content',close:'Close',viewFullText:text=>'View full content: '+text};
 const cleanup=mountOverflowText(d.querySelector('main'),()=>locale),trigger=d.querySelector('.sol-title-preview');

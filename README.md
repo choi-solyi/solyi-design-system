@@ -1,66 +1,65 @@
-# Solyi Design System
+# Sol UI
 
-솔의 여러 앱에서 함께 사용하는 개인 디자인 시스템의 **0.x 검토 초안**입니다. 공통 색 역할·타이포·간격·밀도·상태 규칙을 제공하고, 앱의 성격에 따라 테마를 조정합니다. 특정 앱의 색을 모든 앱의 영구 규칙으로 정하지 않습니다.
+Vue 3와 Vuetify를 사용하는 프로젝트를 위한 UI 라이브러리입니다. `solyi-ui`에 포함된 S 컴포넌트와 공통 토큰·CSS로 색, 글꼴, 간격, 밀도와 상태 표현을 함께 사용합니다.
 
-- [문서 사이트](https://ui.solyi.kr/)
-- [실제 패키지를 사용하는 예제](https://ui.solyi.kr/starter/?view=recipes)
-- [소비 프로젝트 AI 지침](DESIGN.md)
-- [처음 시작하기](documentation/guide/GETTING-STARTED.md)
-- [설치·업데이트·롤백](documentation/guide/DISTRIBUTION.md)
-- [검증·호환 범위](documentation/guide/COMPATIBILITY.md)
+## 설치
 
-## 문서와 코드
-
-문서의 학습 순서는 **Getting started → Style → Components → Patterns**입니다. Releases는 현재 권장 패키지 조합과 설치 방법을, Licensing은 자체 코드와 외부 자산의 권리 범위를 설명합니다. 컴포넌트의 사용 예제와 Props·Slots·Events·Methods는 각 컴포넌트 본문에서 함께 찾습니다.
-
-문서 캔버스·샘플 코드·별도 실행 화면은 같은 Vue SFC와 실제 설치된 패키지를 사용합니다. 화면틀·오류 복구·검색 같은 업무 흐름은 컴포넌트를 연결한 조합입니다. 의미 구조에 필요한 HTML을 없애거나 모든 Vuetify API를 복제하지 않습니다.
-
-| 위치 | 역할 |
-|---|---|
-| `tokens.json`, `site/components.css` | 프레임워크 독립 토큰·공통 CSS 원본 |
-| `packages/core` | Core CSS·JSON·아이콘·날짜·말줄임 helper 패키지 |
-| `packages/vue-ui` | S 컴포넌트·타입·Vuetify 연결 |
-| `examples/package-consumer` | 실제 tarball을 설치하는 별도 타입·빌드 소비 프로젝트 |
-| `examples/vue-vuetify` | 실제 패키지 기반 문서 예제 앱 |
-| `site` | 문서 셸과 원본 리소스 |
-| `docs` | GitHub Pages 생성 산출물. 직접 편집하지 않음 |
-| `documentation/guide` | 설치·사용·호환·폰트·브랜드 가이드 |
-| `documentation/development` | 개발 구조·전환 목록·과거 기술 기록 |
-| `documentation/quality` | 검사 결과·실제 화면 검수와 미검증 범위 |
-| `documentation/plans` | 단계별 계획과 완료표 |
-
-`docs/`가 배포 산출물이라 저장소의 상세 Markdown은 `documentation/`에 분리합니다. 기존 파일의 새 위치는 [문서 이동표](documentation/MOVED-DOCUMENTS.md)에서 찾습니다. [기여 안내](CONTRIBUTING.md)에서 수정 원본·검사·커밋 규칙을 확인하세요.
-
-## 로컬 실행과 검증
-
-공식 Node **22.23.3**을 기준으로 사용합니다. starter 도구는 Node `^22.18.0 || >=24.12.0`을 요구합니다. registry 로그인이나 인증 토큰은 필요하지 않습니다.
+`solyi-ui`와 peer인 Vue·Vuetify를 설치합니다. Core 토큰·CSS·helper는 `solyi-ui`에 포함되어 별도 설치하지 않습니다.
 
 ```sh
-npm ci --ignore-scripts
-npm run library:verify
-npm run serve
+pnpm add solyi-ui@0.10.4 vue@3.5.44 vuetify@4.3.0
 ```
 
-문서는 `http://127.0.0.1:4173`에서 확인합니다. 패키지 내용이 바뀌어 tarball과 잠금 파일을 의도적으로 갱신할 때는 [패키지 개발 절차](documentation/guide/LIBRARY.md)를 따릅니다. 단순 문서 수정에 모든 비싼 검사를 반복하지 말고 영향 범위 확인 후 최종 배치에서 통합 검사합니다.
+자세한 설치·업데이트 절차는 [설치 안내](https://ui.solyi.kr/#start/install)를 확인하세요.
 
-새 CLI나 `npm install sol-ui` 설치 경로는 출시되지 않았습니다. 현재 설치는 [Releases](https://ui.solyi.kr/#releases)의 고정 URL tarball을 사용합니다. npm 이름 `sol-ui`의 사용권·소유권은 확인되지 않았고 패키지는 `private:true`로 게시를 막고 있습니다.
+검증한 조합은 Vue 3.5.44 / Vuetify 4.3.0이며 Node `^22.18.0 || >=24.12.0`을 사용합니다. 다른 조합과 실제 브라우저 지원 범위는 [호환 안내](documentation/guide/COMPATIBILITY.md)를 참고하세요.
 
-## 배포
+## 앱에 연결
 
-기존 GitHub Actions의 validate가 패키지·별도 소비 앱·문서 검사를 통과하면 같은 저장소의 Pages deploy가 실행됩니다. 실패한 검증은 배포하지 않습니다. 배포 후 정확한 커밋과 공개 파일의 HTTP 상태·SHA-256을 확인합니다.
+```ts
+import {createApp} from 'vue';
+import {VApp} from 'vuetify/components/VApp';
+import SolyiUI, {createSolyiVuetify} from 'solyi-ui';
+import 'vuetify/styles';
+import 'solyi-ui/fonts.css';
+import 'solyi-ui/tokens.css';
+import 'solyi-ui/components.css';
+import 'solyi-ui/styles.css';
+import 'solyi-ui/global';
+import App from './App.vue';
 
-```sh
-npm run verify-live -- <공개된 커밋 SHA>
+createApp(App)
+  .use(createSolyiVuetify({components: {VApp}}))
+  .use(SolyiUI)
+  .mount('#app');
 ```
 
-자동 변경 대상은 이 문서 사이트와 starter뿐입니다. 아페·개인 홈페이지·다른 소비 프로젝트의 코드나 배포는 연결하지 않았습니다. 실제 Safari·Fold 기기·화면 낭독기 등 미검증 환경은 [검수 기록](documentation/quality/QA.md)에 구분합니다. 자동 검사나 Lighthouse 점수로 전체 접근성 준수를 주장하지 않습니다.
+등록 후 템플릿에서 S 접두사의 PascalCase 컴포넌트를 사용합니다.
 
-## 라이선스와 참고
+```vue
+<template>
+  <SBtn variant="primary">저장</SBtn>
+</template>
+```
 
-자체 재사용 UI 코드·토큰·스타일·패키지 문서는 [MIT](LICENSE)입니다. 로고·캐릭터·favicon·개인 콘텐츠는 이 허용 범위와 배포 패키지에서 제외합니다. 폰트와 다른 제삼자 소프트웨어는 원래 라이선스·저작권·출처를 유지합니다. [정확한 범위](LICENSE-SCOPE.md), [공식 브랜드 자산 출처](documentation/guide/BRAND-ASSETS.md), [폰트 고지](documentation/guide/FONT.md)를 확인하세요.
+`solyi-ui/global`은 템플릿 타입, `app.use(SolyiUI)`는 런타임 등록을 담당합니다. 샘플에서 생략된 `ref/computed` 등 Vue 함수 import는 별도의 자동 import 설정이 있어야 합니다. [시작 가이드](documentation/guide/GETTING-STARTED.md)에서 TypeScript·자동 import·테마 설정을 확인하세요.
 
-[참고 가이드](https://design.yeolyi.com/)에서는 정보 구조와 공유 UI·문서 셸 분리 개념만 참고했습니다. 원문·시각 디자인은 복제하지 않았습니다. 이 저장소는 가상 데이터와 독창적인 문서·데모만 포함하며 기존 비공개 앱 소스나 개인 파일을 게시하지 않습니다.
+## 컴포넌트와 예제
 
-사용자의 최종 승인 전에는 **1.0.0을 만들지 않으며**, 기존 릴리스 파일과 Git 기록을 삭제하거나 변조하지 않습니다. 이전 상세 README는 [이력 부록](documentation/development/README-HISTORY.md)에 보존합니다.
+- [문서 사이트](https://ui.solyi.kr/): Style, Components, Patterns와 컴포넌트별 Examples·API
+- [실행 예제](https://ui.solyi.kr/starter/?view=recipes): 설치한 패키지를 사용하는 Vue 화면
+- [설치·업데이트](documentation/guide/DISTRIBUTION.md): 패키지 버전, 잠금 파일과 업데이트 방법
+- [폼과 오류 처리](documentation/guide/FORMS.md): rules, 서버 오류와 template ref 메서드
+- [소비 프로젝트 디자인 지침](DESIGN.md): 앱에서 토큰·컴포넌트를 적용하는 규칙
 
-`solyi-ui`는 Vue 3용 UI 라이브러리의 선택한 이름입니다. 컴포넌트는 SBtn·SCard 등 기존 S API를 유지합니다. Core는 프레임워크 독립 패키지 `@solyi/core`로 남으며 현재는 두 로컬 tarball을 함께 설치합니다. npm 이름 확보나 게시 완료를 뜻하지 않습니다.
+버튼·입력·폼·표·탐색·알림·오버레이·날짜/시간·파일·진행 표시 등은 공개 S API를 제공합니다. 검색·편집·비교·복구·화면틀은 해당 컴포넌트를 조합한 예제입니다. 문서 코드와 실행 화면은 같은 SFC와 실제 패키지를 사용합니다.
+
+테마는 Violet·Sage·Sand, 화면 모드는 라이트·다크, 밀도는 기본·컴팩트를 제공합니다. 원본 V 컴포넌트도 공통 테마와 함께 사용할 수 있으며 모든 V API가 S API와 같다는 뜻은 아닙니다. 자동 검사만으로 전체 접근성 준수나 모든 브라우저 호환을 주장하지 않습니다.
+
+## 개발
+
+저장소의 설치·생성 원본·검사 명령·커밋 규칙은 [CONTRIBUTING](CONTRIBUTING.md), 패키지와 문서 구조는 [개발 가이드](documentation/guide/LIBRARY.md)에 있습니다.
+
+## 라이선스
+
+자체 재사용 코드·토큰·스타일·패키지 문서는 [MIT](LICENSE)입니다. 로고·캐릭터·favicon·개인 콘텐츠는 MIT 및 배포 패키지 범위에서 제외합니다. 폰트와 외부 소프트웨어에는 원래 라이선스·저작권 고지가 적용됩니다. [정확한 범위](LICENSE-SCOPE.md), [폰트](documentation/guide/FONT.md), [브랜드 자산](documentation/guide/BRAND-ASSETS.md)을 확인하세요.

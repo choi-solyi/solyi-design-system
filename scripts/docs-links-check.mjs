@@ -23,4 +23,4 @@ for(const file of documents){
     assert.ok(info.isFile()||info.isDirectory(),`${file}: valid local target ${target}`);count++;
   }
 }
-console.log(`PASS: ${documents.length} repository Markdown documents and ${count} local link targets. Historical records stay separated from current guides; external URLs and generated website anchors require their separate gates.`);
+console.log(`PASS: ${documents.length} repository Markdown documents and ${count} local link targets. External URLs and generated website anchors require their separate gates.`);

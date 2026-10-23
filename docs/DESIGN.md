@@ -12,16 +12,16 @@ DESIGN.md라는 파일명만으로 모든 AI 도구가 자동으로 읽는 것�
 
 ```text
 UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
-설치된 @solyi/core·solyi-ui의 버전, 공개 타입·API, 기존 앱 설정을 먼저 확인하세요.
+설치된 solyi-ui의 버전, 공개 타입·API, 기존 앱 설정을 먼저 확인하세요.
 실제 S 컴포넌트와 역할 토큰을 우선 사용하고 없는 API는 추측하지 마세요.
 기존 기능·접근성·앱별 예외를 보존하며, 변경 범위의 반응형·라이트/다크·키보드 동작을 확인하고 미검증을 구분해 보고하세요.
 ```
 
 ## 1. 설치 버전과 실제 API
 
-- package.json과 lockfile, 설치된 패키지의 package.json·exports·타입을 기준으로 작업합니다. 문서 버전과 Core/UI 패키지 버전은 서로 다를 수 있습니다.
-- 현재 권장 Core/UI 조합과 UI의 Core peer 버전을 확인합니다. URL과 integrity를 고정하고, 업데이트·롤백 때 package.json과 lockfile을 함께 관리합니다.
-- 아직 npm 레지스트리에 게시되지 않은 초안이므로 npm install solyi-ui나 생성 CLI가 제공된다고 안내하지 않습니다. 프로젝트가 사용하는 실제 설치 경로를 확인합니다.
+- package.json과 lockfile, 설치된 패키지의 package.json·exports·타입을 기준으로 작업합니다. 문서 버전과 패키지 버전은 서로 다를 수 있습니다.
+- 설치된 solyi-ui와 Vue/Vuetify peer 버전을 확인합니다. 버전과 integrity를 고정하고 업데이트·롤백 때 package.json과 lockfile을 함께 관리합니다.
+- solyi-ui를 설치하고 프로젝트의 Vue/Vuetify peer 조합을 확인합니다. Core 토큰·CSS·helper는 solyi-ui 안에 포함되므로 @solyi/core를 별도 설치하지 않습니다. 제공하지 않는 생성 CLI나 설치 옵션을 임의로 안내하지 않습니다.
 - 사용할 props·slots·events·methods를 설치 버전에서 확인합니다. SCard가 모든 VCard 옵션을 전달한다고 가정하거나, 존재하지 않는 S 태그·메서드를 만들지 않습니다.
 
 ## 2. 컴포넌트와 레이아웃
@@ -29,7 +29,7 @@ UI 작업 전에 프로젝트의 DESIGN.md를 읽고 적용해 주세요.
 - 실제 공개 S 컴포넌트를 우선 사용합니다. 예를 들어 SBtn, STextField, SSelect, SForm, SCard, SDialog, SDataTable을 목적에 맞게 사용합니다. 명명은 S 접두사 PascalCase입니다.
 - SContainer·SRow·SCol은 Vuetify 레이아웃을 재사용합니다. SCard의 actions 슬롯은 카드의 행동을 배치할 때 사용하고, 시각적 그룹과 간격은 명시적으로 구성합니다.
 - S API가 없는 기능은 조합 가능한 기존 컴포넌트와 의미 있는 HTML로 구현하고, 전용 API가 있는 것처럼 설명하지 않습니다. 직접 V 컴포넌트가 필요하면 createSolyiVuetify의 공통 테마·defaults 연결을 유지합니다.
-- 문서 사이트의 docs.css를 소비 앱에 가져오지 않습니다. Core tokens.css·components.css와 Vue UI styles.css 등 실제 패키지 스타일을 앱 진입점에서 한 번 불러옵니다.
+- 문서 사이트의 docs.css를 소비 앱에 가져오지 않습니다. solyi-ui/tokens.css·components.css·styles.css 등 실제 패키지 스타일을 앱 진입점에서 한 번 불러옵니다.
 
 ## 3. 토큰·테마·밀도
 

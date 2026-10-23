@@ -98,7 +98,7 @@ const propertyDescriptions = {
 };
 const records = [
   ['SBtn','동작','버튼의 기본·보조·로딩·비활성 상태를 구분합니다.','component','buttons'],
-  ['SSplitBtn','동작','대표 행동과 추가 행동 메뉴를 한 묶음으로 제공합니다.','start','advanced-vue'],
+  ['SSplitBtn','동작','대표 행동과 추가 행동 메뉴를 한 묶음으로 제공합니다.','component','action-menu'],
   ['SAutocomplete','입력','검색어와 한 개의 선택값을 구분하고 비동기 응답을 다룹니다.','pattern','autocomplete'],
   ['SCheckbox','입력','서로 독립적인 여러 조건을 켜고 끕니다.','component','choices'],
   ['SDatePicker','입력','한 입력창에서 단일 날짜 또는 기간을 선택합니다.','pattern','date'],

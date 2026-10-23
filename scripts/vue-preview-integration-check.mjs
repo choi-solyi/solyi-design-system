@@ -20,7 +20,7 @@ for(const route of ['start','style','component','pattern','releases','licensing'
   for(const element of d.querySelectorAll('[aria-labelledby],[aria-describedby],[aria-controls]'))for(const key of ['aria-labelledby','aria-describedby','aria-controls'])for(const id of(element.getAttribute(key)||'').split(/\s+/).filter(Boolean))assert.ok(d.getElementById(id),'Reference '+id);
   assert.equal(d.querySelectorAll('.demo-stage>button,.demo-stage>form').length,0,'The canonical Vue canvas replaces active native examples');
 }
-assert.ok(seen.has('advanced-vue'),'Advanced API references use the actual shared consumer');seen.delete('advanced-vue');assert.equal(seen.size,30,'Every canonical recipe is a document canvas');
+assert.ok(seen.has('advanced-vue'),'Advanced API references use the actual shared consumer');seen.delete('advanced-vue');assert.equal(seen.size,30,'Every canonical recipe is a document canvas: '+[...seen].join(','));
 w.location.hash='#pattern';await pause();const frame=d.querySelector('iframe[data-recipe=workflow]'),sent=[];assert.ok(frame);frame.contentWindow.postMessage=(data,origin)=>sent.push({data,origin});
 const message=(data,origin=w.location.origin,source=frame.contentWindow)=>w.dispatchEvent(new w.MessageEvent('message',{origin,source,data}));
 const controller=w.__getPreviewController();

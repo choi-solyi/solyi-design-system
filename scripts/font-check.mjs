@@ -9,7 +9,7 @@ const font=await read('site/fonts/wanted-sans/woff2/WantedSansVariable.woff2');a
 const tokens=JSON.parse(await read('tokens.json'));assert.match(tokens.base['font-sans'],/^"Wanted Sans Variable", "Wanted Sans",/);assert.ok(tokens.base['font-sans'].includes('Malgun Gothic'));assert.equal(tokens.base['font-mono'],'"JetBrains Mono", "Nanum Gothic Coding", monospace');
 const css=(await read('site/fonts/wanted-sans/WantedSansVariable.css')).toString();assert.match(css,/font-display:\s*swap/);assert.match(css,/font-weight:\s*400 1000/);assert.ok(!/url\(["']?https?:/.test(css));
 assert.match((await read('site/index.html')).toString(),/rel="stylesheet" href="\.\/fonts\/wanted-sans\/WantedSansVariable.css"/);
-for(const p of ['examples/vue-vuetify/src/main.js','examples/package-consumer/main.ts'])assert.ok((await read(p)).toString().includes("import '@solyi/core/fonts.css'"));
+for(const p of ['examples/vue-vuetify/src/main.js','examples/package-consumer/main.ts'])assert.ok((await read(p)).toString().includes("import 'solyi-ui/fonts.css'"));
 assert.ok((await read('examples/vue-vuetify/dist/THIRD-PARTY-NOTICES.txt')).toString().includes((await read('site/fonts/wanted-sans/OFL.txt')).toString()));
 console.log('PASS: official pinned Wanted Sans WOFF2/CSS/OFL hashes, package/site/starter identical bytes, self-hosted swap and unchanged UI fallback stack. Font rendering/failure/CLS remains a real-browser check.');
 await import('./code-font-check.mjs');

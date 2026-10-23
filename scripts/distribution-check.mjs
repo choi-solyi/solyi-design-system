@@ -20,7 +20,11 @@ for(const file of ['manifest.json','SHA256SUMS',...current.packages.map(p=>p.fil
 await writeFile(new URL(current.packages[0].file,damaged),'not a package');
 await assert.rejects(()=>verifyRelease(damaged),/checksum mismatch/);
 await writeFile(new URL('manifest.json',fixture),JSON.stringify(current));await assert.rejects(()=>verifyRelease(fixture),/ENOENT/);
-const command=async(args)=>{try{const result=await exec(process.platform==='win32'?'npm.cmd':'npm',args,{shell:process.platform==='win32',cwd:fileURLToPath(fixture),env:process.env,maxBuffer:4*1024*1024});if(result.stdout)console.log(result.stdout.trim());}catch(error){console.error(error.stdout,error.stderr);throw error;}};
+const command=async(args)=>{try{const result=await exec(process.platform==='win32'?'npm.cmd':'npm',args,{shell:process.platform==='win32',cwd:fileURLToPath(fixture),env:process.env,maxBuffer:4*1024*1024});if(result.stdout)console.log(result.stdout.trim());return result.stdout+'\n'+result.stderr;}catch(error){console.error(error.stdout,error.stderr);throw error;}};
+const assertNoCoreRegistryRequest=output=>{
+ const decoded=output.replace(/%40/gi,'@').replace(/%2f/gi,'/');
+ assert.ok(!/https?:\/\/registry\.npmjs\.org\/@solyi\/core(?:[/?\s]|$)/i.test(decoded),'A UI-only install must not request Core from the registry');
+};
 const server=http.createServer(async(req,res)=>{try{const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(!/^\/releases\/[\w./-]+$/.test(pathname)||pathname.includes('..'))throw Error('path');const data=await readFile(new URL('.'+pathname,docs));res.writeHead(200,{'Content-Type':'application/octet-stream'}).end(data);}catch{res.writeHead(404).end();}});
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base='http://127.0.0.1:'+server.address().port+'/releases/';
 try{
@@ -31,17 +35,29 @@ try{
  const names=['SBtn','STextField','SDialog','SDataTable','SCheckbox','SRadioGroup','SSwitch','SSelect','STextarea','SNumberInput','STabs','SSnackbar','SDatePicker','STimePicker','SSegmentedControl','SMultiSelect','SRangeSlider','SSplitBtn','SContextMenu','SResizableSplitPane'];
  let installedUiName;
  for(const [label,release]of [['previous',old],['update',current],['rollback',old]]){
-  const uiName=releasePackage(release,'vue-ui').name;
-  // A renamed package is a different dependency. Remove the previous UI while
-  // its matching Core is still installed, before resolving the next pair.
+  const uiPackage=releasePackage(release,'vue-ui'),uiName=uiPackage.name,singlePackage=label==='update';
+  const consumerPackages=singlePackage?[uiPackage]:release.packages;
+  // Preserve the original dependency pair for historical installs and rollback.
+  // A renamed UI is removed while its original Core peer is still present.
   if(installedUiName&&installedUiName!==uiName)await command(['uninstall',installedUiName,'--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org']);
-  const dependencies={...template.dependencies};delete dependencies[historicalUiName];delete dependencies['solyi-ui'];for(const p of release.packages)dependencies[p.name]=base+release.release+'/'+p.file;
+  const dependencies={...template.dependencies};for(const name of [historicalUiName,'solyi-ui','@solyi/core'])delete dependencies[name];for(const p of consumerPackages)dependencies[p.name]=base+release.release+'/'+p.file;
   await writeFile(new URL('package.json',fixture),JSON.stringify({...template,name:'solyi-http-release-check',dependencies},null,2));
-  await writeFile(new URL('main.ts',fixture),`import {createApp,h} from 'vue';import {createVuetify} from 'vuetify';import SolyiUI,{${names.join(',')}${label==='update'?',formatSolDate,formatSolNumber,provideSolLocale':''}} from '${uiName}';import '@solyi/core/tokens.css';import '@solyi/core/components.css';import '${uiName}/styles.css';void [${names.join(',')}];const app=createApp({render:()=>h(STextField,{id:'check',label:'Check',required:true})});${label==='update'?"provideSolLocale(app,'en');void formatSolDate('2026-10-21','en');void formatSolNumber(1234.5,'en');":''}app.use(createVuetify()).use(SolyiUI).mount('#app');`);
+  const sharedImports=singlePackage?`import {tokens,coreVersion} from '${uiName}/tokens';import {parseDateOnly} from '${uiName}/date';import {solIcon} from '${uiName}/icons';import {mountOverflowText} from '${uiName}/overflow';import type {DateParts} from '${uiName}/date';import type {SolIconName} from '${uiName}/icons';import type {OverflowCleanup} from '${uiName}/overflow';import '${uiName}/fonts.css';import '${uiName}/code-fonts.css';void [tokens,coreVersion,parseDateOnly('2026-10-21'),solIcon('close'),mountOverflowText];const typedShared:[DateParts|null,SolIconName,OverflowCleanup|null]=[parseDateOnly('2026-10-21'),'close',null];void typedShared;`:'';
+  const sharedName=singlePackage?uiName:'@solyi/core';
+  await writeFile(new URL('main.ts',fixture),`import {createApp,h} from 'vue';import {createVuetify} from 'vuetify';import SolyiUI,{${names.join(',')}${singlePackage?',formatSolDate,formatSolNumber,provideSolLocale':''}} from '${uiName}';import '${sharedName}/tokens.css';import '${sharedName}/components.css';import '${uiName}/styles.css';${sharedImports}void [${names.join(',')}];const app=createApp({render:()=>h(STextField,{id:'check',label:'Check',required:true})});${singlePackage?"provideSolLocale(app,'en');void formatSolDate('2026-10-21','en');void formatSolNumber(1234.5,'en');":''}app.use(createVuetify()).use(SolyiUI).mount('#app');`);
   console.log('HTTP '+label+': '+release.release);
-  await command(['install','--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org']);
+  const installOutput=await command(['install','--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org','--loglevel=http']);
   const lock=JSON.parse(await readFile(new URL('package-lock.json',fixture),'utf8'));
-  for(const p of release.packages){const installed=JSON.parse(await readFile(new URL('node_modules/'+p.name+'/package.json',fixture),'utf8'));assert.equal(installed.version,p.version);const record=lock.packages['node_modules/'+p.name];assert.equal(record.resolved,dependencies[p.name]);assert.equal(record.integrity,p.integrity);const response=await fetch(dependencies[p.name]);assert.equal(response.status,200);assert.deepEqual(digest(Buffer.from(await response.arrayBuffer())),{sha256:p.sha256,integrity:p.integrity});}
+  for(const p of consumerPackages){const installed=JSON.parse(await readFile(new URL('node_modules/'+p.name+'/package.json',fixture),'utf8'));assert.equal(installed.version,p.version);const record=lock.packages['node_modules/'+p.name];assert.equal(record.resolved,dependencies[p.name]);assert.equal(record.integrity,p.integrity);const response=await fetch(dependencies[p.name]);assert.equal(response.status,200);assert.deepEqual(digest(Buffer.from(await response.arrayBuffer())),{sha256:p.sha256,integrity:p.integrity});}
+  if(singlePackage){
+   assertNoCoreRegistryRequest(installOutput);
+   assert.equal(dependencies['@solyi/core'],undefined);
+   assert.ok(!Object.keys(lock.packages).some(path=>/(?:^|\/)node_modules\/@solyi\/core$/.test(path)),'Current HTTP consumer has no separate Core in its dependency tree');
+   await assert.rejects(()=>stat(new URL('node_modules/@solyi/core',fixture)),{code:'ENOENT'});
+   const installed=JSON.parse(await readFile(new URL('node_modules/'+uiName+'/package.json',fixture),'utf8'));
+   for(const field of ['dependencies','optionalDependencies','peerDependencies'])assert.equal(installed[field]?.['@solyi/core'],undefined,'HTTP-installed UI has no Core '+field);
+   for(const subpath of ['./tokens','./date','./icons','./overflow','./tokens.css','./components.css','./fonts.css','./code-fonts.css'])assert.ok(installed.exports[subpath],'HTTP-installed UI exports '+subpath);
+  }
   for(const name of ['vue','vuetify'])assert.equal(Object.keys(lock.packages).filter(key=>key.endsWith('node_modules/'+name)).length,1,'One '+name+' runtime');
   await command(['run','build']);
   installedUiName=uiName;
@@ -51,5 +67,5 @@ try{
  assert.throws(()=>assertImmutableRelease(current,current.packages.map((p,i)=>i? p:{...p,sha256:'0'.repeat(64)})),/Refusing to replace/);
  assert.doesNotThrow(()=>assertImmutableRelease(current,current.packages));
  assert.throws(()=>assertPackageVersions([current,{packages:current.packages.map((p,i)=>i?p:{...p,sha256:'0'.repeat(64)})}]),/different bytes/);
- console.log('PASS: two published-output package pairs/hash manifests; clean HTTP consumer previous → update → rollback, types/Vite build/locked integrity/one Vue+Vuetify each; corrupt/missing/overwrite guards. Local fixture only, public URLs not published.');
+ console.log('PASS: immutable release artifacts/hash manifests; HTTP consumer previous pair -> single-package update -> previous pair rollback, types/CSS/fonts/Vite build/locked integrity/one Vue+Vuetify each; no separate Core or Core registry request for the update; corrupt/missing/overwrite guards. Local fixture only, public URLs not published.');
 }finally{await new Promise(resolve=>server.close(resolve));}

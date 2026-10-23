@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { solIconPaths } from '@solyi/core/icons';
+import { solIconPaths } from 'solyi-ui/icons';
 import { recipeComponents, recipeLabels } from './recipe-registry';
 
 type RecipeId = keyof typeof recipeComponents;

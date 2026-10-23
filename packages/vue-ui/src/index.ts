@@ -19,6 +19,7 @@ import {VTextField} from 'vuetify/components/VTextField';
 import {VDialog} from 'vuetify/components/VDialog';
 import {mountOverflowText} from '@solyi/core/overflow';
 import {solIconPaths} from '@solyi/core/icons';
+export {tokens,coreVersion} from '@solyi/core';
 import './styles.css';
 import {SForm,useSFieldValidation,fieldError,fieldDisabled,fieldReadonly} from './form';
 import {commonFieldProps,fieldDescription,fieldMessages,fieldLabel} from './controls';

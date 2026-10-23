@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {moduleOrder} from './site-manifest.mjs';
 import {expansionChecks} from './expansion-tests.mjs';
+import {componentReferences,componentExampleSources} from '../site/component-api-data.js';
 const html=await readFile(new URL('../docs/index.html',import.meta.url),'utf8');
 const tokenSource=JSON.parse(await readFile(new URL('../tokens.json',import.meta.url),'utf8'));
 const withoutImports=source=>source.replace(/^import .* from '\.\/[\w-]+\.js';\r?\n/gm,'');
@@ -25,8 +26,10 @@ w.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open');this
 let clipboard='';
 Object.defineProperty(w.navigator,'clipboard',{value:{writeText:async value=>{clipboard=value;}}});
 for(const name of moduleOrder)w.eval(withoutImports(await readFile(new URL(`../docs/${name}.js`,import.meta.url),'utf8')).replace(/^export const /gm,'var ').replace(/^export /gm,''));
-// Unit scope: native Core reference controllers/navigation; Vue canvases are checked separately.
-w.mountVuePreviews=()=>()=>{};w.eval(app);
+// Unit scope: document navigation and remaining native Core patterns. Actual Vue canvases
+// are exercised by the installed-package and preview integration runtime suites.
+let previewMounts=0;
+w.mountVuePreviews=()=>{previewMounts++;return()=>{};};w.eval(app);
 const $=selector=>{const result=d.querySelector(selector);assert.ok(result,selector);return result;};
 const fire=(element,type)=>element.dispatchEvent(new w.Event(type,{bubbles:true,cancelable:true}));
 const click=selector=>$(selector).click();
@@ -43,7 +46,8 @@ function integrity() {
     if(hash==='main-content')continue;
     const [page,anchor]=hash.split('/');
     assert.ok(['start','style','component','pattern','releases','licensing','overview','theme'].includes(page),`Known page ${page}`);
-    if(anchor && page===w.location.hash.slice(1).split('/')[0]) assert.ok(d.getElementById(anchor),`Section ${anchor} exists`);
+    const resolved=w.resolveDocumentLocation('#'+hash),current=w.resolveDocumentLocation(w.location.hash);
+    if(resolved.anchor && resolved.route===current.route) assert.ok(d.getElementById(resolved.anchor),`Section ${page}/${anchor} resolves to ${resolved.anchor}`);
   }
 }
 for(const name of ['start','style','component','pattern','releases','licensing']) {
@@ -82,20 +86,43 @@ click('#mode-toggle');assert.equal(d.documentElement.dataset.mode,'dark');
 assert.ok($('#contrast-results').textContent.includes('dark'));
 $('#token-search').value='no-such-token';fire($('#token-search'),'input');assert.match($('#token-grid').textContent,/일치하는 토큰/);
 await route('component');
-click('[data-action="loading-demo"]');click('[data-action="loading-demo"]');
-assert.equal($('[data-action="loading-demo"]').getAttribute('aria-busy'),'true');
-await pause(760);assert.equal($('[data-action="loading-demo"]').hasAttribute('aria-busy'),false);
-assert.match($('#button-feedback').textContent,/마쳤/);
-const noticeRetry=$('[data-action="retry-feedback"]');noticeRetry.focus();noticeRetry.click();noticeRetry.click();
-assert.equal(noticeRetry.getAttribute('aria-busy'),'true','Notice retry prevents duplicate execution while loading');
-await pause(760);assert.equal(noticeRetry.hasAttribute('aria-busy'),false);assert.match($('#retry-result').textContent,/성공/);
-assert.equal(d.activeElement,noticeRetry,'Notice retry retains keyboard focus after completion');
-click('#buttons .vue-code-examples>summary');click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/<SBtn/);assert.match(clipboard,/\bref\(/,'The copied sample uses the configured Vue preset');assert.doesNotMatch(clipboard,/^import (?!type\b).*from ['"]vue['"]/m);assert.doesNotMatch(clipboard,/import\s*\{[^}]*\bSBtn\b[^}]*\}\s*from 'solyi-ui'/);
-assert.equal($('#usage-buttons-html').hidden,true);$('#usage-buttons-vue-tab').dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.equal($('#usage-buttons-html').hidden,false);assert.equal(d.activeElement.id,'usage-buttons-html-tab');click('#usage-buttons-vue-tab');assert.equal($('#usage-buttons-vue').hidden,false);
-// Only the app's dialog opening and return-focus wiring is checked; no native modal trap is simulated.
+integrity();assert.equal(componentReferences.length,38,'Every current S API has a document reference');
+assert.equal(d.querySelectorAll('main .component-reference').length,38);
+assert.equal(d.querySelectorAll('main [data-component-example]').length,38,'Canonical cards mount the real package preview surface');
+assert.equal(d.querySelector('#component-examples'),null,'No second legacy component gallery');
+assert.equal(d.querySelector('#button-feedback'),null,'Retired native component demo is not rendered');
+for(const component of componentReferences){
+  const card=$('#'+component.id),tabs=[...card.querySelectorAll('[data-component-tab]')];
+  assert.deepEqual(tabs.map(tab=>tab.dataset.componentTab),['examples','code','api']);
+  assert.equal(tabs[0].getAttribute('aria-selected'),'true');
+  assert.equal($('#'+component.id+'-examples').hidden,false);
+  assert.equal($('#'+component.id+'-code').hidden,true);
+  assert.equal($('#'+component.id+'-api').hidden,true);
+}
+const mountedReferences=previewMounts,buttonCard=$('#sbtn');
+click('#sbtn-code-tab');assert.equal(w.location.hash,'#component/sbtn-code');assert.equal($('#sbtn-code').hidden,false);
+assert.ok($('#sbtn-code pre code .token'),'The app runs Prism on the canonical SFC');
+assert.equal($('#sbtn-code pre code').textContent,componentExampleSources.buttons,'Highlighted sample text remains the canonical SFC');
+click('#sbtn-code [data-copy-snippet]');await pause(10);
+assert.equal(clipboard,componentExampleSources.buttons,'Prism display and copy preserve the running SFC source');
+assert.match(clipboard,/<SBtn/);assert.match(clipboard,/\bref\(/,'The copied sample uses the configured Vue preset');
+assert.doesNotMatch(clipboard,/^import (?!type\b).*from ['"]vue['"]/m);
+assert.doesNotMatch(clipboard,/import\s*\{[^}]*\bSBtn\b[^}]*\}\s*from 'solyi-ui'/);
+assert.equal($('#sbtn-code .code-copy-button').getAttribute('aria-label'),'코드 복사 완료');
+click('#sbtn-api-tab');assert.equal($('#sbtn-api').hidden,false);assert.equal($('#sbtn-code').hidden,true);
+w.history.back();await pause(30);assert.equal(w.location.hash,'#component/sbtn-code');assert.equal($('#sbtn-code').hidden,false);
+w.history.forward();await pause(30);assert.equal(w.location.hash,'#component/sbtn-api');assert.equal($('#sbtn-api').hidden,false);
+assert.equal($('#sbtn'),buttonCard,'Same-page tab history preserves the running preview card');
+assert.equal(previewMounts,mountedReferences,'Tab history does not remount package previews');
+await route('component/buttons');assert.equal(d.activeElement.id,'sbtn-title');assert.equal($('#sbtn-examples').hidden,false);integrity();
+await route('component/time');assert.equal(d.activeElement.id,'stime-picker-title');assert.equal($('#stime-picker-examples').hidden,false);integrity();
+await route('style');await route('component/sdate-picker-api');assert.equal($('#sdate-picker-api').hidden,false);assert.equal($('#sdate-picker-examples').hidden,true);integrity();
+// Button loading/retry and component overlays now use the installed Vue runtime suites:
+// library-runtime-check, vue-extended-runtime-check and vue-dedicated-runtime-check.
+await route('pattern');
+// This shared native dialog remains part of the Core search pattern, so its app wiring stays covered.
 const dialog=$('#detail-dialog');dialog.showModal=function(){this.setAttribute('open','');};dialog.close=function(){this.removeAttribute('open');fire(this,'close');};
 click('[data-open-detail]');assert.equal(dialog.open,true);click('#dialog-close');assert.equal(dialog.open,false);assert.equal(d.activeElement.dataset.openDetail,'0');
-await route('pattern');
 fire($('#project-form'),'submit');assert.equal($('#project-name').getAttribute('aria-invalid'),'true');assert.equal(d.activeElement.id,'project-name');
 $('#project-name').value='가상 검증 기록';fire($('#project-name'),'input');assert.equal($('#project-name').hasAttribute('aria-invalid'),false);
 $('#simulate-failure').checked=true;fire($('#project-form'),'submit');fire($('#project-form'),'submit');
@@ -122,25 +149,9 @@ const density=$('input[name="density"][value="compact"]');density.checked=true;f
 assert.equal(JSON.parse(w.localStorage.getItem('solyi-ds-prefs')).density,'compact');
 await route('theme/adoption');assert.equal(d.activeElement.id,'adoption-title');integrity();
 await route('style');assert.match($('#token-count').textContent,/Quiet sage/);
-// Extended components: semantic choices, touch help, native disclosure and overlays.
-await route('component');integrity();
-assert.match($('#extra-choice-count').textContent,/3개/);
-click('#extra-switch');assert.equal($('#extra-switch').getAttribute('aria-checked'),'true');assert.match($('#extra-choice-count').textContent,/4개/);
-for(const input of d.querySelectorAll('input[name="extra-kind"]')){input.checked=false;fire(input,'change');}
-assert.match($('#extra-choice-count').textContent,/결과가 없/);
-$('input[name="extra-kind"][value="기록"]').checked=true;fire($('input[name="extra-kind"][value="기록"]'),'change');
-$('input[name="extra-layout"][value="cards"]').checked=true;fire($('input[name="extra-layout"][value="cards"]'),'change');assert.ok($('#extra-choice-preview').classList.contains('cards'));
-$('#extra-tooltip-trigger').focus();assert.equal($('#extra-tooltip').hidden,false);
-d.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal($('#extra-tooltip').hidden,true);assert.equal(d.activeElement.id,'extra-tooltip-trigger');
-$('#mode-toggle').focus();fire($('#extra-tooltip-trigger'),'pointerenter');fire($('#extra-tooltip-trigger'),'pointerleave');fire($('#extra-tooltip'),'pointerenter');await pause(190);assert.equal($('#extra-tooltip').hidden,false,'Hover can move from trigger to tooltip');fire($('#extra-tooltip'),'pointerleave');await pause(190);assert.equal($('#extra-tooltip').hidden,true);
-click('#extra-popover-trigger');assert.equal($('#extra-popover').hidden,false);assert.equal(d.activeElement.id,'extra-popover-close');
-d.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal($('#extra-popover').hidden,true);assert.equal(d.activeElement.id,'extra-popover-trigger');
-click('#extra-popover-trigger');$('#mode-toggle').focus();assert.equal($('#extra-popover').hidden,true);assert.equal(d.activeElement.id,'mode-toggle','Nonmodal help does not trap focus');
-const disclosure=$('.sol-accordion');assert.equal(disclosure.open,false);disclosure.open=true;assert.equal(disclosure.open,true);disclosure.open=false;
-click('[data-extra-level="0"]');assert.equal($('#extra-location-title').textContent,'작업 공간');assert.equal(d.activeElement.id,'extra-location-title');
-click('[data-extra="breadcrumb-detail"]');assert.equal($('#extra-location-title').textContent,'작은 정원 기록');
-const panelButton=$('[data-extra="panel-open"]');panelButton.getClientRects=()=>[{}];panelButton.focus();panelButton.click();assert.equal($('#extra-panel').open,true);assert.equal(d.activeElement.dataset.extra,'panel-close');click('[data-extra="panel-close"]');assert.equal($('#extra-panel').open,false);assert.equal(d.activeElement,panelButton);
-const toastButton=$('[data-extra="toast-show"]');toastButton.focus();toastButton.click();assert.equal($('#extra-toast').hidden,false);assert.equal(d.activeElement,toastButton,'Toast never steals focus');$('#extra-toast-close').focus();click('#extra-toast-close');assert.equal($('#extra-toast').hidden,true);assert.equal(d.activeElement,toastButton);
+// Native component-only choice/help/disclosure/toast demos were retired. Their real S APIs
+// remain covered by vue-extended-runtime-check, vue-dedicated-runtime-check,
+// vue-expansion-runtime-check and all actual SFCs in vue-recipes-runtime-check.
 // Stable row selection, sorting, filter/page reset, empty result and both responsive views.
 await route('pattern');integrity();
 assert.equal(d.querySelectorAll('#extra-table-body tr').length,3);assert.match($('#extra-data-count').textContent,/1\/4/);
@@ -261,9 +272,9 @@ await recoveryChecks({w,d,$,fire,click,route,integrity});
 }
 assert.deepEqual(errors,[],'No runtime errors in the synthetic DOM');
 dom.window.close();
-console.log('PASS: 5 routes, internal anchors/ARIA IDs, route focus, token search/copy, example copy, theme/mode/density.');
+console.log('PASS: 6 routes, internal anchors/ARIA IDs, route focus, token search/copy, theme/mode/density; 38 canonical S references, default Examples/Sample Code/API panels, Prism/plain-SFC copy, compatible component anchors and same-page back/forward without preview remount.');
 console.log('PASS: form validation/failure/recovery/duplicate guard/reset, search/filter/empty/failure/retry/stale response, comparison, first-use state, dialog open/close wiring.');
-console.log('PASS: table/list selection/filter/sort/page combinations, choices/switch, tooltip/popover dismissal, breadcrumb, panel/toast wiring, dates, file rejection/removal/reselection, IME combobox, response states and cleanup.');
+console.log('PASS: Core pattern table/list selection/filter/sort/page combinations and shared detail panel, dates, file rejection/removal/reselection, IME combobox, response states and cleanup. Component behavior is exercised by installed Vue runtime suites.');
 console.log('PASS: finite token-based motion, rapid goal reversal/stale completion, route persistence, visibility/reduced-motion cancellation; 5 semantic UI palettes and singleton nonintrusive snackbar; unified single/range picker complete-value contract, draft/cancel/reverse/same-day, direct errors/clear/mode switch, reusable instances/API/events, calendar leap/bounds/navigation/selection/focus return.');
 console.log('PASS: shared file picker/drop pipeline, nested drag state, extension/MIME metadata, unknown MIME, rejection/removal/reselection, outside-drop navigation guard, text dragging and unmount cleanup.');
 console.log('LIMIT: no browser rendering, CSS layout, physical keyboard, native modal trap, or screen reader verification.');

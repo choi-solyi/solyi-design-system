@@ -1,10 +1,10 @@
 {
   "name": "@solyi/core",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "private": true,
   "type": "module",
   "license": "MIT",
-  "description": "Framework-independent Solyi tokens and CSS. Local pack preview; not published.",
+  "description": "Internal framework-independent Solyi tokens, CSS and runtime sources included in solyi-ui.",
   "files": [
     "dist",
     "README.md",

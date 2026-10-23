@@ -14,7 +14,7 @@
 .sol-vuetify-field textarea.v-field__input{min-height:calc(3 * 1.5em + 16px);}
 .sol-vuetify-card.v-card{font-family:var(--sol-font-sans);border-radius:var(--sol-radius-card);}
 .sol-vuetify-dialog .v-overlay__content>.v-card{border-radius:var(--sol-radius-panel);}
-/* Vue/Vuetify adapter only. Import @solyi/core/tokens.css + components.css first. */
+/* Vue/Vuetify adapter only. Import solyi-ui/tokens.css + components.css first. */
 .sol-ui-button.v-btn,.sol-ui-field,.sol-ui-dialog,.sol-ui-table {font-family:var(--sol-font-sans);}
 .sol-ui-field,.sol-ui-dialog,.sol-ui-table {line-height:var(--sol-line-body);}
 .sol-ui-button.v-btn {min-width:0;height:var(--sol-button-height);padding-inline:var(--sol-space-3);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-button);background:var(--sol-color-surface);color:var(--sol-color-text);font-size:var(--sol-text-sm);font-weight:600;letter-spacing:normal;text-transform:none;box-shadow:none;}
