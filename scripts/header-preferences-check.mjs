@@ -30,6 +30,17 @@ keyboardGroup.style.direction='rtl';d.activeElement.dispatchEvent(new w.Keyboard
 const modified=new w.KeyboardEvent('keydown',{key:'ArrowLeft',ctrlKey:true,bubbles:true,cancelable:true});d.activeElement.dispatchEvent(modified);assert.equal(modified.defaultPrevented,false);
 assert.equal(d.querySelectorAll('#appearance-dialog [data-pref-theme]:checked').length,1,'The other control surface stays synchronized');
 w.HTMLElement.prototype.focus=nativeFocus;d.documentElement.dataset.theme='violet';header.sync();
+for(const pointerType of ['mouse','touch','pen'])for(const selector of ['#header-density-toggle','#mode-toggle']){
+ const button=d.querySelector(selector),key=selector.includes('density')?'density':'mode',previous=d.documentElement.dataset[key];
+ let pointerScroll=334,optionsUsed;
+ w.HTMLElement.prototype.focus=function(options){optionsUsed=options;if(!options?.preventScroll)pointerScroll=0;return nativeFocus.call(this,options);};
+ const pointer=new w.MouseEvent('pointerdown',{button:0,bubbles:true,cancelable:true});Object.defineProperties(pointer,{pointerType:{value:pointerType},isPrimary:{value:true}});
+ button.dispatchEvent(pointer);assert.equal(pointer.defaultPrevented,true);assert.equal(pointerScroll,334);assert.deepEqual(optionsUsed,{preventScroll:true});assert.equal(d.activeElement,button);assert.equal(d.documentElement.dataset[key],previous,'Pointerdown does not activate the action');
+ button.click();assert.notEqual(d.documentElement.dataset[key],previous,'The original click activates once');
+ const ignored=new w.MouseEvent('pointerdown',{button:2,bubbles:true,cancelable:true});button.dispatchEvent(ignored);assert.equal(ignored.defaultPrevented,false,'Secondary pointer is unchanged');
+ w.HTMLElement.prototype.focus=nativeFocus;
+}
+d.documentElement.dataset.density='comfortable';d.documentElement.dataset.mode='light';header.sync();
 for(const mode of ['light','dark']){d.documentElement.dataset.mode=mode;header.sync();for(const input of d.querySelectorAll('[data-pref-theme]')){const colors=tokens.themes[input.value][mode],style=input.parentElement.style;assert.equal(style.getPropertyValue('--pref-accent'),colors.accent);assert.equal(style.getPropertyValue('--pref-soft'),colors['accent-soft']);assert.equal(style.getPropertyValue('--pref-ink'),colors.text);assert.equal(input.getAttribute('aria-label'),tokens.themes[input.value].label);assert.equal(input.type,'radio');}for(const button of d.querySelectorAll('.appearance-mode')){assert.ok(button.querySelector('svg[aria-hidden=true]'));assert.equal(button.dataset.modeTarget,mode==='light'?'dark':'light');assert.equal(button.querySelector('span').textContent,mode==='light'?'Dark':'Light');assert.ok(button.getAttribute('aria-label').includes(button.querySelector('span').textContent),'Visible mode action is included in accessible name');}}
 assert.notEqual(d.querySelector('#appearance-inline [data-pref-theme]').name,d.querySelector('#appearance-dialog [data-pref-theme]').name);
 d.documentElement.dataset.density='comfortable';header.sync();d.querySelector('#header-density-toggle').click();assert.equal(d.documentElement.dataset.density,'compact');for(const button of d.querySelectorAll('[data-pref-density-toggle]')){assert.equal(button.getAttribute('aria-pressed'),'true');assert.match(button.textContent,/컴팩트/);assert.ok(button.getAttribute('aria-label').includes(button.querySelector('span').textContent),'Visible density label is included in accessible name');assert.ok(d.getElementById(button.getAttribute('aria-describedby')));}
@@ -61,4 +72,4 @@ const saved=JSON.parse(aw.localStorage.getItem('solyi-ds-prefs'));assert.deepEqu
 // A synchronous CSS/layout scroll adjustment is restored without changing the route or panel.
 aw.eval('updateTokens=()=>window.scrollTo({top:120});');aw.__applyAppearance({theme:'sand'});assert.equal(aw.scrollY,640);assert.equal(aw.location.hash,hash);assert.equal(main.firstElementChild,first);
 assert.deepEqual(errors,[]);appDom.window.close();
-console.log('PASS: shared native theme radios; label and Arrow/Home/End activation use preventScroll with one native change, wrapping and RTL; single density swap, mode buttons, mobile focus, '+checks+' color pairs, CSS allowlist; actual app route/history/API/input/scroll/storage retained. Chrome geometry and trusted keyboard remain separate.');
+console.log('PASS: shared native theme radios; label and Arrow/Home/End preventScroll activation; density/mode primary mouse-touch-pen focus prevents scroll before native click; single swap, mode buttons, mobile focus, '+checks+' color pairs, CSS allowlist; actual app route/history/API/input/scroll/storage retained. Chrome geometry and trusted keyboard remain separate.');

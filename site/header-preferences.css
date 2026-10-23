@@ -8,7 +8,7 @@
 .appearance-sr-only {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
 .appearance-mode[data-mode-target="dark"],
 .appearance-mode[data-mode-target="dark"]:active {background:var(--appearance-dark-background);color:var(--appearance-dark-foreground);border-color:var(--appearance-dark-background);}
-.appearance-mode[data-mode-target="dark"]:hover {background:var(--appearance-dark-hover);color:var(--appearance-dark-foreground);border-color:var(--appearance-dark-hover);}
+.appearance-mode[data-mode-target="dark"]:hover:not(:disabled):not([aria-disabled="true"]) {background:var(--appearance-dark-hover);color:var(--appearance-dark-foreground);border-color:var(--appearance-dark-hover);}
 .appearance-density-toggle:focus-visible,.appearance-mode:focus-visible {outline:2px solid var(--sol-color-focus);outline-offset:3px;}
 @media(max-width:680px),(pointer:coarse){.appearance-density-toggle,.appearance-mode {min-height:var(--sol-touch-target-min);}}
 

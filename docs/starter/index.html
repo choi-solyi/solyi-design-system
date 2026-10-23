@@ -1,3 +1,78 @@
-<!doctype html><html lang="ko" data-theme="violet" data-mode="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="프레임워크 독립 토큰과 실제 설치한 Vue UI 패키지의 Button·Field·Dialog·Table을 확인하는 가상 데이터 데모입니다."><meta name="color-scheme" content="light dark"><title>Solyi · Vue/Vuetify starter</title>  <script type="module" crossorigin src="./starter.js"></script>
-  <link rel="stylesheet" crossorigin href="./index.css">
-</head><body><div id="app"></div></body></html>
+<!doctype html>
+<html lang="ko" data-theme="violet" data-mode="light" data-starter-boot="loading">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="공통 토큰과 실제 설치한 solyi-ui의 컴포넌트·폼·조합을 확인하는 Vue 실행 예제입니다.">
+  <meta name="color-scheme" content="light dark">
+  <title>Solyi · Vue 실행 예제</title>
+  <style>:root{--boot-bg:#f5f6fa;--boot-text:#202330;--boot-accent:#7560b5;--boot-border:#818596;background:var(--boot-bg);color:var(--boot-text);--lightningcss-light:initial;--lightningcss-dark: ;color-scheme:light}body{background:var(--boot-bg);margin:0}html[data-starter-boot=loading] #app,html[data-starter-boot=failed] #app{visibility:hidden}#starter-boot{z-index:9999;background:var(--boot-bg);color:var(--boot-text);text-align:center;place-content:center;justify-items:center;gap:16px;padding:24px;font:14px/1.6 system-ui,-apple-system,sans-serif;display:grid;position:fixed;inset:0}#starter-boot[hidden]{display:none}#starter-boot p{max-width:30rem;margin:0}.starter-boot-circle{box-sizing:border-box;border:3px solid var(--boot-border);border-inline-start-color:var(--boot-accent);border-radius:50%;width:32px;height:32px;animation:1.2s linear infinite starter-boot-spin}html[data-starter-boot=failed] .starter-boot-circle{display:none}#starter-boot button,#starter-boot a{box-sizing:border-box;border:1px solid var(--boot-border);background:var(--boot-bg);min-height:44px;color:var(--boot-text);font:inherit;cursor:pointer;border-radius:6px;padding:8px 12px}#starter-boot a{text-underline-offset:3px;justify-content:center;align-items:center;text-decoration:underline;display:inline-flex}#starter-boot button:focus-visible,#starter-boot a:focus-visible{outline:2px solid var(--boot-accent);outline-offset:3px}#starter-boot-actions{flex-wrap:wrap;justify-content:center;gap:8px;display:flex}#starter-boot-actions[hidden]{display:none}@keyframes starter-boot-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.starter-boot-circle{animation:none}}html[data-motion-policy=reduced] .starter-boot-circle{animation:none}</style>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const themes = ['violet', 'sage', 'sand'], modes = ['light', 'dark'], densities = ['comfortable', 'compact'];
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem('solyi-ds-prefs') || '{}') || {}; } catch {}
+      const query = new URLSearchParams(location.search);
+      const pick = (key, allowed, fallback) => allowed.includes(query.get(key)) ? query.get(key) : allowed.includes(saved[key]) ? saved[key] : fallback;
+      const appearance = {
+        theme: pick('theme', themes, 'violet'),
+        mode: pick('mode', modes, matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+        density: pick('density', densities, 'comfortable'),
+      };
+      Object.assign(root.dataset, appearance);
+      if (query.get('motionPolicy') === 'reduced') root.dataset.motionPolicy = 'reduced';
+      const palettes = {"violet":{"light":["#F5F6FA","#202330","#7560B5","#818596"],"dark":["#171821","#F0F0F7","#B8A3F1","#85899D"]},"sage":{"light":["#F4F6F2","#28372F","#476A56","#7B8B7F"],"dark":["#17201B","#EEF4EF","#A1CBB0","#829C8A"]},"sand":{"light":["#F6F0E8","#352E2C","#85614D","#968374"],"dark":["#211B17","#F6EEE5","#D9B394","#A28A77"]}};
+      const colors = palettes[appearance.theme]?.[appearance.mode];
+      if (colors) ['bg', 'text', 'accent', 'border'].forEach((role, index) => root.style.setProperty('--boot-' + role, colors[index]));
+      root.style.colorScheme = appearance.mode;
+      let state = 'loading';
+      const finish = next => {
+        if (state !== 'loading') return;
+        state = next; root.dataset.starterBoot = next; clearTimeout(deadline);
+        const paint = () => {
+        const app = document.getElementById('app'), panel = document.getElementById('starter-boot');
+        app?.setAttribute('aria-busy', 'false');
+        if (next === 'ready') {
+          app?.removeAttribute('inert'); app?.removeAttribute('aria-hidden'); app?.setAttribute('aria-busy', 'false');
+          if (panel) panel.hidden = true;
+        } else {
+          const message = document.getElementById('starter-boot-message'), actions = document.getElementById('starter-boot-actions');
+          if (message) message.textContent = '화면을 불러오지 못했어요. 연결을 확인하고 다시 시도해 주세요.';
+          if (panel) { panel.setAttribute('role', 'alert'); panel.setAttribute('aria-live', 'assertive'); }
+          if (actions) actions.hidden = false;
+        }
+        };
+        if (document.getElementById('starter-boot')) paint();
+        else addEventListener('DOMContentLoaded', paint, {once: true});
+      };
+      // Deadline only offers an escape from a failed/hung resource; no minimum delay.
+      const deadline = setTimeout(() => finish('failed'), 30000);
+      globalThis.__solyiStarterBoot = {appearance, ready: () => finish('ready'), fail: () => finish('failed')};
+      addEventListener('error', event => {
+        const target = event.target;
+        if (target === window || target?.tagName === 'SCRIPT' || target?.tagName === 'LINK' && (target.rel === 'stylesheet' || target.as === 'style')) finish('failed');
+      }, true);
+      addEventListener('unhandledrejection', () => finish('failed'));
+      addEventListener('vite:preloadError', () => finish('failed'));
+    })();
+  </script>
+  <script type="module" crossorigin src="./starter.js"></script>
+  <link rel="preload" as="style" data-starter-css="pending" onload="if(this.rel==='preload'){this.rel='stylesheet'}else{this.dataset.starterCss='ready'}" onerror="this.dataset.starterCss='error';globalThis.__solyiStarterBoot?.fail()" crossorigin href="./index.css">
+</head>
+<body>
+  <div id="starter-boot" role="status" aria-live="polite" aria-atomic="true">
+    <span class="starter-boot-circle" aria-hidden="true"></span>
+    <p id="starter-boot-message">화면을 준비하고 있어요.</p>
+    <div id="starter-boot-actions" hidden>
+      <button type="button" onclick="location.reload()">다시 시도</button>
+      <a href="../">문서로 돌아가기</a>
+    </div>
+  </div>
+  <div id="app" aria-busy="true" aria-hidden="true" inert></div>
+  <noscript>
+    <style>#starter-boot,#app{display:none!important}</style>
+    <p style="padding:24px;font:14px/1.6 system-ui,sans-serif">이 실행 예제에는 JavaScript가 필요합니다. JavaScript를 켠 뒤 새로고침하거나 <a href="../">문서로 돌아가세요.</a></p>
+  </noscript>
+</body>
+</html>

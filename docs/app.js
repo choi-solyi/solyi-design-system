@@ -1,19 +1,21 @@
 import tokens from './token-data.js';
 import {solIcon} from './icons.js';
 import {highlightSample} from './code-highlight.js';
-import {renderComponentReferences} from './component-api.js';
+import {renderComponentReferences,mountComponentReferences} from './component-api.js';
 import {renderDistribution} from './distribution.js';
 import {mountVueExamples,mountVuePreviews} from './vue-examples.js';
 import {mountOverflowText} from './overflow.js';
 import {presentTopics,scrollToDocumentSection,getDocumentSearchEntries,resolveDocumentLocation} from './topics.js';
 import {mountDocumentSearch} from './doc-search.js';
 import {mountHeaderPreferences} from './header-preferences.js';
+import {resolveAppearance,persistAppearance} from './appearance-state.js';
 import {renderExpansion,mountExpansion,requestExpansionLeave} from './expansion.js';
 import {renderComponentExamples, renderPatternExamples, mountExamples} from './extended.js';
 import {renderGoalSpecimen, renderMotionSection, mountMotion} from './motion.js';
 import {renderColorExamples, mountColorExamples} from './palette.js';
 
 const root = document.documentElement;
+Object.assign(root.dataset,resolveAppearance());
 const main = document.querySelector('main');
 const announcement = document.querySelector('#announcement');
 const dialog = document.querySelector('#detail-dialog');
@@ -24,6 +26,7 @@ let headerPreferences=null;
 let returnFocus;
 let cleanupVueExamples=()=>{};
 let cleanupVuePreviews=()=>{};
+let cleanupComponentReferences=()=>{};
 let cleanupOverflow = () => {}; let cleanupTopics = () => {}; let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
 const projects = [
@@ -65,6 +68,7 @@ const colorRoles = {
   accent:['Accent','주요 행동과 선택'], 'accent-hover':['Accent hover','주요 행동에 포인터가 있을 때'], 'accent-soft':['Accent soft','선택된 영역의 바탕'], 'on-accent':['On accent','주요 행동 위의 글자'],
   focus:['Focus','키보드 탐색의 현재 위치'], success:['Success','완료·성공 안내'], 'success-soft':['Success soft','성공 안내 바탕'], warning:['Warning','행동 전 확인 안내'], 'warning-soft':['Warning soft','확인 안내 바탕'], danger:['Danger','오류·위험 안내'], 'danger-soft':['Danger soft','오류 안내 바탕'], info:['Info','중립적 진행 안내'], 'info-soft':['Info soft','진행 안내 바탕']
 };
+Object.assign(colorRoles,{'selected-surface':['Selected surface','선택한 행과 항목의 바탕'],'selected-text':['Selected text','선택 영역의 본문과 보조 글자'],'selected-border':['Selected border','선택을 식별하는 테두리'],'selected-indicator':['Selected indicator','선택 표시선과 체크 강조']});
 function tokenCards(query='') {
   const theme = tokens.themes[root.dataset.theme];
   const colors = theme[root.dataset.mode];
@@ -74,7 +78,7 @@ function style() {
   return intro('01 / STYLE · CORE','보기 좋은 화면의 기본값','색의 이름 대신 역할로 연결합니다. 앱이 달라져도 읽는 순서, 간격의 관계, 상태를 알리는 방식은 이어집니다.') +
   localNav([['principles','Principles'],['tokens','Color tokens'],['color-examples','컬러 적용 예시'],['type','Typography'],['space','Space & density'],['accessibility','Accessibility'],['motion','Motion'],['icons','Icons'],['layers','Layers'],['writing','UI writing']]) +
   section('principles','Core의 경계','공통 규칙과 앱의 언어를 나눕니다.',`<div class="grid-2"><div class="sol-card"><h3>함께 가져가는 것</h3><ul class="rule-list"><li>제목 → 설명 → 행동의 정보 위계</li><li>16px 본문과 여유 있는 행간, 4px 기반 간격</li><li>역할 기반 색, 키보드 포커스, 오류·완료 안내</li><li>조밀한 화면에도 유지하는 터치 목표와 의미 구조</li></ul></div><div class="sol-card"><h3>앱에서 결정하는 것</h3><ul class="rule-list"><li>앱의 강조색·의미 색·목록 밀도</li><li>도메인의 정보 구조와 특수 시각화</li><li>게임의 전투력·등급·희귀도 색은 앱 전용 토큰</li><li>특정 프레임워크의 컴포넌트·라우터·상태 관리</li></ul></div></div>`) +
-  section('tokens','역할로 연결하는 색','카드를 누르면 현재 CSS 선언이 복사됩니다.',`<div class="token-toolbar"><label class="sol-label" for="token-search">토큰 찾기</label><input class="sol-input" type="search" id="token-search" placeholder="역할, 설명, HEX로 검색" aria-describedby="token-search-help"><div class="token-actions"><a class="sol-button" href="#theme/themes">테마 바꾸기 →</a><a class="sol-button" href="./tokens.css" download>전체 CSS ↓</a><a class="sol-button" href="./tokens.json" download>JSON ↓</a></div><p id="token-search-help" class="sol-hint">현재 테마와 라이트·다크 모드의 값을 보여줍니다.</p></div><p id="token-count" class="small muted" role="status">20개 토큰 · ${E(tokens.themes[root.dataset.theme].label)} / ${root.dataset.mode}</p><div id="token-grid" class="token-grid">${tokenCards()}</div><p class="small muted" style="margin-top:16px"><code>border</code>는 구획용입니다. 입력처럼 경계 인지가 필요한 곳에는 더 뚜렷한 <code>control-border</code>를 씁니다. 상태 색은 UI의 의미이며 등급 색이 아닙니다.</p>${codeSample('CSS 역할 매핑 보기',`.app-panel {\n  background: var(--sol-color-surface);\n  color: var(--sol-color-text);\n  border: 1px solid var(--sol-color-border);\n  padding: var(--sol-space-6);\n  border-radius: var(--sol-radius-card);\n}\n.app-primary {\n  background: var(--sol-color-accent);\n  color: var(--sol-color-on-accent);\n}`)}`) +
+  section('tokens','역할로 연결하는 색','카드를 누르면 현재 CSS 선언이 복사됩니다.',`<div class="token-toolbar"><label class="sol-label" for="token-search">토큰 찾기</label><input class="sol-input" type="search" id="token-search" placeholder="역할, 설명, HEX로 검색" aria-describedby="token-search-help"><div class="token-actions"><a class="sol-button" href="#theme/themes">테마 바꾸기 →</a><a class="sol-button" href="./tokens.css" download>전체 CSS ↓</a><a class="sol-button" href="./tokens.json" download>JSON ↓</a></div><p id="token-search-help" class="sol-hint">현재 테마와 라이트·다크 모드의 값을 보여줍니다.</p></div><p id="token-count" class="small muted" role="status">${Object.keys(tokens.themes[root.dataset.theme][root.dataset.mode]).length}개 토큰 · ${E(tokens.themes[root.dataset.theme].label)} / ${root.dataset.mode}</p><div id="token-grid" class="token-grid">${tokenCards()}</div><p class="small muted" style="margin-top:16px"><code>border</code>는 구획용입니다. 입력처럼 경계 인지가 필요한 곳에는 더 뚜렷한 <code>control-border</code>를 씁니다. 상태 색은 UI의 의미이며 등급 색이 아닙니다.</p>${codeSample('CSS 역할 매핑 보기',`.app-panel {\n  background: var(--sol-color-surface);\n  color: var(--sol-color-text);\n  border: 1px solid var(--sol-color-border);\n  padding: var(--sol-space-6);\n  border-radius: var(--sol-radius-card);\n}\n.app-primary {\n  background: var(--sol-color-accent);\n  color: var(--sol-color-on-accent);\n}`)}`) +
   section('type','크기보다 먼저, 읽는 순서','Wanted Sans 1.0.3 · 같은 사이트에서 로드 · 코드 글꼴은 별도',`<dl><div class="type-sample"><dt>Display · 48 / 1.25<br>--sol-text-display</dt><dd style="font-size:clamp(2rem,4vw,3rem);font-weight:720;line-height:1.25;letter-spacing:-.04em">같은 결, 다른 표정.</dd></div><div class="type-sample"><dt>Section · 28 / 1.25<br>--sol-text-xl</dt><dd style="font-size:1.75rem;font-weight:700;line-height:1.25">읽는 순서가 보이게</dd></div><div class="type-sample"><dt>Title · 20 / 1.25<br>--sol-text-lg</dt><dd style="font-size:1.25rem;font-weight:650;line-height:1.25">오늘의 작은 기록</dd></div><div class="type-sample"><dt>Body · 16 / 1.65<br>--sol-text-md</dt><dd>중요한 정보는 먼저, 부가 설명은 다음에 둡니다. 한 문장에 하나의 뜻을 담습니다.</dd></div><div class="type-sample"><dt>Label · 14 / 1.65<br>--sol-text-sm</dt><dd class="small">레이블은 무엇을 입력할지, 안내는 왜 필요한지 설명합니다.</dd></div><div class="type-sample"><dt>Meta · 13 / 1.65<br>--sol-text-xs</dt><dd style="font-size:.8125rem" class="muted">초안 · 가상 프로젝트 · 방금 업데이트</dd></div></dl><p class="small muted">UI는 공식 Wanted Sans Variable을 self-host합니다. 로드 중에는 시스템 폰트로 표시하며 코드·pre·kbd·samp는 JetBrains Mono → Nanum Gothic Coding → monospace를 사용합니다. 한글은 글리프별로 보조 글꼴을 사용하며 UI 글꼴과 구분합니다. <a href="./fonts/wanted-sans/OFL.txt">OFL 원문</a> · <a href="./fonts/wanted-sans/SOURCE.json">고정 출처와 해시</a>. 본문은 60~70자 안팎의 줄 길이를 목표로 합니다. 표·메타 정보를 줄이기 전에 덜 중요한 정보를 접거나 나눕니다. 한국어 제목은 어절을 지키되 좁은 폭에서는 줄바꿈을 허용합니다.</p><pre class="code-font-sample" tabindex="0" aria-label="한영 주석 코드 글꼴 예시"><code>// English comment: keep the last valid value.
 // 한글 주석: 유효한 마지막 값을 유지합니다.
 const label = "가상 기록";
@@ -91,7 +95,7 @@ function component() {
   section('fields','Field','레이블과 도움말은 자리를 지킵니다.',demo('Text field / Validation',`<div class="grid-2"><label class="sol-field"><span class="sol-label">프로젝트 이름</span><input class="sol-input" placeholder="예: 작은 정원 기록" aria-describedby="field-help"><span id="field-help" class="sol-hint">이름을 입력해 포커스와 hover를 확인해 보세요.</span></label><label class="sol-field"><span class="sol-label">프로젝트 이름 · 오류 예시</span><input class="sol-input" value="가" aria-invalid="true" aria-describedby="field-error"><span id="field-error" class="sol-error">이름을 3자 이상 입력해 주세요.</span></label><label class="sol-field"><span class="sol-label">공유 주소 · 비활성</span><input class="sol-input" disabled value="아직 만들 수 없어요" aria-describedby="disabled-help"><span id="disabled-help" class="sol-hint">프로젝트를 만든 뒤 주소가 생깁니다.</span></label><label class="sol-field"><span class="sol-label">프로젝트 이름 · 완료 예시</span><input class="sol-input" value="작은 정원 기록" aria-describedby="valid-help"><span id="valid-help" class="sol-hint"><span class="sol-success-text">✓ 사용할 수 있는 이름입니다.</span> <span>예시 입력값입니다.</span></span></label></div>`) + contract('기본·hover·focus·disabled·오류·유효한 입력 안내. 로딩은 입력 자체보다 제출 행동과 결과 영역에서 표시합니다.','<kbd>Tab</kbd>으로 필드 이동. 오류 후 값을 보존하고 첫 잘못된 입력으로 포커스를 이동합니다.','surface / text / muted / control-border / danger / focus') + codeSample('Field 사용 예시',`<label class="sol-field">\n  <span class="sol-label">프로젝트 이름</span>\n  <input class="sol-input" id="project-name" required\n    aria-describedby="name-hint name-error"\n    aria-invalid="true">\n  <span id="name-hint" class="sol-hint">3~40자로 입력해 주세요.</span>\n  <span id="name-error" class="sol-error">이름을 3자 이상 입력해 주세요.</span>\n</label>\n<!-- 검증 성공 시 aria-invalid 제거, 오류 문구 숨김.\n     레이블은 placeholder로 대체하지 않습니다. -->`)) +
   section('choices','Choice','익숙한 기본 조작을 유지합니다.',demo('Checkbox / Radio / Select',`<div class="grid-3"><div><label class="sol-choice"><input type="checkbox" checked>완료한 항목 포함</label><label class="sol-choice"><input type="checkbox">보관한 항목 포함</label><label class="sol-choice"><input type="checkbox" disabled>공유 항목 · 비활성 예시</label></div><fieldset class="choice-fieldset"><legend>보기 방식</legend><label class="sol-choice"><input type="radio" name="view-demo" value="list" checked>목록</label><label class="sol-choice"><input type="radio" name="view-demo" value="card">카드</label><label class="sol-choice"><input type="radio" name="view-demo" value="map" disabled>지도 · 비활성 예시</label></fieldset><label class="sol-field"><span class="sol-label">정렬 기준</span><select class="sol-select"><option>최근 변경순</option><option>이름순</option></select><span class="sol-hint">브라우저 기본 메뉴를 사용합니다.</span></label></div>`) + contract('체크·미체크·선택·hover·focus·disabled. 필수 그룹 오류는 그룹 설명과 연결합니다. 선택 자체에는 로딩을 넣지 않습니다.','체크박스 <kbd>Space</kbd>, 라디오는 <kbd>방향키</kbd>·<kbd>Space</kbd>. Select는 운영체제의 기본 키보드 동작을 따릅니다.','accent / control-border / focus / control-height') + codeSample('Choice 사용 예시',`<fieldset>\n  <legend>보기 방식</legend>\n  <label class="sol-choice">\n    <input type="radio" name="view" value="list" checked>목록\n  </label>\n  <label class="sol-choice">\n    <input type="radio" name="view" value="card">카드\n  </label>\n</fieldset>\n<label class="sol-choice">\n  <input type="checkbox">완료한 항목 포함\n</label>`)) +
   section('feedback','Feedback','무슨 일이 생겼고, 무엇을 할 수 있는지',demo('Status / Notice / Announcement',`<div class="button-row"><span class="sol-status">◷ 진행 중</span><span class="sol-status success">✓ 완료</span><span class="sol-status warning">! 확인 필요</span><span class="sol-status danger">! 저장 실패</span></div><div class="sol-notice" style="margin-top:20px"><strong>예시 안내</strong><br>이 화면은 가상 데이터로 구성되어 있습니다.</div><div class="sol-notice danger" style="margin-top:12px"><strong>저장하지 못했어요.</strong><br>입력 내용은 남아 있습니다. 연결을 확인하고 다시 시도해 주세요.<div class="sol-notice-actions"><button class="sol-button inline-action" type="button" data-action="retry-feedback">다시 시도</button></div></div><div id="retry-result" class="feedback-space" role="status"></div><button class="sol-button" data-action="toast-demo">복사 완료 안내 띄우기</button>`) + contract('정보·성공·확인·오류를 글자와 색으로 표시. 안내 표식은 비대화형이며 hover·disabled를 갖지 않습니다. 알림 내부 재시도는 inline-action을 사용합니다. 13px 밑줄 텍스트와 작은 좌우 여백으로 메시지보다 약하게 표시하고, 데스크톱 조작 높이 36px, 좁은 화면·터치 포인터 44px를 유지합니다. 포커스·로딩·중복 실행 방지는 Button 규칙을 따릅니다.','읽기용 상태는 Tab 순서에 넣지 않습니다. 다음 행동은 실제 버튼으로 제공합니다. 동적 결과는 role="status"로 알립니다.','info / success / warning / danger와 각 soft 역할. 등급·게임 수치와 분리.') + codeSample('Feedback 사용 예시',`<span class="sol-status success">✓ 완료</span>\n<div class="sol-notice danger">\n  <strong>저장하지 못했어요.</strong>\n  <p class="sol-notice-message">입력 내용은 남아 있습니다. 다시 시도해 주세요.</p>\n  <div class="sol-notice-actions">\n    <button class="sol-button inline-action" type="button">다시 시도</button>\n  </div>\n</div>\n<!-- 초기에는 비워 두고, 작업이 끝나면 내용을 넣습니다. -->\n<p role="status" aria-live="polite"></p>`)) +
-  section('dialog','Dialog','현재 맥락에서 잠깐 더 자세히',demo('Native dialog / Detail',`<h3>작은 정원 기록</h3><p class="small muted">짧은 상세는 대화상자로, 읽을 내용이 길면 별도 페이지로 연결합니다.</p><button class="sol-button" data-open-detail="0">프로젝트 상세 열기</button>`) + contract('닫힘·열림. 진입·닫기 버튼에 hover·focus 상태가 있습니다. 이 정적 상세 데모에는 로딩·오류·비활성 상태가 필요하지 않습니다.','열면 닫기 버튼에 초기 포커스. <kbd>Tab</kbd>은 모달 내부를 순환하며 <kbd>Escape</kbd>로 닫습니다. 닫으면 실행한 버튼으로 돌아갑니다. SDialog는 Vuetify의 모달과 초점 관리를 사용합니다. 실제 브라우저·보조 기술별 추가 확인이 필요합니다.','surface / text / muted / border / radius-panel / focus') + codeSample('Native HTML Dialog 사용 예시',`<button class="sol-button" id="open-detail" type="button">상세 열기</button>\n<dialog id="detail" aria-labelledby="detail-title">\n  <button class="sol-button inline-action" id="close-detail" type="button" autofocus>닫기</button>\n  <h2 id="detail-title">프로젝트 상세</h2>\n  <p>현재 항목에 대한 설명입니다.</p>\n</dialog>\n<script>\n  const opener = document.querySelector('#open-detail');\n  const detail = document.querySelector('#detail');\n  opener.addEventListener('click', () => detail.showModal());\n  document.querySelector('#close-detail').addEventListener('click', () => detail.close());\n  detail.addEventListener('close', () => opener.focus());\n</script>`) + codeSample('Vue 패키지 Dialog · SBtn',`<script setup>\nimport { ref } from 'vue';\nimport { SBtn, SDialog } from '@solyi/vue-ui';\nconst opened = ref(false);\n</script>\n<template>\n  <SBtn @click="opened = true">상세 열기</SBtn>\n  <SDialog id="record-detail" v-model="opened" title="프로젝트 상세">\n    <p>현재 항목의 설명입니다.</p>\n  </SDialog>\n</template>`));
+  section('dialog','Dialog','현재 맥락에서 잠깐 더 자세히',demo('Native dialog / Detail',`<h3>작은 정원 기록</h3><p class="small muted">짧은 상세는 대화상자로, 읽을 내용이 길면 별도 페이지로 연결합니다.</p><button class="sol-button" data-open-detail="0">프로젝트 상세 열기</button>`) + contract('닫힘·열림. 진입·닫기 버튼에 hover·focus 상태가 있습니다. 이 정적 상세 데모에는 로딩·오류·비활성 상태가 필요하지 않습니다.','열면 닫기 버튼에 초기 포커스. <kbd>Tab</kbd>은 모달 내부를 순환하며 <kbd>Escape</kbd>로 닫습니다. 닫으면 실행한 버튼으로 돌아갑니다. SDialog는 Vuetify의 모달과 초점 관리를 사용합니다. 실제 브라우저·보조 기술별 추가 확인이 필요합니다.','surface / text / muted / border / radius-panel / focus') + codeSample('Native HTML Dialog 사용 예시',`<button class="sol-button" id="open-detail" type="button">상세 열기</button>\n<dialog id="detail" aria-labelledby="detail-title">\n  <button class="sol-button inline-action" id="close-detail" type="button" autofocus>닫기</button>\n  <h2 id="detail-title">프로젝트 상세</h2>\n  <p>현재 항목에 대한 설명입니다.</p>\n</dialog>\n<script>\n  const opener = document.querySelector('#open-detail');\n  const detail = document.querySelector('#detail');\n  opener.addEventListener('click', () => detail.showModal());\n  document.querySelector('#close-detail').addEventListener('click', () => detail.close());\n  detail.addEventListener('close', () => opener.focus());\n</script>`) + codeSample('Vue 패키지 Dialog · SBtn',`<script setup>\nimport { ref } from 'vue';\nimport { SBtn, SDialog } from 'solyi-ui';\nconst opened = ref(false);\n</script>\n<template>\n  <SBtn @click="opened = true">상세 열기</SBtn>\n  <SDialog id="record-detail" v-model="opened" title="프로젝트 상세">\n    <p>현재 항목의 설명입니다.</p>\n  </SDialog>\n</template>`));
 }
 
 function pattern() {
@@ -128,7 +132,7 @@ function start(){
 }
 function releases(){const legacy=themeSections();return intro('RELEASES','설치와 업데이트','현재 권장 조합으로 설치하고, 변경 사항과 호환 범위를 확인합니다.')+renderDistribution(documentationHelpers())+legacy.querySelector('#versioning').outerHTML;}
 function licensing(){return intro('LICENSING','사용 범위와 라이선스','코드의 사용 허용과 브랜드·제삼자 자산의 권리를 구분합니다.')+
- section('code-license','재사용 코드 · MIT','UI 코드와 브랜드는 같은 허가 범위가 아닙니다.','<div class="sol-card"><p>@solyi/core와 @solyi/vue-ui의 자체 재사용 코드는 MIT입니다. 상업적 사용·수정·재배포는 원문 라이선스의 조건에 따르며 저작권 및 허가 고지를 보존합니다.</p><p><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE">MIT 원문</a> · <a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE-SCOPE.md">적용 범위</a></p><p class="sol-hint">npm 공개 게시와 1.0.0은 아직 진행하지 않았습니다. 문서 사이트와 로컬 tarball 설치를 제공합니다.</p></div>')+
+ section('code-license','재사용 코드 · MIT','UI 코드와 브랜드는 같은 허가 범위가 아닙니다.','<div class="sol-card"><p>@solyi/core와 solyi-ui의 자체 재사용 코드는 MIT입니다. 상업적 사용·수정·재배포는 원문 라이선스의 조건에 따르며 저작권 및 허가 고지를 보존합니다.</p><p><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE">MIT 원문</a> · <a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE-SCOPE.md">적용 범위</a></p><p class="sol-hint">npm 공개 게시와 1.0.0은 아직 진행하지 않았습니다. 문서 사이트와 로컬 tarball 설치를 제공합니다.</p></div>')+
  section('brand-license','브랜드 자산 제외','로고·캐릭터·개인 콘텐츠를 패키지 코드 라이선스로 허가하지 않습니다.','<div class="sol-card"><p>문서 헤더의 공식 sparkle 심볼과 favicon은 Solyi 브랜드 자산입니다. 재사용 UI 패키지에서는 제외합니다. MIT가 이름·로고·캐릭터·개인 콘텐츠의 상표권이나 사용 허가까지 부여하지 않습니다.</p><p><a href="https://choi-solyi.github.io/solyi-brand-assets/">공식 브랜드 자산과 사용 안내 ↗</a></p></div>')+
  section('third-party-license','폰트·아이콘·외부 의존성','원문 라이선스와 고지를 함께 보존합니다.','<div class="sol-card"><ul class="rule-list"><li>Wanted Sans, JetBrains Mono, 나눔고딕코딩: 각 원본 OFL 1.1·저작권·출처를 폰트와 함께 제공합니다.</li><li>공통 선형 UI 아이콘은 이 저장소의 자체 코드입니다. 브랜드 로고와 구분하며 자체 코드의 MIT 범위를 따릅니다.</li><li>Vue·Vuetify·Prism 등 외부 코드는 각 배포본의 원래 라이선스를 따릅니다. 패키지와 실행 예제의 THIRD-PARTY-NOTICES를 확인하세요.</li></ul><div class="button-row"><a href="./starter/THIRD-PARTY-NOTICES.txt">실행 예제 제삼자 고지</a><a href="./vendor/PRISM-LICENSE.txt">Prism MIT 원문</a><a href="./fonts/wanted-sans/OFL.txt">Wanted Sans OFL</a><a href="./fonts/jetbrains-mono/OFL.txt">JetBrains Mono OFL</a><a href="./fonts/nanum-gothic-coding/OFL.txt">나눔고딕코딩 OFL</a></div></div>');}
 function currentRoute(){return resolveDocumentLocation(location.hash).route;}
@@ -150,13 +154,14 @@ function buildDocumentSearchIndex(){
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'start';
-  cleanupVueExamples(); cleanupVuePreviews(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
+  cleanupVueExamples(); cleanupVuePreviews(); cleanupComponentReferences(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
   main.innerHTML = pageMarkup(route);
   cleanupVueExamples=mountVueExamples(main,codeSample);
   document.title = `Solyi Design System · ${routes[route]}`;
   cleanupTopics = presentTopics(main,route,{section,demo,contract,codeSample});
   cleanupVuePreviews = mountVuePreviews(main);
+  cleanupComponentReferences=mountComponentReferences(main,{onNavigate:hash=>{displayedHash=hash;}});
   document.querySelectorAll('[data-route]').forEach(link=>{
     if (link.dataset.route===route) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
   });
@@ -168,29 +173,27 @@ function render({focus=false}={}) {
   else if (focus) scrollToDocumentSection('',{focus:true});
 }
 function persistPreferences() {
-  try {localStorage.setItem('solyi-ds-prefs',JSON.stringify({theme:root.dataset.theme,mode:root.dataset.mode,density:root.dataset.density}));} catch {}
+  persistAppearance(root.dataset);
 }
 function syncPreferences() {
   headerPreferences?.sync();
   document.querySelectorAll('input[name="density"]').forEach(input=>input.checked=input.value===root.dataset.density);
-  const isDark = root.dataset.mode==='dark';
-  const toggle = document.querySelector('#mode-toggle');
-  toggle.textContent = isDark ? 'Light mode' : 'Dark mode';
-  toggle.removeAttribute('aria-pressed');
-  toggle.setAttribute('aria-label',isDark ? '현재 다크 모드. 라이트 모드로 전환' : '현재 라이트 모드. 다크 모드로 전환');
   document.querySelector('meta[name="theme-color"]').content=tokens.themes[root.dataset.theme][root.dataset.mode].canvas;
   document.querySelectorAll('.theme-card').forEach(card=>card.dataset.mode=root.dataset.mode);
   document.querySelectorAll('[data-set-theme]').forEach(button=>{const selected=button.dataset.setTheme===root.dataset.theme; button.setAttribute('aria-label',`${tokens.themes[button.dataset.setTheme].label} 테마 사용`); button.setAttribute('aria-pressed',String(selected)); button.textContent=selected?'선택됨':'이 테마 사용';});
 }
 function applyPreferences(next){
+ // Appearance is a DOM-only update: keep document, selected panel and hash intact.
+ const viewport={left:window.scrollX,top:window.scrollY},hash=location.hash;
  if(next.theme&&tokens.themes[next.theme])root.dataset.theme=next.theme;
  if(['comfortable','compact'].includes(next.density))root.dataset.density=next.density;
  if(['light','dark'].includes(next.mode))root.dataset.mode=next.mode;
  persistPreferences();syncPreferences();updateTokens();
+ // CSS may synchronously change layout; do not turn this into route navigation.
+ if(location.hash===hash&&(window.scrollX!==viewport.left||window.scrollY!==viewport.top))window.scrollTo({...viewport,behavior:'auto'});
  notify(`${tokens.themes[root.dataset.theme].label} · ${root.dataset.density==='compact'?'컴팩트':'기본'} · ${root.dataset.mode==='dark'?'다크':'라이트'}`);
 }
 function toggleMode(){applyPreferences({mode:root.dataset.mode==='dark'?'light':'dark'});}
-document.querySelector('#mode-toggle').addEventListener('click',toggleMode);
 function notify(message) {
   clearTimeout(toastTimer); announcement.textContent=message;
   toastTimer=setTimeout(()=>announcement.textContent='',4200);

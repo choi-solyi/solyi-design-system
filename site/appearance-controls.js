@@ -47,6 +47,12 @@ export function mountAppearanceControls(scope,{themes,getState,apply,toggleMode}
    button.style.setProperty('--appearance-dark-background',themes.violet.light.text);button.style.setProperty('--appearance-dark-foreground',themes.violet.light.surface);button.style.setProperty('--appearance-dark-hover',themes.violet.dark['surface-alt']);
   }
  }
+ // Pointer focus happens before click/apply can snapshot the viewport. Prevent
+ // only that default focus step; native click and keyboard activation stay intact.
+ for(const button of [...densityButtons,...modeButtons])button.addEventListener('pointerdown',event=>{
+  if(button.disabled||event.button!==0||event.isPrimary===false)return;
+  event.preventDefault();button.focus({preventScroll:true});
+ },{signal});
  for(const button of densityButtons)button.addEventListener('click',()=>apply({density:getState().density==='compact'?'comfortable':'compact'}),{signal});
  for(const button of modeButtons)button.addEventListener('click',()=>toggleMode?toggleMode():apply({mode:getState().mode==='dark'?'light':'dark'}),{signal});
  sync();return{sync,cleanup(){controller.abort();for(const input of themeInputs)input.parentElement.remove();}};

@@ -163,7 +163,7 @@ main:focus {outline: none;}
 .sol-token-card strong {font-size: var(--sol-text-sm); display: block; margin-bottom: 3px;}
 .sol-token-card code, .sol-token-card small {font-size: 11px; display: block; color: var(--sol-color-muted);}
 .sol-token-card .token-value {float: right; font-family: var(--sol-font-mono); font-size: 11px; color: var(--sol-color-muted);}
-.code-example {margin-top: 16px; border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); overflow: visible; background: var(--sol-color-surface-alt);}
+.code-example {min-width:0;max-width:100%;margin-top: 16px; border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); overflow: visible; background: var(--sol-color-surface-alt);}
 .code-example summary {padding: 12px 16px; cursor: pointer; min-height: 44px; font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
 .code-example .code-body {padding:0;min-width:0;}
 .code-body .button-row {margin-top: 12px;}

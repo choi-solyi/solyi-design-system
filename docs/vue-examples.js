@@ -106,17 +106,21 @@ export function mountVuePreviews(root) {
   };
   const appearance=()=>({theme:document.documentElement.dataset.theme,mode:document.documentElement.dataset.mode,density:document.documentElement.dataset.density,motionPolicy:document.documentElement.dataset.motionPolicy});
   const sync=frame=>frame.contentWindow?.postMessage({type:'solyi:appearance',appearance:appearance()},origin);
-  function canvas(section,id,part,label){
+  function canvas(section,id,part,label,view='recipes'){
     const box=document.createElement('div');box.className='vue-live-part';
     const heading=part?section.querySelector('#'+part):null;
     if(heading?.classList.contains('document-alias-heading'))box.append(heading);
     const frame=document.createElement('iframe'),url=new URL('./starter/',location.href);
-    url.searchParams.set('view','recipes');url.searchParams.set('example',id);url.searchParams.set('embed','1');
+    url.searchParams.set('view',view);url.searchParams.set('example',id);url.searchParams.set('embed','1');
     if(part)url.searchParams.set('part',part);
     for(const [key,value] of Object.entries(appearance()))if(value)url.searchParams.set(key,value);
     frame.src=url.pathname+url.search;frame.className='vue-recipe-frame';frame.title=label+' · 실제 패키지 예제';frame.loading='lazy';frame.height='320';frame.dataset.recipe=id;if(part)frame.dataset.part=part;frame.setAttribute('aria-busy','true');
     frame.addEventListener('load',()=>sync(frame),{signal});frames.add(frame);box.append(frame);
     return box;
+  }
+  for(const host of root.querySelectorAll('[data-component-example]')){
+    const label=host.closest('.component-reference').querySelector('h3').textContent;
+    host.append(canvas(host,host.dataset.componentExample,host.dataset.previewPart,label,host.dataset.previewView));
   }
   for(const section of root.querySelectorAll('section.section')){
     const id=section.id,recipe=vueRecipes[id];if(!recipe)continue;

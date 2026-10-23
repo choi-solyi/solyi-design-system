@@ -1,7 +1,115 @@
 // Generated verified release catalogue.
 export const packageReleases={
-  "current": "0.11.2",
+  "current": "0.12.3",
   "releases": [
+    {
+      "release": "0.12.3",
+      "sourceRef": "062fbf26c10b672420c7bed9934b96ac5e525cad",
+      "compatibility": {
+        "node": "^22.18.0 || >=24.12.0",
+        "vue": "3.5.44",
+        "vuetify": "4.3.0"
+      },
+      "packages": [
+        {
+          "name": "@solyi/core",
+          "version": "0.4.9",
+          "file": "solyi-core-0.4.9.tgz",
+          "bytes": 3535812,
+          "sha256": "1eb85d3b047fed3efa31e38dd0f685f233c1f90a48cade296e04d47414422523",
+          "integrity": "sha512-LxRruadS6DAHgXhGkbwPHytuO0HIHD3xBTxpZAzHjWvWcjbxbgG2+4KhV4O8Oc3LzTdyBfPnq3s97LyPQdYjiw=="
+        },
+        {
+          "name": "solyi-ui",
+          "version": "0.10.3",
+          "file": "solyi-ui-0.10.3.tgz",
+          "bytes": 66013,
+          "sha256": "5a2fee0fa744a3127f1cfece93362284fa926ee86171e67ced84506af0b69341",
+          "integrity": "sha512-7J2u1fhPLNYd6JiwjhVP+6DovOiqr0Txy0LnkNwLfjgUzoZMQoBJGkOs1Qrl4MHPBjeOge/LvN20ina1mfo7Dw=="
+        }
+      ]
+    },
+    {
+      "release": "0.12.2",
+      "sourceRef": "7215e6ee9a0a0b311ed4c4ca044109c418defcc7",
+      "compatibility": {
+        "node": "^22.18.0 || >=24.12.0",
+        "vue": "3.5.44",
+        "vuetify": "4.3.0"
+      },
+      "packages": [
+        {
+          "name": "@solyi/core",
+          "version": "0.4.8",
+          "file": "solyi-core-0.4.8.tgz",
+          "bytes": 3535808,
+          "sha256": "9df1498c06fdecedd50d98181602e1184da0ec05f5ca7b3ffc5e6511b0589bcb",
+          "integrity": "sha512-OouGPtAruYDO/BbAYwCREPJTgtQC9J5HEurmXTHS/OqoHORzmyVydK545Cz02/NfbC65QlceTOGTKC80f0aCsA=="
+        },
+        {
+          "name": "solyi-ui",
+          "version": "0.10.2",
+          "file": "solyi-ui-0.10.2.tgz",
+          "bytes": 66007,
+          "sha256": "666c9e99c51004354c262dbb9681830faa9b9acad76ed0c43727bbddbad02333",
+          "integrity": "sha512-/BVf0Bgay7VhYFcByUt+NX25g9FPlbEXHf29nNuH00GjssKBu1wXvgQA+v+ljS2ADmHSya69KbeILOErrDx1ng=="
+        }
+      ]
+    },
+    {
+      "release": "0.12.1",
+      "sourceRef": "dbbfbefd05871fa5251e6d6473e6267df5ead56e",
+      "compatibility": {
+        "node": "^22.18.0 || >=24.12.0",
+        "vue": "3.5.44",
+        "vuetify": "4.3.0"
+      },
+      "packages": [
+        {
+          "name": "@solyi/core",
+          "version": "0.4.7",
+          "file": "solyi-core-0.4.7.tgz",
+          "bytes": 3534961,
+          "sha256": "94e32805cb2ba0ebcae0c64cd424339a5d5a088250f8ad1471313d0db6139939",
+          "integrity": "sha512-u6OzG9ehby2isRPg96RXl17Lq0O550vKVUcRYmHPrXG7xOtcY3SjgLSH/O/GHUyBidLSol+6F6U3qkGyS4yZyw=="
+        },
+        {
+          "name": "solyi-ui",
+          "version": "0.10.1",
+          "file": "solyi-ui-0.10.1.tgz",
+          "bytes": 65774,
+          "sha256": "418833ed066efcb457c358030c67395a49510527c433d93eb3e7db1e29b0347f",
+          "integrity": "sha512-YZJjwKR7MxoMtys5184tVi9G/faklGnvkqCKmyU4591177yH1CPsCq020PVQNQ+pWme/eznW+idE+58qfa4JQA=="
+        }
+      ]
+    },
+    {
+      "release": "0.12.0",
+      "sourceRef": "09d5d4c70c7f84598e31baea5425bb5dd60a9fef",
+      "compatibility": {
+        "node": "^22.18.0 || >=24.12.0",
+        "vue": "3.5.44",
+        "vuetify": "4.3.0"
+      },
+      "packages": [
+        {
+          "name": "@solyi/core",
+          "version": "0.4.6",
+          "file": "solyi-core-0.4.6.tgz",
+          "bytes": 3534651,
+          "sha256": "9735791963a3e3c67b33b030e0ec6bbfca6e7ecd595111c7b98325ba505415eb",
+          "integrity": "sha512-H6wzHqyPnV14eV4RY1U0wU3Cl6+5+HAg8hHcqvquAdLMwxlu8anrhko3fZ9mya1gY+NDu6OZ3PaXjkjhTl4lhA=="
+        },
+        {
+          "name": "solyi-ui",
+          "version": "0.10.0",
+          "file": "solyi-ui-0.10.0.tgz",
+          "bytes": 65774,
+          "sha256": "656b94775b796c4c5931d5198f363935f6683618b4189b0a6bf7aec3830dc9b0",
+          "integrity": "sha512-/P2V89+OZRAAbj3uBzq/GOmYDQyrYtsLnwJOOp4/CgK8885fyRTE/e144klpNvZED9UzeRAuIT5Ztb1h3kICKw=="
+        }
+      ]
+    },
     {
       "release": "0.11.2",
       "sourceRef": "f000029e75e35c7f2ea2d4711a46dbcfc20455d5",
