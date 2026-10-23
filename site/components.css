@@ -114,6 +114,13 @@
 .sol-choice input {width: 20px; height: 20px; margin: 0; accent-color: var(--sol-color-accent); flex-shrink: 0; cursor: pointer;}
 .sol-choice:has(input:disabled) {color: var(--sol-color-muted); cursor: not-allowed;}
 .sol-choice:has(input:disabled) input {cursor: not-allowed;}
+/* Opt-in selectable rows. The label owns the inset and hit area, not the
+   checkbox itself. SCheckbox/SRadioGroup may receive this wrapper class;
+   existing radio cards keep their own card inset. */
+.sol-choice.sol-choice-row,.sol-choice-row>.sol-choice:not(.sol-ui-radio-card) {box-sizing:border-box;width:100%;min-height:var(--sol-touch-target-min);padding:var(--sol-space-2) var(--sol-space-3);gap:var(--sol-space-3);margin:0;border:1px solid transparent;border-radius:var(--sol-radius-small);}
+.sol-choice.sol-choice-row:has(input:checked),.sol-choice-row>.sol-choice:not(.sol-ui-radio-card):has(input:checked) {background:var(--sol-color-accent-soft);border-color:var(--sol-color-accent);}
+.sol-choice.sol-choice-row:has(input:focus-visible),.sol-choice-row>.sol-choice:not(.sol-ui-radio-card):has(input:focus-visible) {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-choice.sol-choice-row>span,.sol-choice-row>.sol-choice:not(.sol-ui-radio-card)>span {min-width:0;overflow-wrap:anywhere;}
 .sol-status {display: inline-flex; align-items: center; gap: var(--sol-space-1); padding: 3px 8px; border-radius:var(--sol-radius-small); font-size: var(--sol-text-xs); font-weight: 600; color: var(--sol-color-info); background: var(--sol-color-info-soft); white-space: nowrap;}
 .sol-status.success {color: var(--sol-color-success); background: var(--sol-color-success-soft);}
 .sol-status.warning {color: var(--sol-color-warning); background: var(--sol-color-warning-soft);}

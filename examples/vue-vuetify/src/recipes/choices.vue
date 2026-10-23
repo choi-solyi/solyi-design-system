@@ -11,10 +11,26 @@ const options = [
 </script>
 <template>
   <SCard :heading-level="2" title="익숙한 기본 선택">
-    <SCheckbox id="recipe-include" v-model="include" label="완료한 항목 포함" />
-    <SCheckbox id="recipe-archived" v-model="archived" label="보관한 항목 포함" />
-    <SCheckbox id="recipe-unavailable" label="공유 항목 · 비활성" disabled />
-    <SRadioGroup id="recipe-view" v-model="view" label="보기 방식" :options="options" />
+    <SCheckbox
+      class="sol-choice-row"
+      id="recipe-include"
+      v-model="include"
+      label="완료한 항목 포함"
+    />
+    <SCheckbox
+      class="sol-choice-row"
+      id="recipe-archived"
+      v-model="archived"
+      label="보관한 항목 포함"
+    />
+    <SCheckbox class="sol-choice-row" id="recipe-unavailable" label="공유 항목 · 비활성" disabled />
+    <SRadioGroup
+      class="sol-choice-row"
+      id="recipe-view"
+      v-model="view"
+      label="보기 방식"
+      :options="options"
+    />
     <SSelect
       id="recipe-sort"
       v-model="sort"

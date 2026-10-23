@@ -14,7 +14,7 @@ import {starterLocale} from './locale-state.js';
 import App from './App.vue';
 const app=createApp(App);provideSolLocale(app,starterLocale);const vuetify=createStarterVuetify();const mounted=app.use(vuetify).use(SolyiUI).mount('#app');
 if(new URLSearchParams(location.search).get('view')==='progress')mountProgressEmbed(vuetify.theme);
-if(new URLSearchParams(location.search).get('view')==='recipes'&&new URLSearchParams(location.search).get('embed')==='1'){
+if(['recipes','advanced'].includes(new URLSearchParams(location.search).get('view'))&&new URLSearchParams(location.search).get('embed')==='1'){
  document.documentElement.dataset.motionPolicy=new URLSearchParams(location.search).get('motionPolicy')==='reduced'?'reduced':'system';
  mountProgressEmbed(vuetify.theme,'recipe',()=>mounted.confirmRecipeLeave());
 }

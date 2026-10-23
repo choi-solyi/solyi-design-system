@@ -191,7 +191,9 @@ const index=files.get('index.ts'),publicComponents=entries(index.symbols.get('sC
 assert.deepEqual(references.map(x=>x.name).sort(),publicComponents.sort(),'Every public S component has one component reference; no imaginary API');
 for (const ref of references) {assert.equal(new Set(ref.props.map(x=>x.name)).size,ref.props.length,ref.name+' unique props');assert.ok(ref.props.length||ref.passthrough,ref.name+' props parsed');}
 const versions=Object.fromEntries(await Promise.all(['core','vue-ui'].map(async name=>[name,JSON.parse(await readFile(new URL('packages/'+name+'/package.json',root),'utf8')).version])));
-const code='// Generated from packages/vue-ui/src by scripts/build-component-api.mjs.\nexport const componentReferences='+JSON.stringify(references,null,2)+';\nexport const componentReferenceVersions='+JSON.stringify(versions)+';\n';
+const recipeFiles={date:'inputs',files:'inputs',autocomplete:'inputs',chart:'chart-tree',tree:'chart-tree'};
+const exampleSources=Object.fromEntries(await Promise.all([...new Set(references.map(ref=>ref.example))].map(async example=>[example,await readFile(new URL(example==='advanced-vue'?'examples/vue-vuetify/src/AdvancedExamples.vue':'examples/vue-vuetify/src/recipes/'+(recipeFiles[example]||example)+'.vue',root),'utf8')])));
+const code='// Generated from packages/vue-ui/src by scripts/build-component-api.mjs.\nexport const componentReferences='+JSON.stringify(references,null,2)+';\nexport const componentReferenceVersions='+JSON.stringify(versions)+';\nexport const componentExampleSources='+JSON.stringify(exampleSources,null,2)+';\n';
 if(process.argv.includes('--check'))assert.ok((await readFile(new URL('site/component-api-data.js',root),'utf8'))===code,'Component reference changed; regenerate from the current implementation');
 else await writeFile(new URL('site/component-api-data.js',root),code);
 console.log(`Generated ${references.length} source-linked S component references with typed props, defaults, events, slots and exposed methods.`);

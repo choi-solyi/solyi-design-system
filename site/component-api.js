@@ -1,4 +1,4 @@
-import {componentReferences} from './component-api-data.js';
+import {componentReferences,componentExampleSources} from './component-api-data.js';
 import {highlightSample} from './code-highlight.js';
 
 const apiEscape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -14,22 +14,63 @@ export function renderComponentReferences(h) {
   return componentGroups.map((group,index)=>h.section('api-group-'+index,group,'기능 안에서는 컴포넌트 이름의 ABC 순서로 찾습니다.',
     componentReferences.filter(component=>component.group===group).map(component=>{
       const name=apiEscape(component.name),id=component.id;
-      const href=`#${component.exampleRoute}/${component.example}`;
+      const preview=componentPreview(component);
+      const code=h.codeSample?.('샘플 코드',componentExampleSources[component.example])||'<details class="code-example"><summary>샘플 코드</summary><pre><code>'+apiEscape(componentExampleSources[component.example])+'</code></pre></details>';
       return `<article class="component-reference sol-card" id="${id}" aria-labelledby="${id}-title">
-        <div class="component-reference-heading"><h3 id="${id}-title">${name}</h3><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/${component.source}">원본 소스 ↗</a></div>
+        <div class="component-reference-heading"><h3 id="${id}-title">${name}</h3></div>
         <p>${apiEscape(component.description)}</p>
-        <nav class="component-reference-links" aria-label="${name} 문서"><a href="#component/${id}-examples">Examples</a><a href="#component/${id}-api">API</a></nav>
-        <div id="${id}-examples" class="component-example-link"><h4>Examples</h4><p>기본 모양과 해당되는 선택·열림·오류 상태를 실제 패키지로 확인합니다. 여러 부품이 함께 쓰이는 예제는 같은 실행 화면을 공유합니다.</p><a class="sol-button" href="${href}">${name} 실행 예제 보기 →</a></div>
-        <div id="${id}-api" class="component-api"><h4>API</h4>
-          ${component.passthrough?`<p class="sol-notice info">${name}은 설치된 Vuetify의 <code>${apiEscape(component.passthrough)}</code>를 그대로 재사용합니다. 그 컴포넌트의 props·slots·이벤트·타입 계약을 유지합니다. 아래에 별도 S 전용 옵션을 만들지 않습니다.</p><p><a href="https://vuetifyjs.com/en/api/${component.passthrough.replace(/^V/,'v-').replace(/([a-z])([A-Z])/g,'$1-$2').toLowerCase()}/">Vuetify ${apiEscape(component.passthrough)} API ↗</a></p>`:''}
+        <div class="component-reference-tabs" role="tablist" aria-label="${name} 보기">
+          <button type="button" role="tab" id="${id}-examples-tab" data-component-tab="examples" aria-selected="true" aria-controls="${id}-examples">Examples</button>
+          <button type="button" role="tab" id="${id}-api-tab" data-component-tab="api" tabindex="-1" aria-selected="false" aria-controls="${id}-api">API</button>
+        </div>
+        <div id="${id}-examples" class="component-example-panel" role="tabpanel" aria-labelledby="${id}-examples-tab">
+          <div class="component-example-canvas" data-component-example="${preview.recipe}" data-preview-view="${preview.view}" data-preview-part="${preview.part}"></div>
+          ${code}
+        </div>
+        <div id="${id}-api" class="component-api" role="tabpanel" aria-labelledby="${id}-api-tab" hidden><h4>API</h4>
           <h5>Props</h5>${apiTable(name+' props',['이름 / 필수','타입 · 허용값','기본값','설명'],component.props.map(prop=>`<tr><th scope="row"><code>${apiEscape(prop.name)}</code>${prop.required?'<span class="api-required">필수</span>':''}</th><td><code>${apiEscape(prop.type)}</code>${prop.values.length?`<span class="sol-hint">${prop.values.map(apiEscape).join(' · ')}</span>`:''}</td><td><code>${apiEscape(prop.default)}</code></td><td>${apiEscape(prop.description)}</td></tr>`))}
           <h5>Slots</h5>${apiTable(name+' slots',['이름','전달 인자 타입','설명'],component.slots.map(slot=>`<tr><th scope="row"><code>${apiEscape(slot.name)}</code></th><td><code>${apiEscape(slot.scope)}</code></td><td>${apiEscape(slot.description)}</td></tr>`))}
           <h5>Events</h5>${apiTable(name+' events',['이름','인자 타입','설명'],component.events.map(event=>`<tr><th scope="row"><code>${apiEscape(event.name)}</code></th><td><code>${apiEscape(event.signature)}</code></td><td>${apiEscape(event.description)}</td></tr>`))}
           <h5>Methods</h5>${apiTable(name+' methods',['이름','공개 핸들 타입','설명'],component.methods.map(method=>`<tr><th scope="row"><code>${apiEscape(method.name)}</code></th><td><code>${apiEscape(method.signature)}</code></td><td>${apiEscape(method.description)}</td></tr>`))}
           ${component.types?.length?`<details class="api-type-definitions"><summary>자료·핸들 타입 정의</summary><pre tabindex="0" aria-label="${name} 자료 타입"><code>${highlightSample(component.types.map(type=>type.source).join('\n\n'),'TypeScript')}</code></pre></details>`:''}
-          ${component.name==='SCard'?'<p class="sol-hint">SCard는 article 기반 표면입니다. VCard 래퍼가 아니며 variant·subtitle·image 같은 VCard 전용 옵션을 지원한다고 표시하지 않습니다. 선언하지 않은 속성·DOM 이벤트는 루트 article로 전달됩니다.</p>':''}
-          <p class="sol-hint">이 표는 실제 구현에서 생성합니다. 명시된 S 계약과 모든 Vuetify 컴포넌트의 API가 같은 것은 아닙니다.</p>
+          ${component.name==='SCard'?'<p class="sol-hint">제목·본문·actions 슬롯으로 내용을 묶는 article 카드입니다. 위 표에 있는 옵션을 사용하세요.</p>':''}
+          <p class="sol-hint">설치한 버전에서 사용할 수 있는 속성·슬롯·이벤트와 메서드입니다.</p>
         </div>
       </article>`;
     }).join(''))).join('');
+}
+
+function componentPreview(component) {
+ const aliases={date:['inputs','date'],files:['inputs','files'],autocomplete:['inputs','autocomplete'],chart:['chart-tree','chart'],tree:['chart-tree','tree']};
+ const parts={STextarea:'textarea',SNumberInput:'number',SMultiSelect:'multiselect',SAvatar:'avatar',SStepper:'steps',SSegmentedControl:'segmented',SRangeSlider:'range',SSplitBtn:'split-button',SContextMenu:'context-menu',SResizableSplitPane:'split-pane'};
+ const [recipe,part]=aliases[component.example]||[component.example,parts[component.name]||''];
+ return {recipe,part,view:component.example==='advanced-vue'?'advanced':'recipes'};
+}
+
+export function revealComponentTarget(root,anchor) {
+ const target=root.ownerDocument.getElementById(anchor);if(!target||!root.contains(target))return null;
+ const card=target?.closest('.component-reference');if(!card)return null;
+ const kind=anchor===card.id+'-api'?'api':anchor===card.id+'-examples'?'examples':null;
+ if(kind)for(const tab of card.querySelectorAll('[data-component-tab]')){
+  const active=tab.dataset.componentTab===kind;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;root.querySelector('#'+tab.getAttribute('aria-controls')).hidden=!active;
+ }
+ return card;
+}
+
+export function mountComponentReferences(root,{onNavigate=()=>{}}={}) {
+ const controller=new AbortController(),{signal}=controller;
+ for(const card of root.querySelectorAll('.component-reference')){
+  const tabs=[...card.querySelectorAll('[data-component-tab]')];
+  function activate(index,focus=false){
+   const tab=tabs[index],anchor=tab.getAttribute('aria-controls');revealComponentTarget(root,anchor);
+   if(focus)tab.focus({preventScroll:true});
+   const hash='#component/'+anchor;if(location.hash!==hash)history.pushState(null,'',hash);onNavigate(hash);
+  }
+  tabs.forEach((tab,index)=>{
+   tab.addEventListener('click',()=>activate(index),{signal});
+   tab.addEventListener('keydown',event=>{if(event.isComposing)return;let next;if(event.key==='ArrowRight'||event.key==='ArrowLeft')next=1-index;else if(event.key==='Home')next=0;else if(event.key==='End')next=1;if(next!==undefined){event.preventDefault();activate(next,true);}},{signal});
+  });
+ }
+ const anchor=location.hash.split('/')[1];if(anchor)revealComponentTarget(root,anchor);
+ return()=>controller.abort();
 }

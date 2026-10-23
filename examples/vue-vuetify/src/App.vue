@@ -12,6 +12,7 @@ import {recipeComponents,recipeLabels} from './recipe-registry';
 const embed=new URLSearchParams(window.location.search).get('view')==='progress';
 const recipeEmbed=new URLSearchParams(window.location.search).get('view')==='recipes';
 const params=new URLSearchParams(window.location.search),embeddedRecipe=recipeEmbed&&params.get('embed')==='1',recipeId=Object.hasOwn(recipeComponents,params.get('example'))?params.get('example'):'buttons',recipePart=params.get('part')||undefined;
+const advancedView=params.get('view')==='advanced',advancedPart=params.get('part')||undefined;
 const recipeInstance=ref(null);
 defineExpose({confirmRecipeLeave:()=>recipeInstance.value?.confirmLeave?.()??Promise.resolve(true)});
 const theme=useTheme(),selected=ref(Object.hasOwn(coreTokens.themes,params.get('theme'))?params.get('theme'):'violet'),mode=ref(['light','dark'].includes(params.get('mode'))?params.get('mode'):matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
@@ -27,7 +28,7 @@ const pages=computed(()=>Math.max(1,Math.ceil(filtered.value.length/3))),rows=co
 watch([query,sort],()=>page.value=1);watch(pages,value=>page.value=Math.min(page.value,value));
 </script>
 <template>
-  <VApp><main class="starter-main"><ProgressExamples v-if="embed" /><template v-else-if="recipeEmbed"><template v-if="embeddedRecipe"><h1 class="sol-ui-sr-only">{{recipeLabels[recipeId]}}</h1><component ref="recipeInstance" :is="recipeComponents[recipeId]" v-bind="recipePart ? {part:recipePart} : {}" /></template><template v-else><div class="starter-settings"><label>테마<select v-model="selected"><option value="violet">Cool violet</option><option value="sage">Quiet sage</option><option value="sand">Warm sand</option></select></label><label>화면 모드<select v-model="mode"><option value="light">Light</option><option value="dark">Dark</option></select></label></div><RecipeExamples/></template></template><template v-else>
+  <VApp><main class="starter-main"><ProgressExamples v-if="embed" /><template v-else-if="advancedView"><h1 v-if="params.get('embed')==='1'" class="sol-ui-sr-only">Vue 컴포넌트 실행 예제</h1><AdvancedExamples :part="advancedPart" /></template><template v-else-if="recipeEmbed"><template v-if="embeddedRecipe"><h1 class="sol-ui-sr-only">{{recipeLabels[recipeId]}}</h1><component ref="recipeInstance" :is="recipeComponents[recipeId]" v-bind="recipePart ? {part:recipePart} : {}" /></template><template v-else><div class="starter-settings"><label>테마<select v-model="selected"><option value="violet">Cool violet</option><option value="sage">Quiet sage</option><option value="sand">Warm sand</option></select></label><label>화면 모드<select v-model="mode"><option value="light">Light</option><option value="dark">Dark</option></select></label></div><RecipeExamples/></template></template><template v-else>
     <a class="starter-link" href="https://choi-solyi.github.io/solyi-design-system/#theme/starter">← 디자인 시스템 문서</a>
     <header><p class="starter-eyebrow">INSTALLED TARBALLS · Core {{coreVersion}} / Vue UI {{uiVersion}}</p><h1>같은 토큰, Vue의 부품.</h1><p>프로젝트에 바로 가져다 쓰는 컴포넌트와 사용 예제입니다. 문서의 실행 예제도 같은 패키지와 정본 Vue 파일을 사용합니다. 기존 앱에는 적용하지 않았습니다.</p><pre class="starter-code-sample" tabindex="0" aria-label="한영 주석 코드 글꼴 예시"><code>// English comment: fictional local data.
 // 한글 주석: 외부 전송 없는 가상 자료입니다.

@@ -34,7 +34,8 @@ try{
     const geometry=await page.locator(scope+' .appearance-options').evaluateAll(groups=>groups.map(group=>[...group.querySelectorAll('.appearance-choice-face')].map(face=>{
       const r=face.getBoundingClientRect(),s=getComputedStyle(face);return{x:r.x,right:r.right,y:r.y,height:r.height,width:r.width,scrollWidth:face.scrollWidth,clientWidth:face.clientWidth,radii:[s.borderTopLeftRadius,s.borderTopRightRadius,s.borderBottomRightRadius,s.borderBottomLeftRadius]};
     })));
-    assert.deepEqual(geometry.map(group=>group.length),[3,2]);
+    assert.deepEqual(geometry.map(group=>group.length),[3]);
+    const densityBox=await page.locator(scope+' [data-pref-density-toggle]').boundingBox();assert.ok(densityBox.height>=(width<=720?44:36)-.1,'Density swap preserves control/touch height');
     for(const group of geometry){
       for(let i=0;i<group.length;i++){
         assert.ok(group[i].height>=(width<=720?44:36)-.1,'Preserved control/touch height');
@@ -50,7 +51,8 @@ try{
     assert.equal(await page.locator('html').getAttribute('data-theme'),'sage');
     await page.keyboard.press('ArrowRight');assert.equal(await page.locator('html').getAttribute('data-theme'),'sand');
     await page.keyboard.press('ArrowLeft');assert.equal(await page.locator('html').getAttribute('data-theme'),'sage');
-    await page.locator(scope+' [data-pref-density][value=comfortable]').focus();await page.keyboard.press('ArrowRight');
+    await page.locator(scope+' [data-pref-density-toggle]').focus();await page.keyboard.press('Enter');
+    assert.equal(await page.locator(scope+' [data-pref-density-toggle]').getAttribute('aria-pressed'),'true');
     assert.equal(await page.locator('html').getAttribute('data-density'),'compact');
     const toggle=page.locator(mobile?'#appearance-mode-toggle':'#mode-toggle');await toggle.click();assert.notEqual(await page.locator('html').getAttribute('data-mode'),mode);await toggle.click();
     await page.reload({waitUntil:'domcontentloaded'});await page.locator('#appearance-inline [data-pref-theme][value=sage]:checked').waitFor({state:'attached'});
@@ -65,7 +67,7 @@ try{
     const screenshot=`header-${width}-${mode}.png`;await page.screenshot({path:fileURLToPath(new URL(screenshot,output)),animations:'disabled'});
     if(mobile){await page.keyboard.press('Escape');assert.equal(await page.locator('#appearance-dialog').evaluate(e=>e.open),false);assert.equal(await page.evaluate(()=>document.activeElement.id),'appearance-open');}
     assert.deepEqual(errors,[]);results.push({width,mode,touchEmulation:width<=720,geometry,screenshot});
-    await context.close();console.log('PASS '+width+' '+mode+': borders, radii, size, native arrows, check/focus, persistence, mode, overflow and Escape.');
+    await context.close();console.log('PASS '+width+' '+mode+': theme segments, density swap, native arrows/Enter, check/focus, persistence, mode, overflow and Escape.');
   }
   await writeFile(new URL('report.json',output),JSON.stringify({date:new Date().toISOString(),browser:'Installed Chrome '+version,headless:true,userProfile:false,results},null,2)+'\n');
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

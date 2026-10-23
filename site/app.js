@@ -1,7 +1,7 @@
 import tokens from './token-data.js';
 import {solIcon} from './icons.js';
 import {highlightSample} from './code-highlight.js';
-import {renderComponentReferences} from './component-api.js';
+import {renderComponentReferences,mountComponentReferences} from './component-api.js';
 import {renderDistribution} from './distribution.js';
 import {mountVueExamples,mountVuePreviews} from './vue-examples.js';
 import {mountOverflowText} from './overflow.js';
@@ -24,6 +24,7 @@ let headerPreferences=null;
 let returnFocus;
 let cleanupVueExamples=()=>{};
 let cleanupVuePreviews=()=>{};
+let cleanupComponentReferences=()=>{};
 let cleanupOverflow = () => {}; let cleanupTopics = () => {}; let cleanupExpansion = () => {}; let routeId = 0; let cleanupExamples = () => {}; let cleanupMotion = () => {}; let cleanupColors = () => {};
 const snippets = new Map();
 const projects = [
@@ -150,13 +151,14 @@ function buildDocumentSearchIndex(){
 function render({focus=false}={}) {
   let route = currentRoute();
   if (!routes[route]) route = 'start';
-  cleanupVueExamples(); cleanupVuePreviews(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
+  cleanupVueExamples(); cleanupVuePreviews(); cleanupComponentReferences(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
   main.innerHTML = pageMarkup(route);
   cleanupVueExamples=mountVueExamples(main,codeSample);
   document.title = `Solyi Design System · ${routes[route]}`;
   cleanupTopics = presentTopics(main,route,{section,demo,contract,codeSample});
   cleanupVuePreviews = mountVuePreviews(main);
+  cleanupComponentReferences=mountComponentReferences(main,{onNavigate:hash=>{displayedHash=hash;}});
   document.querySelectorAll('[data-route]').forEach(link=>{
     if (link.dataset.route===route) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
   });
@@ -173,24 +175,22 @@ function persistPreferences() {
 function syncPreferences() {
   headerPreferences?.sync();
   document.querySelectorAll('input[name="density"]').forEach(input=>input.checked=input.value===root.dataset.density);
-  const isDark = root.dataset.mode==='dark';
-  const toggle = document.querySelector('#mode-toggle');
-  toggle.textContent = isDark ? 'Light mode' : 'Dark mode';
-  toggle.removeAttribute('aria-pressed');
-  toggle.setAttribute('aria-label',isDark ? '현재 다크 모드. 라이트 모드로 전환' : '현재 라이트 모드. 다크 모드로 전환');
   document.querySelector('meta[name="theme-color"]').content=tokens.themes[root.dataset.theme][root.dataset.mode].canvas;
   document.querySelectorAll('.theme-card').forEach(card=>card.dataset.mode=root.dataset.mode);
   document.querySelectorAll('[data-set-theme]').forEach(button=>{const selected=button.dataset.setTheme===root.dataset.theme; button.setAttribute('aria-label',`${tokens.themes[button.dataset.setTheme].label} 테마 사용`); button.setAttribute('aria-pressed',String(selected)); button.textContent=selected?'선택됨':'이 테마 사용';});
 }
 function applyPreferences(next){
+ // Appearance is a DOM-only update: keep document, selected panel and hash intact.
+ const viewport={left:window.scrollX,top:window.scrollY},hash=location.hash;
  if(next.theme&&tokens.themes[next.theme])root.dataset.theme=next.theme;
  if(['comfortable','compact'].includes(next.density))root.dataset.density=next.density;
  if(['light','dark'].includes(next.mode))root.dataset.mode=next.mode;
  persistPreferences();syncPreferences();updateTokens();
+ // CSS may synchronously change layout; do not turn this into route navigation.
+ if(location.hash===hash&&(window.scrollX!==viewport.left||window.scrollY!==viewport.top))window.scrollTo({...viewport,behavior:'auto'});
  notify(`${tokens.themes[root.dataset.theme].label} · ${root.dataset.density==='compact'?'컴팩트':'기본'} · ${root.dataset.mode==='dark'?'다크':'라이트'}`);
 }
 function toggleMode(){applyPreferences({mode:root.dataset.mode==='dark'?'light':'dark'});}
-document.querySelector('#mode-toggle').addEventListener('click',toggleMode);
 function notify(message) {
   clearTimeout(toastTimer); announcement.textContent=message;
   toastTimer=setTimeout(()=>announcement.textContent='',4200);

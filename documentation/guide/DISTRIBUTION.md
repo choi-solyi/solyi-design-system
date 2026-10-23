@@ -4,10 +4,10 @@
 
 ## 현재 권장 조합
 
-이번 통합 후보는 문서 **0.12.0 / Core 0.4.6 / Vue UI 0.10.0**입니다. 정확한 공개 상태는 해당 커밋의 Actions 최종 결과와 [공개 카탈로그](https://ui.solyi.kr/releases/index.json)로 확인합니다. 이 안내 파일을 작성한 것만으로 URL이 배포됐다고 판단하지 않습니다.
+이번 통합 후보는 문서 **0.12.1 / Core 0.4.7 / Vue UI 0.10.1**입니다. 정확한 공개 상태는 해당 커밋의 Actions 최종 결과와 [공개 카탈로그](https://ui.solyi.kr/releases/index.json)로 확인합니다. 이 안내 파일을 작성한 것만으로 URL이 배포됐다고 판단하지 않습니다.
 
 ```sh
-npm install --save-exact https://ui.solyi.kr/releases/0.12.0/solyi-core-0.4.6.tgz https://ui.solyi.kr/releases/0.12.0/solyi-ui-0.10.0.tgz vue@3.5.44 vuetify@4.3.0
+npm install --save-exact https://ui.solyi.kr/releases/0.12.1/solyi-core-0.4.7.tgz https://ui.solyi.kr/releases/0.12.1/solyi-ui-0.10.1.tgz vue@3.5.44 vuetify@4.3.0
 ```
 
 패키지 이름은 `@solyi/core`와 `solyi-ui`이며 **npm/GitHub Packages에는 게시하지 않았습니다**. `private:true`는 실수로 게시하는 것을 막는 설정입니다. 선택한 `solyi-ui`의 이름 사용권·소유권은 미확인이고 새 프로젝트 생성 명령도 출시하지 않았습니다.
@@ -40,3 +40,7 @@ npm install --save-exact https://ui.solyi.kr/releases/0.12.0/solyi-core-0.4.6.tg
 ## Core 의존성과 npm 게시 전 결정
 
 Vue 3용 `solyi-ui`는 현재 `@solyi/core`를 peer로 사용합니다. 로컬에서는 두 tarball을 한 명령에 명시해 함께 설치합니다. UI 이름 변경이 Core 이름 변경이나 npm 스코프 사용 권한 확보를 뜻하지 않습니다. 레지스트리에서 `npm install solyi-ui`만으로 설치하려면 Core 게시·스코프 권한 또는 배포 구조를 별도로 결정해야 합니다. 이번에는 이름을 임의 변경하거나 npm에 게시하지 않습니다.
+
+### 이전 이름에서 전환
+
+기존 `@solyi/vue-ui`를 설치했다면 기존 Core/UI 조합을 유지한 상태에서 `npm uninstall @solyi/vue-ui`를 먼저 실행합니다. 그런 다음 새 Core/UI tarball 쌍을 함께 설치하고, 코드·타입·CSS의 import를 `solyi-ui`로 바꿉니다. 이름을 바꾸는 도중에 옛 UI와 새 Core가 함께 남으면 npm이 옛 peer 버전을 레지스트리에서 찾을 수 있습니다. 롤백은 반대로 `solyi-ui`를 제거한 뒤 보존된 이전 쌍과 import를 복구합니다. 다른 소비 프로젝트를 자동으로 변경하지 않습니다.

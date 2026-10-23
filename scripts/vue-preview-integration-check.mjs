@@ -14,13 +14,13 @@ for(const route of ['start','style','component','pattern','releases','licensing'
   w.location.hash='#'+route;await pause();
   assert.equal(d.querySelectorAll('main h1').length,1);
   for(const frame of d.querySelectorAll('.vue-recipe-frame')){
-    const url=new URL(frame.src);assert.equal(url.origin,w.location.origin);assert.equal(url.searchParams.get('view'),'recipes');assert.equal(url.searchParams.get('embed'),'1');assert.ok(frame.title);seen.add(frame.dataset.recipe);
+    const url=new URL(frame.src);assert.equal(url.origin,w.location.origin);assert.ok(['recipes','advanced'].includes(url.searchParams.get('view')));assert.equal(url.searchParams.get('embed'),'1');assert.ok(frame.title);seen.add(frame.dataset.recipe);
   }
   for(const link of d.querySelectorAll('[data-section-link]'))assert.ok(d.getElementById(link.dataset.sectionLink),'Preserved anchor '+link.dataset.sectionLink);
   for(const element of d.querySelectorAll('[aria-labelledby],[aria-describedby],[aria-controls]'))for(const key of ['aria-labelledby','aria-describedby','aria-controls'])for(const id of(element.getAttribute(key)||'').split(/\s+/).filter(Boolean))assert.ok(d.getElementById(id),'Reference '+id);
   assert.equal(d.querySelectorAll('.demo-stage>button,.demo-stage>form').length,0,'The canonical Vue canvas replaces active native examples');
 }
-assert.equal(seen.size,30,'Every canonical recipe is a document canvas');
+assert.ok(seen.has('advanced-vue'),'Advanced API references use the actual shared consumer');seen.delete('advanced-vue');assert.equal(seen.size,30,'Every canonical recipe is a document canvas');
 w.location.hash='#pattern';await pause();const frame=d.querySelector('iframe[data-recipe=workflow]'),sent=[];assert.ok(frame);frame.contentWindow.postMessage=(data,origin)=>sent.push({data,origin});
 const message=(data,origin=w.location.origin,source=frame.contentWindow)=>w.dispatchEvent(new w.MessageEvent('message',{origin,source,data}));
 const controller=w.__getPreviewController();

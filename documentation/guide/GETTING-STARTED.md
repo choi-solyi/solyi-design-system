@@ -40,6 +40,10 @@ Core 토큰·컴포넌트 CSS와 Vue UI CSS를 명시적으로 한 번 불러옵
 
 [검증·호환 범위](COMPATIBILITY.md), [언어 설정](LOCALE.md), [라이선스 범위](../../LICENSE-SCOPE.md)를 함께 읽습니다.
 
+## 선택 행의 공통 여백
+
+배경·테두리가 있는 선택 행에는 Core의 `.sol-choice-row`를 선택적으로 사용합니다. 네이티브 `<label class="sol-choice sol-choice-row">` 또는 `<SCheckbox class="sol-choice-row" … />`, 목록형 `<SRadioGroup class="sol-choice-row" … />`에 적용할 수 있습니다. 행 label이 세로 `space-2`(8px)·가로 `space-3`(12px)·최소 `touch-target-min`(44px)을 담당하여 빈 여백까지 눌러 선택합니다. 체크박스 자체에 padding을 주지 않습니다. 카드형 라디오의 기존 16px inset은 유지하며, 일반 필드에는 이 클래스를 강제하지 않습니다.
+
 ## 7. AI 작업 지침 연결
 
 [소비 프로젝트 DESIGN.md](../../DESIGN.md)를 앱 루트에 복사하고 사용하는 AI 도구의 프로젝트 지침에서 참조하세요. 사이트의 Getting started → AI guide에서 같은 원본과 짧은 시작 프롬프트를 보기·복사·다운로드할 수 있습니다. 두 패키지에도 동일한 DESIGN.md가 포함됩니다. 이 파일명 자체가 모든 도구의 자동 로딩을 보장하지 않습니다.

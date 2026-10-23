@@ -29,8 +29,12 @@ try{
  await copyFile(new URL('examples/package-consumer/tsconfig.json',root),new URL('tsconfig.json',fixture));
  await copyFile(new URL('examples/package-consumer/env.d.ts',root),new URL('env.d.ts',fixture));
  const names=['SBtn','STextField','SDialog','SDataTable','SCheckbox','SRadioGroup','SSwitch','SSelect','STextarea','SNumberInput','STabs','SSnackbar','SDatePicker','STimePicker','SSegmentedControl','SMultiSelect','SRangeSlider','SSplitBtn','SContextMenu','SResizableSplitPane'];
+ let installedUiName;
  for(const [label,release]of [['previous',old],['update',current],['rollback',old]]){
   const uiName=releasePackage(release,'vue-ui').name;
+  // A renamed package is a different dependency. Remove the previous UI while
+  // its matching Core is still installed, before resolving the next pair.
+  if(installedUiName&&installedUiName!==uiName)await command(['uninstall',installedUiName,'--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org']);
   const dependencies={...template.dependencies};delete dependencies[historicalUiName];delete dependencies['solyi-ui'];for(const p of release.packages)dependencies[p.name]=base+release.release+'/'+p.file;
   await writeFile(new URL('package.json',fixture),JSON.stringify({...template,name:'solyi-http-release-check',dependencies},null,2));
   await writeFile(new URL('main.ts',fixture),`import {createApp,h} from 'vue';import {createVuetify} from 'vuetify';import SolyiUI,{${names.join(',')}${label==='update'?',formatSolDate,formatSolNumber,provideSolLocale':''}} from '${uiName}';import '@solyi/core/tokens.css';import '@solyi/core/components.css';import '${uiName}/styles.css';void [${names.join(',')}];const app=createApp({render:()=>h(STextField,{id:'check',label:'Check',required:true})});${label==='update'?"provideSolLocale(app,'en');void formatSolDate('2026-10-21','en');void formatSolNumber(1234.5,'en');":''}app.use(createVuetify()).use(SolyiUI).mount('#app');`);
@@ -40,6 +44,7 @@ try{
   for(const p of release.packages){const installed=JSON.parse(await readFile(new URL('node_modules/'+p.name+'/package.json',fixture),'utf8'));assert.equal(installed.version,p.version);const record=lock.packages['node_modules/'+p.name];assert.equal(record.resolved,dependencies[p.name]);assert.equal(record.integrity,p.integrity);const response=await fetch(dependencies[p.name]);assert.equal(response.status,200);assert.deepEqual(digest(Buffer.from(await response.arrayBuffer())),{sha256:p.sha256,integrity:p.integrity});}
   for(const name of ['vue','vuetify'])assert.equal(Object.keys(lock.packages).filter(key=>key.endsWith('node_modules/'+name)).length,1,'One '+name+' runtime');
   await command(['run','build']);
+  installedUiName=uiName;
  }
  assert.equal((await fetch(base+'missing/package.tgz')).status,404);
  // Exercise the CLI's exact guard with a changed fixture, without mutating packages.
