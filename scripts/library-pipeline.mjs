@@ -61,6 +61,7 @@ if(process.argv.includes('--packages-only')){
 }
 if(process.argv.includes('--prepare-release'))node('9/10 Freeze verified local artifacts and release history','scripts/releases.mjs',JSON.parse(readFileSync(new URL('package.json',root),'utf8')).version);
 node('9/10 Documentation build','scripts/build.mjs');
+node('9/10 Current release preparation and preserved downloads', 'scripts/release-preparation-check.mjs')
 node('9/10 Installed getting-started examples','scripts/getting-started-check.mjs');
 node('9/10 Real document package previews','scripts/vue-preview-integration-check.mjs');
 node('9/10 Short documents, embedded headings and fallback', 'scripts/document-followup-check.mjs')

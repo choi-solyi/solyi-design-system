@@ -41,8 +41,19 @@ for (const name of siteFiles) {
   }
 }
 const catalogue=await releaseCatalogue();
-await writeFile(path.join(out,'release-data.js'),'// Generated verified release catalogue.\nexport const packageReleases='+JSON.stringify(catalogue,null,2)+';\n');
+const publicCatalogue = {
+  current: catalogue.current,
+  releases: catalogue.releases.filter(release => release.release === catalogue.current),
+}
+await writeFile(path.join(out,'release-data.js'),'// Generated current verified package information.\nexport const packageReleases='+JSON.stringify(publicCatalogue,null,2)+';\n');
 for(const name of await releaseFiles()){await mkdir(path.dirname(path.join(out,name)),{recursive:true});await copyFile(path.join(root,'release-assets',name.slice('releases/'.length)),path.join(out,name));}
+// Keep immutable download URLs while the public index lists only the current release.
+if (catalogue.current) {
+  await writeFile(path.join(out, 'releases/index.json'), JSON.stringify({
+    current: catalogue.current,
+    releases: [catalogue.current],
+  }, null, 2) + '\n')
+}
 await mkdir(path.join(out,'starter'),{recursive:true});
 for(const name of starterFiles)await copyFile(path.join(root,'examples/vue-vuetify/dist',name),path.join(out,'starter',name));
 await writeFile(path.join(out, '.nojekyll'), '');

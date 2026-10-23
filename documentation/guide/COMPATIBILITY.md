@@ -18,7 +18,7 @@
 
 긴 데이터는 말줄임과 전체 내용 접근 경로를 함께 제공하며 문서 본문·textarea를 일괄 자르지 않습니다. 알 수 없는 진행률에 가짜 퍼센트나 aria-valuenow를 표시하지 않습니다. reduced-motion에서는 불필요한 이동과 반복 모션을 줄입니다.
 
-모델 값은 소비 앱이 소유합니다. 입력 검증·서버 오류·포커스는 [폼 계약](FORMS.md), 언어 교체와 부분 override는 [locale 계약](LOCALE.md), 설치와 롤백은 [배포 경로](DISTRIBUTION.md)를 확인합니다.
+모델 값은 소비 앱이 소유합니다. 입력 검증·서버 오류·포커스는 [폼 계약](FORMS.md), 언어 교체와 부분 override는 [locale 계약](LOCALE.md), 설치와 버전 관리는 [설치·업데이트](DISTRIBUTION.md)를 확인합니다.
 
 ## 검사 범위와 한계
 

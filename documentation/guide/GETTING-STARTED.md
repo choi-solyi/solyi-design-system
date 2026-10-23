@@ -220,9 +220,9 @@ SContainer·SRow·SCol은 Vuetify 레이아웃을 재사용합니다. SCard는 �
 
 배경·테두리가 있는 선택 행에는 공통 CSS의 `sol-choice-row`를 명시적으로 사용합니다. 전체 label에 세로 8px·가로 12px, 최소 터치 높이 44px를 주며 체크박스 아이콘 자체에는 padding을 추가하지 않습니다.
 
-## 6. 업데이트와 롤백
+## 6. 버전 관리와 업데이트
 
-[설치·업데이트](DISTRIBUTION.md)대로 solyi-ui 버전과 lockfile을 갱신하고 소비 앱의 타입·동작·대표 화면을 검사합니다. 롤백은 직전 정상 버전의 소비 코드·package.json·lockfile을 함께 복원한 뒤 재설치합니다.
+[설치·업데이트](DISTRIBUTION.md)대로 solyi-ui 버전과 lockfile을 함께 관리하고 패키지를 변경한 뒤 소비 앱의 타입·동작·대표 화면을 검사합니다.
 
 ```sh
 npm ci --ignore-scripts

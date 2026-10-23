@@ -1,6 +1,6 @@
 # solyi-ui
 
-Vue 3용 S 컴포넌트를 제공하는 UI 라이브러리입니다. Vue 3.5 / Vuetify 4.3을 peer로 사용합니다. Core 토큰·CSS·helper·폰트는 이 패키지에 포함되어 @solyi/core를 따로 설치하지 않습니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
+solyi-ui 1.0.0은 Vue 3용 S 컴포넌트를 제공하는 UI 라이브러리입니다. Vue 3.5 / Vuetify 4.3을 peer로 사용합니다. Core 토큰·CSS·helper·폰트는 이 패키지에 포함되어 @solyi/core를 따로 설치하지 않습니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
 
 ## 한 번 등록
 
@@ -37,7 +37,7 @@ createApp(App)
 
 `provideSolLocale`과 ko-KR/en-US의 LTR 팩을 제공하며 부분 override와 반응형 변경을 지원합니다. 전달된 label·slot·업무 오류는 앱 문구입니다. 앱 콘텐츠 번역이나 RTL 지원을 뜻하지 않습니다.
 
-## 스타일·라이선스·게시 경계
+## 스타일과 라이선스
 
 `solyi-ui/all.css` 한 줄로 Vuetify 스타일, UI 폰트, 토큰, 공통 컴포넌트와 S 컴포넌트 스타일을 순서대로 가져옵니다. 기존 개별 CSS 경로도 선택적으로 사용할 수 있으며 통합 진입점과 중복해서 가져오지는 않습니다. 코드 폰트가 필요한 앱은 `solyi-ui/code-fonts.css`를 추가합니다. 문서 셸용 docs.css는 가져오지 않습니다. 테마·defaults 브리지는 `createSolyiVuetify/applySolyiAppearance`로 연결하며 원본 V API와 S API의 차이를 유지합니다. 반경은 버튼 6·입력 10·카드/작은 팝업 12·다이얼로그/큰 패널 16px입니다.
 

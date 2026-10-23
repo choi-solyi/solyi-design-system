@@ -1,6 +1,6 @@
 {
   "name": "solyi-ui",
-  "version": "0.11.6",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -66,5 +66,25 @@
   "scripts": {
     "build": "node ../../scripts/build-vue-version.mjs && vite build && tsc -p tsconfig.json && node ../../scripts/finalize-vue-package.mjs",
     "prepack": "node ../../scripts/prepare-package.mjs vue-ui"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/choi-solyi/solyi-design-system.git",
+    "directory": "packages/vue-ui"
+  },
+  "homepage": "https://ui.solyi.kr/",
+  "bugs": {
+    "url": "https://github.com/choi-solyi/solyi-design-system/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "keywords": [
+    "vue",
+    "vuetify",
+    "ui",
+    "components",
+    "design-system"
+  ]
 }

@@ -140,7 +140,7 @@ function start(){
  '<ol class="adoption-steps"><li><div><h3>패키지를 설치합니다.</h3><p>solyi-ui와 Vue·Vuetify를 설치하고 버전을 고정합니다.</p><a href="#start/install">설치 안내 →</a></div></li><li><div><h3>공통 설정을 연결합니다.</h3><p>전역 등록과 Vue 자동 import, 타입·lint·스타일을 같은 기준으로 설정합니다.</p><a href="#start/registration">프로젝트 설정 →</a></div></li><li><div><h3>부품을 조합해 확인합니다.</h3><p>Examples에서 동작을 보고 Sample Code와 API로 필요한 계약을 확인합니다.</p><div class="button-row"><a href="#component/sbtn">Button →</a><a href="#pattern/form">폼 흐름 →</a></div></div></li></ol>');
  return original.content.querySelector('.overview-hero').outerHTML+steps+renderGettingStarted(documentationHelpers())+order.map(id=>legacy.querySelector('#'+id)?.outerHTML||'').join('')+original.content.querySelector('#principles').outerHTML;
 }
-function releases(){return intro('RELEASES','변경 이력','라이브러리와 문서의 변경 사항을 확인합니다.')+renderReleases(documentationHelpers());}
+function releases(){return intro('RELEASES','릴리스','현재 버전의 제공 기능과 지원 범위를 확인합니다.')+renderReleases(documentationHelpers());}
 
 function licensing(){return intro('LICENSING','사용 범위와 라이선스','코드의 사용 허용과 브랜드·제삼자 자산의 권리를 구분합니다.')+
  section('code-license','재사용 코드 · MIT','UI 코드와 브랜드는 같은 허가 범위가 아닙니다.','<div class="sol-card"><p>@solyi/core와 solyi-ui의 자체 재사용 코드는 MIT입니다. 상업적 사용·수정·재배포는 원문 라이선스의 조건에 따르며 저작권 및 허가 고지를 보존합니다.</p><p><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE">MIT 원문</a> · <a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE-SCOPE.md">적용 범위</a></p><p class="sol-hint">Core 토큰과 Vue UI의 사용·설정은 Getting started에서 확인하세요.</p></div>')+
