@@ -5066,4 +5066,4 @@ export const componentReferences=[
     "passthrough": "VRow"
   }
 ];
-export const componentReferenceVersions={"core":"0.4.3","vue-ui":"0.9.0"};
+export const componentReferenceVersions={"core":"0.4.4","vue-ui":"0.9.1"};

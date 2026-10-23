@@ -2,8 +2,8 @@
 
 솔의 여러 앱에서 함께 사용하는 개인 디자인 시스템의 **0.x 검토 초안**입니다. 공통 색 역할·타이포·간격·밀도·상태 규칙을 제공하고, 앱의 성격에 따라 테마를 조정합니다. 특정 앱의 색을 모든 앱의 영구 규칙으로 정하지 않습니다.
 
-- [문서 사이트](https://choi-solyi.github.io/solyi-design-system/)
-- [실제 패키지를 사용하는 예제](https://choi-solyi.github.io/solyi-design-system/starter/?view=recipes)
+- [문서 사이트](https://ui.solyi.kr/)
+- [실제 패키지를 사용하는 예제](https://ui.solyi.kr/starter/?view=recipes)
 - [소비 프로젝트 AI 지침](DESIGN.md)
 - [처음 시작하기](documentation/guide/GETTING-STARTED.md)
 - [설치·업데이트·롤백](documentation/guide/DISTRIBUTION.md)
@@ -43,7 +43,7 @@ npm run serve
 
 문서는 `http://127.0.0.1:4173`에서 확인합니다. 패키지 내용이 바뀌어 tarball과 잠금 파일을 의도적으로 갱신할 때는 [패키지 개발 절차](documentation/guide/LIBRARY.md)를 따릅니다. 단순 문서 수정에 모든 비싼 검사를 반복하지 말고 영향 범위 확인 후 최종 배치에서 통합 검사합니다.
 
-새 CLI나 `npm install sol-ui` 설치 경로는 출시되지 않았습니다. 현재 설치는 [Releases](https://choi-solyi.github.io/solyi-design-system/#releases)의 고정 URL tarball을 사용합니다. npm 이름 `sol-ui`의 사용권·소유권은 확인되지 않았고 패키지는 `private:true`로 게시를 막고 있습니다.
+새 CLI나 `npm install sol-ui` 설치 경로는 출시되지 않았습니다. 현재 설치는 [Releases](https://ui.solyi.kr/#releases)의 고정 URL tarball을 사용합니다. npm 이름 `sol-ui`의 사용권·소유권은 확인되지 않았고 패키지는 `private:true`로 게시를 막고 있습니다.
 
 ## 배포
 

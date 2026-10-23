@@ -1,6 +1,6 @@
 # 입력·탐색·피드백의 공통 계약
 
-현행 Props·Slots·Events·Methods의 타입·기본값·허용값은 [각 컴포넌트 문서](https://choi-solyi.github.io/solyi-design-system/#component)와 실제 생성 타입 선언이 기준입니다. 이 가이드는 여러 컴포넌트에 공통인 책임과 사용 규칙을 설명합니다. 과거 API별 표는 [이력 부록](../development/VUE-API-HISTORY.md)에 보존합니다.
+현행 Props·Slots·Events·Methods의 타입·기본값·허용값은 [각 컴포넌트 문서](https://ui.solyi.kr/#component)와 실제 생성 타입 선언이 기준입니다. 이 가이드는 여러 컴포넌트에 공통인 책임과 사용 규칙을 설명합니다. 과거 API별 표는 [이력 부록](../development/VUE-API-HISTORY.md)에 보존합니다.
 
 ## 값과 폼
 

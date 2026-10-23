@@ -1,6 +1,6 @@
 # 저장소 상세 문서
 
-사용자는 [처음 시작하기](guide/GETTING-STARTED.md)와 [설치·업데이트](guide/DISTRIBUTION.md)부터 읽습니다. 실제 컴포넌트의 Examples·Props·Slots·Events·Methods는 [문서 사이트](https://choi-solyi.github.io/solyi-design-system/#component)에 함께 있습니다.
+사용자는 [처음 시작하기](guide/GETTING-STARTED.md)와 [설치·업데이트](guide/DISTRIBUTION.md)부터 읽습니다. 실제 컴포넌트의 Examples·Props·Slots·Events·Methods는 [문서 사이트](https://ui.solyi.kr/#component)에 함께 있습니다.
 
 - `guide/`: 설치·공통 계약·테마·언어·호환·브랜드·폰트
 - `development/`: 소스 구조·문서 검색·재사용 전환 목록·이전 안내 원문

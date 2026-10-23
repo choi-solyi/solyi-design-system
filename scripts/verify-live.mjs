@@ -2,7 +2,7 @@ import {readFile,readdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
-const base='https://choi-solyi.github.io/solyi-design-system/';
+const base='https://ui.solyi.kr/';
 const ref=process.argv[2];
 if(ref)assert.match(ref,/^[0-9a-f]{7,40}$/,'Optional published commit SHA');
 async function list(dir,prefix=''){const out=[];for(const x of await readdir(dir,{withFileTypes:true})){if(x.name.startsWith('.'))continue;const name=prefix+x.name;if(x.isDirectory())out.push(...await list(new URL(x.name+'/',dir),name+'/'));else out.push(name);}return out;}
