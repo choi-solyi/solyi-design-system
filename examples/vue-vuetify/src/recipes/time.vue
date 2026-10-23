@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const time = ref<string | null>('09:00');
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="직접 입력과 시·분 선택"
-  >
+  <SCard :heading-level="2" title="직접 입력과 시·분 선택">
     <STimePicker
       id="recipe-time"
       v-model="time"

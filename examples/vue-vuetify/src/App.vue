@@ -1,5 +1,4 @@
 <script setup>
-import {ref,watch,computed,onBeforeUnmount} from 'vue';
 import {useTheme} from 'vuetify';
 import {tokens as coreTokens,coreVersion} from '@solyi/core';
 import { uiVersion, applySolyiAppearance } from '@solyi/vue-ui';

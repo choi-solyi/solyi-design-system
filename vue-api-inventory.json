@@ -1,7 +1,11 @@
 {
-  "documentVersion": "0.10.0",
-  "componentCount": 34,
+  "documentVersion": "0.11.0",
+  "componentCount": 38,
   "components": [
+    "SForm",
+    "SContainer",
+    "SRow",
+    "SCol",
     "SCard",
     "SAlert",
     "STree",
@@ -276,6 +280,9 @@
       "registration": "global",
       "components": [
         "SCard",
+        "SForm",
+        "SRow",
+        "SCol",
         "STextField",
         "SSelect",
         "SCheckbox",
@@ -384,6 +391,10 @@
       "components": [
         "SCard",
         "SBtn",
+        "SContainer",
+        "SRow",
+        "SCol",
+        "SForm",
         "STextField"
       ]
     },
@@ -410,6 +421,7 @@
       "registration": "global",
       "components": [
         "SCard",
+        "SForm",
         "SAlert",
         "STextField",
         "SNumberInput",

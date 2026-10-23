@@ -1,0 +1,20 @@
+# Locale and package delivery · local phases
+
+> 이 문서는 이전 단계의 계획·전환 이력입니다. 당시 체크포인트와 문구를 보존하므로 현재 구현·공개·검수 상태와 혼동하지 마세요. 현재 작업 범위는 [0.11.0 통합 계획](../plans/0.11.0-integration.md), 실제 사용법은 [처음 시작하기](../guide/GETTING-STARTED.md)를 따릅니다.
+
+## 이력 부록 · 당시 기록 원문
+
+Baseline: published `b8648fa`, local search-ranking fix `624bc43` preserved. Existing20 Vue APIs, fonts and role tokens/radii stay intact. No public push, registry publication, new account/credential/permission or other app update.
+
+- [x] Inventory: retain existing locale injection and preserve the verified0.3.0 tarballs as rollback assets before new builds.
+- [x] A. Complete ko/en locale defaults/override/reactive language changes; base wrappers and existing controls, date-only/number formatting and validation. Demonstrate the real installed package and add typed/runtime regressions.
+- [x] A gate: full package/independent consumer/starter/document checks; record limits and a separate local commit.
+- [x] B. Versioned Pages tarballs, SHA-256/integrity manifests, immutable release preparation and installation/update/rollback documentation. Existing package pipeline remains the deployment gate.
+- [x] B gate: install from the prepared HTTP URLs in a clean consumer, build/typecheck, then verify an actual previous-version rollback. Verify missing/corrupt assets fail checks. Separate local commit; no public push.
+- [x] Report exact local commits and remaining Figma/real-device/reference-example conversion work.
+
+Current choices: reuse `provideSolLocale`/`SolLocaleKey`; keep caller labels/data/errors caller-owned. Ship only ko-KR/en-US LTR packs. Date-only values remain ISO and time values HH:mm. Distribution uses this repository's existing Pages path; manifests and versioned tarballs are prepared locally, not live until a later approved push.
+
+A evidence (2026-10-22): locale-pipeline-final.log passed full package/types/two installed consumers/runtime/starter/document regression. Chrome local 1643/333 CSSpx: ko/en switching, invalid draft/validity relocalization, Dialog and date/time Escape return. 12 language×theme×mode combinations at333px had no document overflow; desktop and333px screenshots reviewed. Existing demo grid spacing fixed using shared starter-control-grid. No push.
+
+B evidence: locale-delivery-final-pipeline.log passed fresh package build/frozen-byte comparison, both consumers, all runtime/document regressions and clean HTTP previous→update→rollback installation/type/Vite builds. Missing/corrupt files and changed bytes at the same document/package version are rejected. Both0.5.0 and0.6.0 pairs are prepared in release-assets and docs/releases. This is not public URL or remote CI verification; push remains held.

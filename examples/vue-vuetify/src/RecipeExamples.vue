@@ -1,29 +1,58 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
-
 import { solIconPaths } from '@solyi/core/icons';
 import { recipeComponents, recipeLabels } from './recipe-registry';
 
 type RecipeId = keyof typeof recipeComponents;
 const groups: { label: string; items: RecipeId[] }[] = [
-  { label: '기본 표현', items: ['color-examples', 'writing', 'buttons', 'fields', 'choices', 'feedback'] },
-  { label: '입력과 선택', items: ['selection', 'advanced-inputs', 'inputs', 'time', 'form', 'composition', 'error-summary'] },
-  { label: '탐색과 오버레이', items: ['dialog', 'help', 'accordion', 'navigation', 'content-tabs', 'action-menu'] },
-  { label: '자료와 상태', items: ['data', 'search', 'compare', 'empty', 'responses', 'progress', 'chart-tree'] },
-  { label: '화면과 작업 흐름', items: ['layouts', 'workflow', 'bulk-recovery', 'identity-progress'] },
+  {
+    label: '기본 표현',
+    items: ['color-examples', 'writing', 'buttons', 'fields', 'choices', 'feedback'],
+  },
+  {
+    label: '입력과 선택',
+    items: [
+      'selection',
+      'advanced-inputs',
+      'inputs',
+      'time',
+      'form',
+      'composition',
+      'error-summary',
+    ],
+  },
+  {
+    label: '탐색과 오버레이',
+    items: ['dialog', 'help', 'accordion', 'navigation', 'content-tabs', 'action-menu'],
+  },
+  {
+    label: '자료와 상태',
+    items: ['data', 'search', 'compare', 'empty', 'responses', 'progress', 'chart-tree'],
+  },
+  {
+    label: '화면과 작업 흐름',
+    items: ['layouts', 'workflow', 'bulk-recovery', 'identity-progress'],
+  },
 ];
 const media = window.matchMedia('(min-width: 1100px)');
 const wide = ref(media.matches);
 const menuOpen = ref(false);
 const navigation = ref<HTMLElement | null>(null);
 const title = ref<HTMLElement | null>(null);
+const menuToggle = useTemplateRef<{ $el: HTMLElement }>('menuToggle');
+const links = new Map<RecipeId, HTMLElement>();
+function setLink(id: RecipeId, element: unknown) {
+  if (element instanceof HTMLElement) links.set(id, element);
+  else links.delete(id);
+}
 const selected = ref<RecipeId>(readSelection());
 const current = computed(() => recipeComponents[selected.value]);
-const currentGroup = computed(() => groups.find(group => group.items.includes(selected.value))?.label);
+const currentGroup = computed(
+  () => groups.find((group) => group.items.includes(selected.value))?.label,
+);
 
 function readSelection(): RecipeId {
   const value = new URLSearchParams(location.search).get('example');
-  return value && Object.hasOwn(recipeComponents, value) ? value as RecipeId : 'buttons';
+  return value && Object.hasOwn(recipeComponents, value) ? (value as RecipeId) : 'buttons';
 }
 function href(id: RecipeId): string {
   const url = new URL(location.href);
@@ -32,7 +61,7 @@ function href(id: RecipeId): string {
 }
 function revealSelection() {
   const list = navigation.value;
-  const item = document.getElementById('recipe-link-' + selected.value);
+  const item = links.get(selected.value);
   if (!list || !item || (!wide.value && !menuOpen.value)) return;
   const box = list.getBoundingClientRect();
   const row = item.getBoundingClientRect();
@@ -41,7 +70,10 @@ function revealSelection() {
 }
 async function toggleMenu() {
   menuOpen.value = !menuOpen.value;
-  if (menuOpen.value) { await nextTick(); revealSelection(); }
+  if (menuOpen.value) {
+    await nextTick();
+    revealSelection();
+  }
 }
 async function showExample(id: RecipeId) {
   selected.value = id;
@@ -51,15 +83,18 @@ async function showExample(id: RecipeId) {
   revealSelection();
 }
 function select(event: MouseEvent, id: RecipeId) {
-  if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
+    return;
   event.preventDefault();
   if (selected.value !== id) history.pushState(null, '', href(id));
   void showExample(id);
 }
-function restoreHistory() { void showExample(readSelection()); }
+function restoreHistory() {
+  void showExample(readSelection());
+}
 function closeMenu(restore = false) {
   menuOpen.value = false;
-  if (restore) nextTick(() => document.getElementById('recipe-menu-toggle')?.focus());
+  if (restore) nextTick(() => menuToggle.value?.$el?.focus());
 }
 function escape(event: KeyboardEvent) {
   if (event.key !== 'Escape' || wide.value || !menuOpen.value) return;
@@ -69,21 +104,24 @@ function escape(event: KeyboardEvent) {
 }
 function outside(event: Event) {
   const target = event.target as Node;
-  if (!wide.value && menuOpen.value && !navigation.value?.contains(target) &&
-      !document.getElementById('recipe-menu-toggle')?.contains(target)) closeMenu();
+  if (
+    !wide.value &&
+    menuOpen.value &&
+    !navigation.value?.contains(target) &&
+    !menuToggle.value?.$el?.contains(target)
+  )
+    closeMenu();
 }
 function focusOut(event: FocusEvent) {
   const next = event.relatedTarget as Node | null;
-  if (next && !navigation.value?.contains(next) &&
-      next !== document.getElementById('recipe-menu-toggle')) closeMenu();
+  if (next && !navigation.value?.contains(next) && next !== menuToggle.value?.$el) closeMenu();
 }
 function resize(event: MediaQueryListEvent) {
   const focusedInList = navigation.value?.contains(document.activeElement);
   const focusedToggle = document.activeElement?.id === 'recipe-menu-toggle';
   wide.value = event.matches;
   menuOpen.value = !event.matches && !!focusedInList;
-  if (event.matches && focusedToggle) nextTick(() =>
-    document.getElementById('recipe-link-' + selected.value)?.focus());
+  if (event.matches && focusedToggle) nextTick(() => links.get(selected.value)?.focus());
 }
 onMounted(() => {
   if (new URLSearchParams(location.search).get('example') !== selected.value)
@@ -109,12 +147,25 @@ onBeforeUnmount(() => {
     <SBtn
       v-if="!wide"
       id="recipe-menu-toggle"
+      ref="menuToggle"
       class="recipe-menu-toggle"
       :aria-expanded="menuOpen"
       aria-controls="recipe-navigation"
       @click="toggleMenu"
-    >예제 목록
-      <svg class="sol-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path :d="solIconPaths.chevron" /></svg>
+      >예제 목록
+      <svg
+        class="sol-icon"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path :d="solIconPaths.chevron" />
+      </svg>
     </SBtn>
 
     <div class="recipe-browser">
@@ -134,10 +185,12 @@ onBeforeUnmount(() => {
               <li v-for="id in group.items" :key="id">
                 <a
                   :id="'recipe-link-' + id"
+                  :ref="(element) => setLink(id, element)"
                   :href="href(id)"
                   :aria-current="selected === id ? 'page' : undefined"
                   @click="select($event, id)"
-                >{{ recipeLabels[id] }}</a>
+                  >{{ recipeLabels[id] }}</a
+                >
               </li>
             </ul>
           </section>

@@ -1,2 +1,3 @@
 import {defineConfig} from 'vite';
-export default defineConfig({base:'./',resolve:{dedupe:['vue','vuetify']}});
+import {createVueAutoImport} from './auto-import.config.js';
+export default defineConfig({base:'./',plugins:[createVueAutoImport()],resolve:{dedupe:['vue','vuetify']}});

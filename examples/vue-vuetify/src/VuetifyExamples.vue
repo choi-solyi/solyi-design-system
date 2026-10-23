@@ -1,5 +1,4 @@
 <script setup>
-import {ref} from 'vue';
 import {VBtn} from 'vuetify/components/VBtn';
 import {VTextField} from 'vuetify/components/VTextField';
 import {VCard} from 'vuetify/components/VCard';

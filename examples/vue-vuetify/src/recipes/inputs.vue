@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-
 import type { DateValue, SolOption, SolOptionLoader } from '@solyi/vue-ui';
 defineProps<{ part?: string }>();
 const mode = ref<string | null>('range'),
@@ -10,9 +8,10 @@ watch(dateMode, () => (date.value = null));
 const files = ref<File[]>([]),
   selected = ref<string | null>(null),
   scenario = ref<string | null>('local');
-const options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map(
-  (label) => ({ value: label, label }),
-);
+const options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map((label) => ({
+  value: label,
+  label,
+}));
 let failNext = true;
 watch(scenario, () => {
   failNext = true;
@@ -45,15 +44,8 @@ const loader = computed<SolOptionLoader | undefined>(() => {
 });
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    :title="part ? undefined : '로컬 입력 조합'"
-  >
-    <SCard
-      :heading-level="part ? 2 : 3"
-      v-if="!part || part === 'date'"
-      title="단일 날짜와 기간"
-    >
+  <SCard :heading-level="2" :title="part ? undefined : '로컬 입력 조합'">
+    <SCard :heading-level="part ? 2 : 3" v-if="!part || part === 'date'" title="단일 날짜와 기간">
       <SSelect
         id="recipe-date-mode"
         v-model="mode"
@@ -64,12 +56,7 @@ const loader = computed<SolOptionLoader | undefined>(() => {
         ]"
         required
       />
-      <SDatePicker
-        id="recipe-date"
-        v-model="date"
-        label="가상 일정"
-        :mode="dateMode"
-      />
+      <SDatePicker id="recipe-date" v-model="date" label="가상 일정" :mode="dateMode" />
       <p role="status">완료값: {{ JSON.stringify(date) }}</p>
     </SCard>
     <SCard

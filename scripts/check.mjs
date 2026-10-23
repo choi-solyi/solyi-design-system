@@ -46,7 +46,7 @@ for(const match of source.matchAll(/(?:href|src)=["']\.\/([^"'#?]+)["']/g)) if(!
 const releaseMarkup=renderDistribution({section:(_id,_title,_description,body)=>body,codeSample:(_label,code)=>'<pre>'+code.replaceAll('&','&amp;').replaceAll('<','&lt;')+'</pre>'});
 const releaseDom=new JSDOM(releaseMarkup);
 for(const link of releaseDom.window.document.querySelectorAll('a[href^="./"]'))assert.ok(expected.includes(link.getAttribute('href').slice(2)),`Rendered release link ${link.href} exists`);
-assert.ok(releaseDom.window.document.querySelectorAll('a[download]').length>=4,'Current and rollback download links');releaseDom.window.close();
+assert.ok(releaseDom.window.document.querySelectorAll('a[download]').length===2,'Only the current recommended package pair is displayed');releaseDom.window.close();
 assert.ok(!/\b(?:AIza[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,})\b/.test(source),'No known credential pattern');
 assert.ok(!/analytics|googletagmanager|google-analytics|supabase\.co|fetch\(/i.test(source),'No analytics or external data request');
 const css=await readFile(path.join(root,'docs/tokens.css'),'utf8');

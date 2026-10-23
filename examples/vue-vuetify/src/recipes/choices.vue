@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 const include = ref(true),
   archived = ref(false),
   view = ref<string | null>('list'),
@@ -11,31 +10,11 @@ const options = [
 ];
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="익숙한 기본 선택"
-  >
-    <SCheckbox
-      id="recipe-include"
-      v-model="include"
-      label="완료한 항목 포함"
-    />
-    <SCheckbox
-      id="recipe-archived"
-      v-model="archived"
-      label="보관한 항목 포함"
-    />
-    <SCheckbox
-      id="recipe-unavailable"
-      label="공유 항목 · 비활성"
-      disabled
-    />
-    <SRadioGroup
-      id="recipe-view"
-      v-model="view"
-      label="보기 방식"
-      :options="options"
-    />
+  <SCard :heading-level="2" title="익숙한 기본 선택">
+    <SCheckbox id="recipe-include" v-model="include" label="완료한 항목 포함" />
+    <SCheckbox id="recipe-archived" v-model="archived" label="보관한 항목 포함" />
+    <SCheckbox id="recipe-unavailable" label="공유 항목 · 비활성" disabled />
+    <SRadioGroup id="recipe-view" v-model="view" label="보기 방식" :options="options" />
     <SSelect
       id="recipe-sort"
       v-model="sort"
@@ -46,8 +25,8 @@ const options = [
       ]"
     />
     <p role="status">
-      완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }} ·
-      {{ view }} · {{ sort }}
+      완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }} · {{ view }} ·
+      {{ sort }}
     </p>
   </SCard>
 </template>

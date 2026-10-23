@@ -1,0 +1,88 @@
+# 이력 부록 · VUE-MIGRATION
+
+> 아래는 문서 구조 정리 전의 기록 원문입니다. 당시 버전·API·미게시·검수 상태를 보존하며 현행 지원이나 현재 공개 상태를 뜻하지 않습니다. 최신 안내는 [README](../../README.md)와 [현재 통합 계획](../plans/0.11.0-integration.md)을 따릅니다.
+
+---
+
+# Current migration status
+
+현재 전환 후보: 문서0.10.0 / Core0.4.2 / Vue UI0.8.0. 실제 export34개와 전역 등록 예제30개의 목록은 [현재 기계 목록](../../vue-api-inventory.json), [전용 API·등록 방법](../guide/DEDICATED-VUE-API.md), [이번 진행표](../plans/DEDICATED-VUE-PLAN.md)를 따릅니다. 아래 버전별 표는 당시 기록이며 현행 완료 상태를 대신하지 않습니다.
+
+## 이전 단계 기록
+
+
+Current local0.7 candidate:22 unique S components (existing20 with identical Sol aliases +2 progress APIs). **The authoritative current per-example status is [REUSE-INVENTORY.md](REUSE-INVENTORY.md)**. Main-document progress now executes the actual package consumer; other reference HTML blocks are explicitly pending. The following phase2/3 notes are historical.
+
+# Vue migration inventory · phase 2
+
+Historical phase2 baseline: docs0.3.5, Core/Vue UI0.1.5. Only this repository and its existing Pages demo are in scope. Packages remain private local tarballs. Existing apps, registry publication, Figma and new credentials/permissions are excluded.
+
+## Release gates
+
+- [x] Inventory the current source, distinguish actual package exports from reference demos.
+- [x] A. Checkbox, RadioGroup, Switch, Select, Textarea, NumberInput: source milestone build/types/runtime passed. Final installed-tarball gate remains D.
+- [x] B. Tabs and Toast: source runtime roving/panels, live region, dismissal, pointer/focus/visibility pause and cleanup passed. Final installed gate remains D.
+- [x] C. DatePicker and TimePicker: source runtime complete values, leap/bounds, draft/cancel/reverse/same-day, mode reset, locale/firstDay, keyboard/outside/focus recovery passed. Final installed gate remains D.
+- [x] D. Document every API and usage, connect the actual installed starter and independent type consumer, run the complete package/document regression pipeline.
+- [x] E1. Actual Chrome keyboard/state checks and 1643/833/333/320 CSS px geometry; 3 themes × light/dark representative layout. Screenshot timed out; no pixel-review pass. See QA.md.
+- [x] E2. Phase2 published at e04ba299; CI39716365908 attempt1 succeeded,33 public asset hashes matched, public Chrome interactions confirmed. See release report; no registry or other-app update.
+
+## Existing examples and conversion status
+
+`exported` means a typed Vue component in a packed artifact and an installed consumer, not just a document title.
+
+| Current example / source | Actual Vue API before this phase | This release / remaining scope |
+|---|---|---|
+| Button / loading / disabled / hierarchy | SBtn | Preserve; state regressions |
+| Text field / validation | STextField | Preserve; label/error regressions |
+| Dialog / detail / full title | SDialog; Table full-title dialog | Preserve |
+| Table / list / mobile / select-sort-filter-page | SDataTable; consumer owns filtering | Preserve |
+| Checkbox | None | A: SCheckbox |
+| Radio single choice | None | A: SRadioGroup |
+| Switch immediate setting | None | A: SSwitch |
+| Native select | None | A: SSelect |
+| Multiline textarea / counter | None | A: STextarea |
+| Number min/max/step | None | A: SNumberInput |
+| Content Tabs / panels | None | B: STabs |
+| Snackbar / Toast | None | B: SSnackbar |
+| Date single/range | None | C: SDatePicker |
+| HH:mm direct entry / time panel | None | C: STimePicker |
+| Static multi-select tags | None | New SMultiSelect API in phase3; original HTML example remains a reference |
+| Autocomplete local/delayed/empty/error/retry | None | Follow-up; keep reference behavior |
+| Tooltip / interactive popover | None | Follow-up |
+| Accordion | None | Follow-up |
+| Action menu / Avatar user menu | None | Follow-up |
+| Avatar / fallback initials | None | Follow-up |
+| Breadcrumb / side panel | None | Follow-up |
+| Progress bar/circle determinate/unknown/complete/error | None | Follow-up |
+| Step indicator / step form | None | Follow-up |
+| Chart / table alternative / Tree | None | Follow-up |
+| File picker/drop / metadata / remove/errors | None | Follow-up |
+| Badge / semantic inline notice / retry / palette samples | None (Button's four variants only) | Follow-up |
+| Skeleton / loading / no-results / denied/error simulator | None | Follow-up |
+| Overflow text | Core imperative helper + Table integration | Existing owned-container helper; no separate Vue export yet |
+| Icons | Core paths/types; private Vue icon helper | No public SolIcon component yet |
+| Form/error summary, search/detail, compare, empty | Reference patterns | Follow-up compositions; constituent controls do not make these Vue templates |
+| Edit/save/cancel, unsaved leave, delete/undo | Reference patterns | Follow-up compositions |
+| 404, batch partial failure/retry | Reference patterns | Follow-up compositions |
+| Header/sidebar/mobile navigation; settings/list/detail templates | Reference patterns | Follow-up templates |
+| Core principles, tokens/JSON/CSS, type/space/radii, layers, motion, copy rules, themes/density/adoption | Framework-neutral documentation/assets | Preserve; not Vue component claims |
+
+## Approved later additions · excluded from this release
+
+SegmentedControl, searchable MultiSelect, two-ended RangeSlider, SplitButton, ContextMenu and ResizableSplitPane now have actual typed exports, standalone consumer usage and an installed starter. [Contracts](../guide/ADVANCED-VUE-API.md) and [phase3 release gates](../plans/VUE-EXPANSION-PLAN.md) distinguish source/installed/browser/public validation. The existing14 stay available.
+
+Document-wide search and shared header appearance controls were published at b8648fa; their subsequent name-ranking refinement remains local (DOC-SEARCH.md). See NEXT-STEPS.md for the existing locale provider and the precise remaining global-locale/distribution work. Complete shared-locale settings, distribution/update channels, Figma kit and broader real-device verification remain later work. The reference examples listed as follow-up above remain HTML/JS references; these six exports do not convert them all.
+
+## API decisions
+
+- Required unique `id` and visible `label` for form controls; `help`/`error` link by ID. Consumers own business validation. Local parsing errors never erase typed input.
+- Controlled `modelValue` and `update:modelValue`; `change` carries committed values. Disabled uses native disabled where supported. Readonly keeps readable/focusable content and blocks mutations; no invented unsupported ARIA.
+- String-valued native Select/Radio options, boolean Checkbox/Switch, string Textarea, number-or-null NumberInput, string Tabs value, boolean Toast visibility, date-only single/range values and HH:mm-or-null Time values. No partial date/time value is emitted as a completed value.
+- Locale-ready message objects and Intl formatting hooks are shared by new APIs; this is not a claim that the whole document has been translated. Korean remains the starter default. Wanted Sans is the newly approved default UI font; the separately approved code/pre stack is JetBrains Mono, Nanum Gothic Coding, monospace (FONT.md).
+- Date arithmetic is pure and shared with the existing calendar. Components use Vue-rendered owned nodes/refs and lifecycle cleanup, not document-example IDs or innerHTML mounting.
+- Existing compact desktop sizes, mobile44px targets and button6/field10/card-popup12/dialog16 radius roles remain.
+
+## Shared locale/delivery local follow-up
+
+All20 exported APIs inherit reactive ko/en defaults, including the original Field/Dialog/Table. LOCALE.md defines fallback/override/runtime changes and date/number display; DISTRIBUTION.md defines prepared Pages versioned tarballs/hash/install/update/rollback. The reference-only inventory above is unchanged: this work does not convert the remaining examples or create Figma assets. Publication is held.

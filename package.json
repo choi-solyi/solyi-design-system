@@ -1,13 +1,13 @@
 {
   "name": "solyi-design-system",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "description": "Solyi's independent, framework-neutral design system draft.",
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
-    "test": "node scripts/dom-check.mjs && node scripts/navigation-check.mjs && node scripts/button-state-check.mjs && node scripts/doc-search-check.mjs && node scripts/header-preferences-check.mjs && node scripts/progress-bridge-check.mjs && node scripts/overflow-locale-check.mjs && node scripts/vue-code-panel-check.mjs",
+    "test": "node scripts/dom-check.mjs && node scripts/navigation-check.mjs && node scripts/button-state-check.mjs && node scripts/doc-search-check.mjs && node scripts/header-preferences-check.mjs && node scripts/progress-bridge-check.mjs && node scripts/overflow-locale-check.mjs && node scripts/vue-code-panel-check.mjs && node scripts/code-highlight-check.mjs && node scripts/docs-links-check.mjs && node scripts/auto-import-check.mjs && node scripts/component-api-check.mjs",
     "serve": "node scripts/serve.mjs",
     "verify-live": "node scripts/verify-live.mjs",
     "build:core": "node scripts/build.mjs --core-only",
@@ -17,7 +17,12 @@
     "library:prepare": "node scripts/library-pipeline.mjs --refresh --prepare-release"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "8.72.0",
+    "eslint": "10.13.0",
     "jsdom": "^26.1.0",
-    "rrweb-cssom": "0.8.0"
+    "prettier": "3.9.10",
+    "prismjs": "1.30.0",
+    "rrweb-cssom": "0.8.0",
+    "vue-eslint-parser": "10.4.1"
   }
 }

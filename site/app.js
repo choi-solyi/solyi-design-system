@@ -1,8 +1,11 @@
 import tokens from './token-data.js';
 import {solIcon} from './icons.js';
+import {highlightSample} from './code-highlight.js';
+import {renderComponentReferences} from './component-api.js';
+import {renderDistribution} from './distribution.js';
 import {mountVueExamples,mountVuePreviews} from './vue-examples.js';
 import {mountOverflowText} from './overflow.js';
-import {presentTopics,scrollToDocumentSection,getDocumentSearchEntries} from './topics.js';
+import {presentTopics,scrollToDocumentSection,getDocumentSearchEntries,resolveDocumentLocation} from './topics.js';
 import {mountDocumentSearch} from './doc-search.js';
 import {mountHeaderPreferences} from './header-preferences.js';
 import {renderExpansion,mountExpansion,requestExpansionLeave} from './expansion.js';
@@ -14,7 +17,7 @@ const root = document.documentElement;
 const main = document.querySelector('main');
 const announcement = document.querySelector('#announcement');
 const dialog = document.querySelector('#detail-dialog');
-const routes = {overview:'Overview', style:'Style / Core', component:'Component', pattern:'Pattern', theme:'Theme & adoption'};
+const routes = {start:'Getting started',style:'Style',component:'Components',pattern:'Patterns',releases:'Releases',licensing:'Licensing'};
 let snippetId = 0;
 let toastTimer;
 let headerPreferences=null;
@@ -36,7 +39,7 @@ const localNav = items => `<nav class="local-nav" aria-label="이 문서의 항�
 function codeSample(label, code) {
   const id = `snippet-${++snippetId}`;
   snippets.set(id, code);
-  return `<details class="code-example"><summary>${E(label)}</summary><div class="code-body"><div class="code-toolbar"><span class="code-language">${E(label)}</span><button class="sol-button subtle code-copy-button" type="button" data-copy-snippet="${id}" aria-label="현재 코드 복사" title="코드 복사"><span class="code-copy-glyph">${solIcon('copy',{size:16})}</span><span class="code-check-glyph">${solIcon('check',{size:16})}</span></button></div><pre tabindex="0" aria-label="${E(label)} 코드"><code>${E(code)}</code></pre></div></details>`;
+  return `<details class="code-example"><summary>${E(label)}</summary><div class="code-body"><div class="code-toolbar"><span class="code-language">${E(label)}</span><button class="sol-button subtle code-copy-button" type="button" data-copy-snippet="${id}" aria-label="현재 코드 복사" title="코드 복사"><span class="code-copy-glyph">${solIcon('copy',{size:16})}</span><span class="code-check-glyph">${solIcon('check',{size:16})}</span></button></div><pre tabindex="0" aria-label="${E(label)} 코드"><code>${highlightSample(code,label)}</code></pre></div></details>`;
 }
 const contract = (states, keys, mapping) => `<dl class="contract"><dt>상태</dt><dd>${states}</dd><dt>Keyboard</dt><dd>${keys}</dd><dt>Tokens</dt><dd>${mapping}</dd></dl>`;
 const demo = (name, content, note = 'LIVE · 가상 데이터') => `<div class="demo"><div class="demo-header"><span>${name}</span><span>${note}</span></div><div class="demo-stage">${content}</div></div>`;
@@ -113,15 +116,40 @@ function theme() {
   section('scope','구현 범위와 검증','구현 범위를 분명하게',`<div class="grid-2"><div class="sol-card"><h3>지금 제공하는 것</h3><ul class="rule-list"><li>역할 색 20개 × 3테마 × 라이트·다크</li><li>타입·간격·모서리·동작·밀도 토큰</li><li>Button·Field·Choice·Switch·Feedback·Dialog·Tooltip·Popover·Accordion·Panel·Breadcrumb·Toast·Progress bar/circle 예시</li><li>폼·검색·상세·비교·표와 목록·날짜 기간·로컬 파일·자동완성·응답 상태 데모</li><li>컬러별 UI 비교·스낵바와 유한 Motion 데모</li><li>CSS·JSON 다운로드, 토큰·사용 예시 복사</li></ul></div><div class="sol-card"><h3>다음 검토에서 확인할 것</h3><ul class="rule-list"><li>실제 앱에 적용한 정보 밀도와 가독성</li><li>여러 화면 크기와 브라우저별 추가 검증</li><li>화면 낭독기·400% 확대·강제 색상·실제 기기(폴드 포함)</li><li>실제 앱 요구에 따른 복잡한 데이터와 예외 검증</li><li>검증 범위 밖의 프레임워크·버전 호환성</li></ul></div></div><p class="small muted" style="margin-top:16px">자동 검사는 토큰 대비·파일·링크 구조·DOM 이벤트 흐름을 대상으로 합니다. 접근성 전체 준수나 모든 앱과의 호환성을 검증한 상태가 아닙니다. 독립적인 클라우드 Chrome에서 333 CSS px의 가로 넘침, 토큰 복사, 폼 회복, 테마 전환과 상세 모달의 키보드·Escape·포커스 반환을 확인했습니다. 이전 v0.1 검수는 로컬 Chrome에서 333px의 Style·Component·Pattern, 320px 달력, 1257px의 목표 반복 체크·카드 높이, 세 테마·두 모드, 달력 키보드·Tab 경계·Escape 복귀를 확인했습니다. 연결된 Chrome은 시스템 모션 줄이기가 켜져 있었으며 기본 모션의 실제 시각·실제 탭 숨김/복귀와 보조기기 동작은 후속 검수입니다. 유한 효과·취소·빠른 재입력은 합성 DOM 검사로 확인했습니다. v0.2의 새 화면틀·입력·탭/메뉴·편집 흐름·확장 예시와 starter는 아래 도입 문서와 저장소 QA.md에 검증 범위를 따로 기록합니다. 실제 기기(폴드 포함)·화면 낭독기·400% 확대·강제 색상(forced colors)·OS 다운로드 파일 저장과 모든 화면·브라우저 조합은 미검증입니다. 다운로드 버튼의 클릭 완료 여부도 브라우저 기록 접근 제한으로 미확인이며, 사이트 버그로 판정하지 않았습니다.</p><h3 style="margin-top:16px">참고와 독립성</h3><ul class="source-list"><li><a href="https://design.yeolyi.com/">yeolyi.com 디자인 시스템 ↗</a><p>2026-10-21 확인. Style / Component / Pattern의 정보 구조와 UI·사이트 셸을 나누는 개념만 참고했습니다. 원문·색·스타일은 복제하지 않았습니다.</p></li><li><a href="https://choi-solyi.github.io/solyi-brand-assets/">Solyi Brand Assets ↗</a><p>2026-10-21 공개 페이지 확인. 보라 #6666AA, 세이지 #91A99A, Light #EBECE7, Paper #F9FAF7, Ink #2F3040을 선택 테마의 출발점으로 참고했습니다. 헤더는 공식 sparkle 심볼, favicon은 공식 ICO 원본을 사용합니다. 파일 내용·색·비율을 변형하지 않았으며 출처와 해시는 저장소의 BRAND-ASSETS.md에 기록합니다.</p></li><li><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">W3C: Contrast (Minimum) ↗</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/reflow.html">Reflow ↗</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html">Target Size (Minimum) ↗</a><p>구현 기준의 근거입니다. 사이트 전체의 적합성 인증을 뜻하지 않습니다.</p></li></ul><p class="small muted">모든 예시는 새로 작성한 문서와 가상 데이터입니다. 계정·서버·실데이터 연결 없이 동작합니다. 테마 설정과 달리 목표 체크는 현재 탭의 문서 이동에서만 유지되며 새로고침하면 초기화됩니다. 다른 데모 입력은 새로고침하거나 문서를 이동하면 초기화됩니다.</p>`);
 }
 
-function currentRoute() {return location.hash.slice(1).split('/')[0] || 'overview';}
-function pageMarkup(route){return `<div class="breadcrumb"><span>Solyi</span><span aria-hidden="true">/</span><span>${routes[route]}</span></div>` + ({overview,style,component,pattern,theme}[route])() + (route==='component'?renderComponentExamples({section,demo,contract,codeSample}):route==='pattern'?renderPatternExamples({section,demo,contract,codeSample}):route==='style'?renderColorExamples({section,codeSample})+renderMotionSection({section,demo,codeSample,tokens}):'') + renderExpansion(route,{section,demo,contract,codeSample,version:tokens.version}) + footer();}
+const documentationHelpers=()=>({section,demo,contract,codeSample,version:tokens.version});
+function themeSections(){const template=document.createElement('template');template.innerHTML=theme()+renderExpansion('theme',documentationHelpers());return template.content;}
+function start(){
+ const original=document.createElement('template');original.innerHTML=overview();
+ const legacy=themeSections();
+ const order=['vue-components','starter','adoption','themes','density','locale','advanced-vue','scope'];
+ const steps=section('start-here','작은 화면 하나부터 시작하기','설치 → 공통 설정 → 첫 부품 → 앱의 상태 순서로 익힙니다.',
+ '<ol class="adoption-steps"><li><div><h3>권장 패키지 쌍을 설치합니다.</h3><p>현재 Pages에서 제공하는 고정 URL과 lockfile을 사용합니다. npm 게시나 생성 CLI는 아직 준비 중입니다.</p><a href="#releases/packages">설치·업데이트 안내 →</a></div></li><li><div><h3>스타일·전역 등록·자동 import를 설정합니다.</h3><p>UI 토큰과 폰트를 로드하고 S 컴포넌트를 한 번 등록합니다. Vue 함수 자동 import는 Vite의 Vue preset 설정이 별도로 필요합니다.</p><a href="#start/vue-components">프로젝트 설정 →</a></div></li><li><div><h3>한 부품을 조합해 확인합니다.</h3><p>컴포넌트별 Examples와 API에서 실제 허용값과 상태를 확인하고, 폼·검색 같은 흐름은 Patterns에서 이어갑니다.</p><div class="button-row"><a href="#component/sbtn">SBtn →</a><a href="#pattern/form">폼 흐름 →</a></div></div></li></ol>');
+ return original.content.querySelector('.overview-hero').outerHTML+steps+order.map(id=>legacy.querySelector('#'+id)?.outerHTML||'').join('')+original.content.querySelector('#principles').outerHTML;
+}
+function releases(){const legacy=themeSections();return intro('RELEASES','설치와 업데이트','현재 권장 조합으로 설치하고, 변경 사항과 호환 범위를 확인합니다.')+renderDistribution(documentationHelpers())+legacy.querySelector('#versioning').outerHTML;}
+function licensing(){return intro('LICENSING','사용 범위와 라이선스','코드의 사용 허용과 브랜드·제삼자 자산의 권리를 구분합니다.')+
+ section('code-license','재사용 코드 · MIT','UI 코드와 브랜드는 같은 허가 범위가 아닙니다.','<div class="sol-card"><p>@solyi/core와 @solyi/vue-ui의 자체 재사용 코드는 MIT입니다. 상업적 사용·수정·재배포는 원문 라이선스의 조건에 따르며 저작권 및 허가 고지를 보존합니다.</p><p><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE">MIT 원문</a> · <a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LICENSE-SCOPE.md">적용 범위</a></p><p class="sol-hint">npm 공개 게시와 1.0.0은 아직 진행하지 않았습니다. 문서 사이트와 로컬 tarball 설치를 제공합니다.</p></div>')+
+ section('brand-license','브랜드 자산 제외','로고·캐릭터·개인 콘텐츠를 패키지 코드 라이선스로 허가하지 않습니다.','<div class="sol-card"><p>문서 헤더의 공식 sparkle 심볼과 favicon은 Solyi 브랜드 자산입니다. 재사용 UI 패키지에서는 제외합니다. MIT가 이름·로고·캐릭터·개인 콘텐츠의 상표권이나 사용 허가까지 부여하지 않습니다.</p><p><a href="https://choi-solyi.github.io/solyi-brand-assets/">공식 브랜드 자산과 사용 안내 ↗</a></p></div>')+
+ section('third-party-license','폰트·아이콘·외부 의존성','원문 라이선스와 고지를 함께 보존합니다.','<div class="sol-card"><ul class="rule-list"><li>Wanted Sans, JetBrains Mono, 나눔고딕코딩: 각 원본 OFL 1.1·저작권·출처를 폰트와 함께 제공합니다.</li><li>공통 선형 UI 아이콘은 이 저장소의 자체 코드입니다. 브랜드 로고와 구분하며 자체 코드의 MIT 범위를 따릅니다.</li><li>Vue·Vuetify·Prism 등 외부 코드는 각 배포본의 원래 라이선스를 따릅니다. 패키지와 실행 예제의 THIRD-PARTY-NOTICES를 확인하세요.</li></ul><div class="button-row"><a href="./starter/THIRD-PARTY-NOTICES.txt">실행 예제 제삼자 고지</a><a href="./vendor/PRISM-LICENSE.txt">Prism MIT 원문</a><a href="./fonts/wanted-sans/OFL.txt">Wanted Sans OFL</a><a href="./fonts/jetbrains-mono/OFL.txt">JetBrains Mono OFL</a><a href="./fonts/nanum-gothic-coding/OFL.txt">나눔고딕코딩 OFL</a></div></div>');}
+function currentRoute(){return resolveDocumentLocation(location.hash).route;}
+function pageMarkup(route){
+ const helpers=documentationHelpers();let body;
+ if(route==='start')body=start();
+ else if(route==='releases')body=releases();
+ else if(route==='licensing')body=licensing();
+ else if(route==='component'){
+  const original=document.createElement('template');original.innerHTML=component();const heading=original.content.querySelector('.page-intro');heading.remove();original.content.querySelector('.local-nav')?.remove();
+  body=heading.outerHTML+renderComponentReferences(helpers)+section('component-examples','모양과 상태 예제','위 API에서 연결되는 공통 실행 예제입니다.','<p class="sol-hint">현재 패키지와 같은 SFC·스타일을 실행합니다. HTML·CSS는 보조 참고 코드로 구분합니다.</p>')+original.innerHTML+renderComponentExamples(helpers)+renderExpansion('component',helpers);
+ }else body=({style,pattern}[route])()+(route==='pattern'?renderPatternExamples(helpers):renderColorExamples(helpers)+renderMotionSection({...helpers,tokens}))+renderExpansion(route,helpers);
+ return '<div class="breadcrumb"><span>Solyi</span><span aria-hidden="true">/</span><span>'+routes[route]+'</span></div>'+body+footer();
+}
 function buildDocumentSearchIndex(){
  const saved=new Map(snippets),savedId=snippetId;try {return Object.keys(routes).flatMap(route=>{const template=document.createElement('template');template.innerHTML=pageMarkup(route);return getDocumentSearchEntries(template.content,route);});}
  finally {snippets.clear();for(const [key,value]of saved)snippets.set(key,value);snippetId=savedId;}
 }
 function render({focus=false}={}) {
   let route = currentRoute();
-  if (!routes[route]) route = 'overview';
+  if (!routes[route]) route = 'start';
   cleanupVueExamples(); cleanupVuePreviews(); cleanupOverflow(); cleanupTopics(); cleanupExpansion(); cleanupColors(); cleanupMotion(); cleanupExamples(); routeId++;
   snippets.clear();
   main.innerHTML = pageMarkup(route);
@@ -135,7 +163,7 @@ function render({focus=false}={}) {
   syncPreferences();
   if (route==='style') renderContrast();
   bindPageEvents(); cleanupExamples = mountExamples(main,notify); cleanupMotion = mountMotion(main); cleanupColors = mountColorExamples(main); cleanupExpansion = mountExpansion(main,notify); cleanupOverflow = mountOverflowText(main);
-  const anchor = location.hash.split('/')[1];
+  const anchor = resolveDocumentLocation(location.hash).anchor;
   if (anchor) scrollToDocumentSection(anchor,{focus});
   else if (focus) scrollToDocumentSection('',{focus:true});
 }
@@ -302,12 +330,12 @@ function bindPageEvents() {
 }
 headerPreferences=mountHeaderPreferences({themes:tokens.themes,getState:()=>root.dataset,apply:applyPreferences,toggleMode});
 mountDocumentSearch({getDocuments:buildDocumentSearchIndex,goToSection:scrollToDocumentSection});
-let displayedHash=location.hash||'#overview',navigationRequest=0;
+let displayedHash=location.hash||'#start',navigationRequest=0;
 window.addEventListener('hashchange',async()=>{
   if(location.hash==='#main-content'){scrollToDocumentSection('',{focus:false});main.focus();return;}
   const nextHash=location.hash||'#overview',request=++navigationRequest;
-  const nextPage=nextHash.slice(1).split('/')[0]||'overview';
-  if(nextPage===main.dataset.page){displayedHash=nextHash;scrollToDocumentSection(nextHash.split('/')[1]||'',{focus:true});return;}
+  const nextPage=resolveDocumentLocation(nextHash).route;
+  if(nextPage===main.dataset.page){displayedHash=nextHash;scrollToDocumentSection(resolveDocumentLocation(nextHash).anchor,{focus:true});return;}
   history.replaceState(null,'',displayedHash);
   const vueAllowed=await (cleanupVuePreviews.requestLeave?.()??true);
   const allowed=vueAllowed&&await requestExpansionLeave();

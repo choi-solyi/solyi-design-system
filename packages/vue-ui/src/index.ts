@@ -20,6 +20,12 @@ import {VDialog} from 'vuetify/components/VDialog';
 import {mountOverflowText} from '@solyi/core/overflow';
 import {solIconPaths} from '@solyi/core/icons';
 import './styles.css';
+import {SForm,useSFieldValidation,fieldError,fieldDisabled,fieldReadonly} from './form';
+import {commonFieldProps,fieldDescription,fieldMessages,fieldLabel} from './controls';
+import {SContainer,SRow,SCol} from './layout';
+export {SForm,SContainer,SRow,SCol};
+export {sRules,isSFieldFilled} from './form';
+export type {SRule,SFieldHandle,SFormHandle,SFormError,SFormResult,SFormSubmitEvent} from './form';
 import {SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput} from './controls';
 import {STabs,SSnackbar} from './navigation';
 import {SDatePicker,STimePicker} from './date-time';
@@ -43,7 +49,7 @@ export type {SolOption,SolNumberInputHandle} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale,useSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate} from './locale';
 export type {SolLocale,SolLocaleSource,SolLocaleCode} from './locale';
 
-export const uiVersion='0.8.0';
+export const uiVersion='0.9.0';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
@@ -59,14 +65,18 @@ export const SBtn=defineComponent({
 
 export const STextField=defineComponent({
   name:'STextField',inheritAttrs:false,
-  props:{locale:Object as PropType<Partial<SolLocale>>,id:{type:String,required:true},label:{type:String,required:true},modelValue:{type:String,default:''},help:{type:String,default:''},error:{type:String,default:''},disabled:Boolean,required:Boolean,type:{type:String as PropType<'text'|'search'|'email'|'password'|'tel'|'url'>,default:'text'}},
-  emits:{'update:modelValue':(_value:string)=>true},
-  setup(props,{attrs,emit}){const l=useSolLocale(()=>props.locale);const field=ref<{focus?:()=>void}|null>(null);return()=>h('div',{class:'sol-ui-field'},[
-    h('label',{id:props.id+'-label',for:props.id,class:'sol-ui-label'},[props.label,props.required?' ('+l.value.required+')':'']),
-    h(VTextField as Component,{...attrs,ref:field,id:props.id,modelValue:props.modelValue,'onUpdate:modelValue':(value:unknown)=>emit('update:modelValue',String(value??'')),type:props.type,disabled:props.disabled,required:props.required,error:!!props.error,'aria-invalid':String(!!props.error),'aria-describedby':[props.help&&props.id+'-help',props.error&&props.id+'-error',attrs['aria-describedby']].filter(Boolean).join(' ')||undefined,hideDetails:true,variant:'outlined',density:'compact',class:['sol-ui-input',attrs.class]}),
-    props.help?h('p',{id:props.id+'-help',class:'sol-ui-hint'},props.help):null,
-    props.error?h('p',{id:props.id+'-error',class:'sol-ui-error',role:'alert'},props.error):null
-  ]);}
+  props:{...commonFieldProps,modelValue:{type:String,default:''},type:{type:String as PropType<'text'|'search'|'email'|'password'|'tel'|'url'>,default:'text'}},
+  emits:{'update:modelValue':(_value:string)=>true,blur:(_event:FocusEvent)=>true,focus:(_event:FocusEvent)=>true},
+  setup(props,{attrs,slots,emit,expose}){
+    const l=useSolLocale(()=>props.locale),field=ref<{focus?:()=>void}|null>(null);
+    const validation=useSFieldValidation(props,()=>props.modelValue,{focus:()=>field.value?.focus?.()});
+    expose(validation);
+    return()=>{const error=fieldError(props);return h('div',{class:'sol-ui-field'},[
+      fieldLabel(props,slots,l.value.required),
+      h(VTextField as Component,{...attrs,ref:field,id:props.id,modelValue:props.modelValue,'onUpdate:modelValue':(value:unknown)=>emit('update:modelValue',String(value??'')),type:props.type,disabled:fieldDisabled(props),readonly:fieldReadonly(props),required:props.required,error:!!error,'aria-invalid':String(!!error),'aria-describedby':fieldDescription(props,slots,error,attrs['aria-describedby']),hideDetails:true,variant:'outlined',density:'compact',class:['sol-ui-input',attrs.class],onBlur:(event:FocusEvent)=>{validation.validate();emit('blur',event);},onFocus:(event:FocusEvent)=>emit('focus',event)}),
+      ...fieldMessages(props,slots,error)
+    ]);};
+  }
 });
 
 export const SDialog=defineComponent({
@@ -137,7 +147,7 @@ export const SDataTable=defineComponent({
 
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
-export const sComponents={SCard,SAlert,STree,SProgressLinear,SProgressCircular,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,STooltip,SPopover,SAccordion,SFileInput,SAutocomplete,SBreadcrumbs,SAvatar,SStepper,SBarChart};
+export const sComponents={SForm,SContainer,SRow,SCol,SCard,SAlert,STree,SProgressLinear,SProgressCircular,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,STooltip,SPopover,SAccordion,SFileInput,SAutocomplete,SBreadcrumbs,SAvatar,SStepper,SBarChart};
 
 export interface SolyiOptions {locale?:SolLocaleSource}
 export function install(app:App,options:SolyiOptions={}){if(options.locale)provideSolLocale(app,options.locale);for(const [name,component]of Object.entries(sComponents))app.component(name,component);}

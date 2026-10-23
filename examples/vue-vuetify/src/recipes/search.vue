@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-
 const query = ref(''),
   filter = ref<string | null>('all'),
   detail = ref(false),
@@ -13,23 +11,14 @@ const rows = [
 const visible = computed(() =>
   rows.filter(
     (r) =>
-      r.name.includes(query.value.trim()) &&
-      (filter.value === 'all' || r.status === filter.value),
+      r.name.includes(query.value.trim()) && (filter.value === 'all' || r.status === filter.value),
   ),
 );
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="검색과 상세"
-  >
+  <SCard :heading-level="2" title="검색과 상세">
     <div class="sol-filterbar">
-      <STextField
-        id="recipe-search"
-        v-model="query"
-        label="가상 자료 검색"
-        type="search"
-      />
+      <STextField id="recipe-search" v-model="query" label="가상 자료 검색" type="search" />
       <SSelect
         id="recipe-search-filter"
         v-model="filter"
@@ -43,11 +32,7 @@ const visible = computed(() =>
       />
     </div>
     <p role="status">결과 {{ visible.length }}개</p>
-    <SCard
-      v-for="row in visible"
-      :key="row.name"
-      :title="row.name"
-    >
+    <SCard v-for="row in visible" :key="row.name" :title="row.name">
       <p>{{ row.status }}</p>
       <SBtn
         @click="
@@ -58,10 +43,7 @@ const visible = computed(() =>
         {{ row.name }} 상세 보기
       </SBtn>
     </SCard>
-    <SCard
-      v-if="!visible.length"
-      title="조건에 맞는 자료가 없어요."
-    >
+    <SCard v-if="!visible.length" title="조건에 맞는 자료가 없어요.">
       <SBtn
         @click="
           query = '';
@@ -71,11 +53,7 @@ const visible = computed(() =>
         조건 초기화
       </SBtn>
     </SCard>
-    <SDialog
-      id="recipe-search-detail"
-      v-model="detail"
-      :title="chosen"
-    >
+    <SDialog id="recipe-search-detail" v-model="detail" :title="chosen">
       <p>서버에 연결하지 않는 가상 상세입니다.</p>
     </SDialog>
   </SCard>

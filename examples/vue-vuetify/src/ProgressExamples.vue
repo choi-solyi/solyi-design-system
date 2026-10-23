@@ -1,5 +1,4 @@
 <script setup>
-import {ref,computed,nextTick,watch} from 'vue';
 import { resolveSProgress } from '@solyi/vue-ui';
 const state=ref('determinate'),value=ref(35),restartButton=ref(null);
 const showLabel=ref(true),showValue=ref(true),showMessage=ref(true),animated=ref(true);

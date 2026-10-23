@@ -10,7 +10,7 @@ w.eval(app+'\nwindow.__getPreviewController=()=>cleanupVuePreviews;');return{dom
 const pause=()=>new Promise(r=>setTimeout(r,40));
 const {dom,w,d,errors}=load('#overview');
 const seen=new Set();
-for(const route of ['style','component','pattern','theme']){
+for(const route of ['start','style','component','pattern','releases','licensing']){
   w.location.hash='#'+route;await pause();
   assert.equal(d.querySelectorAll('main h1').length,1);
   for(const frame of d.querySelectorAll('.vue-recipe-frame')){

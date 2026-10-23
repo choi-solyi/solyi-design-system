@@ -24,6 +24,7 @@
   "include": [
     "src/RecipeExamples.vue",
     "src/recipe-registry.ts",
-    "src/recipes/*.vue"
+    "src/recipes/*.vue",
+    "src/auto-imports.d.ts"
   ]
 }

@@ -2,13 +2,101 @@
   "baseline": "8d0b297",
   "destinations": [
     {
-      "route": "overview",
+      "route": "start",
       "id": "",
-      "label": "Overview",
+      "label": "Getting started",
       "title": "같은 결,다른 표정.",
       "kind": "template",
       "target": "Overview/작업 목표·프로젝트 카드 조합",
       "status": "후속 · SCheckbox 기반 상태 조합 필요"
+    },
+    {
+      "route": "start",
+      "id": "start-here",
+      "label": "시작 순서",
+      "kind": "documentation",
+      "target": "문서·원칙·설치·라이선스 안내",
+      "status": "사용자 안내; 별도 Vue 컴포넌트 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "vue-components",
+      "label": "공통 등록·자동 import",
+      "title": "Vue component APIs",
+      "kind": "documentation/core",
+      "target": "Core + 기존 S API / 공통 theme·locale 연결",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "starter",
+      "label": "실제 패키지 실행",
+      "title": "Vue / Vuetify starter",
+      "kind": "documentation/core",
+      "target": "Core + 기존 S API / 공통 theme·locale 연결",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "adoption",
+      "label": "CSS·JSON 적용",
+      "title": "하나의 화면부터 적용하기",
+      "kind": "documentation/core",
+      "target": "토큰·사용 규칙·메타 문서",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "themes",
+      "label": "테마",
+      "title": "세 가지 시작점",
+      "kind": "documentation/core",
+      "target": "Core + 기존 S API / 공통 theme·locale 연결",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "density",
+      "label": "밀도",
+      "title": "밀도는 정보의 양에 맞게",
+      "kind": "documentation/core",
+      "target": "Core + 기존 S API / 공통 theme·locale 연결",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "locale",
+      "label": "공통 locale",
+      "title": "공통 locale",
+      "kind": "documentation/core",
+      "target": "Core + 기존 S API / 공통 theme·locale 연결",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "advanced-vue",
+      "label": "선택·동작·분할",
+      "title": "확장 Vue6종",
+      "kind": "documentation/core",
+      "target": "Core + 기존 S API / 공통 theme·locale 연결",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "scope",
+      "label": "검증·출처",
+      "title": "작게 완결된 v0.2",
+      "kind": "documentation/core",
+      "target": "토큰·사용 규칙·메타 문서",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "start",
+      "id": "principles",
+      "label": "시스템 원칙",
+      "kind": "documentation",
+      "target": "문서·원칙·설치·라이선스 안내",
+      "status": "사용자 안내; 별도 Vue 컴포넌트 완료 주장 아님"
     },
     {
       "route": "style",
@@ -112,11 +200,353 @@
     {
       "route": "component",
       "id": "",
-      "label": "Component",
+      "label": "Components",
       "title": "모양과 동작을 함께",
       "kind": "documentation/core",
       "target": "토큰·사용 규칙·메타 문서",
       "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "component",
+      "id": "sbtn",
+      "label": "SBtn",
+      "description": "버튼의 기본·보조·로딩·비활성 상태를 구분합니다.",
+      "kind": "component",
+      "target": "SBtn",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "ssplit-btn",
+      "label": "SSplitBtn",
+      "description": "대표 행동과 추가 행동 메뉴를 한 묶음으로 제공합니다.",
+      "kind": "component",
+      "target": "SSplitBtn",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sautocomplete",
+      "label": "SAutocomplete",
+      "description": "검색어와 한 개의 선택값을 구분하고 비동기 응답을 다룹니다.",
+      "kind": "component",
+      "target": "SAutocomplete",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "scheckbox",
+      "label": "SCheckbox",
+      "description": "서로 독립적인 여러 조건을 켜고 끕니다.",
+      "kind": "component",
+      "target": "SCheckbox",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sdate-picker",
+      "label": "SDatePicker",
+      "description": "한 입력창에서 단일 날짜 또는 기간을 선택합니다.",
+      "kind": "component",
+      "target": "SDatePicker",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sfile-input",
+      "label": "SFileInput",
+      "description": "브라우저 안에서만 파일을 선택·드롭·제거합니다.",
+      "kind": "component",
+      "target": "SFileInput",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sform",
+      "label": "SForm",
+      "description": "폼 검증 결과와 필드 초점을 모아 처리합니다.",
+      "kind": "component",
+      "target": "SForm",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "smulti-select",
+      "label": "SMultiSelect",
+      "description": "검색과 태그 제거를 함께 사용하는 다중 선택입니다.",
+      "kind": "component",
+      "target": "SMultiSelect",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "snumber-input",
+      "label": "SNumberInput",
+      "description": "최소·최대·간격이 있는 수치를 입력합니다.",
+      "kind": "component",
+      "target": "SNumberInput",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sradio-group",
+      "label": "SRadioGroup",
+      "description": "서로 배타적인 선택지에서 하나를 고릅니다.",
+      "kind": "component",
+      "target": "SRadioGroup",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "srange-slider",
+      "label": "SRangeSlider",
+      "description": "최소·최대 범위의 양 끝값을 조절합니다.",
+      "kind": "component",
+      "target": "SRangeSlider",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "ssegmented-control",
+      "label": "SSegmentedControl",
+      "description": "짧은 단일 선택지를 이어진 컨트롤로 표시합니다.",
+      "kind": "component",
+      "target": "SSegmentedControl",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sselect",
+      "label": "SSelect",
+      "description": "정해진 항목 가운데 하나를 선택합니다.",
+      "kind": "component",
+      "target": "SSelect",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sswitch",
+      "label": "SSwitch",
+      "description": "즉시 적용되는 설정을 켜고 끕니다.",
+      "kind": "component",
+      "target": "SSwitch",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "stextarea",
+      "label": "STextarea",
+      "description": "여러 줄 내용과 글자 수·도움말을 표시합니다.",
+      "kind": "component",
+      "target": "STextarea",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "stext-field",
+      "label": "STextField",
+      "description": "레이블·도움말·오류가 연결된 한 줄 입력입니다.",
+      "kind": "component",
+      "target": "STextField",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "stime-picker",
+      "label": "STimePicker",
+      "description": "직접 HH:mm 입력과 작은 시·분 패널을 함께 제공합니다.",
+      "kind": "component",
+      "target": "STimePicker",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "saccordion",
+      "label": "SAccordion",
+      "description": "추가 내용을 같은 맥락에서 펼치고 접습니다.",
+      "kind": "component",
+      "target": "SAccordion",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sbreadcrumbs",
+      "label": "SBreadcrumbs",
+      "description": "현재 위치와 상위 경로를 표시합니다.",
+      "kind": "component",
+      "target": "SBreadcrumbs",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "scontext-menu",
+      "label": "SContextMenu",
+      "description": "우클릭·키보드·모바일 실행 버튼으로 행동 메뉴를 엽니다.",
+      "kind": "component",
+      "target": "SContextMenu",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sstepper",
+      "label": "SStepper",
+      "description": "현재·완료·다음 단계를 글과 상태로 구분합니다.",
+      "kind": "component",
+      "target": "SStepper",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "stabs",
+      "label": "STabs",
+      "description": "방향키로 탭을 탐색하고 연결된 패널을 표시합니다.",
+      "kind": "component",
+      "target": "STabs",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "stree",
+      "label": "STree",
+      "description": "계층 자료의 펼침과 선택을 구분합니다.",
+      "kind": "component",
+      "target": "STree",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "salert",
+      "label": "SAlert",
+      "description": "화면에 남아 있어야 하는 정보·성공·오류를 전달합니다.",
+      "kind": "component",
+      "target": "SAlert",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sdialog",
+      "label": "SDialog",
+      "description": "현재 맥락의 모달 또는 사이드 패널을 표시합니다.",
+      "kind": "component",
+      "target": "SDialog",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "spopover",
+      "label": "SPopover",
+      "description": "실행 가능한 추가 정보를 작은 패널에 표시합니다.",
+      "kind": "component",
+      "target": "SPopover",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sprogress-circular",
+      "label": "SProgressCircular",
+      "description": "수치가 알려진 진행률과 무한 로딩을 원형으로 표시합니다.",
+      "kind": "component",
+      "target": "SProgressCircular",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sprogress-linear",
+      "label": "SProgressLinear",
+      "description": "수치가 알려진 진행률과 무한 로딩을 선형으로 표시합니다.",
+      "kind": "component",
+      "target": "SProgressLinear",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "ssnackbar",
+      "label": "SSnackbar",
+      "description": "짧은 상태를 초점을 빼앗지 않고 알립니다.",
+      "kind": "component",
+      "target": "SSnackbar",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "stooltip",
+      "label": "STooltip",
+      "description": "초점·클릭으로 짧은 비대화형 설명을 표시합니다.",
+      "kind": "component",
+      "target": "STooltip",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "savatar",
+      "label": "SAvatar",
+      "description": "이미지 또는 대체 글자로 대상을 표시합니다.",
+      "kind": "component",
+      "target": "SAvatar",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sbar-chart",
+      "label": "SBarChart",
+      "description": "작은 수치 비교를 차트와 같은 자료의 표로 제공합니다.",
+      "kind": "component",
+      "target": "SBarChart",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "scard",
+      "label": "SCard",
+      "description": "제목·내용·하단 행동을 한 표면으로 묶습니다.",
+      "kind": "component",
+      "target": "SCard",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "scol",
+      "label": "SCol",
+      "description": "반응형 격자의 한 열을 구성합니다.",
+      "kind": "component",
+      "target": "SCol",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "scontainer",
+      "label": "SContainer",
+      "description": "반응형 화면의 콘텐츠 너비를 제한합니다.",
+      "kind": "component",
+      "target": "SContainer",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sdata-table",
+      "label": "SDataTable",
+      "description": "정렬·선택·페이지와 작은 화면의 카드 보기를 제공합니다.",
+      "kind": "component",
+      "target": "SDataTable",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "sresizable-split-pane",
+      "label": "SResizableSplitPane",
+      "description": "포인터·키보드로 두 영역의 크기를 조절합니다.",
+      "kind": "component",
+      "target": "SResizableSplitPane",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
+    },
+    {
+      "route": "component",
+      "id": "srow",
+      "label": "SRow",
+      "description": "반응형 격자의 행과 열 간격을 구성합니다.",
+      "kind": "component",
+      "target": "SRow",
+      "status": "실제 exported S API와 원본 생성 계약; 공유 실행 샘플 연결"
     },
     {
       "route": "component",
@@ -272,45 +702,9 @@
       "status": "후속 · 구현 완료 아님"
     },
     {
-      "route": "component",
-      "id": "textarea",
-      "label": "Textarea",
-      "title": "Textarea",
-      "kind": "component",
-      "target": "STextarea",
-      "status": "API 있음; 본문 HTML 참고 / 실제 starter 실행"
-    },
-    {
-      "route": "component",
-      "id": "number",
-      "label": "숫자 증감",
-      "title": "숫자 증감",
-      "kind": "component",
-      "target": "SNumberInput",
-      "status": "API 있음; 본문 HTML 참고 / 실제 starter 실행"
-    },
-    {
-      "route": "component",
-      "id": "multiselect",
-      "label": "다중 선택과 태그",
-      "title": "다중 선택과 태그",
-      "kind": "component",
-      "target": "SMultiSelect",
-      "status": "API 있음; 본문 HTML 참고 / 실제 starter 실행"
-    },
-    {
-      "route": "component",
-      "id": "avatar",
-      "label": "Avatar와 사용자 메뉴",
-      "title": "만들기 전 검토",
-      "kind": "component",
-      "target": "SAvatar",
-      "status": "후속 · 구현 완료 아님"
-    },
-    {
       "route": "pattern",
       "id": "",
-      "label": "Pattern",
+      "label": "Patterns",
       "title": "작은 흐름을 끝까지",
       "kind": "documentation/core",
       "target": "토큰·사용 규칙·메타 문서",
@@ -452,103 +846,98 @@
       "status": "후속 · 구현 완료 아님"
     },
     {
-      "route": "theme",
+      "route": "releases",
       "id": "",
-      "label": "Theme & adoption",
-      "title": "기본은 함께, 성격은 다르게",
-      "kind": "documentation/core",
-      "target": "토큰·사용 규칙·메타 문서",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+      "label": "Releases",
+      "kind": "documentation",
+      "target": "문서·원칙·설치·라이선스 안내",
+      "status": "사용자 안내; 별도 Vue 컴포넌트 완료 주장 아님"
     },
     {
-      "route": "theme",
-      "id": "themes",
-      "label": "테마",
-      "title": "세 가지 시작점",
-      "kind": "documentation/core",
-      "target": "Core + 기존 S API / 공통 theme·locale 연결",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "density",
-      "label": "밀도",
-      "title": "밀도는 정보의 양에 맞게",
-      "kind": "documentation/core",
-      "target": "Core + 기존 S API / 공통 theme·locale 연결",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "adoption",
-      "label": "CSS·JSON 도입",
-      "title": "하나의 화면부터 적용하기",
-      "kind": "documentation/core",
-      "target": "토큰·사용 규칙·메타 문서",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "scope",
-      "label": "범위와 출처",
-      "title": "작게 완결된 v0.2",
-      "kind": "documentation/core",
-      "target": "토큰·사용 규칙·메타 문서",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "locale",
-      "label": "공통 locale",
-      "title": "공통 locale",
-      "kind": "documentation/core",
-      "target": "Core + 기존 S API / 공통 theme·locale 연결",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "starter",
-      "label": "Vue·Vuetify starter",
-      "title": "Vue / Vuetify starter",
-      "kind": "documentation/core",
-      "target": "Core + 기존 S API / 공통 theme·locale 연결",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "advanced-vue",
-      "label": "확장 Vue6종",
-      "title": "확장 Vue6종",
-      "kind": "documentation/core",
-      "target": "Core + 기존 S API / 공통 theme·locale 연결",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "vue-components",
-      "label": "Vue API·전환표",
-      "title": "Vue component APIs",
-      "kind": "documentation/core",
-      "target": "Core + 기존 S API / 공통 theme·locale 연결",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
-      "id": "versioning",
-      "label": "버전과 폐기 정책",
-      "title": "Version & change policy",
-      "kind": "documentation/core",
-      "target": "토큰·사용 규칙·메타 문서",
-      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
-    },
-    {
-      "route": "theme",
+      "route": "releases",
       "id": "packages",
       "label": "설치·업데이트",
       "title": "설치·업데이트",
       "kind": "documentation/core",
       "target": "토큰·사용 규칙·메타 문서",
       "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "releases",
+      "id": "versioning",
+      "label": "변경·호환 정책",
+      "title": "Version & change policy",
+      "kind": "documentation/core",
+      "target": "토큰·사용 규칙·메타 문서",
+      "status": "문서/독립 Core 자산; Vue 부품 완료 주장 아님"
+    },
+    {
+      "route": "licensing",
+      "id": "",
+      "label": "Licensing",
+      "kind": "documentation",
+      "target": "문서·원칙·설치·라이선스 안내",
+      "status": "사용자 안내; 별도 Vue 컴포넌트 완료 주장 아님"
+    },
+    {
+      "route": "licensing",
+      "id": "code-license",
+      "label": "코드 · MIT",
+      "kind": "documentation",
+      "target": "문서·원칙·설치·라이선스 안내",
+      "status": "사용자 안내; 별도 Vue 컴포넌트 완료 주장 아님"
+    },
+    {
+      "route": "licensing",
+      "id": "brand-license",
+      "label": "브랜드 제외",
+      "kind": "documentation",
+      "target": "문서·원칙·설치·라이선스 안내",
+      "status": "사용자 안내; 별도 Vue 컴포넌트 완료 주장 아님"
+    },
+    {
+      "route": "licensing",
+      "id": "third-party-license",
+      "label": "폰트·아이콘·외부 고지",
+      "kind": "documentation",
+      "target": "문서·원칙·설치·라이선스 안내",
+      "status": "사용자 안내; 별도 Vue 컴포넌트 완료 주장 아님"
+    },
+    {
+      "route": "component",
+      "id": "textarea",
+      "label": "Textarea",
+      "title": "Textarea",
+      "kind": "component",
+      "target": "STextarea",
+      "status": "API 있음; 본문 HTML 참고 / 실제 starter 실행"
+    },
+    {
+      "route": "component",
+      "id": "number",
+      "label": "숫자 증감",
+      "title": "숫자 증감",
+      "kind": "component",
+      "target": "SNumberInput",
+      "status": "API 있음; 본문 HTML 참고 / 실제 starter 실행"
+    },
+    {
+      "route": "component",
+      "id": "multiselect",
+      "label": "다중 선택과 태그",
+      "title": "다중 선택과 태그",
+      "kind": "component",
+      "target": "SMultiSelect",
+      "status": "API 있음; 본문 HTML 참고 / 실제 starter 실행"
+    },
+    {
+      "route": "component",
+      "id": "avatar",
+      "label": "Avatar와 사용자 메뉴",
+      "title": "만들기 전 검토",
+      "kind": "component",
+      "target": "SAvatar",
+      "status": "후속 · 구현 완료 아님"
     }
   ],
   "demos": [
@@ -914,5 +1303,6 @@
       "target": "기존 브랜드·Core 자산",
       "status": "자산 재사용; Vue 컴포넌트 아님"
     }
-  ]
+  ],
+  "documentationVersion": "0.11.0"
 }

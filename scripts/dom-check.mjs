@@ -42,11 +42,11 @@ function integrity() {
     const hash=a.getAttribute('href').slice(1);
     if(hash==='main-content')continue;
     const [page,anchor]=hash.split('/');
-    assert.ok(['overview','style','component','pattern','theme'].includes(page),`Known page ${page}`);
+    assert.ok(['start','style','component','pattern','releases','licensing','overview','theme'].includes(page),`Known page ${page}`);
     if(anchor && page===w.location.hash.slice(1).split('/')[0]) assert.ok(d.getElementById(anchor),`Section ${anchor} exists`);
   }
 }
-for(const name of ['overview','style','component','pattern','theme']) {
+for(const name of ['start','style','component','pattern','releases','licensing']) {
   await route(name);integrity();assert.equal(d.querySelectorAll('main h1').length,1);
   assert.equal($('[aria-current="page"]').dataset.route,name);
   assert.equal(d.activeElement.tagName,'H1','Route focus');

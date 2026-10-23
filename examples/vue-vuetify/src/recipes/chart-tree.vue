@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import type { STreeItem, SBarChartItem } from '@solyi/vue-ui';
 defineProps<{ part?: string }>();
 const selected = ref<string | null>(null),
@@ -26,10 +25,7 @@ const chart = computed<SBarChartItem[]>(() =>
 const total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0));
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    :title="part ? undefined : '가상 자료의 차트와 계층'"
-  >
+  <SCard :heading-level="2" :title="part ? undefined : '가상 자료의 차트와 계층'">
     <template v-if="!part || part === 'chart'">
       <SSelect
         id="recipe-chart-week"

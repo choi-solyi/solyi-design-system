@@ -1,5 +1,7 @@
 # 변경 이력
 
+이전 항목의 후보·미게시·보류 표시는 당시 체크포인트입니다. 현재 공개 상태는 정확한 커밋의 CI와 공개 파일 확인 결과로 구분합니다. 기존 릴리스 파일과 Git 기록은 보존합니다.
+
 ## 0.10.0 문서 후속 · 헤더 선택 그룹
 
 - 테마 3개와 기본·컴팩트 밀도를 각각 이어진 선택 그룹으로 표시합니다. 기존 테마색, 체크 표시, 라이트·다크, 모바일 화면 설정과 저장·복원 동작은 유지합니다.
@@ -30,30 +32,30 @@
 - 공통 제목 간격, 설치 블록 간격, 메뉴 높이·너비, 트리 가이드선을 통일합니다. Progress 상태 문구 중앙 정렬과 indeterminate 반복 로딩/animated 옵션, 축소 모션의 정적 대안을 제공합니다.
 - 검증 및 미제공 API 범위는 VUE-EXAMPLES-PLAN.md와 QA.md에 기록합니다. 1.0.0 확정·이전 버전 삭제·npm 게시는 포함하지 않습니다.
 
-## 0.8.1 · UI feedback follow-up
+## 0.8.1 · UI 피드백 후속
 
-- Core0.3.5 / Vue UI0.6.1: optional Progress visibility controls and semantic snackbar presentation, keeping existing defaults, component identities and geometry tokens.
-- Whole comparison-card selection, noninput editing entry focus, clearer error-summary links, shared time/tree/data spacing, aligned S/V labels, sticky mobile document menu and theme actions.
-- Original 24 screenshots were reviewed by the parent in a cloud environment; this Windows worker did not visually inspect their pixels. Local runtime/consumption and browser review evidence is tracked in UI-FEEDBACK-PLAN.md.
+- Core0.3.5 / Vue UI0.6.1: Progress 표시 옵션과 상태를 구분하는 스낵바를 추가하고 기존 기본값·컴포넌트 식별·치수 토큰을 유지했습니다.
+- 비교 카드 전체 선택, 편집 진입 시 비입력 요소 초점, 오류 요약 링크, 시간·트리·자료 간격, S/V 라벨 정렬, 모바일 고정 문서 메뉴와 테마 동작을 정리했습니다.
+- 원본 스크린샷24장은 부모가 클라우드 환경에서 실제 픽셀을 검토했으며 당시 Windows 작업자는 직접 보지 않았습니다. 로컬 동작·소비 및 브라우저 검토 근거는 documentation/plans/UI-FEEDBACK-PLAN.md에 기록했습니다.
 
-## 0.7.1 · local predeployment review (unpublished)
+## 0.7.1 · 당시 로컬 배포 전 검토 기록
 
-- Core overflow title actions now honor supplied locale/custom formatters on creation and refresh; preserved linked actions.
-- Small local files show exact bytes below1KiB. Corrected package versions/peer/count/theme wording and stale document scope copy.
-- Immutable0.7.0 artifacts remain unchanged; review fixes use Core0.3.3/UI0.5.1. See PREDEPLOY-REVIEW.md for evidence and visual/device limits.
+- Core 말줄임 제목은 생성·갱신 때 전달한 locale과 formatter를 따르고 기존 링크 동작을 유지했습니다.
+- 1KiB 미만 파일에 정확한 byte 수를 표시하고 패키지 버전·peer·개수·테마 및 오래된 문서 범위 설명을 수정했습니다.
+- 기존0.7.0 산출물은 보존하고 검토 수정본은 Core0.3.3/UI0.5.1을 사용했습니다. 근거와 화면·기기 한계는 documentation/quality/PREDEPLOY-REVIEW.md를 따릅니다.
 
-## 0.7.0 · local candidate, publication held
+## 0.7.0 · 당시 로컬 후보·공개 보류 기록
 
-- Canonical S PascalCase API names with identical legacy Sol aliases/registrations; SBtn/STextField/SDataTable/SSnackbar retain their own contracts.
-- Shared createSolyiVuetify/applySolyiAppearance for token themes/defaults and direct native V usage.
-- SProgressLinear/SProgressCircular, real installed-package starter and same-origin document embed; complete document/example reuse inventory.
-- No package rename, license change, registry publication or other app connection.
+- S PascalCase 이름을 기본으로 당시 Sol 별칭·등록을 동일하게 유지했습니다. SBtn/STextField/SDataTable/SSnackbar는 자체 계약을 따릅니다. Sol 별칭은 이후0.9.0에서 제거했습니다.
+- createSolyiVuetify/applySolyiAppearance로 토큰 테마·defaults와 원본 V 컴포넌트 사용을 연결했습니다.
+- SProgressLinear/SProgressCircular, 실제 설치 패키지 기반 starter와 같은 origin의 문서 embed, 문서·예제 재사용 목록을 추가했습니다.
+- 이 단계에서는 패키지 이름·라이선스 변경, 레지스트리 게시나 다른 앱 연결을 하지 않았습니다.
 
-## 0.6.1 · local candidate, not published
+## 0.6.1 · 당시 로컬 후보·미게시 기록
 
-- Preserve624bc43 exact document-name/alias ranking fix.
-- Core0.3.1 overflow labels and UI0.4.0 shared reactive ko/en locale for20 APIs, base wrappers, Intl date-only/number display and strict grouped-number input. Caller text and data contracts stay unchanged.
-- Actual installed locale starter and dedicated type/runtime/focus regressions; Versioned Pages tarballs/SHA-256/SHA-512 and immutable package pairs prepared; clean HTTP previous→update→rollback/type/build tests passed. Public publication is held.
+- 624bc43의 정확한 문서 이름·별칭 우선순위 수정을 보존했습니다.
+- Core0.3.1 말줄임 라벨과 UI0.4.0의20개 API에 반응형 한국어·영어 locale, 기존 래퍼, Intl date-only·숫자 표시와 엄격한 그룹 숫자 입력을 연결했습니다. 호출자 문구와 데이터 계약은 유지했습니다.
+- 실제 설치 locale starter와 타입·동작·초점 회귀, Pages 버전별 tarball·SHA-256·SHA-512와 고정 패키지 쌍을 준비했습니다. 별도 HTTP 이전→업데이트→롤백 설치·타입·빌드 검사를 통과했으며 이 기록 시점에는 공개를 보류했습니다.
 
 ## 로컬 미게시 후속 · 검색 이름 우선순위 — 2026-10-22
 

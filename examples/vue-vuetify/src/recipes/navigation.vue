@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-
 const drawer = ref(false),
   toast = ref(false),
   detail = ref(false);
@@ -10,15 +8,8 @@ const path = computed(() => [
 ]);
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="현재 위치와 짧은 상세"
-  >
-    <SBreadcrumbs
-      label="가상 경로"
-      :items="path"
-      @navigate="detail = false"
-    />
+  <SCard :heading-level="2" title="현재 위치와 짧은 상세">
+    <SBreadcrumbs label="가상 경로" :items="path" @navigate="detail = false" />
     <div class="sol-actions">
       <SBtn @click="detail = true">가상 상세로 이동</SBtn>
       <SBtn @click="drawer = true">사이드 패널 열기</SBtn>

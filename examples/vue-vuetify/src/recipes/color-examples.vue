@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import type { ToastTone } from '@solyi/vue-ui';
 const open = ref(false),
   selected = ref<ToastTone>('info'),
@@ -43,10 +42,7 @@ function show(tone: ToastTone, label: string) {
 }
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="의미색 UI 조합"
-  >
+  <SCard :heading-level="2" title="의미색 UI 조합">
     <div class="sol-stack">
       <SCard
         v-for="item in tones"
@@ -57,39 +53,19 @@ function show(tone: ToastTone, label: string) {
       >
         <span class="sol-status sol-tone-badge">{{ item.icon }} {{ item.label }}</span>
         <div class="sol-actions">
-          <SBtn
-            variant="primary"
-            :tone="item.tone"
-            @click="show(item.tone, item.label)"
+          <SBtn variant="primary" :tone="item.tone" @click="show(item.tone, item.label)"
             >다음 단계</SBtn
           >
-          <SBtn
-            variant="subtle"
-            :tone="item.tone"
-            @click="show(item.tone, item.label)"
+          <SBtn variant="subtle" :tone="item.tone" @click="show(item.tone, item.label)"
             >옅은 배경</SBtn
           >
-          <SBtn
-            :tone="item.tone"
-            @click="show(item.tone, item.label)"
-            >외곽선</SBtn
-          >
-          <SBtn
-            :tone="item.tone"
-            disabled
-            >비활성</SBtn
-          >
+          <SBtn :tone="item.tone" @click="show(item.tone, item.label)">외곽선</SBtn>
+          <SBtn :tone="item.tone" disabled>비활성</SBtn>
         </div>
-        <SAlert
-          :tone="item.tone"
-          :title="item.icon + ' ' + item.label + ' 안내'"
-        >
+        <SAlert :tone="item.tone" :title="item.icon + ' ' + item.label + ' 안내'">
           <p>{{ item.note }}</p>
           <template #actions
-            ><SBtn
-              variant="inline"
-              :tone="item.tone"
-              @click="show(item.tone, item.label)"
+            ><SBtn variant="inline" :tone="item.tone" @click="show(item.tone, item.label)"
               >스낵바 띄우기</SBtn
             ></template
           >

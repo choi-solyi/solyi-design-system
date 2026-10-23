@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, onBeforeUnmount } from 'vue';
-
+const resultPanel = useTemplateRef<{ $el: HTMLElement }>('resultPanel');
 type Row = {
   id: number;
   state: 'idle' | 'pending' | 'success' | 'error';
@@ -26,9 +25,7 @@ function run(retry = false) {
   });
   timer = setTimeout(() => {
     const restore = document.activeElement?.id === 'recipe-bulk-retry';
-    targets.forEach(
-      (r) => (r.state = r.id === 2 && r.attempts === 1 ? 'error' : 'success'),
-    );
+    targets.forEach((r) => (r.state = r.id === 2 && r.attempts === 1 ? 'error' : 'success'));
     busy.value = false;
     result.value =
       '완료 ' +
@@ -36,21 +33,15 @@ function run(retry = false) {
       '개 · 실패 ' +
       rows.value.filter((r) => r.state === 'error').length +
       '개';
-    if (restore) nextTick(() => document.getElementById('recipe-bulk-result')?.focus());
+    if (restore) nextTick(() => resultPanel.value?.$el.focus());
   }, 350);
 }
 onBeforeUnmount(() => clearTimeout(timer));
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="일괄 작업의 일부 실패"
-  >
+  <SCard :heading-level="2" title="일괄 작업의 일부 실패">
     <p>처음에는 2번만 실패하는 가상 처리입니다. 외부 데이터를 바꾸지 않습니다.</p>
-    <div
-      v-for="row in rows"
-      :key="row.id"
-    >
+    <div v-for="row in rows" :key="row.id">
       <SCheckbox
         :id="'recipe-bulk-' + row.id"
         :model-value="selected[row.id]"
@@ -61,23 +52,14 @@ onBeforeUnmount(() => clearTimeout(timer));
       <p>{{ row.state }} · 처리 {{ row.attempts }}회</p>
     </div>
     <div class="sol-actions">
-      <SBtn
-        :loading="busy"
-        @click="run()"
-      >
-        선택한 가상 항목 처리
-      </SBtn>
-      <SBtn
-        id="recipe-bulk-retry"
-        variant="inline"
-        :disabled="busy || !failed"
-        @click="run(true)"
-      >
+      <SBtn :loading="busy" @click="run()"> 선택한 가상 항목 처리 </SBtn>
+      <SBtn id="recipe-bulk-retry" variant="inline" :disabled="busy || !failed" @click="run(true)">
         실패 항목만 다시 시도
       </SBtn>
     </div>
     <SAlert
       id="recipe-bulk-result"
+      ref="resultPanel"
       tabindex="-1"
       v-if="result"
       :tone="busy ? 'info' : failed ? 'danger' : 'success'"

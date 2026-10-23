@@ -1,3 +1,4 @@
+import {useSFieldValidation,fieldError,externalFieldError,fieldDisabled,fieldReadonly} from './form';
 import {computed,defineComponent,h,nextTick,onBeforeUnmount,onMounted,ref,watch} from 'vue';
 import type {PropType} from 'vue';
 import {SBtn} from './index';
@@ -7,12 +8,12 @@ import type {SolOptionLoader} from './selection';
 import {useSolLocale} from './locale';
 import {useFloatingPanel} from './floating';
 
-export interface SAutocompleteHandle {focus():void;clear():void;validate():boolean;retry():void}
+export interface SAutocompleteHandle {focus():void;clear():void;validate():boolean;retry():void;resetValidation():void}
 export const SAutocomplete=defineComponent({name:'SAutocomplete',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,default:()=>[]},loadOptions:Function as PropType<SolOptionLoader>,debounce:{type:Number,default:150},placeholder:String},emits:{'update:modelValue':(_value:string|null)=>true,change:(_value:string|null)=>true,search:(_query:string)=>true,open:()=>true,close:()=>true,invalid:(_message:string)=>true},setup(p,{attrs,slots,emit,expose}){
   const l=useSolLocale(()=>p.locale),host=ref<HTMLElement|null>(null),input=ref<HTMLInputElement|null>(null),panel=ref<HTMLElement|null>(null),opened=ref(false),query=ref(''),active=ref(-1),items=ref<readonly SolOption[]>([]),busy=ref(false),loadError=ref(false),localError=ref('');
   const {position,locate}=useFloatingPanel(opened,input,panel,true),labels=new Map<string,string>();
   let composing=false,disposed=false,revision=0,expectedValue:string|null|undefined,timer:ReturnType<typeof setTimeout>|undefined,abort:AbortController|undefined;
-  const available=()=>!p.disabled&&!p.readonly;
+  const available=()=>!fieldDisabled(p)&&!fieldReadonly(p);
   const clean=(list:readonly SolOption[])=>{const seen=new Set<string>();return list.filter(item=>item&&typeof item.value==='string'&&!!item.value&&typeof item.label==='string'&&!seen.has(item.value)&&!!seen.add(item.value)).map(item=>{labels.set(item.value,item.label);return item;});};
   const normalized=(text:string)=>text.normalize('NFKC').trim().toLocaleLowerCase(l.value.code);
   const visible=computed(()=>p.loadOptions?items.value:items.value.filter(item=>normalized(item.label).includes(normalized(query.value))));
@@ -36,7 +37,7 @@ export const SAutocomplete=defineComponent({name:'SAutocomplete',inheritAttrs:fa
   function choose(item:SolOption){if(!available()||item.disabled)return;changeValue(item.value);query.value=item.label;close();input.value?.focus({preventScroll:true});}
   function clear(){if(!available())return;changeValue(null);query.value='';close();input.value?.focus({preventScroll:true});}
   function retry(){if(!available())return;input.value?.focus({preventScroll:true});if(!opened.value){opened.value=true;emit('open');}void load();}
-  function validate(){const message=p.error||(p.required&&p.modelValue===null?l.value.chooseAtLeastOne:'');localError.value=message;if(message)emit('invalid',message);return !message;}
+  function validateIntrinsic(){const message=(p.required&&p.modelValue===null?l.value.chooseAtLeastOne:'');localError.value=message;if(message)emit('invalid',message);return !externalFieldError(p)&&!message;}
   function key(e:KeyboardEvent){
     if(composing||e.isComposing||!available())return;
     if(e.key==='Escape'&&opened.value){e.preventDefault();e.stopPropagation();close();input.value?.focus();return;}
@@ -54,14 +55,15 @@ export const SAutocomplete=defineComponent({name:'SAutocomplete',inheritAttrs:fa
   }
   function focusout(e:FocusEvent){const target=e.relatedTarget as Node|null;if(target&&!host.value?.contains(target))close();}
   const outside=(e:Event)=>{if(opened.value&&!host.value?.contains(e.target as Node))close();};
-  watch(()=>[p.disabled,p.readonly,p.loadOptions],()=>{close();if(!p.loadOptions)items.value=clean(p.options);});
+  watch(()=>[fieldDisabled(p),fieldReadonly(p),p.loadOptions],()=>{close();if(!p.loadOptions)items.value=clean(p.options);});
   onMounted(()=>document.addEventListener('pointerdown',outside));onBeforeUnmount(()=>{disposed=true;stop();document.removeEventListener('pointerdown',outside);});
-  expose({focus:()=>input.value?.focus(),clear,validate,retry} satisfies SAutocompleteHandle);
+  const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus(),validateIntrinsic,intrinsicError:()=>localError.value,resetIntrinsic:()=>{localError.value='';}});
+  expose({...validation,clear,retry} satisfies SAutocompleteHandle);
   return()=>{
-    const error=p.error||localError.value,option=opened.value&&!busy.value&&!loadError.value&&active.value>=0?visible.value[active.value]:undefined;
+    const error=fieldError(p)||localError.value,option=opened.value&&!busy.value&&!loadError.value&&active.value>=0?visible.value[active.value]:undefined;
     return h('div',{ref:host,class:['sol-field sol-ui-autocomplete',attrs.class],onFocusout:focusout},[
       fieldLabel(p,slots,l.value.required),
-      h('input',{...attrs,id:p.id,ref:input,class:'sol-input',type:'text',value:query.value,placeholder:p.placeholder,disabled:p.disabled,readonly:p.readonly,required:p.required,role:'combobox','aria-autocomplete':'list','aria-haspopup':'listbox','aria-expanded':String(opened.value),'aria-controls':p.id+'-options','aria-activedescendant':option?p.id+'-option-'+active.value:undefined,'aria-invalid':error?'true':undefined,'aria-describedby':[fieldDescription(p,slots,error,attrs['aria-describedby']),p.id+'-status'].filter(Boolean).join(' '),autocomplete:'off',onClick:open,onInput:edit,onKeydown:key,onCompositionstart:()=>{composing=true;stop();},onCompositionend:(e:CompositionEvent)=>{composing=false;edit(e);}}),
+      h('input',{...attrs,id:p.id,ref:input,class:'sol-input',type:'text',value:query.value,placeholder:p.placeholder,disabled:fieldDisabled(p),readonly:fieldReadonly(p),required:p.required,role:'combobox','aria-autocomplete':'list','aria-haspopup':'listbox','aria-expanded':String(opened.value),'aria-controls':p.id+'-options','aria-activedescendant':option?p.id+'-option-'+active.value:undefined,'aria-invalid':error?'true':undefined,'aria-describedby':[fieldDescription(p,slots,error,attrs['aria-describedby']),p.id+'-status'].filter(Boolean).join(' '),autocomplete:'off',onClick:open,onInput:edit,onKeydown:key,onCompositionstart:()=>{composing=true;stop();},onCompositionend:(e:CompositionEvent)=>{composing=false;edit(e);}}),
       ...fieldMessages(p,slots,error),
       h('div',{ref:panel,popover:'manual',hidden:!opened.value,class:'sol-ui-floating sol-ui-combo-panel',style:position.value,onKeydown:(e:KeyboardEvent)=>{if(e.key==='Escape'&&opened.value){e.preventDefault();e.stopPropagation();close();input.value?.focus();}}},[
         h('ul',{id:p.id+'-options',role:'listbox','aria-label':p.label,hidden:busy.value||loadError.value||!visible.value.length},visible.value.map((item,index)=>h('li',{id:p.id+'-option-'+index,key:item.value,role:'option','aria-selected':String(active.value===index),'aria-disabled':item.disabled?'true':undefined,onMousedown:(e:MouseEvent)=>e.preventDefault(),onClick:()=>choose(item)},[h('span',item.label),item.description?h('span',{class:'sol-hint'},item.description):null]))),

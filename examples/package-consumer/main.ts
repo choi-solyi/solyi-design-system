@@ -1,6 +1,6 @@
 import '@solyi/vue-ui/global';
 import {STooltip,SPopover,SAccordion,SBreadcrumbs,SFileInput,SAutocomplete,SAvatar,SStepper,SBarChart} from '@solyi/vue-ui';
-import {createApp,h,ref} from 'vue';
+import {createApp,h} from 'vue';
 import {createVuetify} from 'vuetify';
 import {VApp} from 'vuetify/components/VApp';
 import SolyiUI,{provideSolLocale,formatSolNumber,formatSolDate,parseSolNumber,resolveSolLocale,SBtn,STextField,SDialog,SDataTable,SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput,STabs,SSnackbar,SDatePicker,STimePicker,SSegmentedControl,SMultiSelect,SRangeSlider,SSplitBtn,SContextMenu,SResizableSplitPane,SProgressLinear,SProgressCircular,koLocale,uiVersion} from '@solyi/vue-ui';

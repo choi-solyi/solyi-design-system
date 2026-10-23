@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-
 import type { TableColumn, TableRow, TableSort } from '@solyi/vue-ui';
 const query = ref(''),
   page = ref(1),
@@ -40,16 +38,8 @@ watch([query, sort], () => (page.value = 1));
 watch(pages, (p) => (page.value = Math.min(page.value, p)));
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="선택·정렬·페이지"
-  >
-    <STextField
-      id="recipe-table-search"
-      v-model="query"
-      label="자료 검색"
-      type="search"
-    />
+  <SCard :heading-level="2" title="선택·정렬·페이지">
+    <STextField id="recipe-table-search" v-model="query" label="자료 검색" type="search" />
     <SSelect
       id="recipe-table-state"
       v-model="state"
@@ -74,12 +64,6 @@ watch(pages, (p) => (page.value = Math.min(page.value, p)));
       :error="state === 'error' ? '가상 오류입니다. 검색과 선택은 남습니다.' : ''"
       @retry="state = 'ready'"
     />
-    <SBtn
-      variant="inline"
-      :disabled="!selected.length"
-      @click="selected = []"
-    >
-      선택 해제
-    </SBtn>
+    <SBtn variant="inline" :disabled="!selected.length" @click="selected = []"> 선택 해제 </SBtn>
   </SCard>
 </template>

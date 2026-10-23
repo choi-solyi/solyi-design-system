@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from 'vue';
-
+const editTitle = useTemplateRef<HTMLElement>('editTitle');
+const nameField = useTemplateRef<{ focus(): void }>('nameField');
+const editButton = useTemplateRef<{ $el: HTMLElement }>('editButton');
+const undoButton = useTemplateRef<{ $el: HTMLElement }>('undoButton');
 const saved = ref({ title: '작은 정원', note: '가상 기록입니다.' }),
   draft = ref({ ...saved.value }),
   editing = ref(false),
@@ -9,8 +11,7 @@ const saved = ref({ title: '작은 정원', note: '가상 기록입니다.' }),
   kind = ref<'leave' | 'delete'>('leave'),
   error = ref('');
 const dirty = computed(
-  () =>
-    draft.value.title !== saved.value.title || draft.value.note !== saved.value.note,
+  () => draft.value.title !== saved.value.title || draft.value.note !== saved.value.note,
 );
 let answerLeave: ((allowed: boolean) => void) | undefined;
 let leavePromise: Promise<boolean> | undefined;
@@ -34,18 +35,18 @@ defineExpose({ confirmLeave });
 function edit() {
   draft.value = { ...saved.value };
   editing.value = true;
-  nextTick(() => document.getElementById('recipe-edit-title')?.focus());
+  nextTick(() => editTitle.value?.focus());
 }
 function save() {
   if (!draft.value.title.trim()) {
     error.value = '기록 제목을 입력해 주세요.';
-    nextTick(() => document.getElementById('recipe-edit-name')?.focus());
+    nextTick(() => nameField.value?.focus());
     return;
   }
   saved.value = { ...draft.value };
   editing.value = false;
   error.value = '';
-  nextTick(() => document.getElementById('recipe-edit')?.focus());
+  nextTick(() => editButton.value?.$el.focus());
 }
 function leave() {
   if (dirty.value) {
@@ -56,11 +57,11 @@ function leave() {
 function cancel() {
   editing.value = false;
   error.value = '';
-  nextTick(() => document.getElementById('recipe-edit')?.focus());
+  nextTick(() => editButton.value?.$el.focus());
 }
 function undo() {
   deleted.value = false;
-  nextTick(() => document.getElementById('recipe-edit')?.focus());
+  nextTick(() => editButton.value?.$el.focus());
 }
 function decide() {
   const answer = answerLeave;
@@ -69,7 +70,7 @@ function decide() {
   confirm.value = false;
   if (kind.value === 'delete') {
     deleted.value = true;
-    nextTick(() => document.getElementById('recipe-undo')?.focus());
+    nextTick(() => undoButton.value?.$el.focus());
   } else cancel();
   answer?.(true);
 }
@@ -86,55 +87,27 @@ onBeforeUnmount(() => {
 });
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="수정과 복구"
-  >
-    <SAlert
-      v-if="deleted"
-      title="가상 기록을 삭제했어요."
-    >
+  <SCard :heading-level="2" title="수정과 복구">
+    <SAlert v-if="deleted" title="가상 기록을 삭제했어요.">
       <template #actions>
-        <SBtn
-          variant="inline"
-          id="recipe-undo"
-          @click="undo"
-        >
+        <SBtn variant="inline" id="recipe-undo" ref="undoButton" @click="undo">
           삭제 되돌리기
         </SBtn>
       </template>
     </SAlert>
-    <form
-      v-else-if="editing"
-      class="sol-stack"
-      @submit.prevent="save"
-      novalidate
-    >
-      <h3
-        id="recipe-edit-title"
-        tabindex="-1"
-      >
-        가상 기록 수정
-      </h3>
+    <form v-else-if="editing" class="sol-stack" @submit.prevent="save" novalidate>
+      <h3 id="recipe-edit-title" ref="editTitle" tabindex="-1">가상 기록 수정</h3>
       <STextField
         id="recipe-edit-name"
+        ref="nameField"
         v-model="draft.title"
         label="기록 제목"
         :error="error"
         required
       />
-      <STextarea
-        id="recipe-edit-note"
-        v-model="draft.note"
-        label="기록 설명"
-      />
+      <STextarea id="recipe-edit-note" v-model="draft.note" label="기록 설명" />
       <div class="sol-actions">
-        <SBtn
-          type="submit"
-          variant="primary"
-        >
-          저장
-        </SBtn>
+        <SBtn type="submit" variant="primary"> 저장 </SBtn>
         <SBtn @click="cancel">수정 취소</SBtn>
         <SBtn @click="leave">다른 가상 화면으로</SBtn>
       </div>
@@ -142,12 +115,7 @@ onBeforeUnmount(() => {
     <template v-else>
       <p>{{ saved.title }} · {{ saved.note }}</p>
       <div class="sol-actions">
-        <SBtn
-          id="recipe-edit"
-          @click="edit"
-        >
-          수정
-        </SBtn>
+        <SBtn id="recipe-edit" ref="editButton" @click="edit"> 수정 </SBtn>
         <SBtn
           variant="secondary"
           @click="
@@ -162,19 +130,12 @@ onBeforeUnmount(() => {
     <SDialog
       id="recipe-edit-confirm"
       v-model="confirm"
-      :title="
-        kind === 'delete'
-          ? '가상 기록 1개를 삭제할까요?'
-          : '저장하지 않은 변경이 있어요.'
-      "
+      :title="kind === 'delete' ? '가상 기록 1개를 삭제할까요?' : '저장하지 않은 변경이 있어요.'"
     >
       <p>실제 파일과 서버에 연결되지 않습니다.</p>
       <template #actions>
         <SBtn @click="confirm = false">계속 작업</SBtn>
-        <SBtn
-          variant="secondary"
-          @click="decide"
-        >
+        <SBtn variant="secondary" @click="decide">
           {{ kind === 'delete' ? '가상 삭제' : '변경 버리기' }}
         </SBtn>
       </template>

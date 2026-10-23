@@ -1,23 +1,23 @@
-# 독립 Vue / Vuetify starter
+# 실제 패키지를 사용하는 Vue 예제
 
-이 예시는 Core 토큰을 Vue/Vuetify의 Button·Field·Dialog에 매핑하는 출발점입니다. 기존 aion2page·solyi.kr에 적용하지 않았고 실제 서버·계정·업로드가 없습니다.
+설치한 `@solyi/core`와 `@solyi/vue-ui` tarball을 사용하는 문서 실행 앱입니다. 문서 표시·복사·실행은 같은 `src/recipes/*.vue` 30개를 원본으로 사용합니다. npm 레지스트리 게시나 다른 앱 연결은 아직 하지 않았습니다.
 
-Node `^22.18.0 || >=24.12.0`과 npm을 사용합니다. 공식 Vue/Vite 문서와 이 lockfile의 요구사항을 함께 확인하세요.
+저장소 루트에서 검증된 tarball과 잠금 파일을 준비한 뒤 실행합니다. Node `^22.18.0 || >=24.12.0`을 사용하며 정확한 Vue·Vuetify·Vite 버전은 package.json과 lockfile에 고정합니다.
 
 ```sh
 cd examples/vue-vuetify
-npm ci
+npm ci --ignore-scripts
 npm run dev
+npm run check:recipes
 npm run build
 ```
 
-`src/core/tokens.json` / `tokens.css`는 저장소 루트의 같은 토큰 스냅샷입니다. 저장소 전체에서 갱신할 때 루트의 `node scripts/sync-starter.mjs`를 실행하고 다시 빌드합니다. 폴더만 복사해도 포함된 토큰으로 실행 가능합니다. Core 파일을 직접 덮어쓰기보다 앱 전용 토큰 또는 adapter.css에 매핑을 작성하세요.
+- `src/main.js`: 설치된 공통 CSS·Wanted Sans·코드 폰트를 불러오고, `app.use(SolyiUI)`로 S 컴포넌트를 한 번 등록합니다. `@solyi/vue-ui/global`은 템플릿 타입을 제공합니다.
+- `auto-import.config.js`: `unplugin-auto-import`의 Vue preset을 사용합니다. 이 앱의 `ref/computed/onBeforeUnmount` 생략은 이 빌드 설정을 전제로 하며, S 전역 등록과는 별개입니다. 미설정 소비 앱은 Vue 함수를 직접 import해야 합니다.
+- `src/auto-imports.d.ts`, `.eslintrc-auto-import.json`: 같은 preset의 TypeScript 선언과 읽기 전용 lint 전역 목록입니다. `../eslint.config.mjs`는 실제 ESLint 검사에 연결하며 템플릿은 vue-tsc가 검사합니다. Vue·라이브러리 타입 import는 필요한 경우 유지합니다.
+- `src/vuetify.js`: 공통 `createSolyiVuetify`로 테마·기본값을 연결합니다. `src/core/`는 보관용 snapshot이며 실행 앱의 원본은 설치된 Core 패키지입니다.
+- `src/recipes/`: SForm·template refs, SCard actions, SContainer/SRow/SCol과 실제 S API를 사용하는 조합 예제입니다. 의미 있는 form·section·목록 등 기본 HTML은 그대로 사용합니다.
+- `src/adapter.css`: 실행 앱 주변의 배치와 문서 iframe 연결을 맡습니다. 컴포넌트 내부 스타일은 설치한 패키지가 제공합니다.
+- `THIRD-PARTY-NOTICES.txt`: 설치된 제삼자 라이선스를 보존합니다. 자체 재사용 코드의 MIT 범위와 브랜드 제외는 [라이선스 안내](../../LICENSE-SCOPE.md), 폰트 OFL과 출처는 [폰트 안내](../../documentation/guide/FONT.md)를 확인하세요.
 
-- `main.js`: 세 테마/두 모드의 Vuetify colors 매핑. `createVuetify` 등록은 사용한 네 컴포넌트만 명시합니다.
-- `App.vue`: 필수·길이 오류와 값 보존, 결과 안내, Dialog 활성화 슬롯과 포커스 반환.
-- `adapter.css`: Button 36/44px, Field 40/44px, 의미색·경계·포커스·backdrop 매핑. 외부 폰트/아이콘 서비스 없음.
-- `THIRD-PARTY-NOTICES.txt`: 설치된 패키지 원본 라이선스와 버전. 각 의존성의 권리를 보존합니다.
-
-검증한 정확한 패키지는 package.json/lockfile에 고정합니다. Vuetify 3 등 다른 버전은 검증하지 않았습니다. 앱의 라우터·비동기 요청·보안·데이터 수명은 별도로 연결하고 검증해야 합니다. 이 문서 사이트의 모든 데모가 자동으로 Vuetify 컴포넌트가 되는 것은 아닙니다.
-
-공식 근거: [Vue Quick Start](https://vuejs.org/guide/quick-start.html), [Vuetify installation](https://vuetifyjs.com/en/getting-started/installation/), [Vite guide](https://vite.dev/guide/). 라이선스 고지는 원본 패키지의 조건을 따릅니다.
+문서 코드의 Prism 강조는 문서 셸에서 처리합니다. 이 앱의 컴포넌트 동작과는 분리되며, raw Vue 원본과 복사 값은 바뀌지 않습니다. 설치·등록·자동 import 전제는 [시작하기](../../documentation/guide/GETTING-STARTED.md)를 확인하세요. 실제 Safari·Fold 기기 검수는 별도로 수행하며 모든 환경에서의 호환을 보장하지 않습니다.

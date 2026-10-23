@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue';
 defineProps<{ part?: string }>();
+const nameField = useTemplateRef<{ focus(): void }>('nameField');
+const categoryField = useTemplateRef<{ focus(): void }>('categoryField');
+const review = useTemplateRef<HTMLElement>('review');
+const finalResult = useTemplateRef<HTMLElement>('finalResult');
 const stage = ref(0),
   done = ref(false),
   name = ref(''),
@@ -24,8 +27,7 @@ async function move(delta: number) {
   error.value = '';
   if (delta > 0 && stage.value === 0 && !name.value.trim())
     error.value = '가상 이름을 입력해 주세요.';
-  if (delta > 0 && stage.value === 1 && !category.value)
-    error.value = '가상 분류를 선택해 주세요.';
+  if (delta > 0 && stage.value === 1 && !category.value) error.value = '가상 분류를 선택해 주세요.';
   if (!error.value) {
     if (stage.value === 2 && delta > 0) done.value = true;
     else {
@@ -34,17 +36,10 @@ async function move(delta: number) {
     }
   }
   await nextTick();
-  document
-    .getElementById(
-      done.value
-        ? 'recipe-step-result'
-        : stage.value === 0
-          ? 'recipe-step-name'
-          : stage.value === 1
-            ? 'recipe-step-category'
-            : 'recipe-step-review',
-    )
-    ?.focus();
+  if (done.value) finalResult.value?.focus();
+  else if (stage.value === 0) nameField.value?.focus();
+  else if (stage.value === 1) categoryField.value?.focus();
+  else review.value?.focus();
 }
 async function reset() {
   stage.value = 0;
@@ -53,22 +48,13 @@ async function reset() {
   category.value = null;
   error.value = '';
   await nextTick();
-  document.getElementById('recipe-step-name')?.focus();
+  nameField.value?.focus();
 }
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    :title="part ? undefined : '가상 사용자와 단계'"
-  >
-    <div
-      v-if="!part || part === 'avatar'"
-      class="sol-actions"
-    >
-      <SAvatar
-        label="가상 사용자 민하"
-        initials="민"
-      />
+  <SCard :heading-level="2" :title="part ? undefined : '가상 사용자와 단계'">
+    <div v-if="!part || part === 'avatar'" class="sol-actions">
+      <SAvatar label="가상 사용자 민하" initials="민" />
       <SSplitBtn
         id="recipe-user"
         label="민하 · 가상 사용자"
@@ -98,6 +84,7 @@ async function reset() {
         <STextField
           v-if="stage === 0"
           id="recipe-step-name"
+          ref="nameField"
           v-model="name"
           label="가상 프로젝트 이름"
           :error="error"
@@ -106,6 +93,7 @@ async function reset() {
         <SSelect
           v-else-if="stage === 1"
           id="recipe-step-category"
+          ref="categoryField"
           v-model="category"
           label="가상 분류"
           :error="error"
@@ -115,33 +103,16 @@ async function reset() {
           ]"
           required
         />
-        <p
-          v-else
-          id="recipe-step-review"
-          tabindex="-1"
-        >
+        <p v-else id="recipe-step-review" ref="review" tabindex="-1">
           {{ name }} · {{ category }} · 서버에 저장하지 않는 가상 검토입니다.
         </p>
       </template>
-      <p
-        v-else
-        id="recipe-step-result"
-        role="status"
-        tabindex="-1"
-      >
+      <p v-else id="recipe-step-result" ref="finalResult" role="status" tabindex="-1">
         ✓ 가상 단계를 완료했어요. 실제 프로젝트는 만들지 않습니다.
       </p>
       <div class="sol-actions">
-        <SBtn
-          :disabled="stage === 0"
-          @click="move(-1)"
-          >이전 단계</SBtn
-        >
-        <SBtn
-          :disabled="done"
-          @click="move(1)"
-          >{{ stage === 2 ? '가상 완료' : '다음 단계' }}</SBtn
-        >
+        <SBtn :disabled="stage === 0" @click="move(-1)">이전 단계</SBtn>
+        <SBtn :disabled="done" @click="move(1)">{{ stage === 2 ? '가상 완료' : '다음 단계' }}</SBtn>
         <SBtn @click="reset">처음부터</SBtn>
       </div>
     </template>

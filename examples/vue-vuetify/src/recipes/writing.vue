@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-
 const name = ref(''),
   checked = ref(false);
 const error = computed(() =>
@@ -8,15 +6,8 @@ const error = computed(() =>
 );
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="구체적인 문구와 가까운 도움말"
-  >
-    <form
-      class="sol-stack"
-      @submit.prevent="checked = true"
-      novalidate
-    >
+  <SCard :heading-level="2" title="구체적인 문구와 가까운 도움말">
+    <form class="sol-stack" @submit.prevent="checked = true" novalidate>
       <STextField
         id="recipe-writing"
         v-model="name"
@@ -25,17 +16,8 @@ const error = computed(() =>
         :error="error"
         required
       />
-      <SBtn
-        type="submit"
-        variant="primary"
-      >
-        기록 확인
-      </SBtn>
-      <SAlert
-        v-if="checked && !error"
-        tone="success"
-        title="✓ 가상 기록 이름을 확인했어요."
-      />
+      <SBtn type="submit" variant="primary"> 기록 확인 </SBtn>
+      <SAlert v-if="checked && !error" tone="success" title="✓ 가상 기록 이름을 확인했어요." />
     </form>
   </SCard>
 </template>

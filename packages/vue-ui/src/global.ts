@@ -1,5 +1,9 @@
 declare module 'vue' {
   export interface GlobalComponents {
+    SForm: typeof import('./index')['SForm'];
+    SContainer: typeof import('./index')['SContainer'];
+    SRow: typeof import('./index')['SRow'];
+    SCol: typeof import('./index')['SCol'];
     SCard: typeof import('./index')['SCard'];
     SAlert: typeof import('./index')['SAlert'];
     STree: typeof import('./index')['STree'];

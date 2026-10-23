@@ -13,7 +13,8 @@ globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};w.Resize
 globalThis.CSS={supports:()=>false,escape:value=>String(value).replace(/[^\w-]/g,'')};w.CSS=globalThis.CSS;
 const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consumer));
 const {default:vue}=await import(new URL('node_modules/@vitejs/plugin-vue/dist/index.mjs',consumer));
-const result=await build({root:fileURLToPath(consumer),configFile:false,plugins:[vue()],logLevel:'error',build:{lib:{entry:fileURLToPath(new URL('runtime-entry.js',consumer)),formats:['es']},write:false,minify:false,rolldownOptions:{external:['vue']}}});
+const {createVueAutoImport}=await import(new URL('auto-import.config.js',consumer));
+const result=await build({root:fileURLToPath(consumer),configFile:false,plugins:[vue(),createVueAutoImport({generate:false})],logLevel:'error',build:{lib:{entry:fileURLToPath(new URL('runtime-entry.js',consumer)),formats:['es']},write:false,minify:false,rolldownOptions:{external:['vue']}}});
 const chunks=(Array.isArray(result)?result:[result]).flatMap(r=>r.output).filter(x=>x.type==='chunk'),output=chunks.find(x=>x.isEntry);assert.ok(output);const generated=new URL('.runtime-test/',consumer);await mkdir(generated,{recursive:true});for(const chunk of chunks){assert.ok(!chunk.fileName.includes('..')&&!chunk.fileName.startsWith('/'));const target=new URL(chunk.fileName,generated);await mkdir(new URL('./',target),{recursive:true});await writeFile(target,chunk.code);}
 const {createApp,nextTick,createStarterVuetify,Starter,SolyiUI}=await import(new URL(output.fileName+'?check='+Date.now(),generated));
 const warnings=[];const app=createApp(Starter);app.config.warnHandler=message=>warnings.push(message);app.use(createStarterVuetify()).use(SolyiUI);app.mount('#app');await nextTick();

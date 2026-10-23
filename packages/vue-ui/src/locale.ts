@@ -5,6 +5,7 @@ import {parseDateOnly} from '@solyi/core/date';
 export type SolLocaleCode='ko-KR'|'en-US';
 export type SolLocaleSource=MaybeRefOrGetter<Partial<SolLocale>|string>;
 export interface SolLocale {
+  validationRequired:string;validationInvalid:string;validationMinLength:(minimum:number)=>string;
   breadcrumb:string;steps:string;currentStep:string;completeStep:string;chartInvalid:string;chartCategory:string;chartValue:string;toastAccent:string;
   filesChoose:string;filesClear:string;dropFiles:string;filesRejected:string;fileRequired:string;unknownFileType:string;noFileExtension:string;duplicateFile:string;unsupportedFile:string;
   filesHelp:(accept:string,max:number,size:string)=>string;oversizedFile:(size:string)=>string;tooManyFiles:(max:number)=>string;fileRemove:string;fileType:(mime:string)=>string;
@@ -25,6 +26,7 @@ export interface SolLocale {
   timeHelp:(min:string,max:string,step:number)=>string;
 }
 export const koLocale:Readonly<SolLocale>=Object.freeze({
+  validationRequired:'필수 항목을 입력하거나 선택해 주세요.',validationInvalid:'입력값을 확인해 주세요.',validationMinLength:(minimum:number)=>`${minimum}자 이상 입력해 주세요.`,
   breadcrumb:'현재 위치',steps:'진행 단계',currentStep:'현재 단계',completeStep:'완료한 단계',chartInvalid:'유효한 0 이상의 값과 축 범위를 확인해 주세요.',chartCategory:'항목',chartValue:'값',toastAccent:'강조',fileRemove:'제거',fileType:(mime:string)=>({'text/plain':'텍스트','image/png':'PNG 이미지','image/jpeg':'JPEG 이미지','application/pdf':'PDF 문서'}[mime]||mime),
   filesChoose:'파일 선택',filesClear:'모두 제거',dropFiles:'파일을 여기에 놓거나 선택해 주세요.',filesRejected:'선택하지 못한 파일',fileRequired:'파일을 하나 이상 선택해 주세요.',unknownFileType:'MIME 정보 없음',noFileExtension:'확장자 없음',duplicateFile:'이미 선택한 파일입니다.',unsupportedFile:'허용하지 않는 파일 형식입니다.',
   filesHelp:(accept:string,max:number,size:string)=>`${accept||'모든 형식'} · 파일당 ${size} 이하 · 최대 ${num(max,'ko-KR')}개`,oversizedFile:(size:string)=>`파일당 ${size}를 초과했습니다.`,tooManyFiles:(max:number)=>`최대 ${num(max,'ko-KR')}개까지 선택할 수 있어요.`,
@@ -42,6 +44,7 @@ export const koLocale:Readonly<SolLocale>=Object.freeze({
   timeHelp:(min:string,max:string,step:number)=>`HH:mm · ${min}–${max} · ${step}분 간격`
 });
 export const enLocale:Readonly<SolLocale>=Object.freeze({
+  validationRequired:'Enter or choose a required value.',validationInvalid:'Check this value.',validationMinLength:(minimum:number)=>`Use at least ${minimum} characters.`,
   breadcrumb:'Breadcrumb',steps:'Progress steps',currentStep:'Current step',completeStep:'Completed step',chartInvalid:'Check nonnegative finite values and the axis range.',chartCategory:'Category',chartValue:'Value',toastAccent:'Accent',fileRemove:'Remove',fileType:(mime:string)=>({'text/plain':'Plain text','image/png':'PNG image','image/jpeg':'JPEG image','application/pdf':'PDF document'}[mime]||mime),
   filesChoose:'Choose files',filesClear:'Remove all',dropFiles:'Drop files here or use the choose button.',filesRejected:'Files not selected',fileRequired:'Choose at least one file.',unknownFileType:'MIME type unavailable',noFileExtension:'No extension',duplicateFile:'This file is already selected.',unsupportedFile:'This file type is not allowed.',
   filesHelp:(accept:string,max:number,size:string)=>`${accept||'All formats'} · Up to ${size} per file · Up to ${num(max,'en-US')} files`,oversizedFile:(size:string)=>`Exceeds ${size} per file.`,tooManyFiles:(max:number)=>`Choose at most ${num(max,'en-US')} files.`,

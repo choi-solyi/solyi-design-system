@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 defineProps<{ part?: string }>();
 const note = ref(''),
   amount = ref<number | null>(2),
@@ -12,10 +10,7 @@ const options = [
 ];
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    :title="part ? undefined : '여러 줄·숫자·태그'"
-  >
+  <SCard :heading-level="2" :title="part ? undefined : '여러 줄·숫자·태그'">
     <STextarea
       v-if="!part || part === 'textarea'"
       id="recipe-note"
@@ -40,11 +35,6 @@ const options = [
       :options="options"
       :max-selected="2"
     />
-    <p
-      v-if="!part"
-      role="status"
-    >
-      {{ amount }}개 · {{ tags.join(', ') || '선택 없음' }}
-    </p>
+    <p v-if="!part" role="status">{{ amount }}개 · {{ tags.join(', ') || '선택 없음' }}</p>
   </SCard>
 </template>

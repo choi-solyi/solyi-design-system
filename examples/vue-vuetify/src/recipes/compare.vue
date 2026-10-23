@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const choice = ref<string | null>('simple');
 const options = [
   {
@@ -16,10 +14,7 @@ const options = [
 ];
 </script>
 <template>
-  <SCard
-    :heading-level="2"
-    title="같은 속성의 선택"
-  >
+  <SCard :heading-level="2" title="같은 속성의 선택">
     <SRadioGroup
       id="recipe-compare"
       v-model="choice"
@@ -28,8 +23,6 @@ const options = [
       layout="cards"
       :options="options"
     />
-    <p role="status">
-      선택: {{ choice === 'simple' ? '가볍게 기록' : '차근차근 정리' }}
-    </p>
+    <p role="status">선택: {{ choice === 'simple' ? '가볍게 기록' : '차근차근 정리' }}</p>
   </SCard>
 </template>
