@@ -42,8 +42,5 @@
   },
   "scripts": {
     "build": "vite build && tsc -p tsconfig.json && node ../../scripts/finalize-vue-package.mjs"
-  },
-  "dependencies": {
-    "solyi-design-system": "file:../.."
   }
 }
