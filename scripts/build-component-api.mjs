@@ -159,6 +159,10 @@ for (const [name, group, description, exampleRoute, example] of records) {
     const def = defaultNode ? text(defaultNode).replace(/^\(\)\s*=>\s*/,'') : type==='boolean'?'false':'undefined';
     return {name,type,required:/^true\b/.test(text(settings.find(e=>e[0]==='required')?.[1])),default:def,description:propertyDescriptions[name] || `${name} 설정값입니다.`,values:allowedValues(type)};
   });
+  if (name === 'SNumberInput') {
+    props.find(prop => prop.name === 'step').description =
+      '양의 유한한 증감 간격입니다. JavaScript Number로 정확한 별도 결과를 표현할 수 없거나 범위를 넘는 증감은 실행하지 않습니다.'
+  }
   const emits = resolve(property(component.node,component.file,'emits'),component.file);
   const events = entries(emits.node,emits.file).map(([name,fn])=>({name,signature:signature(fn),description:name==='update:modelValue'?'소비 앱의 모델 값을 갱신합니다.':name.startsWith('update:')?'해당 상태의 변경을 소비 앱에 전달합니다.':name==='invalid'?'검증 실패 문구를 전달합니다.':name==='close'?(fn.parameters?.length?'닫힌 이유를 전달합니다.':'닫힌 뒤 전달합니다.'):name==='open'?'패널이 열린 뒤 전달합니다.':name==='retry'?'소비 앱에 재시도 처리를 요청합니다.':`${name} 동작이 발생했을 때 전달합니다.`}));
   const setup = property(component.node,component.file,'setup');

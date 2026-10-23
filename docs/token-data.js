@@ -1,6 +1,6 @@
 // Generated from tokens.json.
 export default {
-  "version": "0.14.0",
+  "version": "0.14.1",
   "format": "Solyi plain JSON export (not a DTCG interchange format)",
   "description": "CSS role tokens shared by the documentation and its examples. Violet is a starting theme, not a permanent brand requirement.",
   "base": {

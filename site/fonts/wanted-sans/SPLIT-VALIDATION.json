@@ -1,0 +1,984 @@
+{
+  "method": "Official unmodified split files; full cmap/CSS union, axes/line metrics, all encoded glyph outlines and advance widths at each stated weight.",
+  "fontToolsVersion": "4.67.0",
+  "original": {
+    "sha256": "4259e7e9a172e634c2cb419d793b84148990316341e910443e5d10965b2c8f16",
+    "bytes": 1289292,
+    "cmapCount": 12032,
+    "cmapRanges": "U+0020-007E,U+00A0-0113,U+0116-0125,U+0127-012B,U+012E-0137,U+0139-013E,U+0141-0148,U+014C-014D,U+0150-0165,U+0168-017E,U+0186,U+0189,U+018E,U+0192,U+01CD-01D4,U+01DD,U+01E6-01E9,U+01FE-01FF,U+0201,U+0218-021B,U+0227-0229,U+0232-0233,U+0237,U+0245,U+0250-0252,U+0254,U+0258-0259,U+0261,U+0268,U+026F,U+0279,U+028C-028E,U+029E,U+02B0,U+02B2-02B3,U+02B7-02B8,U+02BD,U+02C6-02C7,U+02D8-02DD,U+02E1-02E3,U+0300-0304,U+0306-0308,U+030A-030C,U+030F,U+0312,U+0314,U+0316-0317,U+0323-0328,U+032C-0331,U+0335,U+1D43,U+1D47-1D49,U+1D4D,U+1D4F-1D50,U+1D52,U+1D56-1D58,U+1D5B,U+1D62-1D65,U+1D9C,U+1DA0,U+1DBB,U+1E04-1E05,U+1E0C-1E0F,U+1E12-1E13,U+1E20-1E21,U+1E24-1E25,U+1E2A-1E2B,U+1E34-1E4B,U+1E5C-1E5F,U+1E62-1E63,U+1E6C-1E71,U+1E80-1E85,U+1E8E-1E8F,U+1E92-1E97,U+1EA0-1EA1,U+1EAC-1EAD,U+1EB6-1EB9,U+1EBC-1EBD,U+1EC6-1EC7,U+1ECA-1ECD,U+1ED8-1ED9,U+1EE4-1EE5,U+1EF2-1EF5,U+1EF8-1EF9,U+2000-200D,U+2012-2015,U+2018-201A,U+201C-201E,U+2020-2023,U+2025-2026,U+202F-2033,U+2039-203B,U+2042-2044,U+204E,U+2051,U+2060,U+2070-2071,U+2074-2079,U+207F-2089,U+2090-2093,U+2095-209C,U+20A9,U+20AC,U+20DD-20DE,U+2103,U+2109,U+2122,U+215B-215E,U+2190-2199,U+2212,U+2248,U+2260,U+2460-2468,U+24B6-24CF,U+24D2,U+24EA,U+24FF,U+25A0-25A2,U+25CB,U+25CF,U+25E6,U+2605-2606,U+2661,U+2665,U+26A0,U+2713,U+2717,U+2776-277E,U+2780-2788,U+278A-2792,U+2C7C,U+2E3A-2E3B,U+3000,U+3008-3011,U+3014-3015,U+3131-3164,U+321C,U+AC00-D7A3,U+FB00-FB04,U+FEFF,U+107A5,U+1F130-1F149,U+1F150-1F169,U+1F170-1F189,U+F0000-F0003,U+100000-100001,U+100092-100093,U+100128-10012B,U+10012E-100131,U+10013E,U+100184-100185,U+1001FE-1001FF,U+1002B4-1002B5,U+1002C2-1002C3,U+100479",
+    "glyphCount": 12663,
+    "axes": [
+      [
+        "wght",
+        400.0,
+        400.0,
+        1000.0
+      ]
+    ],
+    "metrics": {
+      "unitsPerEm": 2048,
+      "hhea": {
+        "ascent": 1950,
+        "descent": -494,
+        "lineGap": 0
+      },
+      "OS/2": {
+        "sTypoAscender": 1752,
+        "sTypoDescender": -296,
+        "sTypoLineGap": 0,
+        "usWinAscent": 1950,
+        "usWinDescent": 494,
+        "sxHeight": 1032,
+        "sCapHeight": 1448
+      }
+    }
+  },
+  "cssSha256": "69bdc767d9fd55fb9ba812f05d6952f9f716b566ab7e3cf90ebe826f0b3c46c0",
+  "weightsCompared": [
+    400,
+    700,
+    1000
+  ],
+  "faceCount": 93,
+  "splitCount": 92,
+  "actualUnionCount": 12032,
+  "effectiveUnionCount": 12032,
+  "missingOriginalGlyphSignatures": {
+    "400": 0,
+    "700": 0,
+    "1000": 0
+  },
+  "errors": [],
+  "files": [
+    {
+      "local": "woff2/WantedSansVariable.split.0.woff2",
+      "sha256": "30cd0f2fb8b076baa281761f95c650e3dd543638e7f8e7b0a95bdcdba6eecbe8",
+      "bytes": 25632,
+      "cmapCount": 108,
+      "cmapRanges": "U+D723-D728,U+D72A-D733,U+D735-D748,U+D74A-D74F,U+D752-D753,U+D755-D757,U+D75A-D75F,U+D762-D764,U+D766-D768,U+D76A-D76B,U+D76D-D76F,U+D771-D787,U+D789-D78B,U+D78D-D78F,U+D791-D797,U+D79A,U+D79C,U+D79E-D7A3",
+      "effectiveCmapCount": 108,
+      "glyphCount": 123,
+      "comparedGlyphInstances": 324
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.1.woff2",
+      "sha256": "2673730caeb4dedfb1265421dec80f8b3d3503a014c657c0afab27e30f21adb3",
+      "bytes": 34604,
+      "cmapCount": 154,
+      "cmapRanges": "U+D679-D68B,U+D68E-D69E,U+D6A0,U+D6A2-D6A7,U+D6A9-D6C3,U+D6C6-D6C7,U+D6C9-D6CB,U+D6CD-D6D3,U+D6D5-D6D6,U+D6D8-D6E3,U+D6E5-D6E7,U+D6E9-D6FB,U+D6FD-D717,U+D719-D71F,U+D721-D722",
+      "effectiveCmapCount": 154,
+      "glyphCount": 169,
+      "comparedGlyphInstances": 462
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.2.woff2",
+      "sha256": "4fdb63527886350a70c14f26dfce7652eb704e25c3a2df0c3eddb7e69b794f63",
+      "bytes": 31040,
+      "cmapCount": 154,
+      "cmapRanges": "U+D5BC-D5C7,U+D5CA-D5CB,U+D5CD-D5CF,U+D5D1-D5D7,U+D5D9-D5DA,U+D5DC,U+D5DE-D5E3,U+D5E6-D5E7,U+D5E9-D5EB,U+D5ED-D5F6,U+D5F8,U+D5FA-D5FF,U+D602-D603,U+D605-D607,U+D609-D60F,U+D612-D613,U+D616-D61B,U+D61D-D637,U+D63A-D63B,U+D63D-D63F,U+D641-D647,U+D64A-D64C,U+D64E-D653,U+D656-D657,U+D659-D65B,U+D65D-D666,U+D668,U+D66A-D678",
+      "effectiveCmapCount": 154,
+      "glyphCount": 169,
+      "comparedGlyphInstances": 462
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.3.woff2",
+      "sha256": "33d5f9d9b4a67a832ce63e0ae4c3390f23f8e80bfe191be1c26d1bc54a143609",
+      "bytes": 26904,
+      "cmapCount": 154,
+      "cmapRanges": "U+D507,U+D509-D50B,U+D50D-D513,U+D515-D53B,U+D53E-D53F,U+D541-D543,U+D545-D54C,U+D54E,U+D550,U+D552-D557,U+D55A-D55B,U+D55D-D55F,U+D561-D564,U+D566-D567,U+D56A,U+D56C,U+D56E-D573,U+D576-D577,U+D579-D583,U+D585-D586,U+D58A-D5A4,U+D5A6-D5BB",
+      "effectiveCmapCount": 154,
+      "glyphCount": 169,
+      "comparedGlyphInstances": 462
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.4.woff2",
+      "sha256": "44d56cbe57945d48e38dc26e0f2f7fbd904379fc296f508243fad8a5e4f936a2",
+      "bytes": 26168,
+      "cmapCount": 154,
+      "cmapRanges": "U+D464-D477,U+D47A-D47B,U+D47D-D47F,U+D481-D487,U+D489-D48A,U+D48C,U+D48E-D4E7,U+D4E9-D503,U+D505-D506",
+      "effectiveCmapCount": 154,
+      "glyphCount": 169,
+      "comparedGlyphInstances": 462
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.5.woff2",
+      "sha256": "01ef1896f340096fafb2a9dd20932a0f3ceab5da3746239972bed838e203e495",
+      "bytes": 77896,
+      "cmapCount": 570,
+      "cmapRanges": "U+D3BF-D3C7,U+D3CA-D3CF,U+D3D1-D3EB,U+D3EE-D3EF,U+D3F1-D3F3,U+D3F5-D3FB,U+D3FD-D600",
+      "effectiveCmapCount": 570,
+      "glyphCount": 585,
+      "comparedGlyphInstances": 1710
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.6.woff2",
+      "sha256": "c82ca7770f16c4e50fc35af3bce62d9045fe3f0b0c44a6716c763907e9a865fa",
+      "bytes": 25120,
+      "cmapCount": 155,
+      "cmapRanges": "U+D2FF,U+D302-D304,U+D306-D30B,U+D30F,U+D311-D313,U+D315-D31B,U+D31E,U+D322-D324,U+D326-D327,U+D32A-D32B,U+D32D-D32F,U+D331-D337,U+D339-D33C,U+D33E-D37B,U+D37E-D37F,U+D381-D383,U+D385-D38B,U+D38E-D390,U+D392-D397,U+D39A-D39B,U+D39D-D39F,U+D3A1-D3A7,U+D3A9-D3AA,U+D3AC,U+D3AE-D3B3,U+D3B5-D3B7,U+D3B9-D3BB,U+D3BD-D3BE",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.7.woff2",
+      "sha256": "3d01d1943979ba868c478fee7a8d13269b9e7d0ed3f011124fe7aa7ad8c83d96",
+      "bytes": 28732,
+      "cmapCount": 155,
+      "cmapRanges": "U+D257-D27F,U+D281-D29B,U+D29D-D29F,U+D2A1-D2AB,U+D2AD-D2B7,U+D2BA-D2BB,U+D2BD-D2BF,U+D2C1-D2C7,U+D2C9-D2EF,U+D2F2-D2F3,U+D2F5-D2F7,U+D2F9-D2FE",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.8.woff2",
+      "sha256": "4616ddf3f54e4a149c7b0c4822991cda931763bee121b0de3eb51d17487cb617",
+      "bytes": 26736,
+      "cmapCount": 155,
+      "cmapRanges": "U+D1B4,U+D1B6-D1F3,U+D1F5-D22B,U+D22E-D22F,U+D231-D233,U+D235-D23B,U+D23D-D240,U+D242-D256",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.9.woff2",
+      "sha256": "83a1abb8e924ff3fe5ee7f2e2c1d639267c014a20ae5311dbb42b77f7e0fac5c",
+      "bytes": 25984,
+      "cmapCount": 155,
+      "cmapRanges": "U+D105-D12F,U+D132-D133,U+D135-D137,U+D139-D13F,U+D141-D142,U+D144,U+D146-D14B,U+D14E-D14F,U+D151-D153,U+D155-D15B,U+D15E-D187,U+D189-D19F,U+D1A2-D1A3,U+D1A5-D1A7,U+D1A9-D1AF,U+D1B2-D1B3",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.10.woff2",
+      "sha256": "dc7d3856c5a4adc28160ea2fa040d97ddb7422b52d74b4327f1a6b6e98f112f9",
+      "bytes": 28708,
+      "cmapCount": 155,
+      "cmapRanges": "U+D04B-D04F,U+D051-D057,U+D059-D06B,U+D06D-D06F,U+D071-D073,U+D075-D07B,U+D07E-D0A3,U+D0A6-D0A7,U+D0A9-D0AB,U+D0AD-D0B3,U+D0B6,U+D0B8,U+D0BA-D0BF,U+D0C2-D0C3,U+D0C5-D0C7,U+D0C9-D0CF,U+D0D2,U+D0D6-D0DB,U+D0DE-D0DF,U+D0E1-D0E3,U+D0E5-D0EB,U+D0EE-D0F0,U+D0F2-D104",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.11.woff2",
+      "sha256": "bb2c33c696c0f2bf7c6e879f5ec5a7d9d684955d531a03bd569bc2ca9ffc98c5",
+      "bytes": 28840,
+      "cmapCount": 155,
+      "cmapRanges": "U+CFA2-CFC3,U+CFC5-CFDF,U+CFE2-CFE3,U+CFE5-CFE7,U+CFE9-CFF4,U+CFF6-CFFB,U+CFFD-CFFF,U+D001-D003,U+D005-D017,U+D019-D033,U+D036-D037,U+D039-D03B,U+D03D-D04A",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.12.woff2",
+      "sha256": "14122c23525ffc3a78ec65f9ac0abf0adab0a567a8eb38ff7f43708535aa859f",
+      "bytes": 27688,
+      "cmapCount": 155,
+      "cmapRanges": "U+CEF0-CEF3,U+CEF6,U+CEF9-CEFF,U+CF01-CF03,U+CF05-CF07,U+CF09-CF0F,U+CF11-CF12,U+CF14-CF1B,U+CF1D-CF1F,U+CF21-CF2F,U+CF31-CF53,U+CF56-CF57,U+CF59-CF5B,U+CF5D-CF63,U+CF66,U+CF68,U+CF6A-CF6F,U+CF71-CF84,U+CF86-CF8B,U+CF8D-CFA1",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.13.woff2",
+      "sha256": "8497912e9bc27dfe4e858c3ec167c12074fe21afd921fab3f285436fea1bc192",
+      "bytes": 27820,
+      "cmapCount": 155,
+      "cmapRanges": "U+CE3C-CE57,U+CE5A-CE5B,U+CE5D-CE5F,U+CE61-CE67,U+CE6A,U+CE6C,U+CE6E-CE73,U+CE76-CE77,U+CE79-CE7B,U+CE7D-CE83,U+CE85-CE88,U+CE8A-CE8F,U+CE91-CE93,U+CE95-CE97,U+CE99-CE9F,U+CEA2,U+CEA4-CEAB,U+CEAD-CEE3,U+CEE6-CEE7,U+CEE9-CEEB,U+CEED-CEEF",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.14.woff2",
+      "sha256": "34b9a8fbc5d1e0e6f03f6b4e9651e66e952f6c4516d5e0b54ae8fa605a770eeb",
+      "bytes": 27452,
+      "cmapCount": 155,
+      "cmapRanges": "U+CD92-CD93,U+CD96-CD97,U+CD99-CD9B,U+CD9D-CDA3,U+CDA6-CDA8,U+CDAA-CDAF,U+CDB1-CDC3,U+CDC5-CDCB,U+CDCD-CDE7,U+CDE9-CE03,U+CE05-CE1F,U+CE22-CE34,U+CE36-CE3B",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.15.woff2",
+      "sha256": "e61e866b3866de809b65298b609165239bceb5c2e722ea0adf672a424e07320b",
+      "bytes": 28988,
+      "cmapCount": 155,
+      "cmapRanges": "U+CCEF-CD07,U+CD0A-CD0B,U+CD0D-CD1A,U+CD1C,U+CD1E-CD2B,U+CD2D-CD5B,U+CD5D-CD77,U+CD79-CD91",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.16.woff2",
+      "sha256": "6a070884744fb74e234bd39fe1434aefe7fb848b7c054af5e52b6277a74af6d1",
+      "bytes": 26896,
+      "cmapCount": 155,
+      "cmapRanges": "U+CC3F-CC43,U+CC46-CC47,U+CC49-CC4B,U+CC4D-CC53,U+CC55-CC58,U+CC5A-CC5F,U+CC61-CC97,U+CC9A-CC9B,U+CC9D-CC9F,U+CCA1-CCA7,U+CCAA,U+CCAC,U+CCAE-CCB3,U+CCB6-CCB7,U+CCB9-CCBB,U+CCBD-CCCF,U+CCD1-CCE3,U+CCE5-CCEE",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.17.woff2",
+      "sha256": "b2023436fd52bca5de5f311fb3e1d44caace700375e62e2aceb0540308729703",
+      "bytes": 31528,
+      "cmapCount": 155,
+      "cmapRanges": "U+CB91-CBD3,U+CBD5-CBE3,U+CBE5-CC0B,U+CC0E-CC0F,U+CC11-CC13,U+CC15-CC1B,U+CC1D-CC20,U+CC23-CC27,U+CC2A-CC2B,U+CC2D,U+CC2F,U+CC31-CC37,U+CC3A,U+CC3C",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.18.woff2",
+      "sha256": "41fdf1557b1f459a71138edad9e1ef9596cfd2b303cac4fd4aa8906fe12bab68",
+      "bytes": 32232,
+      "cmapCount": 155,
+      "cmapRanges": "U+CAF4-CB47,U+CB4A-CB90",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.19.woff2",
+      "sha256": "9e7288e7532831088188e31bb05a03682fc1a4be57617bc6dca84ff8dc025768",
+      "bytes": 27756,
+      "cmapCount": 155,
+      "cmapRanges": "U+CA4A-CA4B,U+CA4E-CA4F,U+CA51-CA53,U+CA55-CA5B,U+CA5D-CA60,U+CA62-CA83,U+CA85-CABB,U+CABE-CABF,U+CAC1-CAC3,U+CAC5-CACB,U+CACD-CAD0,U+CAD2,U+CAD4-CAD8,U+CADA-CAF3",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.20.woff2",
+      "sha256": "b5921ba664a5b005f6c634f1ba375c38de336d5226215cd1fa8168af81b5d95e",
+      "bytes": 28388,
+      "cmapCount": 155,
+      "cmapRanges": "U+C996-C997,U+C99A-C99C,U+C99E-C9BF,U+C9C2-C9C3,U+C9C5-C9C7,U+C9C9-C9CF,U+C9D2,U+C9D4,U+C9D7-C9D8,U+C9DB,U+C9DE-C9DF,U+C9E1-C9E3,U+C9E5-C9E6,U+C9E8-C9EB,U+C9EE-C9F0,U+C9F2-C9F7,U+C9F9-CA0B,U+CA0D-CA28,U+CA2A-CA49",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.21.woff2",
+      "sha256": "d6028a71234765f25712e5edd405c4e90ee4bf554e7f7a4e89601d738e1b4e1d",
+      "bytes": 29844,
+      "cmapCount": 155,
+      "cmapRanges": "U+C8E9-C8F4,U+C8F6-C8FB,U+C8FE-C8FF,U+C901-C903,U+C905-C90B,U+C90E-C910,U+C912-C917,U+C919-C92B,U+C92D-C94F,U+C951-C953,U+C955-C96B,U+C96D-C973,U+C975-C987,U+C98A-C98B,U+C98D-C98F,U+C991-C995",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.22.woff2",
+      "sha256": "10a25a3a3800d93e468ffd557e8c313981579ed4948c1e1e7a08062755de2e84",
+      "bytes": 30712,
+      "cmapCount": 155,
+      "cmapRanges": "U+C841-C84B,U+C84D-C86F,U+C872-C873,U+C875-C877,U+C879-C87F,U+C882-C884,U+C887-C88A,U+C88D-C8C3,U+C8C5-C8DF,U+C8E1-C8E8",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.23.woff2",
+      "sha256": "8aac36453482f88c9b98ad493db08fc971427f6e60783968f0d8a6e332d86ce7",
+      "bytes": 25312,
+      "cmapCount": 155,
+      "cmapRanges": "U+C779-C77B,U+C77E-C782,U+C786,U+C78B,U+C78D,U+C78F,U+C792-C793,U+C795,U+C797,U+C799-C79F,U+C7A2,U+C7A7-C7AB,U+C7AE-C7BB,U+C7BD-C7C0,U+C7C2-C7C7,U+C7C9-C7DC,U+C7DE-C7FF,U+C802-C803,U+C805-C807,U+C809,U+C80B-C80F,U+C812,U+C814,U+C817-C81B,U+C81E-C81F,U+C821-C823,U+C825-C82E,U+C830-C837,U+C839-C83B,U+C83D-C840",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.24.woff2",
+      "sha256": "98ee32185c8e56e81f27f12ec777a71194ac0de85b9aaca8150cf504ce3f3f09",
+      "bytes": 32604,
+      "cmapCount": 155,
+      "cmapRanges": "U+C6BB-C6BF,U+C6C2,U+C6C4,U+C6C6-C6CB,U+C6CE-C6CF,U+C6D1-C6D3,U+C6D5-C6DB,U+C6DD-C6DF,U+C6E1-C6E7,U+C6E9-C6EB,U+C6ED-C6EF,U+C6F1-C6F8,U+C6FA-C703,U+C705-C707,U+C709-C70B,U+C70D-C716,U+C718,U+C71A-C71F,U+C722-C723,U+C725-C727,U+C729-C734,U+C736-C73B,U+C73E-C73F,U+C741-C743,U+C745-C74B,U+C74E-C750,U+C752-C757,U+C759-C773,U+C776-C777",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.25.woff2",
+      "sha256": "059fe7713bbce771b2a85f49d8d0f17d47486c7976391850dbc9284795489e69",
+      "bytes": 30684,
+      "cmapCount": 155,
+      "cmapRanges": "U+C5F5-C5FB,U+C5FE,U+C602-C605,U+C607,U+C609-C60F,U+C611-C61A,U+C61C-C623,U+C626-C627,U+C629-C62B,U+C62D,U+C62F-C632,U+C636,U+C638,U+C63A-C63F,U+C642-C643,U+C645-C647,U+C649-C652,U+C656-C65B,U+C65D-C65F,U+C661-C663,U+C665-C677,U+C679-C67B,U+C67D-C693,U+C696-C697,U+C699-C69B,U+C69D-C6A3,U+C6A6,U+C6A8,U+C6AA-C6AF,U+C6B2-C6B3,U+C6B5-C6B7,U+C6B9-C6BA",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.26.woff2",
+      "sha256": "ab7fe05d14f1eaa6b2df7494ae8dd7e7e0268fbcd336a7620c6cf79694c80fae",
+      "bytes": 27448,
+      "cmapCount": 155,
+      "cmapRanges": "U+C517-C527,U+C52A-C52B,U+C52D-C52F,U+C531-C538,U+C53A,U+C53C,U+C53E-C543,U+C546-C547,U+C54B,U+C54D-C552,U+C556,U+C55A-C55B,U+C55D,U+C55F,U+C562-C563,U+C565-C567,U+C569-C56F,U+C572,U+C574,U+C576-C57B,U+C57E-C57F,U+C581-C583,U+C585-C586,U+C588-C58B,U+C58E,U+C590,U+C592-C596,U+C599-C5B3,U+C5B6-C5B7,U+C5BA,U+C5BE-C5C3,U+C5CA-C5CB,U+C5CD,U+C5CF,U+C5D2-C5D3,U+C5D5-C5D7,U+C5D9-C5DF,U+C5E1-C5E2,U+C5E4,U+C5E6-C5EB,U+C5EF,U+C5F1-C5F3",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.27.woff2",
+      "sha256": "0c1a916c45adae6d52471f998492d3eb1963cad6bbb4d553e2141c2d44cdf2c6",
+      "bytes": 29448,
+      "cmapCount": 155,
+      "cmapRanges": "U+C475-C4EF,U+C4F2-C4F3,U+C4F5-C4F7,U+C4F9-C4FF,U+C502-C50B,U+C50D-C516",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.28.woff2",
+      "sha256": "5c1d060047d96c8ced7b9504fd1ebb9be091b76d72a3e6c1d2921c55cf098c53",
+      "bytes": 29840,
+      "cmapCount": 155,
+      "cmapRanges": "U+C3D0-C3D7,U+C3DA-C3DB,U+C3DD-C3DE,U+C3E1-C3EC,U+C3EE-C3F3,U+C3F5-C42B,U+C42D-C463,U+C466-C474",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.29.woff2",
+      "sha256": "155200ebeaa2c38d738c25124ccca6403236b13e9d60182746fc5be16ed5db98",
+      "bytes": 29204,
+      "cmapCount": 155,
+      "cmapRanges": "U+C32B-C367,U+C36A-C36B,U+C36D-C36F,U+C371-C377,U+C37A-C37B,U+C37E-C383,U+C385-C387,U+C389-C3CF",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.30.woff2",
+      "sha256": "c2ed412db31792ecda5017965020ea6b5806e93c30709adf5dab44ac57c0c739",
+      "bytes": 32008,
+      "cmapCount": 155,
+      "cmapRanges": "U+C26A-C26B,U+C26D-C26F,U+C271-C273,U+C275-C27B,U+C27E-C287,U+C289-C28F,U+C291-C297,U+C299-C29A,U+C29C-C2A3,U+C2A5-C2A7,U+C2A9-C2AB,U+C2AD-C2B3,U+C2B6,U+C2B8,U+C2BA-C2BB,U+C2BD-C2DB,U+C2DE-C2DF,U+C2E1-C2E2,U+C2E5-C2EA,U+C2EE,U+C2F0,U+C2F2-C2F5,U+C2F7,U+C2FA-C2FB,U+C2FD-C2FF,U+C301-C307,U+C309-C30C,U+C30E-C312,U+C315-C323,U+C325-C328,U+C32A",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.31.woff2",
+      "sha256": "4cdbe9043f2c50ae935beaa5031edcd039083095ed9c078ef9888f14ed5a316b",
+      "bytes": 30956,
+      "cmapCount": 155,
+      "cmapRanges": "U+C1BC-C1C3,U+C1C5-C1DF,U+C1E1-C1FB,U+C1FD-C203,U+C205-C20C,U+C20E,U+C210-C217,U+C21A-C21B,U+C21D-C21E,U+C221-C227,U+C229-C22A,U+C22C,U+C22E,U+C230,U+C233-C24F,U+C251-C257,U+C259-C269",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.32.woff2",
+      "sha256": "ef051eb96baabf155130eefc5ca044e0c6f2c62d3914e998f540cc6578bf09ba",
+      "bytes": 27264,
+      "cmapCount": 155,
+      "cmapRanges": "U+C101-C11B,U+C11F,U+C121-C123,U+C125-C12B,U+C12E,U+C132-C137,U+C13A-C13B,U+C13D-C13F,U+C141-C147,U+C14A,U+C14C-C153,U+C155-C157,U+C159-C15B,U+C15D-C166,U+C169-C16F,U+C171-C177,U+C179-C18B,U+C18E-C18F,U+C191-C193,U+C195-C19B,U+C19D-C19E,U+C1A0,U+C1A2-C1A4,U+C1A6-C1BB",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.33.woff2",
+      "sha256": "589b8ba8e3fc8a3634c7f3bc6565502bb991a4b97c735d1d59a23079ac55b72c",
+      "bytes": 26808,
+      "cmapCount": 155,
+      "cmapRanges": "U+C049-C057,U+C059-C05B,U+C05D-C05F,U+C061-C067,U+C069-C08F,U+C091-C0AB,U+C0AE-C0AF,U+C0B1-C0B3,U+C0B5,U+C0B7-C0BB,U+C0BE,U+C0C2-C0C7,U+C0CA-C0CB,U+C0CD-C0CF,U+C0D1-C0D7,U+C0D9-C0DA,U+C0DC,U+C0DE-C0E3,U+C0E5-C0EB,U+C0ED-C0F3,U+C0F6,U+C0F8,U+C0FA-C0FF",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.34.woff2",
+      "sha256": "cda21b98f548005373dafb35799a7e595cac94d4ce51dad83671d50bf8cc43a2",
+      "bytes": 27192,
+      "cmapCount": 155,
+      "cmapRanges": "U+BFA7-BFAF,U+BFB1-BFC4,U+BFC6-BFCB,U+BFCE-BFCF,U+BFD1-BFD3,U+BFD5-BFDB,U+BFDD-C048",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.35.woff2",
+      "sha256": "cbd27cc8aa443193c721358642d65d096550569c6f709b871e6d2037cf3ab2a0",
+      "bytes": 26676,
+      "cmapCount": 155,
+      "cmapRanges": "U+BF07,U+BF09-BF3F,U+BF41-BF4F,U+BF52-BF54,U+BF56-BFA6",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.36.woff2",
+      "sha256": "213e5523012e2e93c8a81eef6923d733187c577d8399c3db7516a3a89caa0338",
+      "bytes": 22164,
+      "cmapCount": 155,
+      "cmapRanges": "U+BE56,U+BE58,U+BE5C-BE5F,U+BE62-BE63,U+BE65-BE67,U+BE69-BE74,U+BE76-BE7B,U+BE7E-BE7F,U+BE81-BE8E,U+BE90,U+BE92-BEA7,U+BEA9-BECF,U+BED2-BED3,U+BED5-BED6,U+BED9-BEE3,U+BEE6-BF06",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.37.woff2",
+      "sha256": "3ab29a74777d984089b8f148081e1c4c78597579b1d5b04400dfb91b69f13df8",
+      "bytes": 27004,
+      "cmapCount": 155,
+      "cmapRanges": "U+BDB0-BDD3,U+BDD5-BDEF,U+BDF1-BE0B,U+BE0D-BE0F,U+BE11-BE13,U+BE15-BE43,U+BE46-BE47,U+BE49-BE4B,U+BE4D-BE53",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.38.woff2",
+      "sha256": "4932123b8f3a1051e3b007f4036eda4ce53420cdd1a3fa82fbab3f662c06d9c1",
+      "bytes": 26624,
+      "cmapCount": 155,
+      "cmapRanges": "U+BD03,U+BD06,U+BD08,U+BD0A-BD0F,U+BD11-BD22,U+BD25-BD47,U+BD49-BD58,U+BD5A-BD7F,U+BD82-BD83,U+BD85-BD87,U+BD8A-BD8F,U+BD91-BD92,U+BD94,U+BD96-BD98,U+BD9A-BDAF",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.39.woff2",
+      "sha256": "87ab66b7a0667622c1125a9eee13bede238f662f4af863b72007f8e0b1c387bd",
+      "bytes": 23120,
+      "cmapCount": 155,
+      "cmapRanges": "U+BC4E-BC83,U+BC86-BC87,U+BC89-BC8B,U+BC8D-BC93,U+BC96,U+BC98,U+BC9B-BC9F,U+BCA2-BCA3,U+BCA5-BCA7,U+BCA9-BCB2,U+BCB4-BCBB,U+BCBE-BCBF,U+BCC1-BCC3,U+BCC5-BCCC,U+BCCE-BCD0,U+BCD2-BCD4,U+BCD6-BCF3,U+BCF7,U+BCF9-BCFB,U+BCFD-BD02",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.40.woff2",
+      "sha256": "ac90cb63075af13001e9d0864f21ac2d80c466d7ca98c3233941bb2fd12d1437",
+      "bytes": 25712,
+      "cmapCount": 155,
+      "cmapRanges": "U+BB90-BBA3,U+BBA5-BBAB,U+BBAD-BBBF,U+BBC1-BBF7,U+BBFA-BBFB,U+BBFD-BBFE,U+BC01-BC07,U+BC09-BC0A,U+BC0E,U+BC10,U+BC12-BC13,U+BC17,U+BC19-BC1A,U+BC1E,U+BC20-BC23,U+BC26,U+BC28,U+BC2A-BC2C,U+BC2E-BC2F,U+BC32-BC33,U+BC35-BC37,U+BC39-BC3F,U+BC41-BC42,U+BC44,U+BC46-BC48,U+BC4A-BC4D",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.41.woff2",
+      "sha256": "a5293e745c4dbb66ff56a655768730e1f5d683273b8f49ee02693d2c0f8d20e4",
+      "bytes": 27128,
+      "cmapCount": 155,
+      "cmapRanges": "U+BAE6-BAFB,U+BAFD-BB17,U+BB19-BB33,U+BB37,U+BB39-BB3A,U+BB3D-BB43,U+BB45-BB46,U+BB48,U+BB4A-BB4F,U+BB51-BB53,U+BB55-BB57,U+BB59-BB62,U+BB64-BB8F",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.42.woff2",
+      "sha256": "90933a3e05c2aabad720507386a3b356b8571af1c5f3ea0aa19366d0482426c3",
+      "bytes": 23608,
+      "cmapCount": 155,
+      "cmapRanges": "U+BA30-BA37,U+BA3A-BA3B,U+BA3D-BA3F,U+BA41-BA47,U+BA49-BA4A,U+BA4C,U+BA4E-BA53,U+BA56-BA57,U+BA59-BA5B,U+BA5D-BA63,U+BA65-BA66,U+BA68-BA6F,U+BA71-BA73,U+BA75-BA77,U+BA79-BA84,U+BA86,U+BA88-BAA7,U+BAAA,U+BAAD-BAAF,U+BAB1-BAB7,U+BABA,U+BABC,U+BABE-BAE5",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.43.woff2",
+      "sha256": "5f4741c660c9211398fdfdaa90e1fc588866e8abbe5778b9f3aa836d5cc5ba59",
+      "bytes": 25312,
+      "cmapCount": 155,
+      "cmapRanges": "U+B96E-B973,U+B976-B977,U+B979-B97B,U+B97D-B983,U+B986,U+B988,U+B98A-B98D,U+B98F-B9AB,U+B9AE-B9AF,U+B9B1-B9B3,U+B9B5-B9BB,U+B9BE,U+B9C0,U+B9C2-B9C7,U+B9CA-B9CB,U+B9CD,U+B9D2-B9D7,U+B9DA,U+B9DC,U+B9DF-B9E0,U+B9E2,U+B9E6-B9E7,U+B9E9-B9F3,U+B9F6,U+B9F8,U+B9FB-BA2F",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.44.woff2",
+      "sha256": "e948f6ef4825eef12c8b65dd071e0ca767480a2f50aa04f26ec945a7b1c379af",
+      "bytes": 27224,
+      "cmapCount": 155,
+      "cmapRanges": "U+B8BF-B8CB,U+B8CD-B8E0,U+B8E2-B8E7,U+B8EA-B8EB,U+B8ED-B8EF,U+B8F1-B8F7,U+B8FA,U+B8FC,U+B8FE-B903,U+B905-B917,U+B919-B91F,U+B921-B93B,U+B93D-B957,U+B95A-B95B,U+B95D-B95F,U+B961-B967,U+B969-B96C",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.45.woff2",
+      "sha256": "27d088b8af55d70bc0843eb1fdfc81029c1d6a97f7df7b384081c0e6377e98fc",
+      "bytes": 28068,
+      "cmapCount": 155,
+      "cmapRanges": "U+B80D-B80F,U+B811-B817,U+B81A,U+B81C-B823,U+B826-B827,U+B829-B82B,U+B82D-B833,U+B836,U+B83A-B83F,U+B841-B85B,U+B85E-B85F,U+B861-B863,U+B865-B86B,U+B86E,U+B870,U+B872-B8AF,U+B8B1-B8BE",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.46.woff2",
+      "sha256": "8afa4ab144fda0704efd00ffaad3e862731f25117cfbc4fd1382d51509ca0403",
+      "bytes": 27920,
+      "cmapCount": 155,
+      "cmapRanges": "U+B74D-B75F,U+B761-B763,U+B765-B774,U+B776-B77B,U+B77E-B77F,U+B781-B783,U+B785-B78B,U+B78E,U+B792-B796,U+B79A-B79B,U+B79D-B7A7,U+B7AA,U+B7AE-B7B3,U+B7B6-B7C8,U+B7CA-B7EB,U+B7EE-B7EF,U+B7F1-B7F3,U+B7F5-B7FB,U+B7FE,U+B802-B806,U+B80A-B80B",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.47.woff2",
+      "sha256": "4b0aad49edf3a0843b9064d9b9c5c52ce7c0985906985550370b72dd76ad9818",
+      "bytes": 28880,
+      "cmapCount": 155,
+      "cmapRanges": "U+B6A7-B6AA,U+B6AC-B6B0,U+B6B2-B6EF,U+B6F1-B727,U+B72A-B72B,U+B72D-B72E,U+B731-B737,U+B739-B73A,U+B73C-B743,U+B745-B74C",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.48.woff2",
+      "sha256": "51858087fdb96e08bf5e7dabff511aa8d2c00834da3bd50cfaa2d19e718b1bd4",
+      "bytes": 27740,
+      "cmapCount": 155,
+      "cmapRanges": "U+B605-B60F,U+B612-B617,U+B619-B624,U+B626-B69B,U+B69E-B6A3,U+B6A5-B6A6",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.49.woff2",
+      "sha256": "b1b4a41702561e5d14ce7e696dfaeab0b358c3db1c0ae28191ed569a11be549c",
+      "bytes": 25284,
+      "cmapCount": 155,
+      "cmapRanges": "U+B55F,U+B562-B583,U+B585-B59F,U+B5A2-B5A3,U+B5A5-B5A7,U+B5A9-B5B2,U+B5B5-B5BA,U+B5BD-B604",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.50.woff2",
+      "sha256": "68949e9efda9ae3b09c6f9be16081cf8056b7008abb1e63f99aacfd2636a5e64",
+      "bytes": 27772,
+      "cmapCount": 155,
+      "cmapRanges": "U+B4A5-B4B6,U+B4B8-B4BF,U+B4C1-B4C7,U+B4C9-B4DB,U+B4DE-B4DF,U+B4E1-B4E2,U+B4E5-B4EB,U+B4EE,U+B4F0,U+B4F2-B513,U+B516-B517,U+B519-B51A,U+B51D-B523,U+B526,U+B528,U+B52B-B52F,U+B532-B533,U+B535-B537,U+B539-B53F,U+B541-B544,U+B546-B54B,U+B54D-B54F,U+B551-B55B,U+B55D-B55E",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.51.woff2",
+      "sha256": "52a48a70ce32907e83b347a5f06c4603852360859d868fddc0022f55b0ceb623",
+      "bytes": 27124,
+      "cmapCount": 155,
+      "cmapRanges": "U+B3F8-B3FB,U+B3FD-B40F,U+B411-B417,U+B419-B41B,U+B41D-B41F,U+B421-B427,U+B42A-B42B,U+B42D-B44F,U+B452-B453,U+B455-B457,U+B459-B45F,U+B462-B464,U+B466-B46B,U+B46D-B47F,U+B481-B4A3",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.52.woff2",
+      "sha256": "309a7d03a2e2dc27b9cd52b7fedad8507ef788d07dd259084a230787e418349f",
+      "bytes": 26744,
+      "cmapCount": 155,
+      "cmapRanges": "U+B342-B353,U+B356-B357,U+B359-B35B,U+B35D-B35E,U+B360-B363,U+B366,U+B368,U+B36A-B36D,U+B36F,U+B372-B373,U+B375-B377,U+B379-B37F,U+B381-B382,U+B384,U+B386-B38B,U+B38D-B3C3,U+B3C6-B3C7,U+B3C9-B3CA,U+B3CD-B3D3,U+B3D6,U+B3D8,U+B3DA-B3F7",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.53.woff2",
+      "sha256": "30937eaa3b38c12f1727972f47707856047bc70713f7291f9eece09e99827562",
+      "bytes": 25980,
+      "cmapCount": 155,
+      "cmapRanges": "U+B27C-B283,U+B285-B28F,U+B292-B293,U+B295-B297,U+B29A-B29F,U+B2A1-B2A4,U+B2A7-B2A9,U+B2AB,U+B2AD-B2C7,U+B2CA-B2CB,U+B2CD-B2CF,U+B2D1-B2D7,U+B2DA,U+B2DC,U+B2DE-B2E3,U+B2E7,U+B2E9-B2EA,U+B2EF-B2F3,U+B2F6,U+B2F8,U+B2FA-B2FB,U+B2FD-B2FE,U+B302-B303,U+B305-B307,U+B309-B30F,U+B312,U+B316-B31B,U+B31D-B341",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.54.woff2",
+      "sha256": "ac7039d8fea5f0d116c8f7e28548b277c95fdde4d1c26f7538b256554bacad73",
+      "bytes": 26980,
+      "cmapCount": 155,
+      "cmapRanges": "U+B1D6-B1E7,U+B1E9-B1FC,U+B1FE-B203,U+B206-B207,U+B209-B20B,U+B20D-B213,U+B216-B21F,U+B221-B257,U+B259-B273,U+B275-B27B",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.55.woff2",
+      "sha256": "0234c0600e9c8e6710d885ea81627ea91f5ec5ce6a2ca96953c9909264bb7b97",
+      "bytes": 27088,
+      "cmapCount": 155,
+      "cmapRanges": "U+B120-B122,U+B126-B127,U+B129-B12B,U+B12D-B133,U+B136,U+B138,U+B13A-B13F,U+B142-B143,U+B145-B14F,U+B151-B153,U+B156-B157,U+B159-B177,U+B17A-B17B,U+B17D-B17F,U+B181-B187,U+B189-B18C,U+B18E-B191,U+B195-B1A7,U+B1A9-B1CB,U+B1CD-B1D5",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.56.woff2",
+      "sha256": "e036109dc2ae524d4c2cdfea8e3805e22b7d71a52839dad2ac008f3ea80c3626",
+      "bytes": 28076,
+      "cmapCount": 155,
+      "cmapRanges": "U+B05F-B07B,U+B07E-B07F,U+B081-B083,U+B085-B08B,U+B08D-B097,U+B09B,U+B09D-B09F,U+B0A2-B0A7,U+B0AA,U+B0B0,U+B0B2,U+B0B6-B0B7,U+B0B9-B0BB,U+B0BD-B0C3,U+B0C6-B0C7,U+B0CA-B0CF,U+B0D1-B0DF,U+B0E1-B0E4,U+B0E6-B107,U+B10A-B10B,U+B10D-B10F,U+B111-B112,U+B114-B117,U+B119-B11A,U+B11C-B11F",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.57.woff2",
+      "sha256": "9def57ffdb7b92a40b2e79e20c1a5ff9aca6b307d124393d4a19abfe231a2fa4",
+      "bytes": 31724,
+      "cmapCount": 155,
+      "cmapRanges": "U+AFAC-AFB7,U+AFBA-AFBB,U+AFBD-AFBF,U+AFC1-AFC6,U+AFCA-AFCC,U+AFCE-AFD3,U+AFD5-AFE7,U+AFE9-AFEF,U+AFF1-B00B,U+B00D-B00F,U+B011-B013,U+B015-B01B,U+B01D-B027,U+B029-B043,U+B045-B047,U+B049,U+B04B,U+B04D-B052,U+B055-B056,U+B058-B05C,U+B05E",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.58.woff2",
+      "sha256": "b408fb7a4e0b5782c2aad70ac35f9483c26e5d29c878b0c1a13a3dc4b7227c1d",
+      "bytes": 29924,
+      "cmapCount": 155,
+      "cmapRanges": "U+AF03-AF07,U+AF09-AF2B,U+AF2E-AF33,U+AF35-AF3B,U+AF3E-AF40,U+AF44-AF47,U+AF4A-AF5C,U+AF5E-AF63,U+AF65-AF7F,U+AF81-AFAB",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.59.woff2",
+      "sha256": "a93d64c00614deb012bcd2943d319f6faa7945ecbc3230e215fbe146ce02015d",
+      "bytes": 29140,
+      "cmapCount": 155,
+      "cmapRanges": "U+AE56-AE5B,U+AE5E-AE60,U+AE62-AE64,U+AE66-AE67,U+AE69-AE6B,U+AE6D-AE83,U+AE85-AEBB,U+AEBF,U+AEC1-AEC3,U+AEC5-AECB,U+AECE,U+AED0,U+AED2-AED7,U+AED9-AEF3,U+AEF5-AF02",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.60.woff2",
+      "sha256": "cf77381c6ffb4febe8fab9e3e8d01ca73822274c3cc30aee2a801aa7297dacb0",
+      "bytes": 27940,
+      "cmapCount": 155,
+      "cmapRanges": "U+AD9C-ADA3,U+ADA5-ADBF,U+ADC1-ADC3,U+ADC5-ADC7,U+ADC9-ADD2,U+ADD4-ADDB,U+ADDD-ADDF,U+ADE1-ADE3,U+ADE5-ADF7,U+ADFA-ADFB,U+ADFD-ADFF,U+AE02-AE07,U+AE0A,U+AE0C,U+AE0E-AE13,U+AE15-AE2F,U+AE31-AE33,U+AE35-AE37,U+AE39-AE3F,U+AE42,U+AE44,U+AE46-AE49,U+AE4B,U+AE4F,U+AE51-AE53,U+AE55",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.61.woff2",
+      "sha256": "209b9ebb895838acfd04bc599a0d8087403ac3dc2fa162ea81d28a6eabbf75a1",
+      "bytes": 26968,
+      "cmapCount": 155,
+      "cmapRanges": "U+ACE2-ACE3,U+ACE5-ACE6,U+ACE9-ACEF,U+ACF2,U+ACF4,U+ACF7-ACFB,U+ACFE-ACFF,U+AD01-AD03,U+AD05-AD0B,U+AD0D-AD10,U+AD12-AD1B,U+AD1D-AD33,U+AD35-AD48,U+AD4A-AD4F,U+AD51-AD6B,U+AD6E-AD6F,U+AD71-AD72,U+AD77-AD7C,U+AD7E,U+AD80,U+AD82-AD87,U+AD89-AD8B,U+AD8D-AD8F,U+AD91-AD9B",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.62.woff2",
+      "sha256": "348f460579ed03ac41cca9d44d2a83e582212af934311457b82fd01fd041a71b",
+      "bytes": 23364,
+      "cmapCount": 155,
+      "cmapRanges": "U+AC25-AC2C,U+AC2E,U+AC30,U+AC32-AC37,U+AC39-AC3F,U+AC41-AC4C,U+AC4E-AC6F,U+AC72-AC73,U+AC75-AC76,U+AC79-AC7F,U+AC82,U+AC84-AC88,U+AC8A-AC8B,U+AC8D-AC8F,U+AC91-AC93,U+AC95-AC9B,U+AC9D-AC9E,U+ACA1-ACA7,U+ACAB,U+ACAD-ACAF,U+ACB1-ACB7,U+ACBA-ACBB,U+ACBE-ACC0,U+ACC2-ACC3,U+ACC5-ACDF",
+      "effectiveCmapCount": 155,
+      "glyphCount": 170,
+      "comparedGlyphInstances": 465
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.63.woff2",
+      "sha256": "dfca87401f15e17448115065fb28b5564cf342631528af69c75c2f203c330756",
+      "bytes": 8084,
+      "cmapCount": 19,
+      "cmapRanges": "U+AC02-AC03,U+AC05-AC06,U+AC09-AC0F,U+AC17-AC18,U+AC1B,U+AC1E-AC1F,U+AC21-AC23",
+      "effectiveCmapCount": 19,
+      "glyphCount": 34,
+      "comparedGlyphInstances": 57
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.64.woff2",
+      "sha256": "3f947c98cb1beb9c01e0128abd6fddec706f8c83d657a3cdee68282e4a50db80",
+      "bytes": 6992,
+      "cmapCount": 25,
+      "cmapRanges": "U+3136,U+3138,U+313A-3140,U+3143-3144,U+3150,U+3152,U+3154-3156,U+3158-315B,U+315D-315F,U+3162,U+3164",
+      "effectiveCmapCount": 25,
+      "glyphCount": 40,
+      "comparedGlyphInstances": 75
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.65.woff2",
+      "sha256": "149d384e1ed0adbf3a8be21cdeb7a79d11b6122e15123324a4dbc98c0bd03a7b",
+      "bytes": 4880,
+      "cmapCount": 4,
+      "cmapRanges": "U+3014-3015,U+3133,U+3135",
+      "effectiveCmapCount": 4,
+      "glyphCount": 19,
+      "comparedGlyphInstances": 12
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.66.woff2",
+      "sha256": "09f1fac58d9a7367040f6e3c9a6878c76a20804aa28de136304b48b3512dc85a",
+      "bytes": 11828,
+      "cmapCount": 19,
+      "cmapRanges": "U+25E6,U+2776-277E,U+278A-2792",
+      "effectiveCmapCount": 19,
+      "glyphCount": 94,
+      "comparedGlyphInstances": 57
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.67.woff2",
+      "sha256": "8d3335de100e29f1e23780ae8966f7e9557624f10ff8a7f4c77d65dda1944bfd",
+      "bytes": 4980,
+      "cmapCount": 3,
+      "cmapRanges": "U+26A0,U+2713,U+2717",
+      "effectiveCmapCount": 3,
+      "glyphCount": 21,
+      "comparedGlyphInstances": 9
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.68.woff2",
+      "sha256": "04308cd8d5f06c6d94264763e74761ca811f1096530c7d6b0ec5bece75a7a303",
+      "bytes": 5620,
+      "cmapCount": 6,
+      "cmapRanges": "U+2103,U+2109,U+2122,U+2212,U+2248,U+2260",
+      "effectiveCmapCount": 6,
+      "glyphCount": 29,
+      "comparedGlyphInstances": 18
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.69.woff2",
+      "sha256": "82ae3fcf0f84ad94a61fc86e04f614d14975cec7aa2c06383c50df404e70d9d6",
+      "bytes": 20068,
+      "cmapCount": 107,
+      "cmapRanges": "U+2460-2468,U+24B6-24CF,U+24D2,U+24EA,U+24FF,U+1F130-1F149,U+1F150-1F169,U+1F170-1F180",
+      "effectiveCmapCount": 107,
+      "glyphCount": 224,
+      "comparedGlyphInstances": 321
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.70.woff2",
+      "sha256": "4f77ec357ecb2e08e4d4bdabb54e01b739bc9733511eebd286515880b45e7626",
+      "bytes": 12704,
+      "cmapCount": 41,
+      "cmapRanges": "U+3132,U+3146,U+3149,U+AC2D,U+ADC8,U+ADD3,U+AF48,U+B014,U+B134-B135,U+B158,U+B2AA,U+B35F,U+B6A4,U+B9CF,U+BB63,U+BD23,U+BE91,U+C29B,U+C3F4,U+C42C,U+C55C,U+C573,U+C58F,U+C78C,U+C7DD,U+C8F5,U+CAD1,U+CC48,U+CF10,U+CF20,U+D03C,U+D07D,U+D2A0,U+D30E,U+D38D,U+D3A8,U+D3C8,U+D5E5,U+D5F9,U+D6E4",
+      "effectiveCmapCount": 41,
+      "glyphCount": 56,
+      "comparedGlyphInstances": 123
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.71.woff2",
+      "sha256": "a88d3acea25b08a8cda5a2374921ef3949773c7a6ad6b2814556768c18f2adbd",
+      "bytes": 12484,
+      "cmapCount": 40,
+      "cmapRanges": "U+25A1,U+3008-3009,U+3151,U+3157,U+AE14,U+AE6C,U+AEC0,U+AFC7,U+AFC9,U+B01C,U+B028,U+B308,U+B311,U+B314,U+B31C,U+B524,U+B560,U+B764,U+B920,U+B9E3,U+BD48,U+BE7D,U+C0DB,U+C231,U+C270,U+C2E3,U+C37D,U+C3ED,U+C530,U+C6A5,U+C6DC,U+C7A4,U+C954,U+C974,U+D000,U+D565,U+D667,U+D6C5,U+D79D",
+      "effectiveCmapCount": 40,
+      "glyphCount": 56,
+      "comparedGlyphInstances": 120
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.72.woff2",
+      "sha256": "ef58a4f7292ad6ddadc6accd9798cac481ce2815ca3dfb1792b206f6c234edc3",
+      "bytes": 13380,
+      "cmapCount": 47,
+      "cmapRanges": "U+3153,U+AC20,U+ACF6,U+AD90,U+AF5D,U+AF80,U+AFCD,U+AFF0,U+B0A1,U+B0B5,U+B1FD,U+B2FC,U+B380,U+B51B,U+B584,U+B5B3,U+B8FD,U+B93C,U+B9F4,U+BB44,U+BC08,U+BC27,U+BC49,U+BE55,U+BE64,U+BFB0,U+BFC5,U+C178,U+C21F,U+C314,U+C4F1,U+C58D,U+C664,U+C698,U+C6A7,U+C6C1,U+C9ED,U+CAC0,U+CACC,U+CAD9,U+CCB5,U+CDCC,U+D0E4,U+D143,U+D320,U+D330,U+D54D",
+      "effectiveCmapCount": 47,
+      "glyphCount": 62,
+      "comparedGlyphInstances": 141
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.73.woff2",
+      "sha256": "170548008c0a38576f5127bd23333e2748ae70c702c4670d55607155d0aeaa45",
+      "bytes": 13448,
+      "cmapCount": 46,
+      "cmapRanges": "U+AC38,U+AD76,U+AE84,U+AECC,U+B07D,U+B0B1,U+B215,U+B2A0,U+B310,U+B3D7,U+B52A,U+B618,U+B775,U+B797,U+BCD5,U+BD59,U+BE80,U+BEA8,U+BED1,U+BEE4-BEE5,U+C060,U+C2EF,U+C329,U+C3DC,U+C597,U+C5BD,U+C5E5,U+C69C,U+C9D6,U+CA29,U+CA5C,U+CA84,U+CC39,U+CC3B,U+CE89,U+CEE5,U+CF65,U+CF85,U+D058,U+D145,U+D22D,U+D325,U+D37D,U+D3AD,U+D769",
+      "effectiveCmapCount": 46,
+      "glyphCount": 61,
+      "comparedGlyphInstances": 138
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.74.woff2",
+      "sha256": "25f923af36fc1e547cdae1c8dcb9edf27de0cde5a929c052435d7296ce70b8a9",
+      "bytes": 14456,
+      "cmapCount": 49,
+      "cmapRanges": "U+AC07,U+AC1A,U+AC40,U+AD0C,U+AD88,U+ADA4,U+AE01,U+AE65,U+AEBD,U+AEC4,U+AFE8,U+B139,U+B205,U+B383,U+B38C,U+B42C,U+B461,U+B55C,U+B78F,U+B8FB,U+B9F7,U+BAFC,U+BC99,U+BED8,U+BFCD,U+C0BF,U+C0F9,U+C167,U+C204,U+C20F,U+C22F,U+C258,U+C298,U+C2BC,U+C388,U+C501,U+C50C,U+C5B9,U+C5CE,U+C641,U+C648,U+C73D,U+CA50,U+CA61,U+CC4C,U+CEAC,U+D0D4,U+D5F7,U+D6D7",
+      "effectiveCmapCount": 49,
+      "glyphCount": 64,
+      "comparedGlyphInstances": 147
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.75.woff2",
+      "sha256": "3aef7599811e73fb9eac1848bc0950cc13eda753bb85546eb9416d4702296f75",
+      "bytes": 16008,
+      "cmapCount": 58,
+      "cmapRanges": "U+25CB,U+300A,U+314F,U+AC2F,U+AC4D,U+ADC4,U+ADE4,U+AE41,U+AE4D-AE4E,U+AED1,U+AFB9,U+B0E0,U+B299,U+B365,U+B46C,U+B480,U+B4C8,U+B7B4,U+B819,U+B918,U+BAAB,U+BAB9,U+BE8F,U+BED7,U+C0EC,U+C19F,U+C1A5,U+C3D9,U+C464,U+C53D,U+C553,U+C570,U+C5CC,U+C633,U+C6A4,U+C7A3,U+C7A6,U+C886,U+C9D9-C9DA,U+C9EC,U+CA0C,U+CC21,U+CD1B,U+CD78,U+CDC4,U+CEF8,U+CFE4,U+D0A5,U+D0B5,U+D0EC,U+D15D,U+D188,U+D23C,U+D2AC,U+D729,U+D79B",
+      "effectiveCmapCount": 58,
+      "glyphCount": 74,
+      "comparedGlyphInstances": 174
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.76.woff2",
+      "sha256": "e16f4592d0789e008c276d7baeb22487411418b66c6c08fa6819694b9434e777",
+      "bytes": 17800,
+      "cmapCount": 67,
+      "cmapRanges": "U+25CF,U+300B,U+AC94,U+AEBE,U+AECD,U+AF08,U+AF41,U+AF49,U+B010,U+B053,U+B109,U+B11B,U+B128,U+B154,U+B291,U+B2E6,U+B301,U+B385,U+B525,U+B5B4,U+B729,U+B72F,U+B738,U+B7FF,U+B837,U+B975,U+BA67,U+BB47,U+BC1F,U+BD90,U+BFD4,U+C27C,U+C324,U+C379,U+C3E0,U+C465,U+C53B,U+C58C,U+C610,U+C653,U+C6CD,U+C813,U+C82F,U+C999,U+C9E0,U+CAC4,U+CAD3,U+CBD4,U+CC10,U+CC22,U+CCB8,U+CCBC,U+CDA5,U+CE84,U+CEA3,U+CF67,U+CFE1,U+D241,U+D30D,U+D31C,U+D391,U+D401,U+D479,U+D5C9,U+D5DB,U+D649,U+D6D4",
+      "effectiveCmapCount": 67,
+      "glyphCount": 84,
+      "comparedGlyphInstances": 201
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.77.woff2",
+      "sha256": "7fe67316a78ce7f2927a1caacc883516af9129543f82433ee884a727d76bd5e7",
+      "bytes": 18732,
+      "cmapCount": 85,
+      "cmapRanges": "U+300E-300F,U+314D,U+AC89,U+AC9C,U+ACC1,U+AD04,U+AD75,U+AD7D,U+AE45,U+AE61,U+AF42,U+B0AB,U+B0AF,U+B0B3,U+B12C,U+B194,U+B1A8,U+B220,U+B258,U+B284,U+B2FF,U+B315,U+B371,U+B3D4-B3D5,U+B460,U+B527,U+B534,U+B810,U+B818,U+B98E,U+BA55,U+BBAC,U+BC0B,U+BC40,U+BCA1,U+BCCD,U+BD93,U+BE54,U+BE5A,U+BF08,U+BF50,U+BF55,U+BFDC,U+C0C0,U+C0D0,U+C0F4,U+C100,U+C11E,U+C170,U+C20D,U+C274,U+C290,U+C308,U+C369,U+C539,U+C587,U+C5FF,U+C6EC,U+C70C,U+C7AD,U+C7C8,U+C83C,U+C881,U+CB48,U+CC60,U+CE69,U+CE6B,U+CE75,U+CF04,U+CF08,U+CF55,U+CF70,U+CFFC,U+D0B7,U+D1A8,U+D2C8,U+D384,U+D47C,U+D48B,U+D5DD,U+D5E8,U+D720,U+D759",
+      "effectiveCmapCount": 85,
+      "glyphCount": 100,
+      "comparedGlyphInstances": 255
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.78.woff2",
+      "sha256": "4908799439050ea626796713cbf9d48c86e47233fbdff4d90c1ebd0065042962",
+      "bytes": 19924,
+      "cmapCount": 86,
+      "cmapRanges": "U+25A0,U+3010-3011,U+314A,U+314C,U+AD49,U+AE0B,U+AE0D,U+AE43,U+AE5D,U+AECF,U+AF3C,U+AF64,U+AFD4,U+B080,U+B084,U+B0C5,U+B10C,U+B1E8,U+B2AC,U+B36E,U+B451,U+B515,U+B540,U+B561,U+B6AB,U+B6B1,U+B72C,U+B730,U+B744,U+B800,U+B8EC,U+B8F0,U+B904,U+B968,U+B96D,U+B987,U+B9D9,U+BB36,U+BB49,U+BC2D,U+BC43,U+BCF6,U+BD89,U+BE57,U+BE61,U+BED4,U+C090,U+C130,U+C148,U+C19C,U+C2F9,U+C36C,U+C37C,U+C384,U+C3DF,U+C575,U+C584,U+C660,U+C719,U+C816,U+CA4D,U+CA54,U+CABC,U+CB49,U+CC14,U+CFF5,U+D004,U+D038,U+D0B4,U+D0D3,U+D0E0,U+D0ED,U+D131,U+D1B0,U+D31F,U+D33D,U+D3A0,U+D3AB,U+D514,U+D584,U+D6A1,U+D6CC,U+D749,U+D760,U+D799",
+      "effectiveCmapCount": 86,
+      "glyphCount": 102,
+      "comparedGlyphInstances": 258
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.79.woff2",
+      "sha256": "bef04098d0677189c3cd79365317e0fc2735c19795bbffbc13eb035dab4bc092",
+      "bytes": 20336,
+      "cmapCount": 91,
+      "cmapRanges": "U+300C-300D,U+3131,U+3134,U+3139,U+3141-3142,U+3148,U+3161,U+3163,U+321C,U+AC31,U+AC77,U+AC9F,U+ACB9,U+ACF0-ACF1,U+ACFD,U+AD73,U+AF3D,U+B00C,U+B04A,U+B057,U+B0C4,U+B188,U+B1CC,U+B214,U+B2DB,U+B2EE,U+B304,U+B4ED,U+B518,U+B5BC,U+B625,U+B69C-B69D,U+B7AC,U+B801,U+B86C,U+B959,U+B95C,U+B985,U+BA48,U+BB58,U+BC0C,U+BC38,U+BC85,U+BC9A,U+BF40,U+C068,U+C0BD,U+C0CC,U+C12F,U+C149,U+C1E0,U+C22B,U+C22D,U+C250,U+C2FC,U+C300,U+C313,U+C370,U+C3D8,U+C557,U+C580,U+C5E3,U+C62E,U+C634,U+C6F0,U+C74D,U+C783,U+C78E,U+C796,U+C7BC,U+C92C,U+CA4C,U+CC1C,U+CC54,U+CC59,U+CE04,U+CF30,U+CFC4,U+D140,U+D321,U+D38C,U+D399,U+D54F,U+D587,U+D5D0,U+D6E8,U+D770",
+      "effectiveCmapCount": 91,
+      "glyphCount": 106,
+      "comparedGlyphInstances": 273
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.80.woff2",
+      "sha256": "a1e6a6efbf88ad9e4bba966da52f1df500a8896339c558a17c072a7502bfc236",
+      "bytes": 20424,
+      "cmapCount": 94,
+      "cmapRanges": "U+3000,U+3137,U+3145,U+315C,U+AC13,U+AC71,U+AC90,U+ACB8,U+ACE7,U+AD7F,U+AE50,U+AEF4,U+AF34,U+AFBC,U+B048,U+B09A,U+B0AD,U+B0BC,U+B113,U+B125,U+B141,U+B20C,U+B2D9,U+B2ED,U+B367,U+B369,U+B374,U+B3CB,U+B4EC,U+B611,U+B760,U+B81B,U+B834,U+B8B0,U+B8E1,U+B989,U+B9D1,U+B9E1,U+B9FA,U+BA4D,U+BA78,U+BB35,U+BB54,U+BBF9,U+BC11,U+BCB3,U+BD05,U+BD95,U+BDD4,U+BE10,U+BED0,U+BF51,U+C0D8,U+C232,U+C2B7,U+C2EB,U+C378,U+C500,U+C52C,U+C549,U+C568,U+C598,U+C5C9,U+C61B,U+C639,U+C67C,U+C717,U+C78A,U+C80A,U+C90C-C90D,U+C950,U+C9E7,U+CBE4,U+CCA9,U+CCE4,U+CDB0,U+CE78,U+CE94,U+CE98,U+CF8C,U+D018,U+D034,U+D0F1,U+D1B1,U+D280,U+D2F8,U+D338,U+D380,U+D3B4,U+D610,U+D69F,U+D6FC,U+D758",
+      "effectiveCmapCount": 94,
+      "glyphCount": 109,
+      "comparedGlyphInstances": 282
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.81.woff2",
+      "sha256": "0efbc50507067f37e23abd67a1fd4e12f96c72f2d4b6d7bfcf82d48adb0aedef",
+      "bytes": 20316,
+      "cmapCount": 91,
+      "cmapRanges": "U+3147,U+ACAA,U+ACBC,U+AD1C,U+AE4A,U+AE5C,U+B044,U+B054,U+B0C8-B0C9,U+B2A6,U+B2D0,U+B35C,U+B364,U+B428,U+B454,U+B465,U+B4B7,U+B4E3,U+B51C,U+B5A1,U+B784,U+B790,U+B7AB,U+B7F4,U+B82C,U+B835,U+B8E9,U+B8F8,U+B9D8,U+B9F9,U+BA5C,U+BA64,U+BABD,U+BB18,U+BB3B,U+BBFF,U+BC0D,U+BC45,U+BC97,U+BCBC,U+BE45,U+BE75,U+BE7C,U+BFCC,U+C0B6,U+C0F7,U+C14B,U+C2B4,U+C30D,U+C4F8,U+C5BB,U+C5D1,U+C5E0,U+C5EE,U+C5FD,U+C606,U+C6C5,U+C6E0,U+C708,U+C81D,U+C820,U+C824,U+C878,U+C918,U+C96C,U+C9E4,U+C9F1,U+CC2E,U+CD09,U+CEA1,U+CEF5,U+CEF7,U+CF64,U+CF69,U+CFE8,U+D035,U+D0AC,U+D230,U+D234,U+D2F4,U+D31D,U+D575,U+D578,U+D608,U+D614,U+D718,U+D751,U+D761,U+D78C,U+D790",
+      "effectiveCmapCount": 91,
+      "glyphCount": 106,
+      "comparedGlyphInstances": 273
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.82.woff2",
+      "sha256": "49a6f8720dc608c190dccc069b170c21f8cfdf56ef10cd9e55fe33ffe67ac1fb",
+      "bytes": 19912,
+      "cmapCount": 96,
+      "cmapRanges": "U+3160,U+AC12,U+AC14,U+AC16,U+AC81,U+AD34,U+ADE0,U+AE54,U+AEBC,U+AF2C,U+AFC0,U+AFC8,U+B04C,U+B08C,U+B099,U+B0A9,U+B0AC,U+B0AE,U+B0B8,U+B123,U+B179,U+B2E5,U+B2F7,U+B4C0,U+B531,U+B538,U+B545,U+B550,U+B5A8,U+B6F0,U+B728,U+B73B,U+B7AD,U+B7ED,U+B809,U+B864,U+B86D,U+B871,U+B9BF,U+B9F5,U+BA40,U+BA4B,U+BA58,U+BA87,U+BAAC,U+BBC0,U+BC16,U+BC34,U+BD07,U+BD99,U+BE59,U+BFD0,U+C058,U+C0E4,U+C0F5,U+C12D,U+C139,U+C228,U+C529,U+C5C7,U+C635,U+C637,U+C735,U+C77D,U+C787,U+C789,U+C8C4,U+C989,U+C98C,U+C9D0,U+C9D3,U+CC0C,U+CC99,U+CD0C,U+CD2C,U+CD98,U+CDA4,U+CE59,U+CE60,U+CE6D,U+CEA0,U+D0D0-D0D1,U+D0D5,U+D14D,U+D1A4,U+D29C,U+D2F1,U+D301,U+D39C,U+D3BC,U+D4E8,U+D540,U+D5EC,U+D640,U+D750",
+      "effectiveCmapCount": 96,
+      "glyphCount": 111,
+      "comparedGlyphInstances": 288
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.83.woff2",
+      "sha256": "c11f49251d9bc49b8071822f29c40c9e91fa4ed6045c307704671ab2dc3b894d",
+      "bytes": 20360,
+      "cmapCount": 97,
+      "cmapRanges": "U+314E,U+AC24,U+ACE1,U+ACE4,U+AE68,U+AF2D,U+B0D0,U+B0E5,U+B150,U+B155,U+B193,U+B2C9,U+B2DD,U+B3C8,U+B3FC,U+B410,U+B458,U+B4DD,U+B5A0,U+B5A4,U+B5BB,U+B7B5,U+B838,U+B840,U+B86F,U+B8F9,U+B960,U+B9E5,U+BAB8,U+BB50,U+BC1D,U+BC24-BC25,U+BCA8,U+BCBD,U+BD04,U+BD10,U+BD24,U+BE48,U+BE5B,U+BE68,U+C05C,U+C12C,U+C140,U+C15C,U+C168,U+C194,U+C219,U+C27D,U+C2A8,U+C2F1,U+C2F8,U+C368,U+C554-C555,U+C559,U+C564,U+C5D8,U+C5FC,U+C625,U+C65C,U+C6B1,U+C728,U+C794,U+C84C,U+C88C,U+C8E0,U+C8FD,U+C998,U+C9DD,U+CC0D,U+CC30,U+CEEC,U+CF13,U+CF1C,U+CF5C,U+D050,U+D07C,U+D0A8,U+D134,U+D138,U+D154,U+D1F4,U+D2BC,U+D329,U+D32C,U+D3D0,U+D3F4,U+D3FC,U+D56B,U+D5CC,U+D600-D601,U+D639,U+D6C8,U+D754,U+D765",
+      "effectiveCmapCount": 97,
+      "glyphCount": 112,
+      "comparedGlyphInstances": 291
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.84.woff2",
+      "sha256": "9e47e2105c9f2cc7ce6a763d018b87f9afbf3fa5b6442f3de7f5cb9eb00c6a49",
+      "bytes": 19736,
+      "cmapCount": 96,
+      "cmapRanges": "U+314B,U+AC11,U+ACF3,U+AD74,U+AD81,U+ADF9,U+AE34,U+AF43,U+AFB8,U+B05D,U+B07C,U+B110,U+B118,U+B17C,U+B180,U+B18D,U+B192,U+B2CC,U+B355,U+B378,U+B4A4,U+B4EF,U+B78D,U+B799,U+B7A9,U+B7FD,U+B807,U+B80C,U+B839,U+B9B4,U+B9DB,U+BA3C,U+BAB0,U+BBA4,U+BC94,U+BE4C,U+C154,U+C1C4,U+C26C,U+C2AC,U+C2ED,U+C4F4,U+C55E,U+C561,U+C571,U+C5B5,U+C5C4,U+C654-C655,U+C695,U+C6E8,U+C6F9,U+C724,U+C751,U+C775,U+C7A0,U+C7C1,U+C874,U+C880,U+C9D5,U+C9F8,U+CABD,U+CC29,U+CC2C,U+CCA8,U+CCAB,U+CCD0,U+CE21,U+CE35,U+CE7C,U+CE90,U+CEE8,U+CEF4,U+CFE0,U+D070,U+D0B9,U+D0C1,U+D0C4,U+D0C8,U+D15C,U+D1A1,U+D2C0,U+D300,U+D314,U+D3ED,U+D478,U+D480,U+D48D,U+D508,U+D53D,U+D5E4,U+D611,U+D61C,U+D68D,U+D6A8,U+D798",
+      "effectiveCmapCount": 96,
+      "glyphCount": 111,
+      "comparedGlyphInstances": 288
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.85.woff2",
+      "sha256": "1ecf7789280e402ca1c1a697a4fcacf6b76165c2fab60dd45c43164d5cbf1bce",
+      "bytes": 19444,
+      "cmapCount": 96,
+      "cmapRanges": "U+AC08,U+AC78,U+ACA8,U+ACAC,U+ACE8,U+AD70,U+ADC0,U+ADDC,U+B137,U+B140,U+B208,U+B290,U+B2F5,U+B3C5,U+B3CC,U+B420,U+B429,U+B529,U+B530,U+B77D,U+B79C,U+B7A8,U+B7C9,U+B7F0,U+B7FC,U+B828,U+B860,U+B9AD,U+B9C1,U+B9C9,U+B9DD-B9DE,U+B9E8,U+BA38-BA39,U+BABB,U+BC00,U+BC8C,U+BCA0,U+BCA4,U+BCD1,U+BCFC,U+BD09,U+BDF0,U+BE60,U+C0AD,U+C0B4,U+C0BC,U+C190,U+C1FC,U+C220,U+C288,U+C2B9,U+C2F6,U+C528,U+C545,U+C558,U+C5BC,U+C5D4,U+C600,U+C644,U+C6C0,U+C6C3,U+C721,U+C798,U+C7A1,U+C811,U+C838,U+C871,U+C904,U+C990,U+C9DC,U+CC38,U+CC44,U+CCA0,U+CD1D,U+CD95,U+CDA9,U+CE5C,U+CF00,U+CF58,U+D150,U+D22C,U+D305,U+D328,U+D37C,U+D3F0,U+D551,U+D5A5,U+D5C8,U+D5D8,U+D63C,U+D64D,U+D669,U+D734,U+D76C",
+      "effectiveCmapCount": 96,
+      "glyphCount": 111,
+      "comparedGlyphInstances": 288
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.86.woff2",
+      "sha256": "4b602f2a527aeb8dcfe8a7d6553e8657c398fd1715238818c89ff1d023052538",
+      "bytes": 19256,
+      "cmapCount": 95,
+      "cmapRanges": "U+AC01,U+AC19,U+AC1D,U+ACA0,U+ACA9,U+ACB0,U+AD8C,U+AE09,U+AE38,U+AE40,U+AED8,U+B09C,U+B0A0,U+B108,U+B204,U+B298,U+B2D8,U+B2EB-B2EC,U+B2F4,U+B313,U+B358,U+B450,U+B4E0,U+B54C,U+B610,U+B780,U+B78C,U+B791,U+B8E8,U+B958,U+B974,U+B984,U+B9B0,U+B9BC-B9BD,U+B9CE,U+BA70,U+BBFC,U+BC0F,U+BC15,U+BC1B,U+BC31,U+BC95,U+BCC0,U+BCC4,U+BD81,U+BD88,U+C0C8,U+C11D,U+C13C,U+C158,U+C18D,U+C1A1,U+C21C,U+C4F0,U+C54A,U+C560,U+C5B8,U+C5C8,U+C5F4,U+C628,U+C62C,U+C678,U+C6CC,U+C808,U+C810,U+C885,U+C88B,U+C900,U+C988,U+C99D,U+C9C8,U+CC3D-CC3E,U+CC45,U+CD08,U+CE20,U+CEE4,U+D074,U+D0A4,U+D0DD,U+D2B9,U+D3B8,U+D3C9,U+D488,U+D544,U+D559,U+D56D,U+D588,U+D615,U+D648,U+D655,U+D658,U+D65C",
+      "effectiveCmapCount": 95,
+      "glyphCount": 110,
+      "comparedGlyphInstances": 285
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.87.woff2",
+      "sha256": "ab823a9776d3e15695775fe70a6b08470c54e657b24b1830dc91dede961936ab",
+      "bytes": 18128,
+      "cmapCount": 97,
+      "cmapRanges": "U+AC10,U+AC15,U+AC74,U+AC80,U+AC83,U+ACC4,U+AD11,U+AD50,U+AD6D,U+ADFC,U+AE00,U+AE08,U+AE4C,U+B0A8,U+B124,U+B144,U+B178,U+B274,U+B2A5,U+B2E8,U+B2F9,U+B354,U+B370,U+B418,U+B41C,U+B4F1,U+B514,U+B798,U+B808,U+B824-B825,U+B8CC,U+B978,U+B9D0,U+B9E4,U+BAA9,U+BB3C,U+BC18,U+BC1C,U+BC30,U+BC84,U+BCF5,U+BCF8,U+BD84,U+BE0C,U+BE14,U+C0B0,U+C0C9,U+C0DD,U+C124,U+C2DD,U+C2E4,U+C2EC,U+C54C,U+C57C-C57D,U+C591,U+C5C5-C5C6,U+C5ED,U+C608,U+C640,U+C6B8,U+C6D4,U+C784,U+C7AC,U+C800-C801,U+C9C1,U+C9D1,U+CC28,U+CC98,U+CC9C,U+CCAD,U+CD5C,U+CD94,U+CD9C,U+CDE8,U+CE68,U+CF54,U+D0DC,U+D14C,U+D1A0,U+D1B5,U+D2F0,U+D30C,U+D310,U+D398,U+D45C,U+D50C,U+D53C,U+D560,U+D568,U+D589,U+D604,U+D6C4,U+D788",
+      "effectiveCmapCount": 97,
+      "glyphCount": 112,
+      "comparedGlyphInstances": 291
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.88.woff2",
+      "sha256": "12b965319b7b41cf8fb44b120cd40c98350f9d0681728033f0caec32e70f0e3a",
+      "bytes": 18796,
+      "cmapCount": 108,
+      "cmapRanges": "U+AC00,U+AC04,U+AC1C,U+AC70,U+AC8C,U+ACBD,U+ACE0,U+ACF5,U+ACFC,U+AD00,U+AD6C,U+ADF8,U+AE30,U+B098,U+B0B4,U+B294,U+B2C8,U+B2E4,U+B300,U+B3C4,U+B3D9,U+B4DC,U+B4E4,U+B77C,U+B7EC,U+B85C-B85D,U+B97C,U+B9AC,U+B9C8,U+B9CC,U+BA54,U+BA74,U+BA85,U+BAA8,U+BB34,U+BB38,U+BBF8,U+BC14,U+BC29,U+BC88,U+BCF4,U+BD80,U+BE44,U+C0AC,U+C0C1,U+C11C,U+C120,U+C131,U+C138,U+C18C,U+C218,U+C2A4,U+C2B5,U+C2DC,U+C2E0,U+C544,U+C548,U+C5B4,U+C5D0,U+C5EC,U+C5F0,U+C601,U+C624,U+C694,U+C6A9,U+C6B0,U+C6B4,U+C6D0,U+C704,U+C720,U+C73C,U+C740,U+C744,U+C74C,U+C758,U+C774,U+C778,U+C77C,U+C785,U+C788,U+C790-C791,U+C7A5,U+C804,U+C815,U+C81C,U+C870,U+C8FC,U+C911,U+C9C0,U+C9C4,U+CCB4,U+CE58,U+CE74,U+D06C,U+D0C0,U+D130,U+D2B8,U+D3EC,U+D504,U+D558,U+D55C,U+D569,U+D574,U+D638,U+D654,U+D68C",
+      "effectiveCmapCount": 108,
+      "glyphCount": 123,
+      "comparedGlyphInstances": 324
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.89.woff2",
+      "sha256": "a8d11889bbb9a4b1356558f043841064e637b69467db507f3ed7d9b6a3f26c0e",
+      "bytes": 21436,
+      "cmapCount": 239,
+      "cmapRanges": "U+0100-0113,U+0116-0125,U+0127-012B,U+012E-0137,U+0139-013E,U+0141-0148,U+014C-014D,U+0150-0165,U+0168-017E,U+0186,U+0189,U+018E,U+0192,U+01CD-01D4,U+01DD,U+01E6-01E9,U+01FE-01FF,U+0201,U+0218-021B,U+0227-0229,U+0232-0233,U+0237,U+0245,U+0259,U+1E04-1E05,U+1E0C-1E0F,U+1E12-1E13,U+1E20-1E21,U+1E24-1E25,U+1E2A-1E2B,U+1E34-1E4B,U+1E5C-1E5F,U+1E62-1E63,U+1E6C-1E71,U+1E80-1E85,U+1E8E-1E8F,U+1E92-1E97,U+1EA0-1EA1,U+1EAC-1EAD,U+1EB6-1EB9,U+1EBC-1EBD,U+1EC6-1EC7,U+1ECA-1ECD,U+1ED8-1ED9,U+1EE4-1EE5,U+1EF2-1EF5,U+1EF8-1EF9,U+2605-2606,U+2661,U+2665,U+2C7C",
+      "effectiveCmapCount": 239,
+      "glyphCount": 458,
+      "comparedGlyphInstances": 717
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.90.woff2",
+      "sha256": "ee81f3b861509a2c94210685e637f348383871340a392728c1f6dabb6bf4974e",
+      "bytes": 44356,
+      "cmapCount": 292,
+      "cmapRanges": "U+0020-007E,U+00A0-00FF,U+0131,U+0152-0153,U+02C6-02C7,U+02D8-02DD,U+2000-200D,U+2012-2015,U+2018-201A,U+201C-201E,U+2020-2023,U+2025-2026,U+202F-2033,U+2039-203B,U+2042-2044,U+204E,U+2051,U+2060,U+2070-2071,U+2074-2079,U+207F-2089,U+2090-2093,U+2095-209C,U+20A9,U+20AC,U+2122,U+2190-2199,U+2212,U+FEFF",
+      "effectiveCmapCount": 292,
+      "glyphCount": 723,
+      "comparedGlyphInstances": 876
+    },
+    {
+      "local": "woff2/WantedSansVariable.split.91.woff2",
+      "sha256": "13c72d73ab988189139ae81bd567649e14c8815ca9206709ff81ce9844a813d9",
+      "bytes": 12248,
+      "cmapCount": 26,
+      "cmapRanges": "U+F0000-F0003,U+100000-100001,U+100092-100093,U+100128-10012B,U+10012E-100131,U+10013E,U+100184-100185,U+1001FE-1001FF,U+1002B4-1002B5,U+1002C2-1002C3,U+100479",
+      "effectiveCmapCount": 26,
+      "glyphCount": 85,
+      "comparedGlyphInstances": 78
+    },
+    {
+      "local": "woff2/WantedSansVariable.woff2",
+      "sha256": "4259e7e9a172e634c2cb419d793b84148990316341e910443e5d10965b2c8f16",
+      "bytes": 1289292,
+      "cmapCount": 12032,
+      "cmapRanges": "U+0020-007E,U+00A0-0113,U+0116-0125,U+0127-012B,U+012E-0137,U+0139-013E,U+0141-0148,U+014C-014D,U+0150-0165,U+0168-017E,U+0186,U+0189,U+018E,U+0192,U+01CD-01D4,U+01DD,U+01E6-01E9,U+01FE-01FF,U+0201,U+0218-021B,U+0227-0229,U+0232-0233,U+0237,U+0245,U+0250-0252,U+0254,U+0258-0259,U+0261,U+0268,U+026F,U+0279,U+028C-028E,U+029E,U+02B0,U+02B2-02B3,U+02B7-02B8,U+02BD,U+02C6-02C7,U+02D8-02DD,U+02E1-02E3,U+0300-0304,U+0306-0308,U+030A-030C,U+030F,U+0312,U+0314,U+0316-0317,U+0323-0328,U+032C-0331,U+0335,U+1D43,U+1D47-1D49,U+1D4D,U+1D4F-1D50,U+1D52,U+1D56-1D58,U+1D5B,U+1D62-1D65,U+1D9C,U+1DA0,U+1DBB,U+1E04-1E05,U+1E0C-1E0F,U+1E12-1E13,U+1E20-1E21,U+1E24-1E25,U+1E2A-1E2B,U+1E34-1E4B,U+1E5C-1E5F,U+1E62-1E63,U+1E6C-1E71,U+1E80-1E85,U+1E8E-1E8F,U+1E92-1E97,U+1EA0-1EA1,U+1EAC-1EAD,U+1EB6-1EB9,U+1EBC-1EBD,U+1EC6-1EC7,U+1ECA-1ECD,U+1ED8-1ED9,U+1EE4-1EE5,U+1EF2-1EF5,U+1EF8-1EF9,U+2000-200D,U+2012-2015,U+2018-201A,U+201C-201E,U+2020-2023,U+2025-2026,U+202F-2033,U+2039-203B,U+2042-2044,U+204E,U+2051,U+2060,U+2070-2071,U+2074-2079,U+207F-2089,U+2090-2093,U+2095-209C,U+20A9,U+20AC,U+20DD-20DE,U+2103,U+2109,U+2122,U+215B-215E,U+2190-2199,U+2212,U+2248,U+2260,U+2460-2468,U+24B6-24CF,U+24D2,U+24EA,U+24FF,U+25A0-25A2,U+25CB,U+25CF,U+25E6,U+2605-2606,U+2661,U+2665,U+26A0,U+2713,U+2717,U+2776-277E,U+2780-2788,U+278A-2792,U+2C7C,U+2E3A-2E3B,U+3000,U+3008-3011,U+3014-3015,U+3131-3164,U+321C,U+AC00-D7A3,U+FB00-FB04,U+FEFF,U+107A5,U+1F130-1F149,U+1F150-1F169,U+1F170-1F189,U+F0000-F0003,U+100000-100001,U+100092-100093,U+100128-10012B,U+10012E-100131,U+10013E,U+100184-100185,U+1001FE-1001FF,U+1002B4-1002B5,U+1002C2-1002C3,U+100479",
+      "effectiveCmapCount": 103,
+      "glyphCount": 12663,
+      "comparedGlyphInstances": 309
+    }
+  ]
+}

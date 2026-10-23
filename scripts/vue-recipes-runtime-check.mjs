@@ -43,6 +43,26 @@ await mount('inputs');const input=$('input[type=file]');const file=new w.File(['
 const mode=$('#recipe-autocomplete-mode');mode.value='error';mode.dispatchEvent(new w.Event('change',{bubbles:true}));await tick();const combo=$('#recipe-autocomplete');combo.click();await wait(180);await tick();combo.focus();combo.setSelectionRange(0,0);const home=new w.KeyboardEvent('keydown',{key:'Home',bubbles:true,cancelable:true});combo.dispatchEvent(home);assert.equal(home.defaultPrevented,false);key(combo,'Tab');await tick();const retry=[...d.querySelectorAll('button')].find(x=>x.textContent.includes('검색 다시 시도'));assert.ok(retry);retry.focus();retry.click();await wait(180);await tick();key(combo,'Enter');await tick();assert.equal(combo.value,'기록');assert.equal(d.activeElement,combo);await unmount();
 await mount('workflow');$('#recipe-edit').click();await tick();assert.equal(d.activeElement.id,'recipe-edit-title');const cancel=[...d.querySelectorAll('button')].find(x=>x.textContent.includes('수정 취소'));cancel.click();await tick();assert.equal(d.activeElement.id,'recipe-edit');await unmount();
 await mount('bulk-recovery');[...d.querySelectorAll('button')].find(x=>x.textContent.includes('선택한 가상')).click();await wait(380);await tick();assert.match($('#recipe-bulk-result').textContent,/실패 1개/);const retryBulk=$('#recipe-bulk-retry');retryBulk.focus();retryBulk.click();await wait(380);await tick();assert.match($('#recipe-bulk-result').textContent,/실패 0개/);assert.equal(d.activeElement.id,'recipe-bulk-result');await unmount();
+for (const recipe of ['responses', 'composition']) {
+  for (let repeat = 0; repeat < 2; repeat++) {
+    await mount(recipe)
+    if (recipe === 'responses') {
+      const response = $('#recipe-response')
+      response.value = 'error'
+      response.dispatchEvent(new w.Event('change', { bubbles: true }))
+      await tick()
+    }
+    const retry = [...d.querySelectorAll('button')].find(button => button.textContent.trim() === '다시 시도')
+    assert.ok(retry)
+    retry.focus()
+    retry.click()
+    await tick()
+    const result = $(recipe === 'responses' ? '#recipe-response-result' : '#recipe-composition-result')
+    assert.equal(d.activeElement, result)
+    assert.equal(result.getAttribute('role'), 'status')
+    await unmount()
+  }
+}
 await mount('inputs')
 const inputsRegion = $('section.sol-stack')
 assert.equal(inputsRegion.getAttribute('aria-labelledby'), 'recipe-inputs-title')

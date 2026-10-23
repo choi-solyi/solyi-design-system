@@ -12,6 +12,7 @@ node('1/10 Internal shared Core','scripts/build-packages.mjs','--core');
 run('2/10 Library locked development dependencies','packages/vue-ui/',npm,['ci',...installArgs]);
 run('3/10 Vite library + strict own-source declarations','packages/vue-ui/',npm,['run','build']);
 node('4/10 Pack local artifacts','scripts/pack-packages.mjs');
+node('4/10 Plain npm pack lifecycle','scripts/prepack-check.mjs');
 for(const project of ['examples/package-consumer/','examples/vue-vuetify/']){
  if(process.argv.includes('--refresh')){
   // A local preview tarball may be rebuilt before its version is committed.
@@ -39,6 +40,8 @@ node('7/10 Actual Vue documentation recipes','scripts/vue-recipes-runtime-check.
 node('7/10 Dedicated reusable Vue APIs','scripts/vue-dedicated-runtime-check.mjs');
 node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.mjs');
 node('7/10 Unsaved navigation and retry focus recovery','scripts/recipe-recovery-check.mjs');
+node('7/10 Floating preview size','scripts/embed-height-check.mjs');
+node('7/10 Decimal number steps','scripts/number-input-step-check.mjs');
 node('7/10 Starter async runtime','scripts/starter-runtime-check.mjs');
 run('8/10 Package-consuming public demo','examples/vue-vuetify/',npm,['run','build']);
 if(process.argv.includes('--packages-only')){

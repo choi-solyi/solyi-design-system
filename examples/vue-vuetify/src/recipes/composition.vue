@@ -1,7 +1,18 @@
 <script setup lang="ts">
-const query = ref(''),
-  state = ref<string | null>('all'),
-  failed = ref(true);
+const query = ref('')
+const state = ref<string | null>('all')
+const failed = ref(true)
+const resultPanel = useTemplateRef<HTMLElement>('resultPanel')
+
+function retry(event: MouseEvent) {
+  const owner = event.currentTarget
+  failed.value = false
+  nextTick(() => {
+    if (document.activeElement === owner || document.activeElement === document.body) {
+      resultPanel.value?.focus({ preventScroll: true })
+    }
+  })
+}
 </script>
 <template>
   <SCard :heading-level="2" title="컨트롤과 보조 행동의 관계">
@@ -26,9 +37,11 @@ const query = ref(''),
     <SAlert v-if="failed" tone="danger" title="가상 자료를 불러오지 못했어요.">
       <p>현재 검색 조건은 유지됩니다.</p>
       <template #actions>
-        <SBtn variant="inline" @click="failed = false"> 다시 시도 </SBtn>
+        <SBtn variant="inline" @click="retry"> 다시 시도 </SBtn>
       </template>
     </SAlert>
-    <p v-else role="status">✓ 가상 재시도를 확인했어요.</p>
+    <p v-else id="recipe-composition-result" ref="resultPanel" tabindex="-1" role="status">
+      ✓ 가상 재시도를 확인했어요.
+    </p>
   </SCard>
 </template>

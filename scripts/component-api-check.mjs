@@ -27,6 +27,8 @@ const copySources=new Map();let copyId=0;
 const escape=value=>value.replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
 const dom=new JSDOM(renderComponentReferences({section:(id,title,description,body)=>`<section id="${id}" class="section"><h2>${title}</h2><p>${description}</p>${body}</section>`,codeSample(label,source){const id='sample-'+(++copyId);copySources.set(id,source);return `<details class="code-example"><summary>${label}</summary><div class="code-body"><div class="code-toolbar"><span>${label}</span><button type="button" data-copy-snippet="${id}">복사</button></div><pre><code>${escape(source)}</code></pre></div></details>`;}}),{url:'https://example.test/#component/sbtn'}),document=dom.window.document;
 const seenIds=[...document.querySelectorAll('[id]')].map(element=>element.id);assert.equal(new Set(seenIds).size,seenIds.length);
+assert.equal(document.querySelectorAll('code.component-api-name').length,38);
+assert.equal(document.querySelectorAll('code.component-api-name[aria-label]').length,0,'Static code retains its native text without prohibited naming');
 const mapping={date:'inputs',files:'inputs',autocomplete:'inputs',chart:'chart-tree',tree:'chart-tree'};
 const advanced=await readFile(new URL('examples/vue-vuetify/src/AdvancedExamples.vue',root),'utf8');
 for(const component of componentReferences){

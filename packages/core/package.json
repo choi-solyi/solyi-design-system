@@ -1,6 +1,6 @@
 {
   "name": "@solyi/core",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -40,6 +40,7 @@
     "**/*.css"
   ],
   "scripts": {
-    "build": "node ../../scripts/build-packages.mjs --core"
+    "build": "node ../../scripts/build-packages.mjs --core",
+    "prepack": "node ../../scripts/prepare-package.mjs core"
   }
 }

@@ -81,6 +81,12 @@ click('[data-color-toast="danger"]');assert.equal(d.querySelectorAll('#color-toa
 $('#color-toast-close').focus();click('#color-toast-close');assert.equal($('#color-toast').hidden,true);assert.equal(d.activeElement,$('[data-color-toast="danger"]'));
 click('.color-specimen[data-tone="info"] .tone-soft');assert.match($('#color-example-result').textContent,/Information/);
 $('#token-search').value='danger';fire($('#token-search'),'input');assert.equal(d.querySelectorAll('.sol-token-card').length,2);
+for(const card of d.querySelectorAll('.sol-token-card')){
+  const name=card.getAttribute('aria-labelledby').split(/\s+/).map(id=>d.getElementById(id).textContent).join(' ');
+  assert.ok(name.includes(card.querySelector('code').textContent),'Visible token variable is in the name');
+  assert.ok(name.includes(card.querySelector('.token-value').textContent),'Visible HEX is in the name');
+  assert.ok(d.getElementById(card.getAttribute('aria-describedby')),'Token help is described separately');
+}
 click('.sol-token-card');await pause(10);assert.match(clipboard,/--sol-color-danger/);
 click('#mode-toggle');assert.equal(d.documentElement.dataset.mode,'dark');
 assert.ok($('#contrast-results').textContent.includes('dark'));

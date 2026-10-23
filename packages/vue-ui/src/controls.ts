@@ -3,6 +3,7 @@ import type {PropType,Slots} from 'vue';
 import {useSolLocale,formatSolNumber,parseSolNumber} from './locale';
 import type {SolLocale} from './locale';
 import {validationProps,useSFieldValidation,fieldError,fieldDisabled,fieldReadonly} from './form';
+import { addNumberStep, isNumberStepAligned } from './number-step'
 
 export interface SolOption {value:string;label:string;description?:string;disabled?:boolean}
 export interface SolNumberInputHandle {focus():void;validate():boolean;resetValidation():void}
@@ -48,17 +49,38 @@ export const STextarea=defineComponent({name:'STextarea',inheritAttrs:false,prop
 export const SNumberInput=defineComponent({name:'SNumberInput',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Number as PropType<number|null>,default:null},min:Number,max:Number,step:{type:Number,default:1}},emits:{'update:modelValue':(_v:number|null)=>true,change:(_v:number|null)=>true,invalid:(_v:string)=>true,blur:(_e:FocusEvent)=>true},setup(p,{attrs,slots,emit,expose}){
  const l=useSolLocale(()=>p.locale),draft=ref(p.modelValue===null?'':formatSolNumber(p.modelValue,l.value)),localError=ref(''),input=ref<HTMLInputElement|null>(null);
  const numeric=()=>draft.value.trim()===''?null:parseSolNumber(draft.value,l.value)??NaN;
- function message(){const value=numeric();if(value===null)return p.required?l.value.invalidNumber:'';if(!Number.isFinite(value)||!Number.isFinite(p.step)||p.step<=0||p.min!==undefined&&p.max!==undefined&&p.min>p.max)return l.value.invalidNumber;if(p.min!==undefined&&value<p.min||p.max!==undefined&&value>p.max)return l.value.numberRange;const steps=(value-(p.min??0))/p.step;return Math.abs(steps-Math.round(steps))>1e-7?l.value.numberStep:'';}
+  function message() {
+    const value = numeric()
+    if (value === null) return p.required ? l.value.invalidNumber : ''
+    if (
+      !Number.isFinite(value) ||
+      !Number.isFinite(p.step) ||
+      p.step <= 0 ||
+      (p.min !== undefined && p.max !== undefined && p.min > p.max)
+    ) {
+      return l.value.invalidNumber
+    }
+    if ((p.min !== undefined && value < p.min) || (p.max !== undefined && value > p.max)) {
+      return l.value.numberRange
+    }
+    return isNumberStepAligned(value, p.min ?? 0, p.step) ? '' : l.value.numberStep
+  }
  function syncValidity(){input.value?.setCustomValidity(fieldError(p)||message());}
  function commit(){if(fieldReadonly(p)||fieldDisabled(p))return !fieldError(p)&&!message();const error=message();localError.value=error;if(error){emit('invalid',error);syncValidity();return false;}const value=numeric();draft.value=value===null?'':formatSolNumber(value,l.value);if(value!==p.modelValue){emit('update:modelValue',value);emit('change',value);}return !p.error&&!p.serverError&&!p.errorMessages.length;}
- function nudgeValue(direction: number): number | null {
-  if (!Number.isFinite(p.step) || p.step <= 0) return null
-  const base = p.modelValue ?? p.min ?? 0
-  const next = Number((base + (p.modelValue === null ? 0 : direction * p.step)).toFixed(10))
-  if (!Number.isFinite(next) || p.min !== undefined && next < p.min ||
-    p.max !== undefined && next > p.max) return null
-  return next
- }
+  function nudgeValue(direction: number): number | null {
+    if (!Number.isFinite(p.step) || p.step <= 0) return null
+    const base = p.modelValue ?? p.min ?? 0
+    const next = p.modelValue === null ? base : addNumberStep(base, direction * p.step)
+    if (
+      next === null ||
+      !Number.isFinite(next) ||
+      (p.min !== undefined && next < p.min) ||
+      (p.max !== undefined && next > p.max)
+    ) {
+      return null
+    }
+    return next
+  }
  function nudge(direction: number) {
   if (fieldDisabled(p) || fieldReadonly(p)) return
   const next = nudgeValue(direction)

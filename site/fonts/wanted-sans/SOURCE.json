@@ -15,7 +15,7 @@
     },
     {
       "path": "packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.css",
-      "local": "WantedSansVariable.css",
+      "local": "WantedSansVariable.complete.original.css",
       "bytes": 510,
       "gitBlob": "dc1e0c9cd6fd69f21cac08d7847345b5fa1fa5ac",
       "sha256": "340ed458c7530e6adeab6e0a9b9b101148765ba693ff8644dc5e14692b967c0c"
@@ -26,6 +26,675 @@
       "bytes": 4394,
       "gitBlob": "de64d7050da4906548292a504c8da5ac04957a79",
       "sha256": "db345ad0216d0b73ba5dd3a540507281da6695f234e0a4e70cf2e1a8f30d4331"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.css",
+      "local": "WantedSansVariable.split.original.css",
+      "bytes": 54031,
+      "gitBlob": "ac6bb0e171508f702736a7b55c5ea3c2255b17e5",
+      "sha256": "8745ef63cbc2e2bf3798aa58114e4e43a67608718f44134416daed959a6ba4cf"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.0.woff2",
+      "local": "woff2/WantedSansVariable.split.0.woff2",
+      "bytes": 25632,
+      "gitBlob": "e64fe60dfe380772e2c490c6aa4976f8014f6c6b",
+      "sha256": "30cd0f2fb8b076baa281761f95c650e3dd543638e7f8e7b0a95bdcdba6eecbe8"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.1.woff2",
+      "local": "woff2/WantedSansVariable.split.1.woff2",
+      "bytes": 34604,
+      "gitBlob": "b966eb676679ca83d540d29ef778b4d8932f8817",
+      "sha256": "2673730caeb4dedfb1265421dec80f8b3d3503a014c657c0afab27e30f21adb3"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.2.woff2",
+      "local": "woff2/WantedSansVariable.split.2.woff2",
+      "bytes": 31040,
+      "gitBlob": "d20356e88cfb3050c8d9853fa1d3fdb9acafc8ef",
+      "sha256": "4fdb63527886350a70c14f26dfce7652eb704e25c3a2df0c3eddb7e69b794f63"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.3.woff2",
+      "local": "woff2/WantedSansVariable.split.3.woff2",
+      "bytes": 26904,
+      "gitBlob": "84a5c86d8b7e240218c6bf6e8df347dabb64177c",
+      "sha256": "33d5f9d9b4a67a832ce63e0ae4c3390f23f8e80bfe191be1c26d1bc54a143609"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.4.woff2",
+      "local": "woff2/WantedSansVariable.split.4.woff2",
+      "bytes": 26168,
+      "gitBlob": "fb5a19c35cd58a66f7550f13e6e0183f10fcc13b",
+      "sha256": "44d56cbe57945d48e38dc26e0f2f7fbd904379fc296f508243fad8a5e4f936a2"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.5.woff2",
+      "local": "woff2/WantedSansVariable.split.5.woff2",
+      "bytes": 77896,
+      "gitBlob": "595ae2e74e9cf08651f8ae9d32d515cd66c7b929",
+      "sha256": "01ef1896f340096fafb2a9dd20932a0f3ceab5da3746239972bed838e203e495"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.6.woff2",
+      "local": "woff2/WantedSansVariable.split.6.woff2",
+      "bytes": 25120,
+      "gitBlob": "1607b31298264586be1217ddeab453a9d61b73e7",
+      "sha256": "c82ca7770f16c4e50fc35af3bce62d9045fe3f0b0c44a6716c763907e9a865fa"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.7.woff2",
+      "local": "woff2/WantedSansVariable.split.7.woff2",
+      "bytes": 28732,
+      "gitBlob": "6fc2b66a7e77ffec8ef70c76cea6a6266abbf40b",
+      "sha256": "3d01d1943979ba868c478fee7a8d13269b9e7d0ed3f011124fe7aa7ad8c83d96"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.8.woff2",
+      "local": "woff2/WantedSansVariable.split.8.woff2",
+      "bytes": 26736,
+      "gitBlob": "e8b35f8b21eb4a9f658b9a0217cfc97e289e5417",
+      "sha256": "4616ddf3f54e4a149c7b0c4822991cda931763bee121b0de3eb51d17487cb617"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.9.woff2",
+      "local": "woff2/WantedSansVariable.split.9.woff2",
+      "bytes": 25984,
+      "gitBlob": "ba1c76c4cb9c4d11d00fad1936f36ee16548953f",
+      "sha256": "83a1abb8e924ff3fe5ee7f2e2c1d639267c014a20ae5311dbb42b77f7e0fac5c"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.10.woff2",
+      "local": "woff2/WantedSansVariable.split.10.woff2",
+      "bytes": 28708,
+      "gitBlob": "45db010496c25667d34d1a68a14025ef4b9f0a36",
+      "sha256": "dc7d3856c5a4adc28160ea2fa040d97ddb7422b52d74b4327f1a6b6e98f112f9"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.11.woff2",
+      "local": "woff2/WantedSansVariable.split.11.woff2",
+      "bytes": 28840,
+      "gitBlob": "0973130d513c7bd3912397b7ad9159310e149955",
+      "sha256": "bb2c33c696c0f2bf7c6e879f5ec5a7d9d684955d531a03bd569bc2ca9ffc98c5"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.12.woff2",
+      "local": "woff2/WantedSansVariable.split.12.woff2",
+      "bytes": 27688,
+      "gitBlob": "2b8f42a53161b8657d0a34ca81fe4a5e81ac871a",
+      "sha256": "14122c23525ffc3a78ec65f9ac0abf0adab0a567a8eb38ff7f43708535aa859f"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.13.woff2",
+      "local": "woff2/WantedSansVariable.split.13.woff2",
+      "bytes": 27820,
+      "gitBlob": "d3a1466b1b3ccb4396dbcd0d8e6bbbac97c38c35",
+      "sha256": "8497912e9bc27dfe4e858c3ec167c12074fe21afd921fab3f285436fea1bc192"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.14.woff2",
+      "local": "woff2/WantedSansVariable.split.14.woff2",
+      "bytes": 27452,
+      "gitBlob": "f30f10708c99d02f6e6aa47341c22077e8e86a22",
+      "sha256": "34b9a8fbc5d1e0e6f03f6b4e9651e66e952f6c4516d5e0b54ae8fa605a770eeb"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.15.woff2",
+      "local": "woff2/WantedSansVariable.split.15.woff2",
+      "bytes": 28988,
+      "gitBlob": "a5619ad638da1a732c937e6f3c34cbc7c68dedb0",
+      "sha256": "e61e866b3866de809b65298b609165239bceb5c2e722ea0adf672a424e07320b"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.16.woff2",
+      "local": "woff2/WantedSansVariable.split.16.woff2",
+      "bytes": 26896,
+      "gitBlob": "9beb02afc9ce30c707beec3cc274c0d6038aa383",
+      "sha256": "6a070884744fb74e234bd39fe1434aefe7fb848b7c054af5e52b6277a74af6d1"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.17.woff2",
+      "local": "woff2/WantedSansVariable.split.17.woff2",
+      "bytes": 31528,
+      "gitBlob": "902efd1eccb6e17b326601ccb83abef5a9b9882d",
+      "sha256": "b2023436fd52bca5de5f311fb3e1d44caace700375e62e2aceb0540308729703"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.18.woff2",
+      "local": "woff2/WantedSansVariable.split.18.woff2",
+      "bytes": 32232,
+      "gitBlob": "c2f492f680b737021fd62f68bfd9a01d02dd79b6",
+      "sha256": "41fdf1557b1f459a71138edad9e1ef9596cfd2b303cac4fd4aa8906fe12bab68"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.19.woff2",
+      "local": "woff2/WantedSansVariable.split.19.woff2",
+      "bytes": 27756,
+      "gitBlob": "31d3ccc547b48bec429468fb228f283db31f3ba1",
+      "sha256": "9e7288e7532831088188e31bb05a03682fc1a4be57617bc6dca84ff8dc025768"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.20.woff2",
+      "local": "woff2/WantedSansVariable.split.20.woff2",
+      "bytes": 28388,
+      "gitBlob": "92298e1f19205ac828263ef83b3acb93bfe911d6",
+      "sha256": "b5921ba664a5b005f6c634f1ba375c38de336d5226215cd1fa8168af81b5d95e"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.21.woff2",
+      "local": "woff2/WantedSansVariable.split.21.woff2",
+      "bytes": 29844,
+      "gitBlob": "9de027c94b8c0ec234f3d92461d7d5a9f4885984",
+      "sha256": "d6028a71234765f25712e5edd405c4e90ee4bf554e7f7a4e89601d738e1b4e1d"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.22.woff2",
+      "local": "woff2/WantedSansVariable.split.22.woff2",
+      "bytes": 30712,
+      "gitBlob": "b90753e6fb1d6a8f8f6365d443937253fb1f0d34",
+      "sha256": "10a25a3a3800d93e468ffd557e8c313981579ed4948c1e1e7a08062755de2e84"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.23.woff2",
+      "local": "woff2/WantedSansVariable.split.23.woff2",
+      "bytes": 25312,
+      "gitBlob": "718d1264ad9e0364d122237b74e1245b9ef22704",
+      "sha256": "8aac36453482f88c9b98ad493db08fc971427f6e60783968f0d8a6e332d86ce7"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.24.woff2",
+      "local": "woff2/WantedSansVariable.split.24.woff2",
+      "bytes": 32604,
+      "gitBlob": "1c7c7490188de5e64c6a3fad63c620c0cd170276",
+      "sha256": "98ee32185c8e56e81f27f12ec777a71194ac0de85b9aaca8150cf504ce3f3f09"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.25.woff2",
+      "local": "woff2/WantedSansVariable.split.25.woff2",
+      "bytes": 30684,
+      "gitBlob": "2e6e1a4a0d770a62971ccad1a8262e6d57ee4550",
+      "sha256": "059fe7713bbce771b2a85f49d8d0f17d47486c7976391850dbc9284795489e69"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.26.woff2",
+      "local": "woff2/WantedSansVariable.split.26.woff2",
+      "bytes": 27448,
+      "gitBlob": "ac4cd75224649ecb87f094d14a85f79311c97fb2",
+      "sha256": "ab7fe05d14f1eaa6b2df7494ae8dd7e7e0268fbcd336a7620c6cf79694c80fae"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.27.woff2",
+      "local": "woff2/WantedSansVariable.split.27.woff2",
+      "bytes": 29448,
+      "gitBlob": "d5ed89ccab5ca92e02da8e78f680014685f97f27",
+      "sha256": "0c1a916c45adae6d52471f998492d3eb1963cad6bbb4d553e2141c2d44cdf2c6"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.28.woff2",
+      "local": "woff2/WantedSansVariable.split.28.woff2",
+      "bytes": 29840,
+      "gitBlob": "da8bace5b28e7694bb00cd11454bdd6b3a019dc0",
+      "sha256": "5c1d060047d96c8ced7b9504fd1ebb9be091b76d72a3e6c1d2921c55cf098c53"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.29.woff2",
+      "local": "woff2/WantedSansVariable.split.29.woff2",
+      "bytes": 29204,
+      "gitBlob": "c061abbc8d49a122104b38015a1fcd26a02eadfb",
+      "sha256": "155200ebeaa2c38d738c25124ccca6403236b13e9d60182746fc5be16ed5db98"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.30.woff2",
+      "local": "woff2/WantedSansVariable.split.30.woff2",
+      "bytes": 32008,
+      "gitBlob": "69dd6912e00a12469fb958181feb3f7bb1f37b2a",
+      "sha256": "c2ed412db31792ecda5017965020ea6b5806e93c30709adf5dab44ac57c0c739"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.31.woff2",
+      "local": "woff2/WantedSansVariable.split.31.woff2",
+      "bytes": 30956,
+      "gitBlob": "57adcb286486c524613aa8d6b8b8fd3065438b9c",
+      "sha256": "4cdbe9043f2c50ae935beaa5031edcd039083095ed9c078ef9888f14ed5a316b"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.32.woff2",
+      "local": "woff2/WantedSansVariable.split.32.woff2",
+      "bytes": 27264,
+      "gitBlob": "b62b4540e83beaed2fee44787e6fed19ae803511",
+      "sha256": "ef051eb96baabf155130eefc5ca044e0c6f2c62d3914e998f540cc6578bf09ba"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.33.woff2",
+      "local": "woff2/WantedSansVariable.split.33.woff2",
+      "bytes": 26808,
+      "gitBlob": "c821426580417cee08e61ad0c8f7e673c15d6cae",
+      "sha256": "589b8ba8e3fc8a3634c7f3bc6565502bb991a4b97c735d1d59a23079ac55b72c"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.34.woff2",
+      "local": "woff2/WantedSansVariable.split.34.woff2",
+      "bytes": 27192,
+      "gitBlob": "5df2d08b26fea7bbbd20b3e8a5c862943e3703d9",
+      "sha256": "cda21b98f548005373dafb35799a7e595cac94d4ce51dad83671d50bf8cc43a2"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.35.woff2",
+      "local": "woff2/WantedSansVariable.split.35.woff2",
+      "bytes": 26676,
+      "gitBlob": "bb73bb062f893033136a0e57b5ebde794a5831f8",
+      "sha256": "cbd27cc8aa443193c721358642d65d096550569c6f709b871e6d2037cf3ab2a0"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.36.woff2",
+      "local": "woff2/WantedSansVariable.split.36.woff2",
+      "bytes": 22164,
+      "gitBlob": "77dbb9b9641ab17cf8da98d7ae61a1903b029d47",
+      "sha256": "213e5523012e2e93c8a81eef6923d733187c577d8399c3db7516a3a89caa0338"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.37.woff2",
+      "local": "woff2/WantedSansVariable.split.37.woff2",
+      "bytes": 27004,
+      "gitBlob": "2fa03d2f7c55f5e2b30fb373490e4afff19de837",
+      "sha256": "3ab29a74777d984089b8f148081e1c4c78597579b1d5b04400dfb91b69f13df8"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.38.woff2",
+      "local": "woff2/WantedSansVariable.split.38.woff2",
+      "bytes": 26624,
+      "gitBlob": "cfb20e6e6d40483aa9bff393a273fb965192af96",
+      "sha256": "4932123b8f3a1051e3b007f4036eda4ce53420cdd1a3fa82fbab3f662c06d9c1"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.39.woff2",
+      "local": "woff2/WantedSansVariable.split.39.woff2",
+      "bytes": 23120,
+      "gitBlob": "8f2af1b0e778e06b657652a0b06970333ca4b7d9",
+      "sha256": "87ab66b7a0667622c1125a9eee13bede238f662f4af863b72007f8e0b1c387bd"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.40.woff2",
+      "local": "woff2/WantedSansVariable.split.40.woff2",
+      "bytes": 25712,
+      "gitBlob": "dfd4d3248fba0e028982dff966434e26ea4e3213",
+      "sha256": "ac90cb63075af13001e9d0864f21ac2d80c466d7ca98c3233941bb2fd12d1437"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.41.woff2",
+      "local": "woff2/WantedSansVariable.split.41.woff2",
+      "bytes": 27128,
+      "gitBlob": "3080ad7e14bc6926ef682cff934876f8791e4d9e",
+      "sha256": "a5293e745c4dbb66ff56a655768730e1f5d683273b8f49ee02693d2c0f8d20e4"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.42.woff2",
+      "local": "woff2/WantedSansVariable.split.42.woff2",
+      "bytes": 23608,
+      "gitBlob": "db61e6c38eab493bec2a3dc2fd276b56bf9c1d59",
+      "sha256": "90933a3e05c2aabad720507386a3b356b8571af1c5f3ea0aa19366d0482426c3"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.43.woff2",
+      "local": "woff2/WantedSansVariable.split.43.woff2",
+      "bytes": 25312,
+      "gitBlob": "f010ca416b4d198fc505903715d9de8d307a18de",
+      "sha256": "5f4741c660c9211398fdfdaa90e1fc588866e8abbe5778b9f3aa836d5cc5ba59"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.44.woff2",
+      "local": "woff2/WantedSansVariable.split.44.woff2",
+      "bytes": 27224,
+      "gitBlob": "ed88b2937bd40e41825afd2a4493627d6c3a48d1",
+      "sha256": "e948f6ef4825eef12c8b65dd071e0ca767480a2f50aa04f26ec945a7b1c379af"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.45.woff2",
+      "local": "woff2/WantedSansVariable.split.45.woff2",
+      "bytes": 28068,
+      "gitBlob": "1de509d93825ed7a9271ee5cc2506df73d46ff1c",
+      "sha256": "27d088b8af55d70bc0843eb1fdfc81029c1d6a97f7df7b384081c0e6377e98fc"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.46.woff2",
+      "local": "woff2/WantedSansVariable.split.46.woff2",
+      "bytes": 27920,
+      "gitBlob": "47ed9848f1b5b57a6f8896a3881e76b607b8d821",
+      "sha256": "8afa4ab144fda0704efd00ffaad3e862731f25117cfbc4fd1382d51509ca0403"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.47.woff2",
+      "local": "woff2/WantedSansVariable.split.47.woff2",
+      "bytes": 28880,
+      "gitBlob": "81250147ffa221aa6ad9b25838aa4a8d350f0366",
+      "sha256": "4b0aad49edf3a0843b9064d9b9c5c52ce7c0985906985550370b72dd76ad9818"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.48.woff2",
+      "local": "woff2/WantedSansVariable.split.48.woff2",
+      "bytes": 27740,
+      "gitBlob": "ae74cb859a7dadbedb6b588b4e94464fefe60c32",
+      "sha256": "51858087fdb96e08bf5e7dabff511aa8d2c00834da3bd50cfaa2d19e718b1bd4"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.49.woff2",
+      "local": "woff2/WantedSansVariable.split.49.woff2",
+      "bytes": 25284,
+      "gitBlob": "281165a0efa713b72ac911dba0b23bbca5cdfefa",
+      "sha256": "b1b4a41702561e5d14ce7e696dfaeab0b358c3db1c0ae28191ed569a11be549c"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.50.woff2",
+      "local": "woff2/WantedSansVariable.split.50.woff2",
+      "bytes": 27772,
+      "gitBlob": "55c69387e168b4ad990102a637555b2d7a53e413",
+      "sha256": "68949e9efda9ae3b09c6f9be16081cf8056b7008abb1e63f99aacfd2636a5e64"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.51.woff2",
+      "local": "woff2/WantedSansVariable.split.51.woff2",
+      "bytes": 27124,
+      "gitBlob": "afbeae7990ba7d9d174e40fa4afaa63f8b67ac52",
+      "sha256": "52a48a70ce32907e83b347a5f06c4603852360859d868fddc0022f55b0ceb623"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.52.woff2",
+      "local": "woff2/WantedSansVariable.split.52.woff2",
+      "bytes": 26744,
+      "gitBlob": "9f3cfd7a99007ace2aecc4812bec3686c294388d",
+      "sha256": "309a7d03a2e2dc27b9cd52b7fedad8507ef788d07dd259084a230787e418349f"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.53.woff2",
+      "local": "woff2/WantedSansVariable.split.53.woff2",
+      "bytes": 25980,
+      "gitBlob": "0949de6f091398287c76b3832522ac8335cee9ff",
+      "sha256": "30937eaa3b38c12f1727972f47707856047bc70713f7291f9eece09e99827562"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.54.woff2",
+      "local": "woff2/WantedSansVariable.split.54.woff2",
+      "bytes": 26980,
+      "gitBlob": "8a61a5998c2b3247b1156053e8d5b8c33f530f1e",
+      "sha256": "ac7039d8fea5f0d116c8f7e28548b277c95fdde4d1c26f7538b256554bacad73"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.55.woff2",
+      "local": "woff2/WantedSansVariable.split.55.woff2",
+      "bytes": 27088,
+      "gitBlob": "244936be5333d854f4b7e6bbfccf622cd14dab88",
+      "sha256": "0234c0600e9c8e6710d885ea81627ea91f5ec5ce6a2ca96953c9909264bb7b97"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.56.woff2",
+      "local": "woff2/WantedSansVariable.split.56.woff2",
+      "bytes": 28076,
+      "gitBlob": "2578a5451e9b3675813232ad495c10b6c42f3613",
+      "sha256": "e036109dc2ae524d4c2cdfea8e3805e22b7d71a52839dad2ac008f3ea80c3626"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.57.woff2",
+      "local": "woff2/WantedSansVariable.split.57.woff2",
+      "bytes": 31724,
+      "gitBlob": "f8c4f80526acb55d3e173a77961652aece89b48d",
+      "sha256": "9def57ffdb7b92a40b2e79e20c1a5ff9aca6b307d124393d4a19abfe231a2fa4"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.58.woff2",
+      "local": "woff2/WantedSansVariable.split.58.woff2",
+      "bytes": 29924,
+      "gitBlob": "9b65cab2583cb647409913a602aa3a49bd5d3e34",
+      "sha256": "b408fb7a4e0b5782c2aad70ac35f9483c26e5d29c878b0c1a13a3dc4b7227c1d"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.59.woff2",
+      "local": "woff2/WantedSansVariable.split.59.woff2",
+      "bytes": 29140,
+      "gitBlob": "613bbda1e5e806514f6eaae6df40bd3a886823a4",
+      "sha256": "a93d64c00614deb012bcd2943d319f6faa7945ecbc3230e215fbe146ce02015d"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.60.woff2",
+      "local": "woff2/WantedSansVariable.split.60.woff2",
+      "bytes": 27940,
+      "gitBlob": "d4afb9a523bed6da751ac90159882580684c56a9",
+      "sha256": "cf77381c6ffb4febe8fab9e3e8d01ca73822274c3cc30aee2a801aa7297dacb0"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.61.woff2",
+      "local": "woff2/WantedSansVariable.split.61.woff2",
+      "bytes": 26968,
+      "gitBlob": "b5cda734a16c8dad0b5d08043095b976f20107d1",
+      "sha256": "209b9ebb895838acfd04bc599a0d8087403ac3dc2fa162ea81d28a6eabbf75a1"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.62.woff2",
+      "local": "woff2/WantedSansVariable.split.62.woff2",
+      "bytes": 23364,
+      "gitBlob": "66145719579f1d083edc750b4c5f370775b920d7",
+      "sha256": "348f460579ed03ac41cca9d44d2a83e582212af934311457b82fd01fd041a71b"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.63.woff2",
+      "local": "woff2/WantedSansVariable.split.63.woff2",
+      "bytes": 8084,
+      "gitBlob": "dfdd594cb4fa69c51de1eca80d76cededf9235f9",
+      "sha256": "dfca87401f15e17448115065fb28b5564cf342631528af69c75c2f203c330756"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.64.woff2",
+      "local": "woff2/WantedSansVariable.split.64.woff2",
+      "bytes": 6992,
+      "gitBlob": "ed2ae7092a8a4ddd476edd4ce447a8ad1b8b96d5",
+      "sha256": "3f947c98cb1beb9c01e0128abd6fddec706f8c83d657a3cdee68282e4a50db80"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.65.woff2",
+      "local": "woff2/WantedSansVariable.split.65.woff2",
+      "bytes": 4880,
+      "gitBlob": "bfe97ee25176b7ca9885580e91915b90b9c9d083",
+      "sha256": "149d384e1ed0adbf3a8be21cdeb7a79d11b6122e15123324a4dbc98c0bd03a7b"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.66.woff2",
+      "local": "woff2/WantedSansVariable.split.66.woff2",
+      "bytes": 11828,
+      "gitBlob": "0a4a79301b04b80d013006fb0227ad6215b83c90",
+      "sha256": "09f1fac58d9a7367040f6e3c9a6878c76a20804aa28de136304b48b3512dc85a"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.67.woff2",
+      "local": "woff2/WantedSansVariable.split.67.woff2",
+      "bytes": 4980,
+      "gitBlob": "1e0b6c81da3b2074624b4c8053f17bce74f17564",
+      "sha256": "8d3335de100e29f1e23780ae8966f7e9557624f10ff8a7f4c77d65dda1944bfd"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.68.woff2",
+      "local": "woff2/WantedSansVariable.split.68.woff2",
+      "bytes": 5620,
+      "gitBlob": "784d28f266b5c0e9ed533fd26137021571058a57",
+      "sha256": "04308cd8d5f06c6d94264763e74761ca811f1096530c7d6b0ec5bece75a7a303"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.69.woff2",
+      "local": "woff2/WantedSansVariable.split.69.woff2",
+      "bytes": 20068,
+      "gitBlob": "887a8742765997fd7d64b6c4b6be8079b3ba79df",
+      "sha256": "82ae3fcf0f84ad94a61fc86e04f614d14975cec7aa2c06383c50df404e70d9d6"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.70.woff2",
+      "local": "woff2/WantedSansVariable.split.70.woff2",
+      "bytes": 12704,
+      "gitBlob": "0c82f5aac5a8f171af42d40e574b2ece9655cb19",
+      "sha256": "4f77ec357ecb2e08e4d4bdabb54e01b739bc9733511eebd286515880b45e7626"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.71.woff2",
+      "local": "woff2/WantedSansVariable.split.71.woff2",
+      "bytes": 12484,
+      "gitBlob": "e99ac3ba356dd3c99b998ccad6af7c364a5a44d0",
+      "sha256": "a88d3acea25b08a8cda5a2374921ef3949773c7a6ad6b2814556768c18f2adbd"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.72.woff2",
+      "local": "woff2/WantedSansVariable.split.72.woff2",
+      "bytes": 13380,
+      "gitBlob": "21911f71df22154bc81e3b0d35ecad795a64623f",
+      "sha256": "ef58a4f7292ad6ddadc6accd9798cac481ce2815ca3dfb1792b206f6c234edc3"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.73.woff2",
+      "local": "woff2/WantedSansVariable.split.73.woff2",
+      "bytes": 13448,
+      "gitBlob": "f4965bed65b6c2cde93fb2dc63dfc6db6a980e9c",
+      "sha256": "170548008c0a38576f5127bd23333e2748ae70c702c4670d55607155d0aeaa45"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.74.woff2",
+      "local": "woff2/WantedSansVariable.split.74.woff2",
+      "bytes": 14456,
+      "gitBlob": "b111a0f498456742523445abfd6a5f0f7e5f3daa",
+      "sha256": "25f923af36fc1e547cdae1c8dcb9edf27de0cde5a929c052435d7296ce70b8a9"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.75.woff2",
+      "local": "woff2/WantedSansVariable.split.75.woff2",
+      "bytes": 16008,
+      "gitBlob": "49223445ec4b089cf290edf2aaf639ea9e001109",
+      "sha256": "3aef7599811e73fb9eac1848bc0950cc13eda753bb85546eb9416d4702296f75"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.76.woff2",
+      "local": "woff2/WantedSansVariable.split.76.woff2",
+      "bytes": 17800,
+      "gitBlob": "d4491100ae22ca045543dbfe5b72e51938ce358f",
+      "sha256": "e16f4592d0789e008c276d7baeb22487411418b66c6c08fa6819694b9434e777"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.77.woff2",
+      "local": "woff2/WantedSansVariable.split.77.woff2",
+      "bytes": 18732,
+      "gitBlob": "ad2ca4339328fefdb1d23038e891e861b7589b61",
+      "sha256": "7fe67316a78ce7f2927a1caacc883516af9129543f82433ee884a727d76bd5e7"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.78.woff2",
+      "local": "woff2/WantedSansVariable.split.78.woff2",
+      "bytes": 19924,
+      "gitBlob": "12a0bb037fc02a128e50f3fc223b1277c28785dd",
+      "sha256": "4908799439050ea626796713cbf9d48c86e47233fbdff4d90c1ebd0065042962"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.79.woff2",
+      "local": "woff2/WantedSansVariable.split.79.woff2",
+      "bytes": 20336,
+      "gitBlob": "112d3286b5b08f1b9bacf53051e109fb2cce76ef",
+      "sha256": "bef04098d0677189c3cd79365317e0fc2735c19795bbffbc13eb035dab4bc092"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.80.woff2",
+      "local": "woff2/WantedSansVariable.split.80.woff2",
+      "bytes": 20424,
+      "gitBlob": "6a6439588c0d094fe4b1ab076448b8c366966437",
+      "sha256": "a1e6a6efbf88ad9e4bba966da52f1df500a8896339c558a17c072a7502bfc236"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.81.woff2",
+      "local": "woff2/WantedSansVariable.split.81.woff2",
+      "bytes": 20316,
+      "gitBlob": "aeec9a30c3ef34d9614680051ee09e86f46498a2",
+      "sha256": "0efbc50507067f37e23abd67a1fd4e12f96c72f2d4b6d7bfcf82d48adb0aedef"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.82.woff2",
+      "local": "woff2/WantedSansVariable.split.82.woff2",
+      "bytes": 19912,
+      "gitBlob": "abfc8231e7843e0448211a88bec5c3c5eddf21b8",
+      "sha256": "49a6f8720dc608c190dccc069b170c21f8cfdf56ef10cd9e55fe33ffe67ac1fb"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.83.woff2",
+      "local": "woff2/WantedSansVariable.split.83.woff2",
+      "bytes": 20360,
+      "gitBlob": "e365116165cc3172497cdca41455f707de93644e",
+      "sha256": "c11f49251d9bc49b8071822f29c40c9e91fa4ed6045c307704671ab2dc3b894d"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.84.woff2",
+      "local": "woff2/WantedSansVariable.split.84.woff2",
+      "bytes": 19736,
+      "gitBlob": "b14b34a5e92b1fc5bc6b1e0d84081af2256a3b60",
+      "sha256": "9e47e2105c9f2cc7ce6a763d018b87f9afbf3fa5b6442f3de7f5cb9eb00c6a49"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.85.woff2",
+      "local": "woff2/WantedSansVariable.split.85.woff2",
+      "bytes": 19444,
+      "gitBlob": "0e9418fad763a83f3323d4c0eedc5d50b9e12244",
+      "sha256": "1ecf7789280e402ca1c1a697a4fcacf6b76165c2fab60dd45c43164d5cbf1bce"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.86.woff2",
+      "local": "woff2/WantedSansVariable.split.86.woff2",
+      "bytes": 19256,
+      "gitBlob": "10a962369a927b80f348a75002f7d6ea3395a551",
+      "sha256": "4b602f2a527aeb8dcfe8a7d6553e8657c398fd1715238818c89ff1d023052538"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.87.woff2",
+      "local": "woff2/WantedSansVariable.split.87.woff2",
+      "bytes": 18128,
+      "gitBlob": "3b1bbcd569394762284f06b15aef4740f59bebfc",
+      "sha256": "ab823a9776d3e15695775fe70a6b08470c54e657b24b1830dc91dede961936ab"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.88.woff2",
+      "local": "woff2/WantedSansVariable.split.88.woff2",
+      "bytes": 18796,
+      "gitBlob": "e0feda8b0a14440b0985059135da08859dfe0ccb",
+      "sha256": "12b965319b7b41cf8fb44b120cd40c98350f9d0681728033f0caec32e70f0e3a"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.89.woff2",
+      "local": "woff2/WantedSansVariable.split.89.woff2",
+      "bytes": 21436,
+      "gitBlob": "0c0a7352faa0143557cc546cf160d2cc0dfdb3ac",
+      "sha256": "a8d11889bbb9a4b1356558f043841064e637b69467db507f3ed7d9b6a3f26c0e"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.90.woff2",
+      "local": "woff2/WantedSansVariable.split.90.woff2",
+      "bytes": 44356,
+      "gitBlob": "90cf0e18eae0f22e84e8447e656a24fb55fb3bb3",
+      "sha256": "ee81f3b861509a2c94210685e637f348383871340a392728c1f6dabb6bf4974e"
+    },
+    {
+      "path": "packages/wanted-sans/fonts/webfonts/variable/split/woff2/WantedSansVariable.split.91.woff2",
+      "local": "woff2/WantedSansVariable.split.91.woff2",
+      "bytes": 12248,
+      "gitBlob": "41f2ee54bcc7950164747feda0a3f7b62b2cd0cb",
+      "sha256": "13c72d73ab988189139ae81bd567649e14c8815ca9206709ff81ce9844a813d9"
     }
-  ]
+  ],
+  "note": "The original binaries, vendor stylesheets and OFL are unmodified. The delivery stylesheet combines the official split CSS with an exact-range complete-font supplement.",
+  "originalSource": {
+    "local": "SOURCE.complete.original.json",
+    "sha256": "48bf121ca3abfecd4f75372488659c326eb6d1009d310325b2fd988d94a52540"
+  },
+  "delivery": {
+    "stylesheet": "WantedSansVariable.css",
+    "generated": true,
+    "bytes": 54831,
+    "sha256": "69bdc767d9fd55fb9ba812f05d6952f9f716b566ab7e3cf90ebe826f0b3c46c0",
+    "splitStylesheet": "WantedSansVariable.split.original.css",
+    "supplement": {
+      "font": "woff2/WantedSansVariable.woff2",
+      "codepoints": 103,
+      "unicodeRange": "U+0250-0252,U+0254,U+0258,U+0261,U+0268,U+026F,U+0279,U+028C-028E,U+029E,U+02B0,U+02B2-02B3,U+02B7-02B8,U+02BD,U+02E1-02E3,U+0300-0304,U+0306-0308,U+030A-030C,U+030F,U+0312,U+0314,U+0316-0317,U+0323-0328,U+032C-0331,U+0335,U+1D43,U+1D47-1D49,U+1D4D,U+1D4F-1D50,U+1D52,U+1D56-1D58,U+1D5B,U+1D62-1D65,U+1D9C,U+1DA0,U+1DBB,U+20DD-20DE,U+215B-215E,U+25A2,U+2780-2788,U+2E3A-2E3B,U+FB00-FB04,U+107A5,U+1F181-1F189"
+    },
+    "generator": "scripts/wanted-font-delivery.mjs"
+  }
 }

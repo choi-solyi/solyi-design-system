@@ -101,7 +101,8 @@ try {
   await font.page.goto(font.url, {waitUntil:'domcontentloaded'});await ready(font.page);
   assert.equal(await font.page.locator('#starter-boot').evaluate(element => element.hidden), true);
   const faces = await font.page.evaluate(() => [...document.fonts].map(face => ({family:face.family,status:face.status})));
-  assert.ok(blockedFonts.some(name => name.endsWith('/WantedSansVariable.woff2')));
+  assert.ok(blockedFonts.some(name => /\/WantedSansVariable\.split\.\d+\.woff2$/.test(name)));
+  assert.ok(!blockedFonts.some(name => name.endsWith('/WantedSansVariable.woff2')), 'Ordinary button text does not request the complete font');
   assert.ok(faces.some(face => face.family === 'Wanted Sans Variable' && face.status === 'error'));
   assert.equal(await font.page.evaluate(() => document.fonts.check('400 14px "Wanted Sans Variable"')), false);
   await record(font, {systemFontFallback:true,blockedFonts,faces});

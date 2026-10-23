@@ -1,5 +1,16 @@
 <script setup lang="ts">
-const state = ref<string | null>('ready');
+const state = ref<string | null>('ready')
+const resultPanel = useTemplateRef<HTMLElement>('resultPanel')
+
+function retry(event: MouseEvent) {
+  const owner = event.currentTarget
+  state.value = 'ready'
+  nextTick(() => {
+    if (document.activeElement === owner || document.activeElement === document.body) {
+      resultPanel.value?.focus({ preventScroll: true })
+    }
+  })
+}
 </script>
 <template>
   <SCard :heading-level="2" title="비어 있음과 오류를 구분">
@@ -33,9 +44,11 @@ const state = ref<string | null>('ready');
     </SAlert>
     <SAlert v-else-if="state === 'error'" tone="danger" title="가상 자료를 불러오지 못했어요.">
       <template #actions>
-        <SBtn variant="inline" @click="state = 'ready'"> 다시 시도 </SBtn>
+        <SBtn variant="inline" @click="retry"> 다시 시도 </SBtn>
       </template>
     </SAlert>
-    <p v-else>✓ 가상 기록 2개를 확인했어요.</p>
+    <p v-else id="recipe-response-result" ref="resultPanel" tabindex="-1" role="status">
+      ✓ 가상 기록 2개를 확인했어요.
+    </p>
   </SCard>
 </template>

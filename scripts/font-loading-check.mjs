@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { JSDOM } from 'jsdom'
 import { loadCodeFontStylesheet, observeCodeFonts } from '../site/font-loading.js'
 import { documentShell } from './document-shell.mjs'
+import { composeWantedFontDelivery, fontFaces } from './wanted-font-delivery.mjs'
 
 const dom = new JSDOM('<pre>const value = 1</pre>', { url: 'https://example.test/' })
 const { window } = dom
@@ -74,6 +75,16 @@ const html = new JSDOM(shell.html)
 assert.equal(html.window.document.querySelectorAll('link[rel="stylesheet"]').length, 1)
 assert.ok(shell.html.indexOf('solyi-ds-prefs') < shell.html.indexOf('href="./shell.css"'))
 assert.match(shell.css, /fonts\/wanted-sans\/woff2\/WantedSansVariable\.woff2/)
+assert.match(shell.css, /fonts\/wanted-sans\/woff2\/WantedSansVariable\.split\.90\.woff2/)
+const delivery = await composeWantedFontDelivery()
+assert.equal(fontFaces(delivery.css).length, 93)
+const omitted = new Set(delivery.missing)
+for (const character of '같은 결, 다른 표정. English 0123 ₩→…✓') {
+  assert.ok(
+    !omitted.has(character.codePointAt(0)),
+    'Ordinary UI text does not request the full font',
+  )
+}
 assert.doesNotMatch(shell.html, /rel="preload"[^>]+WantedSansVariable/)
 assert.ok(html.window.document.querySelector('script[src="./deferred-code-fonts.js"]'))
 html.window.close()

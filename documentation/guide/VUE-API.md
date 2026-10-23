@@ -10,6 +10,13 @@
 - 날짜·시각·숫자의 잘못되거나 미완성인 입력은 초안을 보존하고 완성값으로 내보내지 않습니다. clear는 null로 지웁니다. DatePicker의 mode 변경 정책과 범위 중간 상태는 해당 API 예제를 따릅니다.
 - SForm의 제출·공통 rules와 개별 필드 메서드는 실제 타입 계약을 사용합니다. template ref로 focus·validate·resetValidation을 호출하고 DOM ID 조회에 기대지 않습니다. 비동기 서버 오류는 공통 규칙 오류와 구분합니다.
 
+## 숫자 정밀도
+
+`SNumberInput`은 JavaScript `Number`의 유한한 값과 양의 `step`을 사용합니다. 소수 간격은
+십진 계수로 계산하므로 `step=1e-11`이나 `step=0.1`도 고정 소수 자리에서 잘리지 않습니다.
+증감 결과를 별도의 정확한 `Number` 값으로 표현할 수 없거나 overflow가 생기면 해당 버튼을
+비활성화하고 키보드 증감을 실행하지 않습니다. 임의 정밀도 금액·과학 계산 타입을 대신하지 않습니다.
+
 ## 선택과 키보드
 
 native Checkbox/Radio/Select 의미를 유지합니다. disabled는 조작을 막고 readonly는 읽기와 초점을 유지하면서 값 변경을 막습니다. Radio/Select 옵션 value는 고유하고 비어 있지 않은 문자열로 제공합니다.

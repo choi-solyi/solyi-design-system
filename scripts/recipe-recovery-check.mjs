@@ -10,10 +10,13 @@ const { parse, compileScript } = require('@vue/compiler-sfc')
 const ts = require('typescript')
 const vueSource = await read('examples/vue-vuetify/node_modules/vue/dist/vue.global.prod.js')
 const sources = await Promise.all(
-  ['RecipeExamples.vue', 'recipes/workflow.vue', 'recipes/bulk-recovery.vue'].map(async file => [
-    file,
-    await read('examples/vue-vuetify/src/' + file),
-  ]),
+  [
+    'RecipeExamples.vue',
+    'recipes/workflow.vue',
+    'recipes/bulk-recovery.vue',
+    'recipes/responses.vue',
+    'recipes/composition.vue',
+  ].map(async file => [file, await read('examples/vue-vuetify/src/' + file)]),
 )
 const sourceMap = Object.fromEntries(sources)
 const registrySource = await read('examples/vue-vuetify/src/recipe-registry.ts')
@@ -101,7 +104,7 @@ function fixture(example = 'workflow') {
   const field = tag =>
     V.defineComponent({
       inheritAttrs: false,
-      props: ['modelValue', 'label', 'error', 'disabled'],
+      props: ['modelValue', 'label', 'error', 'disabled', 'options'],
       emits: ['update:modelValue'],
       setup(props, { attrs, emit, expose }) {
         let input
@@ -109,15 +112,22 @@ function fixture(example = 'workflow') {
         return () =>
           V.h('label', [
             props.label,
-            V.h(tag, {
-              ...attrs,
-              ref: value => {
-                input = value
+            V.h(
+              tag,
+              {
+                ...attrs,
+                ref: value => {
+                  input = value
+                },
+                value: props.modelValue,
+                disabled: props.disabled,
+                onInput: event => emit('update:modelValue', event.target.value),
+                onChange: event => emit('update:modelValue', event.target.value),
               },
-              value: props.modelValue,
-              disabled: props.disabled,
-              onInput: event => emit('update:modelValue', event.target.value),
-            }),
+              tag === 'select'
+                ? props.options.map(option => V.h('option', { value: option.value }, option.label))
+                : undefined,
+            ),
           ])
       },
     })
@@ -159,6 +169,7 @@ function fixture(example = 'workflow') {
       SAlert: surface,
       STextField: field('input'),
       STextarea: field('textarea'),
+      SSelect: field('select'),
       SCheckbox: checkbox,
       SDialog: dialog,
     }))
@@ -311,6 +322,42 @@ for (const moveFocus of [false, true]) {
   bulk.unmount()
   assert.deepEqual(b.errors, [])
   b.dom.window.close()
+}
+for (const recipe of ['responses', 'composition']) {
+  for (const moveFocus of [false, true]) {
+    for (let repeat = 0; repeat < 2; repeat++) {
+      const recovery = fixture(recipe)
+      const app = recovery.mount('recipes/' + recipe + '.vue')
+      await recovery.pause()
+      if (recipe === 'responses') {
+        const select = recovery.d.querySelector('select')
+        select.value = 'error'
+        select.dispatchEvent(new recovery.w.Event('change', { bubbles: true }))
+        await recovery.pause()
+      }
+      const retry = [...recovery.d.querySelectorAll('button')].find(
+        button => button.textContent.trim() === '다시 시도',
+      )
+      assert.ok(retry)
+      retry.focus()
+      retry.click()
+      if (moveFocus) recovery.d.getElementById('other').focus()
+      await recovery.pause()
+      const result = recovery.d.getElementById(
+        recipe === 'responses' ? 'recipe-response-result' : 'recipe-composition-result',
+      )
+      assert.ok(result)
+      assert.equal(result.getAttribute('role'), 'status')
+      assert.equal(
+        recovery.d.activeElement,
+        moveFocus ? recovery.d.getElementById('other') : result,
+      )
+      assert.equal(recovery.d.querySelector('[role="alert"]'), null)
+      assert.deepEqual(recovery.errors, [])
+      app.unmount()
+      recovery.dom.window.close()
+    }
+  }
 }
 console.log(
   'PASS: actual explorer/workflow SFC guard for list selection, back/forward cancel/approve, repeated requests and unmount; URL/selection/draft retained on cancel. Actual bulk SFC restores result focus after disabled-button blur and respects a user focus move; only failed rows retry. UI components are focused test doubles; real-browser dialog/keyboard/layout checks remain separate.',

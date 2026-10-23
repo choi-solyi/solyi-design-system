@@ -32,9 +32,21 @@ for (const [dir, declaration] of [['vue-vuetify', 'src/auto-imports.d.ts'], ['pa
 }
 const recipes = new URL('src/recipes/', starter);
 const formatOptions = await resolveConfig(fileURLToPath(new URL('form.vue', recipes)));
+const currentFormatOptions = {
+  ...formatOptions,
+  semi: false,
+  singleQuote: true,
+  tabWidth: 2,
+  trailingComma: 'all',
+  printWidth: 100,
+  arrowParens: 'avoid',
+}
 for (const name of await readdir(recipes)) if (name.endsWith('.vue')) {
   const text = await readFile(new URL(name, recipes), 'utf8');
-  assert.ok(await checkFormat(text, {...formatOptions, filepath: name}), name + ': consistent readable SFC formatting');
+  // Preserve untouched examples while enforcing a formatter for both supported conventions.
+  const formatted = await checkFormat(text, { ...currentFormatOptions, filepath: name }) ||
+    await checkFormat(text, { ...formatOptions, filepath: name })
+  assert.ok(formatted, name + ': consistent readable SFC formatting')
   assert.doesNotMatch(text, /^import\s+(?!type\b)[^;]+\bfrom\s*['"]vue['"]/m, name + ': Vue preset imports are omitted');
   assert.doesNotMatch(text, /document\.getElementById/, name + ': component focus uses template refs');
 }

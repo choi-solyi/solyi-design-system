@@ -24,7 +24,7 @@ export function renderComponentReferences(h) {
       const preview=componentPreview(component);
       const code=componentSampleCode(h,component);
       return `<article class="component-reference sol-card" id="${id}" aria-labelledby="${id}-title">
-        <div class="component-reference-heading"><h3 id="${id}-title">${concept}</h3><code class="component-api-name" aria-label="Vue API ${name}">${name}</code></div>
+        <div class="component-reference-heading"><h3 id="${id}-title">${concept}</h3><code class="component-api-name">${name}</code></div>
         <p>${apiEscape(component.description)}</p>
         <div class="component-reference-tabs" role="tablist" aria-label="${concept} 보기">
           <button type="button" role="tab" id="${id}-examples-tab" data-component-tab="examples" aria-selected="true" aria-controls="${id}-examples">Examples</button>
