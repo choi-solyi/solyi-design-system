@@ -1,15 +1,44 @@
-export function renderAdoption(h){return h.section('locale','공통 locale','한국어·영어 내장 문구와 날짜·숫자 표시를 앱 provider로 함께 바꿉니다.',`<div class="sol-card"><p>기존 provideSolLocale는 ref/getter와 부분 override를 지원합니다. 입력·대화상자·표·선택 컴포넌트의 내장 문구가 반응하며 업무 라벨·자료·오류는 앱이 번역합니다. ko-KR/en-US LTR만 지원합니다. 날짜 저장은 ISO, 시각은 HH:mm을 유지합니다.</p><a class="sol-button" href="./starter/#locale-demo">실제 locale 데모 열기 →</a><p><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LOCALE.md">fallback·override·표시 형식 API</a></p></div>`) + h.section('starter','Vue / Vuetify starter','실제 설치한 두 패키지로 검증합니다.',`<div class="sol-card"><h3>Vue 컴포넌트</h3><p>@solyi/core 0.4.2과 @solyi/vue-ui 0.8.0 로컬 tarball을 설치합니다. Vue/Vuetify는 peer로 분리하고 중복 번들링하지 않습니다. 가상 입력 검증, 오류 후 값 보존, Dialog 닫기·포커스 반환을 확인할 수 있습니다.</p><div class="button-row"><a class="sol-button primary" href="./starter/">독립 starter 열기 ${'→'}</a><a class="sol-button" href="https://github.com/choi-solyi/solyi-design-system/tree/main/examples/vue-vuetify">소스와 실행 방법 ↗</a></div><p class="sol-hint">Vue 3.5.44 · Vuetify 4.3.0 · Vite 8.3.4 · plugin-vue 6.0.10. 고정된 lockfile과 공식 npm 패키지, 원본 라이선스 고지를 포함합니다. 기존 아페·홈페이지에는 적용하지 않았습니다.</p></div><ol class="adoption-steps"><li><div><h3>별도 폴더에서 실행합니다.</h3><p>Node ^22.18.0 또는 >=24.12.0에서 examples/vue-vuetify의 npm ci → npm run dev. 빌드는 npm run build입니다. 먼저 저장소 루트의 npm run library:verify로 패키지를 만들고 설치합니다. 예제는 소스 alias나 Core 복사 파일을 import하지 않습니다.</p></div></li><li><div><h3>역할을 라이브러리 API에 연결합니다.</h3><p>main.js는 primary/accent·surface·text·error 등 의미를 매핑하고 App.vue가 유효성·상태를 다룹니다. packages/vue-ui의 스타일과 공개 API가 제공하는 컴포넌트와 진행 표시을 연결하고 adapter.css는 데모 화면틀만 다룹니다. 라이브러리 업데이트 시 이 경계를 다시 검증합니다.</p></div></li><li><div><h3>한 흐름을 검토합니다.</h3><p>실제 데이터나 운영 앱에 붙이기 전 세 테마·두 모드, 키보드, 모바일, 오류 회복과 앱의 데이터 수명부터 확인합니다. 이 starter의 검증이 다른 Vuetify 버전·React·모든 컴포넌트의 호환을 뜻하지 않습니다.</p></div></li></ol>${h.codeSample('패키지 빌드와 실제 소비',`npm ci --ignore-scripts
-npm run library:verify
-// 최초 변경의 tarball lock 갱신: npm run library:refresh
-// main.js
+import {componentReferenceVersions} from './component-api-data.js';
+
+export function renderAdoption(h) {
+  const guide='https://github.com/choi-solyi/solyi-design-system/blob/main/documentation/guide/';
+  return h.section('locale','공통 locale','한국어·영어 문구와 날짜·숫자 표시를 같은 provider로 바꿉니다.',
+    `<div class="sol-card"><p>provideSolLocale은 ref/getter와 부분 override를 지원합니다. 입력·대화상자·표·날짜는 같은 설정을 사용하고 앱이 제공한 이름·자료·오류는 임의 번역하지 않습니다. ko-KR/en-US의 왼쪽에서 오른쪽으로 읽는 방향만 지원합니다. 날짜 값은 ISO, 시간은 HH:mm을 유지합니다.</p><div class="button-row"><a class="sol-button" href="./starter/#locale-demo">실제 locale 예제 →</a><a href="${guide}LOCALE.md">fallback·override·표시 계약</a></div></div>`) +
+  h.section('starter','실제 패키지로 실행하기','별도 설치 프로젝트가 제공하는 API와 문서 예제를 함께 확인합니다.',
+    `<div class="sol-card"><h3>독립 Vue 프로젝트</h3><p>@solyi/core ${componentReferenceVersions.core}와 @solyi/vue-ui ${componentReferenceVersions['vue-ui']}의 고정 tarball을 설치합니다. Vue·Vuetify는 peer로 분리하며 중복 번들링하지 않습니다.</p><div class="button-row"><a class="sol-button primary" href="./starter/">실제 starter 열기 →</a><a class="sol-button" href="./starter/?view=recipes">분류별 샘플 실행 →</a><a href="#releases/packages">현재 권장 조합 설치</a></div><p class="sol-hint">검증 조합: Vue 3.5.44 · Vuetify 4.3.0 · Vite 8.3.4. 실제 앱·다른 버전의 호환성을 자동으로 보장하지 않습니다. 기존 개인 앱에는 연결하지 않았습니다.</p></div>`) +
+  h.section('advanced-vue','선택·동작·분할 조합','필요한 상태와 키보드 동작을 실제 패키지에서 확인합니다.',
+    `<div class="sol-card"><h3>맥락에 맞는 상호작용</h3><p>SegmentedControl은 짧은 단일 선택, MultiSelect는 검색과 태그 제거, RangeSlider는 양 끝 범위를 다룹니다. SplitButton·ContextMenu는 행동 메뉴를 공유하고 SplitPane은 좁은 화면에서 두 영역을 세로로 배치합니다.</p><div class="button-row"><a class="sol-button" href="./starter/#advanced-title">선택·범위·동작·분할 실행 →</a><a href="#component/ssegmented-control">각 컴포넌트의 API</a></div></div>`) +
+  h.section('vue-components','전역 등록과 자동 import','S 컴포넌트 등록과 Vue 함수 자동 import는 각각 한 번 설정합니다.',
+    `<div class="sol-card"><h3>프로젝트에 한 번 설정</h3><p>SBtn·STextField 등은 <code>app.use(SolyiUI)</code>로 전역 등록합니다. Vue의 ref·computed·onBeforeUnmount 등은 Vite의 <code>unplugin-auto-import</code> Vue preset이 처리합니다. 이 설정을 적용한 샘플에서는 개별 import를 반복하지 않습니다.</p><p>샘플의 파일 경로나 앱 전용 함수·타입까지 자동 import되는 것은 아닙니다. 생성된 선언 파일을 TypeScript에 포함하고 lint 설정에서도 자동 import한 이름을 인식해야 합니다.</p></div>` +
+    h.codeSample('앱의 공통 등록',`import { createApp } from 'vue';
+import { VApp } from 'vuetify/components/VApp';
+import SolyiUI, { createSolyiVuetify } from '@solyi/vue-ui';
+import '@solyi/vue-ui/global';
+import '@solyi/core/fonts.css';
+import '@solyi/core/code-fonts.css';
 import '@solyi/core/tokens.css';
 import '@solyi/core/components.css';
 import '@solyi/vue-ui/styles.css';
-import {SBtn, STextField, SDialog, SDataTable,
-  SCheckbox, SRadioGroup, SSwitch, SSelect, STextarea,
-  SNumberInput, STabs, SSnackbar, SDatePicker, STimePicker} from '@solyi/vue-ui';
-// 앱에서 createVuetify() 한 번, theme/data-mode 연결.
-// 라이브러리 외 예시는 계속 HTML/CSS 참고 구현입니다.`)}<p class="small muted"><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/LIBRARY.md">패키지 API·고정 버전·CI·롤백 절차</a>. npm/GitHub Packages에는 게시하지 않았습니다. 다른 문서 예시를 전부 Vue 라이브러리로 전환한 상태가 아닙니다.</p><p class="small muted">공식 출처: <a href="https://vuejs.org/guide/quick-start.html">Vue Quick Start</a> · <a href="https://vuetifyjs.com/en/getting-started/installation/">Vuetify installation</a> · <a href="https://vite.dev/guide/">Vite guide</a>. 패키지 원본 라이선스는 starter의 THIRD-PARTY-NOTICES.txt를 보존합니다.</p>`) +
- h.section('advanced-vue','선택·범위·동작·분할','선택·범위·동작·화면 분할을 실제 패키지로 제공합니다.',`<div class="sol-card"><h3>작지만 완결된 상호작용</h3><p>SegmentedControl은 단일 설정, MultiSelect는 검색과 태그 선택, RangeSlider는 양끝 구간을 다룹니다. SplitButton·ContextMenu는 공유 메뉴를 사용하고 SplitPane은 좁은 화면에서 두 내용을 세로로 유지합니다. 가상 비동기 검색의 오류·재시도와 키보드·disabled/readonly도 확인할 수 있습니다.</p><div class="button-row"><a class="sol-button primary" href="./starter/#advanced-title">선택·동작·분할 실행 →</a><a class="sol-button" href="https://github.com/choi-solyi/solyi-design-system/blob/main/ADVANCED-VUE-API.md">API·사용 코드 ↗</a></div><p class="sol-hint">나머지 참고 예제의 패키지화·Figma는 후속입니다. 새 권한·백엔드·다른 앱 연결은 없습니다.</p></div>`) +
- h.section('vue-components','Vue 컴포넌트 사용법','같은 패키지·같은 사용 예제를 연결합니다.',`<div class="sol-card"><h3>한 번 등록하고 가져다 쓰기</h3><p>문서의 실행 화면과 사용 코드는 실제 패키지를 소비하는 같은 Vue 원본입니다. SBtn·STextField 같은 S 컴포넌트는 앱에서 한 번 전역 등록합니다. Vue 함수와 타입은 사용하는 파일에서 import하며, 자동 import 도구를 설치한 것은 아닙니다.</p><div class="button-row"><a class="sol-button primary" href="./starter/?view=recipes">사용 예제 열기 →</a><a class="sol-button" href="https://github.com/choi-solyi/solyi-design-system/blob/main/DEDICATED-VUE-API.md">전용 API·상태·키보드 ↗</a><a class="sol-button" href="https://github.com/choi-solyi/solyi-design-system/blob/main/vue-api-inventory.json">실제 전환 목록 ↗</a></div><p>vue-tsc/Volar는 compilerOptions.types에 <code>@solyi/vue-ui/global</code>을 추가하거나 env.d.ts에서 참조하세요. 타입 설정과 런타임 app.use 등록은 각각 필요합니다.</p></div>${h.codeSample('앱에서 한 번 전역 등록',"import {createApp} from 'vue';\nimport {VApp} from 'vuetify/components/VApp';\nimport SolyiUI, {createSolyiVuetify} from '@solyi/vue-ui';\nimport '@solyi/vue-ui/global';\n// Core/UI CSS와 글꼴은 설치 절차대로 한 번 불러옵니다.\ncreateApp(App).use(createSolyiVuetify({components:{VApp}})).use(SolyiUI).mount('#app');\n// 각 SFC는 SBtn 등을 import하지 않습니다. ref/computed와 타입 import는 유지합니다.")}<p class="sol-hint">폼·검색·편집·화면틀은 부품에 앱 상태를 연결한 조합입니다. 모든 업무 흐름이 독립 API라는 뜻은 아닙니다. 사용자 확인 전 1.0.0과 실제 npm 게시는 하지 않습니다.</p>`) +
- h.section('versioning','Version & change policy','작은 변화도 적용 범위와 함께 기록합니다.',`<div class="grid-2"><div class="sol-card"><h3>v${h.version} · 검토 가능한 초안</h3><p>아이콘·레이어·문구, 세 화면틀, 입력 확장·탭·행동 메뉴, 편집/이탈/삭제/Undo, Avatar·진행·시간·차트·트리, 독립 Vue/Vuetify starter를 추가했습니다. 공식 헤더 심볼·favicon 원본을 사용합니다.</p><p class="sol-hint">v0.1의 역할 색과 기존 달력·파일 드롭·compact 보조 행동은 유지합니다. 상태·재사용 API 변경은 별도로 적습니다.</p></div><div class="sol-card"><h3>업데이트의 약속</h3><ul class="rule-list"><li>Patch: 계약을 유지하는 오류 수정. Minor: 새 역할/예시/API와 검토된 변경. 계약 파손은 별도 migration 안내.</li><li>0.x도 조용히 이름을 삭제하지 않습니다. 폐기 표기·대체 예시·이행 방법을 먼저 기록하고 최소 다음 minor까지 병행합니다.</li><li>현재 폐기 예정 API는 없습니다. 샘플 코드도 버전과 함께 가져갑니다.</li><li>이 저장소는 검사 성공 뒤 데모만 자동 게시합니다. 아페·홈페이지 등 개별 앱에는 연결하지 않았습니다. 검증한 환경과 남은 범위를 릴리스마다 갱신합니다.</li></ul></div></div><p class="small muted"><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/CHANGELOG.md">변경 이력</a> · <a href="https://github.com/choi-solyi/solyi-design-system/blob/main/COMPATIBILITY.md">검증·호환 범위</a> · <a href="https://github.com/choi-solyi/solyi-design-system/blob/main/QA.md">검증 기록</a></p>`);}
+
+createApp(App)
+  .use(createSolyiVuetify({ components: { VApp } }))
+  .use(SolyiUI)
+  .mount('#app');`) +
+    h.codeSample('Vite의 Vue 함수 자동 import',`import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import AutoImport from 'unplugin-auto-import/vite';
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    AutoImport({
+      imports: ['vue'],
+      dts: 'src/auto-imports.d.ts',
+      eslintrc: { enabled: true },
+    }),
+  ],
+});`) +
+    `<p><a href="${guide}GETTING-STARTED.md">설치·타입·lint 설정 전체</a> · <a href="./starter/?view=recipes">같은 설정으로 실행되는 샘플</a></p>`) +
+  h.section('versioning','변경과 호환 정책','0.x 초안의 API 변화도 기록합니다.',
+    `<div class="grid-2"><div class="sol-card"><h3>문서 v${h.version}</h3><p>문서 버전과 Core/UI 패키지 버전은 별도입니다. 설치에는 현재 권장 Core/UI 쌍을 사용하고 lockfile을 함께 보존합니다. 화면에서 과거 설치 목록을 숨겨도 기존 다운로드 URL과 산출물은 보존합니다.</p></div><div class="sol-card"><h3>업데이트와 복원</h3><ul class="rule-list"><li>새 API·행동 변화는 변경 이력과 실제 타입에 함께 기록합니다.</li><li>0.x는 검토 중인 초안입니다. 최종 승인 전 1.0.0으로 올리지 않습니다.</li><li>패키지 업데이트 뒤 소비 앱의 타입·행동·화면 검사를 진행합니다. 되돌릴 때 package.json과 lockfile을 함께 복원합니다.</li><li>이 저장소의 데모만 자동 배포되며 다른 앱의 업데이트·배포는 연결하지 않았습니다.</li></ul></div></div><p><a href="https://github.com/choi-solyi/solyi-design-system/blob/main/CHANGELOG.md">변경 이력</a> · <a href="${guide}COMPATIBILITY.md">검증·호환 범위</a></p>`);
+}

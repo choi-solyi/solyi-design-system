@@ -20,7 +20,7 @@ export function mountVueExamples(root, codeSample) {
 
     // Keep registered snippet IDs while removing nested disclosures.
     const source = document.createElement('div');
-    source.innerHTML = codeSample('Vue 사용 예시', recipe.source);
+    source.innerHTML = codeSample('Vue 샘플 코드', recipe.source);
     const vueBody = source.querySelector('pre').outerHTML;
     const copyButton = source.querySelector('[data-copy-snippet]').cloneNode(true);
     const vueCopyId = copyButton.dataset.copySnippet;
@@ -39,9 +39,9 @@ export function mountVueExamples(root, codeSample) {
     const host = document.createElement('details');
     host.className = 'code-example vue-code-examples';
     host.innerHTML = `
-      <summary>사용 코드</summary>
+      <summary>샘플 코드</summary>
       <div class="vue-code-frame">
-        <div class="code-toolbar"><div role="tablist" aria-label="${title} 사용 코드">
+        <div class="code-toolbar"><div role="tablist" aria-label="${title} 샘플 코드">
           <button type="button" class="vue-code-tab" id="${id}-vue-tab"
             role="tab" aria-selected="true" aria-controls="${id}-vue">${vueLabel}</button>
           <button type="button" class="vue-code-tab" id="${id}-html-tab"
@@ -50,10 +50,10 @@ export function mountVueExamples(root, codeSample) {
         </div>${copyButton.outerHTML}</div>
         <div id="${id}-vue" role="tabpanel" aria-labelledby="${id}-vue-tab">
           <p class="code-panel-note">${isComposition
-            ? '전역 등록한 S 컴포넌트에 앱 상태와 데이터를 연결한 Vue 조합입니다.'
-            : 'S 컴포넌트 전역 등록을 한 번 설정한 프로젝트의 사용 예제입니다.'}</p>
+            ? '전역 등록한 S 컴포넌트에 앱 상태를 연결한 조합입니다. ref·computed 등은 Vue preset 자동 import를 전제로 합니다.'
+            : 'S 전역 등록과 Vue preset 자동 import를 설정한 프로젝트의 샘플입니다.'}</p>
           ${vueBody}
-          <footer class="code-example-footer"><a href="./starter/?view=recipes&example=${encodeURIComponent(section.id)}">이 Vue 예제 실행 →</a><a href="#theme/vue-components">전역 등록·타입 설정</a></footer>
+          <footer class="code-example-footer"><a href="./starter/?view=recipes&example=${encodeURIComponent(section.id)}">이 Vue 예제 실행 →</a><a href="#start/vue-components">전역 등록·타입 설정</a></footer>
         </div>
         <div id="${id}-html" role="tabpanel" aria-labelledby="${id}-html-tab" hidden>
           ${htmlBody}

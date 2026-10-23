@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="솔의 여러 앱을 위한 독립적인 디자인 시스템 v0.5. 역할 기반 토큰, 작동하는 컴포넌트와 패턴, 선택 가능한 테마.">
+  <meta name="description" content="여러 앱에서 함께 쓰는 개인 디자인 시스템 초안. 역할 기반 토큰, 재사용 Vue 컴포넌트, 실제 상태 예제와 설치 안내.">
   <meta name="theme-color" content="#F5F6FA">
   <meta name="color-scheme" content="light dark">
-  <title>Solyi Design System · Overview</title>
+  <title>Solyi Design System · Getting started</title>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <link rel="preload" href="./fonts/wanted-sans/woff2/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="./fonts/wanted-sans/WantedSansVariable.css">
@@ -14,23 +14,25 @@
   <link rel="stylesheet" href="./tokens.css">
   <link rel="stylesheet" href="./components.css">
   <link rel="stylesheet" href="./docs.css">
+  <link rel="stylesheet" href="./code-highlight.css">
   <script src="./preferences.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
   <header class="topbar">
-    <a href="#overview" class="brand" aria-label="Solyi Design System 홈"><img class="brand-mark" src="./brand-sparkle.svg" width="32" height="32" alt=""><span>Solyi <span class="brand-detail">Design System</span></span></a>
-    <div class="header-actions"><span class="version">v0.10.0 <span>Draft</span></span><button type="button" id="document-search-open" aria-label="문서 검색" class="sol-button subtle" aria-haspopup="dialog" aria-controls="document-search-dialog"><span class="search-wide">문서 </span>검색</button><div id="appearance-inline" class="appearance-inline"><fieldset class="appearance-choice" data-pref-theme-group data-pref-name="header-theme"><legend>문서 테마</legend><div class="appearance-options"></div></fieldset><fieldset class="appearance-choice" data-pref-density-group data-pref-name="header-density"><legend>문서 화면 밀도</legend><div class="appearance-options"></div></fieldset></div><button type="button" id="appearance-open" class="sol-button subtle" aria-haspopup="dialog" aria-controls="appearance-dialog" aria-label="화면 설정"><span class="appearance-wide">화면 </span>설정</button><button type="button" id="mode-toggle" class="sol-button subtle" aria-pressed="false">Dark mode</button><a class="repo-link" href="https://github.com/choi-solyi/solyi-design-system" aria-label="GitHub 저장소">GitHub ↗</a></div>
+    <a href="#start" class="brand" aria-label="Solyi Design System 홈"><img class="brand-mark" src="./brand-sparkle.svg" width="32" height="32" alt=""><span>Solyi <span class="brand-detail">Design System</span></span></a>
+    <div class="header-actions"><span class="version">v0.11.0 <span>Draft</span></span><button type="button" id="document-search-open" aria-label="문서 검색" class="sol-button subtle" aria-haspopup="dialog" aria-controls="document-search-dialog"><span class="search-wide">문서 </span>검색</button><div id="appearance-inline" class="appearance-inline"><fieldset class="appearance-choice" data-pref-theme-group data-pref-name="header-theme"><legend>문서 테마</legend><div class="appearance-options"></div></fieldset><fieldset class="appearance-choice" data-pref-density-group data-pref-name="header-density"><legend>문서 화면 밀도</legend><div class="appearance-options"></div></fieldset></div><button type="button" id="appearance-open" class="sol-button subtle" aria-haspopup="dialog" aria-controls="appearance-dialog" aria-label="화면 설정"><span class="appearance-wide">화면 </span>설정</button><button type="button" id="mode-toggle" class="sol-button subtle" aria-pressed="false">Dark mode</button><a class="repo-link" href="https://github.com/choi-solyi/solyi-design-system" aria-label="GitHub 저장소">GitHub ↗</a></div>
   </header>
   <div class="app-layout">
     <aside class="sidebar">
       <p class="nav-caption">THE SYSTEM</p>
-      <nav aria-label="문서 내비게이션">
-        <a href="#overview" data-route="overview"><span class="nav-index">00</span> Overview</a>
-        <a href="#style" data-route="style"><span class="nav-index">01</span> Style <span class="nav-note">Core</span></a>
-        <a href="#component" data-route="component"><span class="nav-index">02</span> Component</a>
-        <a href="#pattern" data-route="pattern"><span class="nav-index">03</span> Pattern</a>
-        <a href="#theme" data-route="theme"><span class="nav-index">04</span> Theme & adoption</a>
+      <nav aria-label="주요 내비게이션">
+        <a href="#start" data-route="start"><span class="nav-index">01</span> Getting started</a>
+        <a href="#style" data-route="style"><span class="nav-index">02</span> Style</a>
+        <a href="#component" data-route="component"><span class="nav-index">03</span> Components</a>
+        <a href="#pattern" data-route="pattern"><span class="nav-index">04</span> Patterns</a>
+        <a href="#releases" data-route="releases"><span class="nav-index">05</span> Releases</a>
+        <a href="#licensing" data-route="licensing"><span class="nav-index">06</span> Licensing</a>
       </nav>
       <div class="sidebar-foot"><span class="status-dot" aria-hidden="true"></span> Small, useful, evolving.<p>여러 앱에 같은 기준을.<br>각 앱에는 어울리는 표정을.</p><a href="./tokens.json" download>Tokens JSON ↓</a></div>
     </aside>
@@ -50,6 +52,7 @@
     <div class="appearance-grid"><fieldset class="appearance-choice" data-pref-theme-group data-pref-name="panel-theme"><legend>화면 설정 테마</legend><div class="appearance-options"></div></fieldset><fieldset class="appearance-choice" data-pref-density-group data-pref-name="panel-density"><legend>화면 설정 밀도</legend><div class="appearance-options"></div></fieldset><button id="appearance-mode-toggle" type="button" class="sol-button">다크 모드로 전환</button></div><p class="small muted">선택은 기존 문서 설정과 함께 적용됩니다.</p>
   </dialog>
   <noscript><div class="noscript">작동하는 예시와 문서 탐색에는 JavaScript가 필요합니다. <a href="./tokens.css">CSS 토큰</a>과 <a href="./tokens.json">JSON 토큰</a>은 바로 열 수 있습니다.</div></noscript>
+  <script src="./vendor/prism.js"></script>
   <script type="module" src="./app.js"></script>
 </body>
 </html>

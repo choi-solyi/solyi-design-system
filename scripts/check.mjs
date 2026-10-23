@@ -31,7 +31,7 @@ for(const [name,theme] of Object.entries(tokens.themes)) {
     }
   }
 }
-const expected=[...siteFiles,...generatedFiles,'starter'];
+const expected=[...siteFiles,...generatedFiles,'starter',...starterFiles.map(name=>'starter/'+name)];
 async function walk(dir,prefix=''){const result=[];for(const item of await readdir(dir,{withFileTypes:true})){const n=prefix+item.name;if(item.isDirectory())result.push(...await walk(path.join(dir,item.name),n+'/'));else result.push(n);}return result;}
 assert.deepEqual((await walk(path.join(root,'docs'))).sort(),[...siteFiles,...generatedFiles,...starterFiles.map(n=>'starter/'+n)].sort(),'Only intended public site files, including licensed font assets');
 assert.deepEqual((await readdir(path.join(root,'docs/starter'))).sort(),[...starterFiles].sort(),'Only intended standalone starter files');

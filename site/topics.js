@@ -32,6 +32,11 @@ const documentSearchNames={
  'component/choices':['Select'], 'component/navigation':['Snackbar'], 'pattern/data':['Table','표','리스트'],
  'pattern/files':['File Upload','FileUploader','Drag and Drop'], 'pattern/autocomplete':['Autocomplete']
 };
+// A dedicated API keeps its own visible Korean names, independent of the shared recipe title.
+const componentSearchNames={
+ SDatePicker:['Date Picker','DatePicker','날짜','날짜 선택','날짜 선택기','기간 선택'],
+ STimePicker:['Time Picker','TimePicker','시간','시각','시간 선택','시각 선택','시간 선택기','시각 선택기']
+};
 const documentAliases={
  pattern:[['date','단일 날짜와 기간','#extra-range-form'],['files','로컬 파일과 드롭','#extra-file-drop'],['autocomplete','자동완성 검색','#extra-autocomplete']],
  component:[['textarea','Textarea','#advanced-note'],['number','숫자 증감','#advanced-number-form'],['multiselect','다중 선택과 태그','#advanced-tags'],['avatar','Avatar와 사용자 메뉴','#avatar-menu-trigger'],['progress','진행률과 단계','#steps-form'],['chart','차트와 표 대안','#chart-period'],['tree','트리 탐색','#example-tree']]
@@ -50,7 +55,7 @@ export function getDocumentSearchEntries(root,route){
   const context=node.matches('section.section,.component-reference')?node:node.closest('.demo')||node.closest('section.section')||node;
   const summary=Array.from(context.querySelectorAll('.section-header>p,p,.sol-hint')).find(p=>plain(p)&&!p.closest('pre,[role="status"]'));
   const title=plain(context.querySelector('h2,h3,h4'))||label,text=plain(context),description=component?.description||plain(summary)||label+' · '+title;
-  entries.push({route,id,group:documentNames[route],label,title,aliases:component?[component.name,component.name.slice(1),component.name.slice(1).replace(/([a-z])([A-Z])/g,'$1 $2'),...(documentSearchNames[component.exampleRoute+'/'+component.example]||[])]:documentSearchNames[route+'/'+id]||[],description:description.length>170?description.slice(0,169)+'…':description,text});
+  entries.push({route,id,group:documentNames[route],label,title,aliases:component?[component.name,component.name.slice(1),component.name.slice(1).replace(/([a-z])([A-Z])/g,'$1 $2'),...(componentSearchNames[component.name]||[]),...(documentSearchNames[component.exampleRoute+'/'+component.example]||[])]:documentSearchNames[route+'/'+id]||[],description:description.length>170?description.slice(0,169)+'…':description,text});
  }
  return entries;
 }

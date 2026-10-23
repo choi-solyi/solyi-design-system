@@ -8,7 +8,7 @@ export function componentCatalogue() {
 }
 function apiTable(caption, columns, rows) {
   if (!rows.length) return '<p class="sol-hint">이 컴포넌트가 별도로 선언한 항목은 없습니다.</p>';
-  return `<div class="api-table-scroll" tabindex="0" role="region" aria-label="${apiEscape(caption)}"><table class="api-table"><caption>${apiEscape(caption)}</caption><thead><tr>${columns.map(column=>`<th scope="col">${column}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
+  return `<div class="api-table-scroll" tabindex="0" role="region" aria-label="${apiEscape(caption)}"><table class="api-table api-table--${columns.length}"><caption>${apiEscape(caption)}</caption><thead><tr>${columns.map(column=>`<th scope="col">${column}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
 }
 export function renderComponentReferences(h) {
   return componentGroups.map((group,index)=>h.section('api-group-'+index,group,'기능 안에서는 컴포넌트 이름의 ABC 순서로 찾습니다.',

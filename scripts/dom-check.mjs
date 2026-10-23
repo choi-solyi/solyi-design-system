@@ -76,8 +76,8 @@ const colorTrigger=$('[data-color-toast="success"]');colorTrigger.focus();colorT
 click('[data-color-toast="danger"]');assert.equal(d.querySelectorAll('#color-toast').length,1);assert.match($('#color-toast-message').textContent,/Error/);assert.equal($('#color-toast').dataset.tone,'danger');
 $('#color-toast-close').focus();click('#color-toast-close');assert.equal($('#color-toast').hidden,true);assert.equal(d.activeElement,$('[data-color-toast="danger"]'));
 click('.color-specimen[data-tone="info"] .tone-soft');assert.match($('#color-example-result').textContent,/Information/);
-$('#token-search').value='danger';fire($('#token-search'),'input');assert.equal(d.querySelectorAll('.token').length,2);
-click('.token');await pause(10);assert.match(clipboard,/--sol-color-danger/);
+$('#token-search').value='danger';fire($('#token-search'),'input');assert.equal(d.querySelectorAll('.sol-token-card').length,2);
+click('.sol-token-card');await pause(10);assert.match(clipboard,/--sol-color-danger/);
 click('#mode-toggle');assert.equal(d.documentElement.dataset.mode,'dark');
 assert.ok($('#contrast-results').textContent.includes('dark'));
 $('#token-search').value='no-such-token';fire($('#token-search'),'input');assert.match($('#token-grid').textContent,/일치하는 토큰/);
@@ -90,7 +90,7 @@ const noticeRetry=$('[data-action="retry-feedback"]');noticeRetry.focus();notice
 assert.equal(noticeRetry.getAttribute('aria-busy'),'true','Notice retry prevents duplicate execution while loading');
 await pause(760);assert.equal(noticeRetry.hasAttribute('aria-busy'),false);assert.match($('#retry-result').textContent,/성공/);
 assert.equal(d.activeElement,noticeRetry,'Notice retry retains keyboard focus after completion');
-click('#buttons .vue-code-examples>summary');click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/<SBtn/);assert.match(clipboard,/from 'vue'/);assert.doesNotMatch(clipboard,/import\s*\{[^}]*\bSBtn\b[^}]*\}\s*from '@solyi\/vue-ui'/);
+click('#buttons .vue-code-examples>summary');click('[data-copy-snippet]');await pause(10);assert.match(clipboard,/<SBtn/);assert.match(clipboard,/\bref\(/,'The copied sample uses the configured Vue preset');assert.doesNotMatch(clipboard,/^import (?!type\b).*from ['"]vue['"]/m);assert.doesNotMatch(clipboard,/import\s*\{[^}]*\bSBtn\b[^}]*\}\s*from '@solyi\/vue-ui'/);
 assert.equal($('#usage-buttons-html').hidden,true);$('#usage-buttons-vue-tab').dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.equal($('#usage-buttons-html').hidden,false);assert.equal(d.activeElement.id,'usage-buttons-html-tab');click('#usage-buttons-vue-tab');assert.equal($('#usage-buttons-vue').hidden,false);
 // Only the app's dialog opening and return-focus wiring is checked; no native modal trap is simulated.
 const dialog=$('#detail-dialog');dialog.showModal=function(){this.setAttribute('open','');};dialog.close=function(){this.removeAttribute('open');fire(this,'close');};

@@ -68,7 +68,7 @@ const colorRoles = {
 function tokenCards(query='') {
   const theme = tokens.themes[root.dataset.theme];
   const colors = theme[root.dataset.mode];
-  return Object.entries(colors).filter(([key,value])=>`${key} ${value} ${colorRoles[key].join(' ')}`.toLowerCase().includes(query.toLowerCase())).map(([key,value])=>`<button class="token" data-copy="--sol-color-${key}: ${value};" aria-label="${E(colorRoles[key][0])} CSS 선언 복사, ${value}"><span class="token-color" style="--swatch:${value}" aria-hidden="true"></span><span><strong>${colorRoles[key][0]} <span class="token-value">${value}</span></strong><code>--sol-color-${key}</code><small>${colorRoles[key][1]}</small></span></button>`).join('');
+  return Object.entries(colors).filter(([key,value])=>`${key} ${value} ${colorRoles[key].join(' ')}`.toLowerCase().includes(query.toLowerCase())).map(([key,value])=>`<button class="sol-token-card" data-copy="--sol-color-${key}: ${value};" aria-label="${E(colorRoles[key][0])} CSS 선언 복사, ${value}"><span class="token-color" style="--swatch:${value}" aria-hidden="true"></span><span><strong>${colorRoles[key][0]} <span class="token-value">${value}</span></strong><code>--sol-color-${key}</code><small>${colorRoles[key][1]}</small></span></button>`).join('');
 }
 function style() {
   return intro('01 / STYLE · CORE','보기 좋은 화면의 기본값','색의 이름 대신 역할로 연결합니다. 앱이 달라져도 읽는 순서, 간격의 관계, 상태를 알리는 방식은 이어집니다.') +
@@ -215,7 +215,7 @@ function updateTokens() {
   const grid=document.querySelector('#token-grid'); if(!grid)return;
   const query=document.querySelector('#token-search').value;
   const cards=tokenCards(query); grid.innerHTML=cards || '<p class="small muted">일치하는 토큰이 없어요. 검색어를 바꿔 보세요.</p>';
-  document.querySelector('#token-count').textContent=`${grid.querySelectorAll('.token').length}개 토큰 · ${tokens.themes[root.dataset.theme].label} / ${root.dataset.mode}`;
+  document.querySelector('#token-count').textContent=`${grid.querySelectorAll('.sol-token-card').length}개 토큰 · ${tokens.themes[root.dataset.theme].label} / ${root.dataset.mode}`;
   renderContrast();
 }
 function luminance(hex) {return hex.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(x=>x<=0.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((sum,x,i)=>sum+x*[.2126,.7152,.0722][i],0);}

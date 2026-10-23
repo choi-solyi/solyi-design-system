@@ -30,3 +30,5 @@ SForm은 Vuetify VForm을 재사용하고 S 입력의 검증 결과를 함께 �
 `SFormHandle`과 `SFieldHandle` 타입의 template ref를 사용합니다. `document.getElementById`로 입력을 찾거나 잘못된 ref를 VTextField 내부 구조에 연결하지 않습니다. 오류 요약은 해당 필드의 ref로 이동하고, 서버 오류를 해제하는 시점은 소비 앱이 결정합니다.
 
 이 동작은 요청 전 로컬 검증 도구이지 서버 검증·인증·데이터 저장을 대신하지 않습니다. 실제 네트워크·서버 오류는 앱에 맞게 별도 검증해야 합니다.
+
+`SFormResult.cancelled`는 검증 도중 더 최근 검증·초기화·언마운트가 발생해 결과가 폐기되었음을 뜻합니다. 이때 `valid`는 false이며 제출을 진행하지 않습니다. 초기화 뒤 오래된 검증 응답이 오류 표시를 되살리지 않도록 소비 앱도 이 결과를 존중하세요.

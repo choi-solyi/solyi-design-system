@@ -1,0 +1,15 @@
+/* Self-hosted Prism tokens; 4.5:1 text contrast on the document surface. */
+.code-example pre {white-space:pre;overflow:auto;overflow-wrap:normal;tab-size:2;}
+.code-example pre code {white-space:inherit;overflow-wrap:normal;word-break:normal;}
+.code-example .token.comment,.code-example .token.prolog,.code-example .token.doctype {color:#586477;}
+.code-example .token.tag,.code-example .token.keyword,.code-example .token.selector {color:#70489b;}
+.code-example .token.string,.code-example .token.attr-value {color:#276646;}
+.code-example .token.function,.code-example .token.class-name,.code-example .token.property {color:#255f91;}
+.code-example .token.number,.code-example .token.boolean,.code-example .token.constant,.code-example .token.attr-name {color:#915216;}
+.code-example .token.operator,.code-example .token.punctuation {color:var(--sol-color-text);}
+[data-mode="dark"] .code-example .token.comment,[data-mode="dark"] .code-example .token.prolog,[data-mode="dark"] .code-example .token.doctype {color:#a5b1c4;}
+[data-mode="dark"] .code-example .token.tag,[data-mode="dark"] .code-example .token.keyword,[data-mode="dark"] .code-example .token.selector {color:#d2b2f5;}
+[data-mode="dark"] .code-example .token.string,[data-mode="dark"] .code-example .token.attr-value {color:#a6d7b5;}
+[data-mode="dark"] .code-example .token.function,[data-mode="dark"] .code-example .token.class-name,[data-mode="dark"] .code-example .token.property {color:#a4cff5;}
+[data-mode="dark"] .code-example .token.number,[data-mode="dark"] .code-example .token.boolean,[data-mode="dark"] .code-example .token.constant,[data-mode="dark"] .code-example .token.attr-name {color:#e9c091;}
+@media(forced-colors:active){.code-example .token {color:CanvasText!important;}}
