@@ -4,7 +4,7 @@ export const packageReleases={
   "releases": [
     {
       "release": "0.14.1",
-      "sourceRef": "f111c2c1723d0bb56ee0cc3d88ea90a2d9184eaa",
+      "sourceRef": "1b2d8ae3f24f6d509546694c7f3e489e9dc6d920",
       "compatibility": {
         "node": "^22.18.0 || >=24.12.0",
         "vue": "3.5.44",
