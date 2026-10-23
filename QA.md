@@ -1,5 +1,14 @@
 # 검증 기록
 
+## 헤더의 이어진 선택 그룹 · 2026-10-23 UTC
+
+- 문서 헤더의 테마와 밀도만 각각 연결된 그룹으로 정리했습니다. 기존 native radio/fieldset, 테마색 토큰, 체크 표시, 공유 상태·저장 로직을 유지합니다. 중간 경계는 1px를 공유하고 바깥쪽 모서리만 기존 버튼 반경 6px를 사용하며, 키보드 포커스는 인접 버튼에 가리지 않도록 안쪽에 표시합니다. 패키지 소스·버전·과거 tarball은 변경하지 않습니다.
+- 관련 검사 통과: `scripts/build.mjs`, `scripts/header-preferences-check.mjs`(72개 텍스트·체크·포커스·경계 대비), `scripts/doc-search-check.mjs`(61개 검색 목적지 및 테마×밀도×모드 12개 저장·복원/공유 상태). 기존 패키지 전체 빌드를 로컬에서 반복하지 않았습니다.
+- 실제 렌더링: 사용자 PC에 설치된 Google Chrome 155.0.8059.85를 Playwright Core 1.64.1로 격리된 headless 컨텍스트에서 실행했습니다. 사용자 프로필을 사용하지 않고 Chromium sandbox를 유지하며, 무작위 localhost 포트 외의 요청은 차단했습니다. 1180·720·333 CSSpx × 라이트·다크 6장의 스크린샷을 직접 검토했습니다. 720·333px는 터치 에뮬레이션이며 실제 Fold나 터치 조작 검증이 아닙니다.
+- 검토 결과: PC의 두 선택 그룹·검색·모드 전환이 겹치지 않고, 작은 화면의 화면 설정 패널에서도 테마 3개와 밀도 2개가 각각 한 줄에 들어갑니다. 경계 공유, 모서리, 체크와 포커스 표시, 텍스트 잘림 및 가로 넘침을 확인했습니다. DOM 검사에서도 1px 경계 공유/6px 바깥 반경, 데스크톱 36px·터치 에뮬레이션 44px 높이, 방향키로 모든 테마와 밀도 선택, 라이트·다크 전환, 새로고침 후 복원, Escape 닫기·초점 복귀가 통과했습니다. 실행 중 pageerror는 없었습니다.
+- 로컬 증거: `qa-output/header-segments/`의 6개 PNG와 `report.json`, `header-segments-browser.log`, `header-segments-preferences.log`. 선택적 재현 스크립트는 `scripts/header-segments-browser-check.mjs`입니다. `.tooling/browser-qa`에 공식 registry의 `playwright-core@1.64.1`을 `--ignore-scripts`로 설치한 뒤 실행하며, 설치 Chrome 경로는 `SOLYI_QA_CHROME`, 모듈 URL은 `SOLYI_PLAYWRIGHT_MODULE`로 지정할 수 있습니다. 앱 런타임 의존성과 기본 CI 검사에 추가하지 않습니다.
+- 실제 Safari·Fold 기기·화면 낭독기는 미검증입니다. 이 검수는 헤더 변경의 영향 범위이며 전체 접근성 준수나 모든 상태의 화면 검수를 뜻하지 않습니다. 이 기록은 푸시 전에 작성하며, 정확한 SHA의 CI 최종 결과와 공개 자산 일치는 배포 보고에서 별도로 확인합니다. npm 게시·1.0.0 변경·이전 버전 삭제는 하지 않습니다.
+
 ## 0.10.0 local candidate · dedicated Vue APIs / code panels (2026-10-22 UTC)
 
 ### Final local visual review completed · 2026-10-23 UTC

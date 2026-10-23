@@ -1,5 +1,10 @@
 # 변경 이력
 
+## 0.10.0 문서 후속 · 헤더 선택 그룹
+
+- 테마 3개와 기본·컴팩트 밀도를 각각 이어진 선택 그룹으로 표시합니다. 기존 테마색, 체크 표시, 라이트·다크, 모바일 화면 설정과 저장·복원 동작은 유지합니다.
+- 변경 범위는 문서 헤더 CSS입니다. 패키지 버전과 기존 배포 파일은 유지합니다. 실제 Chrome 화면 및 관련 검사 범위는 QA.md에 기록합니다.
+
 ## 0.10.0 · 전용 Vue API와 같은 원본의 실행 예제
 
 - Core0.4.2 / Vue UI0.8.0. STooltip, SPopover, SAccordion, SBreadcrumbs, SFileInput, SAutocomplete, SAvatar, SStepper, SBarChart를 제공합니다.
