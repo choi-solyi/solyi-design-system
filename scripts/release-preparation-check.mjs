@@ -31,7 +31,7 @@ const publicIndex = JSON.parse(await read('docs/releases/index.json'))
 assert.deepEqual(publicIndex, { current: documentVersion, releases: [documentVersion] })
 const { packageReleases } = await import(new URL('../docs/release-data.js', import.meta.url))
 assert.deepEqual(packageReleases, { current: documentVersion, releases: [current] })
-// The public list is concise; all previously available immutable URLs still exist.
+// Verify the retained source catalogue without requiring an obsolete previous version.
 for (const release of sourceCatalogue.releases) {
   await verifyRelease(new URL(`docs/releases/${release.release}/`, root))
 }
@@ -63,5 +63,5 @@ for (const exported of Object.values(metadata.exports)) {
   }
 }
 console.log(
-  'PASS: current-release metadata, private publication guard, public-only version listing, preserved historical downloads and first-release user guidance',
+  'PASS: current-release metadata, private publication guard, current-only version listing, retained downloads and first-release user guidance',
 )

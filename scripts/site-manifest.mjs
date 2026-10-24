@@ -1,6 +1,7 @@
-import { releaseFiles } from './releases.mjs'
+import { publishedReleaseFiles } from './releases.mjs'
 import { wantedSansSiteFiles, wantedSansStarterFiles } from './wanted-font-files.mjs'
-const frozenReleaseFiles = await releaseFiles()
+// Existing download URLs retain one verified copy in docs/releases.
+const frozenReleaseFiles = await publishedReleaseFiles()
 export const siteFiles = [
   'font-loading.js',
   'deferred-code-fonts.js',
