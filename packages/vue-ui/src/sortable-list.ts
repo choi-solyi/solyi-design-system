@@ -482,7 +482,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
                           cancel('blur', false)
                       },
                     },
-                    slots['handle-icon']?.(scope) || h(SIcon, { name: 'menu', decorative: true }),
+                    slots['handle-icon']?.(scope) || h(SIcon, { name: 'grip', decorative: true }),
                   ),
                   h('div', { class: 'sol-ui-sortable-content' }, [
                     slots.item?.(scope) || label,

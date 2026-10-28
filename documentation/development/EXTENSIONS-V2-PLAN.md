@@ -1,3 +1,5 @@
+Sortable 손잡이: 원본 기하 path인 grip(6점)을 기존 공통 icon registry에 추가해 메뉴 아이콘과 구분했습니다. 기본 슬롯만 교체하고 기존 접근성 이름·터치 target·handle-icon 사용자 슬롯·정렬 로직은 유지합니다. Core/UI 빌드와 실제 모바일 렌더/Space→ArrowDown→Enter 순서 반영을 확인했습니다. 외부 의존성·라이선스 추가는 없습니다.
+
 범주 팔레트 1차: Core 역할 토큰 8색 × 3테마 × light/dark와 순수 resolveCategoricalColor(key,{theme,mode})를 추가했습니다. 고정된 8개 bucket/ID는 확장 시 재배열하지 않는 계약이며 문자열/유한 숫자 key만 받습니다. 48개 조합의 텍스트 대비 최저 6.377:1, 내부 border/background 대비 최저 3.323:1을 확인했습니다. 테마·모드 간 category ID 일치, 잘못된 key 거부, Core/UI 빌드와 실제 빌드된 Core resolver 호출을 통과했습니다. Calendar marker.category를 opt-in으로 연결했고 기존 tone이 있으면 tone을 우선합니다. 모바일은 기존 날짜 셀 개수 표시를 유지하고 선택 날짜 상세에서 범주 이름·색을 표시합니다. README·Components 정본 API·starter color-examples/월 달력 예제를 동기화했으며 light/dark 모바일 실렌더와 key 입력/날짜 선택, 변경 예제 타입·Core/UI 빌드를 확인했습니다. 최종 설치본/통합 검증은 남습니다.
 
 # 확장 요청 2 · 실제 저장소 대조 및 구현 계획
