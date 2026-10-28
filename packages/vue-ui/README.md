@@ -61,6 +61,16 @@ SDatePicker·STimePicker도 연결했습니다. 단일/range의 ISO 모델과 Da
 
 CSS는 `--sol-color-categorical-1-foreground/background/border`부터 8번까지 제공합니다. semantic tone과 별도이며 팔레트 확장 시 기존 여덟 bucket/ID의 매핑을 바꾸지 않습니다. SMonthCalendar marker에 `category: resolveCategoricalColor(key).category`를 주면 CSS 역할을 통해 현재 테마에 맞춰 표시합니다. 기존 `tone`을 함께 지정하면 의미 상태 tone을 우선합니다. marker label과 기존 ISO 모델은 유지합니다.
 
+## 시간 그리드 (1.1.0 개발 후보)
+
+`STimeGrid<T>`는 readonly 객체 배열과 `itemKey/itemLabel/itemColumn/itemStart/itemEnd` accessor를 받습니다. 열은 고유 `key/label`과 선택적 ISO `date`를 가지며, 항목의 시작·끝은 해당 열의 0–1440 정수 분입니다. 표시 범위 밖 항목은 잘라 표시하지만 원본 시간은 바꾸지 않습니다. 겹침은 시각적으로 배치하며 시간대·DST·업무 충돌·저장 형식은 앱에서 처리합니다.
+
+기본 `readonly=true`입니다. `readonly=false`로 이동을 켜고 `allowResize/allowDuplicate`를 선택할 수 있습니다. `start/preview/commit/cancel`은 원본 객체 대신 frozen `{key,action,from,to,input}`을 전달하며 cancel에는 `reason`이 더해집니다. 부모가 commit을 받아 새 배열을 주기 전까지 자료는 바뀌지 않습니다. 복제의 새 key·객체, 비동기 오류와 `pendingKeys`, `isItemDisabled`는 부모가 관리합니다. listener의 Promise를 자동으로 기다리지 않습니다.
+
+`snapMinutes` 기본값은 15이며 자정 기준입니다. 열만 바꾸면 기존 비정렬 시간을 유지하고 경계는 하루 안으로 제한합니다. 기존 TimePicker의 min 기준 step은 바꾸지 않습니다. 항목에서 Space로 시작하고 방향키로 시간·열을 이동하며 Shift/Page는 10단계 간격, Home/End는 하루 경계, Enter/Space는 제안, Escape는 취소입니다. 전체 목록의 이동·시작/끝 조절·복제 버튼으로 같은 작업을 수행할 수 있습니다. 터치는 항목 선택 후 손잡이를 드래그하며 빈 영역의 스크롤은 유지합니다. `focus(key?)`와 `cancel()`을 제공합니다.
+
+`disabled/readonly/loading/pending` 전환, 원본 좌표·열·설정 변경, 포커스 이탈과 포인터 취소는 진행 중 제안을 취소합니다. 소스와 무관한 부모 렌더나 같은 자료의 배열 재생성은 제안을 유지합니다. 좁은 화면은 가로 스크롤과 전체 목록을 사용하며 실제 OS 키보드·스크린리더·실기기 터치는 소비 앱에서 추가 확인해야 합니다.
+
 ## 소비 프로젝트 AI 지침
 
 패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.

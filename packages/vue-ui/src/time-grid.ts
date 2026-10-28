@@ -1,9 +1,34 @@
-import { computed, defineComponent, h, ref, watch, nextTick } from 'vue'
+import { computed, defineComponent, h, ref, watch, nextTick, mergeProps } from 'vue'
 import type { AllowedComponentProps, PropType, SlotsType, VNode, VNodeProps } from 'vue'
 import { formatSolDate, formatSolNumber, useSolLocale } from './locale'
 import type { SolLocale } from './locale'
-import { readTimeGrid, timeGridLanes, timeGridTicks } from './time-grid-values'
-import type { TimeGridBand, TimeGridColumn, TimeGridKey } from './time-grid-values'
+import {
+  readTimeGrid,
+  sameTimeGridSnapshot,
+  timeGridLanes,
+  timeGridTicks,
+} from './time-grid-values'
+import type {
+  TimeGridBand,
+  TimeGridColumn,
+  TimeGridKey,
+  TimeGridSnapshot,
+} from './time-grid-values'
+import { useTimeGridEditor } from './time-grid-editor'
+import type {
+  TimeGridAction,
+  TimeGridCancelReason,
+  TimeGridCancellation,
+  TimeGridCoordinate,
+  TimeGridInput,
+  TimeGridProposal,
+} from './time-grid-proposal'
+export type SolTimeGridAction = TimeGridAction
+export type SolTimeGridCancelReason = TimeGridCancelReason
+export type SolTimeGridCancellation = TimeGridCancellation
+export type SolTimeGridCoordinate = TimeGridCoordinate
+export type SolTimeGridInput = TimeGridInput
+export type SolTimeGridProposal = TimeGridProposal
 export type SolTimeGridKey = TimeGridKey
 export type SolTimeGridColumn = TimeGridColumn
 export type SolTimeGridBand = TimeGridBand
@@ -14,6 +39,11 @@ export interface SolTimeGridItemScope<T> {
   readonly startMinute: number
   readonly endMinute: number
   readonly clipped: boolean
+  readonly active: boolean
+  readonly readonly: boolean
+  readonly disabled: boolean
+  readonly pending: boolean
+  readonly proposal: SolTimeGridProposal | null
 }
 export interface SolTimeGridBandScope {
   readonly band: SolTimeGridBand
@@ -42,23 +72,41 @@ export interface SolTimeGridProps<T> extends AllowedComponentProps, VNodeProps {
   error?: string
   help?: string
   locale?: Partial<SolLocale>
+  readonly?: boolean
+  disabled?: boolean
+  snapMinutes?: number
+  allowMove?: boolean
+  allowResize?: boolean
+  allowDuplicate?: boolean
+  pendingKeys?: readonly SolTimeGridKey[]
+  isItemDisabled?: (item: T) => boolean
+  onStart?: (proposal: SolTimeGridProposal) => void
+  onPreview?: (proposal: SolTimeGridProposal) => void
+  onCommit?: (proposal: SolTimeGridProposal) => void
+  onCancel?: (result: SolTimeGridCancellation) => void
 }
 export interface SolTimeGridHandle {
   focus(key?: SolTimeGridKey): void
+  cancel(): void
 }
 interface SolTimeGridContext<T> {
   props: SolTimeGridProps<T>
   slots: SolTimeGridSlots<T>
+  emit: SolTimeGridEmit
   expose: (handle: SolTimeGridHandle) => void
 }
 export interface SolTimeGridComponent {
   <T>(
     props: SolTimeGridProps<T>,
-    context?: Pick<SolTimeGridContext<T>, 'slots'> & { attrs: Record<string, unknown> },
+    context?: Pick<SolTimeGridContext<T>, 'slots' | 'emit'> & { attrs: Record<string, unknown> },
     expose?: (handle: SolTimeGridHandle) => void,
   ): VNode & { __ctx?: SolTimeGridContext<T> }
 }
-/** Read-only wall-minute projection. No timezone, collision or storage policy. */
+export interface SolTimeGridEmit {
+  (event: 'start' | 'preview' | 'commit', proposal: SolTimeGridProposal): void
+  (event: 'cancel', result: SolTimeGridCancellation): void
+}
+/** Controlled wall-minute projection and opt-in intent. No timezone, collision or storage policy. */
 export const STimeGrid = /* @__PURE__ */ defineComponent({
   name: 'STimeGrid',
   inheritAttrs: false,
@@ -79,16 +127,31 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
     error: { type: String, default: '' },
     help: { type: String, default: '' },
     locale: Object as PropType<Partial<SolLocale>>,
+    readonly: { type: Boolean, default: true },
+    disabled: Boolean,
+    snapMinutes: { type: Number, default: 15 },
+    allowMove: { type: Boolean, default: true },
+    allowResize: Boolean,
+    allowDuplicate: Boolean,
+    pendingKeys: { type: Array as PropType<readonly SolTimeGridKey[]>, default: () => [] },
+    isItemDisabled: Function as PropType<(item: unknown) => boolean>,
   },
   slots: Object as SlotsType<SolTimeGridSlots<unknown>>,
-  setup(p, { attrs, slots, expose }) {
+  emits: {
+    start: (_proposal: SolTimeGridProposal) => true,
+    preview: (_proposal: SolTimeGridProposal) => true,
+    commit: (_proposal: SolTimeGridProposal) => true,
+    cancel: (_result: SolTimeGridCancellation) => true,
+  },
+  setup(p, { attrs, slots, emit, expose }) {
     const l = useSolLocale(() => p.locale),
       scroll = ref<HTMLElement | null>(null),
       host = ref<HTMLElement | null>(null),
-      nodes = new Map<SolTimeGridKey, HTMLElement>()
-    const snapshot = computed(() => {
+      nodes = new Map<SolTimeGridKey, HTMLElement>(),
+      columnNodes = new Map<string, HTMLElement>()
+    const snapshot = computed<TimeGridSnapshot<unknown> | null>((previous) => {
       try {
-        return readTimeGrid(
+        const next = readTimeGrid(
           p.items,
           p.columns,
           {
@@ -102,6 +165,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
           p.endMinute,
           p.bands,
         )
+        return sameTimeGridSnapshot(previous, next) ? previous! : next
       } catch {
         return null
       }
@@ -112,7 +176,42 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
         : nodes.values().next().value || scroll.value || host.value
       )?.focus()
     }
-    expose({ focus } satisfies SolTimeGridHandle)
+    const time = (minute: number) =>
+      formatSolNumber(Math.floor(minute / 60), l.value, {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      }) +
+      ':' +
+      formatSolNumber(minute % 60, l.value, { minimumIntegerDigits: 2, useGrouping: false })
+    const layouts = computed(() => {
+      const data = snapshot.value
+      return new Map(
+        data?.columns.map(
+          (column) =>
+            [
+              column.key,
+              timeGridLanes(data.entries, column.key, data.startMinute, data.endMinute),
+            ] as const,
+        ) || [],
+      )
+    })
+    const editor = useTimeGridEditor(
+      p,
+      () => snapshot.value,
+      { host, scroll, nodes, columns: columnNodes, focus, locale: l, time, keysId: p.id + '-keys' },
+      {
+        start: (value) => emit('start', value),
+        preview: (value) => emit('preview', value),
+        commit: (value) => emit('commit', value),
+        cancel: (value) => emit('cancel', value),
+      },
+    )
+    expose({
+      focus,
+      cancel: () => {
+        editor.cancel()
+      },
+    } satisfies SolTimeGridHandle)
     watch(snapshot, async () => {
       if (typeof document === 'undefined') return
       const active = document.activeElement,
@@ -121,21 +220,16 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
       await nextTick()
       if (!active.isConnected && document.activeElement === document.body) focus(key)
     })
-    const time = (minute: number) =>
-      formatSolNumber(Math.floor(minute / 60), l.value, {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      }) +
-      ':' +
-      formatSolNumber(minute % 60, l.value, { minimumIntegerDigits: 2, useGrouping: false })
     return () => {
       const data = snapshot.value,
-        error = p.error || (!data ? l.value.timeGridInvalid || l.value.invalidTime : '')
+        error =
+          p.error ||
+          (!data || !editor.valid.value ? l.value.timeGridInvalid || l.value.invalidTime : '')
       if (!data)
         return h(
           'section',
           {
-            ...attrs,
+            ...mergeProps(attrs, editor.events),
             class: ['sol-ui-time-grid', attrs.class],
             ref: host,
             tabindex: attrs.tabindex ?? -1,
@@ -157,7 +251,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
       return h(
         'section',
         {
-          ...attrs,
+          ...mergeProps(attrs, editor.events),
           class: ['sol-ui-time-grid', attrs.class],
           ref: host,
           tabindex: attrs.tabindex ?? -1,
@@ -171,6 +265,9 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
             ? h('div', { class: 'sol-ui-hint', id: p.id + '-help' }, slots.help?.() || p.help)
             : null,
           error ? h('p', { class: 'sol-ui-error', role: 'alert' }, error) : null,
+          !p.readonly
+            ? h('p', { class: 'sol-ui-hint', id: p.id + '-keys' }, l.value.timeGridKeys)
+            : null,
           p.loading
             ? h(
                 'p',
@@ -243,6 +340,10 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                           'div',
                           {
                             key: column.key,
+                            ref: (node: unknown) => {
+                              if (node) columnNodes.set(column.key, node as HTMLElement)
+                              else columnNodes.delete(column.key)
+                            },
                             role: 'group',
                             'aria-labelledby': p.id + '-column-' + index,
                             class: 'sol-ui-time-grid-column',
@@ -297,12 +398,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                   slots.band?.({ band, column }) || band.label,
                                 ),
                               ),
-                            ...timeGridLanes(
-                              data.entries,
-                              column.key,
-                              data.startMinute,
-                              data.endMinute,
-                            ).map((entry) => {
+                            ...(layouts.value.get(column.key) || []).map((entry) => {
                               const scope: SolTimeGridItemScope<unknown> = {
                                 item: entry.item as Readonly<unknown>,
                                 key: entry.key,
@@ -312,6 +408,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                 clipped:
                                   entry.visibleStart !== entry.startMinute ||
                                   entry.visibleEnd !== entry.endMinute,
+                                ...editor.scope(entry.key),
                               }
                               return h(
                                 'article',
@@ -322,7 +419,13 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                     else nodes.delete(entry.key)
                                   },
                                   tabindex: 0,
-                                  class: 'sol-ui-time-grid-item',
+                                  class: [
+                                    'sol-ui-time-grid-item',
+                                    !p.readonly ? 'sol-ui-time-grid-item--editable' : undefined,
+                                  ],
+                                  'data-active': String(editor.state.value?.key === entry.key),
+                                  'aria-busy': editor.pending(entry.key) ? 'true' : undefined,
+                                  'aria-describedby': !p.readonly ? p.id + '-keys' : undefined,
                                   'aria-label':
                                     entry.label +
                                     ' · ' +
@@ -341,12 +444,27 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                     inlineSize: 100 / entry.lanes + '%',
                                   },
                                 },
-                                slots.item?.(scope) || [
-                                  h('strong', {class:'sol-ui-time-grid-item-title'}, entry.label),
-                                  h('span', {class:'sol-ui-time-grid-item-time'}, time(entry.startMinute) + '–' + time(entry.endMinute)),
+                                [
+                                  ...(slots.item?.(scope) || [
+                                    h(
+                                      'strong',
+                                      { class: 'sol-ui-time-grid-item-title' },
+                                      entry.label,
+                                    ),
+                                    h(
+                                      'span',
+                                      { class: 'sol-ui-time-grid-item-time' },
+                                      time(entry.startMinute) + '–' + time(entry.endMinute),
+                                    ),
+                                  ]),
+                                  ...editor.handles(
+                                    entry,
+                                    Math.max(30, entry.visibleEnd - entry.visibleStart),
+                                  ),
                                 ],
                               )
                             }),
+                            editor.preview(column.key),
                           ],
                         ),
                       ),
@@ -355,6 +473,8 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                 ],
               )
             : null,
+          !p.readonly ? editor.status() : null,
+          editor.renderToolbar(),
           data.entries.length
             ? h('details', { class: 'sol-ui-time-grid-agenda' }, [
                 h('summary', l.value.timeGridList || p.label),
@@ -373,6 +493,14 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                           '–' +
                           time(entry.endMinute),
                       ),
+                      editor.pending(entry.key)
+                        ? h(
+                            'span',
+                            { role: 'status' },
+                            l.value.timeGridPending || l.value.progressPending,
+                          )
+                        : null,
+                      editor.agendaActions(entry),
                     ])
                   }),
                 ),

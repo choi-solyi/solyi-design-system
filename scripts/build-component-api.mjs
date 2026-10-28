@@ -109,7 +109,7 @@ const propertyDescriptions = {
   open:'메뉴의 제어형 열림 상태입니다. update:open 이벤트와 연결합니다.', menuLabel:'분할 버튼에서 추가 행동 메뉴를 여는 버튼의 이름입니다.', maxFileSize:'파일 하나에 허용하는 최대 바이트 수입니다. 기본 2 × 1024 × 1024바이트(2 MiB)입니다.', drop:'파일 드래그·드롭 영역을 활성화합니다. 선택 버튼은 별도로 유지합니다.', fastFail:'폼 검증에서 첫 오류가 발생하면 뒤의 자체 필드 검사를 중단합니다.', lowerLabel:'범위의 아래쪽 핸들을 구분하는 이름입니다.', upperLabel:'범위의 위쪽 핸들을 구분하는 이름입니다.', formatValue:'숫자 하나를 받아 화면·접근성 값 표시용 문자열을 반환하는 함수입니다. 모델 값은 숫자로 유지합니다.', triggerLabel:'모바일·키보드에서 맥락 메뉴를 직접 여는 버튼의 이름입니다.', dismissible:'사용자가 알림을 닫을 수 있는 버튼을 표시합니다.', collapseBelow:'컨테이너 너비가 이 CSS px 값보다 작으면 두 영역을 세로로 배치합니다. 0 이하는 자동 전환을 끕니다.', primaryLabel:'첫 번째 분할 영역의 접근 가능한 이름입니다.', secondaryLabel:'두 번째 분할 영역의 접근 가능한 이름입니다.',
 };
 const records = [
-  ['STimeGrid','표시·레이아웃','임의 객체를 열과 분 좌표로 읽기 전용 표시합니다. 시간대·충돌·저장 규칙은 소비 앱이 소유합니다.','component','advanced-vue'],
+  ['STimeGrid','표시·레이아웃','기본 readonly로 열과 분 좌표를 표시하고 opt-in 이동·resize·복제를 제안합니다. 시간대·충돌·저장은 소비 앱이 소유합니다.','component','advanced-vue'],
   ['SMonthCalendar','표시·레이아웃','한 달의 날짜와 범용 marker를 조회·탐색합니다. 선택과 표시 월은 부모가 관리합니다.','component','advanced-vue'],
   ['SSortableList','표시·레이아웃','임의 객체 목록의 순서를 포인터·키보드·이동 버튼으로 제안합니다. 원본 모델은 직접 수정하지 않습니다.','component','advanced-vue'],
   ['SChip','표시·레이아웃','짧은 값의 표시·선택·제거를 구분합니다.','component','buttons'],
@@ -211,6 +211,10 @@ for (const [name, group, description, exampleRoute, example] of records) {
     for (const key of ['itemStart','itemEnd']) props.find(prop => prop.name === key).description = '0–1440 범위 정수 분을 읽습니다. 시작<끝이며 자정 넘김은 앱에서 항목을 나눕니다. 모델을 Date/UTC 문자열로 변환하지 않습니다.'
     for (const key of ['startMinute','endMinute']) props.find(prop => prop.name === key).description = '표시 범위입니다. 범위 밖 자료는 원본을 바꾸지 않고 clip하며 전체 목록에는 원래 시간을 표시합니다.'
     props.find(prop => prop.name === 'loading').description = '부모의 작업 상태를 표시하며 기존 자료를 유지합니다. 내부 fetch나 모델 갱신은 하지 않습니다.'
+    props.find(prop => prop.name === 'readonly').description = '기본 true입니다. false일 때만 편집 의도를 시작하며 읽기·스크롤·전체 목록은 계속 사용할 수 있습니다.'
+    props.find(prop => prop.name === 'snapMinutes').description = '1–1440 정수 분 간격입니다. 자정 기준으로 맞추되 열만 바꾸면 기존 비정렬 시간을 보존합니다. 기존 TimePicker의 min 기준 step과 별도입니다.'
+    props.find(prop => prop.name === 'pendingKeys').description = '부모가 처리 중인 stable key입니다. 해당 항목의 조작만 막고 진행 중 제안은 취소합니다. 비동기 listener를 자동 await하지 않습니다.'
+    props.find(prop => prop.name === 'isItemDisabled').description = '임의 객체를 받아 boolean을 반환합니다. 항목별 조작만 막고 내용과 전체 목록은 유지합니다.'
   }
   if (name === 'SConfirmAction') {
     props.find(prop => prop.name === 'timeout').description = '확인 대기 시간(ms)입니다. 기본 5000, 0이면 자동 취소하지 않습니다. Escape와 기본 blur 취소는 유지합니다.'
@@ -252,7 +256,7 @@ for (const [name, group, description, exampleRoute, example] of records) {
       assert.ok(contract&&ts.isInterfaceDeclaration(contract),'Generic public props interface exists')
       for(const prop of props){const member=contract.members.find(member=>member.name?.text===prop.name);assert.ok(member,'Runtime prop is in the public generic contract: '+prop.name);prop.type=text(member.type);prop.required=!member.questionToken}
       for(const event of events){const key=event.name==='update:modelValue'?'onUpdate:modelValue':'on'+event.name[0].toUpperCase()+event.name.slice(1);const member=contract.members.find(member=>member.name?.text===key);assert.ok(member&&ts.isFunctionTypeNode(member.type),'Typed generic event: '+event.name);event.signature=signature(member.type)}
-      const descriptions={start:'키보드/포인터 이동 조작을 시작합니다. 이동 버튼은 바로 제안을 확정합니다.',preview:'순서 미리보기 제안입니다. 모델과 DOM 원본 순서는 바꾸지 않습니다.',end:'commit/unchanged/cancel 결과입니다. cancel이면 취소 사유를 포함합니다.',change:'최종 순서가 달라질 때 items/key/from/to/input 제안을 한 번 보냅니다.'}
+      const descriptions=name==='STimeGrid'?{start:'원본 key/from 좌표로 로컬 조작을 시작합니다. 부모 데이터는 바꾸지 않습니다.',preview:'스냅된 to 좌표의 frozen 미리보기입니다. 모델이나 저장을 쓰지 않습니다.',commit:'마지막 좌표를 한 번 제안합니다. 부모가 승인/거부/새 복제 key/pending과 실제 저장을 소유합니다.',cancel:'마지막 제안과 취소 reason을 전달하고 원본을 유지합니다.'}:{start:'키보드/포인터 이동 조작을 시작합니다. 이동 버튼은 바로 제안을 확정합니다.',preview:'순서 미리보기 제안입니다. 모델과 DOM 원본 순서는 바꾸지 않습니다.',end:'commit/unchanged/cancel 결과입니다. cancel이면 취소 사유를 포함합니다.',change:'최종 순서가 달라질 때 items/key/from/to/input 제안을 한 번 보냅니다.'}
       for(const event of events)if(descriptions[event.name])event.description=descriptions[event.name]
     }
     const setup = property(component.node,component.file,'setup');

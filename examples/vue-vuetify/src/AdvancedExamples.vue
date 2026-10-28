@@ -114,7 +114,7 @@ const gridColumns = Object.freeze([
   { key: 'one', label: '열 A', date: '2026-10-28' },
   { key: 'two', label: '열 B', date: '2026-10-29' },
 ])
-const gridItems = Object.freeze([
+const gridSeed = Object.freeze([
   Object.freeze({ id: 'a', column: 'one', start: 480, end: 570, title: '첫 번째 항목' }),
   Object.freeze({
     id: 'b',
@@ -132,6 +132,52 @@ const gridItems = Object.freeze([
   }),
   Object.freeze({ id: 'd', column: 'two', start: 780, end: 840, title: '두 번째 열 항목' }),
 ])
+const gridItems = ref(gridSeed),
+  gridEditable = ref(false),
+  gridDisabled = ref(false),
+  gridLockedFirst = ref(false),
+  gridPendingFirst = ref(false),
+  gridAccept = ref(true),
+  gridPreview = ref(null),
+  gridResult = ref('')
+let gridCopy = 0
+function acceptGridProposal(proposal) {
+  gridPreview.value = null
+  gridResult.value =
+    proposal.action +
+    ' · ' +
+    proposal.to.columnKey +
+    ' · ' +
+    proposal.to.startMinute +
+    '–' +
+    proposal.to.endMinute
+  if (!gridAccept.value) return
+  const original = gridItems.value.find(item => item.id === proposal.key)
+  if (!original) return
+  const next = Object.freeze({
+    ...original,
+    column: proposal.to.columnKey,
+    start: proposal.to.startMinute,
+    end: proposal.to.endMinute,
+    ...(proposal.action === 'duplicate'
+      ? { id: 'copy-' + ++gridCopy, title: original.title + ' · 복제' }
+      : {}),
+  })
+  gridItems.value = Object.freeze(
+    proposal.action === 'duplicate'
+      ? [...gridItems.value, next]
+      : gridItems.value.map(item => (item.id === proposal.key ? next : item)),
+  )
+}
+function resetGrid() {
+  gridItems.value = Object.freeze([...gridSeed])
+  gridPreview.value = null
+  gridResult.value = ''
+}
+function cancelGrid(result) {
+  gridPreview.value = null
+  gridResult.value = '취소 · ' + result.reason
+}
 const gridEmpty = ref(false),
   gridLoading = ref(false)
 const gridBands = Object.freeze([
@@ -487,10 +533,10 @@ watch([disabled, readonly], () => {
     </p>
   </section>
   <section v-if="show('time-grid')" class="starter-card" aria-labelledby="advanced-time-grid-title">
-    <h2 id="advanced-time-grid-title">시간 그리드 · readonly 기반</h2>
+    <h2 id="advanced-time-grid-title">시간 그리드 · 변경 제안</h2>
     <p class="starter-hint">
-      열과 분 좌표만 표시합니다. 시간대·충돌·저장 규칙은 소비 앱에서 소유합니다. 이동·크기 변경·복제
-      상호작용은 다음 구현 단위입니다.
+      기본은 읽기 전용이며 편집을 켜면 이동·크기 변경·복제를 제안합니다. 아래 반영 체크를 끄면
+      원본은 유지됩니다. 시간대·충돌·새 key·저장은 소비 앱에서 소유합니다.
     </p>
     <div class="starter-settings">
       <SCheckbox id="advanced-time-grid-empty" v-model="gridEmpty" label="빈 항목" /><SCheckbox
@@ -498,6 +544,22 @@ watch([disabled, readonly], () => {
         v-model="gridLoading"
         label="불러오는 중"
       />
+    </div>
+    <div class="starter-settings">
+      <SCheckbox id="advanced-time-grid-edit" v-model="gridEditable" label="변경 제안 허용" />
+      <SCheckbox id="advanced-time-grid-disabled" v-model="gridDisabled" label="전체 조작 비활성" />
+      <SCheckbox
+        id="advanced-time-grid-lock"
+        v-model="gridLockedFirst"
+        label="첫 항목 조작 비활성"
+      />
+      <SCheckbox
+        id="advanced-time-grid-pending"
+        v-model="gridPendingFirst"
+        label="첫 항목 반영 대기"
+      />
+      <SCheckbox id="advanced-time-grid-accept" v-model="gridAccept" label="부모에서 제안 반영" />
+      <SBtn id="advanced-time-grid-reset" @click="resetGrid">원본으로 외부 갱신</SBtn>
     </div>
     <STimeGrid
       id="advanced-time-grid"
@@ -513,7 +575,20 @@ watch([disabled, readonly], () => {
       :start-minute="480"
       :end-minute="1080"
       :loading="gridLoading"
+      :readonly="!gridEditable"
+      :disabled="gridDisabled"
+      allow-resize
+      allow-duplicate
+      :snap-minutes="15"
+      :pending-keys="gridPendingFirst ? ['a'] : []"
+      :is-item-disabled="item=>gridLockedFirst && item.id==='a'"
+      @preview="gridPreview=$event"
+      @commit="acceptGridProposal"
+      @cancel="cancelGrid"
       help="각 항목에 Tab으로 초점을 둘 수 있습니다. 좁은 화면에서는 가로로 스크롤하고 목록으로 전체 이름을 확인하세요."
     />
+    <p id="advanced-time-grid-result" class="starter-hint" role="status">
+      {{gridPreview ? '미리보기 · '+gridPreview.to.columnKey+' · '+gridPreview.to.startMinute+'–'+gridPreview.to.endMinute : gridResult}}
+    </p>
   </section>
 </template>

@@ -1,6 +1,6 @@
 import {STimeGrid} from './time-grid';
 export {STimeGrid};
-export type {SolTimeGridKey,SolTimeGridColumn,SolTimeGridBand,SolTimeGridProps,SolTimeGridItemScope,SolTimeGridBandScope,SolTimeGridSlots,SolTimeGridHandle} from './time-grid';
+export type {SolTimeGridProposal,SolTimeGridCoordinate,SolTimeGridAction,SolTimeGridInput,SolTimeGridCancelReason,SolTimeGridCancellation,SolTimeGridKey,SolTimeGridColumn,SolTimeGridBand,SolTimeGridProps,SolTimeGridItemScope,SolTimeGridBandScope,SolTimeGridSlots,SolTimeGridHandle} from './time-grid';
 import {SPagination} from './pagination';
 export {SPagination};
 export type {SolPaginationHandle} from './pagination';

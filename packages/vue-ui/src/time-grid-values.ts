@@ -80,11 +80,19 @@ export function readTimeGrid<T>(
       !minute(band.startMinute) ||
       !minute(band.endMinute) ||
       band.startMinute >= band.endMinute ||
-      (band.category !== undefined && (typeof band.category !== 'string' || !/^c[1-8]$/.test(band.category)))
+      (band.category !== undefined &&
+        (typeof band.category !== 'string' || !/^c[1-8]$/.test(band.category)))
     )
       throw TypeError('Invalid time grid band')
     bandKeys.add(band.id)
-    return Object.freeze({ ...band })
+    return Object.freeze({
+      id: band.id,
+      label: band.label,
+      columnKey: band.columnKey,
+      startMinute: band.startMinute,
+      endMinute: band.endMinute,
+      category: band.category,
+    })
   })
   const entries = items.map((item, index) => {
     const key = access.key(item),
@@ -114,6 +122,47 @@ export function readTimeGrid<T>(
     startMinute,
     endMinute,
   })
+}
+export type TimeGridSnapshot<T> = ReturnType<typeof readTimeGrid<T>>
+/** Inline accessor/column objects can be rebound by a parent's unrelated render. */
+export function sameTimeGridSnapshot<T>(
+  a: TimeGridSnapshot<T> | null | undefined,
+  b: TimeGridSnapshot<T> | null | undefined,
+) {
+  if (!a || !b) return a === b
+  return (
+    a.startMinute === b.startMinute &&
+    a.endMinute === b.endMinute &&
+    a.columns.length === b.columns.length &&
+    a.entries.length === b.entries.length &&
+    a.bands.length === b.bands.length &&
+    a.columns.every((value, index) => {
+      const other = b.columns[index]
+      return value.key === other.key && value.label === other.label && value.date === other.date
+    }) &&
+    a.entries.every((value, index) => {
+      const other = b.entries[index]
+      return (
+        value.key === other.key &&
+        value.item === other.item &&
+        value.label === other.label &&
+        value.columnKey === other.columnKey &&
+        value.startMinute === other.startMinute &&
+        value.endMinute === other.endMinute
+      )
+    }) &&
+    a.bands.every((value, index) => {
+      const other = b.bands[index]
+      return (
+        value.id === other.id &&
+        value.label === other.label &&
+        value.columnKey === other.columnKey &&
+        value.startMinute === other.startMinute &&
+        value.endMinute === other.endMinute &&
+        value.category === other.category
+      )
+    })
+  )
 }
 /** Visual packing only; never infers or resolves application scheduling conflicts. */
 export function timeGridLanes<T>(

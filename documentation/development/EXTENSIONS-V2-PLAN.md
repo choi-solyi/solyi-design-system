@@ -1,3 +1,5 @@
+TimeGrid 상호작용 완료: 기본 readonly를 보존하고 opt-in 이동·시작/끝 resize·복제, frozen proposal·preview/commit/cancel, pending·항목별 잠금, 키보드·터치 손잡이·자동스크롤·포커스 복원을 구현했습니다. 소스·타입·50종 API 검사와 실제 Chrome 키보드/부모 거절/포인터/캡처 취소/RTL/터치 pan·취소·확정을 확인했습니다. 최종 설치본·확대된 API 예산·통합 출시 검증 및 npm 인증은 남습니다. 아래 readonly 단계 기록은 이전 체크포인트입니다.
+
 TimeGrid readonly 기반: 임의 객체 accessor·ISO 열·wall-minute·band·generic 슬롯·focus·loading/error와 겹침 lane을 구현하고 공개 50종 등록·Components·starter 시간 그리드 링크에 연결했습니다. 순수 helper/원본 보존·정상 generic 타입과 잘못된 accessor/slot 거부·패키지/예제 빌드·실제 넓은 dark/모바일 light 화면과 목록·기본 focus/scroll·loading/empty를 확인했습니다. 짧은 항목은 제목·시간을 한 줄로 다듬고 전체 이름은 목록으로 제공합니다. 이동/resize/duplicate와 pending/proposal/취소·포인터 상호작용 및 최종 설치본 검증은 아직 남았으며 전체 완료/출시 가능 상태가 아닙니다.
 
 Pagination: SPagination(modelValue/pageCount/siblingCount, disabled/loading/locale, update:modelValue, focus)을 공개 타입·등록·Components·starter navigation에 연결했습니다. pageCount=0은 빈 상태, 부모 거부/비동기 pageCount 변경은 원본 모델을 유지합니다. 좁은 영역은 현재 번호+처음/이전/다음/마지막 5개 컨트롤을 제공합니다. 기존 Table은 순수 번호 계산만 재사용하며 5,050개 유효 범위의 기존 결과가 같습니다. 패키지/예제 타입·빌드, controlled 전이와 실제 모바일 조작/빈 상태를 확인했습니다. RTL/설치본은 최종 후보 통합에서 확인합니다. readonly/validate/loading spinner를 번호마다 추가하지 않습니다.
