@@ -1,8 +1,12 @@
 .sol-ui-sortable-list {display:grid;gap:var(--sol-space-2);list-style:none;margin:0;padding:0;}
 .sol-ui-sortable-row {display:grid;grid-template-columns:var(--sol-control-height) minmax(0,1fr) auto;align-items:center;gap:var(--sol-space-2);padding:var(--sol-space-2);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-control);background:var(--sol-color-surface);color:var(--sol-color-text);}
 .sol-ui-sortable-row[data-active=true] {background:var(--sol-color-selected-surface);color:var(--sol-color-selected-text);}
-.sol-ui-sortable-row[data-insert=true] {box-shadow:inset 0 var(--sol-focus-width) 0 var(--sol-color-focus);}
+.sol-ui-sortable-row[data-insert=before] {box-shadow:inset 0 var(--sol-focus-width) 0 var(--sol-color-focus);}
+.sol-ui-sortable-row[data-insert=after] {box-shadow:inset 0 calc(-1 * var(--sol-focus-width)) 0 var(--sol-color-focus);}
 .sol-ui-sortable .sol-ui-sortable-handle,.sol-ui-sortable-moves>.sol-button {inline-size:var(--sol-control-height);min-inline-size:var(--sol-control-height);min-block-size:var(--sol-control-height);padding:0;}
 .sol-ui-sortable-content {min-inline-size:0;overflow-wrap:anywhere;}
 .sol-ui-sortable-moves {display:flex;gap:var(--sol-space-1);}
 .sol-ui-sortable-status {display:block;min-block-size:1lh;}
+.sol-ui-sortable-handle {touch-action:none;user-select:none;cursor:grab;}
+.sol-ui-sortable-handle[aria-pressed=true] {cursor:grabbing;}
+.sol-ui-sortable-handle:disabled {touch-action:pan-y;cursor:default;}

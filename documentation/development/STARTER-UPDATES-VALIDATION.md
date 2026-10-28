@@ -6,7 +6,7 @@
 
 사용자가 승인한 명칭은 헤더 **UI 데모**, 화면 주제목 **컴포넌트 미리보기**입니다. site/index.html의 header-actions 안에 native link를 추가해 ./starter/로 연결했습니다. 링크 의미·Tab/Enter를 유지하며 기존 검색·설정·테마·밀도·모드 컨트롤을 제거하지 않았습니다. starter index.html의 browser title은 Solyi · 컴포넌트 미리보기입니다.
 
-starter의 기존 9개 섹션 href는 유지하고 신규·개선 예제로 가는 항목을 추가했습니다. anchor에 기존 Core sol-button 스타일을 사용하고 starter-example-nav 내부의 간격·줄바꿈만 조정했습니다. 다른 본문·라이선스 링크의 밑줄을 일괄 제거하지 않습니다.
+starter의 기존 9개 섹션 href는 유지하고 신규·개선 예제와 정렬 목록 항목을 추가해 총 11개입니다. anchor에 기존 Core sol-button 스타일을 사용하고 starter-example-nav 내부의 간격·줄바꿈만 조정했습니다. 다른 본문·라이선스 링크의 밑줄을 일괄 제거하지 않습니다. recipes와 advanced 독립 화면도 같은 주제목을 사용합니다.
 
 ## 항목별 대조
 
@@ -21,7 +21,7 @@ starter의 기존 9개 섹션 href는 유지하고 신규·개선 예제로 가�
 | SDatePicker | displayFormatter, ISO 보존 | recipes/inputs.vue의 part=date | mode 전환·요일 표시, 표시가 바뀌어도 ISO 완료값 유지 | 미반영 |
 | SNumberInput | presets/formatValue/unit | recipes/advanced-inputs.vue의 part=number | preset 6·off-grid 5 비활성·표시 6.0/모델 6 | 미반영 |
 | STimePicker | manual/list/initial/current/scrub 옵션 | recipes/time.vue | 초기 09:07·현재 시각 위치·선택/비우기·manual·scrub preview/commit | 미반영 |
-| SSortableList | helper 완료, keyboard/UI 구현 중 | 내부 source proof만 작성 중 | 공개 컴포넌트 완료 검증 전 | 미반영 |
+| SSortableList | generic 공개 타입·root/plugin/global 등록, controlled 목록 | AdvancedExamples.vue의 sortable, 기본 화면 #advanced-sortable-title, ?view=advanced&part=sortable | source runtime·정상/오류 SFC·Chrome 72조합, 실제 키보드·이동 버튼·pointer·취소·자동 스크롤 | 미반영 |
 | SMonthCalendar / STimeGrid | 미착수 | 없음 | 미실행 | 미반영 |
 
 파일 기준은 packages/vue-ui/src/primitives.ts·date-time.ts·controls.ts, examples/vue-vuetify/src/App.vue 및 위 recipes입니다. root를 보완하면서 canonical examples와 다른 복사본을 만들지 않았습니다.

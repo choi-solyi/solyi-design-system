@@ -77,6 +77,8 @@ function options(initializer, file) {
   return {node, file: target.file};
 }
 const propertyDescriptions = {
+  itemKey:'항목의 안정적인 string/유한 number key를 반환합니다. 중복 key는 조작을 막습니다.',
+  itemLabel:'각 항목의 손잡이·이동 버튼·상태 안내에 쓰는 비어 있지 않은 이름입니다.',
   scrubbable:'입력 옆 전용 손잡이를 켭니다. 드래그·키 반복 중 preview만 발행하고 release에 확정합니다.',
   listScrubbable:'list presentation의 전용 행 손잡이를 켭니다. 목록 본문은 native 스크롤을 유지합니다.',
   scrubPixelsPerStep:'입력 손잡이에서 한 step에 필요한 양수 픽셀입니다. 생략하면 control 높이의 1/4, 잘못된 값은 10px을 사용합니다.',
@@ -107,6 +109,7 @@ const propertyDescriptions = {
   open:'메뉴의 제어형 열림 상태입니다. update:open 이벤트와 연결합니다.', menuLabel:'분할 버튼에서 추가 행동 메뉴를 여는 버튼의 이름입니다.', maxFileSize:'파일 하나에 허용하는 최대 바이트 수입니다. 기본 2 × 1024 × 1024바이트(2 MiB)입니다.', drop:'파일 드래그·드롭 영역을 활성화합니다. 선택 버튼은 별도로 유지합니다.', fastFail:'폼 검증에서 첫 오류가 발생하면 뒤의 자체 필드 검사를 중단합니다.', lowerLabel:'범위의 아래쪽 핸들을 구분하는 이름입니다.', upperLabel:'범위의 위쪽 핸들을 구분하는 이름입니다.', formatValue:'숫자 하나를 받아 화면·접근성 값 표시용 문자열을 반환하는 함수입니다. 모델 값은 숫자로 유지합니다.', triggerLabel:'모바일·키보드에서 맥락 메뉴를 직접 여는 버튼의 이름입니다.', dismissible:'사용자가 알림을 닫을 수 있는 버튼을 표시합니다.', collapseBelow:'컨테이너 너비가 이 CSS px 값보다 작으면 두 영역을 세로로 배치합니다. 0 이하는 자동 전환을 끕니다.', primaryLabel:'첫 번째 분할 영역의 접근 가능한 이름입니다.', secondaryLabel:'두 번째 분할 영역의 접근 가능한 이름입니다.',
 };
 const records = [
+  ['SSortableList','표시·레이아웃','임의 객체 목록의 순서를 포인터·키보드·이동 버튼으로 제안합니다. 원본 모델은 직접 수정하지 않습니다.','component','advanced-vue'],
   ['SChip','표시·레이아웃','짧은 값의 표시·선택·제거를 구분합니다.','component','buttons'],
   ['SBadge','표시·레이아웃','상태와 개수를 비대화형 표시로 전달합니다.','component','buttons'],
   ['SIcon','표시·레이아웃','공통 선 아이콘을 장식 또는 접근 가능한 이미지로 표시합니다.','component','buttons'],
@@ -189,11 +192,20 @@ for (const [name, group, description, exampleRoute, example] of records) {
       }
       for (const event of events) if (interactionDescriptions[event.name]) event.description = interactionDescriptions[event.name]
     }
+    if(name==='SSortableList') {
+      const contract=declarations.get('SolSortableProps')
+      assert.ok(contract&&ts.isInterfaceDeclaration(contract),'Generic public props interface exists')
+      for(const prop of props){const member=contract.members.find(member=>member.name?.text===prop.name);assert.ok(member,'Runtime prop is in the public generic contract: '+prop.name);prop.type=text(member.type);prop.required=!member.questionToken}
+      for(const event of events){const key=event.name==='update:modelValue'?'onUpdate:modelValue':'on'+event.name[0].toUpperCase()+event.name.slice(1);const member=contract.members.find(member=>member.name?.text===key);assert.ok(member&&ts.isFunctionTypeNode(member.type),'Typed generic event: '+event.name);event.signature=signature(member.type)}
+      const descriptions={start:'키보드/포인터 이동 조작을 시작합니다. 이동 버튼은 바로 제안을 확정합니다.',preview:'순서 미리보기 제안입니다. 모델과 DOM 원본 순서는 바꾸지 않습니다.',end:'commit/unchanged/cancel 결과입니다. cancel이면 취소 사유를 포함합니다.',change:'최종 순서가 달라질 때 items/key/from/to/input 제안을 한 번 보냅니다.'}
+      for(const event of events)if(descriptions[event.name])event.description=descriptions[event.name]
+    }
     const setup = property(component.node,component.file,'setup');
   const slotNames = new Set();
   for (const node of visit(setup,n=>ts.isPropertyAccessExpression(n)&&n.expression.getText()==='slots')) slotNames.add(node.name.text);
   const shared = text(setup).includes('fieldLabel(') || text(setup).includes('fieldMessages(');
   if (shared) {slotNames.add('label');slotNames.add('help');}
+  if(name==='SSortableList')slotNames.delete('label')
   if (name==='SDataTable')slotNames.add('cell-{column.key}');
   if (name==='STabs')slotNames.add('panel-{item.value}');
   const slotScopes=new Map();
@@ -201,7 +213,7 @@ for (const [name, group, description, exampleRoute, example] of records) {
     const callee=call.expression;
     let slot;
     if(ts.isPropertyAccessExpression(callee)&&callee.expression.getText()==='slots')slot=callee.name.text;
-    else if(ts.isElementAccessExpression(callee)&&callee.expression.getText()==='slots')slot=name==='SDataTable'?'cell-{column.key}':name==='STabs'?'panel-{item.value}':undefined;
+    else if(ts.isElementAccessExpression(callee)&&callee.expression.getText()==='slots')slot=ts.isStringLiteral(callee.argumentExpression)?callee.argumentExpression.text:name==='SDataTable'?'cell-{column.key}':name==='STabs'?'panel-{item.value}':undefined;
     if(!slot)continue;slotNames.add(slot);
     slotScopes.set(slot,call.arguments.length?checker.typeToString(checker.getTypeAtLocation(call.arguments[0]),call.arguments[0],ts.TypeFormatFlags.NoTruncation):'인자 없음');
   }
@@ -210,7 +222,14 @@ for (const [name, group, description, exampleRoute, example] of records) {
   for (const call of visit(setup,n=>ts.isCallExpression(n)&&n.expression.getText()==='expose')) {for(const [method]of entries(call.arguments[0],component.file))methodNames.add(method);if(/\bvalidation\b/.test(text(call.arguments[0]))&&text(setup).includes('useSFieldValidation('))for(const method of validationHandle)methodNames.add(method);}
   const methods=[...methodNames].map(method=>({name:method,signature:name==='SForm'&&method==='validate'?'() => Promise<SFormResult>':methodTypes[method]||'소스의 공개 핸들 타입 참조',description:method==='focus'?'사용 가능한 입력 또는 실행 요소로 초점을 이동합니다.':method==='validate'?'현재 값을 검증하고 유효 여부를 반환합니다.':method==='resetValidation'?'입력값을 바꾸지 않고 로컬 검증 표시를 초기화합니다.':method==='clear'?'선택값을 초기화합니다.':method==='retry'?'실패한 요청을 다시 실행합니다.':`${method} 작업을 실행합니다.`}));
   if(name==='SForm')for(const slot of slots)if(slot.name==='default')slot.description='폼 상태와 작업을 받습니다: {validate, resetValidation, focus, errors, isValid, isValidating}. validate는 Promise<SFormResult>를 반환합니다.';
-  const usedTypes=new Map(),pending=[...props.map(prop=>prop.type),...events.map(event=>event.signature),...methods.map(method=>method.signature)];
+  if(name==='SSortableList'){
+    const contract=declarations.get('SolSortableSlots'),handle=declarations.get('SolSortableHandle')
+    assert.deepEqual(slots.map(slot=>slot.name).sort(),contract.members.map(member=>member.name.text).sort(),'Document exactly the implemented sortable slots')
+    for(const slot of slots){const member=contract.members.find(member=>member.name.text===slot.name);slot.scope=member.type.parameters.length?text(member.type.parameters[0].type):'범위 없음'}
+    assert.deepEqual(methods.map(method=>method.name).sort(),handle.members.map(member=>member.name.text).sort(),'Document exactly the exposed sortable handle')
+    for(const method of methods){const member=handle.members.find(member=>member.name.text===method.name);method.signature=signature(member)+' => '+text(member.type)}
+  }
+  const usedTypes=new Map(),pending=[...props.map(prop=>prop.type),...events.map(event=>event.signature),...methods.map(method=>method.signature),...slots.map(slot=>slot.scope)];
   while(pending.length){const type=pending.pop();for(const match of type.matchAll(/\b[A-Z]\w*\b/g)){const declaration=declarations.get(match[0]);if(!declaration||usedTypes.has(match[0])||match[0]==='SolLocale')continue;const source=declaration.getText().replace(/^export\s+/,'');usedTypes.set(match[0],source);pending.push(source);}}
   references.push({name,id:name.replace(/([a-z0-9])([A-Z])/g,'$1-$2').toLowerCase(),group,description,exampleRoute,example,source:'packages/vue-ui/src/'+file,props,events,slots,methods,types:[...usedTypes].map(([name,source])=>({name,source})),passthrough:['SContainer','SRow','SCol'].includes(name)?name.replace(/^S/,'V'):null});
 }

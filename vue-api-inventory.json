@@ -1,7 +1,8 @@
 {
   "documentVersion": "1.0.0",
-  "componentCount": 42,
+  "componentCount": 43,
   "components": [
+    "SSortableList",
     "SChip",
     "SBadge",
     "SIcon",

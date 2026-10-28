@@ -37,9 +37,9 @@ export interface SolLocale {
 export const koLocale:Readonly<SolLocale>=Object.freeze({
   sortableHandle:(label:string)=>label+' 순서 조절',
   sortableMove:(label:string,direction:-1|1)=>label+(direction===-1?' 위로 이동':' 아래로 이동'),
-  sortableKeys:'손잡이에서 Space/Enter로 시작·확정, 위/아래 화살표와 Home/End로 이동, Escape 또는 Tab으로 취소합니다. 위/아래 이동 버튼도 사용할 수 있습니다.',
+  sortableKeys:'손잡이를 위아래로 드래그할 수 있습니다. 키보드는 Space/Enter로 시작·확정, 위/아래와 Home/End로 이동, Escape 또는 Tab으로 취소합니다. 위/아래 이동 버튼도 사용할 수 있습니다.',
   sortableInvalid:'현재 목록을 정렬할 수 없습니다.',
-  sortableStatus:(kind:'start'|'preview'|'commit'|'cancel'|'unchanged',label:string,position:number,count:number)=>({start:'순서 조절 시작',preview:'이동 예정',commit:'이동 완료',cancel:'순서 조절 취소',unchanged:'순서 유지'}[kind])+': '+label+' · '+num(position,'ko-KR')+' / '+num(count,'ko-KR'),
+  sortableStatus:(kind:'start'|'preview'|'commit'|'cancel'|'unchanged',label:string,position:number,count:number)=>({start:'순서 조절 시작',preview:'이동 예정',commit:'순서 제안 완료',cancel:'순서 조절 취소',unchanged:'순서 유지'}[kind])+': '+label+(kind==='cancel'?'':' · '+num(position,'ko-KR')+' / '+num(count,'ko-KR')),
   timeScrub:(source:'input'|'list')=>source==='input'?'시간 드래그 조절':'목록 드래그 조절',
   timeScrubKeys:'조절 손잡이를 위아래로 드래그하세요. 키보드: 화살표 한 단계, Shift/Page 열 단계, Home/End 경계. 키를 놓으면 확정, Escape 취소. 목록 본문은 스크롤할 수 있습니다.',
   timePreview:(value:string)=>'미리보기 '+value,
@@ -64,9 +64,9 @@ export const koLocale:Readonly<SolLocale>=Object.freeze({
 export const enLocale:Readonly<SolLocale>=Object.freeze({
   sortableHandle:(label:string)=>'Reorder '+label,
   sortableMove:(label:string,direction:-1|1)=>'Move '+label+(direction===-1?' up':' down'),
-  sortableKeys:'On a handle, Space/Enter starts or confirms; Up/Down and Home/End propose a position; Escape or Tab cancels. You can also use the move up/down buttons.',
+  sortableKeys:'Drag a handle up or down. With a keyboard, Space/Enter starts or confirms; Up/Down and Home/End propose a position; Escape or Tab cancels. You can also use the move up/down buttons.',
   sortableInvalid:'This list cannot be reordered right now.',
-  sortableStatus:(kind:'start'|'preview'|'commit'|'cancel'|'unchanged',label:string,position:number,count:number)=>({start:'Reordering',preview:'Proposed position',commit:'Moved',cancel:'Reordering cancelled',unchanged:'Order unchanged'}[kind])+': '+label+' · '+num(position,'en-US')+' / '+num(count,'en-US'),
+  sortableStatus:(kind:'start'|'preview'|'commit'|'cancel'|'unchanged',label:string,position:number,count:number)=>({start:'Reordering',preview:'Proposed position',commit:'Order proposed',cancel:'Reordering cancelled',unchanged:'Order unchanged'}[kind])+': '+label+(kind==='cancel'?'':' · '+num(position,'en-US')+' / '+num(count,'en-US')),
   timeScrub:(source:'input'|'list')=>source==='input'?'Adjust time by dragging':'Adjust time in list by dragging',
   timeScrubKeys:'Drag the adjustment handle up or down. Keyboard: arrows one step, Shift/Page ten steps, Home/End bounds. Release the key to commit; Escape cancels. The list body remains scrollable.',
   timePreview:(value:string)=>'Preview '+value,

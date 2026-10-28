@@ -1,6 +1,10 @@
 # SSortableList 구현 단위 · 승인 범위 진행
 
-입력 확장 이후의 승인된 다음 단계입니다. 현재 공개 42개 컴포넌트에는 임의 객체의 순서를 controlled로 바꾸는 목록이 없습니다. SDataTable의 열 정렬은 이 기능을 대신하지 않습니다. 기존 split-pane과 TimePicker의 capture/cancel·키보드 검증 경험을 참고하되 시간 전용 controller를 범용 drag 엔진으로 억지로 변경하지 않습니다.
+입력 확장 이후의 승인된 단계입니다. 착수 시 개발본의 42개 컴포넌트에는 임의 객체의 순서를 controlled로 바꾸는 목록이 없었습니다. 아래 첫 단위/WIP는 그 시점의 기록입니다. 현재 로컬 개발본에는 SSortableList를 추가해 43개가 등록되며 공개 1.0.0은 변경하지 않았습니다. SDataTable의 열 정렬은 이 기능을 대신하지 않습니다.
+
+## 현재 완료 범위
+
+공개 export·타입·plugin/global 등록, generic 슬롯과 이벤트, 키보드·이동 버튼·포인터 및 touch emulation, 외부 변경 취소·포커스·nested/window 자동 스크롤을 구현했습니다. source runtime, strict 정상/오류 SFC, 72개 실제 Chrome 조합과 8개 Components 카드의 메뉴·검색·실행 예제·Sample Code·API 연결을 통과했습니다. 설치 tarball 검증은 별도 격리 checkout에서 진행하며 동결 1.0.0 hash 게이트는 유지합니다. 최종 계약은 [사용 안내](../guide/SORTABLE-LIST.md)를 기준으로 합니다.
 
 ## 제안 계약
 
@@ -20,7 +24,7 @@ modelValue의 원본 순서가 확정 상태입니다. 조작 중에는 별도 �
 | change | items/key/from/to/input 제안 | 최종 순서가 바뀔 때만 한 번 |
 | expose | focus(key?) / cancel() | validate/clear 같은 폼 의미를 추가하지 않음 |
 
-공개 이름과 타입은 UI 타입 proof 단위에서 확정합니다. generic T 추론을 개별 import·전역 등록·typed slot·이벤트에서 검증합니다. 현재 Vite 라이브러리는 TS entry만 사용하므로 새 SFC compiler 의존성을 추가하지 않고 Vue typed constructor/props 계약을 먼저 검증합니다. 실패하면 타입 설계를 조정하며 any로 약화하지 않습니다.
+generic T 추론을 개별 import·전역 등록·typed slot·이벤트에서 검증했습니다. Vite 라이브러리는 TS entry를 유지하고 generic call/slot context 계약으로 추론을 보존합니다. 새 SFC compiler 의존성과 any 우회는 추가하지 않았습니다.
 
 ## 조작·상태
 

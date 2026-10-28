@@ -52,6 +52,9 @@ node('7/10 Date and number display/form contracts','scripts/input-display-runtim
 node('7/10 Native and custom time list contracts','scripts/time-list-runtime-check.mjs');
 node('7/10 Time scrub proposal/commit/cancel contracts','scripts/time-scrub-runtime-check.mjs');
 node('7/10 Sortable identity and immutable proposal foundation','scripts/sortable-values-check.mjs');
+node('7/10 Installed Sortable controlled runtime','scripts/sortable-keyboard-runtime-check.mjs');
+node('7/10 Installed Sortable generic SFC contracts','scripts/sortable-types-check.mjs','--installed');
+node('7/10 New and extended Components coverage','scripts/component-extension-coverage-check.mjs');
 node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.mjs');
 node('7/10 Unsaved navigation and retry focus recovery','scripts/recipe-recovery-check.mjs');
 node('7/10 Floating preview size','scripts/embed-height-check.mjs');

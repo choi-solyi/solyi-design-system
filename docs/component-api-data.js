@@ -1681,12 +1681,12 @@ export const componentReferences=[
     ],
     "types": [
       {
-        "name": "SolNumberDisplayFormatter",
-        "source": "type SolNumberDisplayFormatter=(value:number,locale:Readonly<SolLocale>)=>string;"
-      },
-      {
         "name": "SolNumberPreset",
         "source": "interface SolNumberPreset {value:number;label?:string;disabled?:boolean}"
+      },
+      {
+        "name": "SolNumberDisplayFormatter",
+        "source": "type SolNumberDisplayFormatter=(value:number,locale:Readonly<SolLocale>)=>string;"
       },
       {
         "name": "SRule",
@@ -5586,6 +5586,193 @@ export const componentReferences=[
     "methods": [],
     "types": [],
     "passthrough": "VRow"
+  },
+  {
+    "name": "SSortableList",
+    "id": "ssortable-list",
+    "group": "표시·레이아웃",
+    "description": "임의 객체 목록의 순서를 포인터·키보드·이동 버튼으로 제안합니다. 원본 모델은 직접 수정하지 않습니다.",
+    "exampleRoute": "component",
+    "example": "advanced-vue",
+    "source": "packages/vue-ui/src/sortable-list.ts",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true,
+        "default": "undefined",
+        "description": "입력·제목·패널의 접근성 연결에 사용하는 고유 ID입니다.",
+        "values": []
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": "undefined",
+        "description": "화면과 보조 기술에 전달하는 이름입니다.",
+        "values": []
+      },
+      {
+        "name": "help",
+        "type": "string",
+        "required": false,
+        "default": "''",
+        "description": "입력 아래의 보조 설명입니다.",
+        "values": []
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "required": false,
+        "default": "''",
+        "description": "소비 앱이 제공하는 오류 문구입니다.",
+        "values": []
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "사용을 막고 비활성 상태를 표시합니다.",
+        "values": []
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "현재 값은 보여 주고 사용자 변경을 막습니다.",
+        "values": []
+      },
+      {
+        "name": "locale",
+        "type": "Partial<SolLocale>",
+        "required": false,
+        "default": "undefined",
+        "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      },
+      {
+        "name": "modelValue",
+        "type": "readonly T[]",
+        "required": true,
+        "default": "undefined",
+        "description": "소비 앱이 소유하는 현재 값입니다. update:modelValue와 연결합니다.",
+        "values": []
+      },
+      {
+        "name": "itemKey",
+        "type": "(item: T) => SolSortableKey",
+        "required": true,
+        "default": "undefined",
+        "description": "항목의 안정적인 string/유한 number key를 반환합니다. 중복 key는 조작을 막습니다.",
+        "values": []
+      },
+      {
+        "name": "itemLabel",
+        "type": "(item: T) => string",
+        "required": true,
+        "default": "undefined",
+        "description": "각 항목의 손잡이·이동 버튼·상태 안내에 쓰는 비어 있지 않은 이름입니다.",
+        "values": []
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "signature": "(items: T[])",
+        "description": "소비 앱의 모델 값을 갱신합니다."
+      },
+      {
+        "name": "change",
+        "signature": "(proposal: SolSortableProposal<T>)",
+        "description": "최종 순서가 달라질 때 items/key/from/to/input 제안을 한 번 보냅니다."
+      },
+      {
+        "name": "start",
+        "signature": "(proposal: SolSortableProposal<T>)",
+        "description": "키보드/포인터 이동 조작을 시작합니다. 이동 버튼은 바로 제안을 확정합니다."
+      },
+      {
+        "name": "preview",
+        "signature": "(proposal: SolSortableProposal<T>)",
+        "description": "순서 미리보기 제안입니다. 모델과 DOM 원본 순서는 바꾸지 않습니다."
+      },
+      {
+        "name": "end",
+        "signature": "(result: SolSortableEnd<T>)",
+        "description": "commit/unchanged/cancel 결과입니다. cancel이면 취소 사유를 포함합니다."
+      }
+    ],
+    "slots": [
+      {
+        "name": "item",
+        "scope": "SolSortableItemScope<T>",
+        "description": "item 영역의 내용입니다."
+      },
+      {
+        "name": "empty",
+        "scope": "범위 없음",
+        "description": "empty 영역의 내용입니다."
+      },
+      {
+        "name": "help",
+        "scope": "범위 없음",
+        "description": "입력 아래의 보조 설명입니다."
+      },
+      {
+        "name": "handle-icon",
+        "scope": "SolSortableItemScope<T>",
+        "description": "handle-icon 영역의 내용입니다."
+      }
+    ],
+    "methods": [
+      {
+        "name": "focus",
+        "signature": "(key?: SolSortableKey) => void",
+        "description": "사용 가능한 입력 또는 실행 요소로 초점을 이동합니다."
+      },
+      {
+        "name": "cancel",
+        "signature": "() => void",
+        "description": "cancel 작업을 실행합니다."
+      }
+    ],
+    "types": [
+      {
+        "name": "SolSortableItemScope",
+        "source": "interface SolSortableItemScope<T> {\n  item: T\n  index: number\n  key: SolSortableKey\n  active: boolean\n}"
+      },
+      {
+        "name": "SolSortableKey",
+        "source": "type SolSortableKey = SortableKey"
+      },
+      {
+        "name": "SortableKey",
+        "source": "type SortableKey = string | number"
+      },
+      {
+        "name": "SolSortableEnd",
+        "source": "type SolSortableEnd<T> =\n  | (SolSortableProposal<T> & { status: 'commit' | 'unchanged' })\n  | (SolSortableProposal<T> & { status: 'cancel'; reason: SolSortableCancelReason })"
+      },
+      {
+        "name": "SolSortableProposal",
+        "source": "type SolSortableProposal<T> = SortableProposal<T>"
+      },
+      {
+        "name": "SolSortableCancelReason",
+        "source": "type SolSortableCancelReason =\n  | 'escape'\n  | 'tab'\n  | 'blur'\n  | 'disabled'\n  | 'external'\n  | 'configuration'\n  | 'unmount'\n  | 'api'\n  | 'pointercancel'\n  | 'capture'\n  | 'outside'"
+      },
+      {
+        "name": "SortableProposal",
+        "source": "interface SortableProposal<T> {\n  items: T[]\n  key: SortableKey\n  from: number\n  to: number\n  input: SortableInput\n}"
+      },
+      {
+        "name": "SortableInput",
+        "source": "type SortableInput = 'pointer' | 'keyboard' | 'button'"
+      }
+    ],
+    "passthrough": null
   }
 ];
 export const componentReferenceVersions={"core":"1.0.0","vue-ui":"1.0.0"};
@@ -5599,7 +5786,7 @@ export const componentExampleSources={
   "form": "<script setup lang=\"ts\">\nimport { sRules } from 'solyi-ui'\nimport type { SFormHandle, SFormSubmitEvent } from 'solyi-ui'\n\nconst form = useTemplateRef<SFormHandle>('form')\nconst name = ref('')\nconst kind = ref<string | null>('note')\nconst fail = ref(false)\nconst busy = ref(false)\nconst done = ref(false)\nconst serverError = ref('')\nconst nameRules = [\n  sRules.required('이름을 입력해 주세요.'),\n  sRules.minLength(3, '이름을 3자 이상 입력해 주세요.'),\n]\nlet timer: ReturnType<typeof setTimeout>\n\nasync function save(event: SFormSubmitEvent) {\n  if (busy.value) return\n  done.value = false\n  serverError.value = ''\n  const result = await event\n  if (!result?.valid) {\n    form.value?.focus()\n    return\n  }\n  busy.value = true\n  timer = setTimeout(() => {\n    busy.value = false\n    if (fail.value)\n      serverError.value =\n        '가상 요청 실패입니다. 입력값은 유지됩니다. 실패 옵션을 끄고 다시 확인하세요.'\n    else done.value = true\n  }, 400)\n}\nonBeforeUnmount(() => clearTimeout(timer))\n</script>\n\n<template>\n  <SCard :heading-level=\"2\" title=\"입력과 검증·복구\">\n    <SForm ref=\"form\" class=\"sol-stack\" @submit.prevent=\"save\">\n      <SRow>\n        <SCol cols=\"12\" md=\"8\">\n          <STextField\n            id=\"recipe-form-name\"\n            v-model=\"name\"\n            label=\"가상 프로젝트 이름\"\n            :rules=\"nameRules\"\n            required\n          />\n        </SCol>\n        <SCol cols=\"12\" md=\"4\">\n          <SSelect\n            id=\"recipe-form-kind\"\n            v-model=\"kind\"\n            label=\"프로젝트 종류\"\n            :options=\"[\n              { value: 'note', label: '기록' },\n              { value: 'search', label: '탐색' },\n            ]\"\n            required\n          />\n        </SCol>\n      </SRow>\n      <SCheckbox id=\"recipe-form-fail\" v-model=\"fail\" label=\"실패를 흉내 내기\" />\n      <SAlert v-if=\"serverError\" tone=\"danger\" :title=\"serverError\" live=\"polite\" />\n      <SAlert v-if=\"done\" tone=\"success\" title=\"✓ 가상 입력을 확인했어요.\" live=\"polite\" />\n      <div class=\"sol-actions\">\n        <SBtn type=\"submit\" variant=\"primary\" :loading=\"busy\">프로젝트 확인</SBtn>\n        <SBtn @click=\"form?.resetValidation()\">검증 표시 지우기</SBtn>\n      </div>\n    </SForm>\n  </SCard>\n</template>\n",
   "advanced-inputs": "<script setup lang=\"ts\">\nimport type { SolNumberDisplayFormatter } from 'solyi-ui'\n\ndefineProps<{ part?: string }>()\nconst showNumberFormat = ref(false)\nconst formatAmount: SolNumberDisplayFormatter = (value, locale) =>\n  new Intl.NumberFormat(locale.code, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(\n    value,\n  )\nconst note = ref(''),\n  amount = ref<number | null>(2),\n  tags = ref<string[]>([])\nconst options = [\n  { value: 'garden', label: '정원' },\n  { value: 'book', label: '책장' },\n  { value: 'walk', label: '산책' },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '여러 줄·숫자·태그'\">\n    <STextarea\n      v-if=\"!part || part === 'textarea'\"\n      id=\"recipe-note\"\n      v-model=\"note\"\n      label=\"가상 기록 설명\"\n      :maxlength=\"120\"\n    />\n    <SCheckbox\n      v-if=\"!part || part === 'number'\"\n      id=\"recipe-number-format\"\n      v-model=\"showNumberFormat\"\n      label=\"숫자 표시 포맷 · 모델은 숫자 유지\"\n    />\n    <SNumberInput\n      v-if=\"!part || part === 'number'\"\n      id=\"recipe-amount\"\n      v-model=\"amount\"\n      label=\"가상 목표 개수\"\n      :min=\"0\"\n      :max=\"10\"\n      :step=\"2\"\n      unit=\"개\"\n      :presets=\"[{ value: 2 }, { value: 6 }, { value: 10 }, { value: 5, label: '5 · 간격 불일치' }]\"\n      :format-value=\"showNumberFormat ? formatAmount : undefined\"\n    />\n    <SMultiSelect\n      v-if=\"!part || part === 'multiselect'\"\n      id=\"recipe-tags\"\n      v-model=\"tags\"\n      label=\"가상 분류\"\n      :options=\"options\"\n      :max-selected=\"2\"\n    />\n    <p v-if=\"!part\" role=\"status\">{{ amount }}개 · {{ tags.join(', ') || '선택 없음' }}</p>\n    <p v-if=\"part === 'number'\" role=\"status\">숫자 모델: {{ amount === null ? 'null' : amount }}</p>\n  </SCard>\n</template>\n",
   "selection": "<script setup lang=\"ts\">\nconst multiple = ref(false),\n  single = ref<string | null>('brief'),\n  immediate = ref(false)\nconst options = [\n  { value: 'brief', label: '간단히' },\n  { value: 'full', label: '자세히' },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"선택의 의미\">\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-multiple\"\n      v-model=\"multiple\"\n      label=\"자료 포함 · 다중 선택의 한 항목\"\n    />\n    <SRadioGroup\n      class=\"sol-choice-row\"\n      id=\"recipe-single\"\n      v-model=\"single\"\n      label=\"한 가지 표시 방식\"\n      :options=\"options\"\n    />\n    <SSwitch id=\"recipe-immediate\" v-model=\"immediate\" label=\"바꾸는 즉시 적용\" />\n    <p role=\"status\">\n      자료 {{ multiple ? '포함' : '제외' }} · {{ single }} · 즉시 설정\n      {{ immediate ? '켬' : '끔' }}\n    </p>\n  </SCard>\n</template>\n",
-  "advanced-vue": "<script setup>\nconst props = defineProps({ part: { type: String, default: '' } })\nconst supportedParts = [\n  'segmented',\n  'multiselect',\n  'range',\n  'split-button',\n  'context-menu',\n  'split-pane',\n]\nconst part = computed(() => (supportedParts.includes(props.part) ? props.part : ''))\nconst show = (...parts) => !part.value || parts.includes(part.value)\nconst disabled = ref(false),\n  readonly = ref(false),\n  display = ref('brief'),\n  selected = ref(['garden']),\n  scenario = ref('local'),\n  requests = ref(0)\nconst choices = [\n  { value: 'garden', label: '정원' },\n  { value: 'book', label: '책장' },\n  { value: 'walk', label: '산책' },\n  { value: 'season', label: '계절 관찰' },\n  { value: 'locked', label: '보관 · 선택 불가', disabled: true },\n]\nconst loader = computed(() => {\n  const mode = scenario.value\n  if (mode === 'local') return undefined\n  return async (query, signal) => {\n    const attempt = ++requests.value\n    await new Promise((resolve, reject) => {\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', abort)\n          resolve()\n        },\n        query.includes('느림') ? 600 : 180,\n      )\n      const abort = () => {\n        clearTimeout(timer)\n        reject(new DOMException('Cancelled', 'AbortError'))\n      }\n      signal.addEventListener('abort', abort, { once: true })\n      if (signal.aborted) abort()\n    })\n    if (mode === 'retry' && attempt === 1) throw new Error('가상 실패')\n    return choices.filter(o => o.label.includes(query.trim()))\n  }\n})\nwatch(scenario, () => (requests.value = 0))\nconst range = ref([20, 80]),\n  action = ref('아직 실행하지 않았어요.'),\n  primaryCount = ref(0),\n  menuOpen = ref(false)\nconst actions = [\n  { id: 'json', label: 'JSON으로 내보내기 · 가상' },\n  { id: 'csv', label: 'CSV로 내보내기 · 가상' },\n  { id: 'blocked', label: '예약 · 비활성', disabled: true },\n]\nconst contextItems = [\n  { id: 'pin', label: '자료 고정 · 가상' },\n  { id: 'copy', label: '복제 · 가상' },\n  { id: 'archive', label: '보관 · 비활성', disabled: true },\n]\nfunction chosenAction(id) {\n  action.value =\n    '✓ ' +\n    [...actions, ...contextItems].find(i => i.id === id)?.label +\n    ' 동작을 확인했습니다. 외부 작업은 없습니다.'\n}\nconst ratio = ref(40),\n  direction = ref('horizontal'),\n  memo = ref('화면 폭을 바꾸어도 이 가상 메모는 유지됩니다.'),\n  stacked = ref(false),\n  resized = ref('')\nwatch([disabled, readonly], () => {\n  if (disabled.value || readonly.value) menuOpen.value = false\n})\n</script>\n\n<template>\n  <section v-if=\"show('segmented')\" class=\"starter-card\" aria-labelledby=\"advanced-title\">\n    <h2 id=\"advanced-title\">설정 하나 선택 · SSegmentedControl</h2>\n    <p class=\"starter-hint\">\n      선택·범위·메뉴·분할 부품을 설치한 solyi-ui에서 가져옵니다. 아래 설정은 이 예제들에만\n      적용됩니다. 모든 데이터와 작업은 가상입니다.\n    </p>\n    <div class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"확장 예시 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"확장 예시 읽기 전용\"\n      />\n    </div>\n    <SSegmentedControl\n      id=\"advanced-segment\"\n      v-model=\"display\"\n      label=\"가상 표시 설정\"\n      :options=\"[\n        { value: 'brief', label: '간단히' },\n        { value: 'full', label: '자세히' },\n        { value: 'locked', label: '보관 · 비활성', disabled: true },\n      ]\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      help=\"설정 하나를 고릅니다. Tabs처럼 별도 패널을 전환하는 부품은 아닙니다.\"\n    />\n    <p class=\"starter-result\" role=\"status\">\n      {{\n        display === 'brief'\n          ? '가상 기록 4개'\n          : '가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정'\n      }}\n    </p>\n  </section>\n  <section v-if=\"show('multiselect')\" class=\"starter-card\" aria-labelledby=\"advanced-multi-title\">\n    <h2 id=\"advanced-multi-title\">검색 가능한 MultiSelect</h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <SSelect\n      id=\"advanced-multi-scenario\"\n      v-model=\"scenario\"\n      required\n      label=\"가상 목록 동작\"\n      :options=\"[\n        { value: 'local', label: '로컬 검색' },\n        { value: 'async', label: '지연 응답 흉내' },\n        { value: 'retry', label: '첫 오류 후 재시도' },\n      ]\"\n      help=\"외부 요청 없이 브라우저 안에서 지연·실패를 흉내 냅니다. '없는값'으로 결과 없음을 확인할 수 있어요.\"\n    />\n    <SMultiSelect\n      id=\"advanced-multi\"\n      v-model=\"selected\"\n      label=\"가상 기록 분류\"\n      :options=\"choices\"\n      :load-options=\"loader\"\n      :max-selected=\"3\"\n      required\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      placeholder=\"분류 이름 검색\"\n      help=\"방향키·Enter로 선택/해제, 빈 검색칸에서 Backspace로 마지막 선택 제거. Escape는 목록만 닫습니다. Tab은 제거/재시도 버튼에도 접근합니다.\"\n    />\n    <p class=\"starter-hint\">\n      완료 값: {{ JSON.stringify(selected) }} · 가상 요청 {{ requests }}회. 검색을 바꾸어도 기존\n      선택은 유지됩니다.\n    </p>\n  </section>\n  <section v-if=\"show('range')\" class=\"starter-card\" aria-labelledby=\"advanced-range-title\">\n    <h2 id=\"advanced-range-title\">양끝 RangeSlider</h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <SRangeSlider\n      id=\"advanced-range\"\n      v-model=\"range\"\n      label=\"가상 점수 구간\"\n      lower-label=\"하한\"\n      upper-label=\"상한\"\n      :min=\"0\"\n      :max=\"100\"\n      :step=\"5\"\n      :format-value=\"(value) => value + '점'\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      help=\"두 핸들은 서로 넘어가지 않습니다. 핸들 드래그·방향키 또는 트랙 누르기로 조절하세요.\"\n    />\n    <div class=\"starter-control-grid\">\n      <SNumberInput\n        id=\"advanced-lower\"\n        required\n        v-model=\"range[0]\"\n        label=\"하한 직접 입력\"\n        :min=\"0\"\n        :max=\"range[1]\"\n        :step=\"5\"\n        :disabled=\"disabled\"\n        :readonly=\"readonly\"\n      /><SNumberInput\n        id=\"advanced-upper\"\n        required\n        v-model=\"range[1]\"\n        label=\"상한 직접 입력\"\n        :min=\"range[0]\"\n        :max=\"100\"\n        :step=\"5\"\n        :disabled=\"disabled\"\n        :readonly=\"readonly\"\n      />\n    </div>\n    <p class=\"starter-hint\">\n      숫자 입력도 같은 값을 사용합니다. 터치 보조기술의 사용자별 동작은 실제 기기에서 별도 확인해야\n      합니다.\n    </p>\n  </section>\n  <section\n    v-if=\"show('split-button', 'context-menu')\"\n    class=\"starter-card\"\n    aria-labelledby=\"advanced-actions-title\"\n  >\n    <h2 id=\"advanced-actions-title\">\n      {{\n        part === 'split-button'\n          ? 'SplitButton'\n          : part === 'context-menu'\n            ? 'ContextMenu'\n            : 'SplitButton · ContextMenu'\n      }}\n    </h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <p class=\"starter-hint\">\n      주 동작과 다른 동작을 분리합니다. 실제 파일을 만들거나 자료를 변경하지 않습니다.\n    </p>\n    <SSplitBtn\n      v-if=\"show('split-button')\"\n      id=\"advanced-split-button\"\n      label=\"가상 내보내기\"\n      :items=\"actions\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      @primary=\"\n        primaryCount++;\n        action = '✓ 주 동작 ' + primaryCount + '회 · 실제 전송이나 다운로드는 없습니다.';\n      \"\n      @select=\"chosenAction\"\n    />\n    <SContextMenu\n      v-if=\"show('context-menu')\"\n      id=\"advanced-context\"\n      v-model:open=\"menuOpen\"\n      label=\"가상 정원 기록\"\n      trigger-label=\"기록 동작 열기\"\n      :items=\"contextItems\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      @select=\"chosenAction\"\n      ><p><strong>작은 정원 기록</strong></p>\n      <p>\n        이 영역에서 우클릭하거나 초점을 두고 Shift+F10을 누르세요. 터치에서도 아래 버튼을 사용할 수\n        있어요.\n      </p></SContextMenu\n    >\n    <p class=\"starter-result\" role=\"status\">{{ action }}</p>\n  </section>\n  <section v-if=\"show('split-pane')\" class=\"starter-card\" aria-labelledby=\"advanced-pane-title\">\n    <h2 id=\"advanced-pane-title\">ResizableSplitPane</h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <SSelect\n      id=\"advanced-pane-direction\"\n      v-model=\"direction\"\n      required\n      label=\"개발 설정 · 분할 방향\"\n      :options=\"[\n        { value: 'horizontal', label: '좌우 두 영역' },\n        { value: 'vertical', label: '위아래 두 영역' },\n      ]\"\n    />\n    <SResizableSplitPane\n      id=\"advanced-pane\"\n      v-model=\"ratio\"\n      label=\"가상 목록과 메모\"\n      primary-label=\"가상 목록\"\n      secondary-label=\"가상 메모\"\n      :orientation=\"direction\"\n      :min=\"25\"\n      :max=\"75\"\n      :step=\"5\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      @reflow=\"stacked = $event\"\n      @change=\"resized = '조절 완료: ' + $event + '%'\"\n    >\n      <template #primary\n        ><p>계절 관찰<br />작은 정원<br />저녁 책장</p>\n        <p class=\"starter-hint\">\n          중앙 구분선을 드래그하거나 초점을 두고 방향키로 조절합니다.\n        </p></template\n      >\n      <template #secondary\n        ><STextarea\n          id=\"advanced-pane-memo\"\n          v-model=\"memo\"\n          label=\"유지되는 가상 메모\"\n          :disabled=\"disabled\"\n          :readonly=\"readonly\"\n      /></template>\n    </SResizableSplitPane>\n    <p class=\"starter-hint\" role=\"status\">\n      저장 비율 {{ ratio }}% · {{ stacked ? '좁은 폭: 위아래 높이 조절' : '크기 조절 가능' }} ·\n      {{ resized }}\n    </p>\n  </section>\n</template>\n",
+  "advanced-vue": "<script setup>\nconst props = defineProps({ part: { type: String, default: '' } })\nconst supportedParts = [\n  'segmented',\n  'multiselect',\n  'range',\n  'split-button',\n  'context-menu',\n  'split-pane',\n  'sortable',\n]\nconst part = computed(() => (supportedParts.includes(props.part) ? props.part : ''))\nconst show = (...parts) => !part.value || parts.includes(part.value)\nconst disabled = ref(false),\n  readonly = ref(false),\n  display = ref('brief'),\n  selected = ref(['garden']),\n  scenario = ref('local'),\n  requests = ref(0)\nconst choices = [\n  { value: 'garden', label: '정원' },\n  { value: 'book', label: '책장' },\n  { value: 'walk', label: '산책' },\n  { value: 'season', label: '계절 관찰' },\n  { value: 'locked', label: '보관 · 선택 불가', disabled: true },\n]\nconst loader = computed(() => {\n  const mode = scenario.value\n  if (mode === 'local') return undefined\n  return async (query, signal) => {\n    const attempt = ++requests.value\n    await new Promise((resolve, reject) => {\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', abort)\n          resolve()\n        },\n        query.includes('느림') ? 600 : 180,\n      )\n      const abort = () => {\n        clearTimeout(timer)\n        reject(new DOMException('Cancelled', 'AbortError'))\n      }\n      signal.addEventListener('abort', abort, { once: true })\n      if (signal.aborted) abort()\n    })\n    if (mode === 'retry' && attempt === 1) throw new Error('가상 실패')\n    return choices.filter(o => o.label.includes(query.trim()))\n  }\n})\nwatch(scenario, () => (requests.value = 0))\nconst range = ref([20, 80]),\n  action = ref('아직 실행하지 않았어요.'),\n  primaryCount = ref(0),\n  menuOpen = ref(false)\nconst actions = [\n  { id: 'json', label: 'JSON으로 내보내기 · 가상' },\n  { id: 'csv', label: 'CSV로 내보내기 · 가상' },\n  { id: 'blocked', label: '예약 · 비활성', disabled: true },\n]\nconst contextItems = [\n  { id: 'pin', label: '자료 고정 · 가상' },\n  { id: 'copy', label: '복제 · 가상' },\n  { id: 'archive', label: '보관 · 비활성', disabled: true },\n]\nfunction chosenAction(id) {\n  action.value =\n    '✓ ' +\n    [...actions, ...contextItems].find(i => i.id === id)?.label +\n    ' 동작을 확인했습니다. 외부 작업은 없습니다.'\n}\nconst ratio = ref(40),\n  direction = ref('horizontal'),\n  memo = ref('화면 폭을 바꾸어도 이 가상 메모는 유지됩니다.'),\n  stacked = ref(false),\n  resized = ref('')\nconst sortableItems = ref([\n    { id: 'a', label: '첫 번째 항목', details: { count: 4 } },\n    { id: 'b', label: '긴 텍스트를 가진 두 번째 항목도 줄바꿈합니다', details: { count: 7 } },\n    { id: 'c', label: '세 번째 항목', details: { count: 2 } },\n  ]),\n  acceptOrder = ref(true),\n  sortStatus = ref('')\nfunction acceptProposal(items) {\n  if (acceptOrder.value) sortableItems.value = items\n}\nfunction reorderEnd(result) {\n  sortStatus.value =\n    result.status === 'cancel'\n      ? '취소: ' + result.reason\n      : result.status === 'unchanged'\n        ? '순서 유지'\n        : (acceptOrder.value ? '새 순서 반영: ' : '순서 제안만 확인: ') + result.key\n}\nwatch([disabled, readonly], () => {\n  if (disabled.value || readonly.value) menuOpen.value = false\n})\n</script>\n\n<template>\n  <section v-if=\"show('segmented')\" class=\"starter-card\" aria-labelledby=\"advanced-title\">\n    <h2 id=\"advanced-title\">설정 하나 선택 · SSegmentedControl</h2>\n    <p class=\"starter-hint\">\n      선택·범위·메뉴·분할 부품을 설치한 solyi-ui에서 가져옵니다. 아래 설정은 이 예제들에만\n      적용됩니다. 모든 데이터와 작업은 가상입니다.\n    </p>\n    <div class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"확장 예시 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"확장 예시 읽기 전용\"\n      />\n    </div>\n    <SSegmentedControl\n      id=\"advanced-segment\"\n      v-model=\"display\"\n      label=\"가상 표시 설정\"\n      :options=\"[\n        { value: 'brief', label: '간단히' },\n        { value: 'full', label: '자세히' },\n        { value: 'locked', label: '보관 · 비활성', disabled: true },\n      ]\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      help=\"설정 하나를 고릅니다. Tabs처럼 별도 패널을 전환하는 부품은 아닙니다.\"\n    />\n    <p class=\"starter-result\" role=\"status\">\n      {{\n        display === 'brief'\n          ? '가상 기록 4개'\n          : '가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정'\n      }}\n    </p>\n  </section>\n  <section v-if=\"show('multiselect')\" class=\"starter-card\" aria-labelledby=\"advanced-multi-title\">\n    <h2 id=\"advanced-multi-title\">검색 가능한 MultiSelect</h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <SSelect\n      id=\"advanced-multi-scenario\"\n      v-model=\"scenario\"\n      required\n      label=\"가상 목록 동작\"\n      :options=\"[\n        { value: 'local', label: '로컬 검색' },\n        { value: 'async', label: '지연 응답 흉내' },\n        { value: 'retry', label: '첫 오류 후 재시도' },\n      ]\"\n      help=\"외부 요청 없이 브라우저 안에서 지연·실패를 흉내 냅니다. '없는값'으로 결과 없음을 확인할 수 있어요.\"\n    />\n    <SMultiSelect\n      id=\"advanced-multi\"\n      v-model=\"selected\"\n      label=\"가상 기록 분류\"\n      :options=\"choices\"\n      :load-options=\"loader\"\n      :max-selected=\"3\"\n      required\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      placeholder=\"분류 이름 검색\"\n      help=\"방향키·Enter로 선택/해제, 빈 검색칸에서 Backspace로 마지막 선택 제거. Escape는 목록만 닫습니다. Tab은 제거/재시도 버튼에도 접근합니다.\"\n    />\n    <p class=\"starter-hint\">\n      완료 값: {{ JSON.stringify(selected) }} · 가상 요청 {{ requests }}회. 검색을 바꾸어도 기존\n      선택은 유지됩니다.\n    </p>\n  </section>\n  <section v-if=\"show('range')\" class=\"starter-card\" aria-labelledby=\"advanced-range-title\">\n    <h2 id=\"advanced-range-title\">양끝 RangeSlider</h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <SRangeSlider\n      id=\"advanced-range\"\n      v-model=\"range\"\n      label=\"가상 점수 구간\"\n      lower-label=\"하한\"\n      upper-label=\"상한\"\n      :min=\"0\"\n      :max=\"100\"\n      :step=\"5\"\n      :format-value=\"(value) => value + '점'\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      help=\"두 핸들은 서로 넘어가지 않습니다. 핸들 드래그·방향키 또는 트랙 누르기로 조절하세요.\"\n    />\n    <div class=\"starter-control-grid\">\n      <SNumberInput\n        id=\"advanced-lower\"\n        required\n        v-model=\"range[0]\"\n        label=\"하한 직접 입력\"\n        :min=\"0\"\n        :max=\"range[1]\"\n        :step=\"5\"\n        :disabled=\"disabled\"\n        :readonly=\"readonly\"\n      /><SNumberInput\n        id=\"advanced-upper\"\n        required\n        v-model=\"range[1]\"\n        label=\"상한 직접 입력\"\n        :min=\"range[0]\"\n        :max=\"100\"\n        :step=\"5\"\n        :disabled=\"disabled\"\n        :readonly=\"readonly\"\n      />\n    </div>\n    <p class=\"starter-hint\">\n      숫자 입력도 같은 값을 사용합니다. 터치 보조기술의 사용자별 동작은 실제 기기에서 별도 확인해야\n      합니다.\n    </p>\n  </section>\n  <section\n    v-if=\"show('split-button', 'context-menu')\"\n    class=\"starter-card\"\n    aria-labelledby=\"advanced-actions-title\"\n  >\n    <h2 id=\"advanced-actions-title\">\n      {{\n        part === 'split-button'\n          ? 'SplitButton'\n          : part === 'context-menu'\n            ? 'ContextMenu'\n            : 'SplitButton · ContextMenu'\n      }}\n    </h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <p class=\"starter-hint\">\n      주 동작과 다른 동작을 분리합니다. 실제 파일을 만들거나 자료를 변경하지 않습니다.\n    </p>\n    <SSplitBtn\n      v-if=\"show('split-button')\"\n      id=\"advanced-split-button\"\n      label=\"가상 내보내기\"\n      :items=\"actions\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      @primary=\"\n        primaryCount++;\n        action = '✓ 주 동작 ' + primaryCount + '회 · 실제 전송이나 다운로드는 없습니다.';\n      \"\n      @select=\"chosenAction\"\n    />\n    <SContextMenu\n      v-if=\"show('context-menu')\"\n      id=\"advanced-context\"\n      v-model:open=\"menuOpen\"\n      label=\"가상 정원 기록\"\n      trigger-label=\"기록 동작 열기\"\n      :items=\"contextItems\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      @select=\"chosenAction\"\n      ><p><strong>작은 정원 기록</strong></p>\n      <p>\n        이 영역에서 우클릭하거나 초점을 두고 Shift+F10을 누르세요. 터치에서도 아래 버튼을 사용할 수\n        있어요.\n      </p></SContextMenu\n    >\n    <p class=\"starter-result\" role=\"status\">{{ action }}</p>\n  </section>\n  <section v-if=\"show('split-pane')\" class=\"starter-card\" aria-labelledby=\"advanced-pane-title\">\n    <h2 id=\"advanced-pane-title\">ResizableSplitPane</h2>\n    <div v-if=\"part\" class=\"starter-settings starter-demo-settings\">\n      <SSwitch id=\"advanced-disabled\" v-model=\"disabled\" label=\"예제 비활성\" /><SSwitch\n        id=\"advanced-readonly\"\n        v-model=\"readonly\"\n        label=\"예제 읽기 전용\"\n      />\n    </div>\n    <SSelect\n      id=\"advanced-pane-direction\"\n      v-model=\"direction\"\n      required\n      label=\"개발 설정 · 분할 방향\"\n      :options=\"[\n        { value: 'horizontal', label: '좌우 두 영역' },\n        { value: 'vertical', label: '위아래 두 영역' },\n      ]\"\n    />\n    <SResizableSplitPane\n      id=\"advanced-pane\"\n      v-model=\"ratio\"\n      label=\"가상 목록과 메모\"\n      primary-label=\"가상 목록\"\n      secondary-label=\"가상 메모\"\n      :orientation=\"direction\"\n      :min=\"25\"\n      :max=\"75\"\n      :step=\"5\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      @reflow=\"stacked = $event\"\n      @change=\"resized = '조절 완료: ' + $event + '%'\"\n    >\n      <template #primary\n        ><p>계절 관찰<br />작은 정원<br />저녁 책장</p>\n        <p class=\"starter-hint\">\n          중앙 구분선을 드래그하거나 초점을 두고 방향키로 조절합니다.\n        </p></template\n      >\n      <template #secondary\n        ><STextarea\n          id=\"advanced-pane-memo\"\n          v-model=\"memo\"\n          label=\"유지되는 가상 메모\"\n          :disabled=\"disabled\"\n          :readonly=\"readonly\"\n      /></template>\n    </SResizableSplitPane>\n    <p class=\"starter-hint\" role=\"status\">\n      저장 비율 {{ ratio }}% · {{ stacked ? '좁은 폭: 위아래 높이 조절' : '크기 조절 가능' }} ·\n      {{ resized }}\n    </p>\n  </section>\n  <section v-if=\"show('sortable')\" class=\"starter-card\" aria-labelledby=\"advanced-sortable-title\">\n    <h2 id=\"advanced-sortable-title\">정렬 목록 · SSortableList</h2>\n    <p class=\"starter-hint\">\n      손잡이를 드래그하거나 키보드와 위·아래 이동 버튼으로 순서를 제안합니다. 원본 객체는\n      유지합니다.\n    </p>\n    <div class=\"starter-settings\">\n      <SCheckbox id=\"advanced-sort-accept\" v-model=\"acceptOrder\" label=\"새 순서 반영\" />\n      <SSwitch v-if=\"part\" id=\"advanced-sort-disabled\" v-model=\"disabled\" label=\"정렬 비활성\" />\n      <SSwitch v-if=\"part\" id=\"advanced-sort-readonly\" v-model=\"readonly\" label=\"정렬 보기 전용\" />\n      <SBtn @click=\"sortableItems = [...sortableItems].reverse()\">외부 목록 변경 시연</SBtn>\n    </div>\n    <SSortableList\n      id=\"advanced-sortable\"\n      label=\"가상 항목 순서\"\n      :model-value=\"sortableItems\"\n      :item-key=\"item => item.id\"\n      :item-label=\"item => item.label\"\n      :disabled=\"disabled\"\n      :readonly=\"readonly\"\n      @update:model-value=\"acceptProposal\"\n      @end=\"reorderEnd\"\n    >\n      <template #item=\"{ item, index, active }\">\n        <strong>{{ index + 1 }}. {{ item.label }}</strong>\n        <p>{{ item.details.count.toFixed(0) }}개 · {{ active ? '이동 위치 선택 중' : '대기' }}</p>\n        <SBtn\n          variant=\"inline\"\n          :disabled=\"disabled\"\n          @click=\"sortStatus = item.label + ' 본문 버튼 확인'\"\n          >본문 동작</SBtn\n        >\n      </template>\n    </SSortableList>\n    <p role=\"status\">{{ sortStatus }}</p>\n    <p class=\"starter-hint\">확정 순서: {{ sortableItems.map(item => item.id).join(' → ') }}</p>\n  </section>\n</template>\n",
   "fields": "<script setup lang=\"ts\">\nconst field = useTemplateRef<{ focus(): void }>('field')\nconst serverRejected = ref(false)\nconst value = ref(''),\n  submitted = ref(false)\nconst error = computed(() =>\n  submitted.value && value.value.trim().length < 3 ? '3자 이상 입력해 주세요.' : '',\n)\nfunction check() {\n  submitted.value = true\n  if (error.value) nextTick(() => field.value?.focus())\n}\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"텍스트 입력\">\n    <form class=\"sol-stack\" @submit.prevent=\"check\" novalidate>\n      <STextField\n        id=\"recipe-field\"\n        ref=\"field\"\n        v-model=\"value\"\n        label=\"가상 기록 제목\"\n        required\n        help=\"3자 이상. 이 페이지 메모리에만 남습니다.\"\n        :error=\"error\"\n        :server-error=\"\n          serverRejected ? '이미 사용 중인 가상 이름입니다. 다른 이름을 입력해 주세요.' : ''\n        \"\n      />\n      <STextField\n        id=\"recipe-readonly\"\n        model-value=\"읽기 전용 예시\"\n        label=\"수정할 수 없는 값\"\n        readonly\n      />\n      <STextField\n        id=\"recipe-disabled-field\"\n        model-value=\"아직 만들 수 없어요\"\n        label=\"공유 주소 · 비활성\"\n        disabled\n      />\n      <SBtn type=\"submit\" variant=\"primary\">입력 확인</SBtn>\n      <SAlert\n        v-if=\"submitted && !error && !serverRejected\"\n        tone=\"success\"\n        title=\"✓ 사용할 수 있는 이름입니다.\"\n        ><p>예시 입력값입니다.</p></SAlert\n      >\n    </form>\n  </SCard>\n</template>\n",
   "time": "<script setup lang=\"ts\">\nimport type { SolTimeInteraction, SolTimeInteractionCancel } from 'solyi-ui'\n\nconst time = ref<string | null>('09:00')\nconst listTime = ref<string | null>(null),\n  manual = ref(false)\nconst scrub = ref(false),\n  interaction = ref('')\nconst initialTime = ref('09:07'),\n  useCurrentTime = ref(false),\n  scrubPixels = ref<number | null>(10)\nfunction preview(value: SolTimeInteraction) {\n  interaction.value = `미리보기 ${value.value}`\n}\nfunction committed(value: SolTimeInteraction) {\n  interaction.value = `확정 ${value.value}`\n}\nfunction cancelled(value: SolTimeInteractionCancel) {\n  interaction.value = `취소 ${value.reason}`\n}\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"직접 입력과 시·분 선택\">\n    <STimePicker\n      id=\"recipe-time\"\n      v-model=\"time\"\n      label=\"가상 알림 시각\"\n      min=\"09:00\"\n      max=\"18:00\"\n      :step=\"15\"\n      required\n      help=\"HH:mm 또는 HHmm으로 입력하거나 Alt+↓로 패널을 엽니다.\"\n    />\n    <p role=\"status\">완료값: {{ time || '없음' }} · 실제 알림을 예약하지 않습니다.</p>\n    <SCheckbox id=\"recipe-time-manual\" v-model=\"manual\" label=\"목록 예제의 직접 입력 허용\" />\n    <SCheckbox id=\"recipe-time-scrub\" v-model=\"scrub\" label=\"입력·목록 드래그 조절 사용\" />\n    <SCheckbox\n      id=\"recipe-time-now\"\n      v-model=\"useCurrentTime\"\n      label=\"선택이 없으면 현재 시각 근처에서 목록 열기\"\n    />\n    <STextField\n      id=\"recipe-time-initial\"\n      v-model=\"initialTime\"\n      label=\"목록 초기 위치\"\n      :disabled=\"useCurrentTime\"\n      help=\"선택된 값이 우선입니다. 시각을 비우고 다시 열어 확인하세요.\"\n    />\n    <SNumberInput\n      id=\"recipe-time-pixels\"\n      v-model=\"scrubPixels\"\n      label=\"드래그 한 단계 이동 거리 · px\"\n      :min=\"2\"\n      :max=\"40\"\n      :step=\"2\"\n      :disabled=\"!scrub\"\n    />\n    <STimePicker\n      id=\"recipe-time-list\"\n      v-model=\"listTime\"\n      label=\"목록에서 시각 선택\"\n      presentation=\"list\"\n      :allow-manual-input=\"manual\"\n      :scrubbable=\"scrub\"\n      :list-scrubbable=\"scrub\"\n      :scrub-pixels-per-step=\"scrubPixels ?? undefined\"\n      :scroll-to-current-time=\"useCurrentTime\"\n      @preview=\"preview\"\n      @interaction-commit=\"committed\"\n      @interaction-cancel=\"cancelled\"\n      :initial-scroll-value=\"useCurrentTime ? undefined : initialTime || undefined\"\n      min=\"00:07\"\n      max=\"23:59\"\n      :step=\"15\"\n      help=\"처음 위치는 선택이 아닙니다. 방향키·Home/End·Page로 이동하고 Enter/Space로 선택, Escape로 닫습니다.\"\n    />\n    <p role=\"status\">{{ interaction }}</p>\n    <p role=\"status\">목록 완료값: {{ listTime || '선택 없음' }}</p>\n  </SCard>\n</template>\n",
   "accordion": "<script setup lang=\"ts\">\nconst expanded = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"상세 펼침\">\n    <SAccordion id=\"recipe-accordion\" v-model=\"expanded\" label=\"가상 기록의 상세\">\n      <p>접으면 이 안의 링크가 Tab 순서에서 제외됩니다.</p>\n      <a href=\"https://choi-solyi.github.io/solyi-design-system/\">문서 홈</a>\n    </SAccordion>\n    <p role=\"status\">{{ expanded ? '상세를 펼쳤어요.' : '상세를 접었어요.' }}</p>\n  </SCard>\n</template>\n",

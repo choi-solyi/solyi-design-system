@@ -1,5 +1,6 @@
 declare module 'vue' {
   export interface GlobalComponents {
+    SSortableList: typeof import('./index')['SSortableList'];
     SChip: typeof import('./index')['SChip'];
     SBadge: typeof import('./index')['SBadge'];
     SIcon: typeof import('./index')['SIcon'];

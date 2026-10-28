@@ -50,6 +50,9 @@ export {STabs,SSnackbar};
 export {SDatePicker,STimePicker};
 export type {DateMode,DateRange,DateValue,DateChange,PickerCloseReason,SolPickerHandle,SolDateDisplayFormatter,SolTimePresentation} from './date-time';
 export type {SolTimeInteraction,SolTimeInteractionCancel,SolTimeCancelReason} from './time-scrub';
+import {SSortableList} from './sortable-list';
+export {SSortableList};
+export type {SolSortableKey,SolSortableInput,SolSortableProposal,SolSortableCancelReason,SolSortableEnd,SolSortableItemScope,SolSortableSlots,SolSortableProps,SolSortableHandle,SolSortableEmit,SolSortableComponent} from './sortable-list';
 export type {SolTab,ToastTone,ToastCloseReason} from './navigation';
 export type {SolOption,SolNumberInputHandle,SolNumberPreset,SolNumberDisplayFormatter} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale,useSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate} from './locale';
@@ -211,6 +214,7 @@ export const SDataTable=defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  SSortableList: typeof SSortableList
   SChip: typeof SChip
   SBadge: typeof SBadge
   SIcon: typeof SIcon
@@ -255,6 +259,7 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  SSortableList,
   SChip,
   SBadge,
   SIcon,

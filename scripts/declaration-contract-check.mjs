@@ -69,7 +69,9 @@ const entries = installed
 const declarationCount = entries.length
 assert.ok(declarationCount > 10, 'All own public declaration files are checked')
 const fixture = normalize(path.join(ownRoot, 'navigation-contract.ts'))
-memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker } from './index'
+memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker, SSortableList } from './index'
+import {createApp,h} from 'vue'
+import type {SolSortableProps,SolSortableSlots} from './index'
 import type { SolIconName, SolTone, SolDateDisplayFormatter, SolNumberDisplayFormatter, SolNumberPreset } from './index'
 import type { GlobalComponents } from 'vue'
 type TabsProps = InstanceType<typeof STabs>['$props']
@@ -128,6 +130,18 @@ const scrubTime: InstanceType<typeof STimePicker>['$props'] = { id: 'scrub', lab
 // @ts-expect-error Preview remains a typed clock proposal, never a number model.
 const invalidPreview: InstanceType<typeof STimePicker>['$props'] = { id: 'scrub', label: 'Time', onPreview: (value: number) => void value }
 void [listTime, nativeTime, unsupportedTime, scrubTime, invalidPreview]
+interface Item {id:string;details:{count:number}}
+const sortable:SolSortableProps<Item> = {id:'sort',label:'Sort',modelValue:[{id:'a',details:{count:1}}],itemKey:item=>item.id,itemLabel:item=>item.id}
+createApp({}).component('SortableDirect',SSortableList)
+h(SSortableList<Item>,sortable)
+const sortableSlots:SolSortableSlots<Item> = {item:({item})=>[h('strong',item.details.count.toFixed(0))]}
+// @ts-expect-error Generic item identity cannot become a boolean.
+const badSortableKey:SolSortableProps<Item> = {...sortable,itemKey:item=>!!item.id}
+// @ts-expect-error Readonly generic input arrays cannot silently become unrelated item models.
+const badSortableModel:SolSortableProps<Item> = {...sortable,modelValue:[1,2]}
+// @ts-expect-error Slot items retain the caller's concrete object type.
+const badSortableSlot:SolSortableSlots<Item> = {item:({item})=>[h('span',item.missing)]}
+void [sortableSlots,badSortableKey,badSortableModel,badSortableSlot]
 `)
 entries.push(fixture)
 const program = ts.createProgram(entries, options, host)

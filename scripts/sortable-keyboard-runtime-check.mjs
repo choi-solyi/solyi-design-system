@@ -9,7 +9,8 @@ for(const name of ['window','document','Element','Node','HTMLElement','HTMLInput
 globalThis.requestAnimationFrame=w.requestAnimationFrame.bind(w);globalThis.cancelAnimationFrame=w.cancelAnimationFrame.bind(w)
 w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});globalThis.matchMedia=w.matchMedia
 globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};globalThis.CSS={supports:()=>false}
-await writeFile(new URL('.runtime-extension-entry.ts',consumer),"export {createApp,h,ref,nextTick} from 'vue';export * from '../../packages/vue-ui/src/index';export {SSortableList} from '../../packages/vue-ui/src/sortable-list';")
+const sourceMode=process.argv.includes('--source'),entry=sourceMode?'../../packages/vue-ui/src/index':'solyi-ui'
+await writeFile(new URL('.runtime-extension-entry.ts',consumer),`export {createApp,h,ref,nextTick} from 'vue';export * from ${JSON.stringify(entry)};`)
 const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consumer))
 const bundled=await build({root:fileURLToPath(consumer),configFile:false,logLevel:'error',resolve:{dedupe:['vue','vuetify']},ssr:{noExternal:true},build:{ssr:fileURLToPath(new URL('.runtime-extension-entry.ts',consumer)),write:false,minify:false,rolldownOptions:{external:['vue']}}})
 await writeFile(new URL('.runtime-check.mjs',consumer),bundled.output.find(chunk=>chunk.type==='chunk').code)
@@ -71,5 +72,34 @@ readonly.value=true;await tick();assert.ok([...d.querySelectorAll('.sol-ui-sorta
 
 await mount();value.value=[{id:'a',title:'A',details:{count:1}},{id:'a',title:'Duplicate',details:{count:2}}];await tick();assert.ok($('[role=alert]').textContent);assert.ok(buttons().every(button=>button.disabled));assert.deepEqual(events.updates,[]);await unmount()
 await mount();value.value=[];await tick();assert.equal(buttons().length,0);handle.focus();assert.equal(d.activeElement,$('#sort'));await unmount()
+const captured=new WeakMap()
+w.HTMLElement.prototype.setPointerCapture=function(id){captured.set(this,id)}
+w.HTMLElement.prototype.hasPointerCapture=function(id){return captured.get(this)===id}
+w.HTMLElement.prototype.releasePointerCapture=function(){captured.delete(this)}
+function geometry(){const rect=(top,height,width=300)=>({x:0,y:top,left:0,right:width,top,bottom:top+height,width,height,toJSON(){}})
+  $('.sol-ui-sortable-list').getBoundingClientRect=()=>rect(0,180)
+  d.querySelectorAll('.sol-ui-sortable-row').forEach((row,index)=>{row.getBoundingClientRect=()=>rect(index*60,60);row.querySelector('.sol-ui-sortable-handle').getBoundingClientRect=()=>rect(index*60+10,40,40)})
+}
+function point(element,type,y=20,x=20,id=1){const event=new w.MouseEvent(type,{bubbles:true,cancelable:true,clientX:x,clientY:y,button:0});Object.defineProperties(event,{pointerId:{value:id},isPrimary:{value:true},pointerType:{value:'touch'}});element.dispatchEvent(event);return event}
+await mount();geometry();point(keyHandle('a'),'pointerdown');point(w,'pointerup');keyHandle('a').dispatchEvent(new w.MouseEvent('click',{bubbles:true,detail:1}));await tick()
+assert.equal(events.start.length,0);assert.equal(events.change.length,0,'A pointer tap cannot enter or commit a keyboard gesture');await unmount()
+await mount();geometry();point(keyHandle('a'),'pointerdown');point(w,'pointermove',150);await tick();assert.deepEqual(keys(),['a','b','c']);point(w,'pointerup',150,20,2);assert.equal(events.end.length,0,'Another pointer cannot finish this gesture')
+point(w,'pointerup',150);await tick();assert.deepEqual(keys(),['b','c','a']);assert.equal(events.end.length,1);assert.equal(events.end[0].input,'pointer');assert.equal(keyHandle('a').hasPointerCapture(1),false);await unmount()
+for(const reason of ['pointercancel','capture','outside','external','disabled','readonly','unmount','blur','escape']){
+ await mount();geometry();point(keyHandle('a'),'pointerdown');point(w,'pointermove',150);await tick()
+ if(reason==='pointercancel')point(w,'pointercancel',150)
+ if(reason==='capture')point(keyHandle('a'),'lostpointercapture',150)
+ if(reason==='outside')point(w,'pointerup',150,400)
+ if(reason==='external')value.value=[...originals].reverse()
+ if(reason==='disabled')disabled.value=true
+ if(reason==='readonly')readonly.value=true
+ if(reason==='unmount')show.value=false
+ if(reason==='blur')w.dispatchEvent(new w.Event('blur'))
+ if(reason==='escape')press(w,'Escape')
+ await tick();point(w,'pointerup',150);point(w,'pointermove',60);await tick()
+ assert.equal(events.change.length,0,reason);assert.equal(events.end.length,1,reason);assert.equal(events.end[0].reason,reason==='readonly'?'disabled':reason,reason)
+ await unmount()
+}
+await mount();geometry();point(keyHandle('a'),'pointerdown');value.value=[...originals];await tick();point(w,'pointermove',150);point(w,'pointerup',150);assert.equal(events.start.length,0);assert.equal(events.end.length,0,'An external change cancels a pending press before its start threshold');await unmount()
 assert.deepEqual(warnings,[])
-console.log('PASS: internal generic list keyboard/button proposals, frozen object identity, controlled rejection, slot content, external removal/replace, seven cancel paths, focus, locale, readonly/invalid/empty and preview isolation. Pointer/touch drag and public registration remain unimplemented.')
+console.log('PASS: '+(sourceMode?'source':'installed')+' generic list keyboard/button proposals, frozen object identity, controlled rejection, slot content, external removal/replace, seven cancel paths, focus, locale, readonly/invalid/empty and preview isolation. Real pointer/keyboard/touch are checked separately in Chrome.')

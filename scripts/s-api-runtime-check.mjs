@@ -28,10 +28,11 @@ const expectedComponents = [
  'SRangeSlider','SSplitBtn','SContextMenu','SResizableSplitPane','STooltip','SPopover','SAccordion',
  'SFileInput','SAutocomplete','SBreadcrumbs','SAvatar','SStepper','SBarChart',
  'SChip','SBadge','SIcon','SIconBtn',
+ 'SSortableList',
 ]
-assert.deepEqual(Object.keys(api.sComponents).sort(), expectedComponents.sort(), 'All previous exports and the four additions remain registered')
+assert.deepEqual(Object.keys(api.sComponents).sort(), expectedComponents.sort(), 'All original 38 exports, four display additions and Sortable remain registered')
 assert.equal(api.uiVersion,JSON.parse(await readFile(new URL('packages/vue-ui/package.json',root),'utf8')).version,'Runtime uiVersion matches the package and demo version');
-const componentNames=Object.keys(api.sComponents);assert.equal(componentNames.length,42);const removed=["SolButton","SolField","SolDialog","SolTable","SolCheckbox","SolRadioGroup","SolSwitch","SolSelect","SolTextarea","SolNumberInput","SolTabs","SolToast","SolDatePicker","SolTimePicker","SolSegmentedControl","SolMultiSelect","SolRangeSlider","SolSplitButton","SolContextMenu","SolResizableSplitPane"];for(const name of componentNames){assert.match(name,/^S[A-Z]/);assert.equal(api[name].name,({SContainer:'VContainer',SRow:'VRow',SCol:'VCol'})[name]||name);}for(const name of removed)assert.equal(api[name],undefined,name+' is not exported');
+const componentNames=Object.keys(api.sComponents);assert.equal(componentNames.length,43);const removed=["SolButton","SolField","SolDialog","SolTable","SolCheckbox","SolRadioGroup","SolSwitch","SolSelect","SolTextarea","SolNumberInput","SolTabs","SolToast","SolDatePicker","SolTimePicker","SolSegmentedControl","SolMultiSelect","SolRangeSlider","SolSplitButton","SolContextMenu","SolResizableSplitPane"];for(const name of componentNames){assert.match(name,/^S[A-Z]/);assert.equal(api[name].name,({SContainer:'VContainer',SRow:'VRow',SCol:'VCol'})[name]||name);}for(const name of removed)assert.equal(api[name],undefined,name+' is not exported');
 const {createApp,h,ref,nextTick,VApp,VBtn,VTextField,SBtn,STextField,SolyiUI,createSolyiVuetify,applySolyiAppearance}=api;
 const vuetify=createSolyiVuetify({components:{VApp},defaults:{VBtn:{density:'compact'}}});
 assert.equal(vuetify.defaults.value.VBtn.class,'sol-vuetify-btn');assert.equal(vuetify.defaults.value.VBtn.density,'compact');
@@ -47,4 +48,4 @@ d.querySelector('#s-btn').click();d.querySelector('#v-btn').click();assert.equal
 for(const theme of ['violet','sage','sand'])for(const mode of ['light','dark']){assert.equal(applySolyiAppearance(vuetify.theme,{theme,mode,density:'compact'}),true);await nextTick();await nextTick();assert.equal(d.documentElement.dataset.theme,theme);assert.equal(d.documentElement.dataset.mode,mode);assert.equal(vuetify.theme.global.name.value,theme+'-'+mode);assert.ok(d.querySelector('.v-theme--'+theme+'-'+mode));}
 assert.equal(applySolyiAppearance(vuetify.theme,{theme:'invalid',mode:'light'}),false);assert.equal(d.documentElement.dataset.theme,'sand');assert.equal(d.querySelector('#s-field').value,'S draft');assert.equal(d.querySelector('#v-field').value,'V draft');
 app.unmount();vuetify.unmount();assert.deepEqual(errors,[]);dom.window.close();
-console.log('PASS:42 canonical S exports/global registrations and no legacy component aliases; merged Vuetify defaults, direct VBtn/VTextField coexistence, guards, six shared themes/Core attributes and retained drafts. Synthetic DOM; visual/native input checks are separate.');
+console.log('PASS:43 canonical S exports/global registrations and no legacy component aliases; merged Vuetify defaults, direct VBtn/VTextField coexistence, guards, six shared themes/Core attributes and retained drafts. Synthetic DOM; visual/native input checks are separate.');

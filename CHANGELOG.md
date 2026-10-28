@@ -2,6 +2,9 @@
 
 ## 미게시 · 다음 minor 버전 후보
 
+- SSortableList를 추가합니다. 임의 객체와 stable key를 받는 controlled 목록으로 키보드·이동 버튼·손잡이 드래그, preview/최종 제안/취소, 자동 스크롤과 포커스 복원을 제공합니다. 기존 42개 API를 보존하며 타입·전역 등록·Components 문서와 starter를 연결합니다.
+- 문서 헤더의 UI 데모 바로가기, 컴포넌트 미리보기 제목과 섹션 이동 버튼을 추가하고 Examples/코드 카드의 모서리 배경을 바로잡습니다. 이 항목은 로컬 개발본이며 운영 배포를 포함하지 않습니다.
+
 - STimePicker 입력·목록 손잡이를 opt-in으로 추가합니다. preview는 모델·폼 값을 유지하며 release에서 확정하고 Escape·pointercancel·capture 상실·외부 값/설정 변경 시 취소합니다. 키보드·목록 자동 스크롤과 optional ko/en locale 키를 함께 제공합니다.
 
 - STimePicker의 native 기본·기존 change/readonly를 유지하고 opt-in 직접 입력 제어·custom list·초기 스크롤·목록 키보드 탐색을 추가합니다. readonly 입력에서도 선택 가능한 required 필드의 native 폼 검증을 유지합니다.

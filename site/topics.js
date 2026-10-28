@@ -37,6 +37,9 @@ const documentSearchNames={
 };
 // A dedicated API keeps its own visible Korean names, independent of the shared recipe title.
 const componentSearchNames={
+ SChip:['Chip','칩'],SBadge:['Badge','배지','뱃지'],SIcon:['Icon','아이콘'],SIconBtn:['Icon Button','아이콘 버튼','아이콘버튼'],
+ SNumberInput:['Number Input','NumberInput','숫자 입력','숫자입력'],
+ SSortableList:['Sortable List','SortableList','정렬 목록','정렬목록','순서 변경','드래그 정렬'],
  SDatePicker:['Date Picker','DatePicker','날짜','날짜 선택','날짜 선택기','기간 선택'],
  STimePicker:['Time Picker','TimePicker','시간','시각','시간 선택','시각 선택','시간 선택기','시각 선택기']
 };

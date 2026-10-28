@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { SSortableList } from '../../../../packages/vue-ui/src/sortable-list'
-import type { SolSortableEnd, SolSortableProposal } from '../../../../packages/vue-ui/src/sortable-list'
+import { SSortableList } from 'solyi-ui'
+import type {
+  SolSortableEnd,
+  SolSortableProposal,
+} from 'solyi-ui'
 
 interface ExampleItem {
   id: string
@@ -12,10 +15,19 @@ const items = ref<ExampleItem[]>([
   { id: 'second', title: '긴 텍스트도 줄바꿈하는 두 번째 항목', details: { count: 7 } },
   { id: 'third', title: '세 번째 항목', details: { count: 2 } },
 ])
-const disabled = ref(false), readonly = ref(false), accept = ref(true), result = ref('')
-function propose(next: ExampleItem[]) { if (accept.value) items.value = next }
-function change(value: SolSortableProposal<ExampleItem>) { result.value = `${value.key}: ${value.from + 1} → ${value.to + 1}` }
-function ended(value: SolSortableEnd<ExampleItem>) { if (value.status === 'cancel') result.value = `취소: ${value.reason}` }
+const disabled = ref(false),
+  readonly = ref(false),
+  accept = ref(true),
+  result = ref('')
+function propose(next: ExampleItem[]) {
+  if (accept.value) items.value = next
+}
+function change(value: SolSortableProposal<ExampleItem>) {
+  result.value = `${value.key}: ${value.from + 1} → ${value.to + 1}`
+}
+function ended(value: SolSortableEnd<ExampleItem>) {
+  if (value.status === 'cancel') result.value = `취소: ${value.reason}`
+}
 </script>
 <template>
   <section>

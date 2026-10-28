@@ -242,7 +242,7 @@ onBeforeUnmount(() => {
 <template>
   <section class="recipe-explorer">
     <header>
-      <h1>Vue 사용 예제</h1>
+      <h1>컴포넌트 미리보기</h1>
       <p>분류에서 예제를 골라 확인하세요. 문서의 코드와 같은 파일을 실제 패키지로 실행합니다.</p>
     </header>
     <SBtn

@@ -7,6 +7,7 @@ const supportedParts = [
   'split-button',
   'context-menu',
   'split-pane',
+  'sortable',
 ]
 const part = computed(() => (supportedParts.includes(props.part) ? props.part : ''))
 const show = (...parts) => !part.value || parts.includes(part.value)
@@ -73,6 +74,24 @@ const ratio = ref(40),
   memo = ref('화면 폭을 바꾸어도 이 가상 메모는 유지됩니다.'),
   stacked = ref(false),
   resized = ref('')
+const sortableItems = ref([
+    { id: 'a', label: '첫 번째 항목', details: { count: 4 } },
+    { id: 'b', label: '긴 텍스트를 가진 두 번째 항목도 줄바꿈합니다', details: { count: 7 } },
+    { id: 'c', label: '세 번째 항목', details: { count: 2 } },
+  ]),
+  acceptOrder = ref(true),
+  sortStatus = ref('')
+function acceptProposal(items) {
+  if (acceptOrder.value) sortableItems.value = items
+}
+function reorderEnd(result) {
+  sortStatus.value =
+    result.status === 'cancel'
+      ? '취소: ' + result.reason
+      : result.status === 'unchanged'
+        ? '순서 유지'
+        : (acceptOrder.value ? '새 순서 반영: ' : '순서 제안만 확인: ') + result.key
+}
 watch([disabled, readonly], () => {
   if (disabled.value || readonly.value) menuOpen.value = false
 })
@@ -311,5 +330,42 @@ watch([disabled, readonly], () => {
       저장 비율 {{ ratio }}% · {{ stacked ? '좁은 폭: 위아래 높이 조절' : '크기 조절 가능' }} ·
       {{ resized }}
     </p>
+  </section>
+  <section v-if="show('sortable')" class="starter-card" aria-labelledby="advanced-sortable-title">
+    <h2 id="advanced-sortable-title">정렬 목록 · SSortableList</h2>
+    <p class="starter-hint">
+      손잡이를 드래그하거나 키보드와 위·아래 이동 버튼으로 순서를 제안합니다. 원본 객체는
+      유지합니다.
+    </p>
+    <div class="starter-settings">
+      <SCheckbox id="advanced-sort-accept" v-model="acceptOrder" label="새 순서 반영" />
+      <SSwitch v-if="part" id="advanced-sort-disabled" v-model="disabled" label="정렬 비활성" />
+      <SSwitch v-if="part" id="advanced-sort-readonly" v-model="readonly" label="정렬 보기 전용" />
+      <SBtn @click="sortableItems = [...sortableItems].reverse()">외부 목록 변경 시연</SBtn>
+    </div>
+    <SSortableList
+      id="advanced-sortable"
+      label="가상 항목 순서"
+      :model-value="sortableItems"
+      :item-key="item => item.id"
+      :item-label="item => item.label"
+      :disabled="disabled"
+      :readonly="readonly"
+      @update:model-value="acceptProposal"
+      @end="reorderEnd"
+    >
+      <template #item="{ item, index, active }">
+        <strong>{{ index + 1 }}. {{ item.label }}</strong>
+        <p>{{ item.details.count.toFixed(0) }}개 · {{ active ? '이동 위치 선택 중' : '대기' }}</p>
+        <SBtn
+          variant="inline"
+          :disabled="disabled"
+          @click="sortStatus = item.label + ' 본문 버튼 확인'"
+          >본문 동작</SBtn
+        >
+      </template>
+    </SSortableList>
+    <p role="status">{{ sortStatus }}</p>
+    <p class="starter-hint">확정 순서: {{ sortableItems.map(item => item.id).join(' → ') }}</p>
   </section>
 </template>

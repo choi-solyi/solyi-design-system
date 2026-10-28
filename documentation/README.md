@@ -13,6 +13,7 @@
 - [미게시 Chip·Badge·Icon·Icon Button](guide/DISPLAY-PRIMITIVES.md)
 - [미게시 날짜·숫자 표시 확장](guide/INPUT-DISPLAY.md)
 - [미게시 TimePicker 입력·목록 확장](guide/TIME-INTERACTION.md)
+- [미게시 controlled 정렬 목록](guide/SORTABLE-LIST.md)
 - [호환 범위](guide/COMPATIBILITY.md)
 
 ## 개발하기
@@ -21,6 +22,9 @@
 - [샘플 코드·자동 import·문법 강조](development/CODE-EXAMPLES.md)
 - [문서 검색·헤더 설정](development/DOC-SEARCH.md)
 - [표시·아이콘 1차 검증 기록](development/DISPLAY-PRIMITIVES-VALIDATION.md)
+- [입력 확장 설치·선언 검증 기록](development/INPUT-EXTENSIONS-VALIDATION.md)
+- [UI 데모와 starter 항목별 점검](development/STARTER-UPDATES-VALIDATION.md)
+- [Components 신규·확장 API 대조](development/COMPONENT-EXTENSIONS-VALIDATION.md)
 - [기여 안내](../CONTRIBUTING.md)
 
 ## 자산과 라이선스

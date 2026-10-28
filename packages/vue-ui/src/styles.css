@@ -1,4 +1,5 @@
 @import './primitives.css';
+@import './sortable.css';
 /* Opt-in classes supplied by createSolyiVuetify. Native Vuetify props/variants remain available. */
 .sol-vuetify,.sol-vuetify .v-application__wrap {font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}
 .sol-vuetify-btn.v-btn {font-family:var(--sol-font-sans);font-size:var(--sol-text-sm);font-weight:600;letter-spacing:normal;text-transform:none;min-width:0;height:var(--sol-button-height);padding-inline:var(--sol-space-3);box-shadow:none;}

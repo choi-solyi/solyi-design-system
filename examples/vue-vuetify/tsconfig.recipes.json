@@ -22,6 +22,7 @@
     "checkUnknownProps": false
   },
   "include": [
+    "src/AdvancedExamples.vue",
     "src/RecipeExamples.vue",
     "src/recipe-registry.ts",
     "src/recipes/*.vue",
