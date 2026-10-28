@@ -58,6 +58,7 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 .starter-code-sample {max-width:100%;overflow-x:auto;white-space:pre;padding:var(--sol-space-3);background:var(--sol-color-surface-alt);border-radius:var(--sol-radius-inset);font-size:var(--sol-text-xs);}
 
 .starter-embed .v-application__wrap{min-height:0;}.starter-embed .starter-main{padding:0;max-width:none;}.starter-embed .starter-card{margin:0;border:0;padding:var(--sol-space-3);background:transparent;}.starter-embed .sol-progress-examples{margin-block:var(--sol-space-4);}
+html:has(>body.starter-embed),body.starter-embed,.starter-embed .v-application {background:transparent;}
 
 .starter-progress-options {display:flex;flex-wrap:wrap;gap:var(--sol-space-3);padding:0;border:0;margin:var(--sol-space-4) 0;}
 .starter-progress-options legend {margin-bottom:var(--sol-space-2);font-size:var(--sol-text-sm);}

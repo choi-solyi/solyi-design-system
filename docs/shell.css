@@ -1658,7 +1658,7 @@ main:focus {outline: none;}
 .sol-token-card .token-value {float: right; font-family: var(--sol-font-mono); font-size: 11px; color: var(--sol-color-muted);}
 .code-example {min-width:0;max-width:100%;margin-top: 16px; border: 1px solid var(--sol-color-border); border-radius:var(--sol-radius-inset); overflow: visible; background: var(--sol-color-surface-alt);}
 .code-example[data-code-static] {margin:0;}
-.code-example[data-code-static]>.code-body>.code-toolbar {border-radius:var(--sol-radius-inset) var(--sol-radius-inset) 0 0;}
+.code-example>.code-body:first-child>.code-toolbar:first-child {border-start-start-radius:calc(var(--sol-radius-inset) - 1px);border-start-end-radius:calc(var(--sol-radius-inset) - 1px);}
 .code-example summary {padding: 12px 16px; cursor: pointer; min-height: 44px; font-size: var(--sol-text-sm); color: var(--sol-color-muted);}
 .code-example .code-body {padding:0;min-width:0;}
 .code-body .button-row {margin-top: 12px;}
@@ -1909,7 +1909,7 @@ html {scroll-padding-top:var(--sol-document-offset,100px);}
   white-space: nowrap;
   clip-path: inset(50%);
 }
-.vue-recipe-frame {display:block;width:100%;border:0;background:var(--sol-color-surface);color-scheme:inherit;}
+.vue-recipe-frame {display:block;width:100%;border:0;background:transparent;color-scheme:inherit;}
 
 /* header-preferences.css */
 /* Shared document and starter appearance controls. Package styles remain unchanged. */
