@@ -189,6 +189,10 @@ for (const [name, group, description, exampleRoute, example] of records) {
   }
   if (name === 'STimePicker') props.find(prop => prop.name === 'presentation').description =
     '기본 두 native select 또는 opt-in 스크롤 목록입니다. 허용값은 native/list입니다.'
+  if (name === 'STimePicker') {
+    props.find(prop => prop.name === 'pickerPresentation').description = '생략하면 기존 body 연결 패널입니다. auto/popover/dialog는 팝업 표시 opt-in이며 presentation=native/list의 내용 선택과 독립적입니다. 표시 전환 중 scrub은 확정 없이 취소합니다.'
+    props.find(prop => prop.name === 'placement').description = 'opt-in 연결 팝업의 logical 위치입니다. 기본 bottom-start이며 top/bottom과 start/end를 조합합니다. 화면 경계에서 flip/shift합니다.'
+  }
   if (name === 'SDatePicker') {
     props.find(prop => prop.name === 'pickerPresentation').description = '생략하면 기존 native 모달을 유지합니다. auto는 화면 크기에 맞춰 연결 팝업/모달로 전환하며 popover/dialog는 명시적 opt-in입니다. 열린 auto 전환은 부분 기간 선택을 보존하고 legacy 경계를 바꾸면 취소합니다.'
     props.find(prop => prop.name === 'placement').description = 'opt-in 연결 팝업의 logical 시작/끝 위치입니다. 화면 경계에서 flip/shift하며 모달에서는 위치 기준으로 사용하지 않습니다.'

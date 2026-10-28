@@ -1,6 +1,6 @@
-# DatePicker 표시 방식
+# Date/TimePicker 표시 방식
 
-미게시 1.1.0 개발 후보의 SDatePicker 옵션입니다. 공개 npm 1.0.0의 기능으로 설명하지 않습니다.
+미게시 1.1.0 개발 후보의 SDatePicker/STimePicker 옵션입니다. 공개 npm 1.0.0의 기능으로 설명하지 않습니다.
 
 ```vue
 <SDatePicker
@@ -19,6 +19,6 @@
 
 ISO string 또는 `{start,end}`/null 모델, DateChange의 input/calendar/clear/mode 이유, displayFormatter와 제출값 분리는 유지합니다. 부모가 날짜 제안을 거부하면 입력 표시와 제출값을 부모 모델로 복원합니다. focus/validate/clear/resetValidation만 공개 handle이며 open/close 메서드를 추가하지 않았습니다. disabled/readonly 및 SForm의 상속 상태는 열기와 변경을 막습니다.
 
-Components Date의 Examples/Sample Code와 starter의 날짜 예제에서 단일/기간·요일 표시·팝업 방식·기준 위치를 조작할 수 있습니다. TimePicker의 기존 presentation=native/list는 별도 계약이며 이 Date 단계에서 새 옵션을 제공한다고 표시하지 않습니다.
+Components Date의 Examples/Sample Code와 starter의 날짜 예제에서 단일/기간·요일 표시·팝업 방식·기준 위치를 조작할 수 있습니다. Time 예제도 팝업 방식을 선택할 수 있습니다. TimePicker의 기존 presentation=native/list는 내용 선택이며 pickerPresentation과 독립적입니다. Time의 새 옵션을 생략하면 기존 body 연결 패널을 유지합니다. min 기준 step·scalar change·수동 입력·초기 목록 위치를 보존하고, 열린 표시 방식 전환 중 scrub preview는 commit 없이 취소합니다. nonmodal에서 마우스로 입력창을 열면 입력 caret를 유지하고, 키보드 열기 또는 modal에서는 패널 내부로 초점을 옮깁니다.
 
 실제 Fold·OS 키보드·Safari·화면 낭독기 검증과 Chrome 자동 검증은 구분합니다. 최종 게시에는 전체 release 검증과 registry 인증 복구가 필요합니다.

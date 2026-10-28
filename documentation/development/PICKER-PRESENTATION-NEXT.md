@@ -1,5 +1,7 @@
 # 승인 계획의 다음 작은 단위: 기존 표시 컴포넌트 점검 → Picker host
 
+Time opt-in: native/list와 팝업 방식을 분리해 연결했습니다. Chrome 36조합과 수동 caret·IME Escape·readonly·resize scrub 취소, 설치본 타입 7건·SSR 8건, Components 45종 및 starter 타입 검사를 통과했습니다. 마지막 CSS 간격 보강은 좁은 화면 18조합으로 재검사했고, 기존 설치 후보와 runtime/선언 46개 파일이 byte 동일함을 확인한 뒤 최종 CSS tarball을 다시 설치했습니다. 원시 결과: qa-output/time-presentation/. 정식 artifact 동결·전체 출시 검증은 아직입니다.
+
 진행: private host의 native 경계·전환·focus·SSR 독립 단위는 [구현·검증 기록](PICKER-HOST-VALIDATION.md)에 보존했습니다. 아래 내용은 착수 시의 기준이며 공개 Date/Time opt-in 연결은 아직 남아 있습니다. 이후 승인된 PURE/크기 기준 정리를 안전한 host 단위 다음에 진행합니다.
 
 [확장 계획](EXTENSIONS-V2-PLAN.md)의 3단계는 기존 SIcon/SIconBtn/SChip/SBadge 재사용 점검이며, 다음 신규 API 작업은 4단계 Date/Time picker presentation입니다. 이 메모는 착수 범위만 정리하며 새 public API를 구현했다고 뜻하지 않습니다. SConfirmAction·Dialog 통합·LoadingOverlay 등 뒤 단계를 끼워 넣지 않습니다.

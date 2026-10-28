@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import type { SolTimeInteraction, SolTimeInteractionCancel } from 'solyi-ui'
+import type { SolTimeInteraction, SolTimeInteractionCancel, SolPickerPresentation } from 'solyi-ui'
 
 const time = ref<string | null>('09:00')
+const popupChoice = ref<string | null>('legacy')
+const pickerPresentation = computed<SolPickerPresentation | undefined>(() =>
+  popupChoice.value === 'auto' || popupChoice.value === 'popover' || popupChoice.value === 'dialog'
+    ? popupChoice.value
+    : undefined,
+)
 const listTime = ref<string | null>(null),
   manual = ref(false)
 const scrub = ref(false),
@@ -21,8 +27,20 @@ function cancelled(value: SolTimeInteractionCancel) {
 </script>
 <template>
   <SCard :heading-level="2" title="직접 입력과 시·분 선택">
+    <SSelect
+      id="recipe-time-popup"
+      v-model="popupChoice"
+      label="시각 팝업 표시 방식"
+      :options="[
+        { value: 'legacy', label: '기존 연결 패널' },
+        { value: 'auto', label: '화면에 맞춰 자동 전환' },
+        { value: 'popover', label: '연결 팝업' },
+        { value: 'dialog', label: '모달 다이얼로그' },
+      ]"
+    />
     <STimePicker
       id="recipe-time"
+      :picker-presentation="pickerPresentation"
       v-model="time"
       clearable
       label="가상 알림 시각"
@@ -58,6 +76,7 @@ function cancelled(value: SolTimeInteractionCancel) {
     />
     <STimePicker
       id="recipe-time-list"
+      :picker-presentation="pickerPresentation"
       v-model="listTime"
       clearable
       label="목록에서 시각 선택"
