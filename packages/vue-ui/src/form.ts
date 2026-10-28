@@ -89,7 +89,7 @@ export function useSFieldValidation(p: ValidationProps, value: () => unknown, op
   return {focus: options.focus, validate, resetValidation};
 }
 
-export const SForm = defineComponent({
+export const SForm = /* @__PURE__ */ defineComponent({
   name: 'SForm', inheritAttrs: false,
   props: {modelValue: {type: Boolean as PropType<boolean | null>, default: null}, disabled: Boolean, readonly: Boolean, fastFail: Boolean},
   emits: {'update:modelValue': (_value: boolean | null) => true, submit: (_event: SFormSubmitEvent) => true},

@@ -35,6 +35,8 @@ for(const project of ['examples/package-consumer/','examples/vue-vuetify/']){
 run('6/10 Independent consumer typecheck + app build','examples/package-consumer/',npm,['run','build']);
 run('6/10 Typecheck actual Vue documentation examples','examples/vue-vuetify/',npm,['run','check:recipes']);
 node('7/10 Pack contracts and installed runtime tests','scripts/library-contract-check.mjs');
+node('7/10 Versioned size budget rejection cases','scripts/library-size-budget-check.mjs');
+node('7/10 Real installed named-import size budgets','scripts/library-size-check.mjs');
 node('7/10 Component runtime','scripts/library-runtime-check.mjs');
 node('7/10 Extended controlled Vue runtime','scripts/vue-extended-runtime-check.mjs');
 node('7/10 Six new reusable Vue APIs','scripts/vue-expansion-runtime-check.mjs');

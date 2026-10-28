@@ -24,7 +24,7 @@ export interface SAutocompleteHandle {
   retry(): void
   resetValidation(): void
 }
-export const SAutocomplete = defineComponent({
+export const SAutocomplete = /* @__PURE__ */ defineComponent({
   name: 'SAutocomplete',
   inheritAttrs: false,
   props: {

@@ -5,7 +5,7 @@ import {formatSolNumber,useSolLocale} from './locale';
 import type {SolLocale} from './locale';
 
 export interface SBreadcrumbItem {id:string;label:string;href?:string;disabled?:boolean}
-export const SBreadcrumbs=defineComponent({name:'SBreadcrumbs',inheritAttrs:false,props:{items:{type:Array as PropType<readonly SBreadcrumbItem[]>,required:true},current:String,label:String,locale:Object as PropType<Partial<SolLocale>>},emits:{navigate:(_item:SBreadcrumbItem,_event:MouseEvent)=>true},setup(p,{attrs,emit}){
+export const SBreadcrumbs=/* @__PURE__ */ defineComponent({name:'SBreadcrumbs',inheritAttrs:false,props:{items:{type:Array as PropType<readonly SBreadcrumbItem[]>,required:true},current:String,label:String,locale:Object as PropType<Partial<SolLocale>>},emits:{navigate:(_item:SBreadcrumbItem,_event:MouseEvent)=>true},setup(p,{attrs,emit}){
   const l=useSolLocale(()=>p.locale);
   return()=>h('nav',{...attrs,class:['sol-breadcrumbs sol-ui-breadcrumbs',attrs.class],'aria-label':p.label||l.value.breadcrumb},h('ol',p.items.map((item,index)=>{
     const current=p.current===undefined?index===p.items.length-1:item.id===p.current;
@@ -13,13 +13,13 @@ export const SBreadcrumbs=defineComponent({name:'SBreadcrumbs',inheritAttrs:fals
   })));
 }});
 
-export const SAvatar=defineComponent({name:'SAvatar',inheritAttrs:false,props:{label:{type:String,required:true},src:String,initials:String,size:{type:Number as PropType<24|32|40|48>,default:40}},emits:{error:(_event:Event)=>true},setup(p,{attrs,slots,emit}){
+export const SAvatar=/* @__PURE__ */ defineComponent({name:'SAvatar',inheritAttrs:false,props:{label:{type:String,required:true},src:String,initials:String,size:{type:Number as PropType<24|32|40|48>,default:40}},emits:{error:(_event:Event)=>true},setup(p,{attrs,slots,emit}){
   const failed=ref(false);watch(()=>p.src,()=>failed.value=false);
   return()=>h('span',{...attrs,class:['sol-avatar sol-ui-avatar',attrs.class],role:'img','aria-label':p.label,style:{width:p.size+'px',height:p.size+'px'}},p.src&&!failed.value?h('img',{src:p.src,alt:'','aria-hidden':'true',onError:(e:Event)=>{failed.value=true;emit('error',e);}}):h('span',{'aria-hidden':'true'},slots.default?.()||p.initials||Array.from(p.label.trim()).slice(0,2).join('')));
 }});
 
 export interface SStep {id:string;label:string;description?:string;disabled?:boolean}
-export const SStepper=defineComponent({name:'SStepper',inheritAttrs:false,props:{id:{type:String,required:true},label:String,items:{type:Array as PropType<readonly SStep[]>,required:true},modelValue:{type:String as PropType<string|null>,default:null},completed:{type:Array as PropType<readonly string[]>,default:()=>[]},interactive:Boolean,disabled:Boolean,readonly:Boolean,locale:Object as PropType<Partial<SolLocale>>},emits:{'update:modelValue':(_id:string)=>true,change:(_id:string)=>true},setup(p,{attrs,emit}){
+export const SStepper=/* @__PURE__ */ defineComponent({name:'SStepper',inheritAttrs:false,props:{id:{type:String,required:true},label:String,items:{type:Array as PropType<readonly SStep[]>,required:true},modelValue:{type:String as PropType<string|null>,default:null},completed:{type:Array as PropType<readonly string[]>,default:()=>[]},interactive:Boolean,disabled:Boolean,readonly:Boolean,locale:Object as PropType<Partial<SolLocale>>},emits:{'update:modelValue':(_id:string)=>true,change:(_id:string)=>true},setup(p,{attrs,emit}){
   const l=useSolLocale(()=>p.locale);
   const choose=(item:SStep)=>{if(p.interactive&&!p.disabled&&!p.readonly&&!item.disabled&&p.modelValue!==item.id){emit('update:modelValue',item.id);emit('change',item.id);}};
   return()=>h('nav',{...attrs,id:p.id,class:['sol-ui-stepper',attrs.class],'aria-label':p.label||l.value.steps},h('ol',p.items.map((item,index)=>{
@@ -38,7 +38,7 @@ export interface SBarChartItem {
   value: number
 }
 
-export const SBarChart = defineComponent({
+export const SBarChart = /* @__PURE__ */ defineComponent({
   name: 'SBarChart',
   inheritAttrs: false,
   props: {

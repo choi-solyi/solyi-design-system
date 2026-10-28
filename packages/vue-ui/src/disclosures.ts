@@ -9,7 +9,7 @@ export type SDisclosureCloseReason='escape'|'outside'|'focus'|'trigger'|'close'|
 const disclosureProps={id:{type:String,required:true as const},label:{type:String,required:true as const},modelValue:{type:Boolean,default:undefined},disabled:Boolean,readonly:Boolean,locale:Object as PropType<Partial<SolLocale>>};
 const disclosureEmits={'update:modelValue':(_value:boolean)=>true,open:()=>true,close:(_reason:SDisclosureCloseReason)=>true};
 
-export const STooltip=defineComponent({name:'STooltip',inheritAttrs:false,props:{...disclosureProps,text:{type:String,required:true}},emits:disclosureEmits,setup(p,{attrs,slots,emit}){
+export const STooltip=/* @__PURE__ */ defineComponent({name:'STooltip',inheritAttrs:false,props:{...disclosureProps,text:{type:String,required:true}},emits:disclosureEmits,setup(p,{attrs,slots,emit}){
   const local=ref(false),root=ref<HTMLElement|null>(null),anchor=ref<HTMLElement|null>(null),panel=ref<HTMLElement|null>(null);
   const open=computed(()=>!p.disabled&&!p.readonly&&(p.modelValue??local.value));
   const {position}=useFloatingPanel(open,anchor,panel);
@@ -33,7 +33,7 @@ export const STooltip=defineComponent({name:'STooltip',inheritAttrs:false,props:
   };
 }});
 
-export const SPopover=defineComponent({name:'SPopover',inheritAttrs:false,props:{...disclosureProps,title:{type:String,required:true}},emits:disclosureEmits,setup(p,{attrs,slots,emit}){
+export const SPopover=/* @__PURE__ */ defineComponent({name:'SPopover',inheritAttrs:false,props:{...disclosureProps,title:{type:String,required:true}},emits:disclosureEmits,setup(p,{attrs,slots,emit}){
   const l=useSolLocale(()=>p.locale),local=ref(false),root=ref<HTMLElement|null>(null),anchor=ref<HTMLElement|null>(null),panel=ref<HTMLElement|null>(null),closeButton=ref<{$el?:HTMLElement}|null>(null);
   const open=computed(()=>!p.disabled&&!p.readonly&&(p.modelValue??local.value));
   const {position}=useFloatingPanel(open,anchor,panel);
@@ -60,7 +60,7 @@ export const SPopover=defineComponent({name:'SPopover',inheritAttrs:false,props:
   };
 }});
 
-export const SAccordion=defineComponent({name:'SAccordion',inheritAttrs:false,props:disclosureProps,emits:{'update:modelValue':(_value:boolean)=>true,change:(_value:boolean)=>true},setup(p,{attrs,slots,emit}){
+export const SAccordion=/* @__PURE__ */ defineComponent({name:'SAccordion',inheritAttrs:false,props:disclosureProps,emits:{'update:modelValue':(_value:boolean)=>true,change:(_value:boolean)=>true},setup(p,{attrs,slots,emit}){
   const local=ref(false),open=computed(()=>p.modelValue??local.value);
   function toggle(e:MouseEvent){e.preventDefault();if(p.disabled||p.readonly)return;const value=!open.value;if(p.modelValue===undefined)local.value=value;emit('update:modelValue',value);emit('change',value);}
   return()=>h('details',{...attrs,id:p.id,open:open.value,class:['sol-accordion',attrs.class]},[

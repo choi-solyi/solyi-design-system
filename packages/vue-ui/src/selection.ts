@@ -7,7 +7,7 @@ import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './cont
 import type {SolOption} from './controls';
 import {useSolLocale,formatSolNumber} from './locale';
 
-export const SSegmentedControl=defineComponent({name:'SSegmentedControl',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,required:true},name:String},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true},setup(p,{attrs,slots,emit,expose}){
+export const SSegmentedControl=/* @__PURE__ */ defineComponent({name:'SSegmentedControl',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,required:true},name:String},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true},setup(p,{attrs,slots,emit,expose}){
  const l=useSolLocale(()=>p.locale),inputs=new Map<string,HTMLInputElement>();
  const enabled=()=>p.options.filter(o=>!o.disabled),chosen=()=>enabled().find(o=>o.value===p.modelValue)||enabled()[0];
  function choose(value:string){if(fieldDisabled(p)||fieldReadonly(p)||!enabled().some(o=>o.value===value))return;if(value!==p.modelValue){emit('update:modelValue',value);emit('change',value);}}
@@ -18,7 +18,7 @@ export const SSegmentedControl=defineComponent({name:'SSegmentedControl',inherit
 
 export type SolOptionLoader=(query:string,signal:AbortSignal)=>Promise<readonly SolOption[]>;
 export interface SolMultiSelectHandle {focus():void;validate():boolean;clear():void;resetValidation():void}
-export const SMultiSelect = defineComponent({
+export const SMultiSelect = /* @__PURE__ */ defineComponent({
   name: 'SMultiSelect',
   inheritAttrs: false,
   props: {
@@ -493,7 +493,7 @@ export const SMultiSelect = defineComponent({
 
 export type SolRangeValue = readonly [number, number]
 
-export const SRangeSlider=defineComponent({name:'SRangeSlider',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as unknown as PropType<SolRangeValue>,required:true},min:{type:Number,default:0},max:{type:Number,default:100},step:{type:Number,default:1},lowerLabel:String,upperLabel:String,formatValue:Function as PropType<(value:number)=>string>},emits:{'update:modelValue':(_v:[number,number])=>true,change:(_v:[number,number])=>true},setup(p,{attrs,slots,emit,expose}){
+export const SRangeSlider=/* @__PURE__ */ defineComponent({name:'SRangeSlider',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as unknown as PropType<SolRangeValue>,required:true},min:{type:Number,default:0},max:{type:Number,default:100},step:{type:Number,default:1},lowerLabel:String,upperLabel:String,formatValue:Function as PropType<(value:number)=>string>},emits:{'update:modelValue':(_v:[number,number])=>true,change:(_v:[number,number])=>true},setup(p,{attrs,slots,emit,expose}){
  const l=useSolLocale(()=>p.locale),track=ref<HTMLElement|null>(null),handles:HTMLElement[]=[];let drag:{id:number;index:number;start:SolRangeValue;last:SolRangeValue;target:HTMLElement}|null=null;
  const valid=()=>Number.isFinite(p.min)&&Number.isFinite(p.max)&&p.min<p.max&&Number.isFinite(p.step)&&p.step>0;
  const top=()=>valid()?Number((p.min+Math.floor((p.max-p.min)/p.step+1e-9)*p.step).toFixed(10)):1;

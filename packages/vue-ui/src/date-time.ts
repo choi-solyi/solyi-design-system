@@ -42,7 +42,7 @@ function calendarDayLabel(formatter: Intl.DateTimeFormat, day: DateParts): strin
 
 function icon(name:'calendar'|'chevron',direction?:'previous'|'next'){return h('svg',{class:['sol-icon','sol-ui-picker-icon',direction?'sol-ui-picker-icon--'+direction:undefined],width:20,height:20,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));}
 
-export const SDatePicker = defineComponent({
+export const SDatePicker = /* @__PURE__ */ defineComponent({
   name: 'SDatePicker',
   inheritAttrs: false,
   props: {
@@ -657,7 +657,7 @@ export const SDatePicker = defineComponent({
 
 export type SolTimePresentation = 'native' | 'list'
 
-export const STimePicker = defineComponent({
+export const STimePicker = /* @__PURE__ */ defineComponent({
   name: 'STimePicker',
   inheritAttrs: false,
   props: {

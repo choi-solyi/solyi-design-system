@@ -6,7 +6,7 @@ import {useSolLocale} from './locale';
 import type {SolLocale} from './locale';
 
 export interface SolTab {value:string;label:string;disabled?:boolean}
-export const STabs=defineComponent({name:'STabs',inheritAttrs:false,props:{...displayFieldProps,modelValue:{type:String,required:true},items:{type:Array as PropType<readonly SolTab[]>,required:true},orientation:{type:String as PropType<'horizontal'|'vertical'>,default:'horizontal'},activation:{type:String as PropType<'automatic'|'manual'>,default:'automatic'}},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true},setup(p,{attrs,slots,emit}){
+export const STabs=/* @__PURE__ */ defineComponent({name:'STabs',inheritAttrs:false,props:{...displayFieldProps,modelValue:{type:String,required:true},items:{type:Array as PropType<readonly SolTab[]>,required:true},orientation:{type:String as PropType<'horizontal'|'vertical'>,default:'horizontal'},activation:{type:String as PropType<'automatic'|'manual'>,default:'automatic'}},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true},setup(p,{attrs,slots,emit}){
  const tablist=ref<HTMLElement|null>(null),buttons=new Map<string,HTMLButtonElement>(),roving=ref(p.modelValue);
  const enabled=()=>p.items.filter(x=>!x.disabled),selected=()=>p.items.find(x=>x.value===p.modelValue&&!x.disabled)||enabled()[0];
  function choose(value:string){if(p.disabled||p.readonly||!enabled().some(x=>x.value===value))return;if(p.modelValue!==value){emit('update:modelValue',value);emit('change',value);}}
@@ -20,7 +20,7 @@ export const STabs=defineComponent({name:'STabs',inheritAttrs:false,props:{...di
 
 export type ToastTone='accent'|'info'|'success'|'warning'|'danger';
 export type ToastCloseReason='close'|'timeout'|'programmatic';
-export const SSnackbar=defineComponent({name:'SSnackbar',inheritAttrs:false,props:{id:{type:String,required:true},modelValue:Boolean,message:{type:String,required:true},label:String,tone:{type:String as PropType<ToastTone>,default:'info'},duration:{type:Number,default:0},live:{type:String as PropType<'polite'|'assertive'|'off'>,default:'polite'},dismissible:{type:Boolean,default:true},returnFocus:Object as PropType<HTMLElement|null>,locale:Object as PropType<Partial<SolLocale>>},emits:{'update:modelValue':(_v:boolean)=>true,close:(_reason:ToastCloseReason)=>true},setup(p,{attrs,slots,emit}){
+export const SSnackbar=/* @__PURE__ */ defineComponent({name:'SSnackbar',inheritAttrs:false,props:{id:{type:String,required:true},modelValue:Boolean,message:{type:String,required:true},label:String,tone:{type:String as PropType<ToastTone>,default:'info'},duration:{type:Number,default:0},live:{type:String as PropType<'polite'|'assertive'|'off'>,default:'polite'},dismissible:{type:Boolean,default:true},returnFocus:Object as PropType<HTMLElement|null>,locale:Object as PropType<Partial<SolLocale>>},emits:{'update:modelValue':(_v:boolean)=>true,close:(_reason:ToastCloseReason)=>true},setup(p,{attrs,slots,emit}){
  const l=useSolLocale(()=>p.locale),host=ref<HTMLElement|null>(null),announcement=ref('');let timer:ReturnType<typeof setTimeout>|undefined,remaining=0,started=0,hovered=false,focused=false,opener:HTMLElement|null=null,reason:ToastCloseReason='programmatic',mounted=false;
  const clear=()=>{if(timer!==undefined){clearTimeout(timer);timer=undefined;remaining=Math.max(0,remaining-(Date.now()-started));}};
  const requestClose=(why:ToastCloseReason)=>{clear();reason=why;emit('update:modelValue',false);};

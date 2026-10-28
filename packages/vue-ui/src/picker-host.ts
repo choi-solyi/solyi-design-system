@@ -11,7 +11,7 @@ export interface PickerHostHandle { content(): HTMLElement | null }
 const locations = { 'bottom-start': 'bottom start', 'bottom-end': 'bottom end', 'top-start': 'top start', 'top-end': 'top end' } as const
 
 /** Reuses Vuetify's connected location, stack, focus trap and owned scroll locks. */
-export const PickerHost = defineComponent({
+export const PickerHost = /* @__PURE__ */ defineComponent({
   name: 'SolInternalPickerHost',
   inheritAttrs: false,
   props: {

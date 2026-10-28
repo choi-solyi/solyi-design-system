@@ -69,7 +69,7 @@ function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
 }
 export type ButtonVariant='primary'|'secondary'|'subtle'|'inline';
 export type SButtonTone='accent'|'info'|'success'|'warning'|'danger';
-export const SBtn = defineComponent({
+export const SBtn = /* @__PURE__ */ defineComponent({
   name: 'SBtn',
   inheritAttrs: false,
   props: {
@@ -129,7 +129,7 @@ import {STextField} from './text-field';
 export {STextField};
 export type {SolInputClearEvent,SolInputControlScope,SolInputControlSlots,SolInputHandle} from './input-control';
 
-export const SDialog=defineComponent({
+export const SDialog=/* @__PURE__ */ defineComponent({
   name:'SDialog',inheritAttrs:false,
   props:{locale:Object as PropType<Partial<SolLocale>>,id:{type:String,required:true},title:{type:String,required:true},eyebrow:String,presentation:{type:String as PropType<'dialog'|'drawer'>,default:'dialog'},modelValue:Boolean,maxWidth:{type:[Number,String],default:480},closeLabel:String,returnFocus:{type:Object as PropType<HTMLElement|null>,default:null}},
   emits:{'update:modelValue':(_value:boolean)=>true,close:()=>true},
@@ -148,7 +148,7 @@ export const SDialog=defineComponent({
 export interface TableColumn {key:string;label:string;width?:string;align?:'start'|'end';sortable?:boolean;ellipsis?:boolean;format?:'text'|'number'|'date'}
 export interface TableRow {id:string;[key:string]:unknown}
 export interface TableSort {key:string;direction:'ascending'|'descending'}
-export const SDataTable=defineComponent({
+export const SDataTable=/* @__PURE__ */ defineComponent({
   name:'SDataTable',inheritAttrs:false,
   props:{locale:Object as PropType<Partial<SolLocale>>,columns:{type:Array as PropType<TableColumn[]>,required:true},rows:{type:Array as PropType<TableRow[]>,required:true},caption:{type:String,required:true},selected:{type:Array as PropType<string[]>,default:()=>[]},selectable:Boolean,sort:{type:Object as PropType<TableSort|null>,default:null},page:{type:Number,default:1},pageCount:{type:Number,default:1},loading:Boolean,error:{type:String,default:''},emptyText:String},
   emits:{'update:selected':(_ids:string[])=>true,'update:sort':(_sort:TableSort)=>true,'update:page':(_page:number)=>true,retry:()=>true,rowAction:(_row:TableRow)=>true},

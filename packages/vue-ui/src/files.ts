@@ -31,7 +31,7 @@ export function validateSFiles(incoming:readonly File[],existing:readonly File[]
   return {files,rejected};
 }
 
-export const SFileInput=defineComponent({name:'SFileInput',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as PropType<readonly File[]>,default:()=>[]},accept:{type:String,default:'.txt,.png,.jpg,.jpeg,.pdf'},maxFiles:{type:Number,default:3},maxFileSize:{type:Number,default:2*1024*1024},drop:{type:Boolean,default:true}},emits:{'update:modelValue':(_files:File[])=>true,change:(_files:File[])=>true,reject:(_items:SFileRejection[])=>true,remove:(_file:File)=>true,invalid:(_message:string)=>true},setup(p,{attrs,slots,emit,expose}){
+export const SFileInput=/* @__PURE__ */ defineComponent({name:'SFileInput',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as PropType<readonly File[]>,default:()=>[]},accept:{type:String,default:'.txt,.png,.jpg,.jpeg,.pdf'},maxFiles:{type:Number,default:3},maxFileSize:{type:Number,default:2*1024*1024},drop:{type:Boolean,default:true}},emits:{'update:modelValue':(_files:File[])=>true,change:(_files:File[])=>true,reject:(_items:SFileRejection[])=>true,remove:(_file:File)=>true,invalid:(_message:string)=>true},setup(p,{attrs,slots,emit,expose}){
   const l=useSolLocale(()=>p.locale),root=ref<HTMLElement|null>(null),input=ref<HTMLInputElement|null>(null),button=ref<{$el?:HTMLElement}|null>(null),dragging=ref(false),rejected=ref<SFileRejection[]>([]),localError=ref('');let depth=0;
   const available=()=>!fieldDisabled(p)&&!fieldReadonly(p);
   function resetDrag() {

@@ -1,6 +1,10 @@
 # 변경 이력
 
-## 미게시 · 다음 minor 버전 후보
+## 1.1.0 후보 · 미게시
+
+- Vue defineComponent의 순수 초기화 42곳에 PURE 표시를 추가합니다. 개별 import의 불필요한 컴포넌트 보존을 줄이며 setup·watch·이벤트·스타일 동작은 유지합니다.
+- 공개 45종에 맞춰 버전별 source/gzip/전체 JS 및 실제 설치본 개별 import 크기 검사를 추가합니다. 기존 1.0.0 파일과 176,000자 기준은 보존합니다. 1.1.0은 로컬 후보이며 npm 게시·운영 배포와 릴리스 동결은 아직 수행하지 않았습니다.
+- 공통 입력 8종의 opt-in 내부 clear action과 별도 자유 입력 SCombobox를 추가합니다. 기존 빈 값·change·폼 제출 계약을 보존하며 문서·starter 예제를 제공합니다.
 
 - SMonthCalendar를 추가합니다. ISO 선택과 표시 월을 controlled로 관리하며 범용 marker·키보드 탐색·로딩·모바일 marker 개수와 전체 자료 표시를 제공합니다. 기존 DatePicker 입력 API와 저장 형식은 유지합니다.
 - SSortableList의 isItemDisabled와 슬롯 disabled를 보완합니다. 조작 중 항목 비활성화 시 취소하고 가능한 다른 손잡이로 초점을 복원합니다.

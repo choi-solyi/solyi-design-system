@@ -76,7 +76,7 @@ function localToday() {
 }
 
 /** Standalone controlled calendar; no form normalization, data fetching or timezone conversion. */
-export const SMonthCalendar = defineComponent({
+export const SMonthCalendar = /* @__PURE__ */ defineComponent({
   name: 'SMonthCalendar',
   inheritAttrs: false,
   props: {

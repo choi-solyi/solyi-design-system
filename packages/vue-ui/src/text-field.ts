@@ -7,7 +7,7 @@ import { useSolLocale } from './locale'
 import { inputControlProps, useInputControl } from './input-control'
 import type { SolInputClearEvent, SolInputControlSlots } from './input-control'
 
-export const STextField = defineComponent({
+export const STextField = /* @__PURE__ */ defineComponent({
   name: 'STextField',
   inheritAttrs: false,
   props: {

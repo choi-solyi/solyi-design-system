@@ -1,0 +1,430 @@
+{
+  "sourceBaseline": "c440b03",
+  "branch": "feat/pure-size-budget",
+  "candidateVersion": "1.1.0",
+  "candidateStatus": "Unpublished temporary tarball; no immutable 1.1.0 artifact or current pointer",
+  "annotations": [
+    {
+      "file": "packages/vue-ui/src/actions.ts",
+      "count": 2
+    },
+    {
+      "file": "packages/vue-ui/src/form.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/surfaces.ts",
+      "count": 2
+    },
+    {
+      "file": "packages/vue-ui/src/tree.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/disclosures.ts",
+      "count": 3
+    },
+    {
+      "file": "packages/vue-ui/src/controls.ts",
+      "count": 6
+    },
+    {
+      "file": "packages/vue-ui/src/files.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/selection.ts",
+      "count": 3
+    },
+    {
+      "file": "packages/vue-ui/src/combobox.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/presentation.ts",
+      "count": 4
+    },
+    {
+      "file": "packages/vue-ui/src/navigation.ts",
+      "count": 2
+    },
+    {
+      "file": "packages/vue-ui/src/date-time.ts",
+      "count": 2
+    },
+    {
+      "file": "packages/vue-ui/src/progress.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/split-pane.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/sortable-list.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/month-calendar.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/text-field.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/index.ts",
+      "count": 3
+    },
+    {
+      "file": "packages/vue-ui/src/primitives.ts",
+      "count": 4
+    },
+    {
+      "file": "packages/vue-ui/src/autocomplete.ts",
+      "count": 1
+    },
+    {
+      "file": "packages/vue-ui/src/picker-host.ts",
+      "count": 1
+    }
+  ],
+  "sourceComparison": [
+    {
+      "kind": "before",
+      "characters": 223451,
+      "bytes": 225784,
+      "gzipBytes": 56831,
+      "totalJavaScriptBytes": 243313,
+      "totalJavaScriptGzipBytes": 63027,
+      "javascriptFiles": 6
+    },
+    {
+      "kind": "after",
+      "characters": 224107,
+      "bytes": 226440,
+      "gzipBytes": 56882,
+      "totalJavaScriptBytes": 243969,
+      "totalJavaScriptGzipBytes": 63078,
+      "javascriptFiles": 6
+    }
+  ],
+  "namedImports": [
+    {
+      "kind": "before",
+      "name": "SIcon",
+      "mode": "peers-external",
+      "bytes": 174013,
+      "gzipBytes": 50765,
+      "retainedNameStringCount": 42
+    },
+    {
+      "kind": "before",
+      "name": "SIcon",
+      "mode": "app-bundled",
+      "bytes": 313959,
+      "gzipBytes": 111805,
+      "retainedNameStringCount": 1
+    },
+    {
+      "kind": "before",
+      "name": "SCombobox",
+      "mode": "peers-external",
+      "bytes": 174021,
+      "gzipBytes": 50773,
+      "retainedNameStringCount": 42
+    },
+    {
+      "kind": "before",
+      "name": "SCombobox",
+      "mode": "app-bundled",
+      "bytes": 329282,
+      "gzipBytes": 117257,
+      "retainedNameStringCount": 3
+    },
+    {
+      "kind": "before",
+      "name": "all_plugin",
+      "mode": "peers-external",
+      "bytes": 174947,
+      "gzipBytes": 51330,
+      "retainedNameStringCount": 45
+    },
+    {
+      "kind": "before",
+      "name": "all_plugin",
+      "mode": "app-bundled",
+      "bytes": 477717,
+      "gzipBytes": 157322,
+      "retainedNameStringCount": 45
+    },
+    {
+      "kind": "after",
+      "name": "SIcon",
+      "mode": "peers-external",
+      "bytes": 16444,
+      "gzipBytes": 6316,
+      "retainedNameStringCount": 1
+    },
+    {
+      "kind": "after",
+      "name": "SIcon",
+      "mode": "app-bundled",
+      "bytes": 275574,
+      "gzipBytes": 99453,
+      "retainedNameStringCount": 1
+    },
+    {
+      "kind": "after",
+      "name": "SCombobox",
+      "mode": "peers-external",
+      "bytes": 31773,
+      "gzipBytes": 11933,
+      "retainedNameStringCount": 3
+    },
+    {
+      "kind": "after",
+      "name": "SCombobox",
+      "mode": "app-bundled",
+      "bytes": 290909,
+      "gzipBytes": 104919,
+      "retainedNameStringCount": 3
+    },
+    {
+      "kind": "after",
+      "name": "all_plugin",
+      "mode": "peers-external",
+      "bytes": 174941,
+      "gzipBytes": 51328,
+      "retainedNameStringCount": 45
+    },
+    {
+      "kind": "after",
+      "name": "all_plugin",
+      "mode": "app-bundled",
+      "bytes": 477717,
+      "gzipBytes": 157322,
+      "retainedNameStringCount": 45
+    }
+  ],
+  "equivalence": {
+    "executableAST": "identical after comment removal",
+    "ssr": "45/45 identical HTML after normalizing Vue-generated IDs; no component warnings or DOM globals",
+    "globalRegistration": "45/45 named identity",
+    "unchangedDistFiles": 162
+  },
+  "candidate": {
+    "sourceBase": "c440b03",
+    "branch": "feat/pure-size-budget",
+    "version": "1.1.0",
+    "private": true,
+    "tarballSha256": "79a547b4f1809c25f196ba2f4ff944a08044df39e57fa9ebca9a9b4875c56d41",
+    "note": "Temporary local candidate; no frozen artifact/current pointer/publication",
+    "sourceMetrics": {
+      "characters": 224107,
+      "bytes": 226440,
+      "gzipBytes": 56882,
+      "totalJavaScriptBytes": 243969,
+      "totalJavaScriptGzipBytes": 63078,
+      "javascriptFiles": 6
+    },
+    "imports": [
+      {
+        "name": "SIcon",
+        "bytes": 16444,
+        "gzipBytes": 6316,
+        "retainedNameStrings": [
+          "SIcon"
+        ]
+      },
+      {
+        "name": "SCombobox",
+        "bytes": 31773,
+        "gzipBytes": 11933,
+        "retainedNameStrings": [
+          "SIcon",
+          "SForm",
+          "SCombobox"
+        ]
+      },
+      {
+        "name": "all_plugin",
+        "bytes": 174941,
+        "gzipBytes": 51328,
+        "retainedNameStrings": [
+          "SMonthCalendar",
+          "SSortableList",
+          "SChip",
+          "SBadge",
+          "SIcon",
+          "SIconBtn",
+          "SForm",
+          "SContainer",
+          "SRow",
+          "SCol",
+          "SCard",
+          "SAlert",
+          "STree",
+          "SProgressLinear",
+          "SProgressCircular",
+          "SBtn",
+          "STextField",
+          "SDialog",
+          "SDataTable",
+          "SCheckbox",
+          "SRadioGroup",
+          "SSwitch",
+          "SSelect",
+          "STextarea",
+          "SNumberInput",
+          "STabs",
+          "SSnackbar",
+          "SDatePicker",
+          "STimePicker",
+          "SSegmentedControl",
+          "SMultiSelect",
+          "SRangeSlider",
+          "SSplitBtn",
+          "SContextMenu",
+          "SResizableSplitPane",
+          "STooltip",
+          "SPopover",
+          "SAccordion",
+          "SFileInput",
+          "SAutocomplete",
+          "SCombobox",
+          "SBreadcrumbs",
+          "SAvatar",
+          "SStepper",
+          "SBarChart"
+        ]
+      }
+    ],
+    "byteMatchingInstalledDistFiles": 163
+  },
+  "legacy": {
+    "release": "1.0.0",
+    "sha256": "72d1d8d622287e8a86444c404ad20f7c5ed5d065dc2b4e48765374697854e23a",
+    "verifyRelease": "passed",
+    "immutableReplacementRejection": "passed",
+    "sameVersionDifferentBytesRejection": "passed",
+    "sourceMetrics": {
+      "characters": 145638,
+      "bytes": 147294,
+      "gzipBytes": 37493,
+      "totalJavaScriptBytes": 164823,
+      "totalJavaScriptGzipBytes": 43689,
+      "javascriptFiles": 6
+    },
+    "componentCount": 38
+  },
+  "declarations": {
+    "reports": [
+      {
+        "compiler": "library",
+        "version": "6.0.3",
+        "options": {
+          "strict": true,
+          "skipLibCheck": false,
+          "target": "ES2022",
+          "module": "ESNext",
+          "moduleResolution": "Bundler",
+          "types": [],
+          "lib": [
+            "ES2022",
+            "DOM"
+          ]
+        },
+        "baseline": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "candidate": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "added": 0,
+        "removed": 0
+      },
+      {
+        "compiler": "starter",
+        "version": "5.9.3",
+        "options": {
+          "strict": true,
+          "skipLibCheck": false,
+          "target": "ES2022",
+          "module": "ESNext",
+          "moduleResolution": "Bundler",
+          "types": [],
+          "lib": [
+            "ES2022",
+            "DOM"
+          ]
+        },
+        "baseline": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "candidate": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "added": 0,
+        "removed": 0
+      }
+    ],
+    "scope": "Same import/global fixture and pinned peers; external errors remain unsuppressed and separately reported"
+  },
+  "checks": {
+    "sourceBuild": "passed TS 6.0.3",
+    "sourceOwnDeclarations": "36 files, own=0, skipLibCheck:false, TS5.9.3",
+    "sourceAPIs": "45 exports/global registrations",
+    "dedicatedRuntime": "9 existing APIs passed",
+    "candidateSizeBudgets": "passed source + totalJS + 3 installed import gzip budgets",
+    "candidateBuild": "TypeScript + Vite passed",
+    "comboboxRuntime": "passed actual installed tarball",
+    "comboboxTypes": "2 positive / 7 intentional-negative SFC cases passed",
+    "chrome": "144 combinations passed, 320/768/1440 widths; installed tarball, no source alias",
+    "budgetNegativeCases": "passed over-limit/exact APIs/unknown version/original ordering",
+    "frozenImmutable": "passed old release verification and replacement rejection",
+    "fullDeliveryPipeline": "NOT RUN: defer immutable 1.1.0 preparation until release scope is complete",
+    "realFoldSafariOSKeyboardScreenReader": "NOT RUN",
+    "prepack": "passed normal npm pack dry-run lifecycle for Core and UI",
+    "legacySourceBudget": "passed actual frozen installed 1.0.0 / 38 APIs / 145638 characters",
+    "markdownLinks": "48 Markdown documents / 195 local targets passed",
+    "componentsDocumentation": "45 API contracts, Examples/Sample Code/API, keyboard/deep-links passed after version metadata regeneration"
+  },
+  "commands": [
+    "node scripts/pure-regression-check.mjs --fixtures=qa-output/pure-size/",
+    "node scripts/library-size-budget-check.mjs",
+    "node scripts/library-size-check.mjs --consumer=qa-output/pure-size/final/consumer/",
+    "node scripts/combobox-runtime-check.mjs --consumer=qa-output/pure-size/final/consumer/",
+    "node scripts/combobox-types-check.mjs --consumer=qa-output/pure-size/final/consumer/",
+    "node scripts/combobox-browser-check.mjs --consumer=qa-output/pure-size/final/consumer/",
+    "node scripts/combobox-declaration-compare.mjs --fixtures=qa-output/pure-size/final/"
+  ],
+  "next": [
+    "Public Date pickerPresentation opt-in adapter on the verified private host",
+    "Time opt-in adapter preserving native/list, min-based steps, preview/commit/cancel",
+    "Common Dialog fixed header/body-only scroll and description spacing; preserve Switch accessible label"
+  ],
+  "publication": {
+    "npm": false,
+    "remotePush": false,
+    "productionDeployment": false,
+    "externalConsumerChange": false
+  },
+  "resolvedFailures": [
+    "Initial offline install cache path corrected without force or dependency changes",
+    "Export-only size fixture produced an eliminated entry; observable entry guard added; zero-byte results discarded",
+    "Generated API data versions updated 1.0.0 -> 1.1.0; API/schema/example payloads unchanged"
+  ]
+}

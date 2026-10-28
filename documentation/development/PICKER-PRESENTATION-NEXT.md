@@ -30,4 +30,4 @@
 - Date range의 부분 draft·취소·부모 거부, ISO/요일 표시/FormData 분리와 기존 DateChange reason·close reason을 보존합니다. Time은 드래그 중 host 변경·pointercancel·외부 모델 갱신이 잘못된 commit을 만들지 않아야 합니다.
 - 전역 overflow:hidden, 일괄 z-index 덮어쓰기, 사업별 저장/공휴일/API 규칙을 추가하지 않습니다. 전체 overlay 통합은 승인 계획 6단계와 연결하되 이 작은 단위에서 완료처럼 보고하지 않습니다.
 
-기존 ESM 크기 및 frozen 1.0.0 게이트는 출시 차단으로 유지합니다. npm·push·운영 배포는 이 착수 범위에 포함되지 않습니다.
+1.0.0의 기존 ESM 기준과 frozen 검사는 보존합니다. 사용자 승인된 [1.1.0 후보 크기 기준](PURE-SIZE-VALIDATION.md)은 별도 설치본에서 통과했으며 정식 artifact 동결과 전체 delivery 검증은 남아 있습니다. npm·push·운영 배포는 이 착수 범위에 포함되지 않습니다.

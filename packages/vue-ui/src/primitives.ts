@@ -35,7 +35,7 @@ function textContent(nodes: readonly VNode[] | undefined): string {
     .trim()
 }
 
-export const SIcon = defineComponent({
+export const SIcon = /* @__PURE__ */ defineComponent({
   name: 'SIcon',
   inheritAttrs: false,
   props: {
@@ -88,7 +88,7 @@ export const SIcon = defineComponent({
   },
 })
 
-export const SChip = defineComponent({
+export const SChip = /* @__PURE__ */ defineComponent({
   name: 'SChip',
   inheritAttrs: false,
   props: {
@@ -178,7 +178,7 @@ export const SChip = defineComponent({
   },
 })
 
-export const SBadge = defineComponent({
+export const SBadge = /* @__PURE__ */ defineComponent({
   name: 'SBadge',
   inheritAttrs: false,
   props: {
@@ -240,7 +240,7 @@ export const SBadge = defineComponent({
 
 /** Keep SBtn's click/loading contract in one implementation without an import cycle. */
 export function createSIconBtn(button: Component) {
-  return defineComponent({
+  return /* @__PURE__ */ defineComponent({
     name: 'SIconBtn',
     inheritAttrs: false,
     props: {

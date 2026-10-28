@@ -19,7 +19,7 @@ export interface SolComboboxHandle extends SolInputHandle {
 }
 
 /** Editable text is a draft. Only confirmation, selection or clear proposes a model update. */
-export const SCombobox = defineComponent({
+export const SCombobox = /* @__PURE__ */ defineComponent({
   name: 'SCombobox',
   inheritAttrs: false,
   props: {

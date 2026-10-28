@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile,readdir,stat} from 'node:fs/promises';
 import {currentPackageNames} from './package-identity.mjs';
+import {assertSourceBudget,measureSource} from './library-size-budget.mjs';
 const root=new URL('../',import.meta.url),json=async file=>JSON.parse(await readFile(new URL(file,root),'utf8'));
 const packs=await json('artifacts/pack-report.json');
 const ui=await json('packages/vue-ui/package.json'),core=await json('packages/core/package.json');
@@ -54,8 +55,9 @@ for(const subpath of ['./fonts.css','./code-fonts.css']){
 const library=await readFile(new URL('packages/vue-ui/dist/index.js',root),'utf8');assert.ok(/from ["']vue["']/.test(library));assert.ok(/from ["']vuetify\//.test(library));assert.match(library,/\.\/core\/overflow\.js/,'Overflow runtime resolves inside the package');
 // A source-size budget is a growth alarm, not proof that peer runtimes are external.
 // Vite's external predicate and the real consumers' single installed runtimes are checked separately.
-// 0.8.0 adds nine dedicated APIs; retain an explicit source growth budget.
-assert.ok(library.length<176000,'ESM component-source budget (176k characters, 34 APIs)');
+// Keep this gate at the original location; versioned criteria include exact API coverage.
+const sourceSize=await measureSource(new URL('packages/vue-ui/',root));
+assertSourceBudget(ui.version,sourceSize.metrics,sourceSize.components);
 const types=await readFile(new URL('packages/vue-ui/dist/index.d.ts',root),'utf8');for(const name of ['SBtn','STextField','SDialog','SDataTable','TableColumn','TableSort','SCheckbox','SRadioGroup','SSwitch','SSelect','STextarea','SNumberInput','STabs','SSnackbar','SDatePicker','STimePicker','SSegmentedControl','SMultiSelect','SRangeSlider','SSplitBtn','SContextMenu','SResizableSplitPane','SolRangeValue','SolOptionLoader','SolMenuItem','SolLocale','DateValue','SolPickerHandle','SBtn','STextField','SDialog','SDataTable','SSnackbar','SProgressLinear','SProgressCircular','createSolyiVuetify','applySolyiAppearance'])assert.ok(types.includes(name));
 for(const name of ["SolButton","SolField","SolDialog","SolTable","SolCheckbox","SolRadioGroup","SolSwitch","SolSelect","SolTextarea","SolNumberInput","SolTabs","SolToast","SolDatePicker","SolTimePicker","SolSegmentedControl","SolMultiSelect","SolRangeSlider","SolSplitButton","SolContextMenu","SolResizableSplitPane"])assert.ok(!types.includes(' '+name+':')&&!types.includes(' '+name+';'),'No legacy component declaration '+name);for(const name of ['SCard','SAlert','STree','STreeItem'])assert.ok(types.includes(name));
 for(const name of ['STooltip','SPopover','SAccordion','SBreadcrumbs','SFileInput','SAutocomplete','SAvatar','SStepper','SBarChart','SForm','SContainer','SRow','SCol','SFormHandle','SFieldHandle','sRules'])assert.ok(types.includes(name),name+' public declaration');

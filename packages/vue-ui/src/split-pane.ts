@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 import { displayFieldProps, fieldDescription, fieldMessages } from './controls'
 import { useSolLocale, formatSolNumber } from './locale'
 
-export const SResizableSplitPane = defineComponent({
+export const SResizableSplitPane = /* @__PURE__ */ defineComponent({
   name: 'SResizableSplitPane',
   inheritAttrs: false,
   props: {

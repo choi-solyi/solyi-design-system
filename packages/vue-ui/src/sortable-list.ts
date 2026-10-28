@@ -86,7 +86,7 @@ export interface SolSortableComponent {
 }
 
 // Runtime unknown values are exposed through the checked generic public contract above.
-export const SSortableList = defineComponent({
+export const SSortableList = /* @__PURE__ */ defineComponent({
   name: 'SSortableList',
   inheritAttrs: false,
   props: {
