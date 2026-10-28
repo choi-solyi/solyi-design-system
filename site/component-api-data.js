@@ -5978,6 +5978,14 @@ export const componentReferences=[
         "values": []
       },
       {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "default": "undefined",
+        "description": "description 설정값입니다.",
+        "values": []
+      },
+      {
         "name": "eyebrow",
         "type": "string",
         "required": false,
@@ -5996,6 +6004,26 @@ export const componentReferences=[
     ],
     "events": [],
     "slots": [
+      {
+        "name": "title",
+        "scope": "인자 없음",
+        "description": "title 영역의 내용입니다."
+      },
+      {
+        "name": "leading",
+        "scope": "인자 없음",
+        "description": "leading 영역의 내용입니다."
+      },
+      {
+        "name": "description",
+        "scope": "인자 없음",
+        "description": "description 영역의 내용입니다."
+      },
+      {
+        "name": "meta",
+        "scope": "인자 없음",
+        "description": "meta 영역의 내용입니다."
+      },
       {
         "name": "default",
         "scope": "인자 없음",
@@ -6351,6 +6379,97 @@ export const componentReferences=[
         "source": "interface TableColumn {key:string;label:string;width?:string;align?:'start'|'end';sortable?:boolean;ellipsis?:boolean;format?:'text'|'number'|'date'}"
       }
     ],
+    "passthrough": null
+  },
+  {
+    "name": "SEmptyState",
+    "id": "sempty-state",
+    "group": "표시·레이아웃",
+    "description": "빈 자료의 설명과 다음 행동을 표시합니다. 로딩·오류 상태는 별도로 구성합니다.",
+    "exampleRoute": "component",
+    "example": "empty",
+    "source": "packages/vue-ui/src/surfaces.ts",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "default": "undefined",
+        "description": "입력·제목·패널의 접근성 연결에 사용하는 고유 ID입니다.",
+        "values": []
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "default": "undefined",
+        "description": "표면 또는 패널의 제목입니다.",
+        "values": []
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "default": "undefined",
+        "description": "description 설정값입니다.",
+        "values": []
+      },
+      {
+        "name": "icon",
+        "type": "SolIconName",
+        "required": false,
+        "default": "undefined",
+        "description": "icon 설정값입니다.",
+        "values": []
+      },
+      {
+        "name": "variant",
+        "type": "'card'|'page'",
+        "required": false,
+        "default": "'card'",
+        "description": "행동의 시각적 위계입니다.",
+        "values": [
+          "card",
+          "page"
+        ]
+      },
+      {
+        "name": "headingLevel",
+        "type": "2|3|4",
+        "required": false,
+        "default": "3",
+        "description": "문서의 제목 위계입니다. 화면의 실제 h2·h3·h4 수준에 맞춥니다.",
+        "values": []
+      },
+      {
+        "name": "minBlockSize",
+        "type": "[String,Number]",
+        "required": false,
+        "default": "undefined",
+        "description": "minBlockSize 설정값입니다.",
+        "values": []
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "icon",
+        "scope": "인자 없음",
+        "description": "icon 영역의 내용입니다."
+      },
+      {
+        "name": "description",
+        "scope": "인자 없음",
+        "description": "description 영역의 내용입니다."
+      },
+      {
+        "name": "actions",
+        "scope": "인자 없음",
+        "description": "내용과 구분된 하단·보조 행동입니다."
+      }
+    ],
+    "methods": [],
+    "types": [],
     "passthrough": null
   },
   {
@@ -7042,7 +7161,8 @@ export const componentExampleSources={
   "help": "<script setup lang=\"ts\">\nconst open = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"짧은 설명과 추가 정보\">\n    <p>짧은 설명에는 툴팁, 읽을 내용과 행동이 있는 추가 정보에는 팝오버를 사용합니다.</p>\n    <div class=\"sol-actions\">\n      <STooltip id=\"recipe-tooltip\" label=\"짧은 설명\" text=\"가상 기록을 찾는 도구예요.\" />\n      <SPopover id=\"recipe-popover\" v-model=\"open\" label=\"추가 정보\" title=\"추가 정보\">\n        <p>읽을 내용과 닫기 행동이 있는 가상 정보입니다.</p>\n      </SPopover>\n    </div>\n    <p class=\"sol-hint\">\n      포커스·포인터·터치로 열고 Escape로 닫습니다. 팝오버는 닫기 버튼과 초점 복귀를 제공합니다.\n    </p>\n  </SCard>\n</template>\n",
   "progress": "<script setup lang=\"ts\">\nimport type { SProgressState } from 'solyi-ui'\n\nconst state = ref<string | null>('indeterminate'),\n  animated = ref(true),\n  showValue = ref(true),\n  showMessage = ref(true)\nconst resolved = computed(() => state.value as SProgressState)\nconst options = [\n  { value: 'determinate', label: '35% 진행' },\n  { value: 'indeterminate', label: '진행률을 모르는 처리 중' },\n  { value: 'complete', label: '완료' },\n  { value: 'error', label: '오류' },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"값을 아는 진행과 처리 중 표시\">\n    <SSelect\n      id=\"recipe-progress-mode\"\n      v-model=\"state\"\n      label=\"가상 작업 상태\"\n      :options=\"options\"\n      required\n    />\n    <SCheckbox id=\"recipe-progress-motion\" v-model=\"animated\" label=\"처리 중 반복 모션\" />\n    <SCheckbox id=\"recipe-progress-value\" v-model=\"showValue\" label=\"수치 표시\" />\n    <SCheckbox id=\"recipe-progress-message\" v-model=\"showMessage\" label=\"상태 문구 표시\" />\n    <SProgressLinear\n      id=\"recipe-linear\"\n      label=\"선형 진행\"\n      :model-value=\"35\"\n      :state=\"resolved\"\n      :animated=\"animated\"\n      :show-value=\"showValue\"\n      :show-message=\"showMessage\"\n    />\n    <SProgressCircular\n      id=\"recipe-circular\"\n      label=\"원형 진행\"\n      :model-value=\"35\"\n      :state=\"resolved\"\n      :animated=\"animated\"\n      :show-value=\"showValue\"\n      :show-message=\"showMessage\"\n    />\n    <p>\n      알 수 없는 진행률에는 퍼센트를 만들지 않습니다. 움직임 줄이기 설정에서는 정적으로 표시합니다.\n    </p>\n  </SCard>\n</template>\n",
   "chart": "<script setup lang=\"ts\">\nimport type { STreeItem, SBarChartItem } from 'solyi-ui'\n\ndefineProps<{ part?: string }>()\nconst selected = ref<string | null>(null),\n  expanded = ref<string[]>([]),\n  week = ref<string | null>('current')\nconst items: STreeItem[] = [\n  {\n    id: 'notes',\n    label: '기록',\n    children: [\n      { id: 'garden', label: '작은 정원' },\n      { id: 'book', label: '저녁 책장' },\n    ],\n  },\n  { id: 'archive', label: '보관', children: [{ id: 'walk', label: '주말 산책' }] },\n]\nconst chart = computed<SBarChartItem[]>(() =>\n  ['월요일', '화요일', '수요일', '목요일'].map((label, index) => ({\n    id: String(index),\n    label,\n    value: (week.value === 'current' ? [2, 4, 0, 5] : [1, 3, 2, 4])[index],\n  })),\n)\nconst total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0))\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '가상 자료의 차트와 계층'\">\n    <template v-if=\"!part || part === 'chart'\">\n      <SSelect\n        id=\"recipe-chart-week\"\n        v-model=\"week\"\n        label=\"가상 활동 주간\"\n        :options=\"[\n          { value: 'current', label: '이번 주' },\n          { value: 'previous', label: '지난주' },\n        ]\"\n      />\n      <p role=\"status\">총 {{ total }}개 기록 · 가상 자료</p>\n      <SBarChart\n        id=\"recipe-chart\"\n        label=\"가상 활동 횟수 · 차트와 같은 자료\"\n        :items=\"chart\"\n        category-label=\"요일\"\n        value-label=\"기록 수\"\n      />\n    </template>\n    <template v-if=\"!part || part === 'tree'\">\n      <STree\n        id=\"recipe-tree\"\n        v-model=\"selected\"\n        v-model:expanded=\"expanded\"\n        label=\"가상 기록 폴더\"\n        :items=\"items\"\n      />\n      <p role=\"status\">선택: {{ selected || '없음' }}</p>\n    </template>\n  </SCard>\n</template>\n",
-  "composition": "<script setup lang=\"ts\">\nconst query = ref('')\nconst state = ref<string | null>('all')\nconst failed = ref(true)\nconst resultPanel = useTemplateRef<HTMLElement>('resultPanel')\n\nfunction retry(event: MouseEvent) {\n  const owner = event.currentTarget\n  failed.value = false\n  nextTick(() => {\n    if (document.activeElement === owner || document.activeElement === document.body) {\n      resultPanel.value?.focus({ preventScroll: true })\n    }\n  })\n}\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"컨트롤과 보조 행동의 관계\">\n    <div class=\"sol-filterbar\">\n      <STextField\n        id=\"recipe-composition-query\"\n        v-model=\"query\"\n        label=\"검색\"\n        help=\"도움말이 있어도 컨트롤 시작점은 같습니다.\"\n      />\n      <SSelect\n        id=\"recipe-composition-state\"\n        v-model=\"state\"\n        label=\"상태\"\n        :options=\"[\n          { value: 'all', label: '전체' },\n          { value: 'done', label: '완료' },\n        ]\"\n        required\n      />\n    </div>\n    <SAlert v-if=\"failed\" tone=\"danger\" title=\"가상 자료를 불러오지 못했어요.\">\n      <p>현재 검색 조건은 유지됩니다.</p>\n      <template #actions>\n        <SBtn variant=\"inline\" @click=\"retry\"> 다시 시도 </SBtn>\n      </template>\n    </SAlert>\n    <p v-else id=\"recipe-composition-result\" ref=\"resultPanel\" tabindex=\"-1\" role=\"status\">\n      ✓ 가상 재시도를 확인했어요.\n    </p>\n  </SCard>\n</template>\n",
+  "composition": "<script setup lang=\"ts\">\nconst query = ref('')\nconst state = ref<string | null>('all')\nconst failed = ref(true)\nconst bookmarked = ref(false)\nconst resultPanel = useTemplateRef<HTMLElement>('resultPanel')\n\nfunction retry(event: MouseEvent) {\n  const owner = event.currentTarget\n  failed.value = false\n  nextTick(() => {\n    if (document.activeElement === owner || document.activeElement === document.body) {\n      resultPanel.value?.focus({ preventScroll: true })\n    }\n  })\n}\n</script>\n<template>\n  <div class=\"sol-stack\">\n    <SCard :heading-level=\"2\" title=\"컨트롤과 보조 행동의 관계\">\n      <div class=\"sol-filterbar\">\n        <STextField\n          id=\"recipe-composition-query\"\n          v-model=\"query\"\n          label=\"검색\"\n          help=\"도움말이 있어도 컨트롤 시작점은 같습니다.\"\n        />\n        <SSelect\n          id=\"recipe-composition-state\"\n          v-model=\"state\"\n          label=\"상태\"\n          :options=\"[\n            { value: 'all', label: '전체' },\n            { value: 'done', label: '완료' },\n          ]\"\n          required\n        />\n      </div>\n      <SAlert v-if=\"failed\" tone=\"danger\" title=\"가상 자료를 불러오지 못했어요.\">\n        <p>현재 검색 조건은 유지됩니다.</p>\n        <template #actions>\n          <SBtn variant=\"inline\" @click=\"retry\"> 다시 시도 </SBtn>\n        </template>\n      </SAlert>\n      <p v-else id=\"recipe-composition-result\" ref=\"resultPanel\" tabindex=\"-1\" role=\"status\">\n        ✓ 가상 재시도를 확인했어요.\n      </p>\n    </SCard>\n    <SCard description=\"제목 링크와 보조 버튼을 독립적으로 조작할 수 있습니다.\">\n      <template #leading><SIcon name=\"folder\" decorative /></template>\n      <template #title><a href=\"?view=recipes&amp;example=empty\">항목 미리보기</a></template>\n      <template #meta><SBadge :content=\"bookmarked ? '보관됨' : '예제'\" /></template>\n      <template #actions>\n        <SBtn @click=\"bookmarked = !bookmarked\">{{ bookmarked ? '보관 해제' : '보관' }}</SBtn>\n      </template>\n    </SCard>\n  </div>\n</template>\n",
   "layouts": "<script setup lang=\"ts\">\nconst heading = useTemplateRef<HTMLElement>('heading')\nconst view = ref('list')\nconst selected = ref('작은 정원')\nconst name = ref('가상 사용자')\nconst result = ref('')\n\nfunction move(next: string) {\n  view.value = next\n  nextTick(() => heading.value?.focus())\n}\n</script>\n\n<template>\n  <SCard :heading-level=\"2\" title=\"설정·목록·상세 화면틀\">\n    <template #actions>\n      <nav class=\"sol-actions\" aria-label=\"가상 화면\">\n        <SBtn @click=\"move('list')\">목록</SBtn>\n        <SBtn @click=\"move('detail')\">상세</SBtn>\n        <SBtn @click=\"move('settings')\">설정</SBtn>\n      </nav>\n    </template>\n    <SContainer fluid class=\"pa-0\">\n      <SRow>\n        <SCol cols=\"12\" md=\"4\">\n          <p>목록·상세·설정은 같은 여백과 반응형 열을 공유합니다.</p>\n        </SCol>\n        <SCol cols=\"12\" md=\"8\">\n          <section>\n            <h3 id=\"recipe-layout-title\" ref=\"heading\" tabindex=\"-1\">\n              {{ view === 'list' ? '목록' : view === 'detail' ? '상세' : '설정' }}\n            </h3>\n            <div v-if=\"view === 'list'\" class=\"sol-actions\">\n              <SBtn\n                v-for=\"row in ['작은 정원', '조용한 책장']\"\n                :key=\"row\"\n                @click=\"\n                  selected = row;\n                  move('detail');\n                \"\n                >{{ row }}</SBtn\n              >\n            </div>\n            <SCard v-else-if=\"view === 'detail'\" :title=\"selected\">\n              <p>가상 기록의 짧은 상세입니다.</p>\n              <template #actions><SBtn @click=\"move('list')\">목록으로</SBtn></template>\n            </SCard>\n            <SForm v-else class=\"sol-stack\" @submit.prevent=\"result = '✓ 가상 설정을 확인했어요.'\">\n              <STextField id=\"recipe-layout-name\" v-model=\"name\" label=\"사용자 이름\" />\n              <SBtn type=\"submit\">설정 확인</SBtn>\n            </SForm>\n            <p role=\"status\">{{ result }}</p>\n          </section>\n        </SCol>\n      </SRow>\n    </SContainer>\n  </SCard>\n</template>\n",
-  "data": "<script setup lang=\"ts\">\nimport type { TableColumn, TableRow, TableSort } from 'solyi-ui'\n\nconst query = ref(''),\n  page = ref(1),\n  selected = ref<string[]>([]),\n  sort = ref<TableSort | null>({ key: 'date', direction: 'descending' }),\n  state = ref<string | null>('ready')\nconst columns: TableColumn[] = [\n  { key: 'name', label: '이름', sortable: true },\n  { key: 'status', label: '상태', width: '96px' },\n  { key: 'date', label: '변경일', width: '128px', sortable: true },\n]\nconst all: TableRow[] = [\n  {\n    id: '1',\n    name: '작은 정원의 아주 긴 가상 기록 제목을 한 줄로 표시합니다',\n    status: '진행 중',\n    date: '2026-10-22',\n  },\n  { id: '2', name: '저녁 책장', status: '초안', date: '2026-10-21' },\n  { id: '3', name: '주말 산책', status: '완료', date: '2026-10-20' },\n  { id: '4', name: '계절 관찰', status: '진행 중', date: '2026-10-19' },\n]\nconst filtered = computed(() =>\n  all\n    .filter(r => String(r.name).includes(query.value.trim()))\n    .sort((a, b) => {\n      const s = sort.value\n      return s\n        ? String(a[s.key]).localeCompare(String(b[s.key]), 'ko') *\n            (s.direction === 'ascending' ? 1 : -1)\n        : 0\n    }),\n)\nconst pages = computed(() => Math.max(1, Math.ceil(filtered.value.length / 2))),\n  rows = computed(() => filtered.value.slice((page.value - 1) * 2, page.value * 2))\nwatch([query, sort], () => (page.value = 1))\nwatch(pages, p => (page.value = Math.min(page.value, p)))\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"선택·정렬·페이지\">\n    <STextField id=\"recipe-table-search\" v-model=\"query\" label=\"자료 검색\" type=\"search\" />\n    <SSelect\n      id=\"recipe-table-state\"\n      v-model=\"state\"\n      label=\"가상 상태\"\n      :options=\"[\n        { value: 'ready', label: '정상' },\n        { value: 'loading', label: '로딩' },\n        { value: 'error', label: '오류' },\n      ]\"\n      required\n    />\n    <SDataTable\n      caption=\"가상 자료 목록\"\n      :columns=\"columns\"\n      :rows=\"rows\"\n      selectable\n      v-model:selected=\"selected\"\n      v-model:sort=\"sort\"\n      v-model:page=\"page\"\n      :page-count=\"pages\"\n      :loading=\"state === 'loading'\"\n      :error=\"state === 'error' ? '가상 오류입니다. 검색과 선택은 남습니다.' : ''\"\n      @retry=\"state = 'ready'\"\n    />\n    <SBtn variant=\"inline\" :disabled=\"!selected.length\" @click=\"selected = []\"> 선택 해제 </SBtn>\n  </SCard>\n</template>\n"
+  "data": "<script setup lang=\"ts\">\nimport type { TableColumn, TableRow, TableSort } from 'solyi-ui'\n\nconst query = ref(''),\n  page = ref(1),\n  selected = ref<string[]>([]),\n  sort = ref<TableSort | null>({ key: 'date', direction: 'descending' }),\n  state = ref<string | null>('ready')\nconst columns: TableColumn[] = [\n  { key: 'name', label: '이름', sortable: true },\n  { key: 'status', label: '상태', width: '96px' },\n  { key: 'date', label: '변경일', width: '128px', sortable: true },\n]\nconst all: TableRow[] = [\n  {\n    id: '1',\n    name: '작은 정원의 아주 긴 가상 기록 제목을 한 줄로 표시합니다',\n    status: '진행 중',\n    date: '2026-10-22',\n  },\n  { id: '2', name: '저녁 책장', status: '초안', date: '2026-10-21' },\n  { id: '3', name: '주말 산책', status: '완료', date: '2026-10-20' },\n  { id: '4', name: '계절 관찰', status: '진행 중', date: '2026-10-19' },\n]\nconst filtered = computed(() =>\n  all\n    .filter(r => String(r.name).includes(query.value.trim()))\n    .sort((a, b) => {\n      const s = sort.value\n      return s\n        ? String(a[s.key]).localeCompare(String(b[s.key]), 'ko') *\n            (s.direction === 'ascending' ? 1 : -1)\n        : 0\n    }),\n)\nconst pages = computed(() => Math.max(1, Math.ceil(filtered.value.length / 2))),\n  rows = computed(() => filtered.value.slice((page.value - 1) * 2, page.value * 2))\nwatch([query, sort], () => (page.value = 1))\nwatch(pages, p => (page.value = Math.min(page.value, p)))\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"선택·정렬·페이지\">\n    <STextField id=\"recipe-table-search\" v-model=\"query\" label=\"자료 검색\" type=\"search\" />\n    <SSelect\n      id=\"recipe-table-state\"\n      v-model=\"state\"\n      label=\"가상 상태\"\n      :options=\"[\n        { value: 'ready', label: '정상' },\n        { value: 'loading', label: '로딩' },\n        { value: 'error', label: '오류' },\n      ]\"\n      required\n    />\n    <SDataTable\n      caption=\"가상 자료 목록\"\n      :columns=\"columns\"\n      :rows=\"rows\"\n      selectable\n      v-model:selected=\"selected\"\n      v-model:sort=\"sort\"\n      v-model:page=\"page\"\n      :page-count=\"pages\"\n      :loading=\"state === 'loading'\"\n      :error=\"state === 'error' ? '가상 오류입니다. 검색과 선택은 남습니다.' : ''\"\n      @retry=\"state = 'ready'\"\n    />\n    <SBtn variant=\"inline\" :disabled=\"!selected.length\" @click=\"selected = []\"> 선택 해제 </SBtn>\n  </SCard>\n</template>\n",
+  "empty": "<script setup lang=\"ts\">\nimport { useSolLocale } from 'solyi-ui'\n\nconst locale = useSolLocale(),\n  added = ref(false),\n  target = ref<HTMLElement | null>(null)\nconst empty = ref<{ $el: HTMLElement } | null>(null)\nasync function toggle() {\n  added.value = !added.value\n  await nextTick()\n  ;(added.value ? target.value : empty.value?.$el)?.focus()\n}\n</script>\n<template>\n  <SEmptyState\n    v-if=\"!added\"\n    id=\"recipe-empty\"\n    ref=\"empty\"\n    tabindex=\"-1\"\n    :heading-level=\"2\"\n    icon=\"folder\"\n    :title=\"locale.code === 'en-US' ? 'No items yet' : '아직 항목이 없어요.'\"\n    :description=\"\n      locale.code === 'en-US'\n        ? 'Create your first item to get started.'\n        : '첫 항목을 추가해 보세요.'\n    \"\n    :min-block-size=\"240\"\n  >\n    <template #actions\n      ><SBtn id=\"recipe-empty-add\" variant=\"primary\" @click=\"toggle\">{{\n        locale.code === 'en-US' ? 'Add item' : '항목 추가'\n      }}</SBtn></template\n    >\n  </SEmptyState>\n  <SCard v-else :heading-level=\"2\" :title=\"locale.code === 'en-US' ? 'Your first item' : '첫 항목'\">\n    <p ref=\"target\" tabindex=\"-1\">\n      {{ locale.code === 'en-US' ? 'One example item is ready.' : '예제 항목을 추가했어요.' }}\n    </p>\n    <template #actions\n      ><SBtn @click=\"toggle\">{{\n        locale.code === 'en-US' ? 'Reset example' : '예제 초기화'\n      }}</SBtn></template\n    >\n  </SCard>\n  <p role=\"status\">{{ locale.code === 'en-US' ? 'Items: ' : '항목 수: ' }}{{ added ? 1 : 0 }}</p>\n</template>\n"
 };

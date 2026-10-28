@@ -1,5 +1,7 @@
 # 확장 요청 2 · 실제 저장소 대조 및 구현 계획
 
+표시 후속: SEmptyState(title/description/icon, card/page, headingLevel/minBlockSize와 description/icon/actions 슬롯)를 추가했습니다. SCard에 leading/title/description/meta 슬롯과 description을 확장하며 기존 default/actions를 유지합니다. 카드 전체를 버튼으로 감싸는 primaryAction은 추가하지 않고 제목 슬롯의 native 링크와 보조 버튼을 독립 배치합니다. 비대화형 EmptyState에는 loading/readonly/validate를 추가하지 않습니다. 360px 실렌더에서 빈 상태 추가·초기화 포커스와 카드 링크/버튼을 확인했고 인접 카드 간격은 기존 sol-stack으로 보완했습니다. 패키지 빌드와 저장소 기존 옵션(strictTemplates, checkUnknownProps:false, skipLibCheck:true)의 변경된 4개 정본 예제 타입 검사가 통과했습니다. 설치본/테마 통합 검사는 최종 후보에서 수행합니다.
+
 Dialog 후속: feedback/actions-start와 busyScope body/all을 연결했습니다. 외부 busy 기본 false, 본문 inert는 폼 값을 제거하지 않습니다. body는 닫기 허용, all은 내부 feedback·actions·닫기·Escape·바깥 클릭 잠금이며 부모 modelValue 제어는 유지합니다. 작업 시작 시 잠긴 포커스를 안전한 영역으로 옮기고 종료 시 사용자가 옮기지 않은 경우만 복원합니다. 기존 고정 헤더/액션과 본문 스크롤이 기본이므로 중복 scrollable/sticky 옵션은 추가하지 않았습니다. 모바일 실렌더와 전체 잠금 Escape·포커스 복원/본문 잠금 닫기 조작을 확인했습니다.
 
 후속 상태: Date/Time 공개 opt-in과 Dialog 고정 헤더·본문 스크롤·설명 간격·Switch hideLabel을 완료했습니다. SConfirmAction은 SBtn 재사용, 공개 타입/등록, Components와 starter buttons 예제까지 연결했습니다. 빌드·46종 API 회귀·확인 상태 전이·실제 Chrome 360px Enter/Escape/확정 조작을 통과했습니다. timeout=0은 자동 취소 없음, 기본 blur 취소, 외부 loading/error/reset 계약입니다. 설치본 최종 검증과 확대된 공개 API의 크기 기준 재측정은 전체 후보에서 수행합니다. 1.1.0은 미게시이며 정식 artifact 동결/전체 delivery 검증은 아직입니다.

@@ -150,6 +150,7 @@ const records = [
   ['SAvatar','표시·레이아웃','이미지 또는 대체 글자로 대상을 표시합니다.','component','identity-progress'],
   ['SBarChart','표시·레이아웃','작은 수치 비교를 차트와 같은 자료의 표로 제공합니다.','component','chart'],
   ['SCard','표시·레이아웃','제목·내용·하단 행동을 한 표면으로 묶습니다.','pattern','composition'],
+  ['SEmptyState','표시·레이아웃','빈 자료의 설명과 다음 행동을 표시합니다. 로딩·오류 상태는 별도로 구성합니다.','component','empty'],
   ['SCol','표시·레이아웃','반응형 격자의 한 열을 구성합니다.','pattern','layouts'],
   ['SContainer','표시·레이아웃','반응형 화면의 콘텐츠 너비를 제한합니다.','pattern','layouts'],
   ['SDataTable','표시·레이아웃','정렬·선택·페이지와 작은 화면의 카드 보기를 제공합니다.','pattern','data'],

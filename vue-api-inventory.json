@@ -1,7 +1,9 @@
 {
-  "documentVersion": "1.0.0",
-  "componentCount": 45,
+  "documentVersion": "1.1.0",
+  "componentCount": 47,
   "components": [
+    "SEmptyState",
+    "SConfirmAction",
     "SCombobox",
     "SMonthCalendar",
     "SSortableList",
@@ -84,8 +86,9 @@
       "components": [
         "SCard",
         "SBtn",
-        "SChip",
+        "SConfirmAction",
         "SIcon",
+        "SChip",
         "SBadge",
         "SIconBtn",
         "STooltip"
@@ -141,8 +144,11 @@
       "registration": "global",
       "components": [
         "SCard",
+        "SSelect",
+        "SCheckbox",
         "SBtn",
-        "SDialog"
+        "SDialog",
+        "STextField"
       ]
     },
     {
@@ -272,6 +278,7 @@
       "registration": "global",
       "components": [
         "SCard",
+        "SSelect",
         "STimePicker",
         "SCheckbox",
         "STextField",
@@ -341,8 +348,9 @@
       "source": "examples/vue-vuetify/src/recipes/empty.vue",
       "registration": "global",
       "components": [
-        "SCard",
-        "SBtn"
+        "SEmptyState",
+        "SBtn",
+        "SCard"
       ]
     },
     {
@@ -399,7 +407,9 @@
         "STextField",
         "SSelect",
         "SAlert",
-        "SBtn"
+        "SBtn",
+        "SIcon",
+        "SBadge"
       ]
     },
     {

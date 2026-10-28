@@ -1,4 +1,4 @@
-import {SCard,SAlert} from './surfaces';
+import {SCard,SAlert,SEmptyState} from './surfaces';
 import {useVisualViewport} from './viewport';
 import {SChip,SBadge,SIcon,createSIconBtn} from './primitives';
 export {SChip,SBadge,SIcon};
@@ -18,7 +18,8 @@ export type {SDisclosureCloseReason} from './disclosures';
 export type {SFileInputHandle,SFileLimits,SFileRejection,SFileRejectionCode} from './files';
 export type {SAutocompleteHandle} from './autocomplete';
 export type {SBreadcrumbItem,SStep,SBarChartItem} from './presentation';
-export {SCard,SAlert,STree};
+export {SCard,SAlert,STree,SEmptyState};
+export type {SolCardSlots,SolEmptyStateSlots} from './surfaces';
 export type {STreeItem} from './tree';
 import {defineComponent, h, ref, watch, nextTick, onBeforeUnmount, onMounted, useId} from 'vue';
 import type {PropType, Component, App, VNode, VNodeChild, SlotsType} from 'vue';
@@ -169,6 +170,7 @@ export const SDataTable=/* @__PURE__ */ defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  SEmptyState: typeof SEmptyState
   SConfirmAction: typeof SConfirmAction
   SCombobox: typeof SCombobox
   SMonthCalendar: typeof SMonthCalendar
@@ -217,6 +219,7 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  SEmptyState,
   SConfirmAction,
   SCombobox,
   SMonthCalendar,
