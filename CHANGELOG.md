@@ -2,6 +2,8 @@
 
 ## 미게시 · 다음 minor 버전 후보
 
+- SDatePicker의 opt-in displayFormatter와 SNumberInput의 preset·formatValue·unit을 추가합니다. 모델·수동 편집 draft·표시·native 제출을 분리하며 기존 readonly·min 기준 step을 유지합니다.
+
 - SChip·SBadge·SIcon·SIconBtn을 추가하고 개별 import·전역 등록·타입·문서 예제를 연결합니다.
 - 기존 버튼·locale·아이콘·테마·밀도·포커스·터치 목표 토큰을 재사용합니다. SIconBtn은 SBtn의 loading·disabled 동작을 유지합니다.
 - controlled 선택·삭제, SVG 접근성, 배지 설명 연결, 타입 계약과 의미색 대비 검사를 추가합니다.

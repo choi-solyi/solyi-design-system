@@ -99,6 +99,10 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-counter {margin-inline-start:auto;white-space:nowrap;text-align:end;}
 .sol-ui-number {display:grid;grid-template-columns:var(--sol-control-height) minmax(0,1fr) var(--sol-control-height);gap:var(--sol-space-2);}
 .sol-ui-number>.sol-button {height:var(--sol-control-height);padding:0;font-size:20px;}
+.sol-ui-number--unit {grid-template-columns:var(--sol-control-height) minmax(0,1fr) auto var(--sol-control-height);}
+.sol-ui-number--unit input {font-variant-numeric:tabular-nums;text-align:end;}
+.sol-ui-number-unit {align-self:center;max-inline-size:calc(var(--sol-control-height) * 2);overflow-wrap:anywhere;color:var(--sol-color-muted);font-size:var(--sol-text-sm);}
+.sol-ui-number-presets {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);}
 .sol-ui-native-field input[aria-readonly=true],.sol-ui-native-field select[aria-readonly=true] {cursor:default;}
 .sol-choice input.sol-ui-switch-input {appearance:none;position:relative;flex:0 0 40px;width:40px;height:24px;border:1px solid var(--sol-color-control-border);border-radius:999px;background:var(--sol-color-surface-alt);margin:0;}
 .sol-ui-switch-input::before {content:'';position:absolute;width:16px;height:16px;inset-block-start:3px;inset-inline-start:3px;border-radius:50%;background:var(--sol-color-text);}

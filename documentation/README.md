@@ -11,6 +11,7 @@
 - [테마·컴포넌트 연결](guide/S-API.md)
 - [언어 설정](guide/LOCALE.md)
 - [미게시 Chip·Badge·Icon·Icon Button](guide/DISPLAY-PRIMITIVES.md)
+- [미게시 날짜·숫자 표시 확장](guide/INPUT-DISPLAY.md)
 - [호환 범위](guide/COMPATIBILITY.md)
 
 ## 개발하기

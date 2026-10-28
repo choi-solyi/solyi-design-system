@@ -1,4 +1,6 @@
-import {defineComponent,h,ref,watch,nextTick,onMounted} from 'vue';
+import {defineComponent,h,ref,watch,nextTick,onMounted,mergeProps} from 'vue';
+import {SChip} from './primitives';
+import {formatFieldDisplay} from './display-format';
 import type {PropType,Slots} from 'vue';
 import {useSolLocale,formatSolNumber,parseSolNumber} from './locale';
 import type {SolLocale} from './locale';
@@ -6,6 +8,8 @@ import {validationProps,useSFieldValidation,fieldError,fieldDisabled,fieldReadon
 import { addNumberStep, isNumberStepAligned } from './number-step'
 
 export interface SolOption {value:string;label:string;description?:string;disabled?:boolean}
+export interface SolNumberPreset {value:number;label?:string;disabled?:boolean}
+export type SolNumberDisplayFormatter=(value:number,locale:Readonly<SolLocale>)=>string;
 export interface SolNumberInputHandle {focus():void;validate():boolean;resetValidation():void}
 export const displayFieldProps = {
   id: {type: String, required: true as const},
@@ -46,50 +50,165 @@ export const STextarea=defineComponent({name:'STextarea',inheritAttrs:false,prop
  const l=useSolLocale(()=>p.locale),input=ref<HTMLElement|null>(null);const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus()});expose(validation);return()=>h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('textarea',{...attrs,ref:input,id:p.id,class:['sol-input sol-textarea',attrs.class],value:p.modelValue,rows:Math.max(3,p.rows),maxlength:p.maxlength,disabled:fieldDisabled(p),readonly:fieldReadonly(p),required:p.required,'aria-invalid':fieldError(p)?'true':undefined,'aria-describedby':fieldDescription(p,slots,fieldError(p),attrs['aria-describedby']),onInput:(e:Event)=>{if(!fieldDisabled(p)&&!fieldReadonly(p))emit('update:modelValue',(e.target as HTMLTextAreaElement).value);},onChange:(e:Event)=>{if(!fieldDisabled(p)&&!fieldReadonly(p))emit('change',(e.target as HTMLTextAreaElement).value);},onBlur:(e:FocusEvent)=>{validation.validate();emit('blur',e);}}),h('div',{class:'sol-ui-field-footer'},[h('div',fieldMessages(p,slots)),p.showCount?h('span',{class:'sol-hint sol-ui-counter'},l.value.count(p.modelValue.length,p.maxlength)):null])]);
 }});
 
-export const SNumberInput=defineComponent({name:'SNumberInput',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Number as PropType<number|null>,default:null},min:Number,max:Number,step:{type:Number,default:1}},emits:{'update:modelValue':(_v:number|null)=>true,change:(_v:number|null)=>true,invalid:(_v:string)=>true,blur:(_e:FocusEvent)=>true},setup(p,{attrs,slots,emit,expose}){
- const l=useSolLocale(()=>p.locale),draft=ref(p.modelValue===null?'':formatSolNumber(p.modelValue,l.value)),localError=ref(''),input=ref<HTMLInputElement|null>(null);
- const numeric=()=>draft.value.trim()===''?null:parseSolNumber(draft.value,l.value)??NaN;
-  function message() {
-    const value = numeric()
-    if (value === null) return p.required ? l.value.invalidNumber : ''
-    if (
-      !Number.isFinite(value) ||
-      !Number.isFinite(p.step) ||
-      p.step <= 0 ||
-      (p.min !== undefined && p.max !== undefined && p.min > p.max)
-    ) {
-      return l.value.invalidNumber
+export const SNumberInput = defineComponent({
+  name: 'SNumberInput',
+  inheritAttrs: false,
+  props: {
+    ...commonFieldProps,
+    modelValue: { type: Number as PropType<number | null>, default: null },
+    min: Number,
+    max: Number,
+    step: { type: Number, default: 1 },
+    presets: { type: Array as PropType<readonly SolNumberPreset[]>, default: () => [] },
+    formatValue: Function as PropType<SolNumberDisplayFormatter>,
+    unit: { type: String, default: '' },
+  },
+  emits: {
+    'update:modelValue': (_value: number | null) => true,
+    change: (_value: number | null) => true,
+    invalid: (_message: string) => true,
+    blur: (_event: FocusEvent) => true,
+  },
+  setup(p, { attrs, slots, emit, expose }) {
+    const l = useSolLocale(() => p.locale)
+    const draft = ref(p.modelValue === null ? '' : formatSolNumber(p.modelValue, l.value))
+    const localError = ref(''), focused = ref(false), input = ref<HTMLInputElement | null>(null)
+    const numeric = () => draft.value.trim() === '' ? null : parseSolNumber(draft.value, l.value) ?? NaN
+    function numberMessage(value: number | null) {
+      if (value === null) return p.required ? l.value.invalidNumber : ''
+      if (!Number.isFinite(value) || !Number.isFinite(p.step) || p.step <= 0 ||
+        (p.min !== undefined && p.max !== undefined && p.min > p.max)) return l.value.invalidNumber
+      if ((p.min !== undefined && value < p.min) || (p.max !== undefined && value > p.max)) return l.value.numberRange
+      return isNumberStepAligned(value, p.min ?? 0, p.step) ? '' : l.value.numberStep
     }
-    if ((p.min !== undefined && value < p.min) || (p.max !== undefined && value > p.max)) {
-      return l.value.numberRange
+    const message = () => numberMessage(numeric())
+    function syncValidity() { input.value?.setCustomValidity(fieldError(p) || message()) }
+    function commit() {
+      if (fieldReadonly(p) || fieldDisabled(p)) return !fieldError(p) && !message()
+      const error = message()
+      localError.value = error
+      if (error) { emit('invalid', error); syncValidity(); return false }
+      const value = numeric()
+      draft.value = value === null ? '' : formatSolNumber(value, l.value)
+      if (value !== p.modelValue) { emit('update:modelValue', value); emit('change', value) }
+      return !p.error && !p.serverError && !p.errorMessages.length
     }
-    return isNumberStepAligned(value, p.min ?? 0, p.step) ? '' : l.value.numberStep
-  }
- function syncValidity(){input.value?.setCustomValidity(fieldError(p)||message());}
- function commit(){if(fieldReadonly(p)||fieldDisabled(p))return !fieldError(p)&&!message();const error=message();localError.value=error;if(error){emit('invalid',error);syncValidity();return false;}const value=numeric();draft.value=value===null?'':formatSolNumber(value,l.value);if(value!==p.modelValue){emit('update:modelValue',value);emit('change',value);}return !p.error&&!p.serverError&&!p.errorMessages.length;}
-  function nudgeValue(direction: number): number | null {
-    if (!Number.isFinite(p.step) || p.step <= 0) return null
-    const base = p.modelValue ?? p.min ?? 0
-    const next = p.modelValue === null ? base : addNumberStep(base, direction * p.step)
-    if (
-      next === null ||
-      !Number.isFinite(next) ||
-      (p.min !== undefined && next < p.min) ||
-      (p.max !== undefined && next > p.max)
-    ) {
-      return null
+    function nudgeValue(direction: number): number | null {
+      if (!Number.isFinite(p.step) || p.step <= 0) return null
+      const base = p.modelValue ?? p.min ?? 0
+      const next = p.modelValue === null ? base : addNumberStep(base, direction * p.step)
+      return next === null || !Number.isFinite(next) ||
+        (p.min !== undefined && next < p.min) || (p.max !== undefined && next > p.max) ? null : next
     }
-    return next
-  }
- function nudge(direction: number) {
-  if (fieldDisabled(p) || fieldReadonly(p)) return
-  const next = nudgeValue(direction)
-  if (next === null) return
-  draft.value = formatSolNumber(next, l.value)
-  commit()
-  input.value?.focus()
- }
- const validation=useSFieldValidation(p,numeric,{focus:()=>input.value?.focus(),validateIntrinsic:commit,intrinsicError:()=>localError.value,resetIntrinsic:()=>{localError.value='';}});
- watch(()=>p.modelValue,v=>{draft.value=v===null?'':formatSolNumber(v,l.value);localError.value='';});watch(()=>[draft.value,fieldError(p),p.required,p.min,p.max,p.step],()=>nextTick(syncValidity));watch(l,()=>{if(localError.value)localError.value=message();if(document.activeElement!==input.value&&!message())draft.value=p.modelValue===null?'':formatSolNumber(p.modelValue,l.value);void nextTick(syncValidity);});onMounted(syncValidity);expose(validation);
- return()=>{const error=fieldError(p)||localError.value,value=numeric();return h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('div',{class:'sol-ui-number'},[h('button',{type:'button',class:'sol-button',disabled:fieldDisabled(p)||fieldReadonly(p)||nudgeValue(-1)===null,'aria-label':p.label+' '+l.value.decrease,onClick:()=>nudge(-1)},'−'),h('input',{...attrs,ref:input,id:p.id,type:'text',inputmode:'decimal',class:['sol-input',attrs.class],value:draft.value,disabled:fieldDisabled(p),readonly:fieldReadonly(p),required:p.required,role:'spinbutton','aria-valuemin':p.min,'aria-valuemax':p.max,'aria-valuenow':value!==null&&Number.isFinite(value)&&!message()?value:undefined,'aria-invalid':error?'true':undefined,'aria-describedby':fieldDescription(p,slots,error,[p.id+'-constraints',attrs['aria-describedby']].filter(Boolean).join(' ')),onInput:(e:Event)=>{if(fieldReadonly(p)||fieldDisabled(p))return;draft.value=(e.target as HTMLInputElement).value;if(localError.value)localError.value=message();},onBlur:(e:FocusEvent)=>{if(!fieldReadonly(p)&&!fieldDisabled(p))validation.validate();emit('blur',e);},onInvalid:(e:Event)=>{e.preventDefault();commit();input.value?.focus();},onKeydown:(e:KeyboardEvent)=>{if(e.isComposing||fieldReadonly(p)||fieldDisabled(p))return;if(e.key==='Enter'){e.preventDefault();commit();}else if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();nudge(e.key==='ArrowUp'?1:-1);}}}),h('button',{type:'button',class:'sol-button',disabled:fieldDisabled(p)||fieldReadonly(p)||nudgeValue(1)===null,'aria-label':p.label+' '+l.value.increase,onClick:()=>nudge(1)},'+')]),h('span',{id:p.id+'-constraints',class:'sol-hint'},l.value.numberHelp(p.min,p.max,p.step)),...fieldMessages(p,slots,error)]);};
-}});
+    function nudge(direction: number) {
+      if (fieldDisabled(p) || fieldReadonly(p)) return
+      const next = nudgeValue(direction)
+      if (next === null) return
+      draft.value = formatSolNumber(next, l.value)
+      commit()
+      input.value?.focus()
+    }
+    const isAllowed = (value: number) => Number.isFinite(value) &&
+      (p.min === undefined || Number.isFinite(p.min)) &&
+      (p.max === undefined || Number.isFinite(p.max)) && !numberMessage(value)
+    function setPreset(value: number): boolean {
+      if (fieldDisabled(p) || fieldReadonly(p) || !isAllowed(value)) return false
+      draft.value = formatSolNumber(value, l.value)
+      commit()
+      input.value?.focus()
+      return true
+    }
+    const formatted = (value: number) => formatFieldDisplay(value, formatSolNumber(value, l.value), p.formatValue, l.value)
+    function displayValue() {
+      const value = numeric()
+      return !p.formatValue || focused.value || value === null || message() ? draft.value : formatted(value)
+    }
+    function beginEdit() {
+      focused.value = !fieldReadonly(p) && !fieldDisabled(p)
+      if (focused.value && p.formatValue && input.value) input.value.value = draft.value
+    }
+    const validation = useSFieldValidation(p, numeric, {
+      focus: () => input.value?.focus(), validateIntrinsic: commit,
+      intrinsicError: () => localError.value, resetIntrinsic: () => { localError.value = '' },
+    })
+    watch(() => p.modelValue, value => {
+      draft.value = value === null ? '' : formatSolNumber(value, l.value)
+      localError.value = ''
+    })
+    watch(() => [draft.value, fieldError(p), p.required, p.min, p.max, p.step], () => nextTick(syncValidity))
+    watch(() => [fieldDisabled(p), fieldReadonly(p)], () => {
+      if (fieldDisabled(p) || fieldReadonly(p)) focused.value = false
+    })
+    watch(l, () => {
+      if (localError.value) localError.value = message()
+      if (document.activeElement !== input.value && !message()) draft.value = p.modelValue === null ? '' : formatSolNumber(p.modelValue, l.value)
+      void nextTick(syncValidity)
+    })
+    onMounted(syncValidity)
+    expose(validation)
+    return () => {
+      const error = fieldError(p) || localError.value, value = numeric()
+      const valueText = value !== null && !message() && (p.formatValue || p.unit)
+        ? [formatted(value), p.unit].filter(Boolean).join(' ') : undefined
+      return h('div', { class: 'sol-field sol-ui-native-field' }, [
+        fieldLabel(p, slots, l.value.required),
+        p.formatValue && attrs.name != null ? h('input', {
+          type: 'hidden', name: attrs.name, form: attrs.form, disabled: fieldDisabled(p),
+          value: p.modelValue === null ? '' : formatSolNumber(p.modelValue, l.value),
+        }) : null,
+        h('div', { class: ['sol-ui-number', p.unit ? 'sol-ui-number--unit' : undefined] }, [
+          h('button', {
+            type: 'button', class: 'sol-button',
+            disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(-1) === null,
+            'aria-label': p.label + ' ' + l.value.decrease, onClick: () => nudge(-1),
+          }, '−'),
+          h('input', mergeProps({ onFocus: beginEdit }, {
+            ...attrs, ref: input, id: p.id, type: 'text', inputmode: 'decimal',
+            class: ['sol-input', attrs.class], value: displayValue(),
+            name: p.formatValue ? undefined : attrs.name,
+            disabled: fieldDisabled(p), readonly: fieldReadonly(p), required: p.required,
+            role: 'spinbutton', 'aria-valuemin': p.min, 'aria-valuemax': p.max,
+            'aria-valuenow': value !== null && Number.isFinite(value) && !message() ? value : undefined,
+            'aria-valuetext': valueText, 'aria-invalid': error ? 'true' : undefined,
+            'aria-describedby': fieldDescription(p, slots, error, [p.id + '-constraints', attrs['aria-describedby']].filter(Boolean).join(' ')),
+            onInput: (event: Event) => {
+              if (fieldReadonly(p) || fieldDisabled(p)) return
+              draft.value = (event.target as HTMLInputElement).value
+              if (localError.value) localError.value = message()
+            },
+            onBlur: (event: FocusEvent) => {
+              if (!fieldReadonly(p) && !fieldDisabled(p)) validation.validate()
+              focused.value = false
+              emit('blur', event)
+            },
+            onInvalid: (event: Event) => { event.preventDefault(); commit(); input.value?.focus() },
+            onKeydown: (event: KeyboardEvent) => {
+              if (event.isComposing || fieldReadonly(p) || fieldDisabled(p)) return
+              if (event.key === 'Enter') { event.preventDefault(); commit() }
+              else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                event.preventDefault(); nudge(event.key === 'ArrowUp' ? 1 : -1)
+              }
+            },
+          })),
+          p.unit ? h('span', { class: 'sol-ui-number-unit', 'aria-hidden': 'true' }, p.unit) : null,
+          h('button', {
+            type: 'button', class: 'sol-button',
+            disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(1) === null,
+            'aria-label': p.label + ' ' + l.value.increase, onClick: () => nudge(1),
+          }, '+'),
+        ]),
+        p.presets.length || slots.presets ? h('div', {
+          class: 'sol-ui-number-presets', role: 'group', 'aria-labelledby': p.id + '-label',
+        }, slots.presets?.({ presets: p.presets, value: p.modelValue, setValue: setPreset, isAllowed, disabled: fieldDisabled(p), readonly: fieldReadonly(p) }) ||
+          p.presets.map((preset, index) => h(SChip, {
+            key: index, selectable: true, selected: p.modelValue === preset.value,
+            disabled: fieldDisabled(p) || fieldReadonly(p) || !!preset.disabled || !isAllowed(preset.value),
+            label: preset.label ?? [formatted(preset.value), p.unit].filter(Boolean).join(' '),
+            locale: p.locale, onClick: () => setPreset(preset.value),
+          }))) : null,
+        h('span', { id: p.id + '-constraints', class: 'sol-hint' }, l.value.numberHelp(p.min, p.max, p.step)),
+        ...fieldMessages(p, slots, error),
+      ])
+    }
+  },
+})

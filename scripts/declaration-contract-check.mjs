@@ -69,8 +69,8 @@ const entries = installed
 const declarationCount = entries.length
 assert.ok(declarationCount > 10, 'All own public declaration files are checked')
 const fixture = normalize(path.join(ownRoot, 'navigation-contract.ts'))
-memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn } from './index'
-import type { SolIconName, SolTone } from './index'
+memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput } from './index'
+import type { SolIconName, SolTone, SolDateDisplayFormatter, SolNumberDisplayFormatter, SolNumberPreset } from './index'
 import type { GlobalComponents } from 'vue'
 type TabsProps = InstanceType<typeof STabs>['$props']
 type PaneProps = InstanceType<typeof SResizableSplitPane>['$props']
@@ -106,6 +106,16 @@ const arbitraryIconSize: IconProps = { name: 'copy', size: 23 }
 // @ts-expect-error Passive badges are not readonly inputs.
 const readonlyBadge: BadgeProps = { content: 'Done', readonly: true }
 void [icon, iconButton, chip, badge, oldButton, globalIconButton, iconName, tone, unnamedIconButton, unknownIcon, arbitraryIconSize, readonlyBadge]
+const dateDisplay: SolDateDisplayFormatter = (iso, locale) => iso + locale.code
+const numberDisplay: SolNumberDisplayFormatter = (value, locale) => String(value) + locale.code
+const numberPresets: readonly SolNumberPreset[] = [{ value: 20, label: 'Twenty' }]
+const formattedDate: InstanceType<typeof SDatePicker>['$props'] = { id: 'date', label: 'Date', displayFormatter: dateDisplay }
+const presetNumber: InstanceType<typeof SNumberInput>['$props'] = { id: 'number', label: 'Number', presets: numberPresets, unit: 'units', formatValue: numberDisplay }
+// @ts-expect-error Display callbacks return text and never parse into model values.
+const numericDateFormatter: SolDateDisplayFormatter = () => 1
+// @ts-expect-error Presets preserve the existing numeric model.
+const stringPreset: SolNumberPreset = { value: '20' }
+void [formattedDate, presetNumber, numericDateFormatter, stringPreset]
 `)
 entries.push(fixture)
 const program = ts.createProgram(entries, options, host)

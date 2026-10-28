@@ -1,10 +1,22 @@
 <script setup lang="ts">
-import type { DateValue, SolOption, SolOptionLoader } from 'solyi-ui'
+import { formatSolDate } from 'solyi-ui'
+import type { DateValue, SolOption, SolOptionLoader, SolDateDisplayFormatter } from 'solyi-ui'
 
 defineProps<{ part?: string }>()
 const mode = ref<string | null>('range'),
   date = ref<DateValue>(null)
 const dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'))
+const showWeekday = ref(false)
+const formatDateWithWeekday: SolDateDisplayFormatter = (iso, locale) =>
+  iso +
+  ' (' +
+  formatSolDate(iso, locale, {
+    year: undefined,
+    month: undefined,
+    day: undefined,
+    weekday: 'short',
+  }) +
+  ')'
 watch(dateMode, () => (date.value = null))
 const files = ref<File[]>([]),
   selected = ref<string | null>(null),
@@ -58,7 +70,18 @@ const loader = computed<SolOptionLoader | undefined>(() => {
         ]"
         required
       />
-      <SDatePicker id="recipe-date" v-model="date" label="가상 일정" :mode="dateMode" />
+      <SCheckbox
+        id="recipe-date-weekday"
+        v-model="showWeekday"
+        label="요일 표시 · 저장값은 ISO 유지"
+      />
+      <SDatePicker
+        id="recipe-date"
+        v-model="date"
+        label="가상 일정"
+        :mode="dateMode"
+        :display-formatter="showWeekday ? formatDateWithWeekday : undefined"
+      />
       <p role="status">완료값: {{ JSON.stringify(date) }}</p>
     </SCard>
     <SCard

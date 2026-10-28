@@ -198,6 +198,7 @@
       "components": [
         "SCard",
         "STextarea",
+        "SCheckbox",
         "SNumberInput",
         "SMultiSelect"
       ]
@@ -358,6 +359,7 @@
       "components": [
         "SCard",
         "SSelect",
+        "SCheckbox",
         "SDatePicker",
         "SFileInput",
         "SAutocomplete"

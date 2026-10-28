@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { formatSolNumber } from 'solyi-ui'
+import type { SolNumberDisplayFormatter } from 'solyi-ui'
+
 defineProps<{ part?: string }>()
+const showNumberFormat = ref(false)
+const formatAmount: SolNumberDisplayFormatter = (value, locale) =>
+  formatSolNumber(value, locale, { minimumFractionDigits: 1 })
 const note = ref(''),
   amount = ref<number | null>(2),
   tags = ref<string[]>([])
@@ -18,6 +24,12 @@ const options = [
       label="가상 기록 설명"
       :maxlength="120"
     />
+    <SCheckbox
+      v-if="!part || part === 'number'"
+      id="recipe-number-format"
+      v-model="showNumberFormat"
+      label="숫자 표시 포맷 · 모델은 숫자 유지"
+    />
     <SNumberInput
       v-if="!part || part === 'number'"
       id="recipe-amount"
@@ -26,6 +38,9 @@ const options = [
       :min="0"
       :max="10"
       :step="2"
+      unit="개"
+      :presets="[{ value: 2 }, { value: 6 }, { value: 10 }, { value: 5, label: '5 · 간격 불일치' }]"
+      :format-value="showNumberFormat ? formatAmount : undefined"
     />
     <SMultiSelect
       v-if="!part || part === 'multiselect'"
