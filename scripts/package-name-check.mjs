@@ -4,7 +4,7 @@ import {packageMetadata,packageTarball,releasePackage,historicalUiName} from './
 import {releaseCatalogue} from './releases.mjs';
 const root=new URL('../',import.meta.url),read=file=>readFile(new URL(file,root),'utf8');
 const ui=packageMetadata('vue-ui'),core=packageMetadata('core');
-assert.equal(ui.name,'solyi-ui');assert.equal(core.name,'@solyi/core');assert.deepEqual(Object.keys(ui.peerDependencies).sort(),['vue','vuetify']);for(const field of ['dependencies','optionalDependencies','peerDependencies'])assert.equal(ui[field]?.[core.name],undefined,'No separate Core '+field);assert.equal(ui.private,true);assert.equal(core.private,true);assert.equal(ui.license,'MIT');
+assert.equal(ui.name,'solyi-ui');assert.equal(core.name,'@solyi/core');assert.deepEqual(Object.keys(ui.peerDependencies).sort(),['vue','vuetify']);for(const field of ['dependencies','optionalDependencies','peerDependencies'])assert.equal(ui[field]?.[core.name],undefined,'No separate Core '+field);assert.equal(ui.private,false);assert.equal(JSON.parse(await read('package.json')).private,true,'Workspace remains private');assert.equal(core.private,true);assert.equal(ui.license,'MIT');
 assert.match(ui.description,/Vue 3/);assert.equal(packageTarball(ui),'solyi-ui-'+ui.version+'.tgz');
 const reports=JSON.parse(await read('artifacts/pack-report.json'));assert.ok(reports.some(p=>p.name===ui.name&&p.filename===packageTarball(ui)));assert.ok(!reports.some(p=>p.name===historicalUiName));
 for(const project of ['examples/package-consumer','examples/vue-vuetify']){

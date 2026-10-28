@@ -46,8 +46,13 @@
       "maxCharactersExclusive": 176000
     },
     "1.1.0": {
-      "baseline": "c440b03 (45 public APIs); production PURE annotations; unpublished candidate",
+      "baseline": "e3a0dc3 (50 public APIs), completed approved scope; installed tarball measurements in FINAL-SIZE-RESULT.json",
       "components": [
+        "STimeGrid",
+        "SPagination",
+        "SLoadingOverlay",
+        "SEmptyState",
+        "SConfirmAction",
         "SMonthCalendar",
         "SSortableList",
         "SChip",
@@ -94,10 +99,10 @@
         "SStepper",
         "SBarChart"
       ],
-      "maxCharactersExclusive": 235000,
-      "maxGzipBytes": 61440,
-      "maxTotalJavaScriptBytes": 260000,
-      "maxTotalJavaScriptGzipBytes": 69632,
+      "maxCharactersExclusive": 300000,
+      "maxGzipBytes": 76800,
+      "maxTotalJavaScriptBytes": 330000,
+      "maxTotalJavaScriptGzipBytes": 83968,
       "imports": {
         "SIcon": {
           "maxGzipBytes": 8192
@@ -106,7 +111,22 @@
           "maxGzipBytes": 14336
         },
         "all_plugin": {
-          "maxGzipBytes": 56320
+          "maxGzipBytes": 67584
+        },
+        "STimeGrid": {
+          "maxGzipBytes": 17408
+        },
+        "SMonthCalendar": {
+          "maxGzipBytes": 13312
+        },
+        "SPagination": {
+          "maxGzipBytes": 9216
+        },
+        "SConfirmAction": {
+          "maxGzipBytes": 8192
+        },
+        "SLoadingOverlay": {
+          "maxGzipBytes": 13312
         }
       }
     }

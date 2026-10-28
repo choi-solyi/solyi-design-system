@@ -13,6 +13,8 @@ examples/package-consumer/.runtime-check.mjs
 examples/vue-vuetify/.runtime-check.mjs
 examples/vue-vuetify/.runtime-test/
 examples/package-consumer/.runtime-extension-entry.ts
+examples/package-consumer/.ssr-check-entry.ts
+examples/package-consumer/.ssr-check.mjs
 examples/package-consumer/.runtime-overflow.mjs
 examples/package-consumer/.runtime-form-check.mjs
 examples/package-consumer/.runtime-form-entry.ts

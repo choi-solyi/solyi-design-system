@@ -93,9 +93,9 @@ click('#mode-toggle');assert.equal(d.documentElement.dataset.mode,'dark');
 assert.ok($('#contrast-results').textContent.includes('dark'));
 $('#token-search').value='no-such-token';fire($('#token-search'),'input');assert.match($('#token-grid').textContent,/일치하는 토큰/);
 await route('component');
-integrity();assert.equal(componentReferences.length,45,'Every current S API has a document reference');
-assert.equal(d.querySelectorAll('main .component-reference').length,45);
-assert.equal(d.querySelectorAll('main [data-component-example]').length,45,'Canonical cards mount the real package preview surface');
+integrity();for(const name of ['SConfirmAction','SEmptyState','SLoadingOverlay','SPagination','STimeGrid'])assert.ok(componentReferences.some(item=>item.name===name),name+' has a public document');assert.equal(componentReferences.length,50,'Every current S API has a document reference');
+assert.equal(d.querySelectorAll('main .component-reference').length,50);
+assert.equal(d.querySelectorAll('main [data-component-example]').length,50,'Canonical cards mount the real package preview surface');
 assert.equal(d.querySelector('#component-examples'),null,'No second legacy component gallery');
 assert.equal(d.querySelector('#button-feedback'),null,'Retired native component demo is not rendered');
 for(const component of componentReferences){

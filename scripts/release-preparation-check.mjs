@@ -10,7 +10,7 @@ const sourceCatalogue = await releaseCatalogue()
 const current = sourceCatalogue.releases.find(release => release.release === documentVersion)
 assert.ok(current, 'Current package files are verified before preparing the document')
 assert.equal(metadata.name, 'solyi-ui')
-assert.equal(metadata.private, true, 'Preparing documents never enables npm publication')
+assert.equal(metadata.private, false, 'Approved next-version UI metadata is publishable; this check never publishes')
 assert.equal(metadata.license, 'MIT')
 assert.deepEqual(metadata.repository, {
   type: 'git',

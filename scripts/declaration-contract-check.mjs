@@ -71,7 +71,7 @@ assert.ok(declarationCount > 10, 'All own public declaration files are checked')
 const fixture = normalize(path.join(ownRoot, 'navigation-contract.ts'))
 memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker, SSortableList } from './index'
 import {createApp,h} from 'vue'
-import type {SolSortableProps,SolSortableSlots} from './index'
+import type {SolSortableProps,SolSortableSlots,SolTimeGridProps,SolTimeGridSlots,SolTimeGridHandle} from './index'
 import type { SolIconName, SolTone, SolDateDisplayFormatter, SolNumberDisplayFormatter, SolNumberPreset } from './index'
 import type { GlobalComponents } from 'vue'
 type TabsProps = InstanceType<typeof STabs>['$props']
@@ -142,6 +142,18 @@ const badSortableModel:SolSortableProps<Item> = {...sortable,modelValue:[1,2]}
 // @ts-expect-error Slot items retain the caller's concrete object type.
 const badSortableSlot:SolSortableSlots<Item> = {item:({item})=>[h('span',item.missing)]}
 void [sortableSlots,badSortableKey,badSortableModel,badSortableSlot]
+interface GridItem {id:string;title:string;column:string;start:number;end:number}
+const grid:SolTimeGridProps<GridItem> = {id:'grid',label:'Grid',items:[],columns:[{key:'one',label:'One'}],itemKey:item=>item.id,itemLabel:item=>item.title,itemColumn:item=>item.column,itemStart:item=>item.start,itemEnd:item=>item.end,onCommit:p=>{p.to.startMinute.toFixed()},onCancel:p=>{p.reason.toUpperCase()}}
+const gridSlots:SolTimeGridSlots<GridItem> = {item:({item,proposal})=>[h('span',item.title+(proposal?.action||''))]}
+declare const gridHandle:SolTimeGridHandle
+gridHandle.focus('a');gridHandle.cancel()
+// @ts-expect-error Minute accessors cannot return display strings.
+const badGridMinute:SolTimeGridProps<GridItem> = {...grid,itemStart:item=>String(item.start)}
+// @ts-expect-error Generic item slot keeps the concrete caller type.
+const badGridSlot:SolTimeGridSlots<GridItem> = {item:({item})=>[h('span',item.missing)]}
+// @ts-expect-error Frozen proposal coordinates cannot be mutated by a consumer.
+const badGridCommit:SolTimeGridProps<GridItem> = {...grid,onCommit:p=>{p.to.startMinute=0}}
+void [gridSlots,badGridMinute,badGridSlot,badGridCommit]
 `)
 entries.push(fixture)
 const program = ts.createProgram(entries, options, host)

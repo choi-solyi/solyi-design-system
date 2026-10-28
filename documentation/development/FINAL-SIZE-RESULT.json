@@ -1,0 +1,206 @@
+{
+  "version": "1.1.0",
+  "components": [
+    "STimeGrid",
+    "SPagination",
+    "SLoadingOverlay",
+    "SEmptyState",
+    "SConfirmAction",
+    "SMonthCalendar",
+    "SSortableList",
+    "SChip",
+    "SBadge",
+    "SIcon",
+    "SIconBtn",
+    "SForm",
+    "SContainer",
+    "SRow",
+    "SCol",
+    "SCard",
+    "SAlert",
+    "STree",
+    "SProgressLinear",
+    "SProgressCircular",
+    "SBtn",
+    "STextField",
+    "SDialog",
+    "SDataTable",
+    "SCheckbox",
+    "SRadioGroup",
+    "SSwitch",
+    "SSelect",
+    "STextarea",
+    "SNumberInput",
+    "STabs",
+    "SSnackbar",
+    "SDatePicker",
+    "STimePicker",
+    "SSegmentedControl",
+    "SMultiSelect",
+    "SRangeSlider",
+    "SSplitBtn",
+    "SContextMenu",
+    "SResizableSplitPane",
+    "STooltip",
+    "SPopover",
+    "SAccordion",
+    "SFileInput",
+    "SAutocomplete",
+    "SCombobox",
+    "SBreadcrumbs",
+    "SAvatar",
+    "SStepper",
+    "SBarChart"
+  ],
+  "metrics": {
+    "characters": 284418,
+    "bytes": 287215,
+    "gzipBytes": 72148,
+    "totalJavaScriptBytes": 312448,
+    "totalJavaScriptGzipBytes": 79417,
+    "javascriptFiles": 6
+  },
+  "imports": [
+    {
+      "name": "SIcon",
+      "bytes": 18986,
+      "gzipBytes": 7098,
+      "retained": [
+        "SIcon"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "SCombobox",
+      "bytes": 34315,
+      "gzipBytes": 12713,
+      "retained": [
+        "SIcon",
+        "SForm",
+        "SCombobox"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "SBtn",
+      "bytes": 18637,
+      "gzipBytes": 6910,
+      "retained": [
+        "SBtn"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "STimeGrid",
+      "bytes": 46206,
+      "gzipBytes": 15847,
+      "retained": [
+        "STimeGrid",
+        "SIcon",
+        "SBtn"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "SMonthCalendar",
+      "bytes": 32171,
+      "gzipBytes": 11873,
+      "retained": [
+        "SMonthCalendar",
+        "SBadge",
+        "SIcon"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "SPagination",
+      "bytes": 23122,
+      "gzipBytes": 8754,
+      "retained": [
+        "SPagination",
+        "SIcon",
+        "SBtn"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "SConfirmAction",
+      "bytes": 21073,
+      "gzipBytes": 7859,
+      "retained": [
+        "SConfirmAction",
+        "SBtn"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "SLoadingOverlay",
+      "bytes": 34702,
+      "gzipBytes": 12335,
+      "retained": [
+        "SLoadingOverlay",
+        "SProgressLinear",
+        "SProgressCircular"
+      ],
+      "peerModules": []
+    },
+    {
+      "name": "all_plugin",
+      "bytes": 222222,
+      "gzipBytes": 64864,
+      "retained": [
+        "STimeGrid",
+        "SPagination",
+        "SLoadingOverlay",
+        "SEmptyState",
+        "SConfirmAction",
+        "SMonthCalendar",
+        "SSortableList",
+        "SChip",
+        "SBadge",
+        "SIcon",
+        "SIconBtn",
+        "SForm",
+        "SContainer",
+        "SRow",
+        "SCol",
+        "SCard",
+        "SAlert",
+        "STree",
+        "SProgressLinear",
+        "SProgressCircular",
+        "SBtn",
+        "STextField",
+        "SDialog",
+        "SDataTable",
+        "SCheckbox",
+        "SRadioGroup",
+        "SSwitch",
+        "SSelect",
+        "STextarea",
+        "SNumberInput",
+        "STabs",
+        "SSnackbar",
+        "SDatePicker",
+        "STimePicker",
+        "SSegmentedControl",
+        "SMultiSelect",
+        "SRangeSlider",
+        "SSplitBtn",
+        "SContextMenu",
+        "SResizableSplitPane",
+        "STooltip",
+        "SPopover",
+        "SAccordion",
+        "SFileInput",
+        "SAutocomplete",
+        "SCombobox",
+        "SBreadcrumbs",
+        "SAvatar",
+        "SStepper",
+        "SBarChart"
+      ],
+      "peerModules": []
+    }
+  ]
+}

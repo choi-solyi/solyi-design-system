@@ -28,4 +28,4 @@ assert.equal(d.querySelector('a[download]').download,'DESIGN.md');
 assert.ok(d.querySelector('details>summary'));assert.equal(d.querySelectorAll('article h3').length,1);assert.ok(d.querySelectorAll('article h4').length>=8);
 assert.ok(d.querySelectorAll('pre[tabindex="0"]').length>=2);
 dom.window.close();
-console.log('PASS: canonical DESIGN.md matches rendered/raw/copy/download text, one extracted prompt, escaped Markdown, actual38-component names/token references and accessible native disclosure. Packed/installed bytes and browser rendering are separate gates.');
+console.log('PASS: canonical DESIGN.md matches rendered/raw/copy/download text, one extracted prompt, escaped Markdown, actual public component names/token references and accessible native disclosure. Packed/installed bytes and browser rendering are separate gates.');

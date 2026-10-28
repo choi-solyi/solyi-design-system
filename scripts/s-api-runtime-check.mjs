@@ -30,7 +30,7 @@ const expectedComponents = [
  'SChip','SBadge','SIcon','SIconBtn',
  'SSortableList','SMonthCalendar','SCombobox','SConfirmAction','SEmptyState','SLoadingOverlay','SPagination','STimeGrid',
 ]
-assert.deepEqual(Object.keys(api.sComponents).sort(), expectedComponents.sort(), 'All original 38 exports, four display additions Sortable, Calendar and Combobox remain registered')
+assert.deepEqual(Object.keys(api.sComponents).sort(), expectedComponents.sort(), 'All original 38 and twelve approved additions remain registered')
 assert.equal(api.uiVersion,JSON.parse(await readFile(new URL('packages/vue-ui/package.json',root),'utf8')).version,'Runtime uiVersion matches the package and demo version');
 const componentNames=Object.keys(api.sComponents);assert.equal(componentNames.length,50);const removed=["SolButton","SolField","SolDialog","SolTable","SolCheckbox","SolRadioGroup","SolSwitch","SolSelect","SolTextarea","SolNumberInput","SolTabs","SolToast","SolDatePicker","SolTimePicker","SolSegmentedControl","SolMultiSelect","SolRangeSlider","SolSplitButton","SolContextMenu","SolResizableSplitPane"];for(const name of componentNames){assert.match(name,/^S[A-Z]/);assert.equal(api[name].name,({SContainer:'VContainer',SRow:'VRow',SCol:'VCol'})[name]||name);}for(const name of removed)assert.equal(api[name],undefined,name+' is not exported');
 const {createApp,h,ref,nextTick,VApp,VBtn,VTextField,SBtn,STextField,SolyiUI,createSolyiVuetify,applySolyiAppearance}=api;

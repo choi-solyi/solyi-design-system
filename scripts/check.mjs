@@ -15,7 +15,9 @@ let checked = 0;
 let minimum = {ratio:Infinity};
 for(const [name,theme] of Object.entries(tokens.themes)) {
   for(const mode of ['light','dark']) {
-    assert.equal(Object.keys(theme[mode]).length,24,`${name}/${mode}: 24 roles including selected-state semantics`);
+    const roles=Object.keys(theme[mode]),categorical=roles.filter(key=>key.startsWith('categorical-'));
+    assert.equal(roles.length-categorical.length,24,`${name}/${mode}: preserve 24 semantic roles`);
+    assert.deepEqual(categorical.sort(),Array.from({length:8},(_,index)=>['foreground','background','border'].map(role=>'categorical-'+(index+1)+'-'+role)).flat().sort(),`${name}/${mode}: exact eight-category roles`);
     for(const [a,b,min] of [
       ['accent','surface-alt',3],['success','surface-alt',3],['danger','surface-alt',3],
       ['text','canvas',4.5],['text','surface',4.5],['text','surface-alt',4.5],['text','accent-soft',4.5],['muted','accent-soft',4.5],

@@ -47,6 +47,16 @@ node('7/10 S public APIs and direct Vuetify bridge','scripts/s-api-runtime-check
 node('7/10 Shared form validation and Vuetify grid','scripts/form-api-runtime-check.mjs');
 node('7/10 Shared input clear model, validation and focus','scripts/input-control-runtime-check.mjs');
 node('7/10 Installed shared input clear SFC contracts','scripts/input-control-types-check.mjs','--installed');
+node('7/10 Freeform Combobox controlled and async contracts','scripts/combobox-runtime-check.mjs');
+node('7/10 Installed Combobox SFC contracts','scripts/combobox-types-check.mjs','--installed');
+node('7/10 Two-step confirmation contracts','scripts/confirm-action-runtime-check.mjs');
+node('7/10 Loading delay, dwell and ownership','scripts/loading-overlay-runtime-check.mjs');
+node('7/10 Controlled pagination contracts','scripts/pagination-runtime-check.mjs');
+node('7/10 Categorical mapping and palette contrast','scripts/categorical-check.mjs');
+node('7/10 Time grid immutable layout','scripts/time-grid-values-check.mjs');
+node('7/10 Time grid coordinate proposals','scripts/time-grid-proposal-check.mjs');
+node('7/10 Installed time grid intent and cancellation','scripts/time-grid-runtime-check.mjs');
+node('7/10 Installed SSR without DOM shims','scripts/library-ssr-check.mjs');
 node('7/10 Installed public declaration contracts','scripts/declaration-contract-check.mjs','--installed');
 node('7/10 Reusable progress','scripts/progress-runtime-check.mjs');
 node('7/10 Actual Vue documentation recipes','scripts/vue-recipes-runtime-check.mjs');
