@@ -80,6 +80,7 @@ const sortableItems = ref([
     { id: 'c', label: '세 번째 항목', details: { count: 2 } },
   ]),
   acceptOrder = ref(true),
+  lockSecond = ref(false),
   sortStatus = ref('')
 function acceptProposal(items) {
   if (acceptOrder.value) sortableItems.value = items
@@ -339,6 +340,11 @@ watch([disabled, readonly], () => {
     </p>
     <div class="starter-settings">
       <SCheckbox id="advanced-sort-accept" v-model="acceptOrder" label="새 순서 반영" />
+      <SCheckbox
+        id="advanced-sort-lock"
+        v-model="lockSecond"
+        label="두 번째 항목 자체의 이동 막기"
+      />
       <SSwitch v-if="part" id="advanced-sort-disabled" v-model="disabled" label="정렬 비활성" />
       <SSwitch v-if="part" id="advanced-sort-readonly" v-model="readonly" label="정렬 보기 전용" />
       <SBtn @click="sortableItems = [...sortableItems].reverse()">외부 목록 변경 시연</SBtn>
@@ -349,6 +355,7 @@ watch([disabled, readonly], () => {
       :model-value="sortableItems"
       :item-key="item => item.id"
       :item-label="item => item.label"
+      :is-item-disabled="item => lockSecond && item.id === 'b'"
       :disabled="disabled"
       :readonly="readonly"
       @update:model-value="acceptProposal"

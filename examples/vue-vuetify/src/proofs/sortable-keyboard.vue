@@ -16,6 +16,7 @@ const items = ref<ExampleItem[]>([
   { id: 'third', title: '세 번째 항목', details: { count: 2 } },
 ])
 const disabled = ref(false),
+  disabledItem = ref(false),
   readonly = ref(false),
   accept = ref(true),
   result = ref('')
@@ -42,6 +43,7 @@ function ended(value: SolSortableEnd<ExampleItem>) {
       :model-value="items"
       :item-key="item => item.id"
       :item-label="item => item.title"
+      :is-item-disabled="item => disabledItem && item.details.count === 7"
       :disabled="disabled"
       :readonly="readonly"
       @update:model-value="propose"

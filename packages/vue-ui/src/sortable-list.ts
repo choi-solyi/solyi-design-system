@@ -36,6 +36,7 @@ export interface SolSortableItemScope<T> {
   index: number
   key: SolSortableKey
   active: boolean
+  disabled: boolean
 }
 export interface SolSortableSlots<T> {
   item?: (scope: SolSortableItemScope<T>) => VNode[]
@@ -49,6 +50,7 @@ export interface SolSortableProps<T> extends AllowedComponentProps, VNodeProps {
   modelValue: readonly T[]
   itemKey: (item: T) => SolSortableKey
   itemLabel: (item: T) => string
+  isItemDisabled?: (item: T) => boolean
   help?: string
   error?: string
   disabled?: boolean
@@ -92,6 +94,7 @@ export const SSortableList = defineComponent({
     modelValue: { type: Array as PropType<readonly unknown[]>, required: true },
     itemKey: { type: Function as PropType<(item: unknown) => SolSortableKey>, required: true },
     itemLabel: { type: Function as PropType<(item: unknown) => string>, required: true },
+    isItemDisabled: Function as PropType<(item: unknown) => boolean>,
   },
   slots: Object as SlotsType<SolSortableSlots<unknown>>,
   emits: {
@@ -111,19 +114,24 @@ export const SSortableList = defineComponent({
       downButtons = new Map<SolSortableKey, HTMLButtonElement>(),
       rows = new Map<SolSortableKey, HTMLElement>()
     const state = computed(() => {
+      const locked = new Set<SolSortableKey>()
       const result = snapshotSortable(p.modelValue, p.itemKey)
-      if (!result.valid) return { snapshot: undefined, labels: [] as string[] }
+      if (!result.valid) return { snapshot: undefined, labels: [] as string[], locked }
       const labels: string[] = []
       try {
         for (const item of result.snapshot.items) {
           const label = p.itemLabel(item)
-          if (typeof label !== 'string' || !label.trim()) return { snapshot: undefined, labels }
+          if (typeof label !== 'string' || !label.trim())
+            return { snapshot: undefined, labels, locked }
+          const disabled = p.isItemDisabled ? p.isItemDisabled(item) : false
+          if (typeof disabled !== 'boolean') return { snapshot: undefined, labels, locked }
+          if (disabled) locked.add(result.snapshot.keys[labels.length]!)
           labels.push(label.trim())
         }
       } catch {
-        return { snapshot: undefined, labels }
+        return { snapshot: undefined, labels, locked }
       }
-      return { snapshot: result.snapshot, labels }
+      return { snapshot: result.snapshot, labels, locked }
     })
     type Session = {
       snapshot: SortableSnapshot<unknown>
@@ -143,6 +151,7 @@ export const SSortableList = defineComponent({
       count: number
     }>()
     const unavailable = () => p.disabled || p.readonly || !state.value.snapshot
+    const itemUnavailable = (key: SolSortableKey) => unavailable() || state.value.locked.has(key)
     const labelFor = (key: SolSortableKey, fallback = '') => {
       const index = state.value.snapshot?.keys.indexOf(key) ?? -1
       return index >= 0 ? state.value.labels[index]! : fallback
@@ -179,11 +188,15 @@ export const SSortableList = defineComponent({
         )
           return
         const map = action === 'up' ? upButtons : action === 'down' ? downButtons : handles
-        let button = map.get(key)
-        if (!button || button.disabled) button = handles.get(key)
+        let button = itemUnavailable(key) ? undefined : map.get(key)
+        if (!itemUnavailable(key) && (!button || button.disabled)) button = handles.get(key)
         if (!button || button.disabled) {
           const keys = state.value.snapshot?.keys || []
-          button = handles.get(keys[Math.min(fallbackIndex, keys.length - 1)]!)
+          const start = Math.max(0, Math.min(fallbackIndex, keys.length - 1))
+          button = [...keys.slice(start), ...keys.slice(0, start).reverse()]
+            .filter(key => !itemUnavailable(key))
+            .map(key => handles.get(key))
+            .find(button => button && !button.disabled)
         }
         if (button && !button.disabled) button.focus({ preventScroll: true })
         else host.value?.focus({ preventScroll: true })
@@ -202,7 +215,7 @@ export const SSortableList = defineComponent({
       if (restore) restoreFocus(old.key, focused, 'handle', value.from)
     }
     function begin(key: SolSortableKey, input: 'keyboard' | 'pointer' = 'keyboard') {
-      if (unavailable()) return false
+      if (itemUnavailable(key)) return false
       const snapshot = state.value.snapshot!
       const from = snapshot.keys.indexOf(key)
       if (from < 0) return false
@@ -211,7 +224,7 @@ export const SSortableList = defineComponent({
       session = current
       revision.value++
       handles.get(key)?.focus({ preventScroll: true })
-      if (session !== current || unavailable()) return false
+      if (session !== current || itemUnavailable(key)) return false
       const value = proposal(current)
       announce('start', value)
       emit('start', value)
@@ -226,7 +239,7 @@ export const SSortableList = defineComponent({
       session = undefined
       revision.value++
       if (
-        unavailable() ||
+        itemUnavailable(old.key) ||
         !state.value.snapshot ||
         !sameSortableSnapshot(old.snapshot, state.value.snapshot)
       ) {
@@ -244,7 +257,7 @@ export const SSortableList = defineComponent({
       restoreFocus(old.key, focused)
     }
     function moveButton(key: SolSortableKey, direction: -1 | 1) {
-      if (unavailable()) return
+      if (itemUnavailable(key)) return
       cancel('api', false)
       const snapshot = state.value.snapshot!,
         from = snapshot.keys.indexOf(key),
@@ -269,7 +282,7 @@ export const SSortableList = defineComponent({
         cancel('escape')
         return
       }
-      if (unavailable()) return
+      if (itemUnavailable(item)) return
       if (event.key === ' ' || event.key === 'Enter') {
         event.preventDefault()
         event.stopPropagation()
@@ -314,18 +327,25 @@ export const SSortableList = defineComponent({
       },
     })
     function pointerdown(event: PointerEvent, key: SolSortableKey) {
-      if (event.button !== 0 || event.isPrimary === false || unavailable()) return
+      if (event.button !== 0 || event.isPrimary === false || itemUnavailable(key)) return
       cancel('api', false)
       const snapshot = state.value.snapshot!
       pointer.press(
         event,
         key,
-        () => !!state.value.snapshot && sameSortableSnapshot(snapshot, state.value.snapshot),
+        () =>
+          !itemUnavailable(key) &&
+          !!state.value.snapshot &&
+          sameSortableSnapshot(snapshot, state.value.snapshot),
       )
     }
     watch(
       state,
       current => {
+        if (session && current.locked.has(session.key)) {
+          cancel('disabled')
+          return
+        }
         if (pointer.pending() && !pointer.valid() && !session) {
           cancel('external', false)
           return
@@ -367,8 +387,9 @@ export const SSortableList = defineComponent({
     expose({
       focus: (key?: SolSortableKey) => {
         if (!p.disabled) {
-          const first = key ?? state.value.snapshot?.keys[0]
-          const button = first === undefined ? undefined : handles.get(first)
+          const first = key ?? state.value.snapshot?.keys.find(key => !itemUnavailable(key))
+          const button =
+            first === undefined || itemUnavailable(first) ? undefined : handles.get(first)
           if (button && !button.disabled) button.focus()
           else host.value?.focus()
         }
@@ -414,8 +435,8 @@ export const SSortableList = defineComponent({
               const itemKey = snapshot?.keys[index] ?? 'invalid-' + index,
                 label = state.value.labels[index] || l.value.record + ' ' + (index + 1),
                 active = session?.key === itemKey
-              const scope = { item, index, key: itemKey, active },
-                disabled = unavailable()
+              const disabled = itemUnavailable(itemKey),
+                scope = { item, index, key: itemKey, active, disabled }
               return h(
                 'li',
                 {
@@ -426,6 +447,7 @@ export const SSortableList = defineComponent({
                   },
                   class: 'sol-ui-sortable-row',
                   'data-active': active ? 'true' : undefined,
+                  'data-disabled': state.value.locked.has(itemKey) ? 'true' : undefined,
                   'data-insert':
                     session?.to === index && session.to !== from
                       ? session.to > from
@@ -462,7 +484,12 @@ export const SSortableList = defineComponent({
                     },
                     slots['handle-icon']?.(scope) || h(SIcon, { name: 'menu', decorative: true }),
                   ),
-                  h('div', { class: 'sol-ui-sortable-content' }, slots.item?.(scope) || label),
+                  h('div', { class: 'sol-ui-sortable-content' }, [
+                    slots.item?.(scope) || label,
+                    state.value.locked.has(itemKey)
+                      ? h('span', { class: 'sol-hint' }, l.value.unavailable)
+                      : null,
+                  ]),
                   h(
                     'div',
                     { class: 'sol-ui-sortable-moves' },

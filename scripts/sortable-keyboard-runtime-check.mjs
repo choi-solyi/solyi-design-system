@@ -18,12 +18,14 @@ const api=await import(new URL('.runtime-check.mjs?sortable='+Date.now(),consume
 const tick=async()=>{await nextTick();await nextTick()},$=selector=>{const element=d.querySelector(selector);assert.ok(element,selector);return element}
 const press=(element,key,extra={})=>{const event=new w.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true,...extra});element.dispatchEvent(event);return event}
 const originals=Object.freeze(['a','b','c'].map((id,index)=>Object.freeze({id,title:id.toUpperCase(),details:Object.freeze({count:index+1})})))
-let app,vuetify,value,disabled,readonly,accept,locale,handle,events,show,mutatePreview
+let app,vuetify,value,disabled,readonly,accept,locale,handle,events,show,mutatePreview,locked,invalidDisabler
 const warnings=[]
 async function mount(){
   value=ref(originals);disabled=ref(false);readonly=ref(false);accept=ref(true);locale=ref('ko-KR');show=ref(true);mutatePreview=false
+  locked=ref([]);invalidDisabler=ref(false)
   events={updates:[],change:[],start:[],preview:[],end:[]}
   app=createApp({render:()=>h('main',[show.value?h(SSortableList,{ref:next=>handle=next,id:'sort',label:'Items',modelValue:value.value,itemKey:item=>item.id,itemLabel:item=>item.title,disabled:disabled.value,readonly:readonly.value,
+    isItemDisabled:item=>{if(invalidDisabler.value)throw Error('consumer disabled callback');return locked.value.includes(item.id)},
     'onUpdate:modelValue':next=>{events.updates.push(next);if(accept.value)value.value=next},onChange:next=>events.change.push(next),onStart:next=>events.start.push(next),onPreview:next=>{events.preview.push(next);if(mutatePreview)next.items.pop()},onEnd:next=>events.end.push(next),
   },{item:({item,index,active})=>[h('strong',item.title),h('input',{id:'content-'+item.id,value:item.details.count,'data-index':index,'data-active':active})]}):null,h('button',{id:'outside'},'Outside')])})
   app.config.warnHandler=message=>warnings.push(message);vuetify=api.createSolyiVuetify();app.use(vuetify).use({install:api.install},{locale}).mount('#app');await tick()
@@ -101,5 +103,19 @@ for(const reason of ['pointercancel','capture','outside','external','disabled','
  await unmount()
 }
 await mount();geometry();point(keyHandle('a'),'pointerdown');value.value=[...originals];await tick();point(w,'pointermove',150);point(w,'pointerup',150);assert.equal(events.start.length,0);assert.equal(events.end.length,0,'An external change cancels a pending press before its start threshold');await unmount()
+await mount();locked.value=['b'];await tick();geometry();assert.equal(keyHandle('b').disabled,true);assert.ok([...d.querySelectorAll('.sol-ui-sortable-row')[1].querySelectorAll('button')].every(button=>button.disabled));assert.equal($('#content-b').disabled,false)
+press(keyHandle('b'),' ');point(keyHandle('b'),'pointerdown');point(w,'pointermove',150);point(w,'pointerup',150);assert.equal(events.start.length,0);assert.equal(events.change.length,0)
+keyHandle('a').focus();press(keyHandle('a'),' ');press(keyHandle('a'),'End');press(keyHandle('a'),'Enter');await tick();assert.deepEqual(keys(),['b','c','a'],'Other rows may pass an immovable source; its absolute index is not locked');await unmount()
+for(const interaction of ['keyboard','pointer','pending']){
+ await mount();geometry();keyHandle('a').focus()
+ if(interaction==='keyboard'){press(keyHandle('a'),' ');press(keyHandle('a'),'End')}
+ else{point(keyHandle('a'),'pointerdown');if(interaction==='pointer')point(w,'pointermove',150)}
+ locked.value=['a'];await tick();point(w,'pointermove',150);point(w,'pointerup',150);await tick()
+ assert.deepEqual(keys(),['a','b','c']);assert.equal(events.change.length,0);assert.equal(events.end.length,interaction==='pending'?0:1)
+ if(interaction!=='pending'){assert.equal(events.end[0].reason,'disabled');assert.equal(d.activeElement,keyHandle('b'),'A newly unavailable source restores focus to an available handle')}
+ await unmount()
+}
+await mount();press(keyHandle('a'),' ');locked.value=['c'];await tick();assert.equal(events.end.length,0,'Unrelated disabled changes do not cancel the active source');press(keyHandle('a'),'ArrowDown');press(keyHandle('a'),'Enter');await tick();assert.deepEqual(keys(),['b','a','c']);await unmount()
+await mount();invalidDisabler.value=true;await tick();assert.ok(buttons().every(button=>button.disabled));assert.ok($('[role=alert]').textContent);assert.equal(events.change.length,0);await unmount()
 assert.deepEqual(warnings,[])
 console.log('PASS: '+(sourceMode?'source':'installed')+' generic list keyboard/button proposals, frozen object identity, controlled rejection, slot content, external removal/replace, seven cancel paths, focus, locale, readonly/invalid/empty and preview isolation. Real pointer/keyboard/touch are checked separately in Chrome.')

@@ -4,7 +4,7 @@
 
 ## 현재 완료 범위
 
-공개 export·타입·plugin/global 등록, generic 슬롯과 이벤트, 키보드·이동 버튼·포인터 및 touch emulation, 외부 변경 취소·포커스·nested/window 자동 스크롤을 구현했습니다. source와 설치본 runtime, strict 정상/오류 SFC, 72개 실제 Chrome 조합과 8개 Components 카드의 메뉴·검색·실행 예제·Sample Code·API 연결을 통과했습니다. 설치 검증은 종료했으며 [기록](SORTABLE-INSTALLED-VALIDATION.md)에 크기 한도 실패·동결 1.0.0 gate 실패·외부 선언 비교를 구분했습니다. 전체 목록 disabled/readonly와 별개로 항목별 disabled는 남아 있습니다. 최종 계약은 [사용 안내](../guide/SORTABLE-LIST.md)를 기준으로 합니다.
+공개 export·타입·plugin/global 등록, generic 슬롯과 이벤트, 키보드·이동 버튼·포인터 및 touch emulation, 외부 변경 취소·포커스·nested/window 자동 스크롤을 구현했습니다. source와 설치본 runtime, strict 정상/오류 SFC, 72개 실제 Chrome 조합과 8개 Components 카드의 메뉴·검색·실행 예제·Sample Code·API 연결을 통과했습니다. 설치 검증은 종료했으며 [기록](SORTABLE-INSTALLED-VALIDATION.md)에 크기 한도 실패·동결 1.0.0 gate 실패·외부 선언 비교를 구분했습니다. 이후 [항목별 disabled 보완](SORTABLE-ITEM-DISABLED-VALIDATION.md)을 source·타입·실제 Chrome에서 검증했습니다. 최종 계약은 [사용 안내](../guide/SORTABLE-LIST.md)를 기준으로 합니다.
 
 ## 제안 계약
 

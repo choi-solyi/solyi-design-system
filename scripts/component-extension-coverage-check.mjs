@@ -13,7 +13,7 @@ const expectations=[
  ['SDatePicker','날짜 선택',['displayFormatter'],['change'],[],['focus','validate','clear']],
  ['SNumberInput','숫자 입력',['presets','formatValue','unit'],['change'],['presets'],['focus','validate']],
  ['STimePicker','시각 선택',['allowManualInput','presentation','initialScrollValue','scrollToCurrentTime','scrubbable','listScrubbable','scrubPixelsPerStep'],['change','preview','interactionCommit','interactionCancel'],[],['focus','validate','clear']],
- ['SSortableList','정렬 목록',['modelValue','itemKey','itemLabel','disabled','readonly'],['update:modelValue','change','start','preview','end'],['item','handle-icon','empty','help'],['focus','cancel']],
+ ['SSortableList','정렬 목록',['modelValue','itemKey','itemLabel','isItemDisabled','disabled','readonly'],['update:modelValue','change','start','preview','end'],['item','handle-icon','empty','help'],['focus','cancel']],
 ]
 const escape=value=>value.replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]))
 const html=renderComponentReferences({section:(id,title,description,body)=>`<section class="section" id="${id}"><h2>${title}</h2>${body}</section>`,codeSample:(_label,source)=>`<details><summary>Code</summary><div class="code-body"><pre><code>${escape(source)}</code></pre></div></details>`})

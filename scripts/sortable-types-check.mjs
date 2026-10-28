@@ -22,5 +22,6 @@ for(const [name,content] of [['local',source],['global',global]]){const result=a
 for(const [name,content,expected] of [
   ['slot-negative',source.replace('item.details.count.toFixed(0)','item.details.missing.toFixed(0)'),/TS2339.*missing/],
   ['key-negative',source.replace('item => item.id','item => true'),/TS2322/],
+  ['disabled-negative',source.replace('item => disabledItem && item.details.count === 7','item => item.details.missing'),/TS2339.*missing/],
   ['prop-negative',source.replace('id="sortable-proof"','id="sortable-proof" :required="true"'),/TS2353|TS2322/],
 ]){const result=await run(name,content);assert.notEqual(result.status,0,name+' must fail, not silently become any');assert.match(result.output,expected);console.log('PASS: '+name+' rejected by real vue-tsc')}

@@ -14,19 +14,20 @@ await writeFile(new URL('entry.js',out),`
 import {createApp,h,ref,nextTick} from 'vue'
 import {SSortableList,createSolyiVuetify,provideSolLocale,applySolyiAppearance} from 'solyi-ui'
 import 'solyi-ui/all.css'
-const locale=ref('ko-KR'),items=ref([]),disabled=ref(false),readonly=ref(false),accept=ref(true),mode=ref('window')
+const locale=ref('ko-KR'),items=ref([]),disabled=ref(false),readonly=ref(false),accept=ref(true),mode=ref('window'),locked=ref([])
 let updates=[],changes=[],starts=[],previews=[],ends=[],original=[]
 const vuetify=createSolyiVuetify(),app=createApp({render:()=>h('main',{class:'sol-card',style:'margin:var(--sol-space-4);padding:var(--sol-space-4)'},[
  h('div',{id:'scrollport',style:mode.value==='nested'?'max-block-size:calc(var(--sol-control-height) * 7);overflow-y:auto':''},[
- h(SSortableList,{id:'sort',label:'Arbitrary objects',modelValue:items.value,itemKey:item=>item.id,itemLabel:item=>'Item '+item.id,disabled:disabled.value,readonly:readonly.value,
+ h(SSortableList,{id:'sort',label:'Arbitrary objects',modelValue:items.value,itemKey:item=>item.id,itemLabel:item=>'Item '+item.id,disabled:disabled.value,readonly:readonly.value,isItemDisabled:item=>locked.value.includes(item.id),
  'onUpdate:modelValue':next=>{updates.push(next);if(accept.value)items.value=next},onChange:value=>changes.push(value),onStart:value=>starts.push(value),onPreview:value=>previews.push(value),onEnd:value=>ends.push(value)},
  {item:({item})=>[h('div',{'data-item':item.id},[h('strong','A long item label · 줄바꿈하는 항목 '+item.id),h('input',{value:item.details.count,'aria-label':'Content '+item.id,style:'inline-size:100%;max-inline-size:7rem;box-sizing:border-box'})])]})]),
  h('button',{id:'outside',type:'button',class:'sol-button'},'Outside'),h('div',{style:'block-size:120vh'},'Ordinary page scroll')
 ])})
 provideSolLocale(app,locale);app.use(vuetify).mount('#app')
-window.qa={reset:async(count=3,nested=false)=>{disabled.value=false;readonly.value=false;accept.value=true;mode.value=nested?'nested':'window';original=Object.freeze(Array.from({length:count},(_,index)=>Object.freeze({id:index<3?'abc'[index]:'item-'+index,details:Object.freeze({count:index})})));items.value=original;await nextTick();updates=[];changes=[];starts=[];previews=[];ends=[];scrollTo(0,0)},
+window.qa={reset:async(count=3,nested=false)=>{disabled.value=false;readonly.value=false;accept.value=true;locked.value=[];mode.value=nested?'nested':'window';original=Object.freeze(Array.from({length:count},(_,index)=>Object.freeze({id:index<3?'abc'[index]:'item-'+index,details:Object.freeze({count:index})})));items.value=original;await nextTick();updates=[];changes=[];starts=[];previews=[];ends=[];scrollTo(0,0)},
  set:async state=>{locale.value=state.locale;document.documentElement.lang=state.locale;applySolyiAppearance(vuetify.theme,state);await nextTick()},
  disabled:async state=>{disabled.value=state;await nextTick()},readonly:async state=>{readonly.value=state;await nextTick()},accept:state=>accept.value=state,
+ lock:async keys=>{locked.value=keys;await nextTick()},
  external:async()=>{items.value=[...items.value].reverse();await nextTick()},get:()=>({ids:items.value.map(item=>item.id),original:original.map(item=>item.id),changes:changes.length,starts:starts.length,previews:previews.length,ends,identity:items.value.every(item=>original.includes(item))})}
 await window.qa.reset()
 `)
@@ -60,6 +61,10 @@ try{
    const box=await handle('a').boundingBox();assert.ok(box.width>=40&&box.height>=40);if(width===320)assert.ok(box.width>=44&&box.height>=44)
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);records.push({width,...state})
   }
+  await page.evaluate(()=>window.qa.reset());await page.evaluate(()=>window.qa.lock(['b']));assert.equal(await handle('b').isDisabled(),true);assert.equal(await row('b').locator('.sol-ui-sortable-moves button:disabled').count(),2)
+  await handle('a').focus();await page.keyboard.press('Space');await page.keyboard.press('End');await page.keyboard.press('Enter');assert.deepEqual((await get()).ids,['b','c','a'])
+  await page.evaluate(()=>window.qa.reset());await handle('a').focus();await page.keyboard.press('Space');await page.keyboard.press('ArrowDown');await page.evaluate(()=>window.qa.lock(['a']));assert.equal((await get()).ends.at(-1).reason,'disabled');assert.equal((await get()).changes,0);assert.equal(await handle('b').evaluate(element=>element===document.activeElement),true)
+  await page.evaluate(()=>window.qa.reset());await drag('a','b');await page.evaluate(()=>window.qa.lock(['a']));await page.mouse.up();assert.equal((await get()).ends.at(-1).reason,'disabled');assert.equal((await get()).changes,0)
   await page.evaluate(()=>window.qa.reset());await drag('a','c');assert.equal(await handle('a').evaluate(element=>element.hasPointerCapture(1)),true);assert.deepEqual((await get()).ids,['a','b','c']);await page.mouse.up()
   assert.deepEqual((await get()).ids,['b','c','a']);assert.equal((await get()).changes,1);assert.equal((await get()).ends.length,1);assert.equal((await get()).ends[0].input,'pointer');assert.equal(await handle('a').getAttribute('aria-pressed'),'false')
   for(const cancellation of ['escape','external','capture','disabled','readonly']){
