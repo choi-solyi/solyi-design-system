@@ -1,6 +1,6 @@
 # Components · 신규/확장 API 대조
 
-이 기록은 미게시 로컬 개발본입니다. 공개 ui.solyi.kr 1.0.0과 npm 패키지를 갱신하지 않았습니다. SMonthCalendar·STimeGrid·SScheduler는 미착수이며 제공 중인 API로 색인하거나 예제를 만들지 않았습니다.
+이 기록은 미게시 로컬 개발본입니다. 공개 ui.solyi.kr 1.0.0과 npm 패키지를 갱신하지 않았습니다. SMonthCalendar는 내부 계산 helper에 착수했으나 공개 UI는 미구현입니다. STimeGrid·SScheduler는 미착수이며, 이들을 제공 중인 API로 색인하거나 예제를 만들지 않았습니다.
 
 ## 항목별 연결
 
