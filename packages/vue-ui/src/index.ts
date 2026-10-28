@@ -49,7 +49,7 @@ import type {SolLocale,SolLocaleSource} from './locale';
 export {SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput};
 export {STabs,SSnackbar};
 export {SDatePicker,STimePicker};
-export type {DateMode,DateRange,DateValue,DateChange,PickerCloseReason,SolPickerHandle,SolDateDisplayFormatter,SolTimePresentation} from './date-time';
+export type {DateMode,DateRange,DateValue,DateChange,PickerCloseReason,SolPickerHandle,SolDateDisplayFormatter,SolTimePresentation,SolPickerPresentation,SolPickerPlacement} from './date-time';
 export type {SolTimeInteraction,SolTimeInteractionCancel,SolTimeCancelReason} from './time-scrub';
 import {SSortableList} from './sortable-list';
 import {SMonthCalendar} from './month-calendar';

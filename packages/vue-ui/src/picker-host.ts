@@ -18,6 +18,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
     open: Boolean,
     id: { type: String, required: true },
     labelledby: { type: String, required: true },
+    describedby: String,
     anchor: Object as PropType<HTMLElement | null>,
     returnFocus: Object as PropType<HTMLElement | null>,
     presentation: { type: String as PropType<PickerPresentation>, default: 'auto' },
@@ -224,6 +225,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       contentProps: {
         id: p.id, role: nativeParent.value ? undefined : 'dialog', tabindex: -1,
         'aria-labelledby': nativeParent.value ? undefined : p.labelledby,
+        'aria-describedby': nativeParent.value ? undefined : p.describedby,
         'aria-modal': nativeParent.value ? undefined : String(mode.value === 'dialog'),
         'data-picker-presentation': mode.value,
         style: nativePopover.value ? { ...nativePosition.value, position: 'fixed' } : undefined,
@@ -233,7 +235,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       'onClick:outside': () => request('outside'),
     } satisfies Partial<InstanceType<typeof VOverlay>['$props']>, () => slots.default?.())
     return () => nativeParent.value ? h(Teleport, { to: nativeParent.value }, [
-      h('dialog', { ref: bridge, popover: 'manual', role: 'dialog', 'aria-labelledby': p.labelledby, 'aria-modal': String(mode.value === 'dialog'), class: 'sol-ui-picker-native-host', onCancel: (event: Event) => event.preventDefault() }, renderOverlay()),
+      h('dialog', { ref: bridge, popover: 'manual', role: 'dialog', 'aria-labelledby': p.labelledby, 'aria-describedby': p.describedby, 'aria-modal': String(mode.value === 'dialog'), class: 'sol-ui-picker-native-host', onCancel: (event: Event) => event.preventDefault() }, renderOverlay()),
     ]) : renderOverlay()
   },
 })

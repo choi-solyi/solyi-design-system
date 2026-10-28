@@ -189,6 +189,10 @@ for (const [name, group, description, exampleRoute, example] of records) {
   }
   if (name === 'STimePicker') props.find(prop => prop.name === 'presentation').description =
     '기본 두 native select 또는 opt-in 스크롤 목록입니다. 허용값은 native/list입니다.'
+  if (name === 'SDatePicker') {
+    props.find(prop => prop.name === 'pickerPresentation').description = '생략하면 기존 native 모달을 유지합니다. auto는 화면 크기에 맞춰 연결 팝업/모달로 전환하며 popover/dialog는 명시적 opt-in입니다. 열린 auto 전환은 부분 기간 선택을 보존하고 legacy 경계를 바꾸면 취소합니다.'
+    props.find(prop => prop.name === 'placement').description = 'opt-in 연결 팝업의 logical 시작/끝 위치입니다. 화면 경계에서 flip/shift하며 모달에서는 위치 기준으로 사용하지 않습니다.'
+  }
   const emits = resolve(property(component.node,component.file,'emits'),component.file);
   const events = entries(emits.node,emits.file).map(([name,fn])=>({name,signature:signature(fn),description:name==='update:modelValue'?'소비 앱의 모델 값을 갱신합니다.':name.startsWith('update:')?'해당 상태의 변경을 소비 앱에 전달합니다.':name==='invalid'?'검증 실패 문구를 전달합니다.':name==='close'?(fn.parameters?.length?'닫힌 이유를 전달합니다.':'닫힌 뒤 전달합니다.'):name==='open'?'패널이 열린 뒤 전달합니다.':name==='retry'?'소비 앱에 재시도 처리를 요청합니다.':`${name} 동작이 발생했을 때 전달합니다.`}));
     if (name === 'SCombobox') {

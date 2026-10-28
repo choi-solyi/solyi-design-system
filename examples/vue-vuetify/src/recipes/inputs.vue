@@ -1,12 +1,35 @@
 <script setup lang="ts">
 import { formatSolDate } from 'solyi-ui'
-import type { DateValue, SolOption, SolOptionLoader, SolDateDisplayFormatter } from 'solyi-ui'
+import type {
+  DateValue,
+  SolOption,
+  SolOptionLoader,
+  SolDateDisplayFormatter,
+  SolPickerPresentation,
+  SolPickerPlacement,
+} from 'solyi-ui'
 
 defineProps<{ part?: string }>()
 const mode = ref<string | null>('range'),
   date = ref<DateValue>(null)
 const dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'))
 const showWeekday = ref(false)
+const pickerChoice = ref<string | null>('legacy'),
+  placementChoice = ref<string | null>('bottom-start')
+const datePickerPresentation = computed<SolPickerPresentation | undefined>(() =>
+  pickerChoice.value === 'auto' ||
+  pickerChoice.value === 'popover' ||
+  pickerChoice.value === 'dialog'
+    ? pickerChoice.value
+    : undefined,
+)
+const datePlacement = computed<SolPickerPlacement>(() =>
+  placementChoice.value === 'top-start' ||
+  placementChoice.value === 'top-end' ||
+  placementChoice.value === 'bottom-end'
+    ? placementChoice.value
+    : 'bottom-start',
+)
 const formatDateWithWeekday: SolDateDisplayFormatter = (iso, locale) =>
   iso +
   ' (' +
@@ -75,12 +98,37 @@ const loader = computed<SolOptionLoader | undefined>(() => {
         v-model="showWeekday"
         label="요일 표시 · 저장값은 ISO 유지"
       />
+      <SSelect
+        id="recipe-date-presentation"
+        v-model="pickerChoice"
+        label="팝업 표시 방식"
+        :options="[
+          { value: 'legacy', label: '기존 기본 모달' },
+          { value: 'auto', label: '화면에 맞춰 자동 전환' },
+          { value: 'popover', label: '입력창에 연결된 팝업' },
+          { value: 'dialog', label: '모달 다이얼로그' },
+        ]"
+      />
+      <SSelect
+        id="recipe-date-placement"
+        v-model="placementChoice"
+        label="연결 팝업의 기준 위치"
+        :disabled="!datePickerPresentation"
+        :options="[
+          { value: 'bottom-start', label: '아래 · 시작' },
+          { value: 'bottom-end', label: '아래 · 끝' },
+          { value: 'top-start', label: '위 · 시작' },
+          { value: 'top-end', label: '위 · 끝' },
+        ]"
+      />
       <SDatePicker
         id="recipe-date"
         v-model="date"
         clearable
         label="가상 일정"
         :mode="dateMode"
+        :picker-presentation="datePickerPresentation"
+        :placement="datePlacement"
         :display-formatter="showWeekday ? formatDateWithWeekday : undefined"
       />
       <p role="status">완료값: {{ JSON.stringify(date) }}</p>

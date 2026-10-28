@@ -9,6 +9,8 @@ import {dateISO,parseDateOnly,weekday,shiftDay,shiftMonth,parseTimeOnly} from '@
 import type {DateParts} from '@solyi/core/date';
 import {solIconPaths} from '@solyi/core/icons';
 import {SIcon} from './primitives';
+import {PickerHost} from './picker-host';
+import type {PickerPresentation,PickerPlacement,PickerHostHandle} from './picker-host';
 import {timeChoices,nearestTime} from './time-values';
 import {createTimeScrub} from './time-scrub';
 import type {SolTimeInteraction,SolTimeInteractionCancel} from './time-scrub';
@@ -16,6 +18,8 @@ import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './cont
 import { useSolLocale, withVisibleNumberLabel } from './locale'
 
 export type DateMode='single'|'range';
+export type SolPickerPresentation=PickerPresentation;
+export type SolPickerPlacement=PickerPlacement;
 export type SolDateDisplayFormatter=(iso:string,locale:Readonly<SolLocale>)=>string;
 export interface DateRange {start:string;end:string}
 export interface SolPickerHandle {focus():void;validate():boolean;clear():void;resetValidation():void}
@@ -51,6 +55,8 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
     mode: { type: String as PropType<DateMode>, default: 'single' },
     modelValue: { type: [String, Object] as PropType<DateValue>, default: null },
     displayFormatter: Function as PropType<SolDateDisplayFormatter>,
+    pickerPresentation: String as PropType<SolPickerPresentation>,
+    placement: { type: String as PropType<SolPickerPlacement>, default: 'bottom-start' },
   },
   slots: Object as SlotsType<SolInputControlSlots>,
   emits: {
@@ -72,12 +78,14 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
       draftStart = ref<string | null>(null),
       input = ref<HTMLInputElement | null>(null),
       dialog = ref<HTMLDialogElement | null>(null),
+      host = ref<PickerHostHandle | null>(null),
       trigger = ref<HTMLButtonElement | null>(null),
       dayButtons = new Map<string, HTMLButtonElement>()
     let opener: HTMLElement | null = null,
       reason: PickerCloseReason = 'close',
       visibilityRevision = 0,
-      disposed = false
+      disposed = false,
+      announced = false
     const weekStart = () =>
       Number.isInteger(l.value.firstDay) && l.value.firstDay >= 0 && l.value.firstDay <= 6
         ? l.value.firstDay
@@ -120,13 +128,21 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
     }
     function commit(value: DateValue, why: DateChange['reason']) {
       if (fieldDisabled(p) || fieldReadonly(p)) return
+      const modeAtCommit = p.mode
       draft.value = format(p.mode, value)
       localError.value = ''
       if (!sameDateValue(value, p.modelValue)) {
         emit('update:modelValue', clone(value))
         emit('change', { mode: p.mode, value: clone(value), reason: why })
       }
-      void nextTick(validity)
+      void nextTick(() => {
+        if (!disposed && p.mode === modeAtCommit && !sameDateValue(value, p.modelValue)) {
+          // A controlled parent may reject the proposal; do not submit stale display text.
+          draft.value = format(p.mode, p.modelValue)
+          localError.value = ''
+        }
+        validity()
+      })
     }
     function validateIntrinsic() {
       const result = parse()
@@ -160,7 +176,7 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
     }
     async function focusDay() {
       await nextTick()
-      if (!disposed && opened.value && dialog.value?.open)
+      if (!disposed && opened.value && (dialog.value?.open || host.value?.content()?.isConnected))
         dayButtons.get(dateISO(active.value))?.focus()
     }
     function choose(day: DateParts) {
@@ -220,14 +236,27 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
       await nextTick()
       if (disposed || revision !== visibilityRevision || v !== opened.value) return
       if (v) {
+        if (p.pickerPresentation) return // The opt-in host announces after visible content is ready.
         if (!dialog.value?.open) dialog.value?.showModal()
         await focusDay()
         if (!disposed && opened.value && revision === visibilityRevision) emit('open')
       } else if (old) {
+        announced = false
         if (dialog.value?.open) dialog.value.close()
         const target = opener && !(opener as HTMLButtonElement).disabled ? opener : input.value
-        if (target?.isConnected && !fieldDisabled(p)) target.focus()
+        if (!p.pickerPresentation && target?.isConnected && !fieldDisabled(p)) target.focus()
         emit('close', reason)
+      }
+    })
+    watch(() => p.pickerPresentation, (value, old) => {
+      if (opened.value && !!value !== !!old) {
+        // Crossing the legacy/opt-in ownership boundary cancels, rather than committing a draft.
+        close()
+        if (dialog.value?.open) dialog.value.close()
+        void nextTick(() => {
+          const target = opener && !(opener as HTMLButtonElement).disabled ? opener : input.value
+          if (!disposed && !opened.value && target?.isConnected && !fieldDisabled(p)) target.focus()
+        })
       }
     })
     watch(l, () => {
@@ -335,6 +364,30 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
       emit('clear', { value: null, reason: 'clear' })
     }
     expose({ ...validation, clear })
+    function renderCalendar(legacyProps: Record<string, unknown>, children: VNodeChild[]) {
+      if (!p.pickerPresentation) return h('dialog', legacyProps, children)
+      return h(PickerHost, {
+        ref: host,
+        open: opened.value,
+        id: p.id + '-calendar',
+        labelledby: p.id + '-title',
+        describedby: p.id + '-keys',
+        anchor: input.value?.closest<HTMLElement>('.sol-ui-input-frame,.sol-date-field') || input.value,
+        returnFocus: opener,
+        presentation: p.pickerPresentation,
+        placement: p.placement,
+        width: '384px',
+        panelClass: 'sol-ui-calendar',
+        initialFocus: () => dayButtons.get(dateISO(active.value)),
+        onRequestClose: close,
+        onReady: () => {
+          if (!disposed && opened.value && !announced) {
+            announced = true
+            emit('open')
+          }
+        },
+      }, () => h('div', {class:'sol-ui-calendar-content',onKeydown:key}, children))
+    }
     return () => {
       const range = draftStart.value
           ? { start: draftStart.value, end: draftStart.value }
@@ -382,6 +435,7 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
             placeholder: p.mode === 'single' ? 'YYYY-MM-DD' : 'YYYY-MM-DD ~ YYYY-MM-DD',
             'aria-haspopup': 'dialog',
             'aria-controls': p.id + '-calendar',
+            ...(p.pickerPresentation ? {'aria-expanded': String(opened.value)} : {}),
             'aria-invalid': error ? 'true' : undefined,
             'aria-describedby': fieldDescription(
               p,
@@ -451,8 +505,7 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
               l.value.clear,
             )
           : null,
-        h(
-          'dialog',
+        renderCalendar(
           {
             ref: dialog,
             id: p.id + '-calendar',
