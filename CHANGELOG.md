@@ -2,6 +2,7 @@
 
 ## 1.1.0 후보 · 미게시
 
+- STimeGrid readonly 기반을 추가합니다. 임의 객체 accessor·ISO 열·분 좌표·band·generic 슬롯·겹침 배치·전체 목록을 제공하며 timezone/충돌/저장 모델은 처리하지 않습니다. 이동·resize·복제 상호작용은 개발 중입니다.
 - SPagination은 처음·이전·다음·마지막 이동과 controlled 페이지 제안을 제공합니다. 좁은 화면은 5개 컨트롤로 표시하며 페이지 수가 바뀌어도 부모 모델을 자동 수정하지 않습니다. Table의 기존 API·번호 범위는 유지합니다.
 - semantic tone과 별도인 범주 8색과 resolveCategoricalColor를 추가합니다. Calendar marker의 opt-in category는 현재 테마의 CSS 역할로 표시하며 이름·기존 tone·ISO 모델을 유지합니다.
 - SLoadingOverlay는 기존 Progress와 modal host를 재사용합니다. container/viewport·blocking/nonblocking·지연·최소 표시·내용 숨김을 제공하며 타이머가 부모 작업 모델을 변경하지 않습니다.

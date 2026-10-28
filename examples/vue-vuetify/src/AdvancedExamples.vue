@@ -11,6 +11,7 @@ const supportedParts = [
   'split-pane',
   'sortable',
   'month-calendar',
+  'time-grid',
 ]
 const part = computed(() => (supportedParts.includes(props.part) ? props.part : ''))
 const show = (...parts) => !part.value || parts.includes(part.value)
@@ -109,6 +110,33 @@ const calendarMarkers = Object.freeze({
     Object.freeze({ id: 'c', label: '세 번째 상태는 추가 개수로 안내합니다' }),
   ]),
 })
+const gridColumns = Object.freeze([
+  { key: 'one', label: '열 A', date: '2026-10-28' },
+  { key: 'two', label: '열 B', date: '2026-10-29' },
+])
+const gridItems = Object.freeze([
+  Object.freeze({ id: 'a', column: 'one', start: 480, end: 570, title: '첫 번째 항목' }),
+  Object.freeze({
+    id: 'b',
+    column: 'one',
+    start: 510,
+    end: 600,
+    title: '겹치는 항목도 원본 시간을 바꾸지 않습니다.',
+  }),
+  Object.freeze({
+    id: 'c',
+    column: 'one',
+    start: 600,
+    end: 615,
+    title: '짧은 항목 · 긴 이름은 아래 목록에서 전체 내용을 확인할 수 있습니다.',
+  }),
+  Object.freeze({ id: 'd', column: 'two', start: 780, end: 840, title: '두 번째 열 항목' }),
+])
+const gridEmpty = ref(false),
+  gridLoading = ref(false)
+const gridBands = Object.freeze([
+  { id: 'band-a', label: '범용 구간', startMinute: 720, endMinute: 780, category: 'c2' },
+])
 function acceptProposal(items) {
   if (acceptOrder.value) sortableItems.value = items
 }
@@ -457,5 +485,35 @@ watch([disabled, readonly], () => {
     <p id="advanced-month-result" class="starter-hint">
       표시 월: {{ calendarMonth }} · 선택 ISO: {{ calendarDate }}
     </p>
+  </section>
+  <section v-if="show('time-grid')" class="starter-card" aria-labelledby="advanced-time-grid-title">
+    <h2 id="advanced-time-grid-title">시간 그리드 · readonly 기반</h2>
+    <p class="starter-hint">
+      열과 분 좌표만 표시합니다. 시간대·충돌·저장 규칙은 소비 앱에서 소유합니다. 이동·크기 변경·복제
+      상호작용은 다음 구현 단위입니다.
+    </p>
+    <div class="starter-settings">
+      <SCheckbox id="advanced-time-grid-empty" v-model="gridEmpty" label="빈 항목" /><SCheckbox
+        id="advanced-time-grid-loading"
+        v-model="gridLoading"
+        label="불러오는 중"
+      />
+    </div>
+    <STimeGrid
+      id="advanced-time-grid"
+      label="범용 시간 항목"
+      :items="gridEmpty ? [] : gridItems"
+      :columns="gridColumns"
+      :bands="gridBands"
+      :item-key="item=>item.id"
+      :item-label="item=>item.title"
+      :item-column="item=>item.column"
+      :item-start="item=>item.start"
+      :item-end="item=>item.end"
+      :start-minute="480"
+      :end-minute="1080"
+      :loading="gridLoading"
+      help="각 항목에 Tab으로 초점을 둘 수 있습니다. 좁은 화면에서는 가로로 스크롤하고 목록으로 전체 이름을 확인하세요."
+    />
   </section>
 </template>

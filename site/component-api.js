@@ -51,7 +51,7 @@ export function renderComponentReferences(h) {
 
 function componentPreview(component) {
  const aliases={date:['inputs','date'],files:['inputs','files'],autocomplete:['inputs','autocomplete'],chart:['chart-tree','chart'],tree:['chart-tree','tree']};
- const parts={STextarea:'textarea',SNumberInput:'number',SMultiSelect:'multiselect',SAvatar:'avatar',SStepper:'steps',SSegmentedControl:'segmented',SRangeSlider:'range',SContextMenu:'context-menu',SResizableSplitPane:'split-pane'};
+ const parts={STimeGrid:'time-grid',STextarea:'textarea',SNumberInput:'number',SMultiSelect:'multiselect',SAvatar:'avatar',SStepper:'steps',SSegmentedControl:'segmented',SRangeSlider:'range',SContextMenu:'context-menu',SResizableSplitPane:'split-pane'};
  const [recipe,part]=aliases[component.example]||[component.example,component.name==='SSortableList'?'sortable':component.name==='SMonthCalendar'?'month-calendar':parts[component.name]||''];
  return {recipe,part,view:component.example==='advanced-vue'?'advanced':'recipes'};
 }

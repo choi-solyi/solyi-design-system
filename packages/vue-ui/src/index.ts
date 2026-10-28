@@ -1,3 +1,6 @@
+import {STimeGrid} from './time-grid';
+export {STimeGrid};
+export type {SolTimeGridKey,SolTimeGridColumn,SolTimeGridBand,SolTimeGridProps,SolTimeGridItemScope,SolTimeGridBandScope,SolTimeGridSlots,SolTimeGridHandle} from './time-grid';
 import {SPagination} from './pagination';
 export {SPagination};
 export type {SolPaginationHandle} from './pagination';
@@ -178,6 +181,7 @@ export const SDataTable=/* @__PURE__ */ defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  STimeGrid: typeof STimeGrid
   SPagination: typeof SPagination
   SLoadingOverlay: typeof SLoadingOverlay
   SEmptyState: typeof SEmptyState
@@ -229,6 +233,7 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  STimeGrid,
   SPagination,
   SLoadingOverlay,
   SEmptyState,

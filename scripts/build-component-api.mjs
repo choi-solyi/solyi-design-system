@@ -109,6 +109,7 @@ const propertyDescriptions = {
   open:'메뉴의 제어형 열림 상태입니다. update:open 이벤트와 연결합니다.', menuLabel:'분할 버튼에서 추가 행동 메뉴를 여는 버튼의 이름입니다.', maxFileSize:'파일 하나에 허용하는 최대 바이트 수입니다. 기본 2 × 1024 × 1024바이트(2 MiB)입니다.', drop:'파일 드래그·드롭 영역을 활성화합니다. 선택 버튼은 별도로 유지합니다.', fastFail:'폼 검증에서 첫 오류가 발생하면 뒤의 자체 필드 검사를 중단합니다.', lowerLabel:'범위의 아래쪽 핸들을 구분하는 이름입니다.', upperLabel:'범위의 위쪽 핸들을 구분하는 이름입니다.', formatValue:'숫자 하나를 받아 화면·접근성 값 표시용 문자열을 반환하는 함수입니다. 모델 값은 숫자로 유지합니다.', triggerLabel:'모바일·키보드에서 맥락 메뉴를 직접 여는 버튼의 이름입니다.', dismissible:'사용자가 알림을 닫을 수 있는 버튼을 표시합니다.', collapseBelow:'컨테이너 너비가 이 CSS px 값보다 작으면 두 영역을 세로로 배치합니다. 0 이하는 자동 전환을 끕니다.', primaryLabel:'첫 번째 분할 영역의 접근 가능한 이름입니다.', secondaryLabel:'두 번째 분할 영역의 접근 가능한 이름입니다.',
 };
 const records = [
+  ['STimeGrid','표시·레이아웃','임의 객체를 열과 분 좌표로 읽기 전용 표시합니다. 시간대·충돌·저장 규칙은 소비 앱이 소유합니다.','component','advanced-vue'],
   ['SMonthCalendar','표시·레이아웃','한 달의 날짜와 범용 marker를 조회·탐색합니다. 선택과 표시 월은 부모가 관리합니다.','component','advanced-vue'],
   ['SSortableList','표시·레이아웃','임의 객체 목록의 순서를 포인터·키보드·이동 버튼으로 제안합니다. 원본 모델은 직접 수정하지 않습니다.','component','advanced-vue'],
   ['SChip','표시·레이아웃','짧은 값의 표시·선택·제거를 구분합니다.','component','buttons'],
@@ -204,6 +205,13 @@ for (const [name, group, description, exampleRoute, example] of records) {
     props.find(prop => prop.name === 'pageCount').description = '전체 페이지 수입니다. 0이면 빈 상태를 표시하고 모든 이동을 막습니다. 소수는 내림, 잘못된 값은 0으로 정규화합니다.'
     props.find(prop => prop.name === 'siblingCount').description = '현재 페이지 양옆 번호 수입니다. 기본 1, 0–5로 제한합니다. 좁은 영역에서는 현재 번호와 처음·이전·다음·마지막 버튼을 표시합니다.'
   }
+  if (name === 'STimeGrid') {
+    props.find(prop => prop.name === 'items').description = 'readonly 임의 객체 배열입니다. accessor로 읽으며 원본 배열·객체를 변경하지 않습니다. 겹침 lane은 시각 배치이며 앱의 충돌 정책을 처리하지 않습니다.'
+    props.find(prop => prop.name === 'columns').description = '고유 key와 label, 선택적 ISO 달력 date를 받습니다. 분 좌표는 해당 열의 wall time이며 timezone/DST/instant 저장 변환은 앱에서 처리합니다.'
+    for (const key of ['itemStart','itemEnd']) props.find(prop => prop.name === key).description = '0–1440 범위 정수 분을 읽습니다. 시작<끝이며 자정 넘김은 앱에서 항목을 나눕니다. 모델을 Date/UTC 문자열로 변환하지 않습니다.'
+    for (const key of ['startMinute','endMinute']) props.find(prop => prop.name === key).description = '표시 범위입니다. 범위 밖 자료는 원본을 바꾸지 않고 clip하며 전체 목록에는 원래 시간을 표시합니다.'
+    props.find(prop => prop.name === 'loading').description = '부모의 작업 상태를 표시하며 기존 자료를 유지합니다. 내부 fetch나 모델 갱신은 하지 않습니다.'
+  }
   if (name === 'SConfirmAction') {
     props.find(prop => prop.name === 'timeout').description = '확인 대기 시간(ms)입니다. 기본 5000, 0이면 자동 취소하지 않습니다. Escape와 기본 blur 취소는 유지합니다.'
     props.find(prop => prop.name === 'loading').description = '소비 앱의 비동기 실행 상태입니다. 대기 확인을 취소하고 재실행을 막으며 버튼 포커스는 유지합니다. confirm listener의 Promise는 자동으로 기다리지 않습니다.'
@@ -239,8 +247,8 @@ for (const [name, group, description, exampleRoute, example] of records) {
       }
       for (const event of events) if (interactionDescriptions[event.name]) event.description = interactionDescriptions[event.name]
     }
-    if(name==='SSortableList') {
-      const contract=declarations.get('SolSortableProps')
+    if(name==='SSortableList'||name==='STimeGrid') {
+      const contract=declarations.get(name==='STimeGrid'?'SolTimeGridProps':'SolSortableProps')
       assert.ok(contract&&ts.isInterfaceDeclaration(contract),'Generic public props interface exists')
       for(const prop of props){const member=contract.members.find(member=>member.name?.text===prop.name);assert.ok(member,'Runtime prop is in the public generic contract: '+prop.name);prop.type=text(member.type);prop.required=!member.questionToken}
       for(const event of events){const key=event.name==='update:modelValue'?'onUpdate:modelValue':'on'+event.name[0].toUpperCase()+event.name.slice(1);const member=contract.members.find(member=>member.name?.text===key);assert.ok(member&&ts.isFunctionTypeNode(member.type),'Typed generic event: '+event.name);event.signature=signature(member.type)}
@@ -273,8 +281,8 @@ for (const [name, group, description, exampleRoute, example] of records) {
   for (const call of visit(setup,n=>ts.isCallExpression(n)&&n.expression.getText()==='expose')) {for(const [method]of entries(call.arguments[0],component.file))methodNames.add(method);if(/\bvalidation\b/.test(text(call.arguments[0]))&&text(setup).includes('useSFieldValidation('))for(const method of validationHandle)methodNames.add(method);}
   const methods=[...methodNames].map(method=>({name:method,signature:name==='SForm'&&method==='validate'?'() => Promise<SFormResult>':methodTypes[method]||'소스의 공개 핸들 타입 참조',description:method==='focus'?'사용 가능한 입력 또는 실행 요소로 초점을 이동합니다.':method==='validate'?'현재 값을 검증하고 유효 여부를 반환합니다.':method==='resetValidation'?'입력값을 바꾸지 않고 로컬 검증 표시를 초기화합니다.':method==='clear'?'선택값을 초기화합니다.':method==='retry'?'실패한 요청을 다시 실행합니다.':`${method} 작업을 실행합니다.`}));
   if(name==='SForm')for(const slot of slots)if(slot.name==='default')slot.description='폼 상태와 작업을 받습니다: {validate, resetValidation, focus, errors, isValid, isValidating}. validate는 Promise<SFormResult>를 반환합니다.';
-  if(name==='SSortableList'||name==='SMonthCalendar'){
-    const contract=declarations.get(name==='SSortableList'?'SolSortableSlots':'SolMonthCalendarSlots'),handle=declarations.get(name==='SSortableList'?'SolSortableHandle':'SolMonthCalendarHandle')
+  if(name==='SSortableList'||name==='SMonthCalendar'||name==='STimeGrid'){
+    const contract=declarations.get(name==='SSortableList'?'SolSortableSlots':name==='STimeGrid'?'SolTimeGridSlots':'SolMonthCalendarSlots'),handle=declarations.get(name==='SSortableList'?'SolSortableHandle':name==='STimeGrid'?'SolTimeGridHandle':'SolMonthCalendarHandle')
     assert.deepEqual(slots.map(slot=>slot.name).sort(),contract.members.map(member=>member.name.text).sort(),'Document exactly the implemented sortable slots')
     for(const slot of slots){const member=contract.members.find(member=>member.name.text===slot.name);slot.scope=member.type.parameters.length?text(member.type.parameters[0].type):'범위 없음'}
     assert.deepEqual(methods.map(method=>method.name).sort(),handle.members.map(member=>member.name.text).sort(),'Document exactly the exposed sortable handle')

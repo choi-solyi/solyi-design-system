@@ -1,7 +1,8 @@
 {
   "documentVersion": "1.1.0",
-  "componentCount": 49,
+  "componentCount": 50,
   "components": [
+    "STimeGrid",
     "SPagination",
     "SLoadingOverlay",
     "SEmptyState",

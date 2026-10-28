@@ -1,5 +1,6 @@
 declare module 'vue' {
   export interface GlobalComponents {
+    STimeGrid: typeof import('./index')['STimeGrid'];
     SPagination: typeof import('./index')['SPagination'];
     SLoadingOverlay: typeof import('./index')['SLoadingOverlay'];
     SEmptyState: typeof import('./index')['SEmptyState'];

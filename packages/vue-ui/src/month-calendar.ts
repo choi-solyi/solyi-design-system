@@ -149,7 +149,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                 !marker.label.trim() ||
                 (marker.tone !== undefined && !tones.has(marker.tone)) ||
                 (marker.icon !== undefined && !Object.hasOwn(solIconPaths, marker.icon)) ||
-                (marker.category !== undefined && !/^c[1-8]$/.test(marker.category))
+                (marker.category !== undefined && (typeof marker.category !== 'string' || !/^c[1-8]$/.test(marker.category)))
               )
                 throw Error('Invalid calendar marker')
               ids.add(marker.id)

@@ -1,3 +1,5 @@
+TimeGrid readonly 기반: 임의 객체 accessor·ISO 열·wall-minute·band·generic 슬롯·focus·loading/error와 겹침 lane을 구현하고 공개 50종 등록·Components·starter 시간 그리드 링크에 연결했습니다. 순수 helper/원본 보존·정상 generic 타입과 잘못된 accessor/slot 거부·패키지/예제 빌드·실제 넓은 dark/모바일 light 화면과 목록·기본 focus/scroll·loading/empty를 확인했습니다. 짧은 항목은 제목·시간을 한 줄로 다듬고 전체 이름은 목록으로 제공합니다. 이동/resize/duplicate와 pending/proposal/취소·포인터 상호작용 및 최종 설치본 검증은 아직 남았으며 전체 완료/출시 가능 상태가 아닙니다.
+
 Pagination: SPagination(modelValue/pageCount/siblingCount, disabled/loading/locale, update:modelValue, focus)을 공개 타입·등록·Components·starter navigation에 연결했습니다. pageCount=0은 빈 상태, 부모 거부/비동기 pageCount 변경은 원본 모델을 유지합니다. 좁은 영역은 현재 번호+처음/이전/다음/마지막 5개 컨트롤을 제공합니다. 기존 Table은 순수 번호 계산만 재사용하며 5,050개 유효 범위의 기존 결과가 같습니다. 패키지/예제 타입·빌드, controlled 전이와 실제 모바일 조작/빈 상태를 확인했습니다. RTL/설치본은 최종 후보 통합에서 확인합니다. readonly/validate/loading spinner를 번호마다 추가하지 않습니다.
 
 Sortable 손잡이: 원본 기하 path인 grip(6점)을 기존 공통 icon registry에 추가해 메뉴 아이콘과 구분했습니다. 기본 슬롯만 교체하고 기존 접근성 이름·터치 target·handle-icon 사용자 슬롯·정렬 로직은 유지합니다. Core/UI 빌드와 실제 모바일 렌더/Space→ArrowDown→Enter 순서 반영을 확인했습니다. 외부 의존성·라이선스 추가는 없습니다.
@@ -133,3 +135,12 @@ Checkbox/Switch는 boolean 상태, Radio/Segmented는 그룹 선택, Slider/Rang
 - [생성 API/타입 계약](../../site/component-api-data.js), [API 생성기](../../scripts/build-component-api.mjs), [Components 검색](../../site/topics.js), [정본 advanced 실행 예제](../../examples/vue-vuetify/src/AdvancedExamples.vue), [starter 기본 연결](../../examples/vue-vuetify/src/App.vue).
 
 잠금 Vuetify 원본의 VField.d.ts에서 prepend-inner/append-inner/clear를, VOverlay의 connected/scroll/attach와 composables/stack을 읽었습니다. 이 내부 경로를 solyi-ui의 새 공개 API로 그대로 노출하지 않습니다.
+
+
+## TimeGrid 기반 계약 검토
+
+- items는 readonly 임의 객체 배열이며 itemKey/itemLabel/itemColumn/itemStart/itemEnd accessor로 읽습니다. columns는 고유 key/label과 선택적 ISO date를 받습니다. 기존 DatePicker·MonthCalendar·TimePicker 모델을 바꾸지 않습니다.
+- 좌표는 columnKey와 정수 startMinute/endMinute(0–1440, 시작<끝)입니다. 날짜는 달력 날짜이고 분은 해당 열의 wall time입니다. timezone/DST/instant 직렬화·자정 넘김 분할·충돌·저장·권한은 앱에서 소유합니다.
+- 표시 range 밖 항목은 원본을 고치지 않고 clip합니다. 겹침 lane과 짧은 항목의 최소 시각 높이는 UI 배치일 뿐 실제 시간·충돌 해결이 아닙니다. 전체 이름/정확한 시간을 native 목록에서도 제공합니다.
+- readonly 기반은 item/band/empty/help generic 슬롯, focus(key?), loading/error/locale를 제공합니다. 새로운 입력 모델·validate/clear/무의미한 disabled를 추가하지 않습니다. root는 region/group/article 의미를 사용하며 ARIA grid 키보드 계약이 있다고 주장하지 않습니다.
+- 후속 상호작용은 이동·양 끝 resize·복제 proposal을 preview/commit/cancel로 분리합니다. payload는 key와 from/to 좌표이며 원본 객체/배열을 쓰지 않습니다. 부모가 승인/거부/새 key/pending 및 충돌 정책을 소유합니다. cancel·외부 변경·disabled·pointercancel·자동 스크롤·키보드/포커스를 별도 구현 단위로 확인한 뒤 전체 완료로 표시합니다.
