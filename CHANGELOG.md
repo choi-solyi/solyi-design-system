@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 미게시 · 다음 minor 버전 후보
+
+- SChip·SBadge·SIcon·SIconBtn을 추가하고 개별 import·전역 등록·타입·문서 예제를 연결합니다.
+- 기존 버튼·locale·아이콘·테마·밀도·포커스·터치 목표 토큰을 재사용합니다. SIconBtn은 SBtn의 loading·disabled 동작을 유지합니다.
+- controlled 선택·삭제, SVG 접근성, 배지 설명 연결, 타입 계약과 의미색 대비 검사를 추가합니다.
+- 기존 API와 peer 범위를 유지합니다. npm 게시·운영 문서 배포·소비 앱 업데이트는 포함하지 않습니다.
+
 ## 2026-10-24 · 한국시간
 
 - `solyi-ui` 1.0.0은 Vue 3용 S 컴포넌트와 공통 토큰·CSS·helper·타입을 하나의 패키지로 제공합니다.

@@ -98,6 +98,10 @@ const propertyDescriptions = {
   open:'메뉴의 제어형 열림 상태입니다. update:open 이벤트와 연결합니다.', menuLabel:'분할 버튼에서 추가 행동 메뉴를 여는 버튼의 이름입니다.', maxFileSize:'파일 하나에 허용하는 최대 바이트 수입니다. 기본 2 × 1024 × 1024바이트(2 MiB)입니다.', drop:'파일 드래그·드롭 영역을 활성화합니다. 선택 버튼은 별도로 유지합니다.', fastFail:'폼 검증에서 첫 오류가 발생하면 뒤의 자체 필드 검사를 중단합니다.', lowerLabel:'범위의 아래쪽 핸들을 구분하는 이름입니다.', upperLabel:'범위의 위쪽 핸들을 구분하는 이름입니다.', formatValue:'숫자 하나를 받아 화면·접근성 값 표시용 문자열을 반환하는 함수입니다. 모델 값은 숫자로 유지합니다.', triggerLabel:'모바일·키보드에서 맥락 메뉴를 직접 여는 버튼의 이름입니다.', dismissible:'사용자가 알림을 닫을 수 있는 버튼을 표시합니다.', collapseBelow:'컨테이너 너비가 이 CSS px 값보다 작으면 두 영역을 세로로 배치합니다. 0 이하는 자동 전환을 끕니다.', primaryLabel:'첫 번째 분할 영역의 접근 가능한 이름입니다.', secondaryLabel:'두 번째 분할 영역의 접근 가능한 이름입니다.',
 };
 const records = [
+  ['SChip','표시·레이아웃','짧은 값의 표시·선택·제거를 구분합니다.','component','buttons'],
+  ['SBadge','표시·레이아웃','상태와 개수를 비대화형 표시로 전달합니다.','component','buttons'],
+  ['SIcon','표시·레이아웃','공통 선 아이콘을 장식 또는 접근 가능한 이미지로 표시합니다.','component','buttons'],
+  ['SIconBtn','동작','접근 가능한 이름을 갖는 아이콘 전용 버튼입니다.','component','buttons'],
   ['SBtn','동작','버튼의 기본·보조·로딩·비활성 상태를 구분합니다.','component','buttons'],
   ['SSplitBtn','동작','대표 행동과 추가 행동 메뉴를 한 묶음으로 제공합니다.','component','action-menu'],
   ['SAutocomplete','입력','검색어와 한 개의 선택값을 구분하고 비동기 응답을 다룹니다.','pattern','autocomplete'],

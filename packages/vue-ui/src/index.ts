@@ -1,4 +1,8 @@
 import {SCard,SAlert} from './surfaces';
+import {SChip,SBadge,SIcon,createSIconBtn} from './primitives';
+export {SChip,SBadge,SIcon};
+export type {SolTone,SolTagVariant,SolTagSize} from './primitives';
+export type {SolIconName} from '@solyi/core/icons';
 import {STree} from './tree';
 import {STooltip,SPopover,SAccordion} from './disclosures';
 import {SFileInput} from './files';
@@ -111,6 +115,8 @@ export const SBtn = defineComponent({
   },
 })
 
+export const SIconBtn = createSIconBtn(SBtn)
+
 export const STextField=defineComponent({
   name:'STextField',inheritAttrs:false,
   props:{...commonFieldProps,modelValue:{type:String,default:''},type:{type:String as PropType<'text'|'search'|'email'|'password'|'tel'|'url'>,default:'text'}},
@@ -204,6 +210,10 @@ export const SDataTable=defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  SChip: typeof SChip
+  SBadge: typeof SBadge
+  SIcon: typeof SIcon
+  SIconBtn: typeof SIconBtn
   SForm: typeof SForm
   SContainer: typeof SContainer
   SRow: typeof SRow
@@ -244,6 +254,10 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  SChip,
+  SBadge,
+  SIcon,
+  SIconBtn,
   SForm,
   SContainer,
   SRow,

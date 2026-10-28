@@ -69,7 +69,9 @@ const entries = installed
 const declarationCount = entries.length
 assert.ok(declarationCount > 10, 'All own public declaration files are checked')
 const fixture = normalize(path.join(ownRoot, 'navigation-contract.ts'))
-memory.set(fixture, `import { STabs, SResizableSplitPane } from './index'
+memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn } from './index'
+import type { SolIconName, SolTone } from './index'
+import type { GlobalComponents } from 'vue'
 type TabsProps = InstanceType<typeof STabs>['$props']
 type PaneProps = InstanceType<typeof SResizableSplitPane>['$props']
 const tabs: TabsProps = { id: 'tabs', label: 'Tabs', modelValue: 'a', items: [], error: 'Info' }
@@ -83,6 +85,27 @@ const paneRules: PaneProps = { ...pane, rules: [] }
 // @ts-expect-error Layout has a display-only error, not server field state.
 const paneServer: PaneProps = { ...pane, errorMessages: ['Server'] }
 void [tabs, pane, tabRules, tabServer, paneRules, paneServer]
+type IconProps = InstanceType<typeof SIcon>['$props']
+type IconButtonProps = InstanceType<typeof SIconBtn>['$props']
+type ChipProps = InstanceType<typeof SChip>['$props']
+type BadgeProps = InstanceType<typeof SBadge>['$props']
+const icon: IconProps = { name: 'copy', size: 16, rotate: 90 }
+const iconButton: IconButtonProps = { label: 'Copy', icon: 'copy', tone: 'danger' }
+const chip: ChipProps = { label: 'Design', selected: true, selectable: true }
+const badge: BadgeProps = { content: 0, label: 'No notifications', tone: 'neutral' }
+const oldButton: InstanceType<typeof SBtn>['$props'] = {}
+const globalIconButton: GlobalComponents['SIconBtn'] = SIconBtn
+const iconName: SolIconName = 'copy'
+const tone: SolTone = 'neutral'
+// @ts-expect-error Accessible label is required for icon buttons.
+const unnamedIconButton: IconButtonProps = { icon: 'copy' }
+// @ts-expect-error There is no warning path in the existing icon set.
+const unknownIcon: IconProps = { name: 'warning' }
+// @ts-expect-error Icon sizes use the existing three tokens.
+const arbitraryIconSize: IconProps = { name: 'copy', size: 23 }
+// @ts-expect-error Passive badges are not readonly inputs.
+const readonlyBadge: BadgeProps = { content: 'Done', readonly: true }
+void [icon, iconButton, chip, badge, oldButton, globalIconButton, iconName, tone, unnamedIconButton, unknownIcon, arbitraryIconSize, readonlyBadge]
 `)
 entries.push(fixture)
 const program = ts.createProgram(entries, options, host)

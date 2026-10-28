@@ -1,5 +1,9 @@
 declare module 'vue' {
   export interface GlobalComponents {
+    SChip: typeof import('./index')['SChip'];
+    SBadge: typeof import('./index')['SBadge'];
+    SIcon: typeof import('./index')['SIcon'];
+    SIconBtn: typeof import('./index')['SIconBtn'];
     SForm: typeof import('./index')['SForm'];
     SContainer: typeof import('./index')['SContainer'];
     SRow: typeof import('./index')['SRow'];

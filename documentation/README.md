@@ -10,6 +10,7 @@
 - [선택·행동·분할 레이아웃](guide/ADVANCED-VUE-API.md)
 - [테마·컴포넌트 연결](guide/S-API.md)
 - [언어 설정](guide/LOCALE.md)
+- [미게시 Chip·Badge·Icon·Icon Button](guide/DISPLAY-PRIMITIVES.md)
 - [호환 범위](guide/COMPATIBILITY.md)
 
 ## 개발하기

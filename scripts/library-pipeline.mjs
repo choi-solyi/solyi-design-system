@@ -47,6 +47,7 @@ node('7/10 Installed public declaration contracts','scripts/declaration-contract
 node('7/10 Reusable progress','scripts/progress-runtime-check.mjs');
 node('7/10 Actual Vue documentation recipes','scripts/vue-recipes-runtime-check.mjs');
 node('7/10 Dedicated reusable Vue APIs','scripts/vue-dedicated-runtime-check.mjs');
+node('7/10 Chip, badge, icon and icon button contracts','scripts/primitives-runtime-check.mjs');
 node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.mjs');
 node('7/10 Unsaved navigation and retry focus recovery','scripts/recipe-recovery-check.mjs');
 node('7/10 Floating preview size','scripts/embed-height-check.mjs');
