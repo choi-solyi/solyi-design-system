@@ -46,6 +46,11 @@ function calendarDayLabel(formatter: Intl.DateTimeFormat, day: DateParts): strin
 
 function icon(name:'calendar'|'chevron',direction?:'previous'|'next'){return h('svg',{class:['sol-icon','sol-ui-picker-icon',direction?'sol-ui-picker-icon--'+direction:undefined],width:20,height:20,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));}
 
+const pickerHostProps = {
+  pickerPresentation: String as PropType<SolPickerPresentation>,
+  placement: { type: String as PropType<SolPickerPlacement>, default: 'bottom-start' },
+}
+
 export const SDatePicker = /* @__PURE__ */ defineComponent({
   name: 'SDatePicker',
   inheritAttrs: false,
@@ -55,8 +60,7 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
     mode: { type: String as PropType<DateMode>, default: 'single' },
     modelValue: { type: [String, Object] as PropType<DateValue>, default: null },
     displayFormatter: Function as PropType<SolDateDisplayFormatter>,
-    pickerPresentation: String as PropType<SolPickerPresentation>,
-    placement: { type: String as PropType<SolPickerPlacement>, default: 'bottom-start' },
+    ...pickerHostProps,
   },
   slots: Object as SlotsType<SolInputControlSlots>,
   emits: {
@@ -722,6 +726,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
     step: { type: Number, default: 15 },
     allowManualInput: { type: Boolean, default: true },
     presentation: { type: String as PropType<SolTimePresentation>, default: 'native' },
+    ...pickerHostProps,
     initialScrollValue: String,
     scrollToCurrentTime: Boolean,
     scrubbable: Boolean,
@@ -752,6 +757,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
       validationInput = ref<HTMLInputElement | null>(null)
     const trigger = ref<HTMLButtonElement | null>(null),
       panel = ref<HTMLElement | null>(null)
+    let keyboardOpen = true, announced = false
     const hourSelect = ref<HTMLSelectElement | null>(null),
       minuteSelect = ref<HTMLSelectElement | null>(null)
     const list = ref<HTMLElement | null>(null),
@@ -831,6 +837,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
       return !externalFieldError(p)
     }
     function locate() {
+      if (p.pickerPresentation) return
       if (!opened.value || !input.value || !panel.value) return
       const enhanced = control.enhanced()
       const anchor = enhanced
@@ -898,7 +905,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
       if (!opened.value) return
       reason = why
       opened.value = false
-      if (restore)
+      if (restore && !p.pickerPresentation)
         void nextTick(() => {
           const target = opener && !(opener as HTMLButtonElement).disabled ? opener : input.value
           if (target?.isConnected && !fieldDisabled(p)) target.focus()
@@ -907,11 +914,13 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
     async function open(keyboard: boolean, from: HTMLElement | null) {
       if (fieldDisabled(p) || fieldReadonly(p)) return
       opener = from
+      keyboardOpen = keyboard
       const wasOpen = opened.value
       active.value = anchor()
       opened.value = true
       await nextTick()
       if (disposed || !opened.value || !input.value) return
+      if (p.pickerPresentation) return // The shared host owns readiness, focus and placement.
       locate()
       if (p.presentation === 'list') {
         scrollActive(true)
@@ -956,6 +965,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
       void nextTick(() => scrollActive())
     }
     const outside = (event: Event) => {
+      if (p.pickerPresentation) return
       const target = event.target as Node
       if (
         opened.value &&
@@ -1108,6 +1118,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
         p.scrubbable,
         p.listScrubbable,
         p.scrubPixelsPerStep,
+        p.placement,
       ],
       () => scrub.cancel('configuration'),
       { flush: 'sync' },
@@ -1128,7 +1139,11 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
       () => close('mode'),
     )
     watch(opened, (value, old) => {
-      if (!value && old) emit('close', reason)
+      if (!value && old) { announced = false; emit('close', reason) }
+    })
+    watch(() => p.pickerPresentation, (value, old) => {
+      scrub.cancel('configuration', false)
+      if (!!value !== !!old) close('mode')
     })
     onMounted(() => {
       syncOptions()
@@ -1157,6 +1172,23 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
       },
     })
     const validate = validation.validate
+
+    function renderTimePopup(node: VNodeChild) {
+      if (!p.pickerPresentation) return h(Teleport, {to:'body'}, [node])
+      return h(PickerHost, {
+        open: opened.value, id:p.id+'-panel', labelledby:p.id+'-title',
+        anchor:input.value?.closest<HTMLElement>('.sol-ui-input-frame,.sol-time-entry') || input.value,
+        returnFocus:opener, presentation:p.pickerPresentation, placement:p.placement,
+        width:'320px', initialFocus:()=>p.presentation==='list'?list.value:hourSelect.value,
+        focusOnOpen:keyboardOpen,
+        onRequestClose:(why)=>close(why, why!=='outside'),
+        onReady:()=>{
+          if (disposed || !opened.value) return
+          if (announced) scrub.cancel('configuration', false)
+          else { scrollActive(true); announced=true; emit('open') }
+        },
+      }, ()=>node)
+    }
 
     function renderGrip() {
       return p.scrubbable
@@ -1378,17 +1410,17 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
               l.value.clear,
             )
           : null,
-        h(Teleport, { to: 'body' }, [
+        renderTimePopup(
           opened.value
             ? h(
                 'div',
                 {
                   ref: panel,
-                  id: p.id + '-panel',
-                  class: 'sol-time-panel sol-ui-time-panel',
-                  role: 'dialog',
-                  'aria-labelledby': p.id + '-title',
-                  style: position.value,
+                  id: p.pickerPresentation ? undefined : p.id + '-panel',
+                  class: p.pickerPresentation ? 'sol-ui-time-content' : 'sol-time-panel sol-ui-time-panel',
+                  role: p.pickerPresentation ? undefined : 'dialog',
+                  'aria-labelledby': p.pickerPresentation ? undefined : p.id + '-title',
+                  style: p.pickerPresentation ? undefined : position.value,
                   onKeydown: (event: KeyboardEvent) => {
                     if (event.key === 'Escape' && !event.isComposing) {
                       event.preventDefault()
@@ -1535,7 +1567,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                 ],
               )
             : null,
-        ]),
+        ),
       ])
     }
   },

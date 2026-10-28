@@ -26,6 +26,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
     width: { type: String, default: 'max-content' },
     panelClass: String,
     initialFocus: Function as PropType<() => HTMLElement | null | undefined>,
+    focusOnOpen: { type: Boolean, default: true },
   },
   emits: {
     requestClose: (_reason: PickerHostCloseReason) => true,
@@ -67,7 +68,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       void nextTick(() => { requested = false })
     }
     function escape(event: KeyboardEvent) {
-      if (event.key !== 'Escape' || !p.open || !top()) return
+      if (event.isComposing || event.key !== 'Escape' || !p.open || !top()) return
       // Native parent dialogs must not consume the same Escape after this child.
       event.preventDefault()
       event.stopImmediatePropagation()
@@ -134,7 +135,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
         })
         const active = document.activeElement
         const previousInside = !initial && previous instanceof HTMLElement && previous.isConnected && panel.contains(previous)
-        if ((previousInside || initial || !panel.contains(active)) &&
+        if ((!initial || p.focusOnOpen || mode.value === 'dialog') && (previousInside || initial || !panel.contains(active)) &&
           (active === previous || active === document.body || owned(active))) {
           const target = previousInside ? previous : p.initialFocus?.()
           ;(target?.isConnected && panel.contains(target) ? target : panel).focus({ preventScroll: true })
