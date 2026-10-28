@@ -29,6 +29,7 @@
 - [Sortable 설치 소비 검증과 남은 gate](development/SORTABLE-INSTALLED-VALIDATION.md)
 - [MonthCalendar 착수와 독립 구현 단위](development/MONTH-CALENDAR-PLAN.md)
 - [MonthCalendar 공개 코드·모바일 검증](development/MONTH-CALENDAR-VALIDATION.md)
+- [확장 요청 2 · 실제 저장소 대조와 변경 계획](development/EXTENSIONS-V2-PLAN.md)
 - [기여 안내](../CONTRIBUTING.md)
 
 ## 자산과 라이선스
