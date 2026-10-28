@@ -1,0 +1,136 @@
+{
+  "sourceCommit": "c4f301110215d717cb197d0e961034ed788c8b1c",
+  "packageVersion": "1.0.0",
+  "purpose": "Local development candidate only; no release/publication",
+  "frozenSha256": "72d1d8d622287e8a86444c404ad20f7c5ed5d065dc2b4e48765374697854e23a",
+  "sourceComboboxSha256": "07cddf6bd124a26165f6a1774a8d14bca476cf6ca0e83a5f5349c5ea02f4defc",
+  "sourceRequestSha256": "fba1cd9e5efb3d88d53581c3c3445e2630419aa9618486847759b44eb059c2b7",
+  "tarballSha256": "032ba80d0ad39cfe6f5d6dad6e84c715de4324770c236d060dfc9dcb069f5802",
+  "tarballIntegrity": "sha512-91t2ZHTq/xbf9ZfkvZ5PqYQHuE6lDkA0l+sIhDKD/mXJI4lMe8GAxW6+NdRFCvQex1UkrcYgv9u6K+vIXVeIiQ==",
+  "installedDistFiles": 162,
+  "esmSha256": "9562d68196d92301aa574cec30d4bb195c77045f836a395fc1ee0171a2685080",
+  "esmCharacters": 222586,
+  "esmBytes": 224919,
+  "esmBudget": 176000,
+  "baselineIntegrity": "sha512-1dugnNzBuF8Rl0z/FMeKPncGh8ynARDozcrIyf8BFzzLEf+IgPZwzYY8FmXo01KpgeMjjC5k0Kcs7YUd2cMh3A==",
+  "baselineResolved": "file:../../../release-assets/1.0.0/solyi-ui-1.0.0.tgz",
+  "verification": {
+    "packageBuild": "passed",
+    "installedRuntime": "passed including final c4f3011 IME guards",
+    "strictVueSFC": {
+      "typescript": "5.9.3",
+      "localImport": "passed",
+      "actualGlobalDeclaration": "passed",
+      "negativeCases": 7
+    },
+    "declarations": [
+      {
+        "compiler": "library",
+        "version": "6.0.3",
+        "options": {
+          "strict": true,
+          "skipLibCheck": false,
+          "target": "ES2022",
+          "module": "ESNext",
+          "moduleResolution": "Bundler",
+          "types": [],
+          "lib": [
+            "ES2022",
+            "DOM"
+          ]
+        },
+        "baseline": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "candidate": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "added": 0,
+        "removed": 0
+      },
+      {
+        "compiler": "starter",
+        "version": "5.9.3",
+        "options": {
+          "strict": true,
+          "skipLibCheck": false,
+          "target": "ES2022",
+          "module": "ESNext",
+          "moduleResolution": "Bundler",
+          "types": [],
+          "lib": [
+            "ES2022",
+            "DOM"
+          ]
+        },
+        "baseline": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "candidate": {
+          "own": 0,
+          "fixture": 0,
+          "external": 769,
+          "skipLibCheckTrue": 0
+        },
+        "added": 0,
+        "removed": 0
+      }
+    ],
+    "browser": {
+      "version": "156.0.8078.49",
+      "cases": 144,
+      "widths": [
+        320,
+        768,
+        1440
+      ],
+      "themes": [
+        "violet",
+        "sage",
+        "sand"
+      ],
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "density": [
+        "comfortable",
+        "compact"
+      ],
+      "locales": [
+        "ko-KR",
+        "en-US"
+      ],
+      "directions": [
+        "ltr",
+        "rtl"
+      ],
+      "sourceAlias": false,
+      "publicImports": "solyi-ui and solyi-ui/all.css",
+      "finalIMEGuards": "passed",
+      "pluginGlobalRegistration": "passed",
+      "limits": [
+        "Installed isolated tarball and its bare public imports/CSS exports; starter source regression is recorded separately",
+        "No public deployment",
+        "Touch emulation and synthetic composition events; physical touch/IME, screen reader and Safari remain unverified"
+      ]
+    }
+  },
+  "release": {
+    "published": false,
+    "pushed": false,
+    "productionDeployed": false,
+    "externalConsumersChanged": false,
+    "esmBudgetPass": false,
+    "frozenGate": "Prior failure retained; full release pipeline not rerun"
+  }
+}

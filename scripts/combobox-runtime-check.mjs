@@ -2,7 +2,8 @@ import assert from 'node:assert/strict'
 import {writeFile} from 'node:fs/promises'
 import {fileURLToPath} from 'node:url'
 import {JSDOM} from 'jsdom'
-const root=new URL('../',import.meta.url),consumer=new URL(process.argv.includes('--candidate')?'qa-output/combobox-candidate/consumer/':'examples/package-consumer/',root),source=process.argv.includes('--source')
+const root=new URL('../',import.meta.url),target=process.argv.find(arg=>arg.startsWith('--consumer='))?.slice(11),consumer=new URL(target?target.replace(/\/?$/,'/'):process.argv.includes('--candidate')?'qa-output/combobox-candidate/consumer/':'examples/package-consumer/',root),source=process.argv.includes('--source')
+if(target){assert.ok(consumer.href.startsWith(new URL('qa-output/',root).href),'Explicit fixtures stay in qa-output');assert.ok(!source,'An explicit consumer checks its installed package, never a source alias')}
 const dom=new JSDOM('<div id="app"></div>',{url:'https://example.test',pretendToBeVisual:true}),w=dom.window,d=w.document
 for(const key of ['window','document','Element','Node','HTMLElement','HTMLInputElement','SVGElement','ShadowRoot','Document','MutationObserver','Event','MouseEvent','KeyboardEvent','FocusEvent','getComputedStyle'])Object.defineProperty(globalThis,key,{value:key==='window'?w:key==='document'?d:w[key],configurable:true})
 globalThis.requestAnimationFrame=w.requestAnimationFrame.bind(w);globalThis.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};globalThis.CSS={supports:()=>false}

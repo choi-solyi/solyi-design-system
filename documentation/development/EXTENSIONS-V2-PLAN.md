@@ -1,10 +1,10 @@
 # 확장 요청 2 · 실제 저장소 대조 및 구현 계획
 
-구현 진행: 공통 입력 1단계 8종은 [단계별 구현·검증 기록](INPUT-CLEAR-VALIDATION.md)에 완료 상태와 제한을 정리했습니다. 아래 표는 승인 당시의 설계 기준이며 다음 순서는 별도 SCombobox입니다.
+구현 진행: 공통 입력 1단계 8종은 [단계별 기록](INPUT-CLEAR-VALIDATION.md), 2단계 SCombobox c4f3011의 최종 tarball 설치 소비 결과는 [Combobox 검증](COMBOBOX-VALIDATION.md)에 정리했습니다. 아래 표와 확인 기준은 승인 당시의 baseline이며 현재 source는 SCombobox를 포함한 45종입니다. 다음은 기존 표시 4종 재사용 점검과 [Picker host 착수 준비](PICKER-PRESENTATION-NEXT.md)입니다. 출시 게이트와 공개 미배포 상태는 유지합니다.
 
 최신 요청서 `붙여넣은 텍스트(2).txt`(Library libfile_6725ea0d3174819196e22055c4e03d86)를 공식 read로 1–230, 231–460, 461–665줄까지 모두 읽었습니다. 이미지 helper·다운로드 우회는 사용하지 않았습니다. 이 문서는 **계획 검토용**이며 아래 새 API는 구현됐다는 뜻이 아닙니다.
 
-## 확인 기준과 현재 상태
+## 승인 당시 확인 기준과 상태
 
 - 원본은 choi-solyi/solyi-design-system, 작업 branch는 feat/month-calendar입니다. 최신 기존 구현 보존 commit은 **d1451fd**, Sortable 항목별 disabled 보완은 **7714883**입니다. 새 요청 때문에 기존 변경을 버리거나 같은 컴포넌트를 다시 만들지 않습니다.
 - packages/vue-ui는 private 1.0.0, 잠금 Vue 3.5.44/Vuetify 4.3.0, TypeScript 6.0.3/Vite 8.3.4입니다. Vue/Vuetify peer 범위는 현재 그대로입니다. 현재 source의 sComponents·전역 타입·Components 색인은 **44종**입니다. 이것은 공개 npm 배포 수를 뜻하지 않습니다.
