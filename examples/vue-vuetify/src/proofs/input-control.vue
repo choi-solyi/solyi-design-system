@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { STextField, STextarea, SSelect, SNumberInput } from 'solyi-ui'
+import { STextField, STextarea, SSelect, SNumberInput, SAutocomplete, SMultiSelect } from 'solyi-ui'
 import type { SolInputClearEvent, SolInputHandle } from 'solyi-ui'
 const value = ref('Text'), handle = ref<SolInputHandle | null>(null)
 const selected = ref<string|null>('a'), number = ref<number|null>(5)
+const multiple = ref<string[]>(['a'])
 function cleared(event: SolInputClearEvent<string>) {
   console.log(event.value.toUpperCase(), event.reason)
 }
 function selectedCleared(event: SolInputClearEvent<string|null>) { console.log(event.value?.toUpperCase()) }
 function numberCleared(event: SolInputClearEvent<number|null>) { console.log(event.value?.toFixed(0)) }
+function multipleCleared(event: SolInputClearEvent<readonly string[]>) { console.log(event.value.join(',')) }
 </script>
 <template>
   <button type="button" @click="handle?.clear()">Clear through the same public action</button>
@@ -32,4 +34,10 @@ function numberCleared(event: SolInputClearEvent<number|null>) { console.log(eve
       <button type="button" :disabled="disabled || readOnly || !isAllowed(20)" @click="setValue(20)">{{ current?.toFixed(0) }} {{ presets[0]?.value.toFixed(0) }}</button>
     </template>
   </SNumberInput>
+  <SAutocomplete id="auto-proof" label="Autocomplete" v-model="selected" :options="[{value:'a',label:'Alpha'}]" clearable @clear="selectedCleared">
+    <template #indicator="{ hasValue }"><span>{{ hasValue }}</span></template>
+  </SAutocomplete>
+  <SMultiSelect id="multi-proof" label="Multiple" v-model="multiple" :options="[{value:'a',label:'Alpha'}]" clearable @clear="multipleCleared">
+    <template #status="{ error }"><span>{{ error.toUpperCase() }}</span></template>
+  </SMultiSelect>
 </template>

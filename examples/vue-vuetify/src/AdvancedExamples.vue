@@ -177,6 +177,7 @@ watch([disabled, readonly], () => {
     <SMultiSelect
       id="advanced-multi"
       v-model="selected"
+      clearable
       label="가상 기록 분류"
       :options="choices"
       :load-options="loader"

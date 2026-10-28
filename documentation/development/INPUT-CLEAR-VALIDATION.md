@@ -1,6 +1,6 @@
 # 입력 내부 clear: 단계별 구현과 검증
 
-승인된 [확장 요청 2 계획](EXTENSIONS-V2-PLAN.md)의 1단계를 작은 단위로 연결합니다. 공통 입력 구조와 STextField·STextarea는 **ab6c1be**에 보존했고, 후속 Select·Number 단위는 아래에 따로 기록합니다. **SAutocomplete/SMultiSelect/SDatePicker/STimePicker 연결은 아직 남아 있습니다.** 18개 전체 또는 입력 8종 완료를 뜻하지 않습니다. 현재 source는 44개 공개 S 컴포넌트를 유지합니다.
+승인된 [확장 요청 2 계획](EXTENSIONS-V2-PLAN.md)의 1단계를 작은 단위로 연결합니다. 공통 입력 구조와 STextField·STextarea는 **ab6c1be**, Select·Number는 **712dba6**에 보존했고 후속 단위는 아래에 따로 기록합니다. **SDatePicker/STimePicker 연결은 아직 남아 있습니다.** 18개 전체 또는 입력 8종 완료를 뜻하지 않습니다. 현재 source는 44개 공개 S 컴포넌트를 유지합니다.
 
 ## 실제 API와 호환성
 
@@ -47,3 +47,19 @@ Number의 formatter·unit·min 기준 step·preset과 hidden canonical 제출값
 정본 `choices.vue`의 SSelect와 `advanced-inputs.vue`의 SNumberInput에 clearable을 추가했습니다. Components Examples/Sample Code와 starter가 같은 정본을 사용합니다. 이 단위의 ESM은 **206,458자 / 208,738 bytes**로 이전 텍스트 단위보다 1,173자 늘었으며 기존 크기 제한·frozen gate는 계속 차단입니다. 추가 의존성·토큰·외부 배포는 없습니다.
 
 기존 input-display source runtime(weekday/range, formatted raw editing, invalid draft, form, inherited guards, decimal/min-origin presets, formatter fallback), 실제 starter source 타입·빌드, Components API, 문서 build도 통과했습니다. TS 5.9.3/skipLibCheck:false 자체 선언 33개 0건·외부 769건입니다. 새 설치본 검증은 아직 하지 않았고 앞 단위에서 닫은 전체 문서 회귀를 불필요하게 반복하지 않았습니다.
+
+## 후속 단위: SAutocomplete·SMultiSelect
+
+두 입력에 opt-in clearable/loading과 공통 slots/action rail을 연결했습니다. 내부 X와 clearable 모드의 exposed clear는 같은 transaction으로 null/빈 배열을 제안하고 검색어·오류·진행 중 요청을 초기화해 닫고 검증한 뒤 입력으로 포커스를 돌립니다. readonly/disabled/SForm 가드는 공통으로 적용합니다. 읽기 전용 입력 배열은 변조하지 않습니다. 기존 scalar change와 commit의 호출 횟수를 유지하므로 이 두 입력은 이미 빈 모델에서 query만 지울 때도 기존 update/change를 내보냅니다. 별도 clear 알림은 `{value,reason:'clear'}`입니다.
+
+clearable=false의 기존 exposed clear는 기본 동작을 보존합니다. Autocomplete는 기존처럼 검색어를 지우고 닫아 포커스를 돌리며, MultiSelect는 기존처럼 선택 값만 비우고 검색어/팝업은 유지합니다. 내부 busy는 강화 모드의 loader/slot scope에 합쳐 표시하고 기존 기본 DOM을 강제로 바꾸지 않습니다. dropdown은 이름 있는 native button이고 기존 popup·ArrowDown/Escape 키를 재사용합니다. SAutocomplete는 여전히 옵션 선택 전용이며 자유 입력 API를 추가하지 않았습니다.
+
+새 clear 후 부모가 값을 거부하면 Autocomplete label을 canonical model로 복구하고, 이후 실제 외부 reset도 동기화합니다. 요청은 AbortSignal과 기존 revision으로 취소·stale 차단합니다. composition 중 clear한 뒤 늦게 온 compositionend가 이전 draft를 복원하거나 팝업을 다시 열지 않으며 다음 composition은 다시 동작합니다.
+
+- 6종 공통 runtime: 모델/이벤트·required/serverError·FormData·포커스·가드·controlled 거부·unmount와 query-only/abort/late response/composition/기본 clear 계약 통과.
+- strict Vue SFC: local/global 2건 + negative 9건 통과. readonly 배열 push 및 SAutocomplete의 미지원 allow-custom도 거부.
+- 기존 dedicated/expansion source runtime: Autocomplete IME/caret/stale/retry/abort, MultiSelect tags/limit/readonly/async/IME/error-retry/unmount 회귀 통과.
+- 격리 Chrome 144조합에서 6종 clear·긴 label·RTL·키보드·폼·guard·모바일 배치 통과. 각 폭에서 실제 ArrowDown/Escape·dropdown·열린 상태 clear·포커스 복원 추가 확인. 물리 IME/터치·스크린리더·Safari는 미실행.
+- 자체 선언 33개 0건/외부 769건, 실제 starter source 타입·빌드, 44개 Components API 및 문서 build 통과. 새 tarball 설치 검증은 미실행.
+
+Components 정본 `inputs.vue`의 SAutocomplete와 `advanced-inputs.vue`의 SMultiSelect, starter의 공유 `AdvancedExamples.vue` 모두 clearable을 연결했습니다. source ESM은 **208,845자 / 211,125 bytes**로 기존 176,000자 제한을 초과합니다. frozen 1.0.0 및 크기 검사·위치·임계값을 변경하지 않았고 새 의존성/토큰·게시·push·운영 배포는 없습니다.

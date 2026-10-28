@@ -118,6 +118,7 @@ const loader = computed<SolOptionLoader | undefined>(() => {
       <SAutocomplete
         id="recipe-autocomplete"
         v-model="selected"
+        clearable
         label="가상 분류 검색"
         :options="options"
         :load-options="loader"

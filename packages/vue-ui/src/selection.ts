@@ -1,6 +1,8 @@
 import {useSFieldValidation,fieldError,externalFieldError,fieldDisabled,fieldReadonly} from './form';
 import {defineComponent,h,ref,watch,nextTick,onMounted,onBeforeUnmount} from 'vue';
-import type {PropType} from 'vue';
+import type {PropType,SlotsType} from 'vue';
+import {inputControlProps,useInputControl} from './input-control';
+import type {SolInputClearEvent,SolInputControlSlots} from './input-control';
 import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './controls';
 import type {SolOption} from './controls';
 import {useSolLocale,formatSolNumber} from './locale';
@@ -16,32 +18,481 @@ export const SSegmentedControl=defineComponent({name:'SSegmentedControl',inherit
 
 export type SolOptionLoader=(query:string,signal:AbortSignal)=>Promise<readonly SolOption[]>;
 export interface SolMultiSelectHandle {focus():void;validate():boolean;clear():void;resetValidation():void}
-export const SMultiSelect=defineComponent({name:'SMultiSelect',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as PropType<readonly string[]>,default:()=>[]},options:{type:Array as PropType<readonly SolOption[]>,default:()=>[]},loadOptions:Function as PropType<SolOptionLoader>,maxSelected:Number,placeholder:String,debounce:{type:Number,default:150}},emits:{'update:modelValue':(_v:string[])=>true,change:(_v:string[])=>true,search:(_q:string)=>true,open:()=>true,close:()=>true,invalid:(_m:string)=>true},setup(p,{attrs,slots,emit,expose}){
- const l=useSolLocale(()=>p.locale),host=ref<HTMLElement|null>(null),input=ref<HTMLInputElement|null>(null),query=ref(''),opened=ref(false),active=ref(''),items=ref<readonly SolOption[]>([]),busy=ref(false),loadError=ref(''),localError=ref('');const labels=new Map<string,string>();let composing=false,request=0,abort:AbortController|undefined,timer:ReturnType<typeof setTimeout>|undefined,disposed=false;
- const remember=(list:readonly SolOption[])=>{const seen=new Set<string>();return list.filter(o=>!!o.value&&!seen.has(o.value)&&!!seen.add(o.value)).map(o=>{labels.set(o.value,o.label);return o;});};
- watch(()=>p.options,value=>{const list=remember(value);if(!p.loadOptions)items.value=list;},{immediate:true,deep:true});
- const visible=()=>p.loadOptions?items.value:items.value.filter(o=>o.label.toLowerCase().includes(query.value.trim().toLowerCase()));
- const available=()=>visible().filter(o=>!o.disabled),selected=()=>[...new Set(p.modelValue)],canAdd=(o:SolOption)=>selected().includes(o.value)||p.maxSelected===undefined||selected().length<p.maxSelected;
- function stop(){clearTimeout(timer);timer=undefined;abort?.abort();abort=undefined;request++;busy.value=false;}
- async function load(){if(!p.loadOptions||composing||!opened.value||fieldDisabled(p)||fieldReadonly(p))return;stop();const revision=request,controller=new AbortController();abort=controller;busy.value=true;loadError.value='';items.value=[];active.value='';try{const result=await p.loadOptions(query.value,controller.signal);if(disposed||revision!==request||controller.signal.aborted)return;items.value=remember(result);active.value=available()[0]?.value||'';}catch(e){if(disposed||revision!==request||controller.signal.aborted)return;loadError.value=l.value.loadFailed;}finally{if(!disposed&&revision===request)busy.value=false;}}
- function search(){emit('search',query.value);if(p.loadOptions){stop();loadError.value='';items.value=[];timer=setTimeout(()=>void load(),Math.max(0,p.debounce));}else active.value=available()[0]?.value||'';}
- function open(){if(fieldDisabled(p)||fieldReadonly(p))return;const was=opened.value;opened.value=true;if(!was){if(p.loadOptions)void load();else active.value=available()[0]?.value||'';}}
- function close(){if(!opened.value)return;opened.value=false;active.value='';stop();}
- function validity(){input.value?.setCustomValidity(fieldError(p)||(p.required&&!selected().length?l.value.chooseAtLeastOne:''));}
- function validateIntrinsic(){localError.value=p.required&&!selected().length?l.value.chooseAtLeastOne:'';validity();if(localError.value)emit('invalid',localError.value);return !externalFieldError(p)&&!localError.value;}
- function commit(values:string[]){if(fieldDisabled(p)||fieldReadonly(p))return;emit('update:modelValue',values);emit('change',values);}
- function toggle(o:SolOption){if(fieldDisabled(p)||fieldReadonly(p)||o.disabled||busy.value||loadError.value)return;const values=selected();if(values.includes(o.value))commit(values.filter(v=>v!==o.value));else if(canAdd(o))commit([...values,o.value]);else{localError.value=l.value.selectionLimit(p.maxSelected!);emit('invalid',localError.value);}input.value?.focus();}
- function remove(value:string){if(fieldDisabled(p)||fieldReadonly(p))return;commit(selected().filter(v=>v!==value));input.value?.focus();}
- function key(e:KeyboardEvent){if(e.isComposing||composing||fieldDisabled(p))return;if(e.key==='Escape'&&opened.value){e.preventDefault();close();return;}if(fieldReadonly(p))return;if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!opened.value){open();return;}const list=available(),index=list.findIndex(o=>o.value===active.value);active.value=list[(index+(e.key==='ArrowDown'?1:-1)+list.length)%list.length]?.value||'';void nextTick(()=>host.value?.querySelector('[data-active="true"]')?.scrollIntoView?.({block:'nearest'}));}else if(e.key==='Enter'&&opened.value){e.preventDefault();const item=available().find(o=>o.value===active.value);if(item)toggle(item);}else if(e.key==='Backspace'&&!query.value&&selected().length){e.preventDefault();remove(selected().at(-1)!);}}
- const outside=(e:Event)=>{if(!host.value?.contains(e.target as Node))close();};
- watch(opened,value=>{if(value)emit('open');else emit('close');});
- watch(l,()=>{if(loadError.value)loadError.value=l.value.loadFailed;if(localError.value)localError.value=p.required&&!selected().length?l.value.chooseAtLeastOne:l.value.selectionLimit(p.maxSelected!);void nextTick(validity);});
- watch(()=>[...p.modelValue],()=>{localError.value='';void nextTick(validity);});watch(()=>[fieldDisabled(p),fieldReadonly(p)],()=>{if(fieldDisabled(p)||fieldReadonly(p))close();});watch(()=>[p.required,fieldError(p)],()=>nextTick(validity));watch(()=>p.loadOptions,()=>{stop();items.value=p.loadOptions?[]:remember(p.options);if(opened.value&&p.loadOptions)void load();});
- onMounted(()=>{document.addEventListener('pointerdown',outside);document.addEventListener('focusin',outside);validity();});onBeforeUnmount(()=>{disposed=true;stop();document.removeEventListener('pointerdown',outside);document.removeEventListener('focusin',outside);});const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus(),validateIntrinsic,intrinsicError:()=>localError.value,resetIntrinsic:()=>{localError.value='';}}),validate=validation.validate;expose({...validation,clear:()=>commit([])});
- return()=>{const error=fieldError(p)||localError.value,list=visible();return h('div',{ref:host,class:'sol-field sol-ui-native-field sol-ui-multiselect'},[fieldLabel(p,slots,l.value.required),selected().length?h('ul',{class:'sol-ui-tags','aria-label':p.label+' '+l.value.selectedItems},selected().map(value=>h('li',{key:value},[h('span',labels.get(value)||value),h('button',{type:'button',class:'sol-button inline-action',disabled:fieldDisabled(p)||fieldReadonly(p),'aria-label':l.value.remove(labels.get(value)||value),onClick:()=>remove(value)},'×')]))):null,h('input',{...attrs,ref:input,id:p.id,type:'text',class:['sol-input',attrs.class],role:'combobox',value:query.value,placeholder:p.placeholder,disabled:fieldDisabled(p),readonly:fieldReadonly(p),autocomplete:'off','aria-autocomplete':'list','aria-expanded':String(opened.value),'aria-controls':opened.value?p.id+'-list':undefined,'aria-activedescendant':opened.value&&!busy.value&&!loadError.value&&list.some(o=>o.value===active.value)?p.id+'-option-'+list.findIndex(o=>o.value===active.value):undefined,'aria-required':p.required?'true':undefined,'aria-invalid':error?'true':undefined,'aria-describedby':fieldDescription(p,slots,error,[p.id+'-count',attrs['aria-describedby']].filter(Boolean).join(' ')),onClick:open,onInput:(e:Event)=>{if(fieldDisabled(p)||fieldReadonly(p))return;query.value=(e.target as HTMLInputElement).value;if(!composing){if(!opened.value)opened.value=true;search();}},onCompositionstart:()=>{composing=true;stop();},onCompositionend:(e:CompositionEvent)=>{composing=false;query.value=(e.target as HTMLInputElement).value;if(!fieldDisabled(p)&&!fieldReadonly(p)){opened.value=true;search();}},onKeydown:key,onInvalid:(e:Event)=>{e.preventDefault();validate();input.value?.focus();}}),opened.value?h('div',{class:'sol-ui-multi-popup'},[h('ul',{id:p.id+'-list',role:'listbox','aria-label':p.label,'aria-multiselectable':'true','aria-busy':String(busy.value),class:'sol-ui-multi-options'},!busy.value&&!loadError.value?list.map((o,i)=>h('li',{key:o.value,id:p.id+'-option-'+i,role:'option','aria-selected':String(selected().includes(o.value)),'aria-disabled':o.disabled?'true':undefined,'data-active':String(active.value===o.value),onPointerdown:(e:PointerEvent)=>e.preventDefault(),onClick:()=>toggle(o)},[h('span',{'aria-hidden':'true'},selected().includes(o.value)?'✓':'○'),h('span',o.label),o.disabled?h('small',l.value.unavailable):null])):[]),busy.value?h('p',{role:'status',class:'sol-hint'},l.value.loading):loadError.value?h('div',{role:'alert'},[h('p',{class:'sol-error'},loadError.value),h('button',{type:'button',class:'sol-button inline-action',onClick:()=>{input.value?.focus();void load();},onKeydown:(e:KeyboardEvent)=>{if(e.key==='Escape'){e.preventDefault();close();input.value?.focus();}}},l.value.retry)]):!list.length?h('p',{role:'status',class:'sol-hint'},l.value.noResults):null]):null,h('span',{id:p.id+'-count',class:'sol-hint',role:'status'},l.value.selectionCount(selected().length,p.maxSelected)),...fieldMessages(p,slots,error)]);};
-}});
+export const SMultiSelect = defineComponent({
+  name: 'SMultiSelect',
+  inheritAttrs: false,
+  props: {
+    ...commonFieldProps,
+    ...inputControlProps,
+    modelValue: { type: Array as PropType<readonly string[]>, default: () => [] },
+    options: { type: Array as PropType<readonly SolOption[]>, default: () => [] },
+    loadOptions: Function as PropType<SolOptionLoader>,
+    maxSelected: Number,
+    placeholder: String,
+    debounce: { type: Number, default: 150 },
+  },
+  slots: Object as SlotsType<SolInputControlSlots>,
+  emits: {
+    'update:modelValue': (_v: string[]) => true,
+    change: (_v: string[]) => true,
+    search: (_q: string) => true,
+    open: () => true,
+    close: () => true,
+    invalid: (_m: string) => true,
+    clear: (_event: SolInputClearEvent<readonly string[]>) => true,
+  },
+  setup(p, { attrs, slots, emit, expose }) {
+    const l = useSolLocale(() => p.locale),
+      host = ref<HTMLElement | null>(null),
+      input = ref<HTMLInputElement | null>(null),
+      query = ref(''),
+      opened = ref(false),
+      active = ref(''),
+      items = ref<readonly SolOption[]>([]),
+      busy = ref(false),
+      loadError = ref(''),
+      localError = ref('')
+    const labels = new Map<string, string>()
+    let cancelledComposition = false,
+      composing = false,
+      request = 0,
+      abort: AbortController | undefined,
+      timer: ReturnType<typeof setTimeout> | undefined,
+      disposed = false
+    const remember = (list: readonly SolOption[]) => {
+      const seen = new Set<string>()
+      return list
+        .filter(o => !!o.value && !seen.has(o.value) && !!seen.add(o.value))
+        .map(o => {
+          labels.set(o.value, o.label)
+          return o
+        })
+    }
+    watch(
+      () => p.options,
+      value => {
+        const list = remember(value)
+        if (!p.loadOptions) items.value = list
+      },
+      { immediate: true, deep: true },
+    )
+    const visible = () =>
+      p.loadOptions
+        ? items.value
+        : items.value.filter(o => o.label.toLowerCase().includes(query.value.trim().toLowerCase()))
+    const available = () => visible().filter(o => !o.disabled),
+      selected = () => [...new Set(p.modelValue)],
+      canAdd = (o: SolOption) =>
+        selected().includes(o.value) ||
+        p.maxSelected === undefined ||
+        selected().length < p.maxSelected
+    function stop() {
+      clearTimeout(timer)
+      timer = undefined
+      abort?.abort()
+      abort = undefined
+      request++
+      busy.value = false
+    }
+    async function load() {
+      if (!p.loadOptions || composing || !opened.value || fieldDisabled(p) || fieldReadonly(p))
+        return
+      stop()
+      const revision = request,
+        controller = new AbortController()
+      abort = controller
+      busy.value = true
+      loadError.value = ''
+      items.value = []
+      active.value = ''
+      try {
+        const result = await p.loadOptions(query.value, controller.signal)
+        if (disposed || revision !== request || controller.signal.aborted) return
+        items.value = remember(result)
+        active.value = available()[0]?.value || ''
+      } catch (e) {
+        if (disposed || revision !== request || controller.signal.aborted) return
+        loadError.value = l.value.loadFailed
+      } finally {
+        if (!disposed && revision === request) busy.value = false
+      }
+    }
+    function search() {
+      emit('search', query.value)
+      if (p.loadOptions) {
+        stop()
+        loadError.value = ''
+        items.value = []
+        timer = setTimeout(() => void load(), Math.max(0, p.debounce))
+      } else active.value = available()[0]?.value || ''
+    }
+    function open() {
+      if (fieldDisabled(p) || fieldReadonly(p)) return
+      const was = opened.value
+      opened.value = true
+      if (!was) {
+        if (p.loadOptions) void load()
+        else active.value = available()[0]?.value || ''
+      }
+    }
+    function close() {
+      if (!opened.value) return
+      opened.value = false
+      active.value = ''
+      stop()
+    }
+    function validity() {
+      input.value?.setCustomValidity(
+        fieldError(p) || (p.required && !selected().length ? l.value.chooseAtLeastOne : ''),
+      )
+    }
+    function validateIntrinsic() {
+      localError.value = p.required && !selected().length ? l.value.chooseAtLeastOne : ''
+      validity()
+      if (localError.value) emit('invalid', localError.value)
+      return !externalFieldError(p) && !localError.value
+    }
+    function commit(values: string[]) {
+      if (fieldDisabled(p) || fieldReadonly(p)) return
+      emit('update:modelValue', values)
+      emit('change', values)
+    }
+    function toggle(o: SolOption) {
+      if (fieldDisabled(p) || fieldReadonly(p) || o.disabled || busy.value || loadError.value)
+        return
+      const values = selected()
+      if (values.includes(o.value)) commit(values.filter(v => v !== o.value))
+      else if (canAdd(o)) commit([...values, o.value])
+      else {
+        localError.value = l.value.selectionLimit(p.maxSelected!)
+        emit('invalid', localError.value)
+      }
+      input.value?.focus()
+    }
+    function remove(value: string) {
+      if (fieldDisabled(p) || fieldReadonly(p)) return
+      commit(selected().filter(v => v !== value))
+      input.value?.focus()
+    }
+    function key(e: KeyboardEvent) {
+      if (e.isComposing || composing || fieldDisabled(p)) return
+      if (e.key === 'Escape' && opened.value) {
+        e.preventDefault()
+        close()
+        return
+      }
+      if (fieldReadonly(p)) return
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault()
+        if (!opened.value) {
+          open()
+          return
+        }
+        const list = available(),
+          index = list.findIndex(o => o.value === active.value)
+        active.value =
+          list[(index + (e.key === 'ArrowDown' ? 1 : -1) + list.length) % list.length]?.value || ''
+        void nextTick(() =>
+          host.value?.querySelector('[data-active="true"]')?.scrollIntoView?.({ block: 'nearest' }),
+        )
+      } else if (e.key === 'Enter' && opened.value) {
+        e.preventDefault()
+        const item = available().find(o => o.value === active.value)
+        if (item) toggle(item)
+      } else if (e.key === 'Backspace' && !query.value && selected().length) {
+        e.preventDefault()
+        remove(selected().at(-1)!)
+      }
+    }
+    const outside = (e: Event) => {
+      if (!host.value?.contains(e.target as Node)) close()
+    }
+    watch(opened, value => {
+      if (value) emit('open')
+      else emit('close')
+    })
+    watch(l, () => {
+      if (loadError.value) loadError.value = l.value.loadFailed
+      if (localError.value)
+        localError.value =
+          p.required && !selected().length
+            ? l.value.chooseAtLeastOne
+            : l.value.selectionLimit(p.maxSelected!)
+      void nextTick(validity)
+    })
+    watch(
+      () => [...p.modelValue],
+      () => {
+        localError.value = ''
+        void nextTick(validity)
+      },
+    )
+    watch(
+      () => [fieldDisabled(p), fieldReadonly(p)],
+      () => {
+        if (fieldDisabled(p) || fieldReadonly(p)) close()
+      },
+    )
+    watch(
+      () => [p.required, fieldError(p)],
+      () => nextTick(validity),
+    )
+    watch(
+      () => p.loadOptions,
+      () => {
+        stop()
+        items.value = p.loadOptions ? [] : remember(p.options)
+        if (opened.value && p.loadOptions) void load()
+      },
+    )
+    onMounted(() => {
+      document.addEventListener('pointerdown', outside)
+      document.addEventListener('focusin', outside)
+      validity()
+    })
+    onBeforeUnmount(() => {
+      disposed = true
+      stop()
+      document.removeEventListener('pointerdown', outside)
+      document.removeEventListener('focusin', outside)
+    })
+    const validation = useSFieldValidation(p, () => p.modelValue, {
+        focus: () => input.value?.focus(),
+        validateIntrinsic,
+        intrinsicError: () => localError.value,
+        resetIntrinsic: () => {
+          localError.value = ''
+        },
+      }),
+      validate = validation.validate
+    const control = useInputControl(p, slots, {
+      locale: () => l.value,
+      hasValue: () => selected().length > 0 || query.value.length > 0,
+      disabled: () => fieldDisabled(p),
+      readonly: () => fieldReadonly(p),
+      error: () => fieldError(p) || localError.value,
+      loading: () => busy.value,
+      clear: () => {
+        cancelledComposition = composing
+        composing = false
+        commit([])
+        query.value = ''
+        localError.value = ''
+        loadError.value = ''
+        close()
+        stop()
+        emit('clear', { value: [], reason: 'clear' })
+      },
+      validate: validation.validate,
+      focus: validation.focus,
+      element: () => input.value,
+      trigger: icon =>
+        h(
+          'button',
+          {
+            type: 'button',
+            class: 'sol-button',
+            disabled: fieldDisabled(p) || fieldReadonly(p),
+            'aria-label': p.label + ' ' + (opened.value ? l.value.close : l.value.choose),
+            'aria-haspopup': 'listbox',
+            'aria-expanded': String(opened.value),
+            'aria-controls': opened.value ? p.id + '-list' : undefined,
+            onMousedown: (event: MouseEvent) => event.preventDefault(),
+            onClick: () => {
+              if (opened.value) close()
+              else open()
+              input.value?.focus({ preventScroll: true })
+            },
+          },
+          [icon],
+        ),
+    })
+    function clear() {
+      if (p.clearable) {
+        control.clear()
+        return
+      }
+      if (fieldDisabled(p) || fieldReadonly(p)) return
+      commit([])
+      emit('clear', { value: [], reason: 'clear' })
+    }
+    expose({ ...validation, clear })
+    return () => {
+      const error = fieldError(p) || localError.value,
+        list = visible()
+      return h('div', { ref: host, class: 'sol-field sol-ui-native-field sol-ui-multiselect' }, [
+        fieldLabel(p, slots, l.value.required),
+        selected().length
+          ? h(
+              'ul',
+              { class: 'sol-ui-tags', 'aria-label': p.label + ' ' + l.value.selectedItems },
+              selected().map(value =>
+                h('li', { key: value }, [
+                  h('span', labels.get(value) || value),
+                  h(
+                    'button',
+                    {
+                      type: 'button',
+                      class: 'sol-button inline-action',
+                      disabled: fieldDisabled(p) || fieldReadonly(p),
+                      'aria-label': l.value.remove(labels.get(value) || value),
+                      onClick: () => remove(value),
+                    },
+                    '×',
+                  ),
+                ]),
+              ),
+            )
+          : null,
+        control.native(
+          h('input', {
+            ...attrs,
+            ref: input,
+            id: p.id,
+            type: 'text',
+            class: ['sol-input', attrs.class],
+            role: 'combobox',
+            value: query.value,
+            placeholder: p.placeholder,
+            disabled: fieldDisabled(p),
+            readonly: fieldReadonly(p),
+            autocomplete: 'off',
+            'aria-autocomplete': 'list',
+            'aria-expanded': String(opened.value),
+            'aria-controls': opened.value ? p.id + '-list' : undefined,
+            'aria-activedescendant':
+              opened.value &&
+              !busy.value &&
+              !loadError.value &&
+              list.some(o => o.value === active.value)
+                ? p.id + '-option-' + list.findIndex(o => o.value === active.value)
+                : undefined,
+            'aria-required': p.required ? 'true' : undefined,
+            'aria-invalid': error ? 'true' : undefined,
+            'aria-describedby': fieldDescription(
+              p,
+              slots,
+              error,
+              [p.id + '-count', attrs['aria-describedby']].filter(Boolean).join(' '),
+            ),
+            onClick: open,
+            onInput: (e: Event) => {
+              if (fieldDisabled(p) || fieldReadonly(p)) return
+              query.value = (e.target as HTMLInputElement).value
+              if (!composing) {
+                if (!opened.value) opened.value = true
+                search()
+              }
+            },
+            onCompositionstart: () => {
+              cancelledComposition = false
+              composing = true
+              stop()
+            },
+            onCompositionend: (e: CompositionEvent) => {
+              if (cancelledComposition) {
+                cancelledComposition = false
+                composing = false
+                ;(e.target as HTMLInputElement).value = query.value
+                return
+              }
+              composing = false
+              query.value = (e.target as HTMLInputElement).value
+              if (!fieldDisabled(p) && !fieldReadonly(p)) {
+                opened.value = true
+                search()
+              }
+            },
+            onKeydown: key,
+            onInvalid: (e: Event) => {
+              e.preventDefault()
+              validate()
+              input.value?.focus()
+            },
+          }),
+        ),
+        opened.value
+          ? h('div', { class: 'sol-ui-multi-popup' }, [
+              h(
+                'ul',
+                {
+                  id: p.id + '-list',
+                  role: 'listbox',
+                  'aria-label': p.label,
+                  'aria-multiselectable': 'true',
+                  'aria-busy': String(busy.value),
+                  class: 'sol-ui-multi-options',
+                },
+                !busy.value && !loadError.value
+                  ? list.map((o, i) =>
+                      h(
+                        'li',
+                        {
+                          key: o.value,
+                          id: p.id + '-option-' + i,
+                          role: 'option',
+                          'aria-selected': String(selected().includes(o.value)),
+                          'aria-disabled': o.disabled ? 'true' : undefined,
+                          'data-active': String(active.value === o.value),
+                          onPointerdown: (e: PointerEvent) => e.preventDefault(),
+                          onClick: () => toggle(o),
+                        },
+                        [
+                          h(
+                            'span',
+                            { 'aria-hidden': 'true' },
+                            selected().includes(o.value) ? '✓' : '○',
+                          ),
+                          h('span', o.label),
+                          o.disabled ? h('small', l.value.unavailable) : null,
+                        ],
+                      ),
+                    )
+                  : [],
+              ),
+              busy.value
+                ? h('p', { role: 'status', class: 'sol-hint' }, l.value.loading)
+                : loadError.value
+                  ? h('div', { role: 'alert' }, [
+                      h('p', { class: 'sol-error' }, loadError.value),
+                      h(
+                        'button',
+                        {
+                          type: 'button',
+                          class: 'sol-button inline-action',
+                          onClick: () => {
+                            input.value?.focus()
+                            void load()
+                          },
+                          onKeydown: (e: KeyboardEvent) => {
+                            if (e.key === 'Escape') {
+                              e.preventDefault()
+                              close()
+                              input.value?.focus()
+                            }
+                          },
+                        },
+                        l.value.retry,
+                      ),
+                    ])
+                  : !list.length
+                    ? h('p', { role: 'status', class: 'sol-hint' }, l.value.noResults)
+                    : null,
+            ])
+          : null,
+        h(
+          'span',
+          { id: p.id + '-count', class: 'sol-hint', role: 'status' },
+          l.value.selectionCount(selected().length, p.maxSelected),
+        ),
+        ...fieldMessages(p, slots, error),
+      ])
+    }
+  },
+})
 
-export type SolRangeValue=readonly [number,number];
+export type SolRangeValue = readonly [number, number]
+
 export const SRangeSlider=defineComponent({name:'SRangeSlider',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as unknown as PropType<SolRangeValue>,required:true},min:{type:Number,default:0},max:{type:Number,default:100},step:{type:Number,default:1},lowerLabel:String,upperLabel:String,formatValue:Function as PropType<(value:number)=>string>},emits:{'update:modelValue':(_v:[number,number])=>true,change:(_v:[number,number])=>true},setup(p,{attrs,slots,emit,expose}){
  const l=useSolLocale(()=>p.locale),track=ref<HTMLElement|null>(null),handles:HTMLElement[]=[];let drag:{id:number;index:number;start:SolRangeValue;last:SolRangeValue;target:HTMLElement}|null=null;
  const valid=()=>Number.isFinite(p.min)&&Number.isFinite(p.max)&&p.min<p.max&&Number.isFinite(p.step)&&p.step>0;

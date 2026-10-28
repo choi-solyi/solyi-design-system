@@ -52,6 +52,7 @@ const options = [
       v-if="!part || part === 'multiselect'"
       id="recipe-tags"
       v-model="tags"
+      clearable
       label="가상 분류"
       :options="options"
       :max-selected="2"
