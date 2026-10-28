@@ -66,8 +66,8 @@ revealComponentTarget(document.body,'sdate-picker-code');assert.equal(document.g
 revealComponentTarget(document.body,'sdate-picker-examples');assert.equal(document.getElementById('sdate-picker-examples').hidden,false);
 revealComponentTarget(document.body,'sdate-picker');assert.equal(document.getElementById('sdate-picker-examples').hidden,false);assert.equal(revealComponentTarget(document.body,'invalid['),null);clean();
 const card=componentReferences.find(component=>component.name==='SCard');
-assert.deepEqual(card.props.map(prop=>prop.name).sort(),['eyebrow','headingLevel','id','title']);
-assert.deepEqual(card.slots.map(slot=>slot.name).sort(),['actions','default']);assert.deepEqual(card.events,[]);assert.equal(card.passthrough,null);
+assert.deepEqual(card.props.map(prop=>prop.name).sort(),['description','eyebrow','headingLevel','id','title']);
+assert.deepEqual(card.slots.map(slot=>slot.name).sort(),['actions','default','description','leading','meta','title']);assert.deepEqual(card.events,[]);assert.equal(card.passthrough,null);
 for(const name of ['SContainer','SRow','SCol'])assert.equal(componentReferences.find(component=>component.name===name).passthrough,name.replace(/^S/,'V'));
 const form=componentReferences.find(component=>component.name==='SForm');assert.equal(form.methods.find(method=>method.name==='validate').signature,'() => Promise<SFormResult>');assert.ok(form.types.some(type=>type.name==='SFormResult'&&type.source.includes('errors')));
 for(const name of ['STextField','STextarea','SCheckbox','SSelect','SNumberInput','SDatePicker','STimePicker','SFileInput','SAutocomplete','SMultiSelect']){

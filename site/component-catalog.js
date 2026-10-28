@@ -1,5 +1,6 @@
 /* Navigation uses component concepts. Export names remain the actual S API. */
 export const componentConceptNames={
+ SConfirmAction:'Confirm Action',SEmptyState:'Empty State',SLoadingOverlay:'Loading Overlay',SPagination:'Pagination',
  SCombobox:'Combobox',
  SMonthCalendar:'Month Calendar',
  SSortableList:'Sortable List',
