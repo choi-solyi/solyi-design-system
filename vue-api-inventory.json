@@ -267,7 +267,9 @@
       "components": [
         "SCard",
         "STimePicker",
-        "SCheckbox"
+        "SCheckbox",
+        "STextField",
+        "SNumberInput"
       ]
     },
     {

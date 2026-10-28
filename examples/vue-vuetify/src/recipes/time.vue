@@ -6,6 +6,9 @@ const listTime = ref<string | null>(null),
   manual = ref(false)
 const scrub = ref(false),
   interaction = ref('')
+const initialTime = ref('09:07'),
+  useCurrentTime = ref(false),
+  scrubPixels = ref<number | null>(10)
 function preview(value: SolTimeInteraction) {
   interaction.value = `미리보기 ${value.value}`
 }
@@ -31,6 +34,27 @@ function cancelled(value: SolTimeInteractionCancel) {
     <p role="status">완료값: {{ time || '없음' }} · 실제 알림을 예약하지 않습니다.</p>
     <SCheckbox id="recipe-time-manual" v-model="manual" label="목록 예제의 직접 입력 허용" />
     <SCheckbox id="recipe-time-scrub" v-model="scrub" label="입력·목록 드래그 조절 사용" />
+    <SCheckbox
+      id="recipe-time-now"
+      v-model="useCurrentTime"
+      label="선택이 없으면 현재 시각 근처에서 목록 열기"
+    />
+    <STextField
+      id="recipe-time-initial"
+      v-model="initialTime"
+      label="목록 초기 위치"
+      :disabled="useCurrentTime"
+      help="선택된 값이 우선입니다. 시각을 비우고 다시 열어 확인하세요."
+    />
+    <SNumberInput
+      id="recipe-time-pixels"
+      v-model="scrubPixels"
+      label="드래그 한 단계 이동 거리 · px"
+      :min="2"
+      :max="40"
+      :step="2"
+      :disabled="!scrub"
+    />
     <STimePicker
       id="recipe-time-list"
       v-model="listTime"
@@ -39,10 +63,12 @@ function cancelled(value: SolTimeInteractionCancel) {
       :allow-manual-input="manual"
       :scrubbable="scrub"
       :list-scrubbable="scrub"
+      :scrub-pixels-per-step="scrubPixels ?? undefined"
+      :scroll-to-current-time="useCurrentTime"
       @preview="preview"
       @interaction-commit="committed"
       @interaction-cancel="cancelled"
-      initial-scroll-value="09:07"
+      :initial-scroll-value="useCurrentTime ? undefined : initialTime || undefined"
       min="00:07"
       max="23:59"
       :step="15"

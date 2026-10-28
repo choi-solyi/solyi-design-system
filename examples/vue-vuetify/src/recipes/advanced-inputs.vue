@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { formatSolNumber } from 'solyi-ui'
 import type { SolNumberDisplayFormatter } from 'solyi-ui'
 
 defineProps<{ part?: string }>()
 const showNumberFormat = ref(false)
 const formatAmount: SolNumberDisplayFormatter = (value, locale) =>
-  formatSolNumber(value, locale, { minimumFractionDigits: 1 })
+  new Intl.NumberFormat(locale.code, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(
+    value,
+  )
 const note = ref(''),
   amount = ref<number | null>(2),
   tags = ref<string[]>([])
@@ -51,5 +52,6 @@ const options = [
       :max-selected="2"
     />
     <p v-if="!part" role="status">{{ amount }}개 · {{ tags.join(', ') || '선택 없음' }}</p>
+    <p v-if="part === 'number'" role="status">숫자 모델: {{ amount === null ? 'null' : amount }}</p>
   </SCard>
 </template>

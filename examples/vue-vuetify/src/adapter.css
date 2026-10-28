@@ -39,8 +39,8 @@ html,body {margin:0;font-family:var(--sol-font-sans);line-height:var(--sol-line-
 
 .starter-dialog {border-radius:var(--sol-radius-panel);}
 .starter-control-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sol-space-4);align-items:start;}
-.starter-example-nav {display:flex;flex-wrap:wrap;gap:var(--sol-space-2) var(--sol-space-4);}
-.starter-example-nav a {min-height:var(--sol-touch-target-min);display:inline-flex;align-items:center;}
+.starter-example-nav {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);}
+.starter-example-nav a {min-height:var(--sol-touch-target-min);max-inline-size:100%;white-space:normal;text-align:center;overflow-wrap:anywhere;}
 .starter-card h2 {scroll-margin-top:var(--sol-space-4);}
 .starter-native-form {display:grid;gap:var(--sol-space-4);min-width:0;max-width:100%;}
 .starter-native-form>* {min-width:0;}

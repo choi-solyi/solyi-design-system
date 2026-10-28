@@ -20,6 +20,7 @@ pre {white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; line-height: 1.8
 .code-font-sample {max-width:100%;overflow-x:auto;white-space:pre;overflow-wrap:normal;}
 /* Documentation shell additions use the existing role tokens and native controls. */
 .topbar .header-actions {flex-wrap:nowrap;gap:var(--sol-space-2);}
+.topbar .header-demo-link {white-space:nowrap;min-block-size:var(--sol-touch-target-min);}
 .appearance-inline {display:flex;align-items:center;gap:var(--sol-space-2);}
 
 .document-search-field input {font:inherit;line-height:normal;min-width:0;height:var(--sol-control-height);min-height:var(--sol-control-height);color:var(--sol-color-text);background:var(--sol-color-surface);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-control);padding:var(--sol-space-2) var(--sol-space-3);}
