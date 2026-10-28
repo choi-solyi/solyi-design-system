@@ -151,6 +151,7 @@ const records = [
   ['SBarChart','표시·레이아웃','작은 수치 비교를 차트와 같은 자료의 표로 제공합니다.','component','chart'],
   ['SCard','표시·레이아웃','제목·내용·하단 행동을 한 표면으로 묶습니다.','pattern','composition'],
   ['SEmptyState','표시·레이아웃','빈 자료의 설명과 다음 행동을 표시합니다. 로딩·오류 상태는 별도로 구성합니다.','component','empty'],
+  ['SLoadingOverlay','피드백','기존 Progress를 조합해 영역 또는 화면 작업 상태를 표시합니다. 실제 작업 모델은 소비 앱에서 소유합니다.','component','progress'],
   ['SCol','표시·레이아웃','반응형 격자의 한 열을 구성합니다.','pattern','layouts'],
   ['SContainer','표시·레이아웃','반응형 화면의 콘텐츠 너비를 제한합니다.','pattern','layouts'],
   ['SDataTable','표시·레이아웃','정렬·선택·페이지와 작은 화면의 카드 보기를 제공합니다.','pattern','data'],
@@ -188,6 +189,14 @@ for (const [name, group, description, exampleRoute, example] of records) {
   if (name === 'SDialog') {
     props.find(prop => prop.name === 'busy').description = '외부 작업 상태입니다. 본문을 inert로 잠그며 폼 값은 유지합니다. 슬롯에 busy/busyScope를 전달하고 작업 결과를 자동 처리하지 않습니다.'
     props.find(prop => prop.name === 'busyScope').description = '기본 body는 본문만 잠그고 닫기와 액션은 허용합니다. all은 feedback·액션·닫기·Escape·바깥 클릭도 잠급니다. 부모가 modelValue=false로 닫는 제어는 유지합니다.'
+  }
+  if (name === 'SLoadingOverlay') {
+    props.find(prop => prop.name === 'modelValue').description = '실제 작업 상태입니다. 표시 타이머는 이 값을 변경하거나 update:modelValue를 보내지 않습니다. aria-busy는 이 모델을 반영합니다.'
+    props.find(prop => prop.name === 'scope').description = '기본 container는 소유 wrapper만 덮습니다. viewport blocking은 기존 modal host의 stack·focus·scroll lock을 재사용합니다. container는 페이지 전체 포커스나 스크롤을 잠그지 않습니다.'
+    props.find(prop => prop.name === 'blocking').description = '기본 true입니다. 보이는 동안 원본 영역을 inert로 만듭니다. false는 포커스 trap·스크롤 잠금 없이 조작을 허용합니다. hideContent로 현재 초점이 숨겨질 때만 안전한 표시 영역으로 이동합니다.'
+    props.find(prop => prop.name === 'delay').description = '기본 150ms입니다. 이 시간 전에 작업이 끝나면 표시하지 않습니다. 0이면 즉시 표시합니다.'
+    props.find(prop => prop.name === 'minVisibleMs').description = '기본 200ms입니다. 한 번 보인 표시는 최소 시간을 유지합니다. 작업이 다시 시작되면 대기 중 숨김을 취소합니다.'
+    props.find(prop => prop.name === 'hideContent').description = '보이는 동안 원본 크기를 유지하면서 내용만 숨깁니다. 숨긴 내용은 접근성 트리와 키보드 탐색에서도 제외합니다.'
   }
   if (name === 'SConfirmAction') {
     props.find(prop => prop.name === 'timeout').description = '확인 대기 시간(ms)입니다. 기본 5000, 0이면 자동 취소하지 않습니다. Escape와 기본 blur 취소는 유지합니다.'

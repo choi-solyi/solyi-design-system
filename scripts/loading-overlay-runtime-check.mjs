@@ -1,0 +1,19 @@
+import assert from 'node:assert/strict'
+import {writeFile} from 'node:fs/promises'
+import {fileURLToPath} from 'node:url'
+import {JSDOM} from 'jsdom'
+const root=new URL('../',import.meta.url),target=process.argv.find(arg=>arg.startsWith('--consumer='))?.slice(11),consumer=new URL(target?target.replace(/\/?$/,'/'):process.argv.includes('--candidate')?'qa-output/combobox-candidate/consumer/':'examples/package-consumer/',root),source=process.argv.includes('--source')
+if(target){assert.ok(consumer.href.startsWith(new URL('qa-output/',root).href),'Explicit fixtures stay in qa-output');assert.ok(!source,'An explicit consumer checks its installed package, never a source alias')}
+const dom=new JSDOM('<div id="app"></div>',{url:'https://example.test',pretendToBeVisual:true}),w=dom.window,d=w.document
+for(const key of ['window','document','Element','Node','HTMLElement','HTMLInputElement','SVGElement','ShadowRoot','Document','MutationObserver','Event','MouseEvent','KeyboardEvent','FocusEvent','getComputedStyle'])Object.defineProperty(globalThis,key,{value:key==='window'?w:key==='document'?d:w[key],configurable:true})
+globalThis.requestAnimationFrame=w.requestAnimationFrame.bind(w);globalThis.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};globalThis.CSS={supports:()=>false}
+w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});globalThis.matchMedia=w.matchMedia
+await writeFile(new URL('.runtime-extension-entry.ts',consumer),`export {createApp,h,ref,nextTick} from 'vue';export * from ${JSON.stringify(source?'../../packages/vue-ui/src/index':'solyi-ui')};`)
+const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consumer))
+const built=await build({root:fileURLToPath(consumer),configFile:false,logLevel:'error',resolve:{dedupe:['vue','vuetify']},ssr:{noExternal:true},build:{ssr:fileURLToPath(new URL('.runtime-extension-entry.ts',consumer)),write:false,minify:false,rolldownOptions:{external:['vue']}}})
+await writeFile(new URL('.runtime-check.mjs',consumer),built.output.find(chunk=>chunk.type==='chunk').code)
+const api=await import(new URL('.runtime-check.mjs?combo='+Date.now(),consumer)),{createApp,h,ref,nextTick}=api
+const tick=async()=>{await nextTick();await nextTick()},wait=async(ms=8)=>{await new Promise(resolve=>setTimeout(resolve,ms));await tick()},$=selector=>{const node=d.querySelector(selector);assert.ok(node,selector);return node}
+
+const model=ref(false),visible=[],updates=[];const app=createApp({render:()=>h(api.SLoadingOverlay,{modelValue:model.value,title:'Working',delay:30,minVisibleMs:80,onVisibleChange:v=>visible.push(v),'onUpdate:modelValue':v=>updates.push(v)},()=>h('button',{id:'inside'},'Content'))});app.use(api.createSolyiVuetify());app.mount('#app');await tick();
+model.value=true;await wait(10);model.value=false;await wait(40);assert.deepEqual(visible,[],'Short work does not flash');model.value=true;await wait(40);assert.deepEqual(visible,[true]);assert.ok($('.sol-ui-loading-content').hasAttribute('inert'));model.value=false;await wait(20);assert.ok(d.querySelector('.sol-ui-loading-panel'),'Minimum dwell remains visible');model.value=true;await wait(70);assert.deepEqual(visible,[true],'Resuming work cancels hiding');model.value=false;await tick();await wait(5);assert.deepEqual(visible,[true,false]);assert.deepEqual(updates,[],'Timing never writes the work model');assert.equal($('.sol-ui-loading').getAttribute('aria-busy'),'false');assert.equal($('.sol-ui-loading-content').hasAttribute('inert'),false);app.unmount();await wait(40);assert.deepEqual(visible,[true,false]);dom.window.close();console.log('PASS: short delay cancellation, minimum display, resumed work, inert cleanup, aria-busy and unchanged parent model.');

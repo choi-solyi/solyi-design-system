@@ -1,7 +1,8 @@
 {
   "documentVersion": "1.1.0",
-  "componentCount": 47,
+  "componentCount": 48,
   "components": [
+    "SLoadingOverlay",
     "SEmptyState",
     "SConfirmAction",
     "SCombobox",
@@ -267,7 +268,9 @@
         "SSelect",
         "SCheckbox",
         "SProgressLinear",
-        "SProgressCircular"
+        "SProgressCircular",
+        "SLoadingOverlay",
+        "SBtn"
       ]
     },
     {

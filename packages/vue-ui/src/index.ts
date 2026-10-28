@@ -1,3 +1,6 @@
+import {SLoadingOverlay} from './loading-overlay';
+export {SLoadingOverlay};
+export type {SolLoadingOverlaySlots} from './loading-overlay';
 import {SCard,SAlert,SEmptyState} from './surfaces';
 import {useVisualViewport} from './viewport';
 import {SChip,SBadge,SIcon,createSIconBtn} from './primitives';
@@ -102,8 +105,8 @@ export const SDialog=/* @__PURE__ */ defineComponent({
     });
     return():VNode=>{const scope:SolDialogScope={busy:props.busy,busyScope:props.busyScope};return h(VDialog as Component,{...attrs,style:[viewport.value?{top:viewport.value.top+'px',left:viewport.value.left+'px',width:viewport.value.width+'px',height:viewport.value.height+'px',right:'auto',bottom:'auto','--sol-dialog-viewport-height':viewport.value.height+'px'}:undefined,attrs.style],modelValue:props.modelValue,'onUpdate:modelValue':requestClose,maxWidth:props.presentation==='drawer'?440:props.maxWidth,transition:false,persistent:blocked()?true:attrs.persistent,'aria-labelledby':props.id+'-title',class:['sol-ui-overlay',props.presentation==='drawer'?'sol-ui-drawer-overlay':undefined,attrs.class]},()=>h('section',{ref:section,class:'sol-ui-dialog',id:props.id,tabindex:-1,'aria-busy':props.busy?'true':undefined},[
       h('div',{class:'sol-ui-dialog-heading'},[h('div',{class:'sol-surface-heading'},[props.eyebrow?h('span',{class:'eyebrow'},props.eyebrow):null,h('h2',{id:props.id+'-title'},props.title)]),h(SIconBtn,{id:props.id+'-close',ref:close,variant:'subtle',icon:'close',label:props.closeLabel?.trim()||l.value.close,autofocus:true,disabled:blocked(),onClick:()=>requestClose(false)})]),
-      h('div',{class:'sol-ui-dialog-body',inert:props.busy},[slots.default?.(scope)]),
-      slots.feedback?h('div',{class:'sol-ui-dialog-feedback',inert:blocked()},[slots.feedback(scope)]):null,
+      h('div',{class:'sol-ui-dialog-body',inert:props.busy||undefined},[slots.default?.(scope)]),
+      slots.feedback?h('div',{class:'sol-ui-dialog-feedback',inert:blocked()||undefined},[slots.feedback(scope)]):null,
       slots.actions||slots['actions-start']?h('div',{class:'sol-ui-dialog-actions',inert:blocked()},[slots['actions-start']?h('div',{class:'sol-ui-dialog-actions-start'},[slots['actions-start'](scope)]):null,slots.actions?.(scope)]):null
     ]));}
   }
@@ -170,6 +173,7 @@ export const SDataTable=/* @__PURE__ */ defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  SLoadingOverlay: typeof SLoadingOverlay
   SEmptyState: typeof SEmptyState
   SConfirmAction: typeof SConfirmAction
   SCombobox: typeof SCombobox
@@ -219,6 +223,7 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  SLoadingOverlay,
   SEmptyState,
   SConfirmAction,
   SCombobox,

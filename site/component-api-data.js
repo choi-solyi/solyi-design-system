@@ -5038,6 +5038,112 @@ export const componentReferences=[
     "passthrough": null
   },
   {
+    "name": "SLoadingOverlay",
+    "id": "sloading-overlay",
+    "group": "피드백",
+    "description": "기존 Progress를 조합해 영역 또는 화면 작업 상태를 표시합니다. 실제 작업 모델은 소비 앱에서 소유합니다.",
+    "exampleRoute": "component",
+    "example": "progress",
+    "source": "packages/vue-ui/src/loading-overlay.ts",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "실제 작업 상태입니다. 표시 타이머는 이 값을 변경하거나 update:modelValue를 보내지 않습니다. aria-busy는 이 모델을 반영합니다.",
+        "values": []
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "default": "undefined",
+        "description": "표면 또는 패널의 제목입니다.",
+        "values": []
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "default": "undefined",
+        "description": "description 설정값입니다.",
+        "values": []
+      },
+      {
+        "name": "scope",
+        "type": "'container'|'viewport'",
+        "required": false,
+        "default": "'container'",
+        "description": "기본 container는 소유 wrapper만 덮습니다. viewport blocking은 기존 modal host의 stack·focus·scroll lock을 재사용합니다. container는 페이지 전체 포커스나 스크롤을 잠그지 않습니다.",
+        "values": [
+          "container",
+          "viewport"
+        ]
+      },
+      {
+        "name": "blocking",
+        "type": "boolean",
+        "required": false,
+        "default": "true",
+        "description": "기본 true입니다. 보이는 동안 원본 영역을 inert로 만듭니다. false는 포커스 trap·스크롤 잠금 없이 조작을 허용합니다. hideContent로 현재 초점이 숨겨질 때만 안전한 표시 영역으로 이동합니다.",
+        "values": []
+      },
+      {
+        "name": "kind",
+        "type": "'linear'|'circular'",
+        "required": false,
+        "default": "'circular'",
+        "description": "kind 설정값입니다.",
+        "values": [
+          "linear",
+          "circular"
+        ]
+      },
+      {
+        "name": "delay",
+        "type": "number",
+        "required": false,
+        "default": "150",
+        "description": "기본 150ms입니다. 이 시간 전에 작업이 끝나면 표시하지 않습니다. 0이면 즉시 표시합니다.",
+        "values": []
+      },
+      {
+        "name": "minVisibleMs",
+        "type": "number",
+        "required": false,
+        "default": "200",
+        "description": "기본 200ms입니다. 한 번 보인 표시는 최소 시간을 유지합니다. 작업이 다시 시작되면 대기 중 숨김을 취소합니다.",
+        "values": []
+      },
+      {
+        "name": "hideContent",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "보이는 동안 원본 크기를 유지하면서 내용만 숨깁니다. 숨긴 내용은 접근성 트리와 키보드 탐색에서도 제외합니다.",
+        "values": []
+      }
+    ],
+    "events": [
+      {
+        "name": "visibleChange",
+        "signature": "(visible: boolean)",
+        "description": "visibleChange 동작이 발생했을 때 전달합니다."
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "scope": "인자 없음",
+        "description": "기본 내용입니다."
+      }
+    ],
+    "methods": [],
+    "types": [],
+    "passthrough": null
+  },
+  {
     "name": "SPopover",
     "id": "spopover",
     "group": "피드백",
@@ -7158,8 +7264,8 @@ export const componentExampleSources={
   "tree": "<script setup lang=\"ts\">\nimport type { STreeItem, SBarChartItem } from 'solyi-ui'\n\ndefineProps<{ part?: string }>()\nconst selected = ref<string | null>(null),\n  expanded = ref<string[]>([]),\n  week = ref<string | null>('current')\nconst items: STreeItem[] = [\n  {\n    id: 'notes',\n    label: '기록',\n    children: [\n      { id: 'garden', label: '작은 정원' },\n      { id: 'book', label: '저녁 책장' },\n    ],\n  },\n  { id: 'archive', label: '보관', children: [{ id: 'walk', label: '주말 산책' }] },\n]\nconst chart = computed<SBarChartItem[]>(() =>\n  ['월요일', '화요일', '수요일', '목요일'].map((label, index) => ({\n    id: String(index),\n    label,\n    value: (week.value === 'current' ? [2, 4, 0, 5] : [1, 3, 2, 4])[index],\n  })),\n)\nconst total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0))\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '가상 자료의 차트와 계층'\">\n    <template v-if=\"!part || part === 'chart'\">\n      <SSelect\n        id=\"recipe-chart-week\"\n        v-model=\"week\"\n        label=\"가상 활동 주간\"\n        :options=\"[\n          { value: 'current', label: '이번 주' },\n          { value: 'previous', label: '지난주' },\n        ]\"\n      />\n      <p role=\"status\">총 {{ total }}개 기록 · 가상 자료</p>\n      <SBarChart\n        id=\"recipe-chart\"\n        label=\"가상 활동 횟수 · 차트와 같은 자료\"\n        :items=\"chart\"\n        category-label=\"요일\"\n        value-label=\"기록 수\"\n      />\n    </template>\n    <template v-if=\"!part || part === 'tree'\">\n      <STree\n        id=\"recipe-tree\"\n        v-model=\"selected\"\n        v-model:expanded=\"expanded\"\n        label=\"가상 기록 폴더\"\n        :items=\"items\"\n      />\n      <p role=\"status\">선택: {{ selected || '없음' }}</p>\n    </template>\n  </SCard>\n</template>\n",
   "feedback": "<script setup lang=\"ts\">\nconst open = ref(false),\n  recovered = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"상태와 다음 행동\">\n    <SAlert v-if=\"!recovered\" tone=\"danger\" title=\"가상 저장을 완료하지 못했어요.\">\n      <p>입력 내용은 유지됩니다.</p>\n      <template #actions>\n        <SBtn variant=\"inline\" @click=\"recovered = true\"> 다시 시도 </SBtn>\n      </template>\n    </SAlert>\n    <SAlert v-else tone=\"success\" title=\"✓ 가상 저장을 확인했어요.\" />\n    <SBtn @click=\"open = true\">짧은 완료 안내</SBtn>\n    <SSnackbar\n      id=\"recipe-feedback-toast\"\n      v-model=\"open\"\n      tone=\"success\"\n      message=\"가상 작업을 확인했어요.\"\n      :duration=\"4000\"\n    />\n  </SCard>\n</template>\n",
   "dialog": "<script setup lang=\"ts\">\nconst open = ref(false),\n  longContent = ref(false),\n  draft = ref('')\nconst presentation = ref<string | null>('dialog'),\n  description = ref<string | null>('one')\nconst busyScope = ref<string | null>('body'),\n  busy = ref(false),\n  feedback = ref('')\nlet timer: ReturnType<typeof setTimeout>\nfunction save() {\n  if (busy.value) return\n  busy.value = true\n  feedback.value = '잠시 기다려 주세요.'\n  timer = setTimeout(() => {\n    busy.value = false\n    feedback.value = '예제 처리를 마쳤어요.'\n  }, 1200)\n}\nonBeforeUnmount(() => clearTimeout(timer))\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"본문 스크롤과 고정 헤더\">\n    <SSelect\n      id=\"recipe-dialog-presentation\"\n      v-model=\"presentation\"\n      label=\"표시 방식\"\n      :options=\"[\n        { value: 'dialog', label: '다이얼로그' },\n        { value: 'drawer', label: '옆 패널' },\n      ]\"\n    />\n    <SSelect\n      id=\"recipe-dialog-description\"\n      v-model=\"description\"\n      label=\"설명 길이\"\n      :options=\"[\n        { value: 'none', label: '설명 없음' },\n        { value: 'one', label: '한 줄' },\n        { value: 'multi', label: '여러 줄' },\n      ]\"\n    />\n    <SCheckbox id=\"recipe-dialog-long\" v-model=\"longContent\" label=\"긴 본문으로 스크롤 확인\" />\n    <SSelect\n      id=\"recipe-dialog-busy-scope\"\n      v-model=\"busyScope\"\n      label=\"작업 중 잠금 범위\"\n      :options=\"[\n        { value: 'body', label: '본문만 · 닫기 가능' },\n        { value: 'all', label: '전체 · 완료 후 닫기' },\n      ]\"\n    />\n    <SBtn id=\"recipe-dialog-open\" @click=\"open = true\">창 열기</SBtn>\n    <SDialog\n      id=\"recipe-dialog\"\n      v-model=\"open\"\n      :presentation=\"presentation === 'drawer' ? 'drawer' : 'dialog'\"\n      eyebrow=\"UI EXAMPLE\"\n      title=\"제목과 닫기는 자리를 유지합니다\"\n      :busy=\"busy\"\n      :busy-scope=\"busyScope === 'all' ? 'all' : 'body'\"\n    >\n      <p v-if=\"description !== 'none'\">\n        {{\n          description === 'multi'\n            ? '본문만 스크롤되며 제목과 닫기는 자리를 유지합니다. '.repeat(8)\n            : '본문만 스크롤되며 제목과 닫기는 자리를 유지합니다.'\n        }}\n      </p>\n      <p>\n        {{\n          busyScope === 'all'\n            ? '전체 잠금 중에는 처리가 끝난 뒤 닫을 수 있습니다.'\n            : 'Escape로 닫으면 열기 버튼으로 돌아갑니다.'\n        }}\n      </p>\n      <p v-for=\"line in longContent ? 30 : 0\" :key=\"line\">스크롤 확인용 내용 {{ line }}</p>\n      <STextField id=\"recipe-dialog-last\" v-model=\"draft\" label=\"마지막 입력\" />\n      <template #feedback\n        ><p role=\"status\">{{ feedback }}</p></template\n      >\n      <template #actions-start=\"{ busy: pending }\"\n        ><SBtn variant=\"subtle\" :disabled=\"pending\" @click=\"draft = ''\">입력 초기화</SBtn></template\n      >\n      <template #actions=\"{ busy: pending }\">\n        <SBtn :disabled=\"pending && busyScope === 'all'\" @click=\"open = false\">닫기</SBtn>\n        <SBtn id=\"recipe-dialog-save\" variant=\"primary\" :loading=\"pending\" @click=\"save\"\n          >예제 처리</SBtn\n        >\n      </template>\n    </SDialog>\n  </SCard>\n</template>\n",
+  "progress": "<script setup lang=\"ts\">\nimport type { SProgressState } from 'solyi-ui'\n\nconst state = ref<string | null>('indeterminate'),\n  animated = ref(true),\n  showValue = ref(true),\n  showMessage = ref(true)\nconst resolved = computed(() => state.value as SProgressState)\nconst pending = ref(false),\n  scope = ref<string | null>('container'),\n  blocking = ref(true),\n  hideContent = ref(false)\nlet timer: ReturnType<typeof setTimeout>\nfunction start(ms: number) {\n  if (pending.value) return\n  pending.value = true\n  timer = setTimeout(() => {\n    pending.value = false\n  }, ms)\n}\nonBeforeUnmount(() => clearTimeout(timer))\nconst options = [\n  { value: 'determinate', label: '35% 진행' },\n  { value: 'indeterminate', label: '진행률을 모르는 처리 중' },\n  { value: 'complete', label: '완료' },\n  { value: 'error', label: '오류' },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"값을 아는 진행과 처리 중 표시\">\n    <SSelect\n      id=\"recipe-progress-mode\"\n      v-model=\"state\"\n      label=\"가상 작업 상태\"\n      :options=\"options\"\n      required\n    />\n    <SCheckbox id=\"recipe-progress-motion\" v-model=\"animated\" label=\"처리 중 반복 모션\" />\n    <SCheckbox id=\"recipe-progress-value\" v-model=\"showValue\" label=\"수치 표시\" />\n    <SCheckbox id=\"recipe-progress-message\" v-model=\"showMessage\" label=\"상태 문구 표시\" />\n    <SProgressLinear\n      id=\"recipe-linear\"\n      label=\"선형 진행\"\n      :model-value=\"35\"\n      :state=\"resolved\"\n      :animated=\"animated\"\n      :show-value=\"showValue\"\n      :show-message=\"showMessage\"\n    />\n    <SProgressCircular\n      id=\"recipe-circular\"\n      label=\"원형 진행\"\n      :model-value=\"35\"\n      :state=\"resolved\"\n      :animated=\"animated\"\n      :show-value=\"showValue\"\n      :show-message=\"showMessage\"\n    />\n    <p>\n      알 수 없는 진행률에는 퍼센트를 만들지 않습니다. 움직임 줄이기 설정에서는 정적으로 표시합니다.\n    </p>\n    <SSelect\n      id=\"recipe-loading-scope\"\n      v-model=\"scope\"\n      label=\"로딩 표시 범위\"\n      :options=\"[\n        { value: 'container', label: '이 영역만' },\n        { value: 'viewport', label: '화면 전체' },\n      ]\"\n    />\n    <SCheckbox id=\"recipe-loading-blocking\" v-model=\"blocking\" label=\"표시 중 영역 조작 잠금\" />\n    <SCheckbox\n      id=\"recipe-loading-hide-content\"\n      v-model=\"hideContent\"\n      label=\"표시 중 원본 내용 숨김\"\n    />\n    <SLoadingOverlay\n      :model-value=\"pending\"\n      title=\"예제를 처리하고 있어요.\"\n      description=\"잠시 후 자동으로 완료됩니다.\"\n      :scope=\"scope === 'viewport' ? 'viewport' : 'container'\"\n      :blocking=\"blocking\"\n      :hide-content=\"hideContent\"\n    >\n      <SCard title=\"독립 작업 영역\">\n        <p>짧은 작업은 표시를 지연해 깜빡임을 줄입니다.</p>\n        <div class=\"sol-actions\">\n          <SBtn id=\"recipe-loading-start\" @click=\"start(1200)\">로딩 예제</SBtn>\n          <SBtn id=\"recipe-loading-short\" @click=\"start(50)\">짧은 작업</SBtn>\n        </div>\n      </SCard>\n    </SLoadingOverlay>\n  </SCard>\n</template>\n",
   "help": "<script setup lang=\"ts\">\nconst open = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"짧은 설명과 추가 정보\">\n    <p>짧은 설명에는 툴팁, 읽을 내용과 행동이 있는 추가 정보에는 팝오버를 사용합니다.</p>\n    <div class=\"sol-actions\">\n      <STooltip id=\"recipe-tooltip\" label=\"짧은 설명\" text=\"가상 기록을 찾는 도구예요.\" />\n      <SPopover id=\"recipe-popover\" v-model=\"open\" label=\"추가 정보\" title=\"추가 정보\">\n        <p>읽을 내용과 닫기 행동이 있는 가상 정보입니다.</p>\n      </SPopover>\n    </div>\n    <p class=\"sol-hint\">\n      포커스·포인터·터치로 열고 Escape로 닫습니다. 팝오버는 닫기 버튼과 초점 복귀를 제공합니다.\n    </p>\n  </SCard>\n</template>\n",
-  "progress": "<script setup lang=\"ts\">\nimport type { SProgressState } from 'solyi-ui'\n\nconst state = ref<string | null>('indeterminate'),\n  animated = ref(true),\n  showValue = ref(true),\n  showMessage = ref(true)\nconst resolved = computed(() => state.value as SProgressState)\nconst options = [\n  { value: 'determinate', label: '35% 진행' },\n  { value: 'indeterminate', label: '진행률을 모르는 처리 중' },\n  { value: 'complete', label: '완료' },\n  { value: 'error', label: '오류' },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"값을 아는 진행과 처리 중 표시\">\n    <SSelect\n      id=\"recipe-progress-mode\"\n      v-model=\"state\"\n      label=\"가상 작업 상태\"\n      :options=\"options\"\n      required\n    />\n    <SCheckbox id=\"recipe-progress-motion\" v-model=\"animated\" label=\"처리 중 반복 모션\" />\n    <SCheckbox id=\"recipe-progress-value\" v-model=\"showValue\" label=\"수치 표시\" />\n    <SCheckbox id=\"recipe-progress-message\" v-model=\"showMessage\" label=\"상태 문구 표시\" />\n    <SProgressLinear\n      id=\"recipe-linear\"\n      label=\"선형 진행\"\n      :model-value=\"35\"\n      :state=\"resolved\"\n      :animated=\"animated\"\n      :show-value=\"showValue\"\n      :show-message=\"showMessage\"\n    />\n    <SProgressCircular\n      id=\"recipe-circular\"\n      label=\"원형 진행\"\n      :model-value=\"35\"\n      :state=\"resolved\"\n      :animated=\"animated\"\n      :show-value=\"showValue\"\n      :show-message=\"showMessage\"\n    />\n    <p>\n      알 수 없는 진행률에는 퍼센트를 만들지 않습니다. 움직임 줄이기 설정에서는 정적으로 표시합니다.\n    </p>\n  </SCard>\n</template>\n",
   "chart": "<script setup lang=\"ts\">\nimport type { STreeItem, SBarChartItem } from 'solyi-ui'\n\ndefineProps<{ part?: string }>()\nconst selected = ref<string | null>(null),\n  expanded = ref<string[]>([]),\n  week = ref<string | null>('current')\nconst items: STreeItem[] = [\n  {\n    id: 'notes',\n    label: '기록',\n    children: [\n      { id: 'garden', label: '작은 정원' },\n      { id: 'book', label: '저녁 책장' },\n    ],\n  },\n  { id: 'archive', label: '보관', children: [{ id: 'walk', label: '주말 산책' }] },\n]\nconst chart = computed<SBarChartItem[]>(() =>\n  ['월요일', '화요일', '수요일', '목요일'].map((label, index) => ({\n    id: String(index),\n    label,\n    value: (week.value === 'current' ? [2, 4, 0, 5] : [1, 3, 2, 4])[index],\n  })),\n)\nconst total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0))\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '가상 자료의 차트와 계층'\">\n    <template v-if=\"!part || part === 'chart'\">\n      <SSelect\n        id=\"recipe-chart-week\"\n        v-model=\"week\"\n        label=\"가상 활동 주간\"\n        :options=\"[\n          { value: 'current', label: '이번 주' },\n          { value: 'previous', label: '지난주' },\n        ]\"\n      />\n      <p role=\"status\">총 {{ total }}개 기록 · 가상 자료</p>\n      <SBarChart\n        id=\"recipe-chart\"\n        label=\"가상 활동 횟수 · 차트와 같은 자료\"\n        :items=\"chart\"\n        category-label=\"요일\"\n        value-label=\"기록 수\"\n      />\n    </template>\n    <template v-if=\"!part || part === 'tree'\">\n      <STree\n        id=\"recipe-tree\"\n        v-model=\"selected\"\n        v-model:expanded=\"expanded\"\n        label=\"가상 기록 폴더\"\n        :items=\"items\"\n      />\n      <p role=\"status\">선택: {{ selected || '없음' }}</p>\n    </template>\n  </SCard>\n</template>\n",
   "composition": "<script setup lang=\"ts\">\nconst query = ref('')\nconst state = ref<string | null>('all')\nconst failed = ref(true)\nconst bookmarked = ref(false)\nconst resultPanel = useTemplateRef<HTMLElement>('resultPanel')\n\nfunction retry(event: MouseEvent) {\n  const owner = event.currentTarget\n  failed.value = false\n  nextTick(() => {\n    if (document.activeElement === owner || document.activeElement === document.body) {\n      resultPanel.value?.focus({ preventScroll: true })\n    }\n  })\n}\n</script>\n<template>\n  <div class=\"sol-stack\">\n    <SCard :heading-level=\"2\" title=\"컨트롤과 보조 행동의 관계\">\n      <div class=\"sol-filterbar\">\n        <STextField\n          id=\"recipe-composition-query\"\n          v-model=\"query\"\n          label=\"검색\"\n          help=\"도움말이 있어도 컨트롤 시작점은 같습니다.\"\n        />\n        <SSelect\n          id=\"recipe-composition-state\"\n          v-model=\"state\"\n          label=\"상태\"\n          :options=\"[\n            { value: 'all', label: '전체' },\n            { value: 'done', label: '완료' },\n          ]\"\n          required\n        />\n      </div>\n      <SAlert v-if=\"failed\" tone=\"danger\" title=\"가상 자료를 불러오지 못했어요.\">\n        <p>현재 검색 조건은 유지됩니다.</p>\n        <template #actions>\n          <SBtn variant=\"inline\" @click=\"retry\"> 다시 시도 </SBtn>\n        </template>\n      </SAlert>\n      <p v-else id=\"recipe-composition-result\" ref=\"resultPanel\" tabindex=\"-1\" role=\"status\">\n        ✓ 가상 재시도를 확인했어요.\n      </p>\n    </SCard>\n    <SCard description=\"제목 링크와 보조 버튼을 독립적으로 조작할 수 있습니다.\">\n      <template #leading><SIcon name=\"folder\" decorative /></template>\n      <template #title><a href=\"?view=recipes&amp;example=empty\">항목 미리보기</a></template>\n      <template #meta><SBadge :content=\"bookmarked ? '보관됨' : '예제'\" /></template>\n      <template #actions>\n        <SBtn @click=\"bookmarked = !bookmarked\">{{ bookmarked ? '보관 해제' : '보관' }}</SBtn>\n      </template>\n    </SCard>\n  </div>\n</template>\n",
   "layouts": "<script setup lang=\"ts\">\nconst heading = useTemplateRef<HTMLElement>('heading')\nconst view = ref('list')\nconst selected = ref('작은 정원')\nconst name = ref('가상 사용자')\nconst result = ref('')\n\nfunction move(next: string) {\n  view.value = next\n  nextTick(() => heading.value?.focus())\n}\n</script>\n\n<template>\n  <SCard :heading-level=\"2\" title=\"설정·목록·상세 화면틀\">\n    <template #actions>\n      <nav class=\"sol-actions\" aria-label=\"가상 화면\">\n        <SBtn @click=\"move('list')\">목록</SBtn>\n        <SBtn @click=\"move('detail')\">상세</SBtn>\n        <SBtn @click=\"move('settings')\">설정</SBtn>\n      </nav>\n    </template>\n    <SContainer fluid class=\"pa-0\">\n      <SRow>\n        <SCol cols=\"12\" md=\"4\">\n          <p>목록·상세·설정은 같은 여백과 반응형 열을 공유합니다.</p>\n        </SCol>\n        <SCol cols=\"12\" md=\"8\">\n          <section>\n            <h3 id=\"recipe-layout-title\" ref=\"heading\" tabindex=\"-1\">\n              {{ view === 'list' ? '목록' : view === 'detail' ? '상세' : '설정' }}\n            </h3>\n            <div v-if=\"view === 'list'\" class=\"sol-actions\">\n              <SBtn\n                v-for=\"row in ['작은 정원', '조용한 책장']\"\n                :key=\"row\"\n                @click=\"\n                  selected = row;\n                  move('detail');\n                \"\n                >{{ row }}</SBtn\n              >\n            </div>\n            <SCard v-else-if=\"view === 'detail'\" :title=\"selected\">\n              <p>가상 기록의 짧은 상세입니다.</p>\n              <template #actions><SBtn @click=\"move('list')\">목록으로</SBtn></template>\n            </SCard>\n            <SForm v-else class=\"sol-stack\" @submit.prevent=\"result = '✓ 가상 설정을 확인했어요.'\">\n              <STextField id=\"recipe-layout-name\" v-model=\"name\" label=\"사용자 이름\" />\n              <SBtn type=\"submit\">설정 확인</SBtn>\n            </SForm>\n            <p role=\"status\">{{ result }}</p>\n          </section>\n        </SCol>\n      </SRow>\n    </SContainer>\n  </SCard>\n</template>\n",

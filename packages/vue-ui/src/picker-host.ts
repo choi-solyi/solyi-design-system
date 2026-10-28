@@ -28,6 +28,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
     panelClass: String,
     initialFocus: Function as PropType<() => HTMLElement | null | undefined>,
     focusOnOpen: { type: Boolean, default: true },
+    dismissible: { type: Boolean, default: true },
   },
   emits: {
     requestClose: (_reason: PickerHostCloseReason) => true,
@@ -62,7 +63,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       if (target?.isConnected && !target.matches(':disabled,[aria-disabled="true"]')) target.focus({ preventScroll: true })
     }
     function request(reason: PickerHostCloseReason) {
-      if (disposed || !p.open || requested || !top()) return
+      if (disposed || !p.open || !p.dismissible || requested || !top()) return
       requested = true
       restore = reason !== 'outside'
       emit('requestClose', reason)
@@ -187,8 +188,11 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       window.removeEventListener('keydown', escape, true)
       document.removeEventListener('focusin', outsideFocus)
       window.removeEventListener('blur', outsideWindow)
-      if (p.open && content()?.contains(document.activeElement)) returnFocus()
+      const previous = document.activeElement, ownedFocus = p.open && !!content()?.contains(previous)
       closeBridge()
+      // Consumers may remove an entire host while unlocking its original content.
+      // Restore after that DOM update; a newer focus target always wins.
+      if (ownedFocus) void nextTick(() => { if (document.activeElement === previous || document.activeElement === document.body) returnFocus() })
     })
     expose({ content } satisfies PickerHostHandle)
     const renderOverlay = () => h(VOverlay as Component, {
@@ -210,7 +214,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       width: p.width,
       maxWidth: `calc(${viewport.value ? viewport.value.width + 'px' : '100vw'} - 2 * var(--sol-space-4))`,
       maxHeight: `calc(${viewport.value ? viewport.value.height + 'px' : '100dvh'} - 2 * var(--sol-space-4))`,
-      class: 'sol-ui-picker-host',
+      class: 'sol-ui-overlay sol-ui-picker-host',
       style: mode.value === 'dialog' && viewport.value ? {top:viewport.value.top+'px',left:viewport.value.left+'px',width:viewport.value.width+'px',height:viewport.value.height+'px',right:'auto',bottom:'auto'} : undefined,
       contentClass: ['sol-ui-picker-host-panel', p.panelClass],
       contentProps: {

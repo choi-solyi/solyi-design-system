@@ -2,6 +2,7 @@
 
 ## 1.1.0 후보 · 미게시
 
+- SLoadingOverlay는 기존 Progress와 modal host를 재사용합니다. container/viewport·blocking/nonblocking·지연·최소 표시·내용 숨김을 제공하며 타이머가 부모 작업 모델을 변경하지 않습니다.
 - SEmptyState의 제목·설명·아이콘·액션·card/page 표현을 추가합니다. SCard는 leading/title/description/meta 슬롯을 확장하며 제목 링크와 보조 버튼을 독립적으로 배치합니다.
 - SBtn을 재사용하는 SConfirmAction을 추가합니다. 두 번 누르기, Escape·blur·timeout 취소, 외부 loading/error/reset과 중복 입력 차단을 제공하며 실제 작업은 소비 앱의 confirm listener가 소유합니다.
 - Date/Time에 opt-in pickerPresentation과 logical placement를 연결합니다. 기존 표시 방식과 모델·폼 계약을 유지합니다.
