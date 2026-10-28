@@ -1,29 +1,48 @@
 # 다음 npm 게시 준비와 남은 조건
 
-사용자는 2026-10-28에 남은 요청을 마무리한 뒤 다음 버전을 npm에 게시하도록 승인했습니다. remote push·운영 사이트/외부 소비 앱 배포·새 인증정보 생성·권한 확대는 승인 범위가 아닙니다. 이전 단계 기록의 게시 금지는 당시 상태이며, 이제 **구현·최종 검증을 마친 차기 버전 게시**는 승인 범위입니다.
+승인된 18항목과 추가 Dialog 요청의 패키지 구현을 마쳤습니다. 1.1.0은 로컬 동결 후보이며 npm 게시·운영 문서 배포·외부 소비 앱 업데이트는 아직 하지 않았습니다. remote push·새 인증정보·권한 확대는 승인 범위가 아닙니다.
 
-## 읽기 전용 확인
+## 최종 포함 범위
 
-- 공식 https://registry.npmjs.org 의 `solyi-ui` metadata에서 version/latest가 **1.0.0**임을 확인했습니다.
-- 기본 sandbox 조회는 ENOTFOUND였고 허용된 네트워크 조회에서 공개 metadata는 성공했습니다.
-- 같은 공식 registry의 `npm whoami`는 **E401 Unauthorized**입니다. 현재 기존 인증의 유효성을 확인하지 못했으며 게시 단계는 인증 차단 상태입니다. npm login/config 변경/새 token 생성/권한 확대는 하지 않았습니다. 새 인증 상태가 제공되기 전 이 인증 요청을 반복하지 않습니다.
-- npm publish는 실행하지 않았습니다. 부분 성공 또는 불확실한 게시 결과는 없습니다. 원시 결과는 qa-output/date-presentation/npm-*-network 파일에 보존합니다.
+| 요청 | 구현 결과 | Components·starter 연결 |
+|---|---|---|
+| 1 입력 공통 구조·clear | 8종의 빈 값·이벤트·폼·focus 보존, 내부 clear/공통 슬롯 | 각 입력 정본 예제 |
+| 2 자유 입력 | SCombobox·Enter/opt-in blur·async/IME | combobox |
+| 3 아이콘·버튼 | SIcon/SIconBtn·SBtn 재사용 | buttons |
+| 4 Chip | 선택·삭제 controlled API | buttons |
+| 5 Badge | 상태 표시·접근성 이름 | buttons |
+| 6 Date | ISO·formatter·opt-in 팝업 | inputs/date |
+| 7 Time | native/list·수동 입력·초기 위치·scrub·opt-in 팝업 | time |
+| 8 확인 액션 | SConfirmAction·두 번 확인·외부 작업 상태 | buttons |
+| 9 Dialog·overlay | 고정 제목/닫기/actions·본문 스크롤·설명 간격·feedback/actions-start·busyScope·공유 host | dialog; Switch hideLabel은 selection |
+| 10 로딩 | SLoadingOverlay·영역/화면·blocking·delay/dwell | progress |
+| 11 빈 상태 | SEmptyState·설명/아이콘/actions | empty |
+| 12 정렬 목록 | controlled generic·항목 잠금·grip·키보드/터치/취소 | advanced/sortable |
+| 13 Duration/Step | SNumberInput preset/formatValue/unit 재사용 | advanced-inputs/number |
+| 14 범주 8색 | Core 토큰·고정 ID resolver·48개 대비 조합 | color-examples·Style 토큰 문서 |
+| 15 월 달력 | SMonthCalendar ISO·marker.category·모바일 상세 | advanced/month-calendar |
+| 16 시간 그리드 | 별도 단계 STimeGrid readonly 기반과 move/resize/duplicate proposal | advanced/time-grid |
+| 17 리스트 카드 | SCard leading/title/description/meta/actions·독립 제목 링크 | empty |
+| 18 페이지 이동 | SPagination controlled·모바일 compact·Table 계약 보존 | navigation |
 
-현재 추가 확인: Dialog 피드백 구현 뒤 기존 45종 예산의 문자 한도를 소폭 넘었습니다(정확한 수치는 qa-output/dialog-feedback/current-size.json). 검사는 유지하며 기능을 빼거나 수치만 올려 통과시키지 않습니다. 전체 승인 범위를 닫은 후 실제 API 집합·증분·gzip·개별 import를 근거로 최종 버전 기준을 정리해야 합니다.
+기존 38종과 추가 12종, 총 50종의 개별 import·plugin·전역 타입을 대조했습니다. SScheduler와 서비스 충돌/저장/업무 규칙은 명시적 제외 범위입니다. 새 Step/Duration/Card 중복 컴포넌트도 만들지 않습니다. 정확한 props/events/slots/handle은 소스와 생성 Components API가 기준입니다.
 
-## 실제 게시 전 닫을 조건
+## 동결 후보와 확인된 결과
 
-1. [승인된 18항목 계획](EXTENSIONS-V2-PLAN.md)과 추가 Dialog 요청을 대조하고 최종 포함 범위를 기록합니다. 완료 기능과 새 WIP를 섞어 하나의 완성 버전처럼 게시하지 않습니다.
-2. Date/Time opt-in과 Dialog 고정 header·본문 스크롤·설명 간격·Switch 접근성 라벨을 구현/검증합니다. 이어 ConfirmAction, Dialog 추가 슬롯/overlay, LoadingOverlay/EmptyState, Sortable grip, categorical palette, MonthCalendar 통합, Card/Pagination을 계획 순서대로 처리합니다. NumberInput/아이콘/Chip/Badge/Sortable/MonthCalendar의 완료 구현은 중복하지 않습니다.
-3. TimeGrid는 승인 계획에 **별도 API 검토·독립 단계/PR**로 명시되어 있습니다. generic 기반과 proposal 계약의 설계/구현 상태를 따로 기록하고 거대 업무 Scheduler·서비스 저장/충돌 규칙은 포함하지 않습니다. 이 조건을 조용히 삭제하거나 이미 완료로 표시하지 않습니다.
-4. 최종 소스에 대해 타입·개별 import·plugin·ko/en·theme/density·mobile/RTL·keyboard/focus·Components/starter와 설치 소비를 확인합니다. 공개 API 집합과 측정 근거를 갱신하고 예산 초과를 자동 상향하지 않습니다.
-5. 기존 1.0.0 파일·SHA·불변 검사를 보존한 채 새 버전 artifact/manifest/current를 준비하고 **같은 최종 tarball**로 전체 release/delivery pipeline과 소비 앱 검증을 마칩니다. 아직 이 단계는 실행하지 않았습니다.
-6. 게시 직전 registry 전체 버전·dist-tag를 다시 확인합니다. 로컬 **1.1.0은 후보**이며 사용 가능한 다음 minor인지 최종 확인합니다. 모든 출시 검증을 통과한 stable 버전은 `latest`로 게시하는 계획입니다. 임의 prerelease 이름으로 기존 semver 검사를 변경하지 않습니다.
-7. 현재 UI package도 private:true라 게시 보호 상태입니다. 사용자가 승인한 최종 게시 단계에서 UI의 실제 배포 metadata와 그 검사를 명시적으로 정리하고 최종 tarball을 다시 검증해야 합니다. root/Core의 내부 private 보호와 1.0.0 bytes는 보존합니다. 현재 인증 차단이 해소된 뒤 실제 게시와 **registry에서 새로 설치한 버전**의 실행/타입을 확인하고 URL을 보고합니다.
+- 파일: release-assets/1.1.0/solyi-ui-1.1.0.tgz, 5,982,608 bytes.
+- SHA-256: 90c8ae6949c05b1e4cb87d9409fc9f25274448f4abd406b5d5d6ae0b93886c0e.
+- 1.0.0 파일·SHA와 176,000자 검사를 보존했습니다. [최종 크기 근거](FINAL-SIZE-VALIDATION.md)의 50종 raw/gzip·총 JS·설치 import 및 초과 거부 검사를 통과했습니다. Icon/Combobox의 기존 작은 import 한도는 유지했습니다.
+- 공식 registry는 0.0.0-stage/1.0.0, latest=1.0.0이며 1.1.0은 비어 있었습니다. 게시 직전에도 같다면 1.1.0 / latest로 UI tarball만 게시합니다. Core와 root는 private이고 UI만 승인된 publish metadata로 준비했습니다.
+- 두 소비 앱의 실제 tarball 설치·타입·빌드, 기존 38+추가12 등록, 새 기능 runtime·clear 8종·기존 입력/정렬/달력 및 자체 52개 선언과 negative fixture를 통과했습니다. TypeScript 5.9.3·skipLibCheck:false 자체 오류0, 외부769는 같은 조건의 1.0.0 기준과 동일(증가0)입니다. 일반 소비 앱은 기존 skipLibCheck:true이며 TypeScript 6.0.3 빌드도 통과했습니다.
+- DOM shim 없는 설치본 SSR, Components 실제 iframe TimeGrid 키보드 제안, 설치본 모바일/가로 Dialog의 본문 스크롤·고정 제목/닫기·닫기 동작·UI 데모 링크와 title을 확인했습니다.
+- 로컬 HTTP tarball 설치·타입/CSS/폰트/빌드·해시·중복 framework/불변/손상 거부, 문서 빌드·소스 연결·60개 공개 코드 샘플·기본 check까지 통과했습니다. npm test의 전체 통합 UX 단계도 통과했습니다. 마지막 기존 팔레트 hash 검사는 원래 hash를 그대로 유지하고 명시적으로 추가한 범주 역할만 분리해 통과했으며 폰트 로딩까지 완료했습니다.
 
-## 차단과 일반 개선의 구분
+첫 pipeline은 Dialog 아이콘 닫기 버튼의 오래된 textContent 검사에서 멈췄습니다. aria-label로 바로잡고 같은 tarball의 원래 다음 순서부터 재개했습니다. Components 검색/범주 토큰 설명과 Picker 안내의 불완전한 코드 조각도 보완했습니다. 앞의 통과 검사나 크기 gate를 생략·이동하지 않았습니다. 단계별 증거는 qa-output/release-final/pipeline.log 및 pipeline-rest.log/pipeline-rest2.log/pipeline-rest3.log/pipeline-rest4.log 및 pipeline-last.log에 분할 보존합니다. 별도 installed-ssr.log, time-grid-installed-types.log, browser-final.log와 screens/도 있습니다. sandbox HTTP 소비 설치는 lockfile·설치본 없이 종료한 뒤 허용된 네트워크에서 통과했습니다.
 
-- **현재 실제 차단:** registry 인증 E401, 아직 미완료인 포함 기능/WIP, 최종 artifact/전체 pipeline 미완료, 최종 게시 metadata 전환 전 상태.
-- **조건부 차단:** 추가 기능으로 예산을 넘거나 자체 선언/동작/접근성 회귀가 발생하면 원인을 해결해야 합니다. PURE 단위의 45종 후보는 새 기준을 통과했지만 이후 소스에도 자동 적용되는 면제는 아닙니다.
-- **기존 제한:** 외부 선언 769건은 두 TS 버전에서 1.0.0과 후보가 동일(추가 0), 자체 선언은 0입니다. 이 수치만을 새 기능의 출시 실패로 혼동하지 않습니다. 실제 Fold/OS 키보드/Safari/화면 낭독기는 별도 미검증 한계로 표시합니다.
-- npm 자체 용량 제한에 걸렸다는 증거는 없습니다. 이미 완료한 내부 개선을 반드시 새 blocker로 만들거나, 필수 실패를 단순 개선 사항으로 낮추지 않습니다.
+물리 Fold/OS 키보드·Safari·스크린리더는 미검증이며 Chrome 터치 에뮬레이션과 구별합니다. 이는 npm 인증 문제와 다른 검증 한계입니다. npm 자체 용량 제한에 걸린 증거는 없습니다.
+
+## 남은 게시 차단과 사용자 행동
+
+공식 registry의 기존 npm whoami 결과는 E401 Unauthorized였습니다. 이후 로그인 완료라는 새 증거가 없어 인증 요청을 반복하거나 인증정보를 생성/교체하지 않았습니다. npm publish는 미실행이므로 불확실한 게시 결과도 없습니다. 실제 registry 설치 검증은 게시 후 단계입니다.
+
+D25019에서 패키지 소유 권한이 있는 사용자 계정으로 직접 `npm login --registry=https://registry.npmjs.org/`을 완료하고 알려 주어야 합니다. 토큰·암호·OTP를 대화에 보내지 않습니다. 복구 후 읽기 전용 whoami·버전/dist-tag 충돌 확인 → 같은 동결 tarball 게시 → 공식 registry에서 새 설치·타입/실행 확인 순서입니다. 사용자 로그인과 독립적인 구현·로컬 검증은 완료했습니다. 현재 실행 중인 검사는 없으며 로그인 복구 확인이 다음 단계입니다.
