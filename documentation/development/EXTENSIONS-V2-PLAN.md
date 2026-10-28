@@ -1,3 +1,5 @@
+범주 팔레트 1차: Core 역할 토큰 8색 × 3테마 × light/dark와 순수 resolveCategoricalColor(key,{theme,mode})를 추가했습니다. 고정된 8개 bucket/ID는 확장 시 재배열하지 않는 계약이며 문자열/유한 숫자 key만 받습니다. 48개 조합의 텍스트 대비 최저 6.377:1, 내부 border/background 대비 최저 3.323:1을 확인했습니다. 테마·모드 간 category ID 일치, 잘못된 key 거부, Core/UI 빌드와 실제 빌드된 Core resolver 호출을 통과했습니다. Calendar opt-in 연결·문서·starter·시각 검증과 최종 설치본 검증은 아직 남습니다.
+
 # 확장 요청 2 · 실제 저장소 대조 및 구현 계획
 
 Loading 후속: SLoadingOverlay를 공개 타입/등록, Components/API와 starter progress에 연결했습니다. 기본 container/blocking, delay=150ms/minVisibleMs=200ms이며 visibleChange만 알리고 작업 모델을 쓰지 않습니다. container는 자기 내용만 inert로 잠그고 페이지 trap/scroll lock은 없습니다. viewport blocking은 PickerHost의 stack/native bridge/focus/scroll lock을 재사용하고 dismissible=false로 Escape를 뒤 dialog로 흘리지 않습니다. nonblocking은 포커스/스크롤 잠금 없이 표시합니다. hideContent는 크기를 유지하며 접근성 트리·키보드에서도 숨기고 숨겨진 초점만 안전하게 옮깁니다. 타이머 전이와 48종 공개 회귀·변경 5개 예제 타입/빌드, 실제 Chrome container/viewport 포커스 복귀·Escape·nonblocking 조작·native dialog bridge를 확인했습니다. 실화면에서 backdrop 누락과 사각 차폐를 발견해 기존 토큰/모서리로 보완했습니다. 최종 설치본과 테마 통합은 후보 동결 전 단계로 남습니다.
