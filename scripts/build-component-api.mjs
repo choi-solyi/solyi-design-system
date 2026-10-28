@@ -77,6 +77,9 @@ function options(initializer, file) {
   return {node, file: target.file};
 }
 const propertyDescriptions = {
+  scrubbable:'입력 옆 전용 손잡이를 켭니다. 드래그·키 반복 중 preview만 발행하고 release에 확정합니다.',
+  listScrubbable:'list presentation의 전용 행 손잡이를 켭니다. 목록 본문은 native 스크롤을 유지합니다.',
+  scrubPixelsPerStep:'입력 손잡이에서 한 step에 필요한 양수 픽셀입니다. 생략하면 control 높이의 1/4, 잘못된 값은 10px을 사용합니다.',
   allowManualInput:'직접 타이핑을 허용합니다. false여도 readonly와 달리 팝업 선택은 허용합니다.',
   initialScrollValue:'목록을 열 때의 별도 스크롤 기준입니다. 값 선택이나 모델 변경을 뜻하지 않습니다.',
   scrollToCurrentTime:'선택값과 별도 기준이 없으면 현재 시각에 가까운 항목으로 스크롤합니다.',
@@ -178,7 +181,15 @@ for (const [name, group, description, exampleRoute, example] of records) {
     '기본 두 native select 또는 opt-in 스크롤 목록입니다. 허용값은 native/list입니다.'
   const emits = resolve(property(component.node,component.file,'emits'),component.file);
   const events = entries(emits.node,emits.file).map(([name,fn])=>({name,signature:signature(fn),description:name==='update:modelValue'?'소비 앱의 모델 값을 갱신합니다.':name.startsWith('update:')?'해당 상태의 변경을 소비 앱에 전달합니다.':name==='invalid'?'검증 실패 문구를 전달합니다.':name==='close'?(fn.parameters?.length?'닫힌 이유를 전달합니다.':'닫힌 뒤 전달합니다.'):name==='open'?'패널이 열린 뒤 전달합니다.':name==='retry'?'소비 앱에 재시도 처리를 요청합니다.':`${name} 동작이 발생했을 때 전달합니다.`}));
-  const setup = property(component.node,component.file,'setup');
+    if (name === 'STimePicker') {
+      const interactionDescriptions = {
+        preview:'스크러빙 중 허용 HH:mm 제안입니다. 모델·폼 값은 바꾸지 않습니다.',
+        interactionCommit:'스크러빙의 포인터·키 release 확정입니다. 기존 change payload는 유지합니다.',
+        interactionCancel:'스크러빙 취소 사유와 마지막 제안입니다. 모델·change를 쓰지 않습니다.',
+      }
+      for (const event of events) if (interactionDescriptions[event.name]) event.description = interactionDescriptions[event.name]
+    }
+    const setup = property(component.node,component.file,'setup');
   const slotNames = new Set();
   for (const node of visit(setup,n=>ts.isPropertyAccessExpression(n)&&n.expression.getText()==='slots')) slotNames.add(node.name.text);
   const shared = text(setup).includes('fieldLabel(') || text(setup).includes('fieldMessages(');

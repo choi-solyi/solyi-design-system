@@ -24,8 +24,16 @@ export interface SolLocale {
   toastInfo:string;toastSuccess:string;toastWarning:string;toastDanger:string;notification:string; count:(current:number,max?:number)=>string;
   numberHelp:(min:number|undefined,max:number|undefined,step:number)=>string;
   timeHelp:(min:string,max:string,step:number)=>string;
+  timeScrub?:(source:'input'|'list')=>string;
+  timeScrubKeys?:string;
+  timePreview?:(value:string)=>string;
+  timeScrubCancelled?:string;
 }
 export const koLocale:Readonly<SolLocale>=Object.freeze({
+  timeScrub:(source:'input'|'list')=>source==='input'?'시간 드래그 조절':'목록 드래그 조절',
+  timeScrubKeys:'조절 손잡이를 위아래로 드래그하세요. 키보드: 화살표 한 단계, Shift/Page 열 단계, Home/End 경계. 키를 놓으면 확정, Escape 취소. 목록 본문은 스크롤할 수 있습니다.',
+  timePreview:(value:string)=>'미리보기 '+value,
+  timeScrubCancelled:'시간 조절을 취소했습니다.',
   validationRequired:'필수 항목을 입력하거나 선택해 주세요.',validationInvalid:'입력값을 확인해 주세요.',validationMinLength:(minimum:number)=>`${minimum}자 이상 입력해 주세요.`,
   breadcrumb:'현재 위치',steps:'진행 단계',currentStep:'현재 단계',completeStep:'완료한 단계',chartInvalid:'유효한 0 이상의 값과 축 범위를 확인해 주세요.',chartCategory:'항목',chartValue:'값',toastAccent:'강조',fileRemove:'제거',fileType:(mime:string)=>({'text/plain':'텍스트','image/png':'PNG 이미지','image/jpeg':'JPEG 이미지','application/pdf':'PDF 문서'}[mime]||mime),
   filesChoose:'파일 선택',filesClear:'모두 제거',dropFiles:'파일을 여기에 놓거나 선택해 주세요.',filesRejected:'선택하지 못한 파일',fileRequired:'파일을 하나 이상 선택해 주세요.',unknownFileType:'MIME 정보 없음',noFileExtension:'확장자 없음',duplicateFile:'이미 선택한 파일입니다.',unsupportedFile:'허용하지 않는 파일 형식입니다.',
@@ -44,6 +52,10 @@ export const koLocale:Readonly<SolLocale>=Object.freeze({
   timeHelp:(min:string,max:string,step:number)=>`HH:mm · ${min}–${max} · ${step}분 간격`
 });
 export const enLocale:Readonly<SolLocale>=Object.freeze({
+  timeScrub:(source:'input'|'list')=>source==='input'?'Adjust time by dragging':'Adjust time in list by dragging',
+  timeScrubKeys:'Drag the adjustment handle up or down. Keyboard: arrows one step, Shift/Page ten steps, Home/End bounds. Release the key to commit; Escape cancels. The list body remains scrollable.',
+  timePreview:(value:string)=>'Preview '+value,
+  timeScrubCancelled:'Time adjustment cancelled.',
   validationRequired:'Enter or choose a required value.',validationInvalid:'Check this value.',validationMinLength:(minimum:number)=>`Use at least ${minimum} characters.`,
   breadcrumb:'Breadcrumb',steps:'Progress steps',currentStep:'Current step',completeStep:'Completed step',chartInvalid:'Check nonnegative finite values and the axis range.',chartCategory:'Category',chartValue:'Value',toastAccent:'Accent',fileRemove:'Remove',fileType:(mime:string)=>({'text/plain':'Plain text','image/png':'PNG image','image/jpeg':'JPEG image','application/pdf':'PDF document'}[mime]||mime),
   filesChoose:'Choose files',filesClear:'Remove all',dropFiles:'Drop files here or use the choose button.',filesRejected:'Files not selected',fileRequired:'Choose at least one file.',unknownFileType:'MIME type unavailable',noFileExtension:'No extension',duplicateFile:'This file is already selected.',unsupportedFile:'This file type is not allowed.',

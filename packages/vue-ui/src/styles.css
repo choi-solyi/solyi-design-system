@@ -139,6 +139,14 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-time-option[aria-selected=true] {background:var(--sol-color-selected-surface);color:var(--sol-color-selected-text);}
 .sol-ui-time-list:focus [data-active=true] {box-shadow:inset 0 0 0 var(--sol-focus-width) var(--sol-color-focus);}
 .sol-ui-time-list:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-time-entry.sol-ui-time-entry--scrub {grid-template-columns:minmax(0,1fr) var(--sol-control-height) auto;}
+.sol-ui-time-scrub,.sol-ui-time-list-grip {display:inline-flex;align-items:center;justify-content:center;inline-size:var(--sol-control-height);block-size:var(--sol-control-height);flex-shrink:0;touch-action:none;user-select:none;cursor:ns-resize;}
+.sol-ui-time-scrub {border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-control);background:var(--sol-color-surface);color:var(--sol-color-text);}
+.sol-ui-time-scrub:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-ui-time-scrub[aria-disabled=true] {cursor:default;pointer-events:none;touch-action:pan-y;}
+.sol-ui-time-preview {display:block;min-block-size:1lh;}
+.sol-ui-time-list--scrub .sol-ui-time-option {padding-block:0;}
+.sol-ui-time-list-grip {margin-inline-start:auto;}
 
 .sol-ui-segment-options {display:flex;flex-wrap:wrap;gap:var(--sol-space-1);}
 .sol-ui-segment {position:relative;min-width:0;cursor:pointer;}

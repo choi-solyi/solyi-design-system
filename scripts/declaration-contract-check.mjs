@@ -120,7 +120,14 @@ const listTime: InstanceType<typeof STimePicker>['$props'] = { id: 'time', label
 const nativeTime: InstanceType<typeof STimePicker>['$props'] = { id: 'native', label: 'Time' }
 // @ts-expect-error Custom time presentation is an explicit opt-in union.
 const unsupportedTime: InstanceType<typeof STimePicker>['$props'] = { id: 'time', label: 'Time', presentation: 'wheel' }
-void [listTime, nativeTime, unsupportedTime]
+const scrubTime: InstanceType<typeof STimePicker>['$props'] = { id: 'scrub', label: 'Time', scrubbable: true, listScrubbable: true, scrubPixelsPerStep: 10,
+  onPreview: value => { const source: 'input' | 'list' = value.source; void source },
+  onInteractionCommit: value => { const input: 'pointer' | 'keyboard' = value.input; void input },
+  onInteractionCancel: value => { const reason: string = value.reason; void reason },
+}
+// @ts-expect-error Preview remains a typed clock proposal, never a number model.
+const invalidPreview: InstanceType<typeof STimePicker>['$props'] = { id: 'scrub', label: 'Time', onPreview: (value: number) => void value }
+void [listTime, nativeTime, unsupportedTime, scrubTime, invalidPreview]
 `)
 entries.push(fixture)
 const program = ts.createProgram(entries, options, host)

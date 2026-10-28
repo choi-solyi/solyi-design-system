@@ -8,6 +8,8 @@ import type {DateParts} from '@solyi/core/date';
 import {solIconPaths} from '@solyi/core/icons';
 import {SIcon} from './primitives';
 import {timeChoices,nearestTime} from './time-values';
+import {createTimeScrub} from './time-scrub';
+import type {SolTimeInteraction,SolTimeInteractionCancel} from './time-scrub';
 import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './controls';
 import { useSolLocale, withVisibleNumberLabel } from './locale'
 
@@ -89,10 +91,16 @@ export const STimePicker = defineComponent({
     presentation: { type: String as PropType<SolTimePresentation>, default: 'native' },
     initialScrollValue: String,
     scrollToCurrentTime: Boolean,
+    scrubbable: Boolean,
+    listScrubbable: Boolean,
+    scrubPixelsPerStep: Number,
   },
   emits: {
     'update:modelValue': (_value: string | null) => true, change: (_value: string | null) => true,
     invalid: (_message: string) => true, open: () => true, close: (_reason: PickerCloseReason) => true,
+    preview: (_value: SolTimeInteraction) => true,
+    interactionCommit: (_value: SolTimeInteraction) => true,
+    interactionCancel: (_value: SolTimeInteractionCancel) => true,
   },
   setup(p, { attrs, slots, emit, expose }) {
     const l = useSolLocale(() => p.locale)
@@ -102,8 +110,10 @@ export const STimePicker = defineComponent({
     const trigger = ref<HTMLButtonElement | null>(null), panel = ref<HTMLElement | null>(null)
     const hourSelect = ref<HTMLSelectElement | null>(null), minuteSelect = ref<HTMLSelectElement | null>(null)
     const list = ref<HTMLElement | null>(null), options = new Map<string, HTMLElement>()
+    const grip = ref<HTMLElement | null>(null), status = ref<{kind: 'preview' | 'commit' | 'cancel'; value: string}>()
     const position = ref({ left: '8px', top: '8px' })
     const choices = computed(() => timeChoices(p.min, p.max, p.step))
+    let savedActive: string | undefined, autoFrame = 0, autoY = 0, autoLast = 0
     let opener: HTMLElement | null = null, reason: PickerCloseReason = 'close', disposed = false
     const bounds = () => ({ min: parseTimeOnly(p.min)?.minutes ?? NaN, max: parseTimeOnly(p.max)?.minutes ?? NaN })
     const allowed = (minutes: number) => {
@@ -133,6 +143,7 @@ export const STimePicker = defineComponent({
       void nextTick(validity)
     }
     function validateIntrinsic() {
+      scrub.cancel('external', false)
       const result = parse(); localError.value = result.error
       if (result.error) { emit('invalid', result.error); validity(); return false }
       if (!fieldDisabled(p) && !fieldReadonly(p)) commit(result.value)
@@ -161,6 +172,7 @@ export const STimePicker = defineComponent({
       else if (inner.bottom > outer.bottom) viewport.scrollTop += inner.bottom - outer.bottom
     }
     function close(why: PickerCloseReason = 'close', restore = true) {
+      scrub.cancel(why === 'escape' ? 'escape' : why === 'disabled' ? 'disabled' : why === 'mode' ? 'configuration' : 'close', false)
       if (!opened.value) return
       reason = why; opened.value = false
       if (restore) void nextTick(() => {
@@ -192,6 +204,7 @@ export const STimePicker = defineComponent({
     }
     function listKey(event: KeyboardEvent) {
       if (event.isComposing || fieldDisabled(p) || fieldReadonly(p)) return
+      if (scrub.active.value) return
       let index = Math.max(0, choices.value.indexOf(active.value || ''))
       if (event.key === 'ArrowDown') index++
       else if (event.key === 'ArrowUp') index--
@@ -207,11 +220,72 @@ export const STimePicker = defineComponent({
     }
     const outside = (event: Event) => {
       const target = event.target as Node
-      if (opened.value && !panel.value?.contains(target) && target !== input.value && !trigger.value?.contains(target)) close('outside', false)
+      if (opened.value && !panel.value?.contains(target) && target !== input.value && !trigger.value?.contains(target) && !grip.value?.contains(target)) close('outside', false)
     }
+    function stopAuto() { if (autoFrame) cancelAnimationFrame(autoFrame); autoFrame = 0; autoLast = 0 }
+    function listIndex(y: number) {
+      const viewport = list.value, first = choices.value[0] && options.get(choices.value[0])
+      if (!viewport || !first) return undefined
+      const box = viewport.getBoundingClientRect(), row = first.getBoundingClientRect()
+      if (!row.height) return undefined
+      const clamped = Math.max(box.top + viewport.clientTop, Math.min(y, box.bottom - 1))
+      return Math.max(0, Math.min(choices.value.length - 1, Math.floor((clamped - row.top) / row.height)))
+    }
+    function autoScroll(now: number) {
+      autoFrame = 0
+      if (!scrub.active.value || scrub.source.value !== 'list' || !list.value) return
+      const viewport = list.value, box = viewport.getBoundingClientRect()
+      const first = choices.value[0] && options.get(choices.value[0])
+      const row = first ? first.getBoundingClientRect().height : 0
+      if (!row) return
+      const zone = Math.min(row, box.height / 3), pressure = autoY < box.top + zone ? -Math.min(1, (box.top + zone - autoY) / zone) : autoY > box.bottom - zone ? Math.min(1, (autoY - box.bottom + zone) / zone) : 0
+      if (!pressure) { autoLast = 0; return }
+      const before = viewport.scrollTop
+      viewport.scrollTop += pressure * row * 6 * Math.min(32, autoLast ? now - autoLast : 16) / 1000
+      autoLast = now
+      const index = listIndex(autoY)
+      if (index !== undefined) scrub.propose(index)
+      if (scrub.active.value && viewport.scrollTop !== before) autoFrame = requestAnimationFrame(autoScroll)
+    }
+    const scrub = createTimeScrub({
+      choices: () => choices.value, value: () => p.modelValue,
+      disabled: source => fieldDisabled(p) || fieldReadonly(p) || !(source === 'input' ? p.scrubbable : p.listScrubbable && p.presentation === 'list' && opened.value),
+      pixels: () => p.scrubPixelsPerStep ?? Math.max(1, (input.value?.getBoundingClientRect().height || 40) / 4),
+      start: source => {
+        const previous = document.activeElement as HTMLElement | null, selection = previous === input.value ? [input.value?.selectionStart, input.value?.selectionEnd] : undefined
+        savedActive = active.value
+        ;(source === 'input' ? grip.value : list.value)?.focus({ preventScroll: true })
+        return () => {
+          if (fieldDisabled(p) || disposed) return
+          const target = previous?.isConnected ? previous : input.value
+          target?.focus({ preventScroll: true })
+          if (target === input.value && selection) input.value?.setSelectionRange(selection[0] ?? null, selection[1] ?? null)
+        }
+      },
+      preview: value => {
+        if (value.source === 'list') active.value = value.value
+        status.value = { kind: 'preview', value: value.value }; emit('preview', value)
+      },
+      commit: value => {
+        commit(value.value); status.value = { kind: 'commit', value: value.value }; emit('interactionCommit', value)
+        if (value.source === 'list') close('select')
+      },
+      cancel: value => {
+        if (value.source === 'list') { active.value = savedActive; void nextTick(() => scrollActive()) }
+        status.value = { kind: 'cancel', value: value.value }; emit('interactionCancel', value)
+      },
+      listIndex: event => listIndex(event.clientY),
+      listMove: event => { autoY = event.clientY; if (!autoFrame) autoFrame = requestAnimationFrame(autoScroll) }, stop: stopAuto,
+    })
+    const scrubBase = () => {
+      const time = parseTimeOnly(draft.value)
+      return time ? nearestTime(choices.value, time.minutes) : anchor()
+    }
+    function beginInputScrub(event: PointerEvent) { close('close', false); scrub.pointer(event, 'input', scrubBase()) }
     watch(l, () => { if (localError.value) localError.value = parse().error; void nextTick(validity) })
-    watch(() => p.modelValue, value => { draft.value = value ?? ''; localError.value = ''; syncOptions(); void nextTick(validity) })
-    watch(() => [fieldDisabled(p), fieldReadonly(p)], () => { if (fieldDisabled(p) || fieldReadonly(p)) close('disabled', !fieldDisabled(p)) })
+    watch(() => p.modelValue, value => { scrub.cancel('external'); draft.value = value ?? ''; localError.value = ''; syncOptions(); void nextTick(validity) }, {flush: 'sync'})
+    watch(() => [fieldDisabled(p), fieldReadonly(p)], () => { if (fieldDisabled(p) || fieldReadonly(p)) { scrub.cancel('disabled', false); close('disabled', !fieldDisabled(p)) } }, {flush: 'sync'})
+    watch(() => [p.min, p.max, p.step, p.allowManualInput, p.scrubbable, p.listScrubbable, p.scrubPixelsPerStep], () => scrub.cancel('configuration'), {flush: 'sync'})
     watch(() => [p.min, p.max, p.step, fieldError(p), p.required, p.allowManualInput], () => {
       syncOptions()
       if (!active.value || !choices.value.includes(active.value)) active.value = anchor()
@@ -225,6 +299,7 @@ export const STimePicker = defineComponent({
     })
     onBeforeUnmount(() => {
       disposed = true
+      scrub.cancel('unmount', false); stopAuto()
       document.removeEventListener('pointerdown', outside); document.removeEventListener('focusin', outside)
       window.removeEventListener('resize', locate); document.removeEventListener('scroll', locate, true)
       if (panel.value?.contains(document.activeElement) && opener?.isConnected) opener.focus()
@@ -234,7 +309,7 @@ export const STimePicker = defineComponent({
       resetIntrinsic: () => { localError.value = '' },
     })
     const validate = validation.validate
-    expose({ ...validation, clear: () => commit(null) })
+    expose({ ...validation, clear: () => { scrub.cancel('external', false); commit(null) } })
     const optionId = (value: string) => p.id + '-time-' + value.replace(':', '')
     return () => {
       const error = fieldError(p) || localError.value, pad = (value: number) => String(value).padStart(2, '0')
@@ -248,7 +323,7 @@ export const STimePicker = defineComponent({
           ref: validationInput, type: 'text', class: 'sol-ui-sr-only', tabindex: -1, 'aria-hidden': 'true',
           form: attrs.form, value: draft.value, required: p.required, disabled: fieldDisabled(p), autocomplete: 'off', onInvalid: invalid,
         }) : null,
-        h('div', { class: 'sol-time-entry' }, [
+        h('div', { class: ['sol-time-entry', p.scrubbable && 'sol-ui-time-entry--scrub'] }, [
           h('input', {
             ...attrs, ref: input, id: p.id, type: 'text', class: ['sol-input', attrs.class], inputmode: 'numeric', maxlength: 5,
             autocomplete: 'off', value: draft.value, disabled: fieldDisabled(p), readonly: fieldReadonly(p) || !p.allowManualInput,
@@ -259,13 +334,14 @@ export const STimePicker = defineComponent({
             'aria-describedby': fieldDescription(p, slots, error, [p.id + '-format', attrs['aria-describedby']].filter(Boolean).join(' ')),
             onBeforeinput: (event: Event) => { if (!p.allowManualInput || fieldReadonly(p) || fieldDisabled(p)) event.preventDefault() },
             onInput: (event: Event) => {
+              scrub.cancel('external', false)
               if (fieldDisabled(p) || fieldReadonly(p) || !p.allowManualInput) { (event.target as HTMLInputElement).value = draft.value; return }
               draft.value = (event.target as HTMLInputElement).value; syncOptions()
               if (localError.value) localError.value = parse().error
               validity()
             },
             onClick: () => void open(false, input.value),
-            onBlur: () => { if (!fieldReadonly(p) && !fieldDisabled(p)) validate() }, onInvalid: invalid,
+            onBlur: () => { if (!scrub.active.value && !fieldReadonly(p) && !fieldDisabled(p)) validate() }, onInvalid: invalid,
             onKeydown: (event: KeyboardEvent) => {
               if (event.isComposing) return
               if (event.key === 'ArrowDown' && event.altKey) { event.preventDefault(); void open(true, input.value) }
@@ -273,6 +349,16 @@ export const STimePicker = defineComponent({
               else if (event.key === 'Enter') { event.preventDefault(); validate() }
             },
           }),
+          p.scrubbable ? h('div', {
+            ref: grip, role: 'spinbutton', class: 'sol-ui-time-scrub', tabindex: fieldDisabled(p) || fieldReadonly(p) || !choices.value.length ? -1 : 0,
+            'aria-label': p.label + ' ' + l.value.timeScrub!('input'), 'aria-disabled': String(fieldDisabled(p) || fieldReadonly(p) || !choices.value.length),
+            'aria-valuemin': parseTimeOnly(choices.value[0])?.minutes, 'aria-valuemax': parseTimeOnly(choices.value.at(-1))?.minutes,
+            'aria-valuenow': parseTimeOnly(scrub.preview.value ?? draft.value)?.minutes,
+            'aria-valuetext': (scrub.preview.value ?? draft.value) || l.value.choose,
+            'aria-describedby': p.id + '-scrub-keys', onPointerdown: beginInputScrub,
+            onKeydown: (event: KeyboardEvent) => { if (!scrub.active.value) close('close', false); scrub.keyboard(event, scrubBase()) },
+            onBlur: () => { if (scrub.source.value === 'input') scrub.cancel('blur', false) },
+          }, h(SIcon, {name: 'arrow', rotate: 270, decorative: true})) : null,
           h('button', {
             ref: trigger, type: 'button', class: 'sol-button', disabled: fieldDisabled(p) || fieldReadonly(p),
             'aria-haspopup': 'dialog', 'aria-controls': opened.value ? p.id + '-panel' : undefined, 'aria-expanded': String(opened.value),
@@ -280,6 +366,8 @@ export const STimePicker = defineComponent({
           }, l.value.time),
         ]),
         h('span', { id: p.id + '-format', class: 'sol-hint' }, l.value.timeHelp(p.min, p.max, p.step)),
+        p.scrubbable || p.listScrubbable ? h('span', {id: p.id + '-scrub-keys', class: 'sol-hint'}, l.value.timeScrubKeys) : null,
+        p.scrubbable || p.listScrubbable ? h('output', {class: 'sol-hint sol-ui-time-preview', role: 'status', 'aria-live': 'polite'}, status.value ? status.value.kind === 'preview' ? l.value.timePreview!(status.value.value) : status.value.kind === 'commit' ? l.value.done + ' ' + status.value.value : l.value.timeScrubCancelled : '') : null,
         ...fieldMessages(p, slots, error),
         h('button', {
           type: 'button', class: 'sol-button inline-action sol-ui-picker-clear', disabled: fieldDisabled(p) || fieldReadonly(p),
@@ -292,14 +380,17 @@ export const STimePicker = defineComponent({
         }, [
           h('div', { class: 'sol-ui-picker-top' }, [h('strong', { id: p.id + '-title' }, l.value.time), h('button', { type: 'button', class: 'sol-button inline-action', onClick: () => close() }, l.value.close)]),
           p.presentation === 'list' ? h('div', {
-            ref: list, class: 'sol-ui-time-list', role: 'listbox', tabindex: 0, 'aria-label': l.value.time,
+            ref: list, class: ['sol-ui-time-list', p.listScrubbable && 'sol-ui-time-list--scrub'], role: 'listbox', tabindex: 0, 'aria-label': l.value.time,
+            'aria-describedby': p.listScrubbable ? p.id + '-scrub-keys' : undefined,
             'aria-activedescendant': active.value ? optionId(active.value) : undefined, onKeydown: listKey,
           }, choices.value.length ? choices.value.map(value => h('div', {
             key: value, ref: (element: unknown) => { if (element) options.set(value, element as HTMLElement); else options.delete(value) },
             id: optionId(value), role: 'option', 'aria-selected': String(value === selected),
             class: 'sol-ui-time-option', 'data-time-value': value, 'data-active': value === active.value ? 'true' : undefined,
             onClick: () => choose(value),
-          }, [h('span', value), value === selected ? h(SIcon, { name: 'check', size: 16, decorative: true }) : null])) : h('p', { role: 'status', class: 'sol-hint' }, l.value.noResults)) :
+          }, [h('span', value), value === selected ? h(SIcon, { name: 'check', size: 16, decorative: true }) : null,
+            p.listScrubbable ? h('span', {class: 'sol-ui-time-list-grip', 'aria-hidden': 'true', onPointerdown: (event: PointerEvent) => scrub.pointer(event, 'list', value), onClick: (event: MouseEvent) => {event.preventDefault(); event.stopPropagation()}}, h(SIcon, {name: 'arrow', rotate: 270, decorative: true})) : null,
+          ])) : h('p', { role: 'status', class: 'sol-hint' }, l.value.noResults)) :
           h('div', { class: 'sol-time-options' }, [
             h('label', { class: 'sol-field' }, [h('span', { class: 'sol-label' }, l.value.hour), h('select', { ref: hourSelect, class: 'sol-select', value: hour.value, onChange: (event: Event) => { hour.value = (event.target as HTMLSelectElement).value; selectNative() } }, [h('option', { value: '' }, l.value.choose), ...hours.map(n => h('option', { value: pad(n) }, pad(n)))])]),
             h('label', { class: 'sol-field' }, [h('span', { class: 'sol-label' }, l.value.minute), h('select', { ref: minuteSelect, class: 'sol-select', value: minute.value, onChange: (event: Event) => { minute.value = (event.target as HTMLSelectElement).value; selectNative() } }, [h('option', { value: '' }, l.value.choose), ...minutes.map(n => h('option', { value: pad(n) }, pad(n)))])]),

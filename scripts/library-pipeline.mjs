@@ -50,6 +50,7 @@ node('7/10 Dedicated reusable Vue APIs','scripts/vue-dedicated-runtime-check.mjs
 node('7/10 Chip, badge, icon and icon button contracts','scripts/primitives-runtime-check.mjs');
 node('7/10 Date and number display/form contracts','scripts/input-display-runtime-check.mjs');
 node('7/10 Native and custom time list contracts','scripts/time-list-runtime-check.mjs');
+node('7/10 Time scrub proposal/commit/cancel contracts','scripts/time-scrub-runtime-check.mjs');
 node('7/10 Recipe navigation and URL history','scripts/recipe-navigation-check.mjs');
 node('7/10 Unsaved navigation and retry focus recovery','scripts/recipe-recovery-check.mjs');
 node('7/10 Floating preview size','scripts/embed-height-check.mjs');

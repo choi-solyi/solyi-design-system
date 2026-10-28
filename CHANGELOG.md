@@ -2,6 +2,8 @@
 
 ## 미게시 · 다음 minor 버전 후보
 
+- STimePicker 입력·목록 손잡이를 opt-in으로 추가합니다. preview는 모델·폼 값을 유지하며 release에서 확정하고 Escape·pointercancel·capture 상실·외부 값/설정 변경 시 취소합니다. 키보드·목록 자동 스크롤과 optional ko/en locale 키를 함께 제공합니다.
+
 - STimePicker의 native 기본·기존 change/readonly를 유지하고 opt-in 직접 입력 제어·custom list·초기 스크롤·목록 키보드 탐색을 추가합니다. readonly 입력에서도 선택 가능한 required 필드의 native 폼 검증을 유지합니다.
 
 - SDatePicker의 opt-in displayFormatter와 SNumberInput의 preset·formatValue·unit을 추가합니다. 모델·수동 편집 draft·표시·native 제출을 분리하며 기존 readonly·min 기준 step을 유지합니다.
