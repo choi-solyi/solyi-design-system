@@ -52,6 +52,7 @@ const valid = count &gt;= 0 &amp;&amp; count !== null</code></pre></header>
       <component :is="recipeComponents.inputs" part="date" />
       <component :is="recipeComponents['advanced-inputs']" part="number" />
       <component :is="recipeComponents.time" />
+      <component :is="recipeComponents.combobox" />
     </section>
     <VuetifyExamples />
     <ProgressExamples />

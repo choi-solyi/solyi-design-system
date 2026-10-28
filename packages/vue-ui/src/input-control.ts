@@ -36,6 +36,7 @@ interface Props {
   loading: boolean
 }
 interface Options {
+  always?: boolean
   locale(): SolLocale
   hasValue(): boolean
   disabled(): boolean
@@ -92,6 +93,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
     })
   }
   const enhanced = () =>
+    options.always ||
     p.clearable ||
     p.loading ||
     ['leading', 'trailing', 'indicator', 'status', 'loading'].some(name => !!slots[name])

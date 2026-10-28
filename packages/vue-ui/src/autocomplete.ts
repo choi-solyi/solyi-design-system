@@ -15,6 +15,7 @@ import type { SolOption } from './controls'
 import type { SolOptionLoader } from './selection'
 import { useSolLocale } from './locale'
 import { useFloatingPanel } from './floating'
+import { createOptionRequest } from './option-request'
 
 export interface SAutocompleteHandle {
   focus(): void
@@ -61,11 +62,7 @@ export const SAutocomplete = defineComponent({
       labels = new Map<string, string>()
     let cancelledComposition = false,
       composing = false,
-      disposed = false,
-      revision = 0,
-      expectedValue: string | null | undefined,
-      timer: ReturnType<typeof setTimeout> | undefined,
-      abort: AbortController | undefined
+      expectedValue: string | null | undefined
     const available = () => !fieldDisabled(p) && !fieldReadonly(p)
     const clean = (list: readonly SolOption[]) => {
       const seen = new Set<string>()
@@ -112,14 +109,26 @@ export const SAutocomplete = defineComponent({
       },
       { immediate: true },
     )
-    function stop() {
-      clearTimeout(timer)
-      timer = undefined
-      abort?.abort()
-      abort = undefined
-      revision++
-      busy.value = false
-    }
+    const requests = createOptionRequest<SolOption>({
+      loader: () => p.loadOptions,
+      available: () => opened.value && available() && !composing,
+      pending: () => {
+        busy.value = true
+        loadError.value = false
+        items.value = []
+        active.value = -1
+      },
+      resolved: result => {
+        items.value = clean(result)
+        first()
+      },
+      rejected: () => { loadError.value = true },
+      settled: () => {
+        busy.value = false
+        void nextTick(locate)
+      },
+    })
+    const stop = requests.stop
     function close() {
       if (!opened.value) return
       opened.value = false
@@ -130,40 +139,12 @@ export const SAutocomplete = defineComponent({
     function first() {
       active.value = enabled()[0]?.index ?? -1
     }
-    async function load() {
-      if (!p.loadOptions || !opened.value || !available() || composing) return
-      stop()
-      const current = revision,
-        controller = new AbortController()
-      abort = controller
-      busy.value = true
-      loadError.value = false
-      items.value = []
-      active.value = -1
-      try {
-        const result = await p.loadOptions(query.value, controller.signal)
-        if (disposed || current !== revision || controller.signal.aborted) return
-        items.value = clean(result)
-        first()
-      } catch {
-        if (!disposed && current === revision && !controller.signal.aborted) loadError.value = true
-      } finally {
-        if (!disposed && current === revision) {
-          busy.value = false
-          void nextTick(locate)
-        }
-      }
-    }
+    const load = () => requests.run(query.value)
     function request() {
       if (!available() || composing) return
       emit('search', query.value)
       if (p.loadOptions) {
-        stop()
-        loadError.value = false
-        items.value = []
-        active.value = -1
-        busy.value = true
-        timer = setTimeout(() => void load(), Math.max(0, p.debounce))
+        requests.schedule(() => query.value, p.debounce)
       } else first()
     }
     function open() {
@@ -287,8 +268,7 @@ export const SAutocomplete = defineComponent({
     )
     onMounted(() => document.addEventListener('pointerdown', outside))
     onBeforeUnmount(() => {
-      disposed = true
-      stop()
+      requests.dispose()
       document.removeEventListener('pointerdown', outside)
     })
     const validation = useSFieldValidation(p, () => p.modelValue, {

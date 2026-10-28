@@ -1,7 +1,8 @@
 {
   "documentVersion": "1.0.0",
-  "componentCount": 44,
+  "componentCount": 45,
   "components": [
+    "SCombobox",
     "SMonthCalendar",
     "SSortableList",
     "SChip",
@@ -458,6 +459,20 @@
         "SCheckbox",
         "SBtn",
         "SAlert"
+      ]
+    },
+    {
+      "id": "combobox",
+      "route": "component",
+      "label": "자유 입력과 후보 선택",
+      "source": "examples/vue-vuetify/src/recipes/combobox.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SCombobox",
+        "SIcon",
+        "SBtn",
+        "SCheckbox"
       ]
     }
   ],

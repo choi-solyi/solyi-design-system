@@ -46,4 +46,4 @@ assert.equal(positive[0].errorCount, 0);
 const negative = await eslint.lintText('<script setup lang="ts">refTypo(0); ref = () => 0;</script>', {filePath: 'examples/vue-vuetify/src/qa-auto-import.vue'});
 assert.ok(negative[0].messages.some(message => message.ruleId === 'no-undef'));
 assert.ok(negative[0].messages.some(message => message.ruleId === 'no-global-assign'));
-console.log('PASS: real Vue-preset import injection, both checked-in TypeScript/readonly lint globals, all30 import-free recipes/template refs, matching runtime plugins, actual ESLint scripts plus typo/readonly negative fixtures.');
+console.log('PASS: real Vue-preset import injection, both checked-in TypeScript/readonly lint globals, all31 import-free recipes/template refs, matching runtime plugins, actual ESLint scripts plus typo/readonly negative fixtures.');

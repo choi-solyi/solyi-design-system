@@ -1,6 +1,6 @@
 {
   "baseline": "a6ad6bf",
-  "count": 44,
+  "count": 45,
   "examples": [
     {
       "route": "style",
@@ -385,6 +385,15 @@
       "kind": "technical",
       "recipe": null,
       "status": "technical-reference"
+    },
+    {
+      "route": "component",
+      "section": "combobox",
+      "label": "자유 입력과 후보 선택",
+      "kind": "vue-recipe",
+      "recipe": "combobox.vue",
+      "status": "source-implemented",
+      "title": "자유 입력과 후보 선택"
     }
   ]
 }

@@ -1,0 +1,9 @@
+.sol-ui-combobox {min-width:0;}
+.sol-ui-combobox-panel {box-sizing:border-box;}
+.sol-ui-combobox-panel [role=option] {min-width:0;}
+.sol-ui-combobox-ellipsis {display:block;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.sol-ui-combobox-details {border-top:1px solid var(--sol-color-border);padding:var(--sol-space-2) var(--sol-space-3);overflow-wrap:anywhere;}
+.sol-ui-combobox-details summary {cursor:pointer;min-height:var(--sol-touch-target-min);align-content:center;color:var(--sol-color-text);border-radius:var(--sol-radius-button);}
+.sol-ui-combobox-details summary:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-ui-combobox-details ul {display:grid;gap:var(--sol-space-3);padding:var(--sol-space-2) 0;margin:0;list-style:none;}
+.sol-ui-combobox-details p {margin:var(--sol-space-1) 0;}

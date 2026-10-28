@@ -29,7 +29,7 @@ async function mount(id,props={}){app=createApp(recipeComponents[id],props);app.
 async function unmount(){app.unmount();vuetify.unmount();await tick();}
 function checkRefs(){for(const el of d.querySelectorAll('[aria-labelledby],[aria-describedby]'))for(const attr of ['aria-labelledby','aria-describedby'])for(const id of (el.getAttribute(attr)||'').split(/\s+/).filter(Boolean))assert.ok(d.getElementById(id),'Missing '+id);}
 for(const id of Object.keys(recipeComponents)){await mount(id);checkRefs();assert.ok($('#app').textContent.trim(),id);const ids=[...d.querySelectorAll('[id]')].map(x=>x.id);assert.equal(ids.length,new Set(ids).size,id+' duplicate IDs');await unmount();}
-assert.equal(Object.keys(recipeComponents).length,30);
+assert.equal(Object.keys(recipeComponents).length,31);
 await mount('form');
 const formName=$('#recipe-form-name');$('form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(15);await tick();
 assert.equal(formName.getAttribute('aria-invalid'),'true','SForm validates the real STextField rules');assert.equal(d.activeElement,formName,'SForm failure focuses the exposed field ref');
@@ -87,4 +87,4 @@ assert.equal(dateInput.value, '')
 assert.equal(dateInput.placeholder, 'YYYY-MM-DD')
 await unmount()
 for(const part of ['date','files','autocomplete']){await mount('inputs',{part});assert.equal(d.querySelectorAll('h2').length,1,'Standalone part keeps heading level2: '+part);assert.equal(d.querySelectorAll('h3').length,0);await unmount();}
-assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: all 30 actual package-consuming Vue SFCs mount, ARIA references and IDs; tree keyboard/collapse/selection, whole-card radio, synthetic local file select/drop/reselect/remove, autocomplete edit/retry/selection, workflow and bulk focus. Synthetic DOM is not visual or native keyboard QA.');
+assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: all 31 actual package-consuming Vue SFCs mount, ARIA references and IDs; tree keyboard/collapse/selection, whole-card radio, synthetic local file select/drop/reselect/remove, autocomplete edit/retry/selection, workflow and bulk focus. Synthetic DOM is not visual or native keyboard QA.');

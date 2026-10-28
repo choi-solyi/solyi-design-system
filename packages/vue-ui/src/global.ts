@@ -40,6 +40,7 @@ declare module 'vue' {
     SAccordion: typeof import('./index')['SAccordion'];
     SFileInput: typeof import('./index')['SFileInput'];
     SAutocomplete: typeof import('./index')['SAutocomplete'];
+    SCombobox: typeof import('./index')['SCombobox'];
     SBreadcrumbs: typeof import('./index')['SBreadcrumbs'];
     SAvatar: typeof import('./index')['SAvatar'];
     SStepper: typeof import('./index')['SStepper'];

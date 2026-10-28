@@ -118,6 +118,7 @@ const records = [
   ['SBtn','동작','버튼의 기본·보조·로딩·비활성 상태를 구분합니다.','component','buttons'],
   ['SSplitBtn','동작','대표 행동과 추가 행동 메뉴를 한 묶음으로 제공합니다.','component','action-menu'],
   ['SAutocomplete','입력','검색어와 한 개의 선택값을 구분하고 비동기 응답을 다룹니다.','pattern','autocomplete'],
+  ['SCombobox','입력','콤보박스에서 자유 입력 문자열과 후보 선택을 확정합니다. Enter 또는 opt-in blur로 확정하고 옵션 ID는 change.option.value로 전달합니다.','component','combobox'],
   ['SCheckbox','입력','서로 독립적인 여러 조건을 켜고 끕니다.','component','choices'],
   ['SDatePicker','입력','한 입력창에서 단일 날짜 또는 기간을 선택합니다.','pattern','date'],
   ['SFileInput','입력','브라우저 안에서만 파일을 선택·드롭·제거합니다.','pattern','files'],
@@ -181,10 +182,19 @@ for (const [name, group, description, exampleRoute, example] of records) {
     props.find(prop => prop.name === 'step').description =
       '양의 유한한 증감 간격입니다. JavaScript Number로 정확한 별도 결과를 표현할 수 없거나 범위를 넘는 증감은 실행하지 않습니다.'
   }
+  if (name === 'SCombobox') {
+    props.find(prop => prop.name === 'modelValue').description = '확정된 표시 문자열 또는 null입니다. 편집 draft는 Enter/opt-in blur 또는 후보 선택 전까지 모델에 반영하지 않습니다. 비어 있는 직접 입력은 null, 그 외 공백은 보존합니다.'
+    props.find(prop => prop.name === 'commitOn').description = '직접 입력의 확정 시점입니다. 기본 [enter], blur는 opt-in입니다. 후보 클릭 또는 명시적으로 방향키 탐색 후 Enter는 select입니다. 빈 배열은 자동 직접 입력 확정을 사용하지 않습니다.'
+    props.find(prop => prop.name === 'openOnFocus').description = '초점 진입 시 목록을 엽니다. clear·선택·retry의 내부 초점 복원으로 중복 요청하지 않습니다.'
+  }
   if (name === 'STimePicker') props.find(prop => prop.name === 'presentation').description =
     '기본 두 native select 또는 opt-in 스크롤 목록입니다. 허용값은 native/list입니다.'
   const emits = resolve(property(component.node,component.file,'emits'),component.file);
   const events = entries(emits.node,emits.file).map(([name,fn])=>({name,signature:signature(fn),description:name==='update:modelValue'?'소비 앱의 모델 값을 갱신합니다.':name.startsWith('update:')?'해당 상태의 변경을 소비 앱에 전달합니다.':name==='invalid'?'검증 실패 문구를 전달합니다.':name==='close'?(fn.parameters?.length?'닫힌 이유를 전달합니다.':'닫힌 뒤 전달합니다.'):name==='open'?'패널이 열린 뒤 전달합니다.':name==='retry'?'소비 앱에 재시도 처리를 요청합니다.':`${name} 동작이 발생했을 때 전달합니다.`}));
+    if (name === 'SCombobox') {
+      events.find(event => event.name === 'change').description = '확정된 표시 문자열 value와 reason(select/custom/clear)을 전달합니다. select에만 option 복사본을 포함하고 option.value는 후보 ID입니다. clear는 이미 빈 모델에도 알림을 보냅니다. 부모가 제안을 거부하면 화면은 부모 모델로 복원됩니다.'
+      events.find(event => event.name === 'search').description = 'IME 조합 중에는 보내지 않고, debounce 전의 검색 문자열을 전달합니다. 실제 로더는 debounce/AbortSignal/stale 응답 무시를 적용합니다.'
+    }
     if (name === 'STimePicker') {
       const interactionDescriptions = {
         preview:'스크러빙 중 허용 HH:mm 제안입니다. 모델·폼 값은 바꾸지 않습니다.',

@@ -28,6 +28,7 @@ import Recipe26 from './recipes/layouts.vue'
 import Recipe27 from './recipes/workflow.vue'
 import Recipe28 from './recipes/error-summary.vue'
 import Recipe29 from './recipes/bulk-recovery.vue'
+import Recipe30 from './recipes/combobox.vue'
 
 export const recipeComponents = {
   'color-examples': Recipe0,
@@ -60,6 +61,7 @@ export const recipeComponents = {
   workflow: Recipe27,
   'error-summary': Recipe28,
   'bulk-recovery': Recipe29,
+  combobox: Recipe30,
 }
 export const recipeLabels = {
   'color-examples': '의미색 UI 조합',
@@ -92,4 +94,5 @@ export const recipeLabels = {
   workflow: '편집·삭제·되돌리기',
   'error-summary': '오류 요약과 이동',
   'bulk-recovery': '일부 실패와 재시도',
+  combobox: '자유 입력과 후보 선택',
 }

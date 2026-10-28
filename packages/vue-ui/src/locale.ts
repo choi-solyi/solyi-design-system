@@ -5,6 +5,8 @@ import {parseDateOnly} from '@solyi/core/date';
 export type SolLocaleCode='ko-KR'|'en-US';
 export type SolLocaleSource=MaybeRefOrGetter<Partial<SolLocale>|string>;
 export interface SolLocale {
+  comboboxUncommitted?:string;
+  comboboxDetails?:string;
   inputLoading?:string;
   validationRequired:string;validationInvalid:string;validationMinLength:(minimum:number)=>string;
   breadcrumb:string;steps:string;currentStep:string;completeStep:string;chartInvalid:string;chartCategory:string;chartValue:string;toastAccent:string;
@@ -45,6 +47,8 @@ export interface SolLocale {
   monthCalendarCount?:(count:number)=>string;
 }
 export const koLocale:Readonly<SolLocale>=Object.freeze({
+  comboboxUncommitted:'입력한 내용을 확정하거나 후보를 선택해 주세요.',
+  comboboxDetails:'후보 전체 내용',
   inputLoading:'입력 내용을 처리하는 중입니다.',
   monthCalendarKeys:'방향키: 하루·한 주 · Home/End: 주 경계 · PageUp/Down: 월 이동(Shift: 연도) · Enter/Space: 날짜 선택 · Escape: 선택일 초점 복귀',
   monthCalendarInvalid:'달력의 월·날짜·marker 설정을 확인해 주세요.',
@@ -82,6 +86,8 @@ export const koLocale:Readonly<SolLocale>=Object.freeze({
   timeHelp:(min:string,max:string,step:number)=>`HH:mm · ${min}–${max} · ${step}분 간격`
 });
 export const enLocale:Readonly<SolLocale>=Object.freeze({
+  comboboxUncommitted:'Confirm your text or choose an option.',
+  comboboxDetails:'Full option content',
   inputLoading:'Working on this input.',
   monthCalendarKeys:'Arrows: day/week; Home/End: week boundaries; PageUp/Down: month (Shift: year); Enter/Space: choose a date; Escape: focus the selected date.',
   monthCalendarInvalid:'Check the calendar month, date and marker configuration.',

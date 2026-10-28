@@ -37,6 +37,7 @@ const documentSearchNames={
 };
 // A dedicated API keeps its own visible Korean names, independent of the shared recipe title.
 const componentSearchNames={
+ SCombobox:['Combobox','Combo Box','콤보박스','자유 입력','직접 입력'],
  SMonthCalendar:['Month Calendar','MonthCalendar','월간 달력','월간달력','캘린더'],
  SChip:['Chip','칩'],SBadge:['Badge','배지','뱃지'],SIcon:['Icon','아이콘'],SIconBtn:['Icon Button','아이콘 버튼','아이콘버튼'],
  SNumberInput:['Number Input','NumberInput','숫자 입력','숫자입력'],

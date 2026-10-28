@@ -7,6 +7,9 @@ import {STree} from './tree';
 import {STooltip,SPopover,SAccordion} from './disclosures';
 import {SFileInput} from './files';
 import {SAutocomplete} from './autocomplete';
+import {SCombobox} from './combobox';
+export {SCombobox};
+export type {SolComboboxCommit,SolComboboxChange,SolComboboxHandle} from './combobox';
 import {SBreadcrumbs,SAvatar,SStepper,SBarChart} from './presentation';
 export {STooltip,SPopover,SAccordion,SFileInput,SAutocomplete,SBreadcrumbs,SAvatar,SStepper,SBarChart};
 export {validateSFiles,describeSFile} from './files';
@@ -203,6 +206,7 @@ export const SDataTable=defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  SCombobox: typeof SCombobox
   SMonthCalendar: typeof SMonthCalendar
   SSortableList: typeof SSortableList
   SChip: typeof SChip
@@ -249,6 +253,7 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  SCombobox,
   SMonthCalendar,
   SSortableList,
   SChip,

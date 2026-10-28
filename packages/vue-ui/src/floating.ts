@@ -2,7 +2,7 @@ import {nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue';
 import type {Ref} from 'vue';
 
 /** A local native top-layer panel with a positioned fallback. No global IDs. */
-export function useFloatingPanel(open: Ref<boolean>, anchor: Ref<HTMLElement|null>, panel: Ref<HTMLElement|null>, matchWidth=false) {
+export function useFloatingPanel(open: Ref<boolean>, anchor: Ref<HTMLElement|null>, panel: Ref<HTMLElement|null>, matchWidth=false, avoidAnchor=false) {
   const position=ref<Record<string,string>>({left:'16px',top:'16px'});
   let revision=0,disposed=false,observer:ResizeObserver|undefined;
   function locate() {
@@ -11,6 +11,13 @@ export function useFloatingPanel(open: Ref<boolean>, anchor: Ref<HTMLElement|nul
     const height=window.innerHeight,box=anchor.value.getBoundingClientRect();
     const size=panel.value.getBoundingClientRect();
     const actualWidth=Math.min(matchWidth?Math.max(160,box.width):size.width,width-32);
+    if(avoidAnchor){
+      const gap=parseFloat(getComputedStyle(panel.value).getPropertyValue('--sol-space-2'))||0;
+      const below=Math.max(0,height-box.bottom-gap-16),above=Math.max(0,box.top-gap-16),up=below<size.height&&above>below;
+      const rtl=getComputedStyle(anchor.value).direction==='rtl';
+      position.value={left:Math.max(16,Math.min(rtl?box.right-actualWidth:box.left,width-actualWidth-16))+'px',...(up?{bottom:Math.max(16,height-box.top+gap)+'px',top:'auto'}:{top:Math.max(16,box.bottom+gap)+'px',bottom:'auto'}),maxWidth:Math.max(0,width-32)+'px',maxHeight:(up?above:below)+'px',...(matchWidth?{width:actualWidth+'px'}:{})};
+      return;
+    }
     const below=box.bottom+8,top=below+size.height<=height-16?below:Math.max(16,box.top-size.height-8);
     position.value={left:Math.max(16,Math.min(box.left,width-actualWidth-16))+'px',top:top+'px',maxWidth:Math.max(0,width-32)+'px',maxHeight:Math.max(48,height-top-16)+'px',...(matchWidth?{width:actualWidth+'px'}:{})};
   }
