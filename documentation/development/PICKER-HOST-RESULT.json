@@ -1,0 +1,59 @@
+{
+  "stage": "Private host foundation only",
+  "publicDateTimeAdapters": false,
+  "browser": "156.0.8078.49",
+  "matrixCases": 72,
+  "widths": [
+    320,
+    768,
+    1440
+  ],
+  "directions": [
+    "ltr",
+    "rtl"
+  ],
+  "parents": [
+    "page",
+    "SDialog",
+    "drawer",
+    "native"
+  ],
+  "presentations": [
+    "popover",
+    "dialog",
+    "auto"
+  ],
+  "additionalChecks": [
+    "auto resize identity in Vuetify/native parents",
+    "four logical placements × two directions",
+    "native no-Popover-API modal fallback",
+    "long content and anchor scroll",
+    "native accessibility dialog roles",
+    "visual viewport shrink/pan and focused content reveal",
+    "six shared Combobox geometry cases",
+    "nonmodal outside/sibling/unmount"
+  ],
+  "ssrCases": 6,
+  "ownDeclarationFiles": 36,
+  "ownDeclarationErrors": 0,
+  "externalDeclarationErrors": 769,
+  "publicComponents": 45,
+  "esm": {
+    "characters": 223451,
+    "bytes": 225784,
+    "gzipLevel9": 56831,
+    "existingBudget": 176000,
+    "gateChanged": false
+  },
+  "frozenSha256": "72d1d8d622287e8a86444c404ad20f7c5ed5d065dc2b4e48765374697854e23a",
+  "pureProductionChange": false,
+  "pureAndBudgetWorkAuthorizedNext": true,
+  "published": false,
+  "pushed": false,
+  "productionDeployed": false,
+  "limits": [
+    "Built source host/SDialog/Combobox and pinned peer Vuetify; not installed new Picker API",
+    "Physical touch/IME, screen reader and Safari unverified",
+    "No package publication or public site deployment"
+  ]
+}

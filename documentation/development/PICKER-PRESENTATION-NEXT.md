@@ -1,5 +1,7 @@
 # 승인 계획의 다음 작은 단위: 기존 표시 컴포넌트 점검 → Picker host
 
+진행: private host의 native 경계·전환·focus·SSR 독립 단위는 [구현·검증 기록](PICKER-HOST-VALIDATION.md)에 보존했습니다. 아래 내용은 착수 시의 기준이며 공개 Date/Time opt-in 연결은 아직 남아 있습니다. 이후 승인된 PURE/크기 기준 정리를 안전한 host 단위 다음에 진행합니다.
+
 [확장 계획](EXTENSIONS-V2-PLAN.md)의 3단계는 기존 SIcon/SIconBtn/SChip/SBadge 재사용 점검이며, 다음 신규 API 작업은 4단계 Date/Time picker presentation입니다. 이 메모는 착수 범위만 정리하며 새 public API를 구현했다고 뜻하지 않습니다. SConfirmAction·Dialog 통합·LoadingOverlay 등 뒤 단계를 끼워 넣지 않습니다.
 
 ## 다시 확인한 실제 계약

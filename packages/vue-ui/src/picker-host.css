@@ -1,0 +1,5 @@
+.sol-ui-picker-host-panel {box-sizing:border-box;min-width:0;padding:var(--sol-space-2);scroll-margin:var(--sol-space-4);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-floating);background:var(--sol-color-surface);color:var(--sol-color-text);box-shadow:var(--sol-elevation-floating);overflow:auto;font-family:var(--sol-font-sans);line-height:var(--sol-line-body);}
+.sol-ui-picker-host-panel:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-ui-picker-host-panel[data-picker-presentation=dialog] {border-radius:var(--sol-radius-panel);}
+.sol-ui-picker-native-host {position:fixed;inset:0;width:auto;height:auto;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;color:inherit;overflow:visible;pointer-events:none;}
+.sol-ui-picker-native-host::backdrop {background:transparent;}

@@ -16,6 +16,7 @@ examples/package-consumer/.runtime-extension-entry.ts
 examples/package-consumer/.runtime-overflow.mjs
 examples/package-consumer/.runtime-form-check.mjs
 examples/package-consumer/.runtime-form-entry.ts
+examples/package-consumer/.runtime-test/picker-host/
 
 # Generated from the canonical root consumer guide.
 packages/*/DESIGN.md
