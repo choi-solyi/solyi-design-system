@@ -22,7 +22,7 @@ starter의 기존 9개 섹션 href는 유지하고 신규·개선 예제와 정�
 | SNumberInput | presets/formatValue/unit | recipes/advanced-inputs.vue의 part=number | preset 6·off-grid 5 비활성·표시 6.0/모델 6 | 미반영 |
 | STimePicker | manual/list/initial/current/scrub 옵션 | recipes/time.vue | 초기 09:07·현재 시각 위치·선택/비우기·manual·scrub preview/commit | 미반영 |
 | SSortableList | generic 공개 타입·root/plugin/global 등록, controlled 목록 | AdvancedExamples.vue의 sortable, 기본 화면 #advanced-sortable-title, ?view=advanced&part=sortable | source runtime·정상/오류 SFC·Chrome 72조합, 실제 키보드·이동 버튼·pointer·취소·자동 스크롤 | 미반영 |
-| SMonthCalendar | 내부 ISO 월/셀/키보드 계산 helper 착수, 공개 UI 미구현 | 없음 | 순수 계산·타입 빌드 통과, UI 미실행 | 미반영 |
+| SMonthCalendar | controlled 공개 UI·root/global 등록 | AdvancedExamples.vue의 month-calendar, 기본 화면 #advanced-month-title | source 타입/runtime·모바일 보완 Chrome 72조합 통과. 새 tarball 설치 미실행 | 미반영 |
 | STimeGrid | 미착수 | 없음 | 미실행 | 미반영 |
 
 파일 기준은 packages/vue-ui/src/primitives.ts·date-time.ts·controls.ts, examples/vue-vuetify/src/App.vue 및 위 recipes입니다. root를 보완하면서 canonical examples와 다른 복사본을 만들지 않았습니다.

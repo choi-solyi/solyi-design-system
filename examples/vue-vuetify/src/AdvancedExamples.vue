@@ -8,6 +8,7 @@ const supportedParts = [
   'context-menu',
   'split-pane',
   'sortable',
+  'month-calendar',
 ]
 const part = computed(() => (supportedParts.includes(props.part) ? props.part : ''))
 const show = (...parts) => !part.value || parts.includes(part.value)
@@ -82,6 +83,25 @@ const sortableItems = ref([
   acceptOrder = ref(true),
   lockSecond = ref(false),
   sortStatus = ref('')
+const calendarMonth = ref('2026-10'),
+  calendarDate = ref('2026-10-07'),
+  calendarAcceptMonth = ref(true),
+  calendarAcceptDate = ref(true),
+  calendarLoading = ref(false),
+  calendarEmpty = ref(false),
+  calendarMonday = ref(false),
+  calendarBlocked = ref(false)
+const calendarMarkers = Object.freeze({
+  '2026-10-28': Object.freeze([
+    Object.freeze({ id: 'a', label: '첫 번째 범용 상태', tone: 'info', icon: 'copy' }),
+    Object.freeze({
+      id: 'b',
+      label: '길게 입력한 두 번째 상태도 넘치지 않게 표시합니다',
+      tone: 'warning',
+    }),
+    Object.freeze({ id: 'c', label: '세 번째 상태는 추가 개수로 안내합니다' }),
+  ]),
+})
 function acceptProposal(items) {
   if (acceptOrder.value) sortableItems.value = items
 }
@@ -374,5 +394,60 @@ watch([disabled, readonly], () => {
     </SSortableList>
     <p role="status">{{ sortStatus }}</p>
     <p class="starter-hint">확정 순서: {{ sortableItems.map(item => item.id).join(' → ') }}</p>
+  </section>
+  <section
+    v-if="show('month-calendar')"
+    class="starter-card"
+    aria-labelledby="advanced-month-title"
+  >
+    <h2 id="advanced-month-title">월간 달력 · SMonthCalendar</h2>
+    <p class="starter-hint">
+      월과 날짜는 부모가 반영할 때 바뀝니다. 오늘 이동과 키보드 탐색은 선택을 자동 저장하지
+      않습니다. 날짜별 자료가 늦게 와도 선택은 남습니다.
+    </p>
+    <div class="starter-settings">
+      <SCheckbox
+        id="advanced-month-accept"
+        v-model="calendarAcceptMonth"
+        label="표시 월 제안 반영"
+      />
+      <SCheckbox
+        id="advanced-month-accept-date"
+        v-model="calendarAcceptDate"
+        label="선택 날짜 제안 반영"
+      />
+      <SCheckbox id="advanced-month-monday" v-model="calendarMonday" label="월요일 시작" />
+      <SCheckbox id="advanced-month-loading" v-model="calendarLoading" label="자료 loading" />
+      <SCheckbox id="advanced-month-empty" v-model="calendarEmpty" label="날짜별 자료 없음" />
+      <SCheckbox id="advanced-month-blocked" v-model="calendarBlocked" label="10일 선택 막기" />
+      <SSwitch v-if="part" id="advanced-month-disabled" v-model="disabled" label="달력 비활성" />
+      <SSwitch v-if="part" id="advanced-month-readonly" v-model="readonly" label="달력 보기 전용" />
+    </div>
+    <SMonthCalendar
+      id="advanced-month"
+      label="범용 날짜 상태"
+      :month="calendarMonth"
+      :model-value="calendarDate"
+      today="2026-10-28"
+      :first-day="calendarMonday ? 1 : 0"
+      :markers="calendarEmpty ? {} : calendarMarkers"
+      :is-date-disabled="date => calendarBlocked && date.endsWith('-10')"
+      :loading="calendarLoading"
+      :disabled="disabled"
+      :readonly="readonly"
+      @update:month="next => { if (calendarAcceptMonth) calendarMonth = next }"
+      @update:model-value="next => { if (calendarAcceptDate) calendarDate = next }"
+    >
+      <template #cell="{ date, disabled: unavailable }">
+        <small
+          v-if="date.endsWith('-28')"
+          :aria-label="unavailable ? '선택 불가 추가 정보' : '추가 정보'"
+          >ⓘ</small
+        >
+      </template>
+    </SMonthCalendar>
+    <p id="advanced-month-result" class="starter-hint">
+      표시 월: {{ calendarMonth }} · 선택 ISO: {{ calendarDate }}
+    </p>
   </section>
 </template>

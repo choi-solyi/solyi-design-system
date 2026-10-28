@@ -14,6 +14,7 @@
 - [미게시 날짜·숫자 표시 확장](guide/INPUT-DISPLAY.md)
 - [미게시 TimePicker 입력·목록 확장](guide/TIME-INTERACTION.md)
 - [미게시 controlled 정렬 목록](guide/SORTABLE-LIST.md)
+- [미게시 월간 조회·탐색 달력](guide/MONTH-CALENDAR.md)
 - [호환 범위](guide/COMPATIBILITY.md)
 
 ## 개발하기
@@ -27,6 +28,7 @@
 - [Components 신규·확장 API 대조](development/COMPONENT-EXTENSIONS-VALIDATION.md)
 - [Sortable 설치 소비 검증과 남은 gate](development/SORTABLE-INSTALLED-VALIDATION.md)
 - [MonthCalendar 착수와 독립 구현 단위](development/MONTH-CALENDAR-PLAN.md)
+- [MonthCalendar 공개 코드·모바일 검증](development/MONTH-CALENDAR-VALIDATION.md)
 - [기여 안내](../CONTRIBUTING.md)
 
 ## 자산과 라이선스

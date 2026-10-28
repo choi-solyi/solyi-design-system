@@ -93,9 +93,9 @@ click('#mode-toggle');assert.equal(d.documentElement.dataset.mode,'dark');
 assert.ok($('#contrast-results').textContent.includes('dark'));
 $('#token-search').value='no-such-token';fire($('#token-search'),'input');assert.match($('#token-grid').textContent,/일치하는 토큰/);
 await route('component');
-integrity();assert.equal(componentReferences.length,43,'Every current S API has a document reference');
-assert.equal(d.querySelectorAll('main .component-reference').length,43);
-assert.equal(d.querySelectorAll('main [data-component-example]').length,43,'Canonical cards mount the real package preview surface');
+integrity();assert.equal(componentReferences.length,44,'Every current S API has a document reference');
+assert.equal(d.querySelectorAll('main .component-reference').length,44);
+assert.equal(d.querySelectorAll('main [data-component-example]').length,44,'Canonical cards mount the real package preview surface');
 assert.equal(d.querySelector('#component-examples'),null,'No second legacy component gallery');
 assert.equal(d.querySelector('#button-feedback'),null,'Retired native component demo is not rendered');
 for(const component of componentReferences){
@@ -279,7 +279,7 @@ await recoveryChecks({w,d,$,fire,click,route,integrity});
 }
 assert.deepEqual(errors,[],'No runtime errors in the synthetic DOM');
 dom.window.close();
-console.log('PASS: 6 routes, internal anchors/ARIA IDs, route focus, token search/copy, theme/mode/density; 43 canonical S references, default Examples/Sample Code/API panels, Prism/plain-SFC copy, compatible component anchors and same-page back/forward without preview remount.');
+console.log('PASS: 6 routes, internal anchors/ARIA IDs, route focus, token search/copy, theme/mode/density; 44 canonical S references, default Examples/Sample Code/API panels, Prism/plain-SFC copy, compatible component anchors and same-page back/forward without preview remount.');
 console.log('PASS: form validation/failure/recovery/duplicate guard/reset, search/filter/empty/failure/retry/stale response, comparison, first-use state, dialog open/close wiring.');
 console.log('PASS: Core pattern table/list selection/filter/sort/page combinations and shared detail panel, dates, file rejection/removal/reselection, IME combobox, response states and cleanup. Component behavior is exercised by installed Vue runtime suites.');
 console.log('PASS: finite token-based motion, rapid goal reversal/stale completion, route persistence, visibility/reduced-motion cancellation; 5 semantic UI palettes and singleton nonintrusive snackbar; unified single/range picker complete-value contract, draft/cancel/reverse/same-day, direct errors/clear/mode switch, reusable instances/API/events, calendar leap/bounds/navigation/selection/focus return.');

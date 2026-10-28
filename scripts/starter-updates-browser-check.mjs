@@ -38,7 +38,7 @@ try{
       await page.keyboard.press('Enter');await page.waitForURL(origin+'/starter/');await page.locator('#starter-updates-title').waitFor()
       assert.equal(await page.title(),'Solyi · 컴포넌트 미리보기');assert.equal(await page.getByRole('heading',{level:1,name:'컴포넌트 미리보기',exact:true}).count(),1)
       const links=page.locator('.starter-example-nav a'),styles=await links.evaluateAll(elements=>elements.map(element=>{const style=getComputedStyle(element),box=element.getBoundingClientRect();return {href:element.getAttribute('href'),role:element.tagName,decoration:style.textDecorationLine,border:style.borderTopWidth,height:box.height,top:box.top,left:box.left,right:box.right}}))
-      assert.equal(styles.length,11);assert.ok(styles.some(link=>link.href==='#advanced-sortable-title'))
+      assert.equal(styles.length,12);assert.ok(styles.some(link=>link.href==='#advanced-sortable-title'));assert.ok(styles.some(link=>link.href==='#advanced-month-title'))
       for(const link of styles){assert.equal(link.role,'A');assert.equal(link.decoration,'none');assert.equal(link.border,'1px');assert.ok(link.height>=44);assert.ok(link.left>=0&&link.right<=width)}
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Starter fits')
       if(width===320)assert.ok(new Set(styles.map(link=>link.top)).size>1,'Narrow navigation wraps')
@@ -73,5 +73,5 @@ try{
     await page.locator('.starter-example-nav').scrollIntoViewIfNeeded();await page.screenshot({path:fileURLToPath(new URL(width+'.png',out))})
     assert.deepEqual(errors,[]);await context.close();console.log('PASS: '+width+'px; 12 header/nav appearance cases, keyboard href/focus, all four primitives, ISO weekday, numeric presets/format, time anchor/manual/scrub wiring')
   }
-  await writeFile(new URL('report.json',out),JSON.stringify({browser:browser.version(),directory,appearanceCases:records.length,records,limits:['Local built starter using isolated installed development tarball','No public deployment, physical device or screen reader verification']},null,2))
+  await writeFile(new URL('report.json',out),JSON.stringify({browser:browser.version(),directory,appearanceCases:records.length,records,limits:['Local built starter; package provenance is recorded separately','No public deployment, physical device or screen reader verification']},null,2))
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}

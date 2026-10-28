@@ -109,6 +109,7 @@ const propertyDescriptions = {
   open:'메뉴의 제어형 열림 상태입니다. update:open 이벤트와 연결합니다.', menuLabel:'분할 버튼에서 추가 행동 메뉴를 여는 버튼의 이름입니다.', maxFileSize:'파일 하나에 허용하는 최대 바이트 수입니다. 기본 2 × 1024 × 1024바이트(2 MiB)입니다.', drop:'파일 드래그·드롭 영역을 활성화합니다. 선택 버튼은 별도로 유지합니다.', fastFail:'폼 검증에서 첫 오류가 발생하면 뒤의 자체 필드 검사를 중단합니다.', lowerLabel:'범위의 아래쪽 핸들을 구분하는 이름입니다.', upperLabel:'범위의 위쪽 핸들을 구분하는 이름입니다.', formatValue:'숫자 하나를 받아 화면·접근성 값 표시용 문자열을 반환하는 함수입니다. 모델 값은 숫자로 유지합니다.', triggerLabel:'모바일·키보드에서 맥락 메뉴를 직접 여는 버튼의 이름입니다.', dismissible:'사용자가 알림을 닫을 수 있는 버튼을 표시합니다.', collapseBelow:'컨테이너 너비가 이 CSS px 값보다 작으면 두 영역을 세로로 배치합니다. 0 이하는 자동 전환을 끕니다.', primaryLabel:'첫 번째 분할 영역의 접근 가능한 이름입니다.', secondaryLabel:'두 번째 분할 영역의 접근 가능한 이름입니다.',
 };
 const records = [
+  ['SMonthCalendar','표시·레이아웃','한 달의 날짜와 범용 marker를 조회·탐색합니다. 선택과 표시 월은 부모가 관리합니다.','component','advanced-vue'],
   ['SSortableList','표시·레이아웃','임의 객체 목록의 순서를 포인터·키보드·이동 버튼으로 제안합니다. 원본 모델은 직접 수정하지 않습니다.','component','advanced-vue'],
   ['SChip','표시·레이아웃','짧은 값의 표시·선택·제거를 구분합니다.','component','buttons'],
   ['SBadge','표시·레이아웃','상태와 개수를 비대화형 표시로 전달합니다.','component','buttons'],
@@ -205,7 +206,7 @@ for (const [name, group, description, exampleRoute, example] of records) {
   for (const node of visit(setup,n=>ts.isPropertyAccessExpression(n)&&n.expression.getText()==='slots')) slotNames.add(node.name.text);
   const shared = text(setup).includes('fieldLabel(') || text(setup).includes('fieldMessages(');
   if (shared) {slotNames.add('label');slotNames.add('help');}
-  if(name==='SSortableList')slotNames.delete('label')
+  if(name==='SSortableList'||name==='SMonthCalendar')slotNames.delete('label')
   if (name==='SDataTable')slotNames.add('cell-{column.key}');
   if (name==='STabs')slotNames.add('panel-{item.value}');
   const slotScopes=new Map();
@@ -222,8 +223,8 @@ for (const [name, group, description, exampleRoute, example] of records) {
   for (const call of visit(setup,n=>ts.isCallExpression(n)&&n.expression.getText()==='expose')) {for(const [method]of entries(call.arguments[0],component.file))methodNames.add(method);if(/\bvalidation\b/.test(text(call.arguments[0]))&&text(setup).includes('useSFieldValidation('))for(const method of validationHandle)methodNames.add(method);}
   const methods=[...methodNames].map(method=>({name:method,signature:name==='SForm'&&method==='validate'?'() => Promise<SFormResult>':methodTypes[method]||'소스의 공개 핸들 타입 참조',description:method==='focus'?'사용 가능한 입력 또는 실행 요소로 초점을 이동합니다.':method==='validate'?'현재 값을 검증하고 유효 여부를 반환합니다.':method==='resetValidation'?'입력값을 바꾸지 않고 로컬 검증 표시를 초기화합니다.':method==='clear'?'선택값을 초기화합니다.':method==='retry'?'실패한 요청을 다시 실행합니다.':`${method} 작업을 실행합니다.`}));
   if(name==='SForm')for(const slot of slots)if(slot.name==='default')slot.description='폼 상태와 작업을 받습니다: {validate, resetValidation, focus, errors, isValid, isValidating}. validate는 Promise<SFormResult>를 반환합니다.';
-  if(name==='SSortableList'){
-    const contract=declarations.get('SolSortableSlots'),handle=declarations.get('SolSortableHandle')
+  if(name==='SSortableList'||name==='SMonthCalendar'){
+    const contract=declarations.get(name==='SSortableList'?'SolSortableSlots':'SolMonthCalendarSlots'),handle=declarations.get(name==='SSortableList'?'SolSortableHandle':'SolMonthCalendarHandle')
     assert.deepEqual(slots.map(slot=>slot.name).sort(),contract.members.map(member=>member.name.text).sort(),'Document exactly the implemented sortable slots')
     for(const slot of slots){const member=contract.members.find(member=>member.name.text===slot.name);slot.scope=member.type.parameters.length?text(member.type.parameters[0].type):'범위 없음'}
     assert.deepEqual(methods.map(method=>method.name).sort(),handle.members.map(member=>member.name.text).sort(),'Document exactly the exposed sortable handle')

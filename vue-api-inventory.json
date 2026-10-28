@@ -1,7 +1,8 @@
 {
   "documentVersion": "1.0.0",
-  "componentCount": 43,
+  "componentCount": 44,
   "components": [
+    "SMonthCalendar",
     "SSortableList",
     "SChip",
     "SBadge",

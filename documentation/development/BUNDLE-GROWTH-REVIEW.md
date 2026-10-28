@@ -7,6 +7,9 @@
 | d1b20d2 입력 확장 | 169,955 | 171,775 | 44,173 |
 | 1815de3 Sortable 공개 | 186,673 | 188,716 | 48,705 |
 | 증가 | 16,718 | 16,941 | 4,532 |
+| Sortable 항목별 disabled + MonthCalendar 모바일 보완 | 200,955 | 203,209 | 52,379 |
+
+마지막 행은 실제 로컬 source 빌드 측정입니다. 176,000자보다 24,955자 크며 여전히 출시 차단입니다. 새 tarball 설치를 완료했다는 의미는 아닙니다.
 
 주된 새 runtime은 Sortable의 identity snapshot, controlled/포커스/lifecycle과 pointer capture·취소·자동 스크롤입니다. 새 runtime 의존성이나 framework bundling을 추가하지 않았고 vite.config.js의 Vue/Vuetify external predicate와 Core 경로는 유지했습니다. 문자 한도는 peer 외부화의 증거를 대신하지 않으며, 기존 source growth 경보입니다.
 

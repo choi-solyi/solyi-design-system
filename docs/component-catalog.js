@@ -1,5 +1,6 @@
 /* Navigation uses component concepts. Export names remain the actual S API. */
 export const componentConceptNames={
+ SMonthCalendar:'Month Calendar',
  SSortableList:'Sortable List',
  SChip:'Chip',SBadge:'Badge',SIcon:'Icon',SIconBtn:'Icon Button',
  SAccordion:'Accordion',SAlert:'Alert',SAutocomplete:'Autocomplete',SAvatar:'Avatar',

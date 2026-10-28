@@ -33,8 +33,26 @@ export interface SolLocale {
   sortableKeys?:string;
   sortableInvalid?:string;
   sortableStatus?:(kind:'start'|'preview'|'commit'|'cancel'|'unchanged',label:string,position:number,count:number)=>string;
+  monthCalendarKeys?:string;
+  monthCalendarInvalid?:string;
+  monthCalendarEmpty?:string;
+  monthCalendarLoading?:string;
+  monthCalendarReadonly?:string;
+  monthCalendarToday?:string;
+  monthCalendarMore?:(count:number)=>string;
+  monthCalendarDetails?:string;
+  monthCalendarCount?:(count:number)=>string;
 }
 export const koLocale:Readonly<SolLocale>=Object.freeze({
+  monthCalendarKeys:'방향키: 하루·한 주 · Home/End: 주 경계 · PageUp/Down: 월 이동(Shift: 연도) · Enter/Space: 날짜 선택 · Escape: 선택일 초점 복귀',
+  monthCalendarInvalid:'달력의 월·날짜·marker 설정을 확인해 주세요.',
+  monthCalendarEmpty:'표시할 날짜별 자료가 없습니다.',
+  monthCalendarLoading:'달력 자료를 불러오는 중입니다.',
+  monthCalendarReadonly:'보기 전용입니다. 월과 날짜를 탐색할 수 있습니다.',
+  monthCalendarToday:'오늘',
+  monthCalendarMore:(count:number)=>'추가 '+num(count,'ko-KR')+'개',
+  monthCalendarDetails:'날짜별 자료',
+  monthCalendarCount:(count:number)=>'자료 '+num(count,'ko-KR')+'개',
   sortableHandle:(label:string)=>label+' 순서 조절',
   sortableMove:(label:string,direction:-1|1)=>label+(direction===-1?' 위로 이동':' 아래로 이동'),
   sortableKeys:'손잡이를 위아래로 드래그할 수 있습니다. 키보드는 Space/Enter로 시작·확정, 위/아래와 Home/End로 이동, Escape 또는 Tab으로 취소합니다. 위/아래 이동 버튼도 사용할 수 있습니다.',
@@ -62,6 +80,15 @@ export const koLocale:Readonly<SolLocale>=Object.freeze({
   timeHelp:(min:string,max:string,step:number)=>`HH:mm · ${min}–${max} · ${step}분 간격`
 });
 export const enLocale:Readonly<SolLocale>=Object.freeze({
+  monthCalendarKeys:'Arrows: day/week; Home/End: week boundaries; PageUp/Down: month (Shift: year); Enter/Space: choose a date; Escape: focus the selected date.',
+  monthCalendarInvalid:'Check the calendar month, date and marker configuration.',
+  monthCalendarEmpty:'No date-specific data to show.',
+  monthCalendarLoading:'Loading calendar data.',
+  monthCalendarReadonly:'Read only. You can still browse months and dates.',
+  monthCalendarToday:'Today',
+  monthCalendarMore:(count:number)=>num(count,'en-US')+' more',
+  monthCalendarDetails:'Date data',
+  monthCalendarCount:(count:number)=>num(count,'en-US')+' markers',
   sortableHandle:(label:string)=>'Reorder '+label,
   sortableMove:(label:string,direction:-1|1)=>'Move '+label+(direction===-1?' up':' down'),
   sortableKeys:'Drag a handle up or down. With a keyboard, Space/Enter starts or confirms; Up/Down and Home/End propose a position; Escape or Tab cancels. You can also use the move up/down buttons.',
