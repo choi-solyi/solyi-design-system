@@ -72,6 +72,7 @@ const colorRoles = {
   focus:['Focus','키보드 탐색의 현재 위치'], success:['Success','완료·성공 안내'], 'success-soft':['Success soft','성공 안내 바탕'], warning:['Warning','행동 전 확인 안내'], 'warning-soft':['Warning soft','확인 안내 바탕'], danger:['Danger','오류·위험 안내'], 'danger-soft':['Danger soft','오류 안내 바탕'], info:['Info','중립적 진행 안내'], 'info-soft':['Info soft','진행 안내 바탕']
 };
 Object.assign(colorRoles,{'selected-surface':['Selected surface','선택한 행과 항목의 바탕'],'selected-text':['Selected text','선택 영역의 본문과 보조 글자'],'selected-border':['Selected border','선택을 식별하는 테두리'],'selected-indicator':['Selected indicator','선택 표시선과 체크 강조']});
+for(let index=1;index<=8;index++)for(const [role,label]of [['foreground','글자'],['background','바탕'],['border','경계']])colorRoles['categorical-'+index+'-'+role]=['Category '+index+' '+role,'범주 '+index+'의 '+label+' · 상태 의미색과 구별하며 이름을 함께 표시합니다.'];
 function tokenCards(query='') {
   const theme = tokens.themes[root.dataset.theme];
   const colors = theme[root.dataset.mode];

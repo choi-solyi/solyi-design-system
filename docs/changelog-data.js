@@ -1,7 +1,7 @@
 // Generated from CHANGELOG.md.
 export const releaseNotes={
   "date": "2026-10-24",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "entries": [
     "`solyi-ui` 1.0.0은 Vue 3용 S 컴포넌트와 공통 토큰·CSS·helper·타입을 하나의 패키지로 제공합니다.",
     "버튼·입력·폼 검증·레이아웃·표·선택·탐색·알림·오버레이·날짜/시간·파일·차트·트리·진행 표시를 38개 S 컴포넌트로 제공합니다.",

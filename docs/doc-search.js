@@ -5,10 +5,10 @@ const searchNormalize=s=>String(s).normalize('NFKC').toLocaleLowerCase('ko').rep
 const searchCompact=s=>searchNormalize(s).replace(/[\s\p{P}\p{S}]/gu,'');
 export function findDocumentResults(documents,query){
  const q=searchNormalize(query),compact=searchCompact(q),terms=q.split(' ').filter(Boolean);if(!compact)return[];
- return documents.map((item,order)=>{const names=[item.label,item.title,item.id,...(item.aliases||[])].filter(Boolean),title=searchNormalize(names.join(' ')),text=searchNormalize(item.text),description=searchNormalize(item.description),joined=title+' '+description+' '+text;
+ return documents.map((item,order)=>{const primary=[item.label,item.title,item.id].filter(Boolean),names=[...primary,...(item.aliases||[])].filter(Boolean),title=searchNormalize(names.join(' ')),text=searchNormalize(item.text),description=searchNormalize(item.description),joined=title+' '+description+' '+text;
   if(!terms.every(t=>joined.includes(t))&&!searchCompact(joined).includes(compact))return null;
   // Compare individual names, not joined metadata: incidental prose never outranks an exact name.
-  const score=names.some(n=>searchCompact(n)===compact)?1000:names.some(n=>searchNormalize(n).includes(q))?700:names.some(n=>searchCompact(n).includes(compact))?650:terms.every(t=>title.includes(t))?600:description.includes(q)?40:10;
+  const score=item.route==='component'&&primary.some(n=>searchCompact(n)===compact)?1100:names.some(n=>searchCompact(n)===compact)?1000:names.some(n=>searchNormalize(n).includes(q))?700:names.some(n=>searchCompact(n).includes(compact))?650:terms.every(t=>title.includes(t))?600:description.includes(q)?40:10;
   return{...item,score,order};
  }).filter(Boolean).sort((a,b)=>b.score-a.score||a.order-b.order);
 }

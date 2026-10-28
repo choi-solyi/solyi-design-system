@@ -1,10 +1,10 @@
 // Generated current verified package information.
 export const packageReleases={
-  "current": "1.0.0",
+  "current": "1.1.0",
   "releases": [
     {
-      "release": "1.0.0",
-      "sourceRef": "56a981378bae6c19ed8db04cb6292e295bf0d56b",
+      "release": "1.1.0",
+      "sourceRef": "7db0301b7737b70fb7b4d322869a78d72bfab32f",
       "compatibility": {
         "node": "^22.18.0 || >=24.12.0",
         "vue": "3.5.44",
@@ -13,19 +13,19 @@ export const packageReleases={
       "packages": [
         {
           "name": "@solyi/core",
-          "version": "1.0.0",
-          "file": "solyi-core-1.0.0.tgz",
-          "bytes": 5873863,
-          "sha256": "73499607b3d76054b4ecab6b6595496ad80bda873d0a969ebb091dc87e72f432",
-          "integrity": "sha512-XNsFQaqHMIaPnj82IfEAt8FAGIj0cfkvd+LoVA5nhoLBps8ZSmZAKN1POdgRsUjffDmUFNZosFC38uxQSEP6Qg=="
+          "version": "1.1.0",
+          "file": "solyi-core-1.1.0.tgz",
+          "bytes": 5876771,
+          "sha256": "8ac10deee0fabf0f12f25a4cc201207236d6748dd795dd4c08b90cd35b08a6b3",
+          "integrity": "sha512-6v/Pm6l35L0JutnQ0FdVX+Nupn9LWHIqeyOoaUCQcpdU9CIeJmfOi07tdDI07I5uTiTHLf11PQ3yrJiEWz3k2A=="
         },
         {
           "name": "solyi-ui",
-          "version": "1.0.0",
-          "file": "solyi-ui-1.0.0.tgz",
-          "bytes": 5928699,
-          "sha256": "72d1d8d622287e8a86444c404ad20f7c5ed5d065dc2b4e48765374697854e23a",
-          "integrity": "sha512-1dugnNzBuF8Rl0z/FMeKPncGh8ynARDozcrIyf8BFzzLEf+IgPZwzYY8FmXo01KpgeMjjC5k0Kcs7YUd2cMh3A=="
+          "version": "1.1.0",
+          "file": "solyi-ui-1.1.0.tgz",
+          "bytes": 5982608,
+          "sha256": "90c8ae6949c05b1e4cb87d9409fc9f25274448f4abd406b5d5d6ae0b93886c0e",
+          "integrity": "sha512-qmYzA/biNMiLMilhNMqoekQh1Wb98CdKvxIXwIpu0ua5/QGmR05R9XI21e+fTQDHaVXR1PK8rIaYXTFXmoStjg=="
         }
       ]
     }

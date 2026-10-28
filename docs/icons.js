@@ -4,6 +4,7 @@ export const solIconPaths = Object.freeze({
   arrow:'M4 12h16m-6-6 6 6-6 6', external:'M14 4h6v6m0-6L10 14M10 4H4v16h16v-6',
   chevron:'m6 9 6 6 6-6', search:'M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',
   menu:'M4 6h16M4 12h16M4 18h16', more:'M5 12h.01M12 12h.01M19 12h.01',
+  grip:'M8 5h.01M16 5h.01M8 12h.01M16 12h.01M8 19h.01M16 19h.01',
   info:'M12 11v6m0-10v.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
   edit:'m15 4 5 5M4 20l4-1L21 6l-4-4L4 15v5Z',
   trash:'M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7',

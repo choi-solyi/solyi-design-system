@@ -938,6 +938,30 @@ http://scripts.sil.org/OFL
   --sol-color-selected-text: #202330;
   --sol-color-selected-border: #7560B5;
   --sol-color-selected-indicator: #7560B5;
+  --sol-color-categorical-1-foreground: #1e40af;
+  --sol-color-categorical-1-background: #dbeafe;
+  --sol-color-categorical-1-border: #2563eb;
+  --sol-color-categorical-2-foreground: #065f46;
+  --sol-color-categorical-2-background: #d1fae5;
+  --sol-color-categorical-2-border: #059669;
+  --sol-color-categorical-3-foreground: #9a3412;
+  --sol-color-categorical-3-background: #ffedd5;
+  --sol-color-categorical-3-border: #c2410c;
+  --sol-color-categorical-4-foreground: #6b21a8;
+  --sol-color-categorical-4-background: #f3e8ff;
+  --sol-color-categorical-4-border: #9333ea;
+  --sol-color-categorical-5-foreground: #9d174d;
+  --sol-color-categorical-5-background: #fce7f3;
+  --sol-color-categorical-5-border: #db2777;
+  --sol-color-categorical-6-foreground: #155e75;
+  --sol-color-categorical-6-background: #cffafe;
+  --sol-color-categorical-6-border: #0e7490;
+  --sol-color-categorical-7-foreground: #854d0e;
+  --sol-color-categorical-7-background: #fef9c3;
+  --sol-color-categorical-7-border: #a16207;
+  --sol-color-categorical-8-foreground: #334155;
+  --sol-color-categorical-8-background: #f1f5f9;
+  --sol-color-categorical-8-border: #64748b;
 }
 [data-theme="violet"][data-mode="light"],
 [data-mode="light"]:not([data-theme]) {
@@ -966,6 +990,30 @@ http://scripts.sil.org/OFL
   --sol-color-selected-text: #202330;
   --sol-color-selected-border: #7560B5;
   --sol-color-selected-indicator: #7560B5;
+  --sol-color-categorical-1-foreground: #1e40af;
+  --sol-color-categorical-1-background: #dbeafe;
+  --sol-color-categorical-1-border: #2563eb;
+  --sol-color-categorical-2-foreground: #065f46;
+  --sol-color-categorical-2-background: #d1fae5;
+  --sol-color-categorical-2-border: #059669;
+  --sol-color-categorical-3-foreground: #9a3412;
+  --sol-color-categorical-3-background: #ffedd5;
+  --sol-color-categorical-3-border: #c2410c;
+  --sol-color-categorical-4-foreground: #6b21a8;
+  --sol-color-categorical-4-background: #f3e8ff;
+  --sol-color-categorical-4-border: #9333ea;
+  --sol-color-categorical-5-foreground: #9d174d;
+  --sol-color-categorical-5-background: #fce7f3;
+  --sol-color-categorical-5-border: #db2777;
+  --sol-color-categorical-6-foreground: #155e75;
+  --sol-color-categorical-6-background: #cffafe;
+  --sol-color-categorical-6-border: #0e7490;
+  --sol-color-categorical-7-foreground: #854d0e;
+  --sol-color-categorical-7-background: #fef9c3;
+  --sol-color-categorical-7-border: #a16207;
+  --sol-color-categorical-8-foreground: #334155;
+  --sol-color-categorical-8-background: #f1f5f9;
+  --sol-color-categorical-8-border: #64748b;
 }
 [data-theme="violet"][data-mode="dark"],
 [data-mode="dark"]:not([data-theme]) {
@@ -994,6 +1042,30 @@ http://scripts.sil.org/OFL
   --sol-color-selected-text: #F0F0F7;
   --sol-color-selected-border: #B8A3F1;
   --sol-color-selected-indicator: #B8A3F1;
+  --sol-color-categorical-1-foreground: #bfdbfe;
+  --sol-color-categorical-1-background: #172554;
+  --sol-color-categorical-1-border: #60a5fa;
+  --sol-color-categorical-2-foreground: #a7f3d0;
+  --sol-color-categorical-2-background: #022c22;
+  --sol-color-categorical-2-border: #34d399;
+  --sol-color-categorical-3-foreground: #fed7aa;
+  --sol-color-categorical-3-background: #431407;
+  --sol-color-categorical-3-border: #fb923c;
+  --sol-color-categorical-4-foreground: #e9d5ff;
+  --sol-color-categorical-4-background: #3b0764;
+  --sol-color-categorical-4-border: #c084fc;
+  --sol-color-categorical-5-foreground: #fbcfe8;
+  --sol-color-categorical-5-background: #500724;
+  --sol-color-categorical-5-border: #f472b6;
+  --sol-color-categorical-6-foreground: #a5f3fc;
+  --sol-color-categorical-6-background: #083344;
+  --sol-color-categorical-6-border: #22d3ee;
+  --sol-color-categorical-7-foreground: #fef08a;
+  --sol-color-categorical-7-background: #422006;
+  --sol-color-categorical-7-border: #facc15;
+  --sol-color-categorical-8-foreground: #e2e8f0;
+  --sol-color-categorical-8-background: #1e293b;
+  --sol-color-categorical-8-border: #94a3b8;
 }
 [data-theme="sage"][data-mode="light"] {
   color-scheme: light;
@@ -1021,6 +1093,30 @@ http://scripts.sil.org/OFL
   --sol-color-selected-text: #28372F;
   --sol-color-selected-border: #476A56;
   --sol-color-selected-indicator: #476A56;
+  --sol-color-categorical-1-foreground: #1e40af;
+  --sol-color-categorical-1-background: #dbeafe;
+  --sol-color-categorical-1-border: #2563eb;
+  --sol-color-categorical-2-foreground: #065f46;
+  --sol-color-categorical-2-background: #d1fae5;
+  --sol-color-categorical-2-border: #059669;
+  --sol-color-categorical-3-foreground: #9a3412;
+  --sol-color-categorical-3-background: #ffedd5;
+  --sol-color-categorical-3-border: #c2410c;
+  --sol-color-categorical-4-foreground: #6b21a8;
+  --sol-color-categorical-4-background: #f3e8ff;
+  --sol-color-categorical-4-border: #9333ea;
+  --sol-color-categorical-5-foreground: #9d174d;
+  --sol-color-categorical-5-background: #fce7f3;
+  --sol-color-categorical-5-border: #db2777;
+  --sol-color-categorical-6-foreground: #155e75;
+  --sol-color-categorical-6-background: #cffafe;
+  --sol-color-categorical-6-border: #0e7490;
+  --sol-color-categorical-7-foreground: #854d0e;
+  --sol-color-categorical-7-background: #fef9c3;
+  --sol-color-categorical-7-border: #a16207;
+  --sol-color-categorical-8-foreground: #334155;
+  --sol-color-categorical-8-background: #f1f5f9;
+  --sol-color-categorical-8-border: #64748b;
 }
 [data-theme="sage"][data-mode="dark"] {
   color-scheme: dark;
@@ -1048,6 +1144,30 @@ http://scripts.sil.org/OFL
   --sol-color-selected-text: #EEF4EF;
   --sol-color-selected-border: #A1CBB0;
   --sol-color-selected-indicator: #A1CBB0;
+  --sol-color-categorical-1-foreground: #bfdbfe;
+  --sol-color-categorical-1-background: #172554;
+  --sol-color-categorical-1-border: #60a5fa;
+  --sol-color-categorical-2-foreground: #a7f3d0;
+  --sol-color-categorical-2-background: #022c22;
+  --sol-color-categorical-2-border: #34d399;
+  --sol-color-categorical-3-foreground: #fed7aa;
+  --sol-color-categorical-3-background: #431407;
+  --sol-color-categorical-3-border: #fb923c;
+  --sol-color-categorical-4-foreground: #e9d5ff;
+  --sol-color-categorical-4-background: #3b0764;
+  --sol-color-categorical-4-border: #c084fc;
+  --sol-color-categorical-5-foreground: #fbcfe8;
+  --sol-color-categorical-5-background: #500724;
+  --sol-color-categorical-5-border: #f472b6;
+  --sol-color-categorical-6-foreground: #a5f3fc;
+  --sol-color-categorical-6-background: #083344;
+  --sol-color-categorical-6-border: #22d3ee;
+  --sol-color-categorical-7-foreground: #fef08a;
+  --sol-color-categorical-7-background: #422006;
+  --sol-color-categorical-7-border: #facc15;
+  --sol-color-categorical-8-foreground: #e2e8f0;
+  --sol-color-categorical-8-background: #1e293b;
+  --sol-color-categorical-8-border: #94a3b8;
 }
 [data-theme="sand"][data-mode="light"] {
   color-scheme: light;
@@ -1075,6 +1195,30 @@ http://scripts.sil.org/OFL
   --sol-color-selected-text: #4A3020;
   --sol-color-selected-border: #8B6248;
   --sol-color-selected-indicator: #805338;
+  --sol-color-categorical-1-foreground: #1e40af;
+  --sol-color-categorical-1-background: #dbeafe;
+  --sol-color-categorical-1-border: #2563eb;
+  --sol-color-categorical-2-foreground: #065f46;
+  --sol-color-categorical-2-background: #d1fae5;
+  --sol-color-categorical-2-border: #059669;
+  --sol-color-categorical-3-foreground: #9a3412;
+  --sol-color-categorical-3-background: #ffedd5;
+  --sol-color-categorical-3-border: #c2410c;
+  --sol-color-categorical-4-foreground: #6b21a8;
+  --sol-color-categorical-4-background: #f3e8ff;
+  --sol-color-categorical-4-border: #9333ea;
+  --sol-color-categorical-5-foreground: #9d174d;
+  --sol-color-categorical-5-background: #fce7f3;
+  --sol-color-categorical-5-border: #db2777;
+  --sol-color-categorical-6-foreground: #155e75;
+  --sol-color-categorical-6-background: #cffafe;
+  --sol-color-categorical-6-border: #0e7490;
+  --sol-color-categorical-7-foreground: #854d0e;
+  --sol-color-categorical-7-background: #fef9c3;
+  --sol-color-categorical-7-border: #a16207;
+  --sol-color-categorical-8-foreground: #334155;
+  --sol-color-categorical-8-background: #f1f5f9;
+  --sol-color-categorical-8-border: #64748b;
 }
 [data-theme="sand"][data-mode="dark"] {
   color-scheme: dark;
@@ -1102,6 +1246,30 @@ http://scripts.sil.org/OFL
   --sol-color-selected-text: #FFF1E4;
   --sol-color-selected-border: #D9B394;
   --sol-color-selected-indicator: #EDC9A6;
+  --sol-color-categorical-1-foreground: #bfdbfe;
+  --sol-color-categorical-1-background: #172554;
+  --sol-color-categorical-1-border: #60a5fa;
+  --sol-color-categorical-2-foreground: #a7f3d0;
+  --sol-color-categorical-2-background: #022c22;
+  --sol-color-categorical-2-border: #34d399;
+  --sol-color-categorical-3-foreground: #fed7aa;
+  --sol-color-categorical-3-background: #431407;
+  --sol-color-categorical-3-border: #fb923c;
+  --sol-color-categorical-4-foreground: #e9d5ff;
+  --sol-color-categorical-4-background: #3b0764;
+  --sol-color-categorical-4-border: #c084fc;
+  --sol-color-categorical-5-foreground: #fbcfe8;
+  --sol-color-categorical-5-background: #500724;
+  --sol-color-categorical-5-border: #f472b6;
+  --sol-color-categorical-6-foreground: #a5f3fc;
+  --sol-color-categorical-6-background: #083344;
+  --sol-color-categorical-6-border: #22d3ee;
+  --sol-color-categorical-7-foreground: #fef08a;
+  --sol-color-categorical-7-background: #422006;
+  --sol-color-categorical-7-border: #facc15;
+  --sol-color-categorical-8-foreground: #e2e8f0;
+  --sol-color-categorical-8-background: #1e293b;
+  --sol-color-categorical-8-border: #94a3b8;
 }
 [data-density="comfortable"] {
   --sol-content-gap: 1rem;

@@ -3,14 +3,24 @@
 미게시 1.1.0 개발 후보의 SDatePicker/STimePicker 옵션입니다. 공개 npm 1.0.0의 기능으로 설명하지 않습니다.
 
 ```vue
-<SDatePicker
-  id="date"
-  v-model="date"
-  label="날짜"
-  picker-presentation="auto"
-  placement="bottom-start"
-  clearable
-/>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SDatePicker } from 'solyi-ui'
+import type { DateValue } from 'solyi-ui'
+
+const date = ref<DateValue>('2026-10-28')
+</script>
+
+<template>
+  <SDatePicker
+    id="date"
+    v-model="date"
+    label="날짜"
+    picker-presentation="auto"
+    placement="bottom-start"
+    clearable
+  />
+</template>
 ```
 
 `pickerPresentation` 생략 시 기존 native modal dialog입니다. `popover`는 입력창에 연결된 nonmodal 팝업, `dialog`는 modal, `auto`는 기존 좁은 화면 기준에 따라 두 방식을 전환합니다. `placement`는 bottom-start(기본), bottom-end, top-start, top-end이며 start/end는 RTL을 반영합니다. 화면 경계에서는 위치를 조정하며 modal 위치에는 사용하지 않습니다.
