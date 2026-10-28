@@ -40,7 +40,9 @@ const options = [
         { value: 'recent', label: '최근 변경순' },
         { value: 'name', label: '이름순' },
       ]"
-    />
+    >
+      <template #indicator><SIcon name="chevron" decorative :size="16" /></template>
+    </SSelect>
     <p role="status">
       완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }} · {{ view }} ·
       {{ sort }}

@@ -1,6 +1,17 @@
 # 입력 내부 clear: 단계별 구현과 검증
 
-승인된 [확장 요청 2 계획](EXTENSIONS-V2-PLAN.md)의 1단계를 작은 단위로 연결합니다. 공통 입력 구조와 STextField·STextarea는 **ab6c1be**, Select·Number는 **712dba6**에 보존했고 후속 단위는 아래에 따로 기록합니다. **SDatePicker/STimePicker 연결은 아직 남아 있습니다.** 18개 전체 또는 입력 8종 완료를 뜻하지 않습니다. 현재 source는 44개 공개 S 컴포넌트를 유지합니다.
+승인된 [확장 요청 2 계획](EXTENSIONS-V2-PLAN.md)의 **1단계 입력 8종 source 구현을 완료**했습니다. 공통 구조·텍스트는 **ab6c1be**, Select·Number는 **712dba6**, Autocomplete·MultiSelect는 **bf01059**에 보존했고 Date·Time 단위는 아래에 기록합니다. 18개 요청 전체 완료나 공개 출시를 뜻하지 않습니다. 현재 source는 44개 공개 S 컴포넌트를 유지합니다.
+
+| 컴포넌트 | 빈 모델 | starter·Components 정본 / 실행 ID | 실제 starter clear | 공개 반영 |
+|---|---|---|---|---|
+| STextField | 빈 문자열 | fields.vue / recipe-field | 통과 | 이번 변경 미배포 |
+| STextarea | 빈 문자열 | advanced-inputs.vue / recipe-note | 통과 | 이번 변경 미배포 |
+| SSelect | null | choices.vue / recipe-sort | 통과 | 이번 변경 미배포 |
+| SNumberInput | null | advanced-inputs.vue / recipe-amount | 통과 | 이번 변경 미배포 |
+| SAutocomplete | null | inputs.vue / recipe-autocomplete | 통과 | 이번 변경 미배포 |
+| SMultiSelect | 빈 배열 | advanced-inputs.vue / recipe-tags | 통과 | 이번 변경 미배포 |
+| SDatePicker | null (단일·range) | inputs.vue / recipe-date | 통과; range modal 별도 검증 | 이번 변경 미배포 |
+| STimePicker | null | time.vue / recipe-time, recipe-time-list | native/list 모두 통과 | 이번 변경 미배포 |
 
 ## 실제 API와 호환성
 
@@ -52,7 +63,7 @@ Number의 formatter·unit·min 기준 step·preset과 hidden canonical 제출값
 
 두 입력에 opt-in clearable/loading과 공통 slots/action rail을 연결했습니다. 내부 X와 clearable 모드의 exposed clear는 같은 transaction으로 null/빈 배열을 제안하고 검색어·오류·진행 중 요청을 초기화해 닫고 검증한 뒤 입력으로 포커스를 돌립니다. readonly/disabled/SForm 가드는 공통으로 적용합니다. 읽기 전용 입력 배열은 변조하지 않습니다. 기존 scalar change와 commit의 호출 횟수를 유지하므로 이 두 입력은 이미 빈 모델에서 query만 지울 때도 기존 update/change를 내보냅니다. 별도 clear 알림은 `{value,reason:'clear'}`입니다.
 
-clearable=false의 기존 exposed clear는 기본 동작을 보존합니다. Autocomplete는 기존처럼 검색어를 지우고 닫아 포커스를 돌리며, MultiSelect는 기존처럼 선택 값만 비우고 검색어/팝업은 유지합니다. 내부 busy는 강화 모드의 loader/slot scope에 합쳐 표시하고 기존 기본 DOM을 강제로 바꾸지 않습니다. dropdown은 이름 있는 native button이고 기존 popup·ArrowDown/Escape 키를 재사용합니다. SAutocomplete는 여전히 옵션 선택 전용이며 자유 입력 API를 추가하지 않았습니다.
+새 공통 옵션/slot을 사용하지 않는 기본 모드의 기존 exposed clear는 동작을 보존합니다. Autocomplete는 기존처럼 검색어를 지우고 닫아 포커스를 돌리며, MultiSelect는 기존처럼 선택 값만 비우고 검색어/팝업은 유지합니다. 새 loading이나 공통 slot만 사용해도 exposed clear와 scope.clear가 같은 강화 모드 transaction을 사용합니다. 내부 busy는 강화 모드의 loader/slot scope에 합쳐 표시하고 기존 기본 DOM을 강제로 바꾸지 않습니다. dropdown은 이름 있는 native button이고 기존 popup·ArrowDown/Escape 키를 재사용합니다. SAutocomplete는 여전히 옵션 선택 전용이며 자유 입력 API를 추가하지 않았습니다.
 
 새 clear 후 부모가 값을 거부하면 Autocomplete label을 canonical model로 복구하고, 이후 실제 외부 reset도 동기화합니다. 요청은 AbortSignal과 기존 revision으로 취소·stale 차단합니다. composition 중 clear한 뒤 늦게 온 compositionend가 이전 draft를 복원하거나 팝업을 다시 열지 않으며 다음 composition은 다시 동작합니다.
 
@@ -63,3 +74,25 @@ clearable=false의 기존 exposed clear는 기본 동작을 보존합니다. Aut
 - 자체 선언 33개 0건/외부 769건, 실제 starter source 타입·빌드, 44개 Components API 및 문서 build 통과. 새 tarball 설치 검증은 미실행.
 
 Components 정본 `inputs.vue`의 SAutocomplete와 `advanced-inputs.vue`의 SMultiSelect, starter의 공유 `AdvancedExamples.vue` 모두 clearable을 연결했습니다. source ESM은 **208,845자 / 211,125 bytes**로 기존 176,000자 제한을 초과합니다. frozen 1.0.0 및 크기 검사·위치·임계값을 변경하지 않았고 새 의존성/토큰·게시·push·운영 배포는 없습니다.
+
+## 후속 단위: SDatePicker·STimePicker와 8종 공통 마무리
+
+Date의 단일·range와 Time 모두 null clear를 연결했습니다. 기존 DateChange의 mode/value/reason:clear와 Time의 scalar change, min 기준 step, native/list 기본 presentation, initial scroll/manual input/scrubbing 계약을 유지합니다. 새 공통 기능이 없는 기본 모드의 exposed clear는 종전처럼 popup을 임의로 닫거나 새 포커스 이동을 추가하지 않습니다. 강화 모드에서는 내부 X·scope.clear·공개 clear가 draft/부분 range/preview를 정리하고 닫기→검증→입력 focus의 같은 경로를 사용합니다. allowManualInput=false는 전체 readonly와 다르므로 picker·clear는 계속 사용할 수 있습니다.
+
+Date의 range 비교는 객체의 속성 순서 대신 start/end 값으로 판단합니다. 부모가 clear를 거부한 뒤 validation이 순서가 다른 같은 range를 추가 input commit으로 내보내지 않게 했고, 기존 payload·ISO 값은 유지했습니다. Time은 active scrub을 external cancel하고 capture/자동 스크롤을 정리한 뒤 null을 제안합니다. 뒤늦은 pointerup/keyup은 commit하지 않습니다. shared rail은 내부 scrub control을 수용하며, clear만 쓰는 VTextField에는 비어 있는 leading slot 공간을 만들지 않습니다.
+
+실제 Chrome에서 좁은 화면의 Time panel이 input row를 덮어 X를 가로막는 실패를 발견했습니다. 강화 모드에서만 전체 field frame을 기준으로 위·아래 가용 공간을 고르고 높이를 제한하며, Core panel spacing을 사용합니다. 위쪽 panel은 bottom을 고정해 내용 크기가 바뀌어도 입력행을 덮지 않습니다. 기존 기본 모드의 위치 정책은 유지했고, force click·z-index 강제 덮어쓰기·전역 overflow 변경을 하지 않았습니다. native/list 양쪽에서 panel/field 비겹침과 실제 clear 클릭을 다시 확인했습니다.
+
+- 8종 공통 runtime 통과: 모든 빈 모델·기존 이벤트·required/serverError·폼·가드·부모 거부·focus/unmount, Date range 속성 순서·부분 range 취소, Time manual-input required·preview cancel·capture/late release. 새 slot/loading 모드의 ref/slot clear 일치도 12조합으로 확인했습니다.
+- strict SFC local/global 2건 + negative 11건 통과. DateChange와 새 clear payload 구분 및 Time의 미지원 presentation=auto 거부 포함입니다.
+- 기존 input-display, extended Date calendar/Time/기본 입력, Time list/scrub, 44개 S export/global 회귀 통과. 자체 선언 33개 오류 0건, TS 5.9.3/skipLibCheck:false 외부 769건은 유지합니다.
+- Chrome 144조합에서 8종 + Date range(9개 instance)의 clear·required·FormData·포커스·긴 text·ko/en·3 theme/light-dark/2 density/LTR-RTL 통과. 각 폭에서 native Date 단일/range footer clear·Escape, Time의 keydown 상태 clear→keyup 후 무commit, initialScrollValue/list/manual-input 및 panel 비겹침을 추가 확인했습니다. key-release commit을 press()로 잘못 시험한 것은 down/up을 분리해 기존 계약 그대로 재검증했습니다.
+- 실제 source-built starter 320px에서 위 9개 예제의 touch-emulated clear·focus·selection 초기화 통과. 읽기 전용 Time 목록 입력에 fill을 강제하지 않고 목록에서 값을 선택했습니다. 문서에는 fields의 leading/trailing과 choices의 indicator 사용 예시도 보완했습니다.
+
+검증 코드는 [actual starter browser](../../scripts/input-control-starter-browser-check.mjs)와 위 공통 runtime/type/browser 검사입니다. 물리 touch/IME, 실제 screen reader, Safari, 새 tarball 설치는 미실행입니다. 문서·실제 starter는 source alias로 검증했으며 배포된 npm/운영 사이트 검증으로 바꾸어 말하지 않습니다.
+
+최종 source ESM은 **211,118자 / 213,398 bytes**로 **176,000자 gate 초과**입니다. frozen UI 1.0.0 SHA-256은 `72d1d8d622287e8a86444c404ad20f7c5ed5d065dc2b4e48765374697854e23a`로 유지했습니다. 새 dependency/token, 버전 변경·게시·push·운영 배포·외부 소비 앱 수정은 없습니다. 지원된 모델과 change 계약을 유지한 opt-in 추가이므로 minor 후보로 정리하되 실제 버전/출시는 별도 결정해야 합니다.
+
+소비자는 내부 clear가 필요한 입력에 clearable을 선택하고 새 null/빈 배열/빈 문자열을 기존 모델 계약대로 처리합니다. 새 공통 옵션/slot을 추가하지 않으면 기존 clear 동작을 유지합니다. 이미 앱이 그린 외부 clear 버튼은 앱에서 선택적으로 정리할 수 있으며 이 작업에서 외부 소비 프로젝트를 변경하지 않았습니다. 다음 승인 단계는 기존 SAutocomplete를 유지한 별도 SCombobox입니다.
+
+실제 코드는 [공통 lifecycle·rail](../../packages/vue-ui/src/input-control.ts), [VTextField adapter](../../packages/vue-ui/src/text-field.ts), [Select/Textarea/Number](../../packages/vue-ui/src/controls.ts), [Autocomplete](../../packages/vue-ui/src/autocomplete.ts), [MultiSelect](../../packages/vue-ui/src/selection.ts), [Date/Time](../../packages/vue-ui/src/date-time.ts), [scoped 스타일](../../packages/vue-ui/src/input-control.css)에 있습니다. global 등록 이름·개별 import 경로는 그대로이고 공개 API 문서는 실제 source에서 생성합니다.

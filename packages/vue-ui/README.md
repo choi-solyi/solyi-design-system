@@ -49,9 +49,11 @@ STextField·STextarea의 `clearable`은 입력 안의 이름 있는 X 버튼을 
 
 SSelect·SNumberInput도 같은 내부 clear를 지원하며 빈 모델은 `null`입니다. Select의 native option·readonly 제약과 Number의 required·min 기준 step·formatter·unit·preset·native 제출값을 유지합니다. Number의 잘못된 draft도 지울 수 있으며 부모가 clear를 거부하면 기존 모델의 draft를 복원합니다.
 
-SAutocomplete·SMultiSelect도 clearable 모드에서 내부 X와 공개 clear가 검색어·요청·팝업을 초기화하고 검증·포커스를 처리합니다. 빈 모델은 null/빈 배열이고 기존 change payload는 유지합니다. 기본 false에서는 기존 clear의 검색어/팝업 동작을 보존합니다. SAutocomplete는 옵션 선택 전용이며 자유 입력 기능이 아닙니다.
+SAutocomplete·SMultiSelect도 강화 모드에서 내부 X와 공개 clear가 검색어·요청·팝업을 초기화하고 검증·포커스를 처리합니다. 빈 모델은 null/빈 배열이고 기존 change payload는 유지합니다. 새 공통 옵션/slot이 없는 기본 모드에서는 기존 clear의 검색어/팝업 동작을 보존합니다. SAutocomplete는 옵션 선택 전용이며 자유 입력 기능이 아닙니다.
 
-`leading/trailing/indicator/status/loading` slot은 `{hasValue,disabled,readonly,loading,error,clear}`를 받습니다. `loading`은 진행 표시입니다. 편집을 막으려면 disabled/readonly를 함께 제어합니다. 새 기능의 타입은 `SolInputHandle`, `SolInputClearEvent<T>`, `SolInputControlScope`이며 Number의 기존 preset scope는 `SolNumberPresetScope`·`SolNumberInputSlots`로도 제공합니다. Date·Time 연결과 새 tarball·공개 배포는 아직 완료하지 않았습니다.
+SDatePicker·STimePicker도 연결했습니다. 단일/range의 ISO 모델과 DateChange reason, Time의 scalar change 및 preview/commit/cancel은 유지합니다. 강화 모드에서 부분 draft·scrub을 취소하고 null을 제안하며, required 오류와 입력 focus를 처리합니다. Time의 allowManualInput=false도 picker/clear를 막지 않습니다.
+
+`leading/trailing/indicator/status/loading` slot은 `{hasValue,disabled,readonly,loading,error,clear}`를 받습니다. `loading`은 진행 표시입니다. 편집을 막으려면 disabled/readonly를 함께 제어합니다. 새 공통 옵션이나 slot을 사용하면 공개 clear와 scope.clear가 같은 강화 경로를 사용합니다. 새 기능의 타입은 `SolInputHandle`, `SolInputClearEvent<T>`, `SolInputControlScope`이며 Number의 기존 preset scope는 `SolNumberPresetScope`·`SolNumberInputSlots`로도 제공합니다. 입력 8종 source·문서·starter 검증과 새 tarball·공개 배포는 구분하며 후자는 아직 하지 않았습니다.
 
 ## 소비 프로젝트 AI 지침
 

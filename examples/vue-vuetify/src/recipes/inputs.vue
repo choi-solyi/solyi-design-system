@@ -78,6 +78,7 @@ const loader = computed<SolOptionLoader | undefined>(() => {
       <SDatePicker
         id="recipe-date"
         v-model="date"
+        clearable
         label="가상 일정"
         :mode="dateMode"
         :display-formatter="showWeekday ? formatDateWithWeekday : undefined"

@@ -48,6 +48,7 @@ interface Options {
   focus(): void
   element(): Element | null | undefined
   icon?: SolIconName
+  actions?(): VNodeChild
   trigger?: (icon: VNodeChild) => VNode
 }
 const content = (items: VNodeChild[]) =>
@@ -142,13 +143,14 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
             h(SIcon, { name: 'close', size: 16, decorative: true }),
           )
         : null,
+      options.actions?.(),
       options.trigger
         ? cloneVNode(options.trigger(indicator()), { class: 'sol-ui-input-trigger' })
         : includeIndicator
           ? slots.indicator?.(state)
           : null,
     ])
-    return nodes.length ? h('span', { class: 'sol-ui-input-rail' }, nodes) : null
+    return nodes.length ? h('div', { class: 'sol-ui-input-rail' }, nodes) : null
   }
   function native(node: VNode, settings: { multiline?: boolean; select?: boolean } = {}) {
     if (!enhanced()) return node
@@ -188,7 +190,9 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
     )
   }
   function vuetifySlots() {
-    return enhanced() ? { 'prepend-inner': leading, 'append-inner': () => rail() } : {}
+    return enhanced()
+      ? { ...(slots.leading ? { 'prepend-inner': leading } : {}), 'append-inner': () => rail() }
+      : {}
   }
   return { clear, scope, enhanced, native, vuetifySlots }
 }

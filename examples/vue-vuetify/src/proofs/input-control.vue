@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { STextField, STextarea, SSelect, SNumberInput, SAutocomplete, SMultiSelect } from 'solyi-ui'
-import type { SolInputClearEvent, SolInputHandle } from 'solyi-ui'
+import { STextField, STextarea, SSelect, SNumberInput, SAutocomplete, SMultiSelect, SDatePicker, STimePicker } from 'solyi-ui'
+import type { SolInputClearEvent, SolInputHandle, SolPickerHandle, DateValue, DateChange } from 'solyi-ui'
 const value = ref('Text'), handle = ref<SolInputHandle | null>(null)
 const selected = ref<string|null>('a'), number = ref<number|null>(5)
 const multiple = ref<string[]>(['a'])
+const date = ref<DateValue>('2026-10-28'), time = ref<string|null>('09:05')
+const pickerHandle = ref<SolPickerHandle|null>(null)
 function cleared(event: SolInputClearEvent<string>) {
   console.log(event.value.toUpperCase(), event.reason)
 }
 function selectedCleared(event: SolInputClearEvent<string|null>) { console.log(event.value?.toUpperCase()) }
 function numberCleared(event: SolInputClearEvent<number|null>) { console.log(event.value?.toFixed(0)) }
 function multipleCleared(event: SolInputClearEvent<readonly string[]>) { console.log(event.value.join(',')) }
+function dateCleared(event: SolInputClearEvent<DateValue>) { console.log(event.value === null, event.reason) }
+function dateChanged(event: DateChange) { console.log(event.mode, event.value, event.reason) }
 </script>
 <template>
   <button type="button" @click="handle?.clear()">Clear through the same public action</button>
@@ -40,4 +44,11 @@ function multipleCleared(event: SolInputClearEvent<readonly string[]>) { console
   <SMultiSelect id="multi-proof" label="Multiple" v-model="multiple" :options="[{value:'a',label:'Alpha'}]" clearable @clear="multipleCleared">
     <template #status="{ error }"><span>{{ error.toUpperCase() }}</span></template>
   </SMultiSelect>
+  <button type="button" @click="pickerHandle?.clear()">Clear picker</button>
+  <SDatePicker ref="pickerHandle" id="date-proof" label="Date" v-model="date" clearable @clear="dateCleared" @change="dateChanged">
+    <template #leading="{ readonly: readOnly }"><span>{{ readOnly }}</span></template>
+  </SDatePicker>
+  <STimePicker id="time-proof" label="Time" v-model="time" :min="'08:05'" :step="15" :allow-manual-input="false" presentation="list" scrubbable clearable @clear="selectedCleared">
+    <template #trailing="{ clear, disabled }"><button type="button" :disabled="disabled" @click="clear">Clear</button></template>
+  </STimePicker>
 </template>

@@ -30,7 +30,12 @@ function check() {
         :server-error="
           serverRejected ? '이미 사용 중인 가상 이름입니다. 다른 이름을 입력해 주세요.' : ''
         "
-      />
+      >
+        <template #leading><SIcon name="edit" decorative :size="16" /></template>
+        <template #trailing
+          ><span class="sol-hint">{{ value.length }}자</span></template
+        >
+      </STextField>
       <SCheckbox id="recipe-field-loading" v-model="showInputLoading" label="입력 로딩 표시" />
       <p role="status">입력 내부 X로 지운 횟수: {{ clearCount }}</p>
       <STextField

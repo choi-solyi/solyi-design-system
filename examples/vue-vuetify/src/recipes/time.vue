@@ -24,6 +24,7 @@ function cancelled(value: SolTimeInteractionCancel) {
     <STimePicker
       id="recipe-time"
       v-model="time"
+      clearable
       label="가상 알림 시각"
       min="09:00"
       max="18:00"
@@ -58,6 +59,7 @@ function cancelled(value: SolTimeInteractionCancel) {
     <STimePicker
       id="recipe-time-list"
       v-model="listTime"
+      clearable
       label="목록에서 시각 선택"
       presentation="list"
       :allow-manual-input="manual"

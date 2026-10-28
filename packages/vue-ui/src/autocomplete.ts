@@ -194,7 +194,7 @@ export const SAutocomplete = defineComponent({
       input.value?.focus({ preventScroll: true })
     }
     function clear() {
-      if (p.clearable) {
+      if (control.enhanced()) {
         control.clear()
         return
       }

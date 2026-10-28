@@ -308,7 +308,7 @@ export const SMultiSelect = defineComponent({
         ),
     })
     function clear() {
-      if (p.clearable) {
+      if (control.enhanced()) {
         control.clear()
         return
       }

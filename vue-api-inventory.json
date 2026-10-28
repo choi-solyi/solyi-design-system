@@ -99,6 +99,7 @@
       "components": [
         "SCard",
         "STextField",
+        "SIcon",
         "SCheckbox",
         "SBtn",
         "SAlert"
@@ -114,7 +115,8 @@
         "SCard",
         "SCheckbox",
         "SRadioGroup",
-        "SSelect"
+        "SSelect",
+        "SIcon"
       ]
     },
     {

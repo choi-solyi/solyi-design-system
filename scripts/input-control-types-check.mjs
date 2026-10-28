@@ -4,7 +4,7 @@ import {execFileSync} from 'node:child_process'
 import {fileURLToPath} from 'node:url'
 const root=new URL('../',import.meta.url),starter=new URL('examples/vue-vuetify/',root),directory=new URL('.runtime-test/input-control-types/',starter),installed=process.argv.includes('--installed')
 await mkdir(directory,{recursive:true})
-const names=['STextField','STextarea','SSelect','SNumberInput','SAutocomplete','SMultiSelect'],source=await readFile(new URL('src/proofs/input-control.vue',starter),'utf8')
+const names=['STextField','STextarea','SSelect','SNumberInput','SAutocomplete','SMultiSelect','SDatePicker','STimePicker'],source=await readFile(new URL('src/proofs/input-control.vue',starter),'utf8')
 let global=source.replace(/^import \{[^}]+\} from 'solyi-ui'\r?\n/m,'')
 for(const name of names)global=global.replaceAll(name,'Proof'+name)
 await writeFile(new URL('global.d.ts',directory),`import type {${names.join(',')}} from ${JSON.stringify(installed?'solyi-ui':'../../../../packages/vue-ui/src/index')};declare module 'vue' {interface GlobalComponents {${names.map(name=>'Proof'+name+':typeof '+name).join(';')}}}export {}\n`)
@@ -16,7 +16,7 @@ async function run(name,content){
  try{return {status:0,output:execFileSync(process.execPath,[compiler,'--noEmit','-p',fileURLToPath(config)],{cwd:fileURLToPath(root),encoding:'utf8',stdio:'pipe'})}}
  catch(error){return {status:error.status,output:String(error.stdout||'')+String(error.stderr||'')}}
 }
-for(const [name,content]of [['local',source],['global',global]]){const result=await run(name,content);assert.equal(result.status,0,result.output);console.log('PASS: '+name+' six input props, clear events, shared slots, number presets and public handle')}
+for(const [name,content]of [['local',source],['global',global]]){const result=await run(name,content);assert.equal(result.status,0,result.output);console.log('PASS: '+name+' eight input props, clear events, shared slots, number presets and public handles')}
 for(const [name,content,expected]of [
  ['slot-negative',source.replace('error.toUpperCase()','error.missing'),/TS2339.*missing/],
  ['model-negative',source.replace('v-model="value"','v-model="true"'),/TS2322|Invalid v-model|must be a valid JavaScript/],
@@ -27,4 +27,6 @@ for(const [name,content,expected]of [
  ['select-event-negative',source.replace('SolInputClearEvent<string|null>','SolInputClearEvent<number|null>'),/TS2322/],
  ['multiple-event-negative',source.replace("event.value.join(',')","event.value.push('bad')"),/TS2339.*push/],
  ['selection-only-negative',source.replace('id="auto-proof"','id="auto-proof" :allow-custom="true"'),/TS2353|TS2322/],
+ ['date-event-negative',source.replace('function dateCleared(event: SolInputClearEvent<DateValue>)','function dateCleared(event: DateChange)'),/TS2322/],
+ ['time-presentation-negative',source.replace('presentation="list"','presentation="auto"'),/TS2322/],
 ]){const result=await run(name,content);assert.notEqual(result.status,0,name+' must fail');assert.match(result.output,expected);console.log('PASS: '+name+' rejected by real strict vue-tsc')}

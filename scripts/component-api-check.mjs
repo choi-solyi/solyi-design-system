@@ -85,7 +85,15 @@ for(const name of ['STextField','STextarea']){
  assert.match(componentExampleSources[component.example],/\bclearable\b/);assert.match(componentExampleSources[component.example],/@clear=/);
 }
 assert.equal(componentReferences.find(component=>component.name==='STextField').events.some(event=>event.name==='change'),false,'Do not invent a TextField change event while adding clear');
-for(const name of ['SSelect','SNumberInput','SAutocomplete']){
+{
+ const component=componentReferences.find(component=>component.name==='SDatePicker');
+ for(const prop of ['clearable','loading'])assert.equal(component.props.find(item=>item.name===prop)?.default,'false');
+ assert.match(component.events.find(item=>item.name==='clear')?.signature||'',/SolInputClearEvent<DateValue>/);
+ assert.match(component.events.find(item=>item.name==='change')?.signature||'',/DateChange/);
+ for(const slot of ['leading','trailing','indicator','status','loading'])assert.equal(component.slots.find(item=>item.name===slot)?.scope,'SolInputControlScope');
+ assert.equal(component.methods.find(item=>item.name==='clear')?.signature,'() => void');assert.match(componentExampleSources[component.example],/\bclearable\b/);
+}
+for(const name of ['SSelect','SNumberInput','SAutocomplete','STimePicker']){
  const component=componentReferences.find(component=>component.name===name);
  for(const prop of ['clearable','loading'])assert.equal(component.props.find(item=>item.name===prop)?.default,'false');
  assert.match(component.events.find(item=>item.name==='clear')?.signature||'',/SolInputClearEvent<(?:string|number)\s*\|\s*null>/);
