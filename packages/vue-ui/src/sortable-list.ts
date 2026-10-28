@@ -1,0 +1,167 @@
+import {computed,defineComponent,h,nextTick,onBeforeUnmount,onMounted,ref,watch} from 'vue'
+import type {AllowedComponentProps,PropType,SlotsType,VNode,VNodeProps} from 'vue'
+import {displayFieldProps,fieldDescription,fieldMessages} from './controls'
+import {useSolLocale} from './locale'
+import type {SolLocale} from './locale'
+import {SIcon} from './primitives'
+import {snapshotSortable,sameSortableSnapshot,proposeSortableMove} from './sortable-values'
+import type {SortableKey,SortableInput,SortableSnapshot,SortableProposal} from './sortable-values'
+import './sortable.css'
+
+export type SolSortableKey = SortableKey
+export type SolSortableInput = SortableInput
+export type SolSortableProposal<T> = SortableProposal<T>
+export type SolSortableCancelReason = 'escape'|'tab'|'blur'|'disabled'|'external'|'configuration'|'unmount'|'api'
+export type SolSortableEnd<T> = (SolSortableProposal<T> & {status:'commit'|'unchanged'}) | (SolSortableProposal<T> & {status:'cancel';reason:SolSortableCancelReason})
+export interface SolSortableItemScope<T> {item:T;index:number;key:SolSortableKey;active:boolean}
+export interface SolSortableSlots<T> {
+  item?:(scope:SolSortableItemScope<T>)=>VNode[]
+  'handle-icon'?:(scope:SolSortableItemScope<T>)=>VNode[]
+  empty?:()=>VNode[]
+  help?:()=>VNode[]
+}
+export interface SolSortableProps<T> extends AllowedComponentProps,VNodeProps {
+  id:string;label:string;modelValue:readonly T[]
+  itemKey:(item:T)=>SolSortableKey
+  itemLabel:(item:T)=>string
+  help?:string;error?:string;disabled?:boolean;readonly?:boolean;locale?:Partial<SolLocale>
+  'onUpdate:modelValue'?:(items:T[])=>void
+  onChange?:(proposal:SolSortableProposal<T>)=>void
+  onStart?:(proposal:SolSortableProposal<T>)=>void
+  onPreview?:(proposal:SolSortableProposal<T>)=>void
+  onEnd?:(result:SolSortableEnd<T>)=>void
+}
+export interface SolSortableHandle {focus(key?:SolSortableKey):void;cancel():void}
+export interface SolSortableEmit<T> {
+  (event:'update:modelValue',items:T[]):void
+  (event:'change'|'start'|'preview',proposal:SolSortableProposal<T>):void
+  (event:'end',result:SolSortableEnd<T>):void
+}
+interface SolSortableContext<T> {props:SolSortableProps<T>;slots:SolSortableSlots<T>;emit:SolSortableEmit<T>;expose:(value:SolSortableHandle)=>void}
+export interface SolSortableComponent {
+  <T>(props:SolSortableProps<T>,context?:SolSortableContext<T>):VNode & {__ctx?:SolSortableContext<T>}
+}
+
+// This unit is internal. Root export/global registration follows pointer verification.
+export const SSortableList = defineComponent({
+  name:'SSortableList',inheritAttrs:false,
+  props:{...displayFieldProps,modelValue:{type:Array as PropType<readonly unknown[]>,required:true},
+    itemKey:{type:Function as PropType<(item:unknown)=>SolSortableKey>,required:true},
+    itemLabel:{type:Function as PropType<(item:unknown)=>string>,required:true}},
+  slots:Object as SlotsType<SolSortableSlots<unknown>>,
+  emits:{'update:modelValue':(_items:unknown[])=>true,change:(_proposal:SolSortableProposal<unknown>)=>true,
+    start:(_proposal:SolSortableProposal<unknown>)=>true,preview:(_proposal:SolSortableProposal<unknown>)=>true,end:(_result:SolSortableEnd<unknown>)=>true},
+  setup(p,{attrs,slots,emit,expose}) {
+    const l=useSolLocale(()=>p.locale),host=ref<HTMLElement|null>(null),revision=ref(0)
+    const handles=new Map<SolSortableKey,HTMLButtonElement>(),upButtons=new Map<SolSortableKey,HTMLButtonElement>(),downButtons=new Map<SolSortableKey,HTMLButtonElement>()
+    const state=computed(()=>{
+      const result=snapshotSortable(p.modelValue,p.itemKey)
+      if(!result.valid)return {snapshot:undefined,labels:[] as string[]}
+      const labels:string[]=[]
+      try {for(const item of result.snapshot.items){const label=p.itemLabel(item);if(typeof label!=='string'||!label.trim())return {snapshot:undefined,labels};labels.push(label.trim())}}
+      catch{return {snapshot:undefined,labels}}
+      return {snapshot:result.snapshot,labels}
+    })
+    type Session={snapshot:SortableSnapshot<unknown>;key:SolSortableKey;to:number;keyer:typeof p.itemKey;labeler:typeof p.itemLabel}
+    let session:Session|undefined,disposed=false
+    const status=ref<{kind:'start'|'preview'|'commit'|'cancel'|'unchanged';key:SolSortableKey;label:string;to:number;count:number}>()
+    const unavailable=()=>p.disabled||p.readonly||!state.value.snapshot
+    const labelFor=(key:SolSortableKey,fallback='')=>{const index=state.value.snapshot?.keys.indexOf(key)??-1;return index>=0?state.value.labels[index]!:fallback}
+    function proposal(current:Session){return proposeSortableMove(current.snapshot,current.key,current.to,'keyboard')!}
+    function announce(kind:NonNullable<typeof status.value>['kind'],value:SolSortableProposal<unknown>){status.value={kind,key:value.key,label:labelFor(value.key),to:value.to,count:value.items.length}}
+    function restoreFocus(key:SolSortableKey,previous:Element|null,action:'handle'|'up'|'down'='handle',fallbackIndex=0){
+      void nextTick(()=>{
+        if(disposed||p.disabled)return
+        const active=document.activeElement
+        if(active&&active!==document.body&&active!==previous&&!host.value?.contains(active))return
+        const map=action==='up'?upButtons:action==='down'?downButtons:handles
+        let button=map.get(key)
+        if(!button||button.disabled)button=handles.get(key)
+        if(!button||button.disabled){const keys=state.value.snapshot?.keys||[];button=handles.get(keys[Math.min(fallbackIndex,keys.length-1)]!)}
+        if(button&&!button.disabled)button.focus({preventScroll:true});else host.value?.focus({preventScroll:true})
+      })
+    }
+    function cancel(reason:SolSortableCancelReason='api',restore=true){
+      if(!session)return
+      const old=session,value=proposal(old),focused=document.activeElement
+      session=undefined;revision.value++;announce('cancel',value)
+      emit('end',{...value,status:'cancel',reason})
+      if(restore)restoreFocus(old.key,focused,'handle',value.from)
+    }
+    function begin(key:SolSortableKey){
+      if(unavailable())return
+      const snapshot=state.value.snapshot!
+      const from=snapshot.keys.indexOf(key);if(from<0)return
+      cancel('api',false)
+      const current={snapshot,key,to:from,keyer:p.itemKey,labeler:p.itemLabel};session=current;revision.value++
+      handles.get(key)?.focus({preventScroll:true})
+      if(session!==current||unavailable())return
+      const value=proposal(current);announce('start',value);emit('start',value)
+    }
+    function finish(){
+      if(!session)return
+      const old=session,value=proposal(old),focused=document.activeElement
+      session=undefined;revision.value++
+      if(unavailable()||!state.value.snapshot||!sameSortableSnapshot(old.snapshot,state.value.snapshot)){announce('cancel',value);emit('end',{...value,status:'cancel',reason:'external'});return}
+      const changed=value.from!==value.to;announce(changed?'commit':'unchanged',value)
+      if(changed){emit('update:modelValue',[...value.items]);emit('change',{...value,items:[...value.items]})}
+      emit('end',{...value,items:[...value.items],status:changed?'commit':'unchanged'})
+      restoreFocus(old.key,focused)
+    }
+    function moveButton(key:SolSortableKey,direction:-1|1){
+      if(unavailable())return
+      cancel('api',false)
+      const snapshot=state.value.snapshot!,from=snapshot.keys.indexOf(key),value=proposeSortableMove(snapshot,key,from+direction,'button')
+      if(!value)return
+      const focused=document.activeElement;announce('commit',value)
+      emit('update:modelValue',[...value.items]);emit('change',{...value,items:[...value.items]});emit('end',{...value,items:[...value.items],status:'commit'})
+      restoreFocus(key,focused,direction===-1?'up':'down',from)
+    }
+    function key(event:KeyboardEvent,item:SolSortableKey){
+      if(event.isComposing||event.altKey||event.ctrlKey||event.metaKey)return
+      if(event.key==='Tab'){cancel('tab',false);return}
+      if(event.key==='Escape'&&session){event.preventDefault();event.stopPropagation();cancel('escape');return}
+      if(unavailable())return
+      if(event.key===' '||event.key==='Enter'){
+        event.preventDefault();event.stopPropagation();if(event.repeat)return
+        if(session?.key===item)finish();else begin(item)
+        return
+      }
+      if(!session||session.key!==item)return
+      const current=session
+      let to=current.to
+      if(event.key==='ArrowUp')to--;else if(event.key==='ArrowDown')to++;else if(event.key==='Home')to=0;else if(event.key==='End')to=current.snapshot.items.length-1;else return
+      event.preventDefault();event.stopPropagation();to=Math.max(0,Math.min(current.snapshot.items.length-1,to))
+      if(to===current.to)return
+      current.to=to;revision.value++;const value=proposal(current);announce('preview',value);emit('preview',value)
+    }
+    watch(state,current=>{if(session&&(!current.snapshot||!sameSortableSnapshot(session.snapshot,current.snapshot)))cancel(session.snapshot.source===p.modelValue&&(session.keyer!==p.itemKey||session.labeler!==p.itemLabel)?'configuration':'external')},{flush:'sync'})
+    watch(()=>[p.disabled,p.readonly],()=>{if(p.disabled||p.readonly)cancel('disabled',false)},{flush:'sync'})
+    const blur=()=>cancel('blur',false),visibility=()=>{if(document.hidden)cancel('blur',false)}
+    onMounted(()=>{window.addEventListener('blur',blur);document.addEventListener('visibilitychange',visibility)})
+    onBeforeUnmount(()=>{disposed=true;cancel('unmount',false);window.removeEventListener('blur',blur);document.removeEventListener('visibilitychange',visibility)})
+    expose({focus:(key?:SolSortableKey)=>{if(!p.disabled){const first=key??state.value.snapshot?.keys[0];const button=first===undefined?undefined:handles.get(first);if(button&&!button.disabled)button.focus();else host.value?.focus()}},cancel:()=>cancel('api')})
+    return()=>{
+      void revision.value
+      const snapshot=state.value.snapshot,items=snapshot?.items||(Array.isArray(p.modelValue)?p.modelValue:[]),error=p.error||(!snapshot?l.value.sortableInvalid!:'')
+      const description=fieldDescription(p,slots,error,p.id+'-keys')
+      const currentStatus=status.value
+      const message=currentStatus?l.value.sortableStatus!(currentStatus.kind,labelFor(currentStatus.key,currentStatus.label),currentStatus.to+1,currentStatus.count):''
+      return h('div',{...attrs,ref:host,id:p.id,class:['sol-field sol-ui-sortable',attrs.class],tabindex:-1,role:'group','aria-labelledby':p.id+'-label','aria-describedby':description,'aria-disabled':p.disabled?'true':undefined},[
+        h('p',{id:p.id+'-label',class:'sol-label'},p.label),
+        h('p',{id:p.id+'-keys',class:'sol-hint'},l.value.sortableKeys),
+        h('ol',{class:'sol-ui-sortable-list','aria-labelledby':p.id+'-label'},items.map((item,index)=>{
+          const itemKey=snapshot?.keys[index]??'invalid-'+index,label=state.value.labels[index]||l.value.record+' '+(index+1),active=session?.key===itemKey
+          const scope={item,index,key:itemKey,active},disabled=unavailable()
+          return h('li',{key:itemKey,class:'sol-ui-sortable-row','data-active':active?'true':undefined,'data-insert':session?.to===index?'true':undefined},[
+            h('button',{ref:(element:unknown)=>{if(element)handles.set(itemKey,element as HTMLButtonElement);else handles.delete(itemKey)},type:'button',class:'sol-button sol-ui-sortable-handle',disabled,'aria-label':l.value.sortableHandle!(label),'aria-pressed':String(active),'aria-describedby':p.id+'-keys',onKeydown:(event:KeyboardEvent)=>key(event,itemKey),onClick:()=>{if(session?.key===itemKey)finish();else begin(itemKey)},onBlur:()=>{if(session?.key===itemKey)cancel('blur',false)}},slots['handle-icon']?.(scope)||h(SIcon,{name:'menu',decorative:true})),
+            h('div',{class:'sol-ui-sortable-content'},slots.item?.(scope)||label),
+            h('div',{class:'sol-ui-sortable-moves'},([-1,1] as const).map(direction=>h('button',{ref:(element:unknown)=>{const map=direction===-1?upButtons:downButtons;if(element)map.set(itemKey,element as HTMLButtonElement);else map.delete(itemKey)},type:'button',class:'sol-button',disabled:disabled||(direction===-1?index===0:index===items.length-1),'aria-label':l.value.sortableMove!(label,direction),'aria-describedby':p.id+'-keys',onClick:()=>moveButton(itemKey,direction)},h(SIcon,{name:'arrow',rotate:direction===-1?270:90,decorative:true})))),
+          ])
+        })),
+        !items.length?h('div',{class:'sol-hint'},slots.empty?.()||l.value.noResults):null,
+        ...fieldMessages(p,slots,error),h('output',{class:'sol-hint sol-ui-sortable-status',role:'status','aria-live':'polite'},message),
+      ])
+    }
+  },
+}) as unknown as SolSortableComponent

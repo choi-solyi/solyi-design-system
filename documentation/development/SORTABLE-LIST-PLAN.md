@@ -46,3 +46,9 @@ modelValue의 원본 순서가 확정 상태입니다. 조작 중에는 별도 �
 내부 sortable-values.ts에 stable key snapshot·외부 변경 감지·불변 이동 제안을 구현했습니다. [단위 검사](../../scripts/sortable-values-check.mjs)는 frozen 객체의 identity, number/string key 구분·중복·getter 예외·비유한 값·희소 배열, 제안 배열을 소비자가 변경해도 원본 보존, 외부 교체/재정렬/재key, 140개 이동 조합과 strict generic/negative 타입을 통과했습니다. key callback이 원본 배열을 늘려도 반복은 초기 snapshot 길이로 제한하며 잘못된 snapshot을 거부합니다. UI 패키지 빌드도 통과했습니다.
 
 이 helper는 root export/plugin/global에 아직 공개하지 않습니다. 컴포넌트 generic slot·keyboard·focus·pointer·scroll 검증은 다음 단위입니다. 새 runtime 동작이나 Sortable 전체 완료로 간주하지 않습니다. 해당 테스트는 library-pipeline에도 연결했습니다.
+
+## 키보드 UI WIP
+
+sortable-list.ts와 sortable.css에 내부 목록·키보드·이동 버튼·취소/초점 복원을 작성했습니다. src/proofs/sortable-keyboard.vue는 generic 객체의 props/slot/event 추론을 vue-tsc strict template/checkUnknownProps:true로 통과했습니다. constructor 형태에서 unknown으로 사라졌던 추론은 generic call/slot context 형태로 수정했으며 any로 우회하지 않았습니다.
+
+sort­able-keyboard-runtime-check.mjs는 controlled 제안 거부·원본 객체 identity·외부 변경/삭제·7개 취소 경로·focus·locale·readonly·empty/invalid·preview 배열 격리를 통과했습니다. 이 단계는 source 내부 WIP이며 공개 등록, 실제 키보드·터치 버튼 브라우저 검증, negative generic fixture 및 포인터 드래그는 아직 남아 있습니다. 문서/스타터 UI 수정 중에도 해당 파일을 유지하며 별도 WIP 커밋으로 보존합니다.
