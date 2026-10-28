@@ -266,7 +266,8 @@
       "registration": "global",
       "components": [
         "SCard",
-        "STimePicker"
+        "STimePicker",
+        "SCheckbox"
       ]
     },
     {

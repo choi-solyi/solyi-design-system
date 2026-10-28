@@ -48,7 +48,7 @@ import type {SolLocale,SolLocaleSource} from './locale';
 export {SCheckbox,SRadioGroup,SSwitch,SSelect,STextarea,SNumberInput};
 export {STabs,SSnackbar};
 export {SDatePicker,STimePicker};
-export type {DateMode,DateRange,DateValue,DateChange,PickerCloseReason,SolPickerHandle,SolDateDisplayFormatter} from './date-time';
+export type {DateMode,DateRange,DateValue,DateChange,PickerCloseReason,SolPickerHandle,SolDateDisplayFormatter,SolTimePresentation} from './date-time';
 export type {SolTab,ToastTone,ToastCloseReason} from './navigation';
 export type {SolOption,SolNumberInputHandle,SolNumberPreset,SolNumberDisplayFormatter} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale,useSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate} from './locale';

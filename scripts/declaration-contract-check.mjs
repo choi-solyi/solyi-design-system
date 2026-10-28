@@ -69,7 +69,7 @@ const entries = installed
 const declarationCount = entries.length
 assert.ok(declarationCount > 10, 'All own public declaration files are checked')
 const fixture = normalize(path.join(ownRoot, 'navigation-contract.ts'))
-memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput } from './index'
+memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker } from './index'
 import type { SolIconName, SolTone, SolDateDisplayFormatter, SolNumberDisplayFormatter, SolNumberPreset } from './index'
 import type { GlobalComponents } from 'vue'
 type TabsProps = InstanceType<typeof STabs>['$props']
@@ -116,6 +116,11 @@ const numericDateFormatter: SolDateDisplayFormatter = () => 1
 // @ts-expect-error Presets preserve the existing numeric model.
 const stringPreset: SolNumberPreset = { value: '20' }
 void [formattedDate, presetNumber, numericDateFormatter, stringPreset]
+const listTime: InstanceType<typeof STimePicker>['$props'] = { id: 'time', label: 'Time', presentation: 'list', allowManualInput: false, initialScrollValue: '09:07', scrollToCurrentTime: true }
+const nativeTime: InstanceType<typeof STimePicker>['$props'] = { id: 'native', label: 'Time' }
+// @ts-expect-error Custom time presentation is an explicit opt-in union.
+const unsupportedTime: InstanceType<typeof STimePicker>['$props'] = { id: 'time', label: 'Time', presentation: 'wheel' }
+void [listTime, nativeTime, unsupportedTime]
 `)
 entries.push(fixture)
 const program = ts.createProgram(entries, options, host)

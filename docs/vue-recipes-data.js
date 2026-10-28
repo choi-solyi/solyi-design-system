@@ -83,7 +83,7 @@ export const vueRecipes={
   "time": {
     "route": "component",
     "label": "시간 선택",
-    "source": "<script setup lang=\"ts\">\nconst time = ref<string | null>('09:00')\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"직접 입력과 시·분 선택\">\n    <STimePicker\n      id=\"recipe-time\"\n      v-model=\"time\"\n      label=\"가상 알림 시각\"\n      min=\"09:00\"\n      max=\"18:00\"\n      :step=\"15\"\n      required\n      help=\"HH:mm 또는 HHmm으로 입력하거나 Alt+↓로 패널을 엽니다.\"\n    />\n    <p role=\"status\">완료값: {{ time || '없음' }} · 실제 알림을 예약하지 않습니다.</p>\n  </SCard>\n</template>\n"
+    "source": "<script setup lang=\"ts\">\nconst time = ref<string | null>('09:00')\nconst listTime = ref<string | null>(null),\n  manual = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"직접 입력과 시·분 선택\">\n    <STimePicker\n      id=\"recipe-time\"\n      v-model=\"time\"\n      label=\"가상 알림 시각\"\n      min=\"09:00\"\n      max=\"18:00\"\n      :step=\"15\"\n      required\n      help=\"HH:mm 또는 HHmm으로 입력하거나 Alt+↓로 패널을 엽니다.\"\n    />\n    <p role=\"status\">완료값: {{ time || '없음' }} · 실제 알림을 예약하지 않습니다.</p>\n    <SCheckbox id=\"recipe-time-manual\" v-model=\"manual\" label=\"목록 예제의 직접 입력 허용\" />\n    <STimePicker\n      id=\"recipe-time-list\"\n      v-model=\"listTime\"\n      label=\"목록에서 시각 선택\"\n      presentation=\"list\"\n      :allow-manual-input=\"manual\"\n      initial-scroll-value=\"09:07\"\n      min=\"00:07\"\n      max=\"23:59\"\n      :step=\"15\"\n      help=\"처음 위치는 선택이 아닙니다. 방향키·Home/End·Page로 이동하고 Enter/Space로 선택, Escape로 닫습니다.\"\n    />\n    <p role=\"status\">목록 완료값: {{ listTime || '선택 없음' }}</p>\n  </SCard>\n</template>\n"
   },
   "chart-tree": {
     "route": "component",

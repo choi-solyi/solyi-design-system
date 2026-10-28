@@ -1,11 +1,13 @@
 import {useSFieldValidation,fieldError,externalFieldError,fieldDisabled,fieldReadonly} from './form';
-import {defineComponent,h,ref,watch,nextTick,onMounted,onBeforeUnmount,Teleport,mergeProps} from 'vue';
+import {defineComponent,h,ref,watch,nextTick,onMounted,onBeforeUnmount,Teleport,mergeProps,computed} from 'vue';
 import type {PropType} from 'vue';
 import type {SolLocale} from './locale';
 import {formatFieldDisplay} from './display-format';
 import {dateISO,parseDateOnly,weekday,shiftDay,shiftMonth,parseTimeOnly} from '@solyi/core/date';
 import type {DateParts} from '@solyi/core/date';
 import {solIconPaths} from '@solyi/core/icons';
+import {SIcon} from './primitives';
+import {timeChoices,nearestTime} from './time-values';
 import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './controls';
 import { useSolLocale, withVisibleNumberLabel } from './locale'
 
@@ -74,25 +76,245 @@ export const SDatePicker=defineComponent({name:'SDatePicker',inheritAttrs:false,
  ])]);};
 }});
 
-export const STimePicker=defineComponent({name:'STimePicker',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},min:{type:String,default:'00:00'},max:{type:String,default:'23:59'},step:{type:Number,default:15}},emits:{'update:modelValue':(_v:string|null)=>true,change:(_v:string|null)=>true,invalid:(_v:string)=>true,open:()=>true,close:(_why:PickerCloseReason)=>true},setup(p,{attrs,slots,emit,expose}){
- const l=useSolLocale(()=>p.locale),draft=ref(p.modelValue??''),localError=ref(''),opened=ref(false),hour=ref(''),minute=ref(''),input=ref<HTMLInputElement|null>(null),trigger=ref<HTMLButtonElement|null>(null),panel=ref<HTMLElement|null>(null),hourSelect=ref<HTMLSelectElement|null>(null),minuteSelect=ref<HTMLSelectElement|null>(null),position=ref({left:'8px',top:'8px'});let opener:HTMLElement|null=null,reason:PickerCloseReason='close';
- const bounds=()=>({min:parseTimeOnly(p.min)?.minutes??NaN,max:parseTimeOnly(p.max)?.minutes??NaN});
- const allowed=(n:number)=>{const b=bounds();return Number.isFinite(b.min)&&Number.isFinite(b.max)&&b.min<=b.max&&Number.isInteger(p.step)&&p.step>0&&n>=b.min&&n<=b.max&&(n-b.min)%p.step===0;};
- function parse(){if(!draft.value.trim())return {value:null,error:p.required?l.value.timeRequired:''};const t=parseTimeOnly(draft.value);return t&&allowed(t.minutes)?{value:t.value,error:''}:{value:null,error:l.value.invalidTime};}
- function syncOptions(){const t=parseTimeOnly(draft.value);hour.value=t&&Array.from({length:60},(_,i)=>i).some(n=>allowed(Math.floor(t.minutes/60)*60+n))?t.value.slice(0,2):'';minute.value=t&&allowed(t.minutes)?t.value.slice(3):'';}
- function validity(){input.value?.setCustomValidity(fieldError(p)||parse().error);}
- function commit(value:string|null){if(fieldDisabled(p)||fieldReadonly(p))return;draft.value=value??'';localError.value='';syncOptions();if(value!==p.modelValue){emit('update:modelValue',value);emit('change',value);}void nextTick(validity);}
- function validateIntrinsic(){const result=parse();localError.value=result.error;if(result.error){emit('invalid',result.error);validity();return false;}if(!fieldDisabled(p)&&!fieldReadonly(p))commit(result.value);return !externalFieldError(p);}
- function locate(){if(!opened.value||!input.value||!panel.value)return;const r=input.value.getBoundingClientRect(),b=panel.value.getBoundingClientRect(),width=document.documentElement.clientWidth||window.innerWidth;position.value={left:Math.max(8,Math.min(r.left,width-b.width-8))+'px',top:Math.max(8,Math.min(r.bottom+6,window.innerHeight-b.height-8))+'px'};}
- function close(why:PickerCloseReason='close',restore=true){if(!opened.value)return;reason=why;opened.value=false;if(restore)void nextTick(()=>{const target=opener&&!(opener as HTMLButtonElement).disabled?opener:input.value;if(target?.isConnected&&!fieldDisabled(p))target.focus();});}
- async function open(keyboard:boolean,from:HTMLElement|null){if(fieldDisabled(p)||fieldReadonly(p))return;opener=from;const was=opened.value;opened.value=true;await nextTick();if(!opened.value||!input.value)return;locate();if(keyboard)hourSelect.value?.focus();if(!was)emit('open');}
- function select(){if(fieldDisabled(p)||fieldReadonly(p))return;if(!hour.value||!minute.value)return;const text=hour.value+':'+minute.value,t=parseTimeOnly(text);if(t&&allowed(t.minutes))commit(t.value);else{minute.value='';localError.value='';}}
- const outside=(e:Event)=>{const t=e.target as Node;if(opened.value&&!panel.value?.contains(t)&&t!==input.value&&!trigger.value?.contains(t))close('outside',false);};
- watch(l,()=>{if(localError.value)localError.value=parse().error;void nextTick(validity);});
- watch(()=>p.modelValue,v=>{draft.value=v??'';localError.value='';syncOptions();void nextTick(validity);});watch(()=>[fieldDisabled(p),fieldReadonly(p)],()=>{if(fieldDisabled(p)||fieldReadonly(p))close('disabled',!fieldDisabled(p));});watch(()=>[p.min,p.max,p.step,fieldError(p),p.required],()=>{syncOptions();void nextTick(validity);});watch(opened,(v,old)=>{if(!v&&old)emit('close',reason);});
- onMounted(()=>{syncOptions();validity();document.addEventListener('pointerdown',outside);document.addEventListener('focusin',outside);window.addEventListener('resize',locate);document.addEventListener('scroll',locate,true);});
- onBeforeUnmount(()=>{document.removeEventListener('pointerdown',outside);document.removeEventListener('focusin',outside);window.removeEventListener('resize',locate);document.removeEventListener('scroll',locate,true);if(panel.value?.contains(document.activeElement)&&opener?.isConnected)opener.focus();});const validation=useSFieldValidation(p,()=>parse().value,{focus:()=>input.value?.focus(),validateIntrinsic,intrinsicError:()=>localError.value,resetIntrinsic:()=>{localError.value='';}}),validate=validation.validate;expose({...validation,clear:()=>commit(null)});
- return()=>{const error=fieldError(p)||localError.value,hours=Array.from({length:24},(_,i)=>i).filter(v=>Array.from({length:60},(_,n)=>n).some(n=>allowed(v*60+n))),minutes=Array.from({length:60},(_,i)=>i).filter(n=>hour.value!==''&&allowed(Number(hour.value)*60+n));const pad=(v:number)=>String(v).padStart(2,'0');return h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('div',{class:'sol-time-entry'},[h('input',{...attrs,ref:input,id:p.id,type:'text',class:['sol-input',attrs.class],inputmode:'numeric',maxlength:5,autocomplete:'off',value:draft.value,disabled:fieldDisabled(p),readonly:fieldReadonly(p),required:p.required,placeholder:'HH:mm','aria-haspopup':'dialog','aria-controls':opened.value?p.id+'-panel':undefined,'aria-invalid':error?'true':undefined,'aria-describedby':fieldDescription(p,slots,error,[p.id+'-format',attrs['aria-describedby']].filter(Boolean).join(' ')),onInput:(e:Event)=>{if(fieldDisabled(p)||fieldReadonly(p))return;draft.value=(e.target as HTMLInputElement).value;syncOptions();if(localError.value)localError.value=parse().error;validity();},onClick:()=>void open(false,input.value),onBlur:()=>{if(!fieldReadonly(p)&&!fieldDisabled(p))validate();},onInvalid:(e:Event)=>{e.preventDefault();validate();input.value?.focus();},onKeydown:(e:KeyboardEvent)=>{if(e.isComposing)return;if(e.key==='ArrowDown'&&e.altKey){e.preventDefault();void open(true,input.value);}else if(e.key==='Escape'){e.preventDefault();close('escape');}else if(e.key==='Enter'){e.preventDefault();validate();}}}),h('button',{ref:trigger,type:'button',class:'sol-button',disabled:fieldDisabled(p)||fieldReadonly(p),'aria-haspopup':'dialog','aria-controls':opened.value?p.id+'-panel':undefined,'aria-expanded':String(opened.value),'aria-label':p.label+' '+l.value.time,onClick:()=>opened.value?close():void open(true,trigger.value)},l.value.time)]),h('span',{id:p.id+'-format',class:'sol-hint'},l.value.timeHelp(p.min,p.max,p.step)),...fieldMessages(p,slots,error),h('button',{type:'button',class:'sol-button inline-action sol-ui-picker-clear',disabled:fieldDisabled(p)||fieldReadonly(p),onClick:()=>{close('close',false);commit(null);input.value?.focus();}},l.value.clear),h(Teleport,{to:'body'},[opened.value?h('div',{ref:panel,id:p.id+'-panel',class:'sol-time-panel sol-ui-time-panel',role:'dialog','aria-labelledby':p.id+'-title',style:position.value,onKeydown:(e:KeyboardEvent)=>{if(e.key==='Escape'&&!e.isComposing){e.preventDefault();e.stopPropagation();close('escape');}}},[
- h('div',{class:'sol-ui-picker-top'},[h('strong',{id:p.id+'-title'},l.value.time),h('button',{type:'button',class:'sol-button inline-action',onClick:()=>close()},l.value.close)]),h('div',{class:'sol-time-options'},[h('label',{class:'sol-field'},[h('span',{class:'sol-label'},l.value.hour),h('select',{ref:hourSelect,class:'sol-select',value:hour.value,onChange:(e:Event)=>{hour.value=(e.target as HTMLSelectElement).value;select();}},[h('option',{value:''},l.value.choose),...hours.map(n=>h('option',{value:pad(n)},pad(n)))])]),h('label',{class:'sol-field'},[h('span',{class:'sol-label'},l.value.minute),h('select',{ref:minuteSelect,class:'sol-select',value:minute.value,onChange:(e:Event)=>{minute.value=(e.target as HTMLSelectElement).value;select();}},[h('option',{value:''},l.value.choose),...minutes.map(n=>h('option',{value:pad(n)},pad(n)))])])]),h('button',{type:'button',class:'sol-button',onClick:()=>{if(!hour.value){hourSelect.value?.focus();return;}if(!minute.value){minuteSelect.value?.focus();return;}if(validate())close('select');}},l.value.done)
- ]):null])]);};
-}});
+export type SolTimePresentation = 'native' | 'list'
+
+export const STimePicker = defineComponent({
+  name: 'STimePicker', inheritAttrs: false,
+  props: {
+    ...commonFieldProps,
+    modelValue: { type: String as PropType<string | null>, default: null },
+    min: { type: String, default: '00:00' }, max: { type: String, default: '23:59' },
+    step: { type: Number, default: 15 },
+    allowManualInput: { type: Boolean, default: true },
+    presentation: { type: String as PropType<SolTimePresentation>, default: 'native' },
+    initialScrollValue: String,
+    scrollToCurrentTime: Boolean,
+  },
+  emits: {
+    'update:modelValue': (_value: string | null) => true, change: (_value: string | null) => true,
+    invalid: (_message: string) => true, open: () => true, close: (_reason: PickerCloseReason) => true,
+  },
+  setup(p, { attrs, slots, emit, expose }) {
+    const l = useSolLocale(() => p.locale)
+    const draft = ref(p.modelValue ?? ''), localError = ref(''), opened = ref(false)
+    const hour = ref(''), minute = ref(''), active = ref<string | undefined>()
+    const input = ref<HTMLInputElement | null>(null), validationInput = ref<HTMLInputElement | null>(null)
+    const trigger = ref<HTMLButtonElement | null>(null), panel = ref<HTMLElement | null>(null)
+    const hourSelect = ref<HTMLSelectElement | null>(null), minuteSelect = ref<HTMLSelectElement | null>(null)
+    const list = ref<HTMLElement | null>(null), options = new Map<string, HTMLElement>()
+    const position = ref({ left: '8px', top: '8px' })
+    const choices = computed(() => timeChoices(p.min, p.max, p.step))
+    let opener: HTMLElement | null = null, reason: PickerCloseReason = 'close', disposed = false
+    const bounds = () => ({ min: parseTimeOnly(p.min)?.minutes ?? NaN, max: parseTimeOnly(p.max)?.minutes ?? NaN })
+    const allowed = (minutes: number) => {
+      const b = bounds()
+      return Number.isFinite(b.min) && Number.isFinite(b.max) && b.min <= b.max &&
+        Number.isInteger(p.step) && p.step > 0 && minutes >= b.min && minutes <= b.max && (minutes - b.min) % p.step === 0
+    }
+    function parse() {
+      if (!draft.value.trim()) return { value: null, error: p.required ? l.value.timeRequired : '' }
+      const time = parseTimeOnly(draft.value)
+      return time && allowed(time.minutes) ? { value: time.value, error: '' } : { value: null, error: l.value.invalidTime }
+    }
+    function syncOptions() {
+      const time = parseTimeOnly(draft.value)
+      hour.value = time && Array.from({ length: 60 }, (_, n) => n).some(n => allowed(Math.floor(time.minutes / 60) * 60 + n)) ? time.value.slice(0, 2) : ''
+      minute.value = time && allowed(time.minutes) ? time.value.slice(3) : ''
+    }
+    function validity() {
+      const error = fieldError(p) || parse().error
+      input.value?.setCustomValidity(error)
+      validationInput.value?.setCustomValidity(error)
+    }
+    function commit(value: string | null) {
+      if (fieldDisabled(p) || fieldReadonly(p)) return
+      draft.value = value ?? ''; localError.value = ''; syncOptions()
+      if (value !== p.modelValue) { emit('update:modelValue', value); emit('change', value) }
+      void nextTick(validity)
+    }
+    function validateIntrinsic() {
+      const result = parse(); localError.value = result.error
+      if (result.error) { emit('invalid', result.error); validity(); return false }
+      if (!fieldDisabled(p) && !fieldReadonly(p)) commit(result.value)
+      return !externalFieldError(p)
+    }
+    function locate() {
+      if (!opened.value || !input.value || !panel.value) return
+      const rect = input.value.getBoundingClientRect(), box = panel.value.getBoundingClientRect()
+      const width = document.documentElement.clientWidth || window.innerWidth
+      position.value = { left: Math.max(8, Math.min(rect.left, width - box.width - 8)) + 'px', top: Math.max(8, Math.min(rect.bottom + 6, window.innerHeight - box.height - 8)) + 'px' }
+    }
+    function anchor() {
+      const selected = parseTimeOnly(p.modelValue)
+      if (selected && allowed(selected.minutes)) return selected.value
+      const initial = parseTimeOnly(p.initialScrollValue)
+      if (initial) return nearestTime(choices.value, initial.minutes)
+      if (p.scrollToCurrentTime) { const now = new Date(); return nearestTime(choices.value, now.getHours() * 60 + now.getMinutes()) }
+      return choices.value[0]
+    }
+    function scrollActive(center = false) {
+      const viewport = list.value, option = active.value && options.get(active.value)
+      if (!viewport || !option) return
+      const outer = viewport.getBoundingClientRect(), inner = option.getBoundingClientRect()
+      if (center) viewport.scrollTop += inner.top - outer.top - (viewport.clientHeight - inner.height) / 2
+      else if (inner.top < outer.top) viewport.scrollTop += inner.top - outer.top
+      else if (inner.bottom > outer.bottom) viewport.scrollTop += inner.bottom - outer.bottom
+    }
+    function close(why: PickerCloseReason = 'close', restore = true) {
+      if (!opened.value) return
+      reason = why; opened.value = false
+      if (restore) void nextTick(() => {
+        const target = opener && !(opener as HTMLButtonElement).disabled ? opener : input.value
+        if (target?.isConnected && !fieldDisabled(p)) target.focus()
+      })
+    }
+    async function open(keyboard: boolean, from: HTMLElement | null) {
+      if (fieldDisabled(p) || fieldReadonly(p)) return
+      opener = from
+      const wasOpen = opened.value
+      active.value = anchor(); opened.value = true
+      await nextTick()
+      if (disposed || !opened.value || !input.value) return
+      locate()
+      if (p.presentation === 'list') { scrollActive(true); if (keyboard) list.value?.focus({ preventScroll: true }) }
+      else if (keyboard) hourSelect.value?.focus()
+      if (!wasOpen) emit('open')
+    }
+    function selectNative() {
+      if (fieldDisabled(p) || fieldReadonly(p) || !hour.value || !minute.value) return
+      const time = parseTimeOnly(hour.value + ':' + minute.value)
+      if (time && allowed(time.minutes)) commit(time.value)
+      else { minute.value = ''; localError.value = '' }
+    }
+    function choose(value: string | undefined) {
+      if (!value || !choices.value.includes(value) || fieldDisabled(p) || fieldReadonly(p)) return
+      active.value = value; commit(value); close('select')
+    }
+    function listKey(event: KeyboardEvent) {
+      if (event.isComposing || fieldDisabled(p) || fieldReadonly(p)) return
+      let index = Math.max(0, choices.value.indexOf(active.value || ''))
+      if (event.key === 'ArrowDown') index++
+      else if (event.key === 'ArrowUp') index--
+      else if (event.key === 'Home') index = 0
+      else if (event.key === 'End') index = choices.value.length - 1
+      else if (event.key === 'PageDown') index += 10
+      else if (event.key === 'PageUp') index -= 10
+      else if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); choose(active.value); return }
+      else return
+      event.preventDefault(); event.stopPropagation()
+      active.value = choices.value[Math.max(0, Math.min(index, choices.value.length - 1))]
+      void nextTick(() => scrollActive())
+    }
+    const outside = (event: Event) => {
+      const target = event.target as Node
+      if (opened.value && !panel.value?.contains(target) && target !== input.value && !trigger.value?.contains(target)) close('outside', false)
+    }
+    watch(l, () => { if (localError.value) localError.value = parse().error; void nextTick(validity) })
+    watch(() => p.modelValue, value => { draft.value = value ?? ''; localError.value = ''; syncOptions(); void nextTick(validity) })
+    watch(() => [fieldDisabled(p), fieldReadonly(p)], () => { if (fieldDisabled(p) || fieldReadonly(p)) close('disabled', !fieldDisabled(p)) })
+    watch(() => [p.min, p.max, p.step, fieldError(p), p.required, p.allowManualInput], () => {
+      syncOptions()
+      if (!active.value || !choices.value.includes(active.value)) active.value = anchor()
+      void nextTick(() => { validity(); scrollActive() })
+    })
+    watch(() => p.presentation, () => close('mode'))
+    watch(opened, (value, old) => { if (!value && old) emit('close', reason) })
+    onMounted(() => {
+      syncOptions(); validity(); document.addEventListener('pointerdown', outside); document.addEventListener('focusin', outside)
+      window.addEventListener('resize', locate); document.addEventListener('scroll', locate, true)
+    })
+    onBeforeUnmount(() => {
+      disposed = true
+      document.removeEventListener('pointerdown', outside); document.removeEventListener('focusin', outside)
+      window.removeEventListener('resize', locate); document.removeEventListener('scroll', locate, true)
+      if (panel.value?.contains(document.activeElement) && opener?.isConnected) opener.focus()
+    })
+    const validation = useSFieldValidation(p, () => parse().value, {
+      focus: () => input.value?.focus(), validateIntrinsic, intrinsicError: () => localError.value,
+      resetIntrinsic: () => { localError.value = '' },
+    })
+    const validate = validation.validate
+    expose({ ...validation, clear: () => commit(null) })
+    const optionId = (value: string) => p.id + '-time-' + value.replace(':', '')
+    return () => {
+      const error = fieldError(p) || localError.value, pad = (value: number) => String(value).padStart(2, '0')
+      const hours = Array.from({ length: 24 }, (_, n) => n).filter(hour => Array.from({ length: 60 }, (_, n) => n).some(n => allowed(hour * 60 + n)))
+      const minutes = Array.from({ length: 60 }, (_, n) => n).filter(n => hour.value !== '' && allowed(Number(hour.value) * 60 + n))
+      const selected = parseTimeOnly(p.modelValue)?.value
+      const invalid = (event: Event) => { event.preventDefault(); validate(); input.value?.focus() }
+      return h('div', { class: 'sol-field sol-ui-native-field' }, [
+        fieldLabel(p, slots, l.value.required),
+        !p.allowManualInput && !fieldReadonly(p) ? h('input', {
+          ref: validationInput, type: 'text', class: 'sol-ui-sr-only', tabindex: -1, 'aria-hidden': 'true',
+          form: attrs.form, value: draft.value, required: p.required, disabled: fieldDisabled(p), autocomplete: 'off', onInvalid: invalid,
+        }) : null,
+        h('div', { class: 'sol-time-entry' }, [
+          h('input', {
+            ...attrs, ref: input, id: p.id, type: 'text', class: ['sol-input', attrs.class], inputmode: 'numeric', maxlength: 5,
+            autocomplete: 'off', value: draft.value, disabled: fieldDisabled(p), readonly: fieldReadonly(p) || !p.allowManualInput,
+            required: p.required, placeholder: 'HH:mm', 'aria-haspopup': 'dialog',
+            'aria-controls': opened.value ? p.id + '-panel' : undefined,
+            'aria-expanded': p.presentation === 'list' ? String(opened.value) : undefined,
+            'aria-invalid': error ? 'true' : undefined,
+            'aria-describedby': fieldDescription(p, slots, error, [p.id + '-format', attrs['aria-describedby']].filter(Boolean).join(' ')),
+            onBeforeinput: (event: Event) => { if (!p.allowManualInput || fieldReadonly(p) || fieldDisabled(p)) event.preventDefault() },
+            onInput: (event: Event) => {
+              if (fieldDisabled(p) || fieldReadonly(p) || !p.allowManualInput) { (event.target as HTMLInputElement).value = draft.value; return }
+              draft.value = (event.target as HTMLInputElement).value; syncOptions()
+              if (localError.value) localError.value = parse().error
+              validity()
+            },
+            onClick: () => void open(false, input.value),
+            onBlur: () => { if (!fieldReadonly(p) && !fieldDisabled(p)) validate() }, onInvalid: invalid,
+            onKeydown: (event: KeyboardEvent) => {
+              if (event.isComposing) return
+              if (event.key === 'ArrowDown' && event.altKey) { event.preventDefault(); void open(true, input.value) }
+              else if (event.key === 'Escape') { event.preventDefault(); close('escape') }
+              else if (event.key === 'Enter') { event.preventDefault(); validate() }
+            },
+          }),
+          h('button', {
+            ref: trigger, type: 'button', class: 'sol-button', disabled: fieldDisabled(p) || fieldReadonly(p),
+            'aria-haspopup': 'dialog', 'aria-controls': opened.value ? p.id + '-panel' : undefined, 'aria-expanded': String(opened.value),
+            'aria-label': p.label + ' ' + l.value.time, onClick: () => opened.value ? close() : void open(true, trigger.value),
+          }, l.value.time),
+        ]),
+        h('span', { id: p.id + '-format', class: 'sol-hint' }, l.value.timeHelp(p.min, p.max, p.step)),
+        ...fieldMessages(p, slots, error),
+        h('button', {
+          type: 'button', class: 'sol-button inline-action sol-ui-picker-clear', disabled: fieldDisabled(p) || fieldReadonly(p),
+          onClick: () => { close('close', false); commit(null); input.value?.focus() },
+        }, l.value.clear),
+        h(Teleport, { to: 'body' }, [opened.value ? h('div', {
+          ref: panel, id: p.id + '-panel', class: 'sol-time-panel sol-ui-time-panel', role: 'dialog',
+          'aria-labelledby': p.id + '-title', style: position.value,
+          onKeydown: (event: KeyboardEvent) => { if (event.key === 'Escape' && !event.isComposing) { event.preventDefault(); event.stopPropagation(); close('escape') } },
+        }, [
+          h('div', { class: 'sol-ui-picker-top' }, [h('strong', { id: p.id + '-title' }, l.value.time), h('button', { type: 'button', class: 'sol-button inline-action', onClick: () => close() }, l.value.close)]),
+          p.presentation === 'list' ? h('div', {
+            ref: list, class: 'sol-ui-time-list', role: 'listbox', tabindex: 0, 'aria-label': l.value.time,
+            'aria-activedescendant': active.value ? optionId(active.value) : undefined, onKeydown: listKey,
+          }, choices.value.length ? choices.value.map(value => h('div', {
+            key: value, ref: (element: unknown) => { if (element) options.set(value, element as HTMLElement); else options.delete(value) },
+            id: optionId(value), role: 'option', 'aria-selected': String(value === selected),
+            class: 'sol-ui-time-option', 'data-time-value': value, 'data-active': value === active.value ? 'true' : undefined,
+            onClick: () => choose(value),
+          }, [h('span', value), value === selected ? h(SIcon, { name: 'check', size: 16, decorative: true }) : null])) : h('p', { role: 'status', class: 'sol-hint' }, l.value.noResults)) :
+          h('div', { class: 'sol-time-options' }, [
+            h('label', { class: 'sol-field' }, [h('span', { class: 'sol-label' }, l.value.hour), h('select', { ref: hourSelect, class: 'sol-select', value: hour.value, onChange: (event: Event) => { hour.value = (event.target as HTMLSelectElement).value; selectNative() } }, [h('option', { value: '' }, l.value.choose), ...hours.map(n => h('option', { value: pad(n) }, pad(n)))])]),
+            h('label', { class: 'sol-field' }, [h('span', { class: 'sol-label' }, l.value.minute), h('select', { ref: minuteSelect, class: 'sol-select', value: minute.value, onChange: (event: Event) => { minute.value = (event.target as HTMLSelectElement).value; selectNative() } }, [h('option', { value: '' }, l.value.choose), ...minutes.map(n => h('option', { value: pad(n) }, pad(n)))])]),
+          ]),
+          h('button', {
+            type: 'button', class: 'sol-button', disabled: p.presentation === 'list' && !active.value,
+            onClick: () => {
+              if (p.presentation === 'list') { choose(active.value); return }
+              if (!hour.value) { hourSelect.value?.focus(); return }
+              if (!minute.value) { minuteSelect.value?.focus(); return }
+              if (validate()) close('select')
+            },
+          }, l.value.done),
+        ]) : null]),
+      ])
+    }
+  },
+})

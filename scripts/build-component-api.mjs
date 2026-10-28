@@ -77,6 +77,12 @@ function options(initializer, file) {
   return {node, file: target.file};
 }
 const propertyDescriptions = {
+  allowManualInput:'직접 타이핑을 허용합니다. false여도 readonly와 달리 팝업 선택은 허용합니다.',
+  initialScrollValue:'목록을 열 때의 별도 스크롤 기준입니다. 값 선택이나 모델 변경을 뜻하지 않습니다.',
+  scrollToCurrentTime:'선택값과 별도 기준이 없으면 현재 시각에 가까운 항목으로 스크롤합니다.',
+  displayFormatter:'ISO 모델과 분리한 날짜 표시 callback입니다. 편집과 제출에는 표시 문자열을 사용하지 않습니다.',
+  presets:'범위와 min 기준 step을 만족하는 숫자 preset 목록입니다.',
+  unit:'모델과 parser에 포함하지 않는 표시용 단위입니다.',
   id:'입력·제목·패널의 접근성 연결에 사용하는 고유 ID입니다.', label:'화면과 보조 기술에 전달하는 이름입니다.', title:'표면 또는 패널의 제목입니다.', eyebrow:'제목 위에 표시하는 짧은 보조 문구입니다.',
   headingLevel:'문서의 제목 위계입니다. 화면의 실제 h2·h3·h4 수준에 맞춥니다.', modelValue:'소비 앱이 소유하는 현재 값입니다. update:modelValue와 연결합니다.',
   help:'입력 아래의 보조 설명입니다.', error:'소비 앱이 제공하는 오류 문구입니다.', serverError:'서버 응답 오류입니다. 로컬 규칙 오류와 구분하여 소비 앱에서 갱신합니다.',
@@ -168,6 +174,8 @@ for (const [name, group, description, exampleRoute, example] of records) {
     props.find(prop => prop.name === 'step').description =
       '양의 유한한 증감 간격입니다. JavaScript Number로 정확한 별도 결과를 표현할 수 없거나 범위를 넘는 증감은 실행하지 않습니다.'
   }
+  if (name === 'STimePicker') props.find(prop => prop.name === 'presentation').description =
+    '기본 두 native select 또는 opt-in 스크롤 목록입니다. 허용값은 native/list입니다.'
   const emits = resolve(property(component.node,component.file,'emits'),component.file);
   const events = entries(emits.node,emits.file).map(([name,fn])=>({name,signature:signature(fn),description:name==='update:modelValue'?'소비 앱의 모델 값을 갱신합니다.':name.startsWith('update:')?'해당 상태의 변경을 소비 앱에 전달합니다.':name==='invalid'?'검증 실패 문구를 전달합니다.':name==='close'?(fn.parameters?.length?'닫힌 이유를 전달합니다.':'닫힌 뒤 전달합니다.'):name==='open'?'패널이 열린 뒤 전달합니다.':name==='retry'?'소비 앱에 재시도 처리를 요청합니다.':`${name} 동작이 발생했을 때 전달합니다.`}));
   const setup = property(component.node,component.file,'setup');

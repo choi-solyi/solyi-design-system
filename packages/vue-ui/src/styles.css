@@ -134,6 +134,11 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-calendar .sol-calendar-top>.sol-button {white-space:nowrap;}
 .sol-ui-calendar .sol-calendar-top>strong,.sol-ui-picker-top>strong {min-width:0;overflow-wrap:anywhere;}
 .sol-ui-time-panel>.sol-button:last-child {margin-top:var(--sol-space-2);}
+.sol-ui-time-list {position:relative;max-block-size:min(50vh,calc(var(--sol-control-height) * 7));overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-control);}
+.sol-ui-time-option {display:flex;align-items:center;justify-content:space-between;gap:var(--sol-space-2);min-block-size:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);font-variant-numeric:tabular-nums;cursor:pointer;}
+.sol-ui-time-option[aria-selected=true] {background:var(--sol-color-selected-surface);color:var(--sol-color-selected-text);}
+.sol-ui-time-list:focus [data-active=true] {box-shadow:inset 0 0 0 var(--sol-focus-width) var(--sol-color-focus);}
+.sol-ui-time-list:focus-visible {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
 
 .sol-ui-segment-options {display:flex;flex-wrap:wrap;gap:var(--sol-space-1);}
 .sol-ui-segment {position:relative;min-width:0;cursor:pointer;}
