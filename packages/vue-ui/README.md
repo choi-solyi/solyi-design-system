@@ -55,6 +55,12 @@ SDatePicker·STimePicker도 연결했습니다. 단일/range의 ISO 모델과 Da
 
 `leading/trailing/indicator/status/loading` slot은 `{hasValue,disabled,readonly,loading,error,clear}`를 받습니다. `loading`은 진행 표시입니다. 편집을 막으려면 disabled/readonly를 함께 제어합니다. 새 공통 옵션이나 slot을 사용하면 공개 clear와 scope.clear가 같은 강화 경로를 사용합니다. 새 기능의 타입은 `SolInputHandle`, `SolInputClearEvent<T>`, `SolInputControlScope`이며 Number의 기존 preset scope는 `SolNumberPresetScope`·`SolNumberInputSlots`로도 제공합니다. 입력 8종 source·문서·starter 검증과 새 tarball·공개 배포는 구분하며 후자는 아직 하지 않았습니다.
 
+## 범주 팔레트 (1.1.0 개발 후보)
+
+`resolveCategoricalColor(key, {theme:'violet', mode:'light'})`는 문자열/유한 숫자 key를 고정된 `c1`–`c8`에 대응시키고 `category/index/foreground/background/border`를 반환하는 순수 함수입니다. 옵션은 DOM 테마를 읽지 않으며 기본값은 violet/light입니다. `solyi-ui` 또는 `solyi-ui/tokens`에서 import할 수 있습니다. 테마·명암에 관계없이 같은 key의 category는 유지하며 색만 바뀝니다. 분류 충돌은 가능하므로 색을 식별자나 유일한 구분 수단으로 사용하지 마세요.
+
+CSS는 `--sol-color-categorical-1-foreground/background/border`부터 8번까지 제공합니다. semantic tone과 별도이며 팔레트 확장 시 기존 여덟 bucket/ID의 매핑을 바꾸지 않습니다. SMonthCalendar marker에 `category: resolveCategoricalColor(key).category`를 주면 CSS 역할을 통해 현재 테마에 맞춰 표시합니다. 기존 `tone`을 함께 지정하면 의미 상태 tone을 우선합니다. marker label과 기존 ISO 모델은 유지합니다.
+
 ## 소비 프로젝트 AI 지침
 
 패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.

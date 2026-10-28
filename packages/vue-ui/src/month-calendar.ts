@@ -3,6 +3,7 @@ import type { PropType, SlotsType, VNode } from 'vue'
 import { parseDateOnly } from '@solyi/core/date'
 import { solIconPaths } from '@solyi/core/icons'
 import type { SolIconName } from '@solyi/core/icons'
+import type { SolCategoryId } from '@solyi/core'
 import { displayFieldProps, fieldDescription, fieldMessages } from './controls'
 import { formatSolDate, useSolLocale, withVisibleNumberLabel } from './locale'
 import { SBadge, SIcon } from './primitives'
@@ -23,7 +24,16 @@ export interface SolCalendarMarker {
   readonly label: string
   readonly tone?: SolTone
   readonly icon?: SolIconName
+  readonly category?: SolCategoryId
 }
+const markerCategoryStyle = (marker: Readonly<SolCalendarMarker>) =>
+  marker.tone === undefined && marker.category
+    ? {
+        '--sol-tag-fg': `var(--sol-color-categorical-${marker.category.slice(1)}-foreground)`,
+        '--sol-tag-bg': `var(--sol-color-categorical-${marker.category.slice(1)}-background)`,
+        borderColor: `var(--sol-color-categorical-${marker.category.slice(1)}-border)`,
+      }
+    : undefined
 export type SolCalendarMarkers = Readonly<Record<string, readonly SolCalendarMarker[]>>
 export interface SolCalendarCellScope {
   date: string
@@ -138,7 +148,8 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                 typeof marker.label !== 'string' ||
                 !marker.label.trim() ||
                 (marker.tone !== undefined && !tones.has(marker.tone)) ||
-                (marker.icon !== undefined && !Object.hasOwn(solIconPaths, marker.icon))
+                (marker.icon !== undefined && !Object.hasOwn(solIconPaths, marker.icon)) ||
+                (marker.category !== undefined && !/^c[1-8]$/.test(marker.category))
               )
                 throw Error('Invalid calendar marker')
               ids.add(marker.id)
@@ -147,6 +158,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                 label: marker.label,
                 tone: marker.tone,
                 icon: marker.icon,
+                category: marker.category,
               })
             })
             days.set(cell.iso, { disabled, markers: Object.freeze(markers) })
@@ -155,7 +167,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
             days.set(cell.iso, { disabled: true, markers: [] })
           }
         }
-      return { invalid, days, hasMarkers: [...days.values()].some(day => day.markers.length > 0) }
+      return { invalid, days, hasMarkers: [...days.values()].some((day) => day.markers.length > 0) }
     })
     const unavailable = (date: string) =>
       !!(
@@ -252,7 +264,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
     )
     watch(
       () => p.disabled,
-      disabled => {
+      (disabled) => {
         if (disabled) pending = undefined
       },
     )
@@ -379,7 +391,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
               Array.from({ length: 6 }, (_, row) =>
                 h(
                   'tr',
-                  cells.slice(row * 7, row * 7 + 7).map(cell => {
+                  cells.slice(row * 7, row * 7 + 7).map((cell) => {
                     if (!cell)
                       return h(
                         'td',
@@ -410,7 +422,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                       isToday ? l.value.monthCalendarToday : '',
                       selected ? l.value.selected : '',
                       scope.disabled ? l.value.unavailable : '',
-                      ...data.markers.map(marker => marker.label),
+                      ...data.markers.map((marker) => marker.label),
                       data.markers.length ? l.value.monthCalendarCount!(data.markers.length) : '',
                     ]
                       .filter(Boolean)
@@ -462,7 +474,11 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                                   slots.marker?.({ date: cell.iso, marker, index }) ||
                                     h(
                                       SBadge,
-                                      { tone: marker.tone ?? 'neutral', size: 'sm' },
+                                      {
+                                        tone: marker.tone ?? 'neutral',
+                                        size: 'sm',
+                                        style: markerCategoryStyle(marker),
+                                      },
                                       () => [
                                         marker.icon
                                           ? h(SIcon, {
@@ -526,12 +542,18 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                   activeMarkers.length
                     ? h(
                         'ul',
-                        activeMarkers.map(marker =>
+                        activeMarkers.map((marker) =>
                           h('li', { key: marker.id }, [
                             marker.icon
                               ? h(SIcon, { name: marker.icon, size: 16, decorative: true })
                               : null,
-                            h('span', marker.label),
+                            marker.category && marker.tone === undefined
+                              ? h(SBadge, {
+                                  content: marker.label,
+                                  size: 'sm',
+                                  style: markerCategoryStyle(marker),
+                                })
+                              : h('span', marker.label),
                           ]),
                         ),
                       )

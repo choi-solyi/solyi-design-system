@@ -1,4 +1,6 @@
 <script setup>
+import { resolveCategoricalColor } from 'solyi-ui'
+
 const props = defineProps({ part: { type: String, default: '' } })
 const supportedParts = [
   'segmented',
@@ -93,7 +95,12 @@ const calendarMonth = ref('2026-10'),
   calendarBlocked = ref(false)
 const calendarMarkers = Object.freeze({
   '2026-10-28': Object.freeze([
-    Object.freeze({ id: 'a', label: '첫 번째 범용 상태', tone: 'info', icon: 'copy' }),
+    Object.freeze({
+      id: 'a',
+      label: '첫 번째 범주',
+      category: resolveCategoricalColor('example-a').category,
+      icon: 'copy',
+    }),
     Object.freeze({
       id: 'b',
       label: '길게 입력한 두 번째 상태도 넘치지 않게 표시합니다',

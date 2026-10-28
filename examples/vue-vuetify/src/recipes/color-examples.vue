@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import { resolveCategoricalColor } from 'solyi-ui'
 import type { ToastTone } from 'solyi-ui'
 
 const open = ref(false),
   selected = ref<ToastTone>('info'),
   message = ref('')
+const categoryKey = ref('example-a'),
+  category = computed(() => resolveCategoricalColor(categoryKey.value))
+const categoryStyle = (index: number) => ({
+  '--sol-tag-fg': `var(--sol-color-categorical-${index}-foreground)`,
+  '--sol-tag-bg': `var(--sol-color-categorical-${index}-background)`,
+  borderColor: `var(--sol-color-categorical-${index}-border)`,
+})
 const tones: { tone: ToastTone; label: string; icon: string; note: string }[] = [
   {
     tone: 'accent',
@@ -44,6 +52,19 @@ function show(tone: ToastTone, label: string) {
 </script>
 <template>
   <div class="sol-stack">
+    <SCard title="서로 다른 범주 8색" :heading-level="2">
+      <p>성공·오류와 별도인 분류 색입니다. 색과 함께 항상 이름을 표시합니다.</p>
+      <div class="sol-actions">
+        <SBadge
+          v-for="index in 8"
+          :key="index"
+          :content="`범주 ${index}`"
+          :style="categoryStyle(index)"
+        />
+      </div>
+      <STextField id="recipe-category-key" v-model="categoryKey" label="안정적인 분류 key" />
+      <p role="status">{{ category.category }} · 테마와 명암을 바꿔도 분류 ID는 유지합니다.</p>
+    </SCard>
     <SCard
       v-for="item in tones"
       :key="item.tone"
