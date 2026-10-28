@@ -1,0 +1,24 @@
+.sol-ui-input-frame {display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;min-inline-size:0;min-block-size:var(--sol-control-height);border-radius:var(--sol-radius-control);background:var(--sol-color-surface);color:var(--sol-color-text);box-shadow:inset 0 0 0 1px var(--sol-color-control-border);}
+.sol-ui-input-frame[data-disabled=true] {background:var(--sol-color-surface-alt);color:var(--sol-color-muted);}
+.sol-ui-input-frame[data-error=true] {box-shadow:inset 0 0 0 1px var(--sol-color-danger);}
+.sol-ui-input-frame:has(.sol-ui-input-native:focus-visible) {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-ui-input-leading {grid-column:1;display:inline-flex;align-items:center;gap:var(--sol-space-1);min-inline-size:0;padding-inline-start:var(--sol-space-3);}
+.sol-ui-input-core {grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) auto;min-inline-size:0;}
+.sol-ui-input-frame .sol-ui-input-core>.sol-ui-input-native {grid-area:1/1/2/-1;min-inline-size:0;inline-size:100%;border:0;border-radius:0;background:transparent;box-shadow:none;}
+.sol-ui-input-frame .sol-ui-input-core>.sol-ui-input-native:focus-visible {outline:0;box-shadow:none;}
+.sol-ui-input-frame--multiline {align-items:start;}
+.sol-ui-input-rail {grid-column:3;display:inline-flex;align-items:center;gap:var(--sol-space-1);min-inline-size:0;padding-inline-end:var(--sol-space-1);}
+.sol-ui-input-frame--multiline .sol-ui-input-rail {align-self:start;}
+.sol-ui-input-clear.sol-button,.sol-ui-input-trigger.sol-button {display:inline-flex;align-items:center;justify-content:center;flex:none;min-inline-size:var(--sol-control-height);min-block-size:var(--sol-control-height);padding:0;border-color:transparent;background:transparent;}
+.sol-ui-input-status {display:inline-flex;align-items:center;color:var(--sol-color-danger);}
+.sol-ui-input-loading {display:inline-flex;align-items:center;justify-content:center;inline-size:var(--sol-icon-md);block-size:var(--sol-icon-md);}
+.sol-ui-input-spinner {inline-size:var(--sol-icon-sm);block-size:var(--sol-icon-sm);box-sizing:border-box;border:2px solid currentColor;border-inline-end-color:transparent;border-radius:50%;animation:sol-input-spin var(--sol-motion-duration-loading) var(--sol-motion-easing-linear) infinite;}
+.sol-ui-input-overlay-indicator {grid-column:2;grid-row:1;align-self:center;display:inline-flex;padding-inline-end:var(--sol-space-3);pointer-events:none;}
+.sol-ui-input-frame .sol-ui-input-native--indicator {appearance:none;padding-inline-end:var(--sol-control-height);}
+.sol-ui-input-enhanced .v-field__append-inner,.sol-ui-input-enhanced .v-field__prepend-inner {align-items:center;padding-block:0;}
+.sol-ui-input-enhanced .v-field__append-inner .sol-ui-input-rail {padding-inline-end:0;}
+.sol-ui-input-enhanced .sol-ui-input-leading {padding-inline-start:0;}
+.sol-ui-input-enhanced input:focus-visible {outline:0;}
+.sol-ui-input-frame .sol-ui-input-native[type=search]::-webkit-search-cancel-button,.sol-ui-input-enhanced input[type=search]::-webkit-search-cancel-button {appearance:none;}
+@keyframes sol-input-spin {to{transform:rotate(360deg);}}
+@media(prefers-reduced-motion:reduce) {.sol-ui-input-spinner {animation:none;}}

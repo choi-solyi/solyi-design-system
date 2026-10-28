@@ -3,6 +3,7 @@ import type { SolNumberDisplayFormatter } from 'solyi-ui'
 
 defineProps<{ part?: string }>()
 const showNumberFormat = ref(false)
+const noteClearCount = ref(0)
 const formatAmount: SolNumberDisplayFormatter = (value, locale) =>
   new Intl.NumberFormat(locale.code, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(
     value,
@@ -22,9 +23,12 @@ const options = [
       v-if="!part || part === 'textarea'"
       id="recipe-note"
       v-model="note"
+      clearable
+      @clear="noteClearCount++"
       label="가상 기록 설명"
       :maxlength="120"
     />
+    <p v-if="!part || part === 'textarea'" role="status">내용 지움: {{ noteClearCount }}회</p>
     <SCheckbox
       v-if="!part || part === 'number'"
       id="recipe-number-format"

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const field = useTemplateRef<{ focus(): void }>('field')
 const serverRejected = ref(false)
+const showInputLoading = ref(false),
+  clearCount = ref(0)
 const value = ref(''),
   submitted = ref(false)
 const error = computed(() =>
@@ -18,6 +20,9 @@ function check() {
         id="recipe-field"
         ref="field"
         v-model="value"
+        clearable
+        :loading="showInputLoading"
+        @clear="clearCount++"
         label="가상 기록 제목"
         required
         help="3자 이상. 이 페이지 메모리에만 남습니다."
@@ -26,6 +31,8 @@ function check() {
           serverRejected ? '이미 사용 중인 가상 이름입니다. 다른 이름을 입력해 주세요.' : ''
         "
       />
+      <SCheckbox id="recipe-field-loading" v-model="showInputLoading" label="입력 로딩 표시" />
+      <p role="status">입력 내부 X로 지운 횟수: {{ clearCount }}</p>
       <STextField
         id="recipe-readonly"
         model-value="읽기 전용 예시"

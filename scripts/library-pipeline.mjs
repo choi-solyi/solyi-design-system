@@ -43,6 +43,8 @@ node('7/10 Shared locale runtime','scripts/locale-runtime-check.mjs');
 node('7/10 Installed overflow locale','scripts/overflow-locale-check.mjs','--installed');
 node('7/10 S public APIs and direct Vuetify bridge','scripts/s-api-runtime-check.mjs');
 node('7/10 Shared form validation and Vuetify grid','scripts/form-api-runtime-check.mjs');
+node('7/10 Shared input clear model, validation and focus','scripts/input-control-runtime-check.mjs');
+node('7/10 Installed shared input clear SFC contracts','scripts/input-control-types-check.mjs','--installed');
 node('7/10 Installed public declaration contracts','scripts/declaration-contract-check.mjs','--installed');
 node('7/10 Reusable progress','scripts/progress-runtime-check.mjs');
 node('7/10 Actual Vue documentation recipes','scripts/vue-recipes-runtime-check.mjs');

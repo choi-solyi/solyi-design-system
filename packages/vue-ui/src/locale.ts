@@ -5,6 +5,7 @@ import {parseDateOnly} from '@solyi/core/date';
 export type SolLocaleCode='ko-KR'|'en-US';
 export type SolLocaleSource=MaybeRefOrGetter<Partial<SolLocale>|string>;
 export interface SolLocale {
+  inputLoading?:string;
   validationRequired:string;validationInvalid:string;validationMinLength:(minimum:number)=>string;
   breadcrumb:string;steps:string;currentStep:string;completeStep:string;chartInvalid:string;chartCategory:string;chartValue:string;toastAccent:string;
   filesChoose:string;filesClear:string;dropFiles:string;filesRejected:string;fileRequired:string;unknownFileType:string;noFileExtension:string;duplicateFile:string;unsupportedFile:string;
@@ -44,6 +45,7 @@ export interface SolLocale {
   monthCalendarCount?:(count:number)=>string;
 }
 export const koLocale:Readonly<SolLocale>=Object.freeze({
+  inputLoading:'입력 내용을 처리하는 중입니다.',
   monthCalendarKeys:'방향키: 하루·한 주 · Home/End: 주 경계 · PageUp/Down: 월 이동(Shift: 연도) · Enter/Space: 날짜 선택 · Escape: 선택일 초점 복귀',
   monthCalendarInvalid:'달력의 월·날짜·marker 설정을 확인해 주세요.',
   monthCalendarEmpty:'표시할 날짜별 자료가 없습니다.',
@@ -80,6 +82,7 @@ export const koLocale:Readonly<SolLocale>=Object.freeze({
   timeHelp:(min:string,max:string,step:number)=>`HH:mm · ${min}–${max} · ${step}분 간격`
 });
 export const enLocale:Readonly<SolLocale>=Object.freeze({
+  inputLoading:'Working on this input.',
   monthCalendarKeys:'Arrows: day/week; Home/End: week boundaries; PageUp/Down: month (Shift: year); Enter/Space: choose a date; Escape: focus the selected date.',
   monthCalendarInvalid:'Check the calendar month, date and marker configuration.',
   monthCalendarEmpty:'No date-specific data to show.',

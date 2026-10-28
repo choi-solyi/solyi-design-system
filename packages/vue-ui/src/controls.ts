@@ -1,7 +1,9 @@
 import {defineComponent,h,ref,watch,nextTick,onMounted,mergeProps} from 'vue';
 import {SChip} from './primitives';
 import {formatFieldDisplay} from './display-format';
-import type {PropType,Slots} from 'vue';
+import type {PropType,Slots,SlotsType} from 'vue';
+import {inputControlProps,useInputControl} from './input-control';
+import type {SolInputClearEvent,SolInputControlSlots} from './input-control';
 import {useSolLocale,formatSolNumber,parseSolNumber} from './locale';
 import type {SolLocale} from './locale';
 import {validationProps,useSFieldValidation,fieldError,fieldDisabled,fieldReadonly} from './form';
@@ -46,9 +48,98 @@ export const SSwitch=defineComponent({name:'SSwitch',inheritAttrs:false,props:{.
 export const SSelect=defineComponent({name:'SSelect',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,required:true},placeholder:String},emits:{'update:modelValue':(_v:string|null)=>true,change:(_v:string|null)=>true,blur:(_e:FocusEvent)=>true},setup(p,{attrs,slots,emit,expose}){
  const l=useSolLocale(()=>p.locale),input=ref<HTMLElement|null>(null);const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus()});expose(validation);return()=>h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('select',{...attrs,ref:input,id:p.id,value:p.modelValue??'',class:['sol-select',attrs.class],disabled:fieldDisabled(p),required:p.required,'aria-readonly':fieldReadonly(p)?'true':undefined,'aria-invalid':fieldError(p)?'true':undefined,'aria-describedby':fieldDescription(p,slots,fieldError(p),attrs['aria-describedby']),onPointerdown:(e:PointerEvent)=>stopReadonly(p,e),onKeydown:(e:KeyboardEvent)=>readonlyKeys(p,e),onChange:(e:Event)=>{let input=e.target as HTMLSelectElement;if(fieldDisabled(p)||fieldReadonly(p)){input.value=p.modelValue??'';return;}const value=input.value||null;emit('update:modelValue',value);emit('change',value);},onBlur:(e:FocusEvent)=>{validation.validate();emit('blur',e);}},[h('option',{value:'',disabled:p.required},p.placeholder??l.value.choose),...p.options.map(o=>h('option',{value:o.value,disabled:o.disabled},o.label))]),...fieldMessages(p,slots)]);
 }});
-export const STextarea=defineComponent({name:'STextarea',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String,default:''},rows:{type:Number,default:3},maxlength:Number,showCount:{type:Boolean,default:true}},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true,blur:(_e:FocusEvent)=>true},setup(p,{attrs,slots,emit,expose}){
- const l=useSolLocale(()=>p.locale),input=ref<HTMLElement|null>(null);const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus()});expose(validation);return()=>h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('textarea',{...attrs,ref:input,id:p.id,class:['sol-input sol-textarea',attrs.class],value:p.modelValue,rows:Math.max(3,p.rows),maxlength:p.maxlength,disabled:fieldDisabled(p),readonly:fieldReadonly(p),required:p.required,'aria-invalid':fieldError(p)?'true':undefined,'aria-describedby':fieldDescription(p,slots,fieldError(p),attrs['aria-describedby']),onInput:(e:Event)=>{if(!fieldDisabled(p)&&!fieldReadonly(p))emit('update:modelValue',(e.target as HTMLTextAreaElement).value);},onChange:(e:Event)=>{if(!fieldDisabled(p)&&!fieldReadonly(p))emit('change',(e.target as HTMLTextAreaElement).value);},onBlur:(e:FocusEvent)=>{validation.validate();emit('blur',e);}}),h('div',{class:'sol-ui-field-footer'},[h('div',fieldMessages(p,slots)),p.showCount?h('span',{class:'sol-hint sol-ui-counter'},l.value.count(p.modelValue.length,p.maxlength)):null])]);
-}});
+export const STextarea = defineComponent({
+  name: 'STextarea',
+  inheritAttrs: false,
+  props: {
+    ...commonFieldProps,
+    ...inputControlProps,
+    modelValue: { type: String, default: '' },
+    rows: { type: Number, default: 3 },
+    maxlength: Number,
+    showCount: { type: Boolean, default: true },
+  },
+  slots: Object as SlotsType<SolInputControlSlots>,
+  emits: {
+    'update:modelValue': (_value: string) => true,
+    change: (_value: string) => true,
+    blur: (_event: FocusEvent) => true,
+    clear: (_event: SolInputClearEvent<string>) => true,
+  },
+  setup(p, { attrs, slots, emit, expose }) {
+    const l = useSolLocale(() => p.locale),
+      input = ref<HTMLElement | null>(null)
+    const validation = useSFieldValidation(p, () => p.modelValue, {
+      focus: () => input.value?.focus(),
+    })
+    const control = useInputControl(p, slots, {
+      locale: () => l.value,
+      hasValue: () => p.modelValue.length > 0,
+      disabled: () => fieldDisabled(p),
+      readonly: () => fieldReadonly(p),
+      error: () => fieldError(p),
+      clear: () => {
+        if (p.modelValue !== '') {
+          emit('update:modelValue', '')
+          emit('change', '')
+        }
+        emit('clear', { value: '', reason: 'clear' })
+      },
+      validate: validation.validate,
+      focus: validation.focus,
+      element: () => input.value,
+    })
+    expose({ ...validation, clear: control.clear })
+    return () =>
+      h('div', { class: 'sol-field sol-ui-native-field' }, [
+        fieldLabel(p, slots, l.value.required),
+        control.native(
+          h('textarea', {
+            ...attrs,
+            ref: input,
+            id: p.id,
+            class: ['sol-input sol-textarea', attrs.class],
+            value: p.modelValue,
+            rows: Math.max(3, p.rows),
+            maxlength: p.maxlength,
+            disabled: fieldDisabled(p),
+            readonly: fieldReadonly(p),
+            required: p.required,
+            'aria-invalid': fieldError(p) ? 'true' : undefined,
+            'aria-describedby': fieldDescription(
+              p,
+              slots,
+              fieldError(p),
+              attrs['aria-describedby'],
+            ),
+            onInput: (event: Event) => {
+              if (!fieldDisabled(p) && !fieldReadonly(p))
+                emit('update:modelValue', (event.target as HTMLTextAreaElement).value)
+            },
+            onChange: (event: Event) => {
+              if (!fieldDisabled(p) && !fieldReadonly(p))
+                emit('change', (event.target as HTMLTextAreaElement).value)
+            },
+            onBlur: (event: FocusEvent) => {
+              validation.validate()
+              emit('blur', event)
+            },
+          }),
+          { multiline: true },
+        ),
+        h('div', { class: 'sol-ui-field-footer' }, [
+          h('div', fieldMessages(p, slots)),
+          p.showCount
+            ? h(
+                'span',
+                { class: 'sol-hint sol-ui-counter' },
+                l.value.count(p.modelValue.length, p.maxlength),
+              )
+            : null,
+        ]),
+      ])
+  },
+})
 
 export const SNumberInput = defineComponent({
   name: 'SNumberInput',

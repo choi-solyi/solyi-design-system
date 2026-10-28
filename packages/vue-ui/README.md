@@ -43,6 +43,12 @@ createApp(App)
 
 자체 재사용 코드는 MIT이며 Core 폰트는 원문 OFL을 유지합니다. 로고·캐릭터·favicon·개인 콘텐츠는 제외하며 MIT로 브랜드 권리를 부여하지 않습니다. [설치·업데이트](https://ui.solyi.kr/#start/install)를 확인하세요. 패키지 업데이트와 배포는 소비 앱의 절차에 맞게 관리합니다.
 
+## 입력 내부 clear (개발 source)
+
+STextField·STextarea의 `clearable`은 입력 안의 이름 있는 X 버튼을 표시합니다. 기본값은 false입니다. `clear()`도 같은 동작을 수행하며, 두 모델의 빈 값은 `''`입니다. 새 `clear({value,reason:'clear'})` 알림은 기존 update/change payload를 바꾸지 않습니다. STextField에는 기존에 change 이벤트가 없으므로 새로 만들지 않습니다. required도 지운 뒤 오류를 표시하며 disabled/readonly는 버튼과 메서드를 모두 막습니다.
+
+`leading/trailing/indicator/status/loading` slot은 `{hasValue,disabled,readonly,loading,error,clear}`를 받습니다. `loading`은 진행 표시입니다. 편집을 막으려면 disabled/readonly를 함께 제어합니다. 새 기능의 타입은 `SolInputHandle`, `SolInputClearEvent<T>`, `SolInputControlScope`입니다. 다른 입력 6종 연결과 새 tarball·공개 배포는 아직 완료하지 않았습니다.
+
 ## 소비 프로젝트 AI 지침
 
 패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.

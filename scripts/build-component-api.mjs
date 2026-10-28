@@ -218,6 +218,10 @@ for (const [name, group, description, exampleRoute, example] of records) {
     if(!slot)continue;slotNames.add(slot);
     slotScopes.set(slot,call.arguments.length?checker.typeToString(checker.getTypeAtLocation(call.arguments[0]),call.arguments[0],ts.TypeFormatFlags.NoTruncation):'인자 없음');
   }
+  if(props.some(prop=>prop.name==='clearable')){
+    const inputSlots=declarations.get('SolInputControlSlots');assert.ok(inputSlots&&ts.isInterfaceDeclaration(inputSlots),'Shared input slots exist')
+    for(const member of inputSlots.members){const slot=member.name.text;slotNames.add(slot);slotScopes.set(slot,member.type.parameters.length?text(member.type.parameters[0].type):'인자 없음')}
+  }
   const slots = [...slotNames].map(name=>({name,scope:slotScopes.get(name)||'인자 없음',description:name==='default'?'기본 내용입니다.':name==='actions'?'내용과 구분된 하단·보조 행동입니다.':name==='activator'?'전달받은 props를 실제 실행 요소에 바인딩합니다.':name==='label'?'기본 이름 표시를 바꿉니다. 접근 가능한 이름은 유지합니다.':name==='help'?'입력 아래의 보조 설명입니다.':name.startsWith('cell-')?'열 키에 해당하는 셀 내용입니다. {row, value}를 받습니다.':name.startsWith('panel-')?'항목 값에 해당하는 탭 패널 내용입니다.':`${name} 영역의 내용입니다.`}));
   const methodNames = new Set();
   for (const call of visit(setup,n=>ts.isCallExpression(n)&&n.expression.getText()==='expose')) {for(const [method]of entries(call.arguments[0],component.file))methodNames.add(method);if(/\bvalidation\b/.test(text(call.arguments[0]))&&text(setup).includes('useSFieldValidation('))for(const method of validationHandle)methodNames.add(method);}

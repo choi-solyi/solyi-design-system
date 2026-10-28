@@ -19,14 +19,12 @@ export type {STreeItem} from './tree';
 import {defineComponent, h, ref, watch, nextTick, onBeforeUnmount, onMounted, useId} from 'vue';
 import type {PropType, Component, App, VNode} from 'vue';
 import {VBtn} from 'vuetify/components/VBtn';
-import {VTextField} from 'vuetify/components/VTextField';
 import {VDialog} from 'vuetify/components/VDialog';
 import {mountOverflowText} from '@solyi/core/overflow';
 import {solIconPaths} from '@solyi/core/icons';
 export {tokens,coreVersion} from '@solyi/core';
 import './styles.css';
-import {SForm,useSFieldValidation,fieldError,fieldDisabled,fieldReadonly} from './form';
-import {commonFieldProps,fieldDescription,fieldMessages,fieldLabel} from './controls';
+import {SForm} from './form';
 import {SContainer,SRow,SCol} from './layout';
 export {SForm,SContainer,SRow,SCol};
 export {sRules,isSFieldFilled} from './form';
@@ -124,21 +122,9 @@ export const SBtn = defineComponent({
 
 export const SIconBtn = createSIconBtn(SBtn)
 
-export const STextField=defineComponent({
-  name:'STextField',inheritAttrs:false,
-  props:{...commonFieldProps,modelValue:{type:String,default:''},type:{type:String as PropType<'text'|'search'|'email'|'password'|'tel'|'url'>,default:'text'}},
-  emits:{'update:modelValue':(_value:string)=>true,blur:(_event:FocusEvent)=>true,focus:(_event:FocusEvent)=>true},
-  setup(props,{attrs,slots,emit,expose}){
-    const l=useSolLocale(()=>props.locale),field=ref<{focus?:()=>void}|null>(null);
-    const validation=useSFieldValidation(props,()=>props.modelValue,{focus:()=>field.value?.focus?.()});
-    expose(validation);
-    return()=>{const error=fieldError(props);return h('div',{class:'sol-ui-field'},[
-      fieldLabel(props,slots,l.value.required),
-      h(VTextField as Component,{...attrs,ref:field,id:props.id,modelValue:props.modelValue,'onUpdate:modelValue':(value:unknown)=>emit('update:modelValue',String(value??'')),type:props.type,disabled:fieldDisabled(props),readonly:fieldReadonly(props),required:props.required,error:!!error,'aria-invalid':String(!!error),'aria-describedby':fieldDescription(props,slots,error,attrs['aria-describedby']),hideDetails:true,variant:'outlined',density:'compact',class:['sol-ui-input',attrs.class],onBlur:(event:FocusEvent)=>{validation.validate();emit('blur',event);},onFocus:(event:FocusEvent)=>emit('focus',event)}),
-      ...fieldMessages(props,slots,error)
-    ]);};
-  }
-});
+import {STextField} from './text-field';
+export {STextField};
+export type {SolInputClearEvent,SolInputControlScope,SolInputControlSlots,SolInputHandle} from './input-control';
 
 export const SDialog=defineComponent({
   name:'SDialog',inheritAttrs:false,

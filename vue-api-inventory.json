@@ -99,6 +99,7 @@
       "components": [
         "SCard",
         "STextField",
+        "SCheckbox",
         "SBtn",
         "SAlert"
       ]
