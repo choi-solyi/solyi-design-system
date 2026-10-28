@@ -80,6 +80,8 @@ SBtn을 재사용하며 loading 중 클릭 차단·초점 유지·aria-busy를 �
 
 ## 예제·검증·기준 산출물
 
+소비 프로젝트의 SVG 래퍼는 SIcon으로, 아이콘 전용 버튼은 필수 label을 갖는 SIconBtn으로 교체할 수 있습니다. 정적인 상태·개수 표시는 SBadge, 값 표시·controlled 선택·삭제는 SChip으로 옮깁니다. 기존 데이터·선택·삭제 후 초점 정책은 소비자가 유지하며 원본 배열이나 서버 저장을 이 컴포넌트에 넘기지 않습니다. 실제 소비 프로젝트 교체는 이번 변경에 포함하지 않습니다.
+
 공유 실행·복사 예제는 [buttons.vue](../../examples/vue-vuetify/src/recipes/buttons.vue)입니다. controlled 선택·삭제 후 초점·disabled·loading·warning/danger 문구·빈 상태·긴 텍스트·겹침 Badge·Tooltip을 포함합니다. 문서/실행 화면의 appearance와 locale 제어에서 테마·밀도·언어를 바꿉니다. locale 변경은 값·선택·초점을 초기화하지 않습니다. 표시 label과 데이터 번역은 앱 책임입니다.
 
 `scripts/primitives-runtime-check.mjs`는 설치한 tarball의 등록·DOM·controlled 이벤트·locale·초점·오류 입력 방어 및 108개 토큰 대비 조합을 검사합니다. `scripts/declaration-contract-check.mjs`는 필수 label·아이콘 이름·크기·전역 타입과 기존 SBtn 타입을 검증합니다. 실제 모바일/브라우저 native 키보드·화면 낭독기 검증은 DOM 검사를 통과한 것으로 대체하지 않습니다.

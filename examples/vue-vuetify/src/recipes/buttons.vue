@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, ref } from 'vue'
 import { useSolLocale } from 'solyi-ui'
 
 const locale = useSolLocale()

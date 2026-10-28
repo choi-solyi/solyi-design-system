@@ -18,6 +18,7 @@
 - [패키지 구조·생성·검증](guide/LIBRARY.md)
 - [샘플 코드·자동 import·문법 강조](development/CODE-EXAMPLES.md)
 - [문서 검색·헤더 설정](development/DOC-SEARCH.md)
+- [표시·아이콘 1차 검증 기록](development/DISPLAY-PRIMITIVES-VALIDATION.md)
 - [기여 안내](../CONTRIBUTING.md)
 
 ## 자산과 라이선스

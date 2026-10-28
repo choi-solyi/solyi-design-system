@@ -156,12 +156,20 @@ try {
     await page.locator('#select').focus()
     await page.keyboard.press('Space')
     assert.equal(await page.locator('#select').getAttribute('aria-pressed'), 'true')
+    await page.screenshot({ path: fileURLToPath(new URL(width + '-selected.png', out)), fullPage: true })
     await page.keyboard.press('Enter')
     assert.equal(await page.locator('#select').getAttribute('aria-pressed'), 'false')
     assert.notEqual(
       await page.locator('#select').evaluate((element) => getComputedStyle(element).outlineStyle),
       'none',
     )
+    assert.equal(await page.getByRole('button', { name: 'Copy', exact: true }).count(), 1)
+    assert.equal(await page.getByRole('img', { name: 'Information', exact: true }).count(), 1)
+    assert.equal(await page.getByRole('img', { name: 'Three notifications', exact: true }).count(), 1)
+    await page.keyboard.press('Tab')
+    assert.equal(await page.locator('#remove .sol-ui-chip-remove').evaluate(element => element === document.activeElement), true)
+    await page.keyboard.press('Tab')
+    assert.equal(await page.evaluate(() => document.activeElement.getAttribute('aria-label')), 'Notifications', 'Tab skips disabled chip controls')
     await page.locator('#copy').focus()
     await page.keyboard.press('Enter')
     assert.equal(await page.locator('#result').innerText(), 'Copied')
@@ -172,7 +180,10 @@ try {
     )
     assert.equal(await page.locator('#copy').getAttribute('aria-busy'), 'true')
     await page.evaluate(() => window.qa.busy(false))
-    if (width === 320) await page.locator('#select').tap()
+    if (width === 320) {
+      await page.locator('#select').tap()
+      assert.equal(await page.locator('#select').getAttribute('aria-pressed'), 'true', 'Emulated touch activates selection')
+    }
     await page.locator('#remove .sol-ui-chip-remove').focus()
     await page.keyboard.press('Space')
     await page.waitForFunction(() => document.activeElement.id === 'result')

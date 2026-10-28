@@ -1,7 +1,11 @@
 {
   "documentVersion": "1.0.0",
-  "componentCount": 38,
+  "componentCount": 42,
   "components": [
+    "SChip",
+    "SBadge",
+    "SIcon",
+    "SIconBtn",
     "SForm",
     "SContainer",
     "SRow",
@@ -76,7 +80,12 @@
       "registration": "global",
       "components": [
         "SCard",
-        "SBtn"
+        "SBtn",
+        "SChip",
+        "SIcon",
+        "SBadge",
+        "SIconBtn",
+        "STooltip"
       ]
     },
     {
