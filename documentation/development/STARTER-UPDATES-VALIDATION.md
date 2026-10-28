@@ -37,3 +37,5 @@ TimePicker 예제에는 scrollToCurrentTime과 scrubPixelsPerStep 조작이 빠�
 [실제 브라우저 검사](../../scripts/starter-updates-browser-check.mjs)는 새 격리 Chrome에서 localhost만 사용합니다. 320/768/1440 × 3테마 × 2모드 × 2density, 총 36개 header/nav 조합에서 링크·키보드·포커스·touch target·줄바꿈·overflow를 확인했고, 각 폭에서 위 신규 부품과 입력 옵션의 실제 조작을 통과했습니다. 물리 터치·스크린리더는 미검증입니다.
 
 로컬 증거는 qa-output/starter-updates-browser/의 report.json·스크린샷과 별도 검증 checkout의 qa-output/starter-updates-*.log에 있습니다. 배포 게이트 및 외부 선언 769건의 동일 baseline 비교는 [입력 확장 검증](INPUT-EXTENSIONS-VALIDATION.md)에 기록되어 있으며 그대로 유지합니다.
+
+1815de3의 새 tarball을 설치한 solyi-ui-sortable-verify/docs에서도 36개 header/nav 및 8종 Components 16개 연결을 재통과했습니다. [최종 설치 기록](SORTABLE-INSTALLED-VALIDATION.md)에 실제 실행 결과와 크기·동결 gate 실패를 함께 남겼습니다. 공개 사이트 반영을 뜻하지 않습니다.

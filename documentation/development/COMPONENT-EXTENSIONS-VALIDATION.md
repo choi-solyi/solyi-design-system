@@ -32,3 +32,5 @@
 추가로 [starter 점검](STARTER-UPDATES-VALIDATION.md)의 36개 헤더/nav 조합과 부품·입력 옵션 검사, Sortable의 72개 appearance/locale/폭 조합을 별도로 검사합니다. 화면 크기나 터치 에뮬레이션을 물리 기기·스크린리더·Safari 검증으로 표현하지 않습니다.
 
 증거는 qa-output/component-extensions-browser/report.json, qa-output/sortable-browser/report.json와 각 실행 로그입니다. 최종 설치 소비 검증은 별도 checkout과 개발 tarball로 수행합니다. 동결 1.0.0 hash 게이트·외부 선언 769건은 제거하거나 완화하지 않으며 [입력 확장 검증 기록](INPUT-EXTENSIONS-VALIDATION.md)과 구분해 결과를 남깁니다.
+
+1815de3 설치본에서도 위 16개 연결을 재통과했습니다. [설치 소비 검증](SORTABLE-INSTALLED-VALIDATION.md)에 완료 결과, 동일한 외부 진단 집합과 두 gate 실패를 기록했습니다.

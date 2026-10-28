@@ -25,6 +25,7 @@
 - [입력 확장 설치·선언 검증 기록](development/INPUT-EXTENSIONS-VALIDATION.md)
 - [UI 데모와 starter 항목별 점검](development/STARTER-UPDATES-VALIDATION.md)
 - [Components 신규·확장 API 대조](development/COMPONENT-EXTENSIONS-VALIDATION.md)
+- [Sortable 설치 소비 검증과 남은 gate](development/SORTABLE-INSTALLED-VALIDATION.md)
 - [기여 안내](../CONTRIBUTING.md)
 
 ## 자산과 라이선스
