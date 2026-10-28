@@ -2,6 +2,7 @@
 
 ## 1.1.0 후보 · 미게시
 
+- SPagination은 처음·이전·다음·마지막 이동과 controlled 페이지 제안을 제공합니다. 좁은 화면은 5개 컨트롤로 표시하며 페이지 수가 바뀌어도 부모 모델을 자동 수정하지 않습니다. Table의 기존 API·번호 범위는 유지합니다.
 - semantic tone과 별도인 범주 8색과 resolveCategoricalColor를 추가합니다. Calendar marker의 opt-in category는 현재 테마의 CSS 역할로 표시하며 이름·기존 tone·ISO 모델을 유지합니다.
 - SLoadingOverlay는 기존 Progress와 modal host를 재사용합니다. container/viewport·blocking/nonblocking·지연·최소 표시·내용 숨김을 제공하며 타이머가 부모 작업 모델을 변경하지 않습니다.
 - SEmptyState의 제목·설명·아이콘·액션·card/page 표현을 추가합니다. SCard는 leading/title/description/meta 슬롯을 확장하며 제목 링크와 보조 버튼을 독립적으로 배치합니다.

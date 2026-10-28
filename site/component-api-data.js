@@ -4486,6 +4486,90 @@ export const componentReferences=[
     "passthrough": null
   },
   {
+    "name": "SPagination",
+    "id": "spagination",
+    "group": "탐색",
+    "description": "부모가 소유한 페이지 이동을 제안합니다. 페이지 수 변경은 모델을 자동 수정하지 않습니다.",
+    "exampleRoute": "component",
+    "example": "navigation",
+    "source": "packages/vue-ui/src/pagination.ts",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "number",
+        "required": false,
+        "default": "1",
+        "description": "부모가 소유하는 1부터 시작하는 페이지입니다. 화면에서만 유효 범위로 표시하며 부모가 제안을 거부하거나 pageCount가 바뀌어도 자동으로 수정하지 않습니다.",
+        "values": []
+      },
+      {
+        "name": "pageCount",
+        "type": "number",
+        "required": false,
+        "default": "1",
+        "description": "전체 페이지 수입니다. 0이면 빈 상태를 표시하고 모든 이동을 막습니다. 소수는 내림, 잘못된 값은 0으로 정규화합니다.",
+        "values": []
+      },
+      {
+        "name": "siblingCount",
+        "type": "number",
+        "required": false,
+        "default": "1",
+        "description": "현재 페이지 양옆 번호 수입니다. 기본 1, 0–5로 제한합니다. 좁은 영역에서는 현재 번호와 처음·이전·다음·마지막 버튼을 표시합니다.",
+        "values": []
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "default": "undefined",
+        "description": "화면과 보조 기술에 전달하는 이름입니다.",
+        "values": []
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "사용을 막고 비활성 상태를 표시합니다.",
+        "values": []
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "처리 중 상태입니다. 해당 컴포넌트의 입력·행동 계약을 따릅니다.",
+        "values": []
+      },
+      {
+        "name": "locale",
+        "type": "Partial<SolLocale>",
+        "required": false,
+        "default": "undefined",
+        "description": "앱 공통 문구를 이 컴포넌트에서 부분적으로 덮어씁니다.",
+        "values": []
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "signature": "(page: number)",
+        "description": "소비 앱의 모델 값을 갱신합니다."
+      }
+    ],
+    "slots": [],
+    "methods": [
+      {
+        "name": "focus",
+        "signature": "() => void",
+        "description": "사용 가능한 입력 또는 실행 요소로 초점을 이동합니다."
+      }
+    ],
+    "types": [],
+    "passthrough": null
+  },
+  {
     "name": "SStepper",
     "id": "sstepper",
     "group": "탐색",
@@ -7258,7 +7342,7 @@ export const componentExampleSources={
   "fields": "<script setup lang=\"ts\">\nconst field = useTemplateRef<{ focus(): void }>('field')\nconst serverRejected = ref(false)\nconst showInputLoading = ref(false),\n  clearCount = ref(0)\nconst value = ref(''),\n  submitted = ref(false)\nconst error = computed(() =>\n  submitted.value && value.value.trim().length < 3 ? '3자 이상 입력해 주세요.' : '',\n)\nfunction check() {\n  submitted.value = true\n  if (error.value) nextTick(() => field.value?.focus())\n}\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"텍스트 입력\">\n    <form class=\"sol-stack\" @submit.prevent=\"check\" novalidate>\n      <STextField\n        id=\"recipe-field\"\n        ref=\"field\"\n        v-model=\"value\"\n        clearable\n        :loading=\"showInputLoading\"\n        @clear=\"clearCount++\"\n        label=\"가상 기록 제목\"\n        required\n        help=\"3자 이상. 이 페이지 메모리에만 남습니다.\"\n        :error=\"error\"\n        :server-error=\"\n          serverRejected ? '이미 사용 중인 가상 이름입니다. 다른 이름을 입력해 주세요.' : ''\n        \"\n      >\n        <template #leading><SIcon name=\"edit\" decorative :size=\"16\" /></template>\n        <template #trailing\n          ><span class=\"sol-hint\">{{ value.length }}자</span></template\n        >\n      </STextField>\n      <SCheckbox id=\"recipe-field-loading\" v-model=\"showInputLoading\" label=\"입력 로딩 표시\" />\n      <p role=\"status\">입력 내부 X로 지운 횟수: {{ clearCount }}</p>\n      <STextField\n        id=\"recipe-readonly\"\n        model-value=\"읽기 전용 예시\"\n        label=\"수정할 수 없는 값\"\n        readonly\n      />\n      <STextField\n        id=\"recipe-disabled-field\"\n        model-value=\"아직 만들 수 없어요\"\n        label=\"공유 주소 · 비활성\"\n        disabled\n      />\n      <SBtn type=\"submit\" variant=\"primary\">입력 확인</SBtn>\n      <SAlert\n        v-if=\"submitted && !error && !serverRejected\"\n        tone=\"success\"\n        title=\"✓ 사용할 수 있는 이름입니다.\"\n        ><p>예시 입력값입니다.</p></SAlert\n      >\n    </form>\n  </SCard>\n</template>\n",
   "time": "<script setup lang=\"ts\">\nimport type { SolTimeInteraction, SolTimeInteractionCancel, SolPickerPresentation } from 'solyi-ui'\n\nconst time = ref<string | null>('09:00')\nconst popupChoice = ref<string | null>('legacy')\nconst pickerPresentation = computed<SolPickerPresentation | undefined>(() =>\n  popupChoice.value === 'auto' || popupChoice.value === 'popover' || popupChoice.value === 'dialog'\n    ? popupChoice.value\n    : undefined,\n)\nconst listTime = ref<string | null>(null),\n  manual = ref(false)\nconst scrub = ref(false),\n  interaction = ref('')\nconst initialTime = ref('09:07'),\n  useCurrentTime = ref(false),\n  scrubPixels = ref<number | null>(10)\nfunction preview(value: SolTimeInteraction) {\n  interaction.value = `미리보기 ${value.value}`\n}\nfunction committed(value: SolTimeInteraction) {\n  interaction.value = `확정 ${value.value}`\n}\nfunction cancelled(value: SolTimeInteractionCancel) {\n  interaction.value = `취소 ${value.reason}`\n}\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"직접 입력과 시·분 선택\">\n    <SSelect\n      id=\"recipe-time-popup\"\n      v-model=\"popupChoice\"\n      label=\"시각 팝업 표시 방식\"\n      :options=\"[\n        { value: 'legacy', label: '기존 연결 패널' },\n        { value: 'auto', label: '화면에 맞춰 자동 전환' },\n        { value: 'popover', label: '연결 팝업' },\n        { value: 'dialog', label: '모달 다이얼로그' },\n      ]\"\n    />\n    <STimePicker\n      id=\"recipe-time\"\n      :picker-presentation=\"pickerPresentation\"\n      v-model=\"time\"\n      clearable\n      label=\"가상 알림 시각\"\n      min=\"09:00\"\n      max=\"18:00\"\n      :step=\"15\"\n      required\n      help=\"HH:mm 또는 HHmm으로 입력하거나 Alt+↓로 패널을 엽니다.\"\n    />\n    <p role=\"status\">완료값: {{ time || '없음' }} · 실제 알림을 예약하지 않습니다.</p>\n    <SCheckbox id=\"recipe-time-manual\" v-model=\"manual\" label=\"목록 예제의 직접 입력 허용\" />\n    <SCheckbox id=\"recipe-time-scrub\" v-model=\"scrub\" label=\"입력·목록 드래그 조절 사용\" />\n    <SCheckbox\n      id=\"recipe-time-now\"\n      v-model=\"useCurrentTime\"\n      label=\"선택이 없으면 현재 시각 근처에서 목록 열기\"\n    />\n    <STextField\n      id=\"recipe-time-initial\"\n      v-model=\"initialTime\"\n      label=\"목록 초기 위치\"\n      :disabled=\"useCurrentTime\"\n      help=\"선택된 값이 우선입니다. 시각을 비우고 다시 열어 확인하세요.\"\n    />\n    <SNumberInput\n      id=\"recipe-time-pixels\"\n      v-model=\"scrubPixels\"\n      label=\"드래그 한 단계 이동 거리 · px\"\n      :min=\"2\"\n      :max=\"40\"\n      :step=\"2\"\n      :disabled=\"!scrub\"\n    />\n    <STimePicker\n      id=\"recipe-time-list\"\n      :picker-presentation=\"pickerPresentation\"\n      v-model=\"listTime\"\n      clearable\n      label=\"목록에서 시각 선택\"\n      presentation=\"list\"\n      :allow-manual-input=\"manual\"\n      :scrubbable=\"scrub\"\n      :list-scrubbable=\"scrub\"\n      :scrub-pixels-per-step=\"scrubPixels ?? undefined\"\n      :scroll-to-current-time=\"useCurrentTime\"\n      @preview=\"preview\"\n      @interaction-commit=\"committed\"\n      @interaction-cancel=\"cancelled\"\n      :initial-scroll-value=\"useCurrentTime ? undefined : initialTime || undefined\"\n      min=\"00:07\"\n      max=\"23:59\"\n      :step=\"15\"\n      help=\"처음 위치는 선택이 아닙니다. 방향키·Home/End·Page로 이동하고 Enter/Space로 선택, Escape로 닫습니다.\"\n    />\n    <p role=\"status\">{{ interaction }}</p>\n    <p role=\"status\">목록 완료값: {{ listTime || '선택 없음' }}</p>\n  </SCard>\n</template>\n",
   "accordion": "<script setup lang=\"ts\">\nconst expanded = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"상세 펼침\">\n    <SAccordion id=\"recipe-accordion\" v-model=\"expanded\" label=\"가상 기록의 상세\">\n      <p>접으면 이 안의 링크가 Tab 순서에서 제외됩니다.</p>\n      <a href=\"https://choi-solyi.github.io/solyi-design-system/\">문서 홈</a>\n    </SAccordion>\n    <p role=\"status\">{{ expanded ? '상세를 펼쳤어요.' : '상세를 접었어요.' }}</p>\n  </SCard>\n</template>\n",
-  "navigation": "<script setup lang=\"ts\">\nconst drawer = ref(false),\n  toast = ref(false),\n  detail = ref(false)\nconst path = computed(() => [\n  { id: 'home', label: '기록함' },\n  { id: 'current', label: detail.value ? '기록 상세' : '기록 목록' },\n])\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"현재 위치와 짧은 상세\">\n    <SBreadcrumbs label=\"가상 경로\" :items=\"path\" @navigate=\"detail = false\" />\n    <div class=\"sol-actions\">\n      <SBtn @click=\"detail = true\">가상 상세로 이동</SBtn>\n      <SBtn @click=\"drawer = true\">사이드 패널 열기</SBtn>\n      <SBtn @click=\"toast = true\">완료 안내</SBtn>\n    </div>\n    <SDialog\n      id=\"recipe-drawer\"\n      v-model=\"drawer\"\n      presentation=\"drawer\"\n      eyebrow=\"FICTIONAL DETAIL\"\n      title=\"작은 정원 기록\"\n    >\n      <p>Dialog와 같은 제목·초점·Escape·복귀 계약을 쓰는 모달 사이드 패널입니다.</p>\n    </SDialog>\n    <SSnackbar\n      id=\"recipe-nav-toast\"\n      v-model=\"toast\"\n      tone=\"success\"\n      message=\"가상 설정을 적용했어요.\"\n      :duration=\"4000\"\n    />\n  </SCard>\n</template>\n",
+  "navigation": "<script setup lang=\"ts\">\nconst drawer = ref(false),\n  toast = ref(false),\n  detail = ref(false)\nconst page = ref(1),\n  pageCount = ref<number | null>(20),\n  acceptPage = ref(true),\n  proposal = ref(1)\nfunction proposePage(next: number) {\n  proposal.value = next\n  if (acceptPage.value) page.value = next\n}\nconst path = computed(() => [\n  { id: 'home', label: '기록함' },\n  { id: 'current', label: detail.value ? '기록 상세' : '기록 목록' },\n])\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"현재 위치와 짧은 상세\">\n    <SNumberInput\n      id=\"recipe-pagination-count\"\n      v-model=\"pageCount\"\n      label=\"페이지 수\"\n      :min=\"0\"\n      :step=\"1\"\n    />\n    <SCheckbox id=\"recipe-pagination-accept\" v-model=\"acceptPage\" label=\"페이지 이동 제안 반영\" />\n    <SPagination\n      :model-value=\"page\"\n      :page-count=\"pageCount ?? 0\"\n      label=\"예제 항목 페이지\"\n      @update:model-value=\"proposePage\"\n    />\n    <p role=\"status\">부모 페이지 {{ page }} · 마지막 제안 {{ proposal }}</p>\n    <SBreadcrumbs label=\"가상 경로\" :items=\"path\" @navigate=\"detail = false\" />\n    <div class=\"sol-actions\">\n      <SBtn @click=\"detail = true\">가상 상세로 이동</SBtn>\n      <SBtn @click=\"drawer = true\">사이드 패널 열기</SBtn>\n      <SBtn @click=\"toast = true\">완료 안내</SBtn>\n    </div>\n    <SDialog\n      id=\"recipe-drawer\"\n      v-model=\"drawer\"\n      presentation=\"drawer\"\n      eyebrow=\"FICTIONAL DETAIL\"\n      title=\"작은 정원 기록\"\n    >\n      <p>Dialog와 같은 제목·초점·Escape·복귀 계약을 쓰는 모달 사이드 패널입니다.</p>\n    </SDialog>\n    <SSnackbar\n      id=\"recipe-nav-toast\"\n      v-model=\"toast\"\n      tone=\"success\"\n      message=\"가상 설정을 적용했어요.\"\n      :duration=\"4000\"\n    />\n  </SCard>\n</template>\n",
   "identity-progress": "<script setup lang=\"ts\">\ndefineProps<{ part?: string }>()\nconst nameField = useTemplateRef<{ focus(): void }>('nameField')\nconst categoryField = useTemplateRef<{ focus(): void }>('categoryField')\nconst review = useTemplateRef<HTMLElement>('review')\nconst finalResult = useTemplateRef<HTMLElement>('finalResult')\nconst stage = ref(0),\n  done = ref(false),\n  name = ref(''),\n  category = ref<string | null>(null),\n  error = ref(''),\n  result = ref('')\nconst items = [\n  { id: 'profile', label: '가상 사용자 정보' },\n  { id: 'settings', label: '가상 설정' },\n]\nconst steps = [\n  { id: 'name', label: '이름' },\n  { id: 'category', label: '분류' },\n  { id: 'review', label: '검토' },\n]\nconst current = computed(() => steps[stage.value].id)\nconst completed = computed(() => steps.slice(0, done.value ? 3 : stage.value).map(item => item.id))\nasync function move(delta: number) {\n  error.value = ''\n  if (delta > 0 && stage.value === 0 && !name.value.trim())\n    error.value = '가상 이름을 입력해 주세요.'\n  if (delta > 0 && stage.value === 1 && !category.value) error.value = '가상 분류를 선택해 주세요.'\n  if (!error.value) {\n    if (stage.value === 2 && delta > 0) done.value = true\n    else {\n      stage.value = Math.max(0, Math.min(2, stage.value + delta))\n      done.value = false\n    }\n  }\n  await nextTick()\n  if (done.value) finalResult.value?.focus()\n  else if (stage.value === 0) nameField.value?.focus()\n  else if (stage.value === 1) categoryField.value?.focus()\n  else review.value?.focus()\n}\nasync function reset() {\n  stage.value = 0\n  done.value = false\n  name.value = ''\n  category.value = null\n  error.value = ''\n  await nextTick()\n  nameField.value?.focus()\n}\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '가상 사용자와 단계'\">\n    <div v-if=\"!part || part === 'avatar'\" class=\"sol-actions\">\n      <SAvatar label=\"가상 사용자 민하\" initials=\"민\" />\n      <SSplitBtn\n        id=\"recipe-user\"\n        label=\"민하 · 가상 사용자\"\n        :items=\"items\"\n        @primary=\"result = '가상 사용자 정보'\"\n        @select=\"result = $event\"\n      />\n      <p role=\"status\">{{ result }}</p>\n    </div>\n    <template v-if=\"!part || part === 'steps'\">\n      <SStepper\n        id=\"recipe-steps\"\n        :model-value=\"current\"\n        :items=\"steps\"\n        :completed=\"completed\"\n        label=\"가상 작성 단계\"\n      />\n      <SProgressLinear\n        id=\"recipe-step-progress\"\n        label=\"완료한 단계\"\n        :model-value=\"done ? 3 : stage\"\n        :min=\"0\"\n        :max=\"3\"\n        :show-message=\"false\"\n      />\n      <template v-if=\"!done\">\n        <STextField\n          v-if=\"stage === 0\"\n          id=\"recipe-step-name\"\n          ref=\"nameField\"\n          v-model=\"name\"\n          label=\"가상 프로젝트 이름\"\n          :error=\"error\"\n          required\n        />\n        <SSelect\n          v-else-if=\"stage === 1\"\n          id=\"recipe-step-category\"\n          ref=\"categoryField\"\n          v-model=\"category\"\n          label=\"가상 분류\"\n          :error=\"error\"\n          :options=\"[\n            { value: 'notes', label: '기록' },\n            { value: 'books', label: '독서' },\n          ]\"\n          required\n        />\n        <p v-else id=\"recipe-step-review\" ref=\"review\" tabindex=\"-1\">\n          {{ name }} · {{ category }} · 서버에 저장하지 않는 가상 검토입니다.\n        </p>\n      </template>\n      <p v-else id=\"recipe-step-result\" ref=\"finalResult\" role=\"status\" tabindex=\"-1\">\n        ✓ 가상 단계를 완료했어요. 실제 프로젝트는 만들지 않습니다.\n      </p>\n      <div class=\"sol-actions\">\n        <SBtn :disabled=\"stage === 0\" @click=\"move(-1)\">이전 단계</SBtn>\n        <SBtn :disabled=\"done\" @click=\"move(1)\">{{ stage === 2 ? '가상 완료' : '다음 단계' }}</SBtn>\n        <SBtn @click=\"reset\">처음부터</SBtn>\n      </div>\n    </template>\n  </SCard>\n</template>\n",
   "content-tabs": "<script setup lang=\"ts\">\nconst tab = ref('summary'),\n  memo = ref('')\nconst items = [\n  { value: 'summary', label: '요약' },\n  { value: 'detail', label: '상세' },\n  { value: 'blocked', label: '비활성', disabled: true },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"같은 맥락의 탭\">\n    <STabs id=\"recipe-tabs\" v-model=\"tab\" label=\"기록 보기\" :items=\"items\">\n      <template #panel-summary><p>방향키로 탭을 바꾸세요.</p></template>\n      <template #panel-detail>\n        <STextField id=\"recipe-tab-memo\" v-model=\"memo\" label=\"탭을 바꾸어도 유지되는 메모\" />\n      </template>\n    </STabs>\n  </SCard>\n</template>\n",
   "tree": "<script setup lang=\"ts\">\nimport type { STreeItem, SBarChartItem } from 'solyi-ui'\n\ndefineProps<{ part?: string }>()\nconst selected = ref<string | null>(null),\n  expanded = ref<string[]>([]),\n  week = ref<string | null>('current')\nconst items: STreeItem[] = [\n  {\n    id: 'notes',\n    label: '기록',\n    children: [\n      { id: 'garden', label: '작은 정원' },\n      { id: 'book', label: '저녁 책장' },\n    ],\n  },\n  { id: 'archive', label: '보관', children: [{ id: 'walk', label: '주말 산책' }] },\n]\nconst chart = computed<SBarChartItem[]>(() =>\n  ['월요일', '화요일', '수요일', '목요일'].map((label, index) => ({\n    id: String(index),\n    label,\n    value: (week.value === 'current' ? [2, 4, 0, 5] : [1, 3, 2, 4])[index],\n  })),\n)\nconst total = computed(() => chart.value.reduce((sum, item) => sum + item.value, 0))\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"part ? undefined : '가상 자료의 차트와 계층'\">\n    <template v-if=\"!part || part === 'chart'\">\n      <SSelect\n        id=\"recipe-chart-week\"\n        v-model=\"week\"\n        label=\"가상 활동 주간\"\n        :options=\"[\n          { value: 'current', label: '이번 주' },\n          { value: 'previous', label: '지난주' },\n        ]\"\n      />\n      <p role=\"status\">총 {{ total }}개 기록 · 가상 자료</p>\n      <SBarChart\n        id=\"recipe-chart\"\n        label=\"가상 활동 횟수 · 차트와 같은 자료\"\n        :items=\"chart\"\n        category-label=\"요일\"\n        value-label=\"기록 수\"\n      />\n    </template>\n    <template v-if=\"!part || part === 'tree'\">\n      <STree\n        id=\"recipe-tree\"\n        v-model=\"selected\"\n        v-model:expanded=\"expanded\"\n        label=\"가상 기록 폴더\"\n        :items=\"items\"\n      />\n      <p role=\"status\">선택: {{ selected || '없음' }}</p>\n    </template>\n  </SCard>\n</template>\n",

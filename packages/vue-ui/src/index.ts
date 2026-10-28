@@ -1,3 +1,7 @@
+import {SPagination} from './pagination';
+export {SPagination};
+export type {SolPaginationHandle} from './pagination';
+import {paginationRange} from './pagination-values';
 import {SLoadingOverlay} from './loading-overlay';
 export {SLoadingOverlay};
 export type {SolLoadingOverlaySlots} from './loading-overlay';
@@ -148,7 +152,7 @@ export const SDataTable=/* @__PURE__ */ defineComponent({
       },
     }, () => l.value.details)
     const busy=()=>props.loading||!!props.error;
-    return()=>{const safePage=Math.max(1,Math.min(props.page,Math.max(1,props.pageCount))),count=Math.max(1,props.pageCount);const pageNumbers=[...new Set([1,safePage-1,safePage,safePage+1,count])].filter(n=>n>0&&n<=count).sort((a,b)=>a-b);return h('div',{...attrs,ref:host,class:['sol-ui-table',attrs.class],'aria-busy':String(props.loading)},[
+    return()=>{const safePage=Math.max(1,Math.min(props.page,Math.max(1,props.pageCount))),count=Math.max(1,props.pageCount);const pageNumbers=paginationRange(safePage,count);return h('div',{...attrs,ref:host,class:['sol-ui-table',attrs.class],'aria-busy':String(props.loading)},[
       h('div',{class:'sol-ui-table-desktop'},h('table',{class:'sol-data-table'},[
         h('caption',props.caption),h('colgroup',[props.selectable?h('col',{style:{width:'48px'}}):null,...props.columns.map(c=>h('col',{style:{width:c.width}})),h('col',{style:{width:'72px'}})]),
         h('thead',h('tr',[props.selectable?h('th',{scope:'col'},h('input',{ref:all,type:'checkbox','aria-label':l.value.selectPage,checked:!!props.rows.length&&props.rows.every(r=>props.selected.includes(r.id)),disabled:busy()||!props.rows.length,onChange:(e:Event)=>selectPage((e.target as HTMLInputElement).checked)})):null,...props.columns.map(c=>h('th',{scope:'col',style:{textAlign:c.align},'aria-sort':c.sortable?(props.sort?.key===c.key?props.sort.direction:'none'):undefined},c.sortable?h(SBtn,{variant:'subtle',class:'sol-sort-button',disabled:busy(),onClick:()=>emit('update:sort',{key:c.key,direction:props.sort?.key===c.key&&props.sort.direction==='ascending'?'descending':'ascending'})},()=>[c.label,h('span',{'aria-hidden':'true',class:'sol-sort-symbol'},props.sort?.key===c.key?(props.sort.direction==='ascending'?'↑':'↓'):'↕')]):c.label)),h('th',{scope:'col'},l.value.details)])),
@@ -174,6 +178,7 @@ export const SDataTable=/* @__PURE__ */ defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  SPagination: typeof SPagination
   SLoadingOverlay: typeof SLoadingOverlay
   SEmptyState: typeof SEmptyState
   SConfirmAction: typeof SConfirmAction
@@ -224,6 +229,7 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  SPagination,
   SLoadingOverlay,
   SEmptyState,
   SConfirmAction,

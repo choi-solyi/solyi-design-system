@@ -1,7 +1,8 @@
 {
   "documentVersion": "1.1.0",
-  "componentCount": 48,
+  "componentCount": 49,
   "components": [
+    "SPagination",
     "SLoadingOverlay",
     "SEmptyState",
     "SConfirmAction",
@@ -198,6 +199,9 @@
       "registration": "global",
       "components": [
         "SCard",
+        "SNumberInput",
+        "SCheckbox",
+        "SPagination",
         "SBreadcrumbs",
         "SBtn",
         "SDialog",

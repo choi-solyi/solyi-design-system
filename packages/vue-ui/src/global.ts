@@ -1,5 +1,6 @@
 declare module 'vue' {
   export interface GlobalComponents {
+    SPagination: typeof import('./index')['SPagination'];
     SLoadingOverlay: typeof import('./index')['SLoadingOverlay'];
     SEmptyState: typeof import('./index')['SEmptyState'];
     SConfirmAction: typeof import('./index')['SConfirmAction'];
