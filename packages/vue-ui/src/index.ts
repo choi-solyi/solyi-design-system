@@ -21,7 +21,7 @@ export type {SBreadcrumbItem,SStep,SBarChartItem} from './presentation';
 export {SCard,SAlert,STree};
 export type {STreeItem} from './tree';
 import {defineComponent, h, ref, watch, nextTick, onBeforeUnmount, onMounted, useId} from 'vue';
-import type {PropType, Component, App, VNode} from 'vue';
+import type {PropType, Component, App, VNode, VNodeChild, SlotsType} from 'vue';
 import {VDialog} from 'vuetify/components/VDialog';
 import {mountOverflowText} from '@solyi/core/overflow';
 import {solIconPaths} from '@solyi/core/icons';
@@ -80,19 +80,31 @@ import {STextField} from './text-field';
 export {STextField};
 export type {SolInputClearEvent,SolInputControlScope,SolInputControlSlots,SolInputHandle} from './input-control';
 
+export interface SolDialogScope {readonly busy:boolean;readonly busyScope:'body'|'all'}
+export interface SolDialogSlots {default?:(scope:SolDialogScope)=>VNodeChild;actions?:(scope:SolDialogScope)=>VNodeChild;feedback?:(scope:SolDialogScope)=>VNodeChild;'actions-start'?:(scope:SolDialogScope)=>VNodeChild}
 export const SDialog=/* @__PURE__ */ defineComponent({
   name:'SDialog',inheritAttrs:false,
-  props:{locale:Object as PropType<Partial<SolLocale>>,id:{type:String,required:true},title:{type:String,required:true},eyebrow:String,presentation:{type:String as PropType<'dialog'|'drawer'>,default:'dialog'},modelValue:Boolean,maxWidth:{type:[Number,String],default:480},closeLabel:String,returnFocus:{type:Object as PropType<HTMLElement|null>,default:null}},
+  props:{locale:Object as PropType<Partial<SolLocale>>,id:{type:String,required:true},title:{type:String,required:true},eyebrow:String,presentation:{type:String as PropType<'dialog'|'drawer'>,default:'dialog'},modelValue:Boolean,maxWidth:{type:[Number,String],default:480},closeLabel:String,returnFocus:{type:Object as PropType<HTMLElement|null>,default:null},busy:Boolean,busyScope:{type:String as PropType<'body'|'all'>,default:'body'}},
+  slots:Object as SlotsType<SolDialogSlots>,
   emits:{'update:modelValue':(_value:boolean)=>true,close:()=>true},
   setup(props,{attrs,slots,emit}){
-    const l=useSolLocale(()=>props.locale);const close=ref<{ $el?:HTMLElement }|null>(null),viewport=useVisualViewport();let opener:HTMLElement|null=null;
+    const l=useSolLocale(()=>props.locale);const close=ref<{ $el?:HTMLElement }|null>(null),viewport=useVisualViewport(),section=ref<HTMLElement|null>(null);let opener:HTMLElement|null=null,lockedFocus:HTMLElement|null=null,forcedFocus:HTMLElement|null=null;
+    const blocked=()=>props.busy&&props.busyScope==='all';
+    const requestClose=(value:boolean)=>{if(value||!blocked())emit('update:modelValue',value)};
     const restore=()=>{const target=props.returnFocus||opener;if(target?.isConnected)target.focus({preventScroll:true});};
-    watch(()=>props.modelValue,async(value,old)=>{if(typeof document==='undefined')return;if(value){opener=document.activeElement instanceof HTMLElement?document.activeElement:null;await nextTick();close.value?.$el?.focus();}else if(old){await nextTick();restore();emit('close');}},{immediate:true});
+    watch(()=>props.modelValue,async(value,old)=>{if(typeof document==='undefined')return;if(value){opener=document.activeElement instanceof HTMLElement?document.activeElement:null;await nextTick();if(props.modelValue)(blocked()?section.value:close.value?.$el)?.focus();}else if(old){await nextTick();restore();emit('close');}},{immediate:true});
     onBeforeUnmount(()=>{if(props.modelValue)restore();});
-    return():VNode=>h(VDialog as Component,{...attrs,style:[viewport.value?{top:viewport.value.top+'px',left:viewport.value.left+'px',width:viewport.value.width+'px',height:viewport.value.height+'px',right:'auto',bottom:'auto','--sol-dialog-viewport-height':viewport.value.height+'px'}:undefined,attrs.style],modelValue:props.modelValue,'onUpdate:modelValue':(value:boolean)=>emit('update:modelValue',value),maxWidth:props.presentation==='drawer'?440:props.maxWidth,transition:false,'aria-labelledby':props.id+'-title',class:['sol-ui-overlay',props.presentation==='drawer'?'sol-ui-drawer-overlay':undefined,attrs.class]},()=>h('section',{class:'sol-ui-dialog',id:props.id},[
-      h('div',{class:'sol-ui-dialog-heading'},[h('div',{class:'sol-surface-heading'},[props.eyebrow?h('span',{class:'eyebrow'},props.eyebrow):null,h('h2',{id:props.id+'-title'},props.title)]),h(SIconBtn,{id:props.id+'-close',ref:close,variant:'subtle',icon:'close',label:props.closeLabel?.trim()||l.value.close,autofocus:true,onClick:()=>emit('update:modelValue',false)})]),
-      h('div',{class:'sol-ui-dialog-body'},slots.default?.()),slots.actions?h('div',{class:'sol-ui-dialog-actions'},slots.actions()):null
-    ]));
+    watch(()=>[props.busy,props.busyScope,props.modelValue],async()=>{
+      if(typeof document==='undefined')return;
+      if(props.busy&&props.modelValue){const active=document.activeElement;if(active instanceof HTMLElement&&section.value?.contains(active)&&(active===forcedFocus||blocked()||section.value.querySelector('.sol-ui-dialog-body')?.contains(active))){lockedFocus??=active;await nextTick();if(!props.modelValue||!props.busy)return;forcedFocus=blocked()?section.value:close.value?.$el||null;forcedFocus?.focus({preventScroll:true});}}
+      else{const target=lockedFocus,forced=forcedFocus;lockedFocus=null;forcedFocus=null;await nextTick();if(props.modelValue&&target?.isConnected&&document.activeElement===forced)target.focus({preventScroll:true});}
+    });
+    return():VNode=>{const scope:SolDialogScope={busy:props.busy,busyScope:props.busyScope};return h(VDialog as Component,{...attrs,style:[viewport.value?{top:viewport.value.top+'px',left:viewport.value.left+'px',width:viewport.value.width+'px',height:viewport.value.height+'px',right:'auto',bottom:'auto','--sol-dialog-viewport-height':viewport.value.height+'px'}:undefined,attrs.style],modelValue:props.modelValue,'onUpdate:modelValue':requestClose,maxWidth:props.presentation==='drawer'?440:props.maxWidth,transition:false,persistent:blocked()?true:attrs.persistent,'aria-labelledby':props.id+'-title',class:['sol-ui-overlay',props.presentation==='drawer'?'sol-ui-drawer-overlay':undefined,attrs.class]},()=>h('section',{ref:section,class:'sol-ui-dialog',id:props.id,tabindex:-1,'aria-busy':props.busy?'true':undefined},[
+      h('div',{class:'sol-ui-dialog-heading'},[h('div',{class:'sol-surface-heading'},[props.eyebrow?h('span',{class:'eyebrow'},props.eyebrow):null,h('h2',{id:props.id+'-title'},props.title)]),h(SIconBtn,{id:props.id+'-close',ref:close,variant:'subtle',icon:'close',label:props.closeLabel?.trim()||l.value.close,autofocus:true,disabled:blocked(),onClick:()=>requestClose(false)})]),
+      h('div',{class:'sol-ui-dialog-body',inert:props.busy},[slots.default?.(scope)]),
+      slots.feedback?h('div',{class:'sol-ui-dialog-feedback',inert:blocked()},[slots.feedback(scope)]):null,
+      slots.actions||slots['actions-start']?h('div',{class:'sol-ui-dialog-actions',inert:blocked()},[slots['actions-start']?h('div',{class:'sol-ui-dialog-actions-start'},[slots['actions-start'](scope)]):null,slots.actions?.(scope)]):null
+    ]));}
   }
 });
 

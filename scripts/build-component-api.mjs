@@ -184,6 +184,10 @@ for (const [name, group, description, exampleRoute, example] of records) {
       '양의 유한한 증감 간격입니다. JavaScript Number로 정확한 별도 결과를 표현할 수 없거나 범위를 넘는 증감은 실행하지 않습니다.'
   }
   if (name === 'SSwitch') props.find(prop => prop.name === 'hideLabel').description = '기본 false입니다. 외부 설정명이 있는 배치에서 시각 라벨만 숨깁니다. label의 접근 가능한 이름은 유지하고 명시적 aria-label/aria-labelledby를 우선합니다.'
+  if (name === 'SDialog') {
+    props.find(prop => prop.name === 'busy').description = '외부 작업 상태입니다. 본문을 inert로 잠그며 폼 값은 유지합니다. 슬롯에 busy/busyScope를 전달하고 작업 결과를 자동 처리하지 않습니다.'
+    props.find(prop => prop.name === 'busyScope').description = '기본 body는 본문만 잠그고 닫기와 액션은 허용합니다. all은 feedback·액션·닫기·Escape·바깥 클릭도 잠급니다. 부모가 modelValue=false로 닫는 제어는 유지합니다.'
+  }
   if (name === 'SConfirmAction') {
     props.find(prop => prop.name === 'timeout').description = '확인 대기 시간(ms)입니다. 기본 5000, 0이면 자동 취소하지 않습니다. Escape와 기본 blur 취소는 유지합니다.'
     props.find(prop => prop.name === 'loading').description = '소비 앱의 비동기 실행 상태입니다. 대기 확인을 취소하고 재실행을 막으며 버튼 포커스는 유지합니다. confirm listener의 Promise는 자동으로 기다리지 않습니다.'

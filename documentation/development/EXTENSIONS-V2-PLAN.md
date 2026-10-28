@@ -1,5 +1,7 @@
 # 확장 요청 2 · 실제 저장소 대조 및 구현 계획
 
+Dialog 후속: feedback/actions-start와 busyScope body/all을 연결했습니다. 외부 busy 기본 false, 본문 inert는 폼 값을 제거하지 않습니다. body는 닫기 허용, all은 내부 feedback·actions·닫기·Escape·바깥 클릭 잠금이며 부모 modelValue 제어는 유지합니다. 작업 시작 시 잠긴 포커스를 안전한 영역으로 옮기고 종료 시 사용자가 옮기지 않은 경우만 복원합니다. 기존 고정 헤더/액션과 본문 스크롤이 기본이므로 중복 scrollable/sticky 옵션은 추가하지 않았습니다. 모바일 실렌더와 전체 잠금 Escape·포커스 복원/본문 잠금 닫기 조작을 확인했습니다.
+
 후속 상태: Date/Time 공개 opt-in과 Dialog 고정 헤더·본문 스크롤·설명 간격·Switch hideLabel을 완료했습니다. SConfirmAction은 SBtn 재사용, 공개 타입/등록, Components와 starter buttons 예제까지 연결했습니다. 빌드·46종 API 회귀·확인 상태 전이·실제 Chrome 360px Enter/Escape/확정 조작을 통과했습니다. timeout=0은 자동 취소 없음, 기본 blur 취소, 외부 loading/error/reset 계약입니다. 설치본 최종 검증과 확대된 공개 API의 크기 기준 재측정은 전체 후보에서 수행합니다. 1.1.0은 미게시이며 정식 artifact 동결/전체 delivery 검증은 아직입니다.
 
 구현 진행: 공통 입력 1단계 8종은 [단계별 기록](INPUT-CLEAR-VALIDATION.md), 2단계 SCombobox c4f3011의 최종 tarball 설치 소비 결과는 [Combobox 검증](COMBOBOX-VALIDATION.md)에 정리했습니다. 아래 표와 확인 기준은 승인 당시의 baseline이며 현재 source는 SCombobox를 포함한 45종입니다. 다음은 기존 표시 4종 재사용 점검과 [Picker host 착수 준비](PICKER-PRESENTATION-NEXT.md)입니다. 출시 게이트와 공개 미배포 상태는 유지합니다.

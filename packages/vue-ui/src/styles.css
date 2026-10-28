@@ -63,6 +63,9 @@
 .sol-ui-dialog-body {display:grid;align-content:start;gap:var(--sol-space-3);min-width:0;min-height:0;flex:1 1 auto;overflow:auto;padding:var(--sol-space-2);margin:calc(-1 * var(--sol-space-2));}
 .sol-ui-dialog-body>p,.sol-ui-detail {margin:0;}
 .sol-ui-dialog-actions {display:flex;flex:none;flex-wrap:wrap;gap:var(--sol-space-3);margin-top:var(--sol-space-4);}
+.sol-ui-dialog-actions-start {display:flex;flex-wrap:wrap;align-items:center;gap:var(--sol-space-3);margin-inline-end:auto;}
+.sol-ui-dialog-feedback {flex:none;margin-top:var(--sol-space-3);overflow-wrap:anywhere;}
+.sol-ui-dialog-feedback>p {margin:0;}
 .sol-ui-table {container-type:inline-size;min-width:0;display:grid;gap:var(--sol-space-4);}
 .sol-ui-table-desktop {border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);overflow:hidden;}
 .sol-ui-table .sol-data-table {margin:0;table-layout:fixed;width:100%;}
