@@ -2,6 +2,7 @@ import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref
 import type { Component, PropType } from 'vue'
 import { VOverlay } from 'vuetify/components/VOverlay'
 import { useFloatingPanel } from './floating'
+import {useVisualViewport} from './viewport'
 
 // Private until the Date/Time opt-in adapters export their public contracts.
 export type PickerPresentation = 'auto' | 'popover' | 'dialog'
@@ -40,7 +41,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       supportsPopover = ref(true),
       offset = ref(0),
       margin = ref<number>(),
-      viewport = ref<{top:number;left:number;width:number;height:number} | null>(null),
+      viewport = useVisualViewport(),
       nativeParent = computed(() => p.anchor?.closest('dialog') ?? null),
       mode = computed(() => nativeParent.value && !supportsPopover.value ? 'dialog' : p.presentation === 'auto' ? narrow.value ? 'dialog' : 'popover' : p.presentation),
       nativePopover = computed(() => !!nativeParent.value && p.open && mode.value === 'popover'),
@@ -166,24 +167,16 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
     })
     watch(mode, () => { if (p.open) void ready(false, document.activeElement) })
     const mediaChanged = () => { narrow.value = !!media?.matches }
-    const viewportChanged = () => {
-      const visible = window.visualViewport
-      viewport.value = { top: visible?.offsetTop || 0, left: visible?.offsetLeft || 0, width: visible?.width || window.innerWidth, height: visible?.height || window.innerHeight }
-      void nextTick(reveal)
-    }
+    watch(viewport, () => void nextTick(reveal))
     onMounted(() => {
       // Matches the existing library's narrow layout breakpoint; no new public breakpoint API.
       media = window.matchMedia('(max-width: 680px)')
       supportsPopover.value = typeof HTMLElement.prototype.showPopover === 'function'
-      viewportChanged()
       mediaChanged()
       media.addEventListener('change', mediaChanged)
       window.addEventListener('keydown', escape, true)
       document.addEventListener('focusin', outsideFocus)
-      window.addEventListener('resize', viewportChanged)
       window.addEventListener('blur', outsideWindow)
-      window.visualViewport?.addEventListener('resize', viewportChanged)
-      window.visualViewport?.addEventListener('scroll', viewportChanged)
       if (p.open) void ready(true, document.activeElement)
     })
     onBeforeUnmount(() => {
@@ -193,10 +186,7 @@ export const PickerHost = /* @__PURE__ */ defineComponent({
       media?.removeEventListener('change', mediaChanged)
       window.removeEventListener('keydown', escape, true)
       document.removeEventListener('focusin', outsideFocus)
-      window.removeEventListener('resize', viewportChanged)
       window.removeEventListener('blur', outsideWindow)
-      window.visualViewport?.removeEventListener('resize', viewportChanged)
-      window.visualViewport?.removeEventListener('scroll', viewportChanged)
       if (p.open && content()?.contains(document.activeElement)) returnFocus()
       closeBridge()
     })

@@ -9,6 +9,8 @@
 - 같은 공식 registry의 `npm whoami`는 **E401 Unauthorized**입니다. 현재 기존 인증의 유효성을 확인하지 못했으며 게시 단계는 인증 차단 상태입니다. npm login/config 변경/새 token 생성/권한 확대는 하지 않았습니다. 새 인증 상태가 제공되기 전 이 인증 요청을 반복하지 않습니다.
 - npm publish는 실행하지 않았습니다. 부분 성공 또는 불확실한 게시 결과는 없습니다. 원시 결과는 qa-output/date-presentation/npm-*-network 파일에 보존합니다.
 
+현재 추가 확인: Dialog 피드백 구현 뒤 기존 45종 예산의 문자 한도를 소폭 넘었습니다(정확한 수치는 qa-output/dialog-feedback/current-size.json). 검사는 유지하며 기능을 빼거나 수치만 올려 통과시키지 않습니다. 전체 승인 범위를 닫은 후 실제 API 집합·증분·gzip·개별 import를 근거로 최종 버전 기준을 정리해야 합니다.
+
 ## 실제 게시 전 닫을 조건
 
 1. [승인된 18항목 계획](EXTENSIONS-V2-PLAN.md)과 추가 Dialog 요청을 대조하고 최종 포함 범위를 기록합니다. 완료 기능과 새 WIP를 섞어 하나의 완성 버전처럼 게시하지 않습니다.

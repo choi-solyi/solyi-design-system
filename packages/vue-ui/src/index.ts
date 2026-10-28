@@ -1,4 +1,5 @@
 import {SCard,SAlert} from './surfaces';
+import {useVisualViewport} from './viewport';
 import {SChip,SBadge,SIcon,createSIconBtn} from './primitives';
 export {SChip,SBadge,SIcon};
 export type {SolTone,SolTagVariant,SolTagSize} from './primitives';
@@ -134,12 +135,12 @@ export const SDialog=/* @__PURE__ */ defineComponent({
   props:{locale:Object as PropType<Partial<SolLocale>>,id:{type:String,required:true},title:{type:String,required:true},eyebrow:String,presentation:{type:String as PropType<'dialog'|'drawer'>,default:'dialog'},modelValue:Boolean,maxWidth:{type:[Number,String],default:480},closeLabel:String,returnFocus:{type:Object as PropType<HTMLElement|null>,default:null}},
   emits:{'update:modelValue':(_value:boolean)=>true,close:()=>true},
   setup(props,{attrs,slots,emit}){
-    const l=useSolLocale(()=>props.locale);const close=ref<{ $el?:HTMLElement }|null>(null);let opener:HTMLElement|null=null;
+    const l=useSolLocale(()=>props.locale);const close=ref<{ $el?:HTMLElement }|null>(null),viewport=useVisualViewport();let opener:HTMLElement|null=null;
     const restore=()=>{const target=props.returnFocus||opener;if(target?.isConnected)target.focus({preventScroll:true});};
-    watch(()=>props.modelValue,async(value,old)=>{if(value){opener=document.activeElement instanceof HTMLElement?document.activeElement:null;await nextTick();close.value?.$el?.focus();}else if(old){await nextTick();restore();emit('close');}},{immediate:true});
+    watch(()=>props.modelValue,async(value,old)=>{if(typeof document==='undefined')return;if(value){opener=document.activeElement instanceof HTMLElement?document.activeElement:null;await nextTick();close.value?.$el?.focus();}else if(old){await nextTick();restore();emit('close');}},{immediate:true});
     onBeforeUnmount(()=>{if(props.modelValue)restore();});
-    return():VNode=>h(VDialog as Component,{...attrs,modelValue:props.modelValue,'onUpdate:modelValue':(value:boolean)=>emit('update:modelValue',value),maxWidth:props.presentation==='drawer'?440:props.maxWidth,transition:false,'aria-labelledby':props.id+'-title',class:['sol-ui-overlay',props.presentation==='drawer'?'sol-ui-drawer-overlay':undefined,attrs.class]},()=>h('section',{class:'sol-ui-dialog',id:props.id},[
-      h('div',{class:'sol-ui-dialog-heading'},[h('div',{class:'sol-surface-heading'},[props.eyebrow?h('span',{class:'eyebrow'},props.eyebrow):null,h('h2',{id:props.id+'-title'},props.title)]),h(SBtn,{id:props.id+'-close',ref:close,variant:'inline',autofocus:true,'aria-label':(props.closeLabel??l.value.close),onClick:()=>emit('update:modelValue',false)},()=>[(props.closeLabel??l.value.close),uiIcon('close')])]),
+    return():VNode=>h(VDialog as Component,{...attrs,style:[viewport.value?{top:viewport.value.top+'px',left:viewport.value.left+'px',width:viewport.value.width+'px',height:viewport.value.height+'px',right:'auto',bottom:'auto','--sol-dialog-viewport-height':viewport.value.height+'px'}:undefined,attrs.style],modelValue:props.modelValue,'onUpdate:modelValue':(value:boolean)=>emit('update:modelValue',value),maxWidth:props.presentation==='drawer'?440:props.maxWidth,transition:false,'aria-labelledby':props.id+'-title',class:['sol-ui-overlay',props.presentation==='drawer'?'sol-ui-drawer-overlay':undefined,attrs.class]},()=>h('section',{class:'sol-ui-dialog',id:props.id},[
+      h('div',{class:'sol-ui-dialog-heading'},[h('div',{class:'sol-surface-heading'},[props.eyebrow?h('span',{class:'eyebrow'},props.eyebrow):null,h('h2',{id:props.id+'-title'},props.title)]),h(SIconBtn,{id:props.id+'-close',ref:close,variant:'subtle',icon:'close',label:props.closeLabel?.trim()||l.value.close,autofocus:true,onClick:()=>emit('update:modelValue',false)})]),
       h('div',{class:'sol-ui-dialog-body'},slots.default?.()),slots.actions?h('div',{class:'sol-ui-dialog-actions'},slots.actions()):null
     ]));
   }

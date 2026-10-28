@@ -2,6 +2,9 @@
 
 ## 1.1.0 후보 · 미게시
 
+- Date/Time에 opt-in pickerPresentation과 logical placement를 연결합니다. 기존 표시 방식과 모델·폼 계약을 유지합니다.
+- Dialog의 제목·닫기·actions는 고정하고 본문만 스크롤합니다. 설명 간격과 짧은 viewport를 다듬고 Switch에 시각 라벨만 숨기는 hideLabel을 추가합니다.
+
 - Vue defineComponent의 순수 초기화 42곳에 PURE 표시를 추가합니다. 개별 import의 불필요한 컴포넌트 보존을 줄이며 setup·watch·이벤트·스타일 동작은 유지합니다.
 - 공개 45종에 맞춰 버전별 source/gzip/전체 JS 및 실제 설치본 개별 import 크기 검사를 추가합니다. 기존 1.0.0 파일과 176,000자 기준은 보존합니다. 1.1.0은 로컬 후보이며 npm 게시·운영 배포와 릴리스 동결은 아직 수행하지 않았습니다.
 - 공통 입력 8종의 opt-in 내부 clear action과 별도 자유 입력 SCombobox를 추가합니다. 기존 빈 값·change·폼 제출 계약을 보존하며 문서·starter 예제를 제공합니다.

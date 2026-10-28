@@ -182,6 +182,7 @@ for (const [name, group, description, exampleRoute, example] of records) {
     props.find(prop => prop.name === 'step').description =
       '양의 유한한 증감 간격입니다. JavaScript Number로 정확한 별도 결과를 표현할 수 없거나 범위를 넘는 증감은 실행하지 않습니다.'
   }
+  if (name === 'SSwitch') props.find(prop => prop.name === 'hideLabel').description = '기본 false입니다. 외부 설정명이 있는 배치에서 시각 라벨만 숨깁니다. label의 접근 가능한 이름은 유지하고 명시적 aria-label/aria-labelledby를 우선합니다.'
   if (name === 'SCombobox') {
     props.find(prop => prop.name === 'modelValue').description = '확정된 표시 문자열 또는 null입니다. 편집 draft는 Enter/opt-in blur 또는 후보 선택 전까지 모델에 반영하지 않습니다. 비어 있는 직접 입력은 null, 그 외 공백은 보존합니다.'
     props.find(prop => prop.name === 'commitOn').description = '직접 입력의 확정 시점입니다. 기본 [enter], blur는 opt-in입니다. 후보 클릭 또는 명시적으로 방향키 탐색 후 Enter는 select입니다. 빈 배열은 자동 직접 입력 확정을 사용하지 않습니다.'

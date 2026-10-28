@@ -45,18 +45,20 @@
 .sol-ui-input .v-field {--v-input-control-height:var(--sol-control-height);--v-field-padding-top:0;--v-field-padding-bottom:0;--v-field-input-padding-top:8px;--v-field-input-padding-bottom:8px;border-radius:var(--sol-radius-control);background:var(--sol-color-surface);color:var(--sol-color-text);}
 .sol-ui-input .v-field__input {min-height:var(--sol-control-height);padding:var(--sol-space-2) var(--sol-space-3);font:inherit;line-height:1.4;}
 .sol-ui-input .v-field__outline {color:var(--sol-color-control-border);--v-field-border-opacity:1;}
-.sol-ui-input .v-field--focused .v-field__outline {color:var(--sol-color-focus);}
+.sol-ui-input .v-field--focused .v-field__outline {color:var(--sol-color-focus);--v-field-border-width:var(--sol-focus-width);}
 .sol-ui-input:has(input:focus-visible) .v-field {outline:var(--sol-focus-width) solid var(--sol-color-focus);outline-offset:var(--sol-focus-offset);}
+.sol-ui-input:has(input:focus-visible) .v-field--variant-outlined:not(.v-field--error) {outline:none;}
+.sol-ui-input .v-field__input:focus-visible,.sol-vuetify-field .v-field__input:focus-visible {outline:none;}
 .sol-ui-input .v-field--error .v-field__outline {color:var(--sol-color-danger);}
 .sol-ui-hint,.sol-ui-error {font-size:var(--sol-text-sm);margin:0;overflow-wrap:anywhere;}
 .sol-ui-hint {color:var(--sol-color-muted);}.sol-ui-error{color:var(--sol-color-danger);}
 .sol-ui-overlay .v-overlay__scrim {background:var(--sol-backdrop-color);opacity:1;}
-.sol-ui-dialog {background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-panel);padding:var(--sol-space-6);max-height:calc(100dvh - 48px);overflow:auto;overflow-wrap:anywhere;}
-.sol-ui-dialog-heading {display:flex;align-items:start;justify-content:space-between;gap:var(--sol-space-3);margin-bottom:var(--sol-space-4);}
+.sol-ui-dialog {box-sizing:border-box;display:flex;flex-direction:column;background:var(--sol-color-surface);color:var(--sol-color-text);border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-panel);padding:var(--sol-space-6);max-height:calc(var(--sol-dialog-viewport-height,100dvh) - 48px);overflow:visible;overflow-wrap:anywhere;}
+.sol-ui-dialog-heading {display:flex;flex:none;align-items:start;justify-content:space-between;gap:var(--sol-space-3);margin-bottom:var(--sol-space-3);}
 .sol-ui-dialog h2 {font-size:var(--sol-text-lg);margin:0;}.sol-ui-dialog-heading>.sol-ui-button {flex:none;}
-.sol-ui-dialog-body {display:grid;gap:var(--sol-space-3);min-width:0;}
+.sol-ui-dialog-body {display:grid;align-content:start;gap:var(--sol-space-3);min-width:0;min-height:0;flex:1 1 auto;overflow:auto;padding:var(--sol-space-2);margin:calc(-1 * var(--sol-space-2));}
 .sol-ui-dialog-body>p,.sol-ui-detail {margin:0;}
-.sol-ui-dialog-actions {display:flex;flex-wrap:wrap;gap:var(--sol-space-3);margin-top:var(--sol-space-4);}
+.sol-ui-dialog-actions {display:flex;flex:none;flex-wrap:wrap;gap:var(--sol-space-3);margin-top:var(--sol-space-4);}
 .sol-ui-table {container-type:inline-size;min-width:0;display:grid;gap:var(--sol-space-4);}
 .sol-ui-table-desktop {border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);overflow:hidden;}
 .sol-ui-table .sol-data-table {margin:0;table-layout:fixed;width:100%;}
@@ -236,8 +238,8 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-card {display:grid;gap:var(--sol-content-gap);}
 .sol-ui-card>:last-child {margin-bottom:0;}
 .sol-ui-card-actions {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);}
-.sol-ui-drawer-overlay>.v-overlay__content {position:fixed!important;inset:0 0 0 auto!important;margin:0!important;max-height:100dvh!important;height:100dvh;width:min(440px,100%)!important;}
-.sol-ui-drawer-overlay .sol-ui-dialog {height:100%;border-radius:var(--sol-radius-panel) 0 0 var(--sol-radius-panel);overflow:auto;}
+.sol-ui-drawer-overlay>.v-overlay__content {position:absolute!important;inset:0 0 0 auto!important;margin:0!important;max-height:100%!important;height:100%;width:min(440px,100%)!important;}
+.sol-ui-drawer-overlay .sol-ui-dialog {height:100%;max-height:100%;border-radius:var(--sol-radius-panel) 0 0 var(--sol-radius-panel);}
 @media(max-width:440px){.sol-ui-drawer-overlay .sol-ui-dialog{border-radius:0;}}
 .sol-ui-tree [aria-disabled=true]>.sol-tree-row {color:var(--sol-color-muted);cursor:default;}
 
