@@ -1,7 +1,7 @@
 import {defineComponent,h,ref,watch,nextTick,onMounted,mergeProps} from 'vue';
 import {SChip} from './primitives';
 import {formatFieldDisplay} from './display-format';
-import type {PropType,Slots,SlotsType} from 'vue';
+import type {PropType,Slots,SlotsType,VNode} from 'vue';
 import {inputControlProps,useInputControl} from './input-control';
 import type {SolInputClearEvent,SolInputControlSlots} from './input-control';
 import {useSolLocale,formatSolNumber,parseSolNumber} from './locale';
@@ -12,7 +12,18 @@ import { addNumberStep, isNumberStepAligned } from './number-step'
 export interface SolOption {value:string;label:string;description?:string;disabled?:boolean}
 export interface SolNumberPreset {value:number;label?:string;disabled?:boolean}
 export type SolNumberDisplayFormatter=(value:number,locale:Readonly<SolLocale>)=>string;
-export interface SolNumberInputHandle {focus():void;validate():boolean;resetValidation():void}
+export interface SolNumberInputHandle {focus():void;validate():boolean;resetValidation():void;clear():void}
+export interface SolNumberPresetScope {
+  readonly presets: readonly SolNumberPreset[]
+  readonly value: number | null
+  readonly disabled: boolean
+  readonly readonly: boolean
+  setValue(value:number):boolean
+  isAllowed(value:number):boolean
+}
+export interface SolNumberInputSlots extends SolInputControlSlots {
+  presets?: (scope:SolNumberPresetScope)=>VNode[]
+}
 export const displayFieldProps = {
   id: {type: String, required: true as const},
   label: {type: String, required: true as const},
@@ -45,9 +56,55 @@ export const SRadioGroup=defineComponent({name:'SRadioGroup',inheritAttrs:false,
  const l=useSolLocale(()=>p.locale),inputs=new Map<string,HTMLElement>();const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>{const option=p.options.find(o=>!o.disabled&&o.value===p.modelValue)||p.options.find(o=>!o.disabled);if(option)inputs.get(option.value)?.focus();}});expose(validation);return()=>h('fieldset',{...attrs,id:p.id,disabled:fieldDisabled(p),class:['sol-ui-native-field sol-choice-fieldset',attrs.class],'aria-describedby':fieldDescription(p,slots,fieldError(p),attrs['aria-describedby']),'aria-invalid':fieldError(p)?'true':undefined},[h('legend',{id:p.id+'-label',class:'sol-label'},[slots.label?.()||p.label,p.required?` (${l.value.required})`:'']),...p.options.map((o,i)=>h('label',{class:['sol-choice',p.layout==='cards'?'sol-ui-radio-card':undefined],for:p.id+'-'+i},[h('input',{id:p.id+'-'+i,type:'radio',ref:(el:unknown)=>{if(el)inputs.set(o.value,el as HTMLElement);else inputs.delete(o.value);},name:p.name||p.id,value:o.value,checked:p.modelValue===o.value,disabled:fieldDisabled(p)||o.disabled,required:p.required,'aria-disabled':fieldReadonly(p)?'true':undefined,onClick:(e:MouseEvent)=>stopReadonly(p,e),onKeydown:(e:KeyboardEvent)=>readonlyKeys(p,e),onChange:(e:Event)=>{if(fieldDisabled(p)||fieldReadonly(p)){(e.target as HTMLInputElement).checked=p.modelValue===o.value;return;}emit('update:modelValue',o.value);emit('change',o.value);}}),h('span',[h('span',o.label),o.description?h('span',{class:'sol-hint sol-ui-option-description'},o.description):null])])),...fieldMessages(p,slots)]);
 }});
 export const SSwitch=defineComponent({name:'SSwitch',inheritAttrs:false,props:{...commonFieldProps,modelValue:Boolean},emits:{'update:modelValue':(_v:boolean)=>true,change:(_v:boolean)=>true},setup(p,{attrs,slots,emit,expose}){const l=useSolLocale(()=>p.locale),input=ref<HTMLElement|null>(null);const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus()});expose(validation);return()=>h('div',{class:'sol-ui-native-field'},[h('label',{class:'sol-choice',for:p.id},[h('input',{...attrs,ref:input,id:p.id,type:'checkbox',role:'switch',class:['sol-ui-switch-input',attrs.class],checked:p.modelValue,disabled:fieldDisabled(p),required:p.required,'aria-checked':String(p.modelValue),'aria-readonly':fieldReadonly(p)?'true':undefined,'aria-describedby':fieldDescription(p,slots,fieldError(p),attrs['aria-describedby']),'aria-invalid':fieldError(p)?'true':undefined,onClick:(e:MouseEvent)=>stopReadonly(p,e),onChange:(e:Event)=>{const input=e.target as HTMLInputElement;if(fieldDisabled(p)||fieldReadonly(p)){input.checked=p.modelValue;return;}emit('update:modelValue',input.checked);emit('change',input.checked);}}),h('span',slots.label?.()||p.label),p.required?' ('+l.value.required+')':'']),...fieldMessages(p,slots)]);}});
-export const SSelect=defineComponent({name:'SSelect',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,required:true},placeholder:String},emits:{'update:modelValue':(_v:string|null)=>true,change:(_v:string|null)=>true,blur:(_e:FocusEvent)=>true},setup(p,{attrs,slots,emit,expose}){
- const l=useSolLocale(()=>p.locale),input=ref<HTMLElement|null>(null);const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus()});expose(validation);return()=>h('div',{class:'sol-field sol-ui-native-field'},[fieldLabel(p,slots,l.value.required),h('select',{...attrs,ref:input,id:p.id,value:p.modelValue??'',class:['sol-select',attrs.class],disabled:fieldDisabled(p),required:p.required,'aria-readonly':fieldReadonly(p)?'true':undefined,'aria-invalid':fieldError(p)?'true':undefined,'aria-describedby':fieldDescription(p,slots,fieldError(p),attrs['aria-describedby']),onPointerdown:(e:PointerEvent)=>stopReadonly(p,e),onKeydown:(e:KeyboardEvent)=>readonlyKeys(p,e),onChange:(e:Event)=>{let input=e.target as HTMLSelectElement;if(fieldDisabled(p)||fieldReadonly(p)){input.value=p.modelValue??'';return;}const value=input.value||null;emit('update:modelValue',value);emit('change',value);},onBlur:(e:FocusEvent)=>{validation.validate();emit('blur',e);}},[h('option',{value:'',disabled:p.required},p.placeholder??l.value.choose),...p.options.map(o=>h('option',{value:o.value,disabled:o.disabled},o.label))]),...fieldMessages(p,slots)]);
-}});
+export const SSelect = defineComponent({
+  name: 'SSelect', inheritAttrs: false,
+  props: {
+    ...commonFieldProps, ...inputControlProps,
+    modelValue: {type:String as PropType<string|null>,default:null},
+    options: {type:Array as PropType<readonly SolOption[]>,required:true}, placeholder:String,
+  },
+  slots: Object as SlotsType<SolInputControlSlots>,
+  emits: {
+    'update:modelValue': (_value:string|null)=>true,
+    change: (_value:string|null)=>true, blur: (_event:FocusEvent)=>true,
+    clear: (_event:SolInputClearEvent<string|null>)=>true,
+  },
+  setup(p,{attrs,slots,emit,expose}) {
+    const l=useSolLocale(()=>p.locale),input=ref<HTMLSelectElement|null>(null)
+    const validation=useSFieldValidation(p,()=>p.modelValue,{focus:()=>input.value?.focus()})
+    const control=useInputControl(p,slots,{
+      locale:()=>l.value,hasValue:()=>p.modelValue!==null&&p.modelValue!=='',
+      disabled:()=>fieldDisabled(p),readonly:()=>fieldReadonly(p),error:()=>fieldError(p),
+      clear:()=>{
+        if(p.modelValue!==null){emit('update:modelValue',null);emit('change',null)}
+        emit('clear',{value:null,reason:'clear'})
+      },
+      validate:validation.validate,focus:validation.focus,element:()=>input.value,
+    })
+    expose({...validation,clear:control.clear})
+    return()=>h('div',{class:'sol-field sol-ui-native-field'},[
+      fieldLabel(p,slots,l.value.required),
+      control.native(h('select',{
+        ...attrs,ref:input,id:p.id,value:p.modelValue??'',class:['sol-select',attrs.class],
+        disabled:fieldDisabled(p),required:p.required,
+        'aria-readonly':fieldReadonly(p)?'true':undefined,'aria-invalid':fieldError(p)?'true':undefined,
+        'aria-describedby':fieldDescription(p,slots,fieldError(p),attrs['aria-describedby']),
+        onPointerdown:(event:PointerEvent)=>stopReadonly(p,event),
+        onKeydown:(event:KeyboardEvent)=>readonlyKeys(p,event),
+        onChange:(event:Event)=>{
+          const target=event.target as HTMLSelectElement
+          if(fieldDisabled(p)||fieldReadonly(p)){target.value=p.modelValue??'';return}
+          const value=target.value||null;emit('update:modelValue',value);emit('change',value)
+        },
+        onBlur:(event:FocusEvent)=>{validation.validate();emit('blur',event)},
+      },[
+        h('option',{value:'',disabled:p.required},p.placeholder??l.value.choose),
+        ...p.options.map(option=>h('option',{value:option.value,disabled:option.disabled},option.label)),
+      ]),{select:true}),
+      ...fieldMessages(p,slots),
+    ])
+  },
+})
 export const STextarea = defineComponent({
   name: 'STextarea',
   inheritAttrs: false,
@@ -146,6 +203,7 @@ export const SNumberInput = defineComponent({
   inheritAttrs: false,
   props: {
     ...commonFieldProps,
+    ...inputControlProps,
     modelValue: { type: Number as PropType<number | null>, default: null },
     min: Number,
     max: Number,
@@ -154,11 +212,13 @@ export const SNumberInput = defineComponent({
     formatValue: Function as PropType<SolNumberDisplayFormatter>,
     unit: { type: String, default: '' },
   },
+  slots: Object as SlotsType<SolNumberInputSlots>,
   emits: {
     'update:modelValue': (_value: number | null) => true,
     change: (_value: number | null) => true,
     invalid: (_message: string) => true,
     blur: (_event: FocusEvent) => true,
+    clear: (_event: SolInputClearEvent<number|null>) => true,
   },
   setup(p, { attrs, slots, emit, expose }) {
     const l = useSolLocale(() => p.locale)
@@ -222,6 +282,17 @@ export const SNumberInput = defineComponent({
       focus: () => input.value?.focus(), validateIntrinsic: commit,
       intrinsicError: () => localError.value, resetIntrinsic: () => { localError.value = '' },
     })
+    const control=useInputControl(p,slots,{
+      locale:()=>l.value,hasValue:()=>p.modelValue!==null||draft.value.length>0,
+      disabled:()=>fieldDisabled(p),readonly:()=>fieldReadonly(p),error:()=>fieldError(p)||localError.value,
+      clear:()=>{
+        draft.value='';localError.value=''
+        if(p.modelValue!==null){emit('update:modelValue',null);emit('change',null)}
+        emit('clear',{value:null,reason:'clear'})
+      },
+      reconcile:()=>{draft.value=p.modelValue===null?'':formatSolNumber(p.modelValue,l.value);localError.value=''},
+      validate:validation.validate,focus:validation.focus,element:()=>input.value,
+    })
     watch(() => p.modelValue, value => {
       draft.value = value === null ? '' : formatSolNumber(value, l.value)
       localError.value = ''
@@ -236,7 +307,7 @@ export const SNumberInput = defineComponent({
       void nextTick(syncValidity)
     })
     onMounted(syncValidity)
-    expose(validation)
+    expose({...validation,clear:control.clear})
     return () => {
       const error = fieldError(p) || localError.value, value = numeric()
       const valueText = value !== null && !message() && (p.formatValue || p.unit)
@@ -253,7 +324,7 @@ export const SNumberInput = defineComponent({
             disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(-1) === null,
             'aria-label': p.label + ' ' + l.value.decrease, onClick: () => nudge(-1),
           }, '−'),
-          h('input', mergeProps({ onFocus: beginEdit }, {
+          control.native(h('input', mergeProps({ onFocus: beginEdit }, {
             ...attrs, ref: input, id: p.id, type: 'text', inputmode: 'decimal',
             class: ['sol-input', attrs.class], value: displayValue(),
             name: p.formatValue ? undefined : attrs.name,
@@ -280,7 +351,7 @@ export const SNumberInput = defineComponent({
                 event.preventDefault(); nudge(event.key === 'ArrowUp' ? 1 : -1)
               }
             },
-          })),
+          }))),
           p.unit ? h('span', { class: 'sol-ui-number-unit', 'aria-hidden': 'true' }, p.unit) : null,
           h('button', {
             type: 'button', class: 'sol-button',

@@ -55,7 +55,7 @@ export type {SolCalendarWeekStart,SolCalendarMarker,SolCalendarMarkers,SolCalend
 export {SSortableList};
 export type {SolSortableKey,SolSortableInput,SolSortableProposal,SolSortableCancelReason,SolSortableEnd,SolSortableItemScope,SolSortableSlots,SolSortableProps,SolSortableHandle,SolSortableEmit,SolSortableComponent} from './sortable-list';
 export type {SolTab,ToastTone,ToastCloseReason} from './navigation';
-export type {SolOption,SolNumberInputHandle,SolNumberPreset,SolNumberDisplayFormatter} from './controls';
+export type {SolOption,SolNumberInputHandle,SolNumberPreset,SolNumberDisplayFormatter,SolNumberPresetScope,SolNumberInputSlots} from './controls';
 export {koLocale,enLocale,SolLocaleKey,provideSolLocale,useSolLocale,resolveSolLocale,formatSolNumber,parseSolNumber,formatSolDate} from './locale';
 export type {SolLocale,SolLocaleSource,SolLocaleCode} from './locale';
 

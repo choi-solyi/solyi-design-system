@@ -39,6 +39,7 @@ const options = [
       v-if="!part || part === 'number'"
       id="recipe-amount"
       v-model="amount"
+      clearable
       label="가상 목표 개수"
       :min="0"
       :max="10"

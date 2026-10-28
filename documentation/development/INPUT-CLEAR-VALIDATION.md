@@ -1,6 +1,6 @@
-# 입력 내부 clear: 공통 구조와 텍스트 2종
+# 입력 내부 clear: 단계별 구현과 검증
 
-승인된 [확장 요청 2 계획](EXTENSIONS-V2-PLAN.md)의 1단계 중 공통 입력 구조와 STextField·STextarea를 먼저 연결했습니다. **나머지 SSelect/SNumberInput/SAutocomplete/SMultiSelect/SDatePicker/STimePicker 연결은 아직 남아 있습니다.** 18개 전체 또는 입력 8종 완료를 뜻하지 않습니다. 현재 source는 44개 공개 S 컴포넌트를 유지합니다.
+승인된 [확장 요청 2 계획](EXTENSIONS-V2-PLAN.md)의 1단계를 작은 단위로 연결합니다. 공통 입력 구조와 STextField·STextarea는 **ab6c1be**에 보존했고, 후속 Select·Number 단위는 아래에 따로 기록합니다. **SAutocomplete/SMultiSelect/SDatePicker/STimePicker 연결은 아직 남아 있습니다.** 18개 전체 또는 입력 8종 완료를 뜻하지 않습니다. 현재 source는 44개 공개 S 컴포넌트를 유지합니다.
 
 ## 실제 API와 호환성
 
@@ -35,3 +35,15 @@ STextField는 [fields recipe](../../examples/vue-vuetify/src/recipes/fields.vue)
 새 tarball 설치 검증·npm 게시·push·운영 ui.solyi.kr 배포·외부 소비 앱 변경은 이번 단위에서 하지 않았습니다. package 버전은 private 1.0.0 그대로이며 compatible minor 후보 검토까지입니다. 기존 frozen 1.0.0 산출물을 덮어쓰지 않았습니다.
 
 현재 build ESM은 **205,285자 / 207,565 bytes**이며 기존 **176,000자 제한 초과**입니다. 이전 Calendar 200,955자에서 4,330자 늘었습니다. 크기 gate 및 frozen 1.0.0 hash gate는 출시 차단으로 유지하며 위치·임계값·검사를 바꾸지 않습니다. 이 결과는 새 기능의 source 동작 통과와 구분합니다. 기존 설치본의 외부 선언 baseline 769건도 해결됐다고 주장하지 않습니다.
+
+## 후속 단위: SSelect·SNumberInput
+
+두 입력에 같은 opt-in `clearable/loading`, common slots, `clear():void`, `clear({value:null,reason:'clear'})`를 연결했습니다. 기존 scalar update/change는 그대로이며 clear로 모델이 달라질 때만 각각 한 번 보냅니다. Select는 native select/option/required/readonly 처리를 유지하고 indicator slot도 비대화형 장식으로 배치합니다. Number는 required라도 모델을 null로 지울 수 있게 intrinsic commit과 clear transaction을 구분하고, 부모가 거부하면 canonical 모델에서 draft를 복구합니다. 미완성 `-` draft도 지웁니다.
+
+Number의 formatter·unit·min 기준 step·preset과 hidden canonical 제출값을 유지했습니다. 기존 preset scope의 실제 값 `{presets,value,setValue,isAllowed,disabled,readonly}`를 `SolNumberPresetScope`로 공개하고 `SolNumberInputSlots`에 연결했습니다. 기존 slot 이름이나 필드를 바꾸지 않았습니다. 공통 action이 의미 없는 Checkbox/Radio/Switch 등에는 clear props를 추가하지 않습니다.
+
+패키지 build, clear runtime 4종, strict local/global SFC 2건 + negative 7건, 기존 form runtime, 격리 Chrome 144조합에서 4종 clear/모델/required/포커스/RTL/배치가 통과했습니다. Number의 preset·off-step 차단·clear 이후 min 기준 ArrowUp·formatted native 제출값, Select의 비활성 option과 custom indicator도 검사했습니다. JSDOM은 required select의 비활성 빈 option을 FormData에 포함하지만 Chrome은 제외하므로 실제 브라우저의 기존 제출 의미를 따로 확인했습니다. Chrome 초기 선택자가 select/hidden input을 구분하지 못한 것은 테스트 선택자를 수정한 뒤 재검증했습니다.
+
+정본 `choices.vue`의 SSelect와 `advanced-inputs.vue`의 SNumberInput에 clearable을 추가했습니다. Components Examples/Sample Code와 starter가 같은 정본을 사용합니다. 이 단위의 ESM은 **206,458자 / 208,738 bytes**로 이전 텍스트 단위보다 1,173자 늘었으며 기존 크기 제한·frozen gate는 계속 차단입니다. 추가 의존성·토큰·외부 배포는 없습니다.
+
+기존 input-display source runtime(weekday/range, formatted raw editing, invalid draft, form, inherited guards, decimal/min-origin presets, formatter fallback), 실제 starter source 타입·빌드, Components API, 문서 build도 통과했습니다. TS 5.9.3/skipLibCheck:false 자체 선언 33개 0건·외부 769건입니다. 새 설치본 검증은 아직 하지 않았고 앞 단위에서 닫은 전체 문서 회귀를 불필요하게 반복하지 않았습니다.

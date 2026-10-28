@@ -34,6 +34,7 @@ const options = [
     <SSelect
       id="recipe-sort"
       v-model="sort"
+      clearable
       label="정렬 기준"
       :options="[
         { value: 'recent', label: '최근 변경순' },

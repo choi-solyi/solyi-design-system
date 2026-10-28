@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { STextField, STextarea } from 'solyi-ui'
+import { STextField, STextarea, SSelect, SNumberInput } from 'solyi-ui'
 import type { SolInputClearEvent, SolInputHandle } from 'solyi-ui'
 const value = ref('Text'), handle = ref<SolInputHandle | null>(null)
+const selected = ref<string|null>('a'), number = ref<number|null>(5)
 function cleared(event: SolInputClearEvent<string>) {
   console.log(event.value.toUpperCase(), event.reason)
 }
+function selectedCleared(event: SolInputClearEvent<string|null>) { console.log(event.value?.toUpperCase()) }
+function numberCleared(event: SolInputClearEvent<number|null>) { console.log(event.value?.toFixed(0)) }
 </script>
 <template>
   <button type="button" @click="handle?.clear()">Clear through the same public action</button>
@@ -20,4 +23,13 @@ function cleared(event: SolInputClearEvent<string>) {
     <template #trailing="{ loading }"><span>{{ loading }}</span></template>
     <template #loading="{ readonly: readOnly }"><span>{{ readOnly }}</span></template>
   </STextarea>
+  <SSelect id="select-proof" label="Select" v-model="selected" :options="[{value:'a',label:'Alpha'}]" clearable @clear="selectedCleared">
+    <template #indicator="{ disabled }"><span>{{ disabled }}</span></template>
+  </SSelect>
+  <SNumberInput id="number-proof" label="Number" v-model="number" :min="5" :step="15" clearable @clear="numberCleared">
+    <template #leading="{ clear }"><button type="button" @click="clear">Clear</button></template>
+    <template #presets="{ presets, value: current, setValue, isAllowed, readonly: readOnly, disabled }">
+      <button type="button" :disabled="disabled || readOnly || !isAllowed(20)" @click="setValue(20)">{{ current?.toFixed(0) }} {{ presets[0]?.value.toFixed(0) }}</button>
+    </template>
+  </SNumberInput>
 </template>
