@@ -1,0 +1,1151 @@
+{
+  "scope": "Frozen 1.0.0 versus completed c4f3011 candidate; unexported Picker WIP is excluded",
+  "compression": "Node gzipSync level 9; production minification by Vite 8.3.4",
+  "fixtures": [
+    {
+      "kind": "baseline",
+      "version": "1.0.0",
+      "componentCount": 38,
+      "esmCharacters": 145638,
+      "bytes": 147294,
+      "gzipBytes": 37493,
+      "sideEffects": [
+        "**/*.css"
+      ],
+      "peerDependencies": {
+        "vue": ">=3.5.44 <3.6.0",
+        "vuetify": ">=4.3.0 <4.4.0"
+      },
+      "imports": [
+        "vue",
+        "./core/icons.js",
+        "./core/date-only.js",
+        "vuetify/components/VForm",
+        "vuetify/components/VBtn",
+        "vuetify/components/VTextField",
+        "vuetify/components/VDialog",
+        "./core/overflow.js",
+        "./core/index.js",
+        "vuetify/components/VGrid",
+        "vuetify"
+      ]
+    },
+    {
+      "kind": "consumer",
+      "version": "1.0.0",
+      "componentCount": 45,
+      "esmCharacters": 222586,
+      "bytes": 224919,
+      "gzipBytes": 56546,
+      "sideEffects": [
+        "**/*.css"
+      ],
+      "peerDependencies": {
+        "vue": ">=3.5.44 <3.6.0",
+        "vuetify": ">=4.3.0 <4.4.0"
+      },
+      "imports": [
+        "vue",
+        "./core/icons.js",
+        "./core/date-only.js",
+        "vuetify/components/VForm",
+        "vuetify/components/VBtn",
+        "vuetify/components/VDialog",
+        "./core/overflow.js",
+        "./core/index.js",
+        "vuetify/components/VGrid",
+        "vuetify/components/VTextField",
+        "vuetify"
+      ]
+    },
+    {
+      "kind": "pure-prototype",
+      "version": "1.0.0",
+      "componentCount": 45,
+      "esmCharacters": 223119,
+      "bytes": 225452,
+      "gzipBytes": 56589,
+      "sideEffects": [
+        "**/*.css"
+      ],
+      "peerDependencies": {
+        "vue": ">=3.5.44 <3.6.0",
+        "vuetify": ">=4.3.0 <4.4.0"
+      },
+      "imports": [
+        "vue",
+        "./core/icons.js",
+        "./core/date-only.js",
+        "vuetify/components/VForm",
+        "vuetify/components/VBtn",
+        "vuetify/components/VDialog",
+        "./core/overflow.js",
+        "./core/index.js",
+        "vuetify/components/VGrid",
+        "vuetify/components/VTextField",
+        "vuetify"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "fixture": "baseline",
+      "name": "bare_vue",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 99,
+        "gzipBytes": 111
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 1,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 0
+    },
+    {
+      "fixture": "baseline",
+      "name": "bare_vue",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 62737,
+        "gzipBytes": 24314
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 4,
+        "vuetify": 0,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 0
+    },
+    {
+      "fixture": "baseline",
+      "name": "setup_only",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 122192,
+        "gzipBytes": 36246
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 6,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 35
+    },
+    {
+      "fixture": "baseline",
+      "name": "setup_only",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 309006,
+        "gzipBytes": 109880
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9293
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 0
+    },
+    {
+      "fixture": "baseline",
+      "name": "SBtn",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 114929,
+        "gzipBytes": 33707
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 35
+    },
+    {
+      "fixture": "baseline",
+      "name": "SBtn",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 309882,
+        "gzipBytes": 110248
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9293
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 1
+    },
+    {
+      "fixture": "baseline",
+      "name": "SBtn",
+      "mode": "app-with-css",
+      "javascript": {
+        "bytes": 309882,
+        "gzipBytes": 110248
+      },
+      "css": {
+        "bytes": 382891,
+        "gzipBytes": 63366
+      },
+      "fontAssets": {
+        "count": 93,
+        "bytes": 3571152
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 160,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 6
+      },
+      "retainedComponentNameCount": 1
+    },
+    {
+      "fixture": "baseline",
+      "name": "STextField",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 114929,
+        "gzipBytes": 33710
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 35
+    },
+    {
+      "fixture": "baseline",
+      "name": "STextField",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 312426,
+        "gzipBytes": 111269
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9293
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 2
+    },
+    {
+      "fixture": "baseline",
+      "name": "SDatePicker",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 114937,
+        "gzipBytes": 33717
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 35
+    },
+    {
+      "fixture": "baseline",
+      "name": "SDatePicker",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 321814,
+        "gzipBytes": 114505
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9293
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 2
+    },
+    {
+      "fixture": "baseline",
+      "name": "STimePicker",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 114937,
+        "gzipBytes": 33713
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 35
+    },
+    {
+      "fixture": "baseline",
+      "name": "STimePicker",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 317792,
+        "gzipBytes": 113104
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9293
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 2
+    },
+    {
+      "fixture": "baseline",
+      "name": "all_plugin",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 115748,
+        "gzipBytes": 34180
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 38
+    },
+    {
+      "fixture": "baseline",
+      "name": "all_plugin",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 418504,
+        "gzipBytes": 139836
+      },
+      "css": {
+        "bytes": 86669,
+        "gzipBytes": 10765
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 164,
+        "vue": 5,
+        "vuetify": 123,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 38
+    },
+    {
+      "fixture": "consumer",
+      "name": "bare_vue",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 99,
+        "gzipBytes": 111
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 1,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 0
+    },
+    {
+      "fixture": "consumer",
+      "name": "bare_vue",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 62737,
+        "gzipBytes": 24314
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 4,
+        "vuetify": 0,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 0
+    },
+    {
+      "fixture": "consumer",
+      "name": "setup_only",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 180546,
+        "gzipBytes": 53073
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 6,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "setup_only",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 312774,
+        "gzipBytes": 111319
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 0
+    },
+    {
+      "fixture": "consumer",
+      "name": "SBtn",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 173282,
+        "gzipBytes": 50513
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "SBtn",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 313646,
+        "gzipBytes": 111647
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 1
+    },
+    {
+      "fixture": "consumer",
+      "name": "SBtn",
+      "mode": "app-with-css",
+      "javascript": {
+        "bytes": 313646,
+        "gzipBytes": 111647
+      },
+      "css": {
+        "bytes": 398150,
+        "gzipBytes": 65471
+      },
+      "fontAssets": {
+        "count": 93,
+        "bytes": 3571152
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 160,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 6
+      },
+      "retainedComponentNameCount": 1
+    },
+    {
+      "fixture": "consumer",
+      "name": "SChip",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 173283,
+        "gzipBytes": 50513
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "SChip",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 316494,
+        "gzipBytes": 112759
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 2
+    },
+    {
+      "fixture": "consumer",
+      "name": "SIcon",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 173282,
+        "gzipBytes": 50513
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "SIcon",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 313996,
+        "gzipBytes": 111827
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 1
+    },
+    {
+      "fixture": "consumer",
+      "name": "STextField",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 173290,
+        "gzipBytes": 50515
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "STextField",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 320225,
+        "gzipBytes": 114106
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 3
+    },
+    {
+      "fixture": "consumer",
+      "name": "SDatePicker",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 173290,
+        "gzipBytes": 50524
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "SDatePicker",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 330630,
+        "gzipBytes": 117483
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 3
+    },
+    {
+      "fixture": "consumer",
+      "name": "STimePicker",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 173290,
+        "gzipBytes": 50526
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "STimePicker",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 336952,
+        "gzipBytes": 119321
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 3
+    },
+    {
+      "fixture": "consumer",
+      "name": "SCombobox",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 173290,
+        "gzipBytes": 50522
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 42
+    },
+    {
+      "fixture": "consumer",
+      "name": "SCombobox",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 328587,
+        "gzipBytes": 117027
+      },
+      "css": {
+        "bytes": 64236,
+        "gzipBytes": 9325
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 159,
+        "vue": 5,
+        "vuetify": 118,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 3
+    },
+    {
+      "fixture": "consumer",
+      "name": "all_plugin",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 174216,
+        "gzipBytes": 51075
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 4
+      },
+      "retainedComponentNameCount": 45
+    },
+    {
+      "fixture": "consumer",
+      "name": "all_plugin",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 477019,
+        "gzipBytes": 157089
+      },
+      "css": {
+        "bytes": 86669,
+        "gzipBytes": 11040
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 164,
+        "vue": 5,
+        "vuetify": 123,
+        "ui": 5
+      },
+      "retainedComponentNameCount": 45
+    },
+    {
+      "fixture": "pure-prototype",
+      "name": "SIcon",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 16444,
+        "gzipBytes": 6316
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 4,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 1
+    },
+    {
+      "fixture": "pure-prototype",
+      "name": "SIcon",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 275611,
+        "gzipBytes": 99472
+      },
+      "css": {
+        "bytes": 60394,
+        "gzipBytes": 8693
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 133,
+        "vue": 5,
+        "vuetify": 93,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 1
+    },
+    {
+      "fixture": "pure-prototype",
+      "name": "SCombobox",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 31042,
+        "gzipBytes": 11677
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 4,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 3
+    },
+    {
+      "fixture": "pure-prototype",
+      "name": "SCombobox",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 290214,
+        "gzipBytes": 104684
+      },
+      "css": {
+        "bytes": 60394,
+        "gzipBytes": 8693
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 133,
+        "vue": 5,
+        "vuetify": 93,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 3
+    },
+    {
+      "fixture": "pure-prototype",
+      "name": "all_plugin",
+      "mode": "peers-external",
+      "javascript": {
+        "bytes": 174210,
+        "gzipBytes": 51082
+      },
+      "css": {
+        "bytes": 0,
+        "gzipBytes": 20
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 5,
+        "vue": 0,
+        "vuetify": 0,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 45
+    },
+    {
+      "fixture": "pure-prototype",
+      "name": "all_plugin",
+      "mode": "app-bundled",
+      "javascript": {
+        "bytes": 477019,
+        "gzipBytes": 157089
+      },
+      "css": {
+        "bytes": 86669,
+        "gzipBytes": 11040
+      },
+      "fontAssets": {
+        "count": 0,
+        "bytes": 0
+      },
+      "chunks": 1,
+      "modules": {
+        "all": 164,
+        "vue": 5,
+        "vuetify": 123,
+        "ui": 0
+      },
+      "retainedComponentNameCount": 45
+    }
+  ],
+  "prototype": {
+    "purpose": "Isolated copied installed module; no package source/build/gate change",
+    "annotation": "Only calls resolved by TypeScript to the imported Vue defineComponent binding",
+    "calls": 41
+  },
+  "sourceCommit": "c4f301110215d717cb197d0e961034ed788c8b1c",
+  "gateChanged": false,
+  "originalInstalledCandidateUnchanged": true,
+  "frozenSha256": "72d1d8d622287e8a86444c404ad20f7c5ed5d065dc2b4e48765374697854e23a"
+}

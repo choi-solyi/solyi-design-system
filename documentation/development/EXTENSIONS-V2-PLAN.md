@@ -2,6 +2,8 @@
 
 구현 진행: 공통 입력 1단계 8종은 [단계별 기록](INPUT-CLEAR-VALIDATION.md), 2단계 SCombobox c4f3011의 최종 tarball 설치 소비 결과는 [Combobox 검증](COMBOBOX-VALIDATION.md)에 정리했습니다. 아래 표와 확인 기준은 승인 당시의 baseline이며 현재 source는 SCombobox를 포함한 45종입니다. 다음은 기존 표시 4종 재사용 점검과 [Picker host 착수 준비](PICKER-PRESENTATION-NEXT.md)입니다. 출시 게이트와 공개 미배포 상태는 유지합니다.
 
+추가 실기기 요청은 [Dialog 고정 header·설명 간격·Switch 라벨 범위](DIALOG-FEEDBACK-NEXT.md)에 기록했습니다. 게이트를 변경하지 않은 [출시 진단과 승인 대상 제안](RELEASE-GATE-DIAGNOSIS.md)을 별도로 따릅니다.
+
 최신 요청서 `붙여넣은 텍스트(2).txt`(Library libfile_6725ea0d3174819196e22055c4e03d86)를 공식 read로 1–230, 231–460, 461–665줄까지 모두 읽었습니다. 이미지 helper·다운로드 우회는 사용하지 않았습니다. 이 문서는 **계획 검토용**이며 아래 새 API는 구현됐다는 뜻이 아닙니다.
 
 ## 승인 당시 확인 기준과 상태
