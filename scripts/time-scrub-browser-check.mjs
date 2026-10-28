@@ -3,9 +3,11 @@ import assert from 'node:assert/strict'
 import http from 'node:http'
 import path from 'node:path'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { fileURLToPath } from 'node:url'
-const root = new URL('../', import.meta.url), out = new URL('qa-output/time-scrub-browser/', root)
-const consumer = new URL('examples/package-consumer/', root), ui = new URL('packages/vue-ui/', root)
+import { fileURLToPath, pathToFileURL } from 'node:url'
+const installed = process.argv.includes('--installed'), consumerArgument = process.argv.indexOf('--consumer')
+const root = new URL('../', import.meta.url), out = new URL(installed ? 'qa-output/time-scrub-installed-browser/' : 'qa-output/time-scrub-browser/', root)
+const consumer = consumerArgument < 0 ? new URL('examples/package-consumer/', root) : pathToFileURL(path.resolve(process.argv[consumerArgument + 1]) + path.sep)
+const ui = installed ? new URL('node_modules/solyi-ui/', consumer) : new URL('packages/vue-ui/', root)
 const { chromium } = await import(new URL('.tooling/browser-qa/node_modules/playwright-core/index.mjs', root))
 const { build } = await import(new URL('node_modules/vite/dist/node/index.js', consumer))
 await mkdir(out, { recursive: true })
@@ -108,5 +110,5 @@ try {
     assert.deepEqual(errors, [])
     await context.close(); console.log('PASS: ' + width + 'px; capture/release, form-safe preview, key commit/Escape selection, list edge autoscroll/cancel, page scroll; 24 theme/mode/density/locale combinations')
   }
-  await writeFile(new URL('report.json', out), JSON.stringify({browser:browser.version(),combinations:records.length,records,limits:['Built source dist; installed tarball pending','Touch is Chrome emulation; physical touch and screen reader unverified']}, null, 2))
+  await writeFile(new URL('report.json', out), JSON.stringify({browser:browser.version(),packageSource:fileURLToPath(ui),installed,combinations:records.length,records,limits:[installed ? 'Installed local development tarball; not a published release' : 'Built source dist; installed tarball pending','Touch is Chrome emulation; physical touch and screen reader unverified']}, null, 2))
 } finally { await browser?.close(); await new Promise(resolve => server.close(resolve)) }

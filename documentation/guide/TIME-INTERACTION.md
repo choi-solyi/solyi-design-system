@@ -49,11 +49,13 @@ listbox/option의 active descendant와 aria-selected를 분리하고 선택값�
 새 이벤트는 스크러빙 전용입니다. 일반 타이핑·native select·행 클릭·기본 목록 키보드 선택은 기존 이벤트를 유지합니다.
 
 ```ts
+import type { SolTimeCancelReason } from 'solyi-ui'
+
 interface SolTimeInteraction {
   source: 'input' | 'list'
   input: 'pointer' | 'keyboard'
   previousValue: string | null // 시작 시 controlled 모델
-  value: string               // 허용 그리드의 HH:mm 제안
+  value: string // 허용 그리드의 HH:mm 제안
 }
 interface SolTimeInteractionCancel extends SolTimeInteraction {
   reason: SolTimeCancelReason
@@ -82,4 +84,4 @@ readonly/disabled/빈 그리드는 입력 손잡이를 Tab에서 제외합니다
 
 [스크러빙 런타임](../../scripts/time-scrub-runtime-check.mjs)은 모델·폼 값을 쓰지 않는 preview, 최종 1회 commit, 8가지 취소 경로, 포인터 identity·경계 반전·draft blur·포커스와 선택 복원·locale/readonly·목록 취소·listener 정리를 통과했습니다. 자체 선언은 26개와 negative fixture가 통과했습니다. [스크러빙 Chrome](../../scripts/time-scrub-browser-check.mjs)은 현재 dist의 72개 테마/밀도/locale/폭 조합에서 실제 capture/release·폼 값 유지·키 반복 commit·Escape 선택 복원·목록 가장자리 자동 스크롤 취소·페이지 스크롤을 확인했습니다. 320px touch는 Chrome 에뮬레이션이며 input commit/pointercancel과 목록 본문 pan을 확인했습니다.
 
-새 tarball의 설치 소비와 전체 배포 파이프라인은 다음 검증 단위입니다. 물리 터치 기기·스크린리더는 미검증입니다. 동결 1.0.0 검사와 버전·릴리스 파일을 유지하며 npm 게시·push·운영 배포·외부 소비 프로젝트 수정은 하지 않습니다.
+새 tarball의 격리 설치·타입·빌드·runtime·Chrome 검증을 완료했습니다. 전체 배포 파이프라인의 동결 1.0.0 hash 게이트는 미통과로 유지합니다. 외부 선언 769건의 동일 조건 baseline 비교와 소비자 영향은 [입력 확장 검증](../development/INPUT-EXTENSIONS-VALIDATION.md)에 기록했습니다. 물리 터치 기기·스크린리더는 미검증입니다. npm 게시·push·운영 배포·외부 소비 프로젝트 수정은 하지 않습니다.
