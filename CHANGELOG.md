@@ -2,6 +2,7 @@
 
 ## 1.1.0 후보 · 미게시
 
+- SBtn을 재사용하는 SConfirmAction을 추가합니다. 두 번 누르기, Escape·blur·timeout 취소, 외부 loading/error/reset과 중복 입력 차단을 제공하며 실제 작업은 소비 앱의 confirm listener가 소유합니다.
 - Date/Time에 opt-in pickerPresentation과 logical placement를 연결합니다. 기존 표시 방식과 모델·폼 계약을 유지합니다.
 - Dialog의 제목·닫기·actions는 고정하고 본문만 스크롤합니다. 설명 간격과 짧은 viewport를 다듬고 Switch에 시각 라벨만 숨기는 hideLabel을 추가합니다.
 

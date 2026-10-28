@@ -1,5 +1,6 @@
 declare module 'vue' {
   export interface GlobalComponents {
+    SConfirmAction: typeof import('./index')['SConfirmAction'];
     SMonthCalendar: typeof import('./index')['SMonthCalendar'];
     SSortableList: typeof import('./index')['SSortableList'];
     SChip: typeof import('./index')['SChip'];

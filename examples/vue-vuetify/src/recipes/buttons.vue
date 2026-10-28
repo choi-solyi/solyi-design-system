@@ -2,6 +2,7 @@
 import { useSolLocale } from 'solyi-ui'
 
 const locale = useSolLocale()
+const confirmed = ref(0)
 const selected = ref(false),
   removed = ref(false)
 const removalResult = ref<HTMLElement | null>(null)
@@ -32,6 +33,18 @@ onBeforeUnmount(() => clearTimeout(timer))
       <SBtn disabled>비활성</SBtn>
     </div>
     <p role="status">{{ result }}</p>
+    <div class="sol-actions">
+      <SConfirmAction
+        :label="locale.code === 'en-US' ? 'Remove draft' : '초안 제거'"
+        :confirm-label="locale.code === 'en-US' ? 'Press again to remove' : '한 번 더 눌러 제거'"
+        tone="danger"
+        @confirm="confirmed++"
+      >
+        <template #leading><SIcon name="trash" :size="16" /></template>
+      </SConfirmAction>
+      <SConfirmAction label="Unavailable · 비활성" confirm-label="Confirm · 확인" disabled />
+    </div>
+    <p role="status">{{ locale.code === 'en-US' ? 'Confirmed' : '확정 횟수' }}: {{ confirmed }}</p>
     <div class="sol-actions">
       <SChip label="Design" />
       <SChip v-model:selected="selected" selectable label="Review" tone="info" />

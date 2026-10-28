@@ -7,7 +7,7 @@ export const componentReferences=[
     "description": "버튼의 기본·보조·로딩·비활성 상태를 구분합니다.",
     "exampleRoute": "component",
     "example": "buttons",
-    "source": "packages/vue-ui/src/index.ts",
+    "source": "packages/vue-ui/src/button.ts",
     "props": [
       {
         "name": "variant",
@@ -81,6 +81,155 @@ export const componentReferences=[
     ],
     "methods": [],
     "types": [
+      {
+        "name": "SButtonTone",
+        "source": "type SButtonTone='accent'|'info'|'success'|'warning'|'danger';"
+      },
+      {
+        "name": "ButtonVariant",
+        "source": "type ButtonVariant='primary'|'secondary'|'subtle'|'inline';"
+      }
+    ],
+    "passthrough": null
+  },
+  {
+    "name": "SConfirmAction",
+    "id": "sconfirm-action",
+    "group": "동작",
+    "description": "같은 버튼을 두 번 눌러 의도를 확인합니다. 실제 비동기 작업과 오류는 소비 앱에서 처리합니다.",
+    "exampleRoute": "component",
+    "example": "buttons",
+    "source": "packages/vue-ui/src/confirm-action.ts",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": "undefined",
+        "description": "기본 버튼 이름입니다. 첫 클릭은 확인 대기만 시작하며 type=button으로 폼을 자동 제출하지 않습니다.",
+        "values": []
+      },
+      {
+        "name": "confirmLabel",
+        "type": "string",
+        "required": true,
+        "default": "undefined",
+        "description": "confirmLabel 설정값입니다.",
+        "values": []
+      },
+      {
+        "name": "timeout",
+        "type": "number",
+        "required": false,
+        "default": "5000",
+        "description": "확인 대기 시간(ms)입니다. 기본 5000, 0이면 자동 취소하지 않습니다. Escape와 기본 blur 취소는 유지합니다.",
+        "values": []
+      },
+      {
+        "name": "cancelOnBlur",
+        "type": "boolean",
+        "required": false,
+        "default": "true",
+        "description": "cancelOnBlur 설정값입니다.",
+        "values": []
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "사용을 막고 비활성 상태를 표시합니다.",
+        "values": []
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "소비 앱의 비동기 실행 상태입니다. 대기 확인을 취소하고 재실행을 막으며 버튼 포커스는 유지합니다. confirm listener의 Promise는 자동으로 기다리지 않습니다.",
+        "values": []
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "required": false,
+        "default": "''",
+        "description": "외부 오류 문구입니다. 확인 대기를 취소하고 접근 가능한 오류를 표시합니다. reset()은 외부 error/loading 값을 변경하지 않습니다.",
+        "values": []
+      },
+      {
+        "name": "variant",
+        "type": "ButtonVariant",
+        "required": false,
+        "default": "'secondary'",
+        "description": "행동의 시각적 위계입니다.",
+        "values": [
+          "primary",
+          "secondary",
+          "subtle",
+          "inline"
+        ]
+      },
+      {
+        "name": "tone",
+        "type": "SButtonTone",
+        "required": false,
+        "default": "undefined",
+        "description": "강조·정보·성공·주의·오류의 의미색입니다.",
+        "values": [
+          "accent",
+          "info",
+          "success",
+          "warning",
+          "danger"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "confirm",
+        "signature": "(event: MouseEvent)",
+        "description": "confirm 동작이 발생했을 때 전달합니다."
+      },
+      {
+        "name": "cancel",
+        "signature": "(reason: SolConfirmCancelReason)",
+        "description": "cancel 동작이 발생했을 때 전달합니다."
+      },
+      {
+        "name": "armedChange",
+        "signature": "(armed: boolean)",
+        "description": "armedChange 동작이 발생했을 때 전달합니다."
+      }
+    ],
+    "slots": [
+      {
+        "name": "leading",
+        "scope": "SolConfirmActionScope",
+        "description": "leading 영역의 내용입니다."
+      }
+    ],
+    "methods": [
+      {
+        "name": "focus",
+        "signature": "() => void",
+        "description": "사용 가능한 입력 또는 실행 요소로 초점을 이동합니다."
+      },
+      {
+        "name": "reset",
+        "signature": "() => void",
+        "description": "reset 작업을 실행합니다."
+      }
+    ],
+    "types": [
+      {
+        "name": "SolConfirmActionScope",
+        "source": "interface SolConfirmActionScope {readonly armed:boolean;readonly disabled:boolean;readonly loading:boolean}"
+      },
+      {
+        "name": "SolConfirmCancelReason",
+        "source": "type SolConfirmCancelReason='timeout'|'blur'|'escape'|'disabled'|'loading'|'error'|'configuration'|'reset'|'unmount'"
+      },
       {
         "name": "SButtonTone",
         "source": "type SButtonTone='accent'|'info'|'success'|'warning'|'danger';"
@@ -6836,7 +6985,7 @@ export const componentReferences=[
 ];
 export const componentReferenceVersions={"core":"1.1.0","vue-ui":"1.1.0"};
 export const componentExampleSources={
-  "buttons": "<script setup lang=\"ts\">\nimport { useSolLocale } from 'solyi-ui'\n\nconst locale = useSolLocale()\nconst selected = ref(false),\n  removed = ref(false)\nconst removalResult = ref<HTMLElement | null>(null)\nasync function removeChip() {\n  removed.value = true\n  await nextTick()\n  removalResult.value?.focus()\n}\nconst busy = ref(false),\n  result = ref('')\nlet timer: ReturnType<typeof setTimeout>\nfunction run() {\n  if (busy.value) return\n  busy.value = true\n  timer = setTimeout(() => {\n    result.value = '가상 확인을 마쳤어요.'\n    busy.value = false\n  }, 500)\n}\nonBeforeUnmount(() => clearTimeout(timer))\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"버튼 사용\">\n    <div class=\"sol-actions\">\n      <SBtn variant=\"primary\" :loading=\"busy\" @click=\"run\"> 확인 </SBtn>\n      <SBtn @click=\"result = '보조 동작을 눌렀어요.'\">보조 동작</SBtn>\n      <SBtn variant=\"inline\" @click=\"result = ''\"> 초기화 </SBtn>\n      <SBtn disabled>비활성</SBtn>\n    </div>\n    <p role=\"status\">{{ result }}</p>\n    <div class=\"sol-actions\">\n      <SChip label=\"Design\" />\n      <SChip v-model:selected=\"selected\" selectable label=\"Review\" tone=\"info\" />\n      <SChip\n        v-if=\"!removed\"\n        removable\n        label=\"A long reusable label · 아주 긴 항목 이름도 전체 내용을 확인할 수 있어요\"\n        @remove=\"removeChip\"\n      >\n        <template #leading><SIcon name=\"folder\" :size=\"16\" /></template>\n      </SChip>\n      <SChip disabled selectable removable label=\"Unavailable · 비활성\" />\n    </div>\n    <p ref=\"removalResult\" role=\"status\" tabindex=\"-1\">\n      {{ removed ? (locale.code === 'en-US' ? 'Item removed.' : '항목을 제거했어요.') : '' }}\n    </p>\n    <div class=\"sol-actions\">\n      <SBadge tone=\"success\" label=\"Complete · 완료\" content=\"✓ Complete · 완료\" />\n      <SBadge tone=\"warning\" variant=\"outlined\" content=\"! Check · 확인\" />\n      <SBadge tone=\"danger\" variant=\"filled\" content=\"! Error · 오류\" />\n      <SBadge :content=\"3\" label=\"3 notifications · 알림 3개\">\n        <template #anchor=\"{ descriptionId }\">\n          <SIconBtn icon=\"info\" label=\"Notifications · 알림\" :aria-describedby=\"descriptionId\" />\n        </template>\n      </SBadge>\n      <SIcon name=\"info\" label=\"Information · 정보\" />\n      <SIcon name=\"chevron\" :rotate=\"270\" decorative />\n    </div>\n    <div class=\"sol-actions\">\n      <STooltip id=\"recipe-copy-tip\" label=\"Copy · 복사\" text=\"Copy example · 예제 복사\">\n        <template #activator=\"{ props }\">\n          <SIconBtn v-bind=\"props\" icon=\"copy\" label=\"Copy · 복사\" @click=\"run\" />\n        </template>\n      </STooltip>\n      <SIconBtn icon=\"save\" label=\"Save · 저장\" :loading=\"busy\" @click=\"run\" />\n      <SIconBtn icon=\"trash\" label=\"Delete · 삭제\" tone=\"danger\" disabled />\n      <SBadge v-if=\"removed\" size=\"sm\" content=\"Empty · 비어 있음\" />\n    </div>\n  </SCard>\n</template>\n",
+  "buttons": "<script setup lang=\"ts\">\nimport { useSolLocale } from 'solyi-ui'\n\nconst locale = useSolLocale()\nconst confirmed = ref(0)\nconst selected = ref(false),\n  removed = ref(false)\nconst removalResult = ref<HTMLElement | null>(null)\nasync function removeChip() {\n  removed.value = true\n  await nextTick()\n  removalResult.value?.focus()\n}\nconst busy = ref(false),\n  result = ref('')\nlet timer: ReturnType<typeof setTimeout>\nfunction run() {\n  if (busy.value) return\n  busy.value = true\n  timer = setTimeout(() => {\n    result.value = '가상 확인을 마쳤어요.'\n    busy.value = false\n  }, 500)\n}\nonBeforeUnmount(() => clearTimeout(timer))\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"버튼 사용\">\n    <div class=\"sol-actions\">\n      <SBtn variant=\"primary\" :loading=\"busy\" @click=\"run\"> 확인 </SBtn>\n      <SBtn @click=\"result = '보조 동작을 눌렀어요.'\">보조 동작</SBtn>\n      <SBtn variant=\"inline\" @click=\"result = ''\"> 초기화 </SBtn>\n      <SBtn disabled>비활성</SBtn>\n    </div>\n    <p role=\"status\">{{ result }}</p>\n    <div class=\"sol-actions\">\n      <SConfirmAction\n        :label=\"locale.code === 'en-US' ? 'Remove draft' : '초안 제거'\"\n        :confirm-label=\"locale.code === 'en-US' ? 'Press again to remove' : '한 번 더 눌러 제거'\"\n        tone=\"danger\"\n        @confirm=\"confirmed++\"\n      >\n        <template #leading><SIcon name=\"trash\" :size=\"16\" /></template>\n      </SConfirmAction>\n      <SConfirmAction label=\"Unavailable · 비활성\" confirm-label=\"Confirm · 확인\" disabled />\n    </div>\n    <p role=\"status\">{{ locale.code === 'en-US' ? 'Confirmed' : '확정 횟수' }}: {{ confirmed }}</p>\n    <div class=\"sol-actions\">\n      <SChip label=\"Design\" />\n      <SChip v-model:selected=\"selected\" selectable label=\"Review\" tone=\"info\" />\n      <SChip\n        v-if=\"!removed\"\n        removable\n        label=\"A long reusable label · 아주 긴 항목 이름도 전체 내용을 확인할 수 있어요\"\n        @remove=\"removeChip\"\n      >\n        <template #leading><SIcon name=\"folder\" :size=\"16\" /></template>\n      </SChip>\n      <SChip disabled selectable removable label=\"Unavailable · 비활성\" />\n    </div>\n    <p ref=\"removalResult\" role=\"status\" tabindex=\"-1\">\n      {{ removed ? (locale.code === 'en-US' ? 'Item removed.' : '항목을 제거했어요.') : '' }}\n    </p>\n    <div class=\"sol-actions\">\n      <SBadge tone=\"success\" label=\"Complete · 완료\" content=\"✓ Complete · 완료\" />\n      <SBadge tone=\"warning\" variant=\"outlined\" content=\"! Check · 확인\" />\n      <SBadge tone=\"danger\" variant=\"filled\" content=\"! Error · 오류\" />\n      <SBadge :content=\"3\" label=\"3 notifications · 알림 3개\">\n        <template #anchor=\"{ descriptionId }\">\n          <SIconBtn icon=\"info\" label=\"Notifications · 알림\" :aria-describedby=\"descriptionId\" />\n        </template>\n      </SBadge>\n      <SIcon name=\"info\" label=\"Information · 정보\" />\n      <SIcon name=\"chevron\" :rotate=\"270\" decorative />\n    </div>\n    <div class=\"sol-actions\">\n      <STooltip id=\"recipe-copy-tip\" label=\"Copy · 복사\" text=\"Copy example · 예제 복사\">\n        <template #activator=\"{ props }\">\n          <SIconBtn v-bind=\"props\" icon=\"copy\" label=\"Copy · 복사\" @click=\"run\" />\n        </template>\n      </STooltip>\n      <SIconBtn icon=\"save\" label=\"Save · 저장\" :loading=\"busy\" @click=\"run\" />\n      <SIconBtn icon=\"trash\" label=\"Delete · 삭제\" tone=\"danger\" disabled />\n      <SBadge v-if=\"removed\" size=\"sm\" content=\"Empty · 비어 있음\" />\n    </div>\n  </SCard>\n</template>\n",
   "action-menu": "<script setup lang=\"ts\">\nconst result = ref('')\nconst items = [\n  { id: 'copy', label: '가상 복제' },\n  { id: 'archive', label: '가상 보관' },\n  { id: 'disabled', label: '비활성', disabled: true },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"더 많은 동작\">\n    <SSplitBtn\n      id=\"recipe-actions\"\n      label=\"가상 내보내기\"\n      :items=\"items\"\n      @primary=\"result = '주 동작 확인'\"\n      @select=\"result = $event\"\n    />\n    <SContextMenu id=\"recipe-context\" label=\"가상 기록\" :items=\"items\" @select=\"result = $event\">\n      <p>우클릭·Shift+F10 또는 표시된 동작 버튼으로 엽니다.</p>\n    </SContextMenu>\n    <p role=\"status\">{{ result }}</p>\n  </SCard>\n</template>\n",
   "autocomplete": "<script setup lang=\"ts\">\nimport { formatSolDate } from 'solyi-ui'\nimport type {\n  DateValue,\n  SolOption,\n  SolOptionLoader,\n  SolDateDisplayFormatter,\n  SolPickerPresentation,\n  SolPickerPlacement,\n} from 'solyi-ui'\n\ndefineProps<{ part?: string }>()\nconst mode = ref<string | null>('range'),\n  date = ref<DateValue>(null)\nconst dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'))\nconst showWeekday = ref(false)\nconst pickerChoice = ref<string | null>('legacy'),\n  placementChoice = ref<string | null>('bottom-start')\nconst datePickerPresentation = computed<SolPickerPresentation | undefined>(() =>\n  pickerChoice.value === 'auto' ||\n  pickerChoice.value === 'popover' ||\n  pickerChoice.value === 'dialog'\n    ? pickerChoice.value\n    : undefined,\n)\nconst datePlacement = computed<SolPickerPlacement>(() =>\n  placementChoice.value === 'top-start' ||\n  placementChoice.value === 'top-end' ||\n  placementChoice.value === 'bottom-end'\n    ? placementChoice.value\n    : 'bottom-start',\n)\nconst formatDateWithWeekday: SolDateDisplayFormatter = (iso, locale) =>\n  iso +\n  ' (' +\n  formatSolDate(iso, locale, {\n    year: undefined,\n    month: undefined,\n    day: undefined,\n    weekday: 'short',\n  }) +\n  ')'\nwatch(dateMode, () => (date.value = null))\nconst files = ref<File[]>([]),\n  selected = ref<string | null>(null),\n  scenario = ref<string | null>('local')\nconst options: SolOption[] = ['기록', '독서', '식물', '산책', '작은 정원'].map(label => ({\n  value: label,\n  label,\n}))\nlet failNext = true\nwatch(scenario, () => {\n  failNext = true\n  selected.value = null\n})\nconst loader = computed<SolOptionLoader | undefined>(() => {\n  const responseMode = scenario.value\n  if (responseMode === 'local') return undefined\n  return (query, signal) =>\n    new Promise<readonly SolOption[]>((resolve, reject) => {\n      const cancel = () => {\n        clearTimeout(timer)\n        reject(new DOMException('Cancelled', 'AbortError'))\n      }\n      const timer = setTimeout(\n        () => {\n          signal.removeEventListener('abort', cancel)\n          if (responseMode === 'error' && failNext) {\n            failNext = false\n            reject(new Error('Simulated response'))\n            return\n          }\n          resolve(options.filter(item => item.label.includes(query.trim())))\n        },\n        query.includes('느림') ? 450 : 150,\n      )\n      signal.addEventListener('abort', cancel, { once: true })\n      if (signal.aborted) cancel()\n    })\n})\n</script>\n<template>\n  <section class=\"sol-stack\" :aria-labelledby=\"part ? undefined : 'recipe-inputs-title'\">\n    <h2 v-if=\"!part\" id=\"recipe-inputs-title\">로컬 입력 조합</h2>\n    <SCard :heading-level=\"part ? 2 : 3\" v-if=\"!part || part === 'date'\" title=\"단일 날짜와 기간\">\n      <SSelect\n        id=\"recipe-date-mode\"\n        v-model=\"mode\"\n        label=\"개발 설정 시연\"\n        :options=\"[\n          { value: 'single', label: '단일 날짜' },\n          { value: 'range', label: '기간' },\n        ]\"\n        required\n      />\n      <SCheckbox\n        id=\"recipe-date-weekday\"\n        v-model=\"showWeekday\"\n        label=\"요일 표시 · 저장값은 ISO 유지\"\n      />\n      <SSelect\n        id=\"recipe-date-presentation\"\n        v-model=\"pickerChoice\"\n        label=\"팝업 표시 방식\"\n        :options=\"[\n          { value: 'legacy', label: '기존 기본 모달' },\n          { value: 'auto', label: '화면에 맞춰 자동 전환' },\n          { value: 'popover', label: '입력창에 연결된 팝업' },\n          { value: 'dialog', label: '모달 다이얼로그' },\n        ]\"\n      />\n      <SSelect\n        id=\"recipe-date-placement\"\n        v-model=\"placementChoice\"\n        label=\"연결 팝업의 기준 위치\"\n        :disabled=\"!datePickerPresentation\"\n        :options=\"[\n          { value: 'bottom-start', label: '아래 · 시작' },\n          { value: 'bottom-end', label: '아래 · 끝' },\n          { value: 'top-start', label: '위 · 시작' },\n          { value: 'top-end', label: '위 · 끝' },\n        ]\"\n      />\n      <SDatePicker\n        id=\"recipe-date\"\n        v-model=\"date\"\n        clearable\n        label=\"가상 일정\"\n        :mode=\"dateMode\"\n        :picker-presentation=\"datePickerPresentation\"\n        :placement=\"datePlacement\"\n        :display-formatter=\"showWeekday ? formatDateWithWeekday : undefined\"\n      />\n      <p role=\"status\">완료값: {{ JSON.stringify(date) }}</p>\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'files'\"\n      title=\"로컬 파일 선택과 드롭\"\n    >\n      <SFileInput\n        id=\"recipe-files\"\n        v-model=\"files\"\n        label=\"가상 첨부 파일\"\n        accept=\".txt,.png,.jpg,.jpeg,.pdf\"\n        :max-files=\"3\"\n        :max-file-size=\"2 * 1024 * 1024\"\n        help=\"파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다.\"\n      />\n    </SCard>\n    <SCard\n      :heading-level=\"part ? 2 : 3\"\n      v-if=\"!part || part === 'autocomplete'\"\n      title=\"단일 자동완성\"\n    >\n      <SSelect\n        id=\"recipe-autocomplete-mode\"\n        v-model=\"scenario\"\n        label=\"가상 응답\"\n        :options=\"[\n          { value: 'local', label: '즉시 로컬' },\n          { value: 'async', label: '지연 응답' },\n          { value: 'error', label: '오류 후 재시도' },\n        ]\"\n        required\n      />\n      <SAutocomplete\n        id=\"recipe-autocomplete\"\n        v-model=\"selected\"\n        clearable\n        label=\"가상 분류 검색\"\n        :options=\"options\"\n        :load-options=\"loader\"\n        :debounce=\"0\"\n        :locale=\"{ retry: '검색 다시 시도' }\"\n        help=\"방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다.\"\n      />\n      <p role=\"status\">선택값: {{ selected || '없음' }}</p>\n    </SCard>\n  </section>\n</template>\n",
   "choices": "<script setup lang=\"ts\">\nconst include = ref(true),\n  archived = ref(false),\n  view = ref<string | null>('list'),\n  sort = ref<string | null>('recent')\nconst options = [\n  { value: 'list', label: '목록' },\n  { value: 'cards', label: '카드' },\n  { value: 'map', label: '지도 · 비활성', disabled: true },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"익숙한 기본 선택\">\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-include\"\n      v-model=\"include\"\n      label=\"완료한 항목 포함\"\n    />\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-archived\"\n      v-model=\"archived\"\n      label=\"보관한 항목 포함\"\n    />\n    <SCheckbox class=\"sol-choice-row\" id=\"recipe-unavailable\" label=\"공유 항목 · 비활성\" disabled />\n    <SRadioGroup\n      class=\"sol-choice-row\"\n      id=\"recipe-view\"\n      v-model=\"view\"\n      label=\"보기 방식\"\n      :options=\"options\"\n    />\n    <SSelect\n      id=\"recipe-sort\"\n      v-model=\"sort\"\n      clearable\n      label=\"정렬 기준\"\n      :options=\"[\n        { value: 'recent', label: '최근 변경순' },\n        { value: 'name', label: '이름순' },\n      ]\"\n    >\n      <template #indicator><SIcon name=\"chevron\" decorative :size=\"16\" /></template>\n    </SSelect>\n    <p role=\"status\">\n      완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }} · {{ view }} ·\n      {{ sort }}\n    </p>\n  </SCard>\n</template>\n",

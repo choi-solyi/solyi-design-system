@@ -1,6 +1,6 @@
 # 확장 요청 2 · 실제 저장소 대조 및 구현 계획
 
-후속 상태: 내부 Picker host c440b03과 [PURE·새 minor 크기 기준](PURE-SIZE-VALIDATION.md)을 검증했습니다. 다음 구현은 Date/Time 공개 opt-in이며 Dialog 요청은 별도 기록대로 이어갑니다. 1.1.0은 미게시 개발 후보이고 정식 artifact 동결/전체 delivery 검증은 아직입니다.
+후속 상태: Date/Time 공개 opt-in과 Dialog 고정 헤더·본문 스크롤·설명 간격·Switch hideLabel을 완료했습니다. SConfirmAction은 SBtn 재사용, 공개 타입/등록, Components와 starter buttons 예제까지 연결했습니다. 빌드·46종 API 회귀·확인 상태 전이·실제 Chrome 360px Enter/Escape/확정 조작을 통과했습니다. timeout=0은 자동 취소 없음, 기본 blur 취소, 외부 loading/error/reset 계약입니다. 설치본 최종 검증과 확대된 공개 API의 크기 기준 재측정은 전체 후보에서 수행합니다. 1.1.0은 미게시이며 정식 artifact 동결/전체 delivery 검증은 아직입니다.
 
 구현 진행: 공통 입력 1단계 8종은 [단계별 기록](INPUT-CLEAR-VALIDATION.md), 2단계 SCombobox c4f3011의 최종 tarball 설치 소비 결과는 [Combobox 검증](COMBOBOX-VALIDATION.md)에 정리했습니다. 아래 표와 확인 기준은 승인 당시의 baseline이며 현재 source는 SCombobox를 포함한 45종입니다. 다음은 기존 표시 4종 재사용 점검과 [Picker host 착수 준비](PICKER-PRESENTATION-NEXT.md)입니다. 출시 게이트와 공개 미배포 상태는 유지합니다.
 

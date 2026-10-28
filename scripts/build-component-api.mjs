@@ -116,6 +116,7 @@ const records = [
   ['SIcon','표시·레이아웃','공통 선 아이콘을 장식 또는 접근 가능한 이미지로 표시합니다.','component','buttons'],
   ['SIconBtn','동작','접근 가능한 이름을 갖는 아이콘 전용 버튼입니다.','component','buttons'],
   ['SBtn','동작','버튼의 기본·보조·로딩·비활성 상태를 구분합니다.','component','buttons'],
+  ['SConfirmAction','동작','같은 버튼을 두 번 눌러 의도를 확인합니다. 실제 비동기 작업과 오류는 소비 앱에서 처리합니다.','component','buttons'],
   ['SSplitBtn','동작','대표 행동과 추가 행동 메뉴를 한 묶음으로 제공합니다.','component','action-menu'],
   ['SAutocomplete','입력','검색어와 한 개의 선택값을 구분하고 비동기 응답을 다룹니다.','pattern','autocomplete'],
   ['SCombobox','입력','콤보박스에서 자유 입력 문자열과 후보 선택을 확정합니다. Enter 또는 opt-in blur로 확정하고 옵션 ID는 change.option.value로 전달합니다.','component','combobox'],
@@ -183,6 +184,12 @@ for (const [name, group, description, exampleRoute, example] of records) {
       '양의 유한한 증감 간격입니다. JavaScript Number로 정확한 별도 결과를 표현할 수 없거나 범위를 넘는 증감은 실행하지 않습니다.'
   }
   if (name === 'SSwitch') props.find(prop => prop.name === 'hideLabel').description = '기본 false입니다. 외부 설정명이 있는 배치에서 시각 라벨만 숨깁니다. label의 접근 가능한 이름은 유지하고 명시적 aria-label/aria-labelledby를 우선합니다.'
+  if (name === 'SConfirmAction') {
+    props.find(prop => prop.name === 'timeout').description = '확인 대기 시간(ms)입니다. 기본 5000, 0이면 자동 취소하지 않습니다. Escape와 기본 blur 취소는 유지합니다.'
+    props.find(prop => prop.name === 'loading').description = '소비 앱의 비동기 실행 상태입니다. 대기 확인을 취소하고 재실행을 막으며 버튼 포커스는 유지합니다. confirm listener의 Promise는 자동으로 기다리지 않습니다.'
+    props.find(prop => prop.name === 'error').description = '외부 오류 문구입니다. 확인 대기를 취소하고 접근 가능한 오류를 표시합니다. reset()은 외부 error/loading 값을 변경하지 않습니다.'
+    props.find(prop => prop.name === 'label').description = '기본 버튼 이름입니다. 첫 클릭은 확인 대기만 시작하며 type=button으로 폼을 자동 제출하지 않습니다.'
+  }
   if (name === 'SCombobox') {
     props.find(prop => prop.name === 'modelValue').description = '확정된 표시 문자열 또는 null입니다. 편집 draft는 Enter/opt-in blur 또는 후보 선택 전까지 모델에 반영하지 않습니다. 비어 있는 직접 입력은 null, 그 외 공백은 보존합니다.'
     props.find(prop => prop.name === 'commitOn').description = '직접 입력의 확정 시점입니다. 기본 [enter], blur는 opt-in입니다. 후보 클릭 또는 명시적으로 방향키 탐색 후 Enter는 select입니다. 빈 배열은 자동 직접 입력 확정을 사용하지 않습니다.'

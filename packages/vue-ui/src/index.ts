@@ -22,7 +22,6 @@ export {SCard,SAlert,STree};
 export type {STreeItem} from './tree';
 import {defineComponent, h, ref, watch, nextTick, onBeforeUnmount, onMounted, useId} from 'vue';
 import type {PropType, Component, App, VNode} from 'vue';
-import {VBtn} from 'vuetify/components/VBtn';
 import {VDialog} from 'vuetify/components/VDialog';
 import {mountOverflowText} from '@solyi/core/overflow';
 import {solIconPaths} from '@solyi/core/icons';
@@ -68,61 +67,12 @@ function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
 }
-export type ButtonVariant='primary'|'secondary'|'subtle'|'inline';
-export type SButtonTone='accent'|'info'|'success'|'warning'|'danger';
-export const SBtn = /* @__PURE__ */ defineComponent({
-  name: 'SBtn',
-  inheritAttrs: false,
-  props: {
-    variant: { type: String as PropType<ButtonVariant>, default: 'secondary' },
-    tone: String as PropType<SButtonTone>,
-    disabled: Boolean,
-    loading: Boolean,
-    type: { type: String as PropType<'button' | 'submit' | 'reset'>, default: 'button' },
-  },
-  emits: { click: (_event: MouseEvent) => true },
-  setup(props, { attrs, slots, emit }) {
-    return () => {
-      const unavailable =
-        props.disabled ||
-        props.loading ||
-        attrs['aria-disabled'] === true ||
-        attrs['aria-disabled'] === 'true'
-      return h(
-        VBtn as Component,
-        {
-          ...attrs,
-          'data-tone': props.tone || attrs['data-tone'],
-          class: [
-            'sol-ui-button',
-            'sol-ui-button--' + props.variant,
-            props.tone ? 'sol-tone' : undefined,
-            attrs.class,
-          ],
-          type: props.type,
-          disabled: props.disabled,
-          loading: props.loading,
-          tabindex: props.loading ? (attrs.tabindex ?? 0) : attrs.tabindex,
-          'aria-disabled': unavailable ? 'true' : attrs['aria-disabled'],
-          'aria-busy': props.loading ? 'true' : attrs['aria-busy'],
-          ripple: false,
-          variant: 'flat',
-          onClick: (event: MouseEvent) => {
-            if (unavailable) {
-              event.preventDefault()
-              return
-            }
-            emit('click', event)
-          },
-        },
-        {
-          default: () => slots.default?.(),
-          loader: () => h('span', { class: 'sol-ui-busy', 'aria-hidden': 'true' }, '◷'),
-        },
-      )
-    }
-  },
-})
+import {SBtn} from './button';
+export {SBtn};
+export type {ButtonVariant,SButtonTone} from './button';
+import {SConfirmAction} from './confirm-action';
+export {SConfirmAction};
+export type {SolConfirmCancelReason,SolConfirmActionHandle,SolConfirmActionScope,SolConfirmActionSlots} from './confirm-action';
 
 export const SIconBtn = createSIconBtn(SBtn)
 
@@ -207,6 +157,7 @@ export const SDataTable=/* @__PURE__ */ defineComponent({
 export {createSolyiVuetify,applySolyiAppearance} from './vuetify';
 export type {SAppearance,SThemeName,SThemeHost} from './vuetify';
 export interface SComponents {
+  SConfirmAction: typeof SConfirmAction
   SCombobox: typeof SCombobox
   SMonthCalendar: typeof SMonthCalendar
   SSortableList: typeof SSortableList
@@ -254,6 +205,7 @@ export interface SComponents {
   SBarChart: typeof SBarChart
 }
 export const sComponents: SComponents = {
+  SConfirmAction,
   SCombobox,
   SMonthCalendar,
   SSortableList,
