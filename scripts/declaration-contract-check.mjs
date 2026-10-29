@@ -69,7 +69,7 @@ const entries = installed
 const declarationCount = entries.length
 assert.ok(declarationCount > 10, 'All own public declaration files are checked')
 const fixture = normalize(path.join(ownRoot, 'navigation-contract.ts'))
-memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker, SSortableList } from './index'
+memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker, SSortableList, SPagination, SDataTable } from './index'
 import {createApp,h} from 'vue'
 import type {SolSortableProps,SolSortableSlots,SolTimeGridProps,SolTimeGridSlots,SolTimeGridHandle} from './index'
 import type { SolIconName, SolTone, SolDateDisplayFormatter, SolNumberDisplayFormatter, SolNumberPreset } from './index'
@@ -154,6 +154,13 @@ const badGridSlot:SolTimeGridSlots<GridItem> = {item:({item})=>[h('span',item.mi
 // @ts-expect-error Frozen proposal coordinates cannot be mutated by a consumer.
 const badGridCommit:SolTimeGridProps<GridItem> = {...grid,onCommit:p=>{p.to.startMinute=0}}
 void [gridSlots,badGridMinute,badGridSlot,badGridCommit]
+const paginationProps:InstanceType<typeof SPagination>['$props']={pageCount:1003,siblingCount:3,compactPagination:false}
+const tableProps:InstanceType<typeof SDataTable>['$props']={caption:'Table',columns:[],rows:[],siblingCount:3,compactPagination:true}
+// @ts-expect-error Compact pagination is boolean, not a CSS density string.
+const badCompact:InstanceType<typeof SDataTable>['$props']={...tableProps,compactPagination:'compact'}
+// @ts-expect-error Neighbor counts are numeric on the standalone control too.
+const badSiblings:InstanceType<typeof SPagination>['$props']={...paginationProps,siblingCount:'3'}
+void [paginationProps,tableProps,badCompact,badSiblings]
 `)
 entries.push(fixture)
 const program = ts.createProgram(entries, options, host)
