@@ -14,3 +14,8 @@
 증거: qa-output/common-ui-audit/fix-installed-checks.log, fix-consumer-build.log, fix-recipes-types.log, fix-required-checks.log, fix-installed-browser.log, installed-fixed-observations.json 및 installed-fixed-screens/.
 
 새 UI 후보: release-assets/1.1.0/solyi-ui-1.1.0.tgz (5,982,999 bytes), SHA-256 f39964b931082a23d2c06e7d87d18c9c536132600bc93397e1687bad1b0c1426. 공개1.0.0은 보존했고 이전 미게시1.1.0 후보는 별도 이력에 보존했습니다. 새 후보의 npm 게시·registry 설치 결과는 별도 기록하며 게시 성공 전 완료로 표시하지 않습니다.
+
+
+## 최종 게시 결과
+
+위 최종 후보는 공식 npm에 solyi-ui@1.1.0 / latest로 게시됐습니다. registry 배포 SHA가 일치하고 깨끗한 registry 설치·타입·빌드·대표 runtime 검증도 완료했습니다. 추가 Chrome smoke 실행 제한을 포함한 근거는 [게시 결과](NPM-1.1.0-PUBLICATION.md)를 참조하세요. 이전 미게시 표현은 후보 준비 당시의 이력입니다.
