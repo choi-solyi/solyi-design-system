@@ -71,6 +71,12 @@ CSS는 `--sol-color-categorical-1-foreground/background/border`부터 8번까지
 
 `disabled/readonly/loading/pending` 전환, 원본 좌표·열·설정 변경, 포커스 이탈과 포인터 취소는 진행 중 제안을 취소합니다. 소스와 무관한 부모 렌더나 같은 자료의 배열 재생성은 제안을 유지합니다. 좁은 화면은 가로 스크롤과 전체 목록을 사용하며 실제 OS 키보드·스크린리더·실기기 터치는 소비 앱에서 추가 확인해야 합니다.
 
+## 페이지 번호 표시
+
+`SPagination`과 `SDataTable`은 같은 `siblingCount`(기본 1, 양옆 각각 0–5)를 받습니다. 처음·마지막 번호를 포함하고 번호가 생략된 곳만 줄임표를 표시합니다. 페이지 500/전체 1003에서 3을 지정하면 1, …, 497–503, …, 1003을 표시합니다. `SPagination`의 modelValue/update:modelValue와 Table의 page/update:page 계약은 유지합니다.
+
+좁은 화면에서도 주변 번호를 유지하고 줄바꿈합니다. 독립 Pagination은 좁은 화면의 중복 처음/마지막 아이콘만 줄이고 해당 번호로 이동할 수 있습니다. `compactPagination=true`를 명시하면 현재 번호와 이동 버튼 중심으로 표시합니다. 이 옵션은 행 간격의 global density와 별도입니다. starter navigation에서는 두 컴포넌트에 같은 설정을 적용하고 1003페이지 예제를 조작할 수 있습니다.
+
 ## 소비 프로젝트 AI 지침
 
 패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.

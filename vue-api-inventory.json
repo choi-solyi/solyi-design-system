@@ -202,9 +202,10 @@
         "SCard",
         "SNumberInput",
         "SCheckbox",
-        "SPagination",
-        "SBreadcrumbs",
         "SBtn",
+        "SPagination",
+        "SDataTable",
+        "SBreadcrumbs",
         "SDialog",
         "SSnackbar"
       ]
@@ -374,6 +375,8 @@
         "STextField",
         "SSelect",
         "SDataTable",
+        "SNumberInput",
+        "SCheckbox",
         "SBtn"
       ]
     },

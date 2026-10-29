@@ -9,6 +9,7 @@ const expectations=[
  ['SDialog','Dialog',['busy','busyScope'],['update:modelValue','close'],['default','actions','actions-start','feedback'],[]],
  ['SSwitch','Switch',['hideLabel','label'],['update:modelValue'],[],[]],
  ['SCard','Card',['description'],[],['leading','title','description','meta','default','actions'],[]],
+ ['SDataTable','Data Table',['siblingCount','compactPagination'],['update:page'],[],[]],
  ['SChip','칩',['selected','removable','disabled'],['update:selected','click','remove'],['default','leading','trailing'],[]],
  ['SBadge','배지',['content','label','live'],[],['default','anchor'],[]],
  ['SIcon','아이콘',['name','label','decorative','size','rotate'],[],[],[]],
@@ -22,7 +23,7 @@ const expectations=[
  ['SConfirmAction','확인 액션',['timeout','cancelOnBlur','loading','error'],['confirm','cancel'],[],['focus','reset']],
  ['SEmptyState','빈 상태',['title','description','icon'],[],['actions','icon','description'],[]],
  ['SLoadingOverlay','로딩 오버레이',['modelValue','scope','blocking','delay','minVisibleMs'],['visibleChange'],[],[]],
- ['SPagination','페이지 이동',['modelValue','pageCount','siblingCount','disabled','loading'],['update:modelValue'],[],['focus']],
+ ['SPagination','페이지 이동',['modelValue','pageCount','siblingCount','compactPagination','disabled','loading'],['update:modelValue'],[],['focus']],
  ['STimeGrid','시간 그리드',['items','columns','readonly','snapMinutes','allowResize','allowDuplicate','pendingKeys','isItemDisabled'],['start','preview','commit','cancel'],['item','band','empty','help'],['focus','cancel']],
 ]
 const escape=value=>value.replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]))

@@ -203,7 +203,10 @@ for (const [name, group, description, exampleRoute, example] of records) {
   if (name === 'SPagination') {
     props.find(prop => prop.name === 'modelValue').description = '부모가 소유하는 1부터 시작하는 페이지입니다. 화면에서만 유효 범위로 표시하며 부모가 제안을 거부하거나 pageCount가 바뀌어도 자동으로 수정하지 않습니다.'
     props.find(prop => prop.name === 'pageCount').description = '전체 페이지 수입니다. 0이면 빈 상태를 표시하고 모든 이동을 막습니다. 소수는 내림, 잘못된 값은 0으로 정규화합니다.'
-    props.find(prop => prop.name === 'siblingCount').description = '현재 페이지 양옆 번호 수입니다. 기본 1, 0–5로 제한합니다. 좁은 영역에서는 현재 번호와 처음·이전·다음·마지막 버튼을 표시합니다.'
+  }
+  if (name === 'SPagination' || name === 'SDataTable') {
+    props.find(prop => prop.name === 'siblingCount').description = '현재 페이지 양옆 번호 수입니다. 기본 1, 0–5로 제한하며 처음·마지막 번호를 포함합니다. 좁은 영역에서도 번호를 유지하고 줄바꿈합니다.'
+    props.find(prop => prop.name === 'compactPagination').description = '기본 false입니다. true이면 현재 번호와 이동 버튼만 표시합니다. 화면 폭이 작다는 이유만으로 주변 번호를 자동 숨기지 않습니다. 부모 모델·이벤트는 유지합니다.'
   }
   if (name === 'STimeGrid') {
     props.find(prop => prop.name === 'items').description = 'readonly 임의 객체 배열입니다. accessor로 읽으며 원본 배열·객체를 변경하지 않습니다. 겹침 lane은 시각 배치이며 앱의 충돌 정책을 처리하지 않습니다.'

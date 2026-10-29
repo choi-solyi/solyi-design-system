@@ -35,6 +35,8 @@ const filtered = computed(() =>
 )
 const pages = computed(() => Math.max(1, Math.ceil(filtered.value.length / 2))),
   rows = computed(() => filtered.value.slice((page.value - 1) * 2, page.value * 2))
+const siblings = ref<number | null>(1),
+  compactPagination = ref(false)
 watch([query, sort], () => (page.value = 1))
 watch(pages, p => (page.value = Math.min(page.value, p)))
 </script>
@@ -61,9 +63,24 @@ watch(pages, p => (page.value = Math.min(page.value, p)))
       v-model:sort="sort"
       v-model:page="page"
       :page-count="pages"
+      :sibling-count="siblings ?? 1"
+      :compact-pagination="compactPagination"
       :loading="state === 'loading'"
       :error="state === 'error' ? '가상 오류입니다. 검색과 선택은 남습니다.' : ''"
       @retry="state = 'ready'"
+    />
+    <SNumberInput
+      id="recipe-table-siblings"
+      v-model="siblings"
+      label="현재 페이지 양옆 번호 수"
+      :min="0"
+      :max="5"
+      :step="1"
+    />
+    <SCheckbox
+      id="recipe-table-compact"
+      v-model="compactPagination"
+      label="페이지 이동을 현재 번호 중심으로 표시"
     />
     <SBtn variant="inline" :disabled="!selected.length" @click="selected = []"> 선택 해제 </SBtn>
   </SCard>

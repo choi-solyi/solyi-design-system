@@ -16,6 +16,8 @@
 .sol-ui-input-overlay-indicator {grid-column:2;grid-row:1;align-self:center;display:inline-flex;padding-inline-end:var(--sol-space-3);pointer-events:none;}
 .sol-ui-input-frame .sol-ui-input-native--indicator {appearance:none;padding-inline-end:var(--sol-control-height);}
 .sol-ui-input-enhanced .v-field__append-inner,.sol-ui-input-enhanced .v-field__prepend-inner {align-items:center;padding-block:0;}
+.sol-ui-input-enhanced .v-field {grid-template-columns:auto minmax(0,1fr) min-content fit-content(40%);}
+.sol-ui-input-enhanced .v-field__append-inner {min-inline-size:0;max-inline-size:100%;}
 .sol-ui-input-enhanced .v-field__append-inner .sol-ui-input-rail {padding-inline-end:0;}
 .sol-ui-input-enhanced .sol-ui-input-leading {padding-inline-start:0;}
 .sol-ui-input-enhanced input:focus-visible {outline:0;}
