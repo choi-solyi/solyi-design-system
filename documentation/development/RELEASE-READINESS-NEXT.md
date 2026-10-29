@@ -1,3 +1,7 @@
+## 2026-10-29 승인된 네 보완 완료 · 게시 인증 직전
+
+네 보완은 00004b9, 설치본 계약 검증은 1f30977입니다. 필수 check/test와 변경 영향 runtime·타입·SSR·실제 설치본 Chrome 확인이 모두 통과했습니다. 새 1.1.0 UI 후보는 5,982,999 bytes, SHA-256 f39964b931082a23d2c06e7d87d18c9c536132600bc93397e1687bad1b0c1426입니다. 이전 미게시 후보 90c8ae69…는 release-candidate-history/1.1.0/에 원문 해시·manifest·pack report와 함께 보존했습니다. 공식 registry에 1.1.0이 없음을 확인한 뒤 사용자 승인에 따라 미게시 후보만 갱신했고 1.0.0·검사 코드는 유지했습니다. 새 후보의 실제 게시 인증은 이제 진행하며 아직 게시 성공을 주장하지 않습니다. [보완 결과](COMMON-UI-CORRECTIONS.md)를 따릅니다. 아래는 이전 단계의 이력입니다.
+
 ## 2026-10-29 게시 체크포인트
 
 사용자의 로그인 완료 통보 후 npm whoami에서 maintainer choi-solyi를 확인했습니다. 동일 동결 1.1.0 tarball을 한 번 publish했으나 EOTP(일회용 인증번호 필요), exit 1로 거부됐습니다. 직후 공식 registry를 다시 읽어 버전이 0.0.0-stage/1.0.0, latest=1.0.0으로 유지되고 1.1.0이 없음을 확인했습니다. 게시 성공·부분 게시 증거는 없습니다. OTP/인증정보 생성·변경과 재시도는 하지 않았습니다. 이후 사용자 공통 UI 누락 점검 요청으로 게시를 보류했습니다. registry 설치 검증은 미게시라 실행하지 않았습니다. 원본 SHA와 커밋 3132ab1을 확인했으며 패키지 bytes는 변경하지 않았습니다. 로그는 qa-output/release-final/npm-publish-1.1.0.log와 registry-after-eotp.json에 있습니다. 추가 [공통 UI 대조](COMMON-UI-PREPUBLICATION-AUDIT.md)에서 미정의 상태 색 토큰·입력 trailing 줄바꿈·Segmented hover 이중 표시·Pagination/Table 제어 차이를 확인했습니다. 제품 코드는 수정하지 않았으며 후속 범위 검토와 게시 보류가 유지됩니다. 아래는 이전 로컬 검증 완료 기록입니다.

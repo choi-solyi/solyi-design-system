@@ -1,0 +1,3 @@
+# Superseded unpublished 1.1.0 candidate
+
+2026-10-29: User approved four common UI corrections and a new 1.1.0 candidate. Official registry confirmed only 0.0.0-stage and 1.0.0 before this archive. The earlier publish attempt failed with EOTP. These bytes were not published to npm. Original package SHA-256, manifest and pack report are preserved here; no immutable published 1.0.0 file or checker was changed. This is candidate revision history, not another published package with the same version. Previous source/delivery commits: 3132ab1, c7ddbff. UI SHA-256: 90c8ae6949c05b1e4cb87d9409fc9f25274448f4abd406b5d5d6ae0b93886c0e.

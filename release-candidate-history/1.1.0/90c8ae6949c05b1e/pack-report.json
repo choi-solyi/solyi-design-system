@@ -1,0 +1,1555 @@
+[
+  {
+    "id": "@solyi/core@1.1.0",
+    "name": "@solyi/core",
+    "version": "1.1.0",
+    "size": 5876771,
+    "unpackedSize": 8665557,
+    "shasum": "ba5044076e14759b1cfca6a7bb3508e64929b2a5",
+    "integrity": "sha512-6v/Pm6l35L0JutnQ0FdVX+Nupn9LWHIqeyOoaUCQcpdU9CIeJmfOi07tdDI07I5uTiTHLf11PQ3yrJiEWz3k2A==",
+    "filename": "solyi-core-1.1.0.tgz",
+    "files": [
+      {
+        "path": "DESIGN.md",
+        "size": 9439,
+        "mode": 420
+      },
+      {
+        "path": "LICENSE",
+        "size": 1369,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 2657,
+        "mode": 420
+      },
+      {
+        "path": "dist/components.css",
+        "size": 46293,
+        "mode": 420
+      },
+      {
+        "path": "dist/date-only.d.ts",
+        "size": 543,
+        "mode": 420
+      },
+      {
+        "path": "dist/date-only.js",
+        "size": 1534,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/code-fonts.css",
+        "size": 973,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/jetbrains-mono/JetBrainsMono-Bold.woff2",
+        "size": 94588,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "size": 92164,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/jetbrains-mono/OFL.txt",
+        "size": 4399,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/jetbrains-mono/SOURCE.json",
+        "size": 1464,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/nanum-gothic-coding/METADATA.pb",
+        "size": 986,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/nanum-gothic-coding/NanumGothicCoding-Bold.ttf",
+        "size": 2246240,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/nanum-gothic-coding/NanumGothicCoding-Regular.ttf",
+        "size": 2315924,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/nanum-gothic-coding/OFL.txt",
+        "size": 4534,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/nanum-gothic-coding/SOURCE.json",
+        "size": 2096,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/OFL.txt",
+        "size": 4394,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/README.md",
+        "size": 2572,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/SOURCE.complete.original.json",
+        "size": 1104,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/SOURCE.json",
+        "size": 34337,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/SPLIT-VALIDATION.json",
+        "size": 59017,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/WantedSansVariable.complete.original.css",
+        "size": 510,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/WantedSansVariable.css",
+        "size": 54831,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/WantedSansVariable.split.original.css",
+        "size": 54031,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.0.woff2",
+        "size": 25632,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.1.woff2",
+        "size": 34604,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.2.woff2",
+        "size": 31040,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.3.woff2",
+        "size": 26904,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.4.woff2",
+        "size": 26168,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.5.woff2",
+        "size": 77896,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.6.woff2",
+        "size": 25120,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.7.woff2",
+        "size": 28732,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.8.woff2",
+        "size": 26736,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.9.woff2",
+        "size": 25984,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.10.woff2",
+        "size": 28708,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.11.woff2",
+        "size": 28840,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.12.woff2",
+        "size": 27688,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.13.woff2",
+        "size": 27820,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.14.woff2",
+        "size": 27452,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.15.woff2",
+        "size": 28988,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.16.woff2",
+        "size": 26896,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.17.woff2",
+        "size": 31528,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.18.woff2",
+        "size": 32232,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.19.woff2",
+        "size": 27756,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.20.woff2",
+        "size": 28388,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.21.woff2",
+        "size": 29844,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.22.woff2",
+        "size": 30712,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.23.woff2",
+        "size": 25312,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.24.woff2",
+        "size": 32604,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.25.woff2",
+        "size": 30684,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.26.woff2",
+        "size": 27448,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.27.woff2",
+        "size": 29448,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.28.woff2",
+        "size": 29840,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.29.woff2",
+        "size": 29204,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.30.woff2",
+        "size": 32008,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.31.woff2",
+        "size": 30956,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.32.woff2",
+        "size": 27264,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.33.woff2",
+        "size": 26808,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.34.woff2",
+        "size": 27192,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.35.woff2",
+        "size": 26676,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.36.woff2",
+        "size": 22164,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.37.woff2",
+        "size": 27004,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.38.woff2",
+        "size": 26624,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.39.woff2",
+        "size": 23120,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.40.woff2",
+        "size": 25712,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.41.woff2",
+        "size": 27128,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.42.woff2",
+        "size": 23608,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.43.woff2",
+        "size": 25312,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.44.woff2",
+        "size": 27224,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.45.woff2",
+        "size": 28068,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.46.woff2",
+        "size": 27920,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.47.woff2",
+        "size": 28880,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.48.woff2",
+        "size": 27740,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.49.woff2",
+        "size": 25284,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.50.woff2",
+        "size": 27772,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.51.woff2",
+        "size": 27124,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.52.woff2",
+        "size": 26744,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.53.woff2",
+        "size": 25980,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.54.woff2",
+        "size": 26980,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.55.woff2",
+        "size": 27088,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.56.woff2",
+        "size": 28076,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.57.woff2",
+        "size": 31724,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.58.woff2",
+        "size": 29924,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.59.woff2",
+        "size": 29140,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.60.woff2",
+        "size": 27940,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.61.woff2",
+        "size": 26968,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.62.woff2",
+        "size": 23364,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.63.woff2",
+        "size": 8084,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.64.woff2",
+        "size": 6992,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.65.woff2",
+        "size": 4880,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.66.woff2",
+        "size": 11828,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.67.woff2",
+        "size": 4980,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.68.woff2",
+        "size": 5620,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.69.woff2",
+        "size": 20068,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.70.woff2",
+        "size": 12704,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.71.woff2",
+        "size": 12484,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.72.woff2",
+        "size": 13380,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.73.woff2",
+        "size": 13448,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.74.woff2",
+        "size": 14456,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.75.woff2",
+        "size": 16008,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.76.woff2",
+        "size": 17800,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.77.woff2",
+        "size": 18732,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.78.woff2",
+        "size": 19924,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.79.woff2",
+        "size": 20336,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.80.woff2",
+        "size": 20424,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.81.woff2",
+        "size": 20316,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.82.woff2",
+        "size": 19912,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.83.woff2",
+        "size": 20360,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.84.woff2",
+        "size": 19736,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.85.woff2",
+        "size": 19444,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.86.woff2",
+        "size": 19256,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.87.woff2",
+        "size": 18128,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.88.woff2",
+        "size": 18796,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.89.woff2",
+        "size": 21436,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.90.woff2",
+        "size": 44356,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.split.91.woff2",
+        "size": 12248,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/wanted-sans/woff2/WantedSansVariable.woff2",
+        "size": 1289292,
+        "mode": 420
+      },
+      {
+        "path": "dist/icons.d.ts",
+        "size": 446,
+        "mode": 420
+      },
+      {
+        "path": "dist/icons.js",
+        "size": 1701,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 782,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 15962,
+        "mode": 420
+      },
+      {
+        "path": "dist/overflow.d.ts",
+        "size": 296,
+        "mode": 420
+      },
+      {
+        "path": "dist/overflow.js",
+        "size": 6025,
+        "mode": 420
+      },
+      {
+        "path": "dist/tokens.css",
+        "size": 17127,
+        "mode": 420
+      },
+      {
+        "path": "dist/tokens.json",
+        "size": 14845,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 1222,
+        "mode": 420
+      }
+    ],
+    "entryCount": 126,
+    "bundled": []
+  },
+  {
+    "id": "solyi-ui@1.1.0",
+    "name": "solyi-ui",
+    "version": "1.1.0",
+    "size": 5982608,
+    "unpackedSize": 9198045,
+    "shasum": "3cd0fbba821cb11bb3f06b38aaae1727148fb85f",
+    "integrity": "sha512-qmYzA/biNMiLMilhNMqoekQh1Wb98CdKvxIXwIpu0ua5/QGmR05R9XI21e+fTQDHaVXR1PK8rIaYXTFXmoStjg==",
+    "filename": "solyi-ui-1.1.0.tgz",
+    "files": [
+      {
+        "path": "DESIGN.md",
+        "size": 9439,
+        "mode": 420
+      },
+      {
+        "path": "LICENSE",
+        "size": 1375,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 10622,
+        "mode": 420
+      },
+      {
+        "path": "dist/actions.d.ts",
+        "size": 4105,
+        "mode": 420
+      },
+      {
+        "path": "dist/all.css",
+        "size": 192,
+        "mode": 420
+      },
+      {
+        "path": "dist/autocomplete.d.ts",
+        "size": 4331,
+        "mode": 420
+      },
+      {
+        "path": "dist/button.d.ts",
+        "size": 1452,
+        "mode": 420
+      },
+      {
+        "path": "dist/combobox.d.ts",
+        "size": 5137,
+        "mode": 420
+      },
+      {
+        "path": "dist/confirm-action.d.ts",
+        "size": 2849,
+        "mode": 420
+      },
+      {
+        "path": "dist/controls.d.ts",
+        "size": 22035,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/components.css",
+        "size": 46293,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/date-only.d.ts",
+        "size": 543,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/date-only.js",
+        "size": 1534,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/code-fonts.css",
+        "size": 973,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/jetbrains-mono/JetBrainsMono-Bold.woff2",
+        "size": 94588,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+        "size": 92164,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/jetbrains-mono/OFL.txt",
+        "size": 4399,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/jetbrains-mono/SOURCE.json",
+        "size": 1464,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/nanum-gothic-coding/METADATA.pb",
+        "size": 986,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/nanum-gothic-coding/NanumGothicCoding-Bold.ttf",
+        "size": 2246240,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/nanum-gothic-coding/NanumGothicCoding-Regular.ttf",
+        "size": 2315924,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/nanum-gothic-coding/OFL.txt",
+        "size": 4534,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/nanum-gothic-coding/SOURCE.json",
+        "size": 2096,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/OFL.txt",
+        "size": 4394,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/README.md",
+        "size": 2572,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/SOURCE.complete.original.json",
+        "size": 1104,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/SOURCE.json",
+        "size": 34337,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/SPLIT-VALIDATION.json",
+        "size": 59017,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/WantedSansVariable.complete.original.css",
+        "size": 510,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/WantedSansVariable.css",
+        "size": 54831,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/WantedSansVariable.split.original.css",
+        "size": 54031,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.0.woff2",
+        "size": 25632,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.1.woff2",
+        "size": 34604,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.2.woff2",
+        "size": 31040,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.3.woff2",
+        "size": 26904,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.4.woff2",
+        "size": 26168,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.5.woff2",
+        "size": 77896,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.6.woff2",
+        "size": 25120,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.7.woff2",
+        "size": 28732,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.8.woff2",
+        "size": 26736,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.9.woff2",
+        "size": 25984,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.10.woff2",
+        "size": 28708,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.11.woff2",
+        "size": 28840,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.12.woff2",
+        "size": 27688,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.13.woff2",
+        "size": 27820,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.14.woff2",
+        "size": 27452,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.15.woff2",
+        "size": 28988,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.16.woff2",
+        "size": 26896,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.17.woff2",
+        "size": 31528,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.18.woff2",
+        "size": 32232,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.19.woff2",
+        "size": 27756,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.20.woff2",
+        "size": 28388,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.21.woff2",
+        "size": 29844,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.22.woff2",
+        "size": 30712,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.23.woff2",
+        "size": 25312,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.24.woff2",
+        "size": 32604,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.25.woff2",
+        "size": 30684,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.26.woff2",
+        "size": 27448,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.27.woff2",
+        "size": 29448,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.28.woff2",
+        "size": 29840,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.29.woff2",
+        "size": 29204,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.30.woff2",
+        "size": 32008,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.31.woff2",
+        "size": 30956,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.32.woff2",
+        "size": 27264,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.33.woff2",
+        "size": 26808,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.34.woff2",
+        "size": 27192,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.35.woff2",
+        "size": 26676,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.36.woff2",
+        "size": 22164,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.37.woff2",
+        "size": 27004,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.38.woff2",
+        "size": 26624,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.39.woff2",
+        "size": 23120,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.40.woff2",
+        "size": 25712,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.41.woff2",
+        "size": 27128,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.42.woff2",
+        "size": 23608,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.43.woff2",
+        "size": 25312,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.44.woff2",
+        "size": 27224,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.45.woff2",
+        "size": 28068,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.46.woff2",
+        "size": 27920,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.47.woff2",
+        "size": 28880,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.48.woff2",
+        "size": 27740,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.49.woff2",
+        "size": 25284,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.50.woff2",
+        "size": 27772,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.51.woff2",
+        "size": 27124,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.52.woff2",
+        "size": 26744,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.53.woff2",
+        "size": 25980,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.54.woff2",
+        "size": 26980,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.55.woff2",
+        "size": 27088,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.56.woff2",
+        "size": 28076,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.57.woff2",
+        "size": 31724,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.58.woff2",
+        "size": 29924,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.59.woff2",
+        "size": 29140,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.60.woff2",
+        "size": 27940,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.61.woff2",
+        "size": 26968,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.62.woff2",
+        "size": 23364,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.63.woff2",
+        "size": 8084,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.64.woff2",
+        "size": 6992,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.65.woff2",
+        "size": 4880,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.66.woff2",
+        "size": 11828,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.67.woff2",
+        "size": 4980,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.68.woff2",
+        "size": 5620,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.69.woff2",
+        "size": 20068,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.70.woff2",
+        "size": 12704,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.71.woff2",
+        "size": 12484,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.72.woff2",
+        "size": 13380,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.73.woff2",
+        "size": 13448,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.74.woff2",
+        "size": 14456,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.75.woff2",
+        "size": 16008,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.76.woff2",
+        "size": 17800,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.77.woff2",
+        "size": 18732,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.78.woff2",
+        "size": 19924,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.79.woff2",
+        "size": 20336,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.80.woff2",
+        "size": 20424,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.81.woff2",
+        "size": 20316,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.82.woff2",
+        "size": 19912,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.83.woff2",
+        "size": 20360,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.84.woff2",
+        "size": 19736,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.85.woff2",
+        "size": 19444,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.86.woff2",
+        "size": 19256,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.87.woff2",
+        "size": 18128,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.88.woff2",
+        "size": 18796,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.89.woff2",
+        "size": 21436,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.90.woff2",
+        "size": 44356,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.split.91.woff2",
+        "size": 12248,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/fonts/wanted-sans/woff2/WantedSansVariable.woff2",
+        "size": 1289292,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/icons.d.ts",
+        "size": 446,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/icons.js",
+        "size": 1701,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/index.d.ts",
+        "size": 782,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/index.js",
+        "size": 15962,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/LICENSE",
+        "size": 1369,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/overflow.d.ts",
+        "size": 296,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/overflow.js",
+        "size": 6025,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/tokens.css",
+        "size": 17127,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/tokens.json",
+        "size": 14845,
+        "mode": 420
+      },
+      {
+        "path": "dist/date-time.d.ts",
+        "size": 10520,
+        "mode": 420
+      },
+      {
+        "path": "dist/disclosures.d.ts",
+        "size": 5096,
+        "mode": 420
+      },
+      {
+        "path": "dist/display-format.d.ts",
+        "size": 305,
+        "mode": 420
+      },
+      {
+        "path": "dist/files.d.ts",
+        "size": 4567,
+        "mode": 420
+      },
+      {
+        "path": "dist/floating.d.ts",
+        "size": 649,
+        "mode": 420
+      },
+      {
+        "path": "dist/form.d.ts",
+        "size": 3486,
+        "mode": 420
+      },
+      {
+        "path": "dist/global.d.ts",
+        "size": 3033,
+        "mode": 420
+      },
+      {
+        "path": "dist/global.js",
+        "size": 11,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 15169,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 287215,
+        "mode": 420
+      },
+      {
+        "path": "dist/input-control.d.ts",
+        "size": 2091,
+        "mode": 420
+      },
+      {
+        "path": "dist/layout.d.ts",
+        "size": 191,
+        "mode": 420
+      },
+      {
+        "path": "dist/loading-overlay.d.ts",
+        "size": 2254,
+        "mode": 420
+      },
+      {
+        "path": "dist/locale.d.ts",
+        "size": 6116,
+        "mode": 420
+      },
+      {
+        "path": "dist/month-calendar-values.d.ts",
+        "size": 1608,
+        "mode": 420
+      },
+      {
+        "path": "dist/month-calendar.d.ts",
+        "size": 4697,
+        "mode": 420
+      },
+      {
+        "path": "dist/navigation.d.ts",
+        "size": 4878,
+        "mode": 420
+      },
+      {
+        "path": "dist/number-step.d.ts",
+        "size": 366,
+        "mode": 420
+      },
+      {
+        "path": "dist/option-request.d.ts",
+        "size": 543,
+        "mode": 420
+      },
+      {
+        "path": "dist/pagination-values.d.ts",
+        "size": 241,
+        "mode": 420
+      },
+      {
+        "path": "dist/pagination.d.ts",
+        "size": 1637,
+        "mode": 420
+      },
+      {
+        "path": "dist/picker-host.d.ts",
+        "size": 2997,
+        "mode": 420
+      },
+      {
+        "path": "dist/presentation.d.ts",
+        "size": 5881,
+        "mode": 420
+      },
+      {
+        "path": "dist/primitives.d.ts",
+        "size": 7158,
+        "mode": 420
+      },
+      {
+        "path": "dist/progress.d.ts",
+        "size": 6463,
+        "mode": 420
+      },
+      {
+        "path": "dist/selection.d.ts",
+        "size": 10810,
+        "mode": 420
+      },
+      {
+        "path": "dist/sortable-list.d.ts",
+        "size": 2596,
+        "mode": 420
+      },
+      {
+        "path": "dist/sortable-pointer.d.ts",
+        "size": 940,
+        "mode": 420
+      },
+      {
+        "path": "dist/sortable-values.d.ts",
+        "size": 1367,
+        "mode": 420
+      },
+      {
+        "path": "dist/split-pane.d.ts",
+        "size": 3262,
+        "mode": 420
+      },
+      {
+        "path": "dist/styles.css",
+        "size": 55919,
+        "mode": 420
+      },
+      {
+        "path": "dist/surfaces.d.ts",
+        "size": 3900,
+        "mode": 420
+      },
+      {
+        "path": "dist/text-field.d.ts",
+        "size": 3553,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-grid-editor.d.ts",
+        "size": 2756,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-grid-interaction.d.ts",
+        "size": 1512,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-grid-pointer.d.ts",
+        "size": 1024,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-grid-proposal.d.ts",
+        "size": 1457,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-grid-values.d.ts",
+        "size": 2455,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-grid.d.ts",
+        "size": 3491,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-scrub.d.ts",
+        "size": 1594,
+        "mode": 420
+      },
+      {
+        "path": "dist/time-values.d.ts",
+        "size": 355,
+        "mode": 420
+      },
+      {
+        "path": "dist/tree.d.ts",
+        "size": 2046,
+        "mode": 420
+      },
+      {
+        "path": "dist/version.d.ts",
+        "size": 42,
+        "mode": 420
+      },
+      {
+        "path": "dist/viewport.d.ts",
+        "size": 389,
+        "mode": 420
+      },
+      {
+        "path": "dist/vuetify.d.ts",
+        "size": 5220,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 2409,
+        "mode": 420
+      }
+    ],
+    "entryCount": 179,
+    "bundled": []
+  }
+]

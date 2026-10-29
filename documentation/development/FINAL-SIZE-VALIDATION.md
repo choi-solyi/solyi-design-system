@@ -6,16 +6,16 @@
 
 | 측정 | 45종 PURE 기준 | 최종 50종 | 최종 한도 |
 |---|---:|---:|---:|
-| index 문자 | 224,107 | 284,418 | 300,000 미만 |
-| index gzip bytes | 56,882 | 72,148 | 76,800 |
-| 모든 JS bytes | 243,969 | 312,448 | 330,000 |
-| 모든 JS 개별 gzip 합 | 63,078 | 79,417 | 83,968 |
-| 전체 plugin gzip | 51,328 | 64,864 | 67,584 |
+| index 문자 | 224,107 | 284,688 | 300,000 미만 |
+| index gzip bytes | 56,882 | 72,206 | 76,800 |
+| 모든 JS bytes | 243,969 | 312,718 | 330,000 |
+| 모든 JS 개별 gzip 합 | 63,078 | 79,475 | 83,968 |
+| 전체 plugin gzip | 51,328 | 64,919 | 67,584 |
 | 개별 SIcon gzip | 6,316 | 7,098 | 기존 8,192 유지 |
 | 개별 SCombobox gzip | 11,933 | 12,713 | 기존 14,336 유지 |
 
-전체 plugin의 증분은 13,536 gzip bytes이며 모든 기능을 전역 등록할 때의 비용입니다. 개별 SIcon에는 SIcon 하나, Combobox에는 필요한 SIcon/SForm/Combobox만 남고 Calendar/TimeGrid/Loader는 남지 않습니다. 별도 entry로 옮겨 index만 줄이지 않았으며 Vue/Vuetify peer와 Core 내부 포함 정책도 유지합니다.
+전체 plugin의 증분은 13,591 gzip bytes이며 모든 기능을 전역 등록할 때의 비용입니다. 개별 SIcon에는 SIcon 하나, Combobox에는 필요한 SIcon/SForm/Combobox만 남고 Calendar/TimeGrid/Loader는 남지 않습니다. 별도 entry로 옮겨 index만 줄이지 않았으며 Vue/Vuetify peer와 Core 내부 포함 정책도 유지합니다.
 
-새 개별 import 한도는 TimeGrid 17,408(실측15,847), Calendar 13,312(11,873), Pagination 9,216(8,754), ConfirmAction 8,192(7,859), LoadingOverlay 13,312(12,335) bytes입니다. 범위가 커진 전체 기준은 약 4–6%의 수정 여유만 두었고 기존 작은 import 한도는 유지했습니다. 새 기능을 빼거나 실패한 측정만 제외한 값이 아닙니다. 원본 버전별 검사 위치는 유지하며 raw/gzip/전체 JS/개별 import 초과·미등록 버전·다른 API 집합을 거부하는 경계 검사도 통과했습니다.
+새 개별 import 한도는 TimeGrid 17,408(실측15,847), Calendar 13,312(11,873), Pagination 9,216(8,781), ConfirmAction 8,192(7,859), LoadingOverlay 13,312(12,335) bytes입니다. 범위가 커진 전체 기준은 약 4–6%의 수정 여유만 두었고 기존 작은 import 한도는 유지했습니다. 새 기능을 빼거나 실패한 측정만 제외한 값이 아닙니다. 원본 버전별 검사 위치는 유지하며 raw/gzip/전체 JS/개별 import 초과·미등록 버전·다른 API 집합을 거부하는 경계 검사도 통과했습니다.
 
 이 측정은 게시 성공 증거가 아닙니다. 최종 불변 artifact·전체 pipeline과 registry 인증/게시/registry 설치는 별도 완료 조건입니다. 원본 최적화 이후 setup·watch·타이머에 PURE를 추가하지 않았습니다.

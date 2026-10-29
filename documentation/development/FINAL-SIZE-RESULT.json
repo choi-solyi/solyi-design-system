@@ -1,5 +1,6 @@
 {
   "version": "1.1.0",
+  "compression": "gzip level 9",
   "components": [
     "STimeGrid",
     "SPagination",
@@ -53,11 +54,11 @@
     "SBarChart"
   ],
   "metrics": {
-    "characters": 284418,
-    "bytes": 287215,
-    "gzipBytes": 72148,
-    "totalJavaScriptBytes": 312448,
-    "totalJavaScriptGzipBytes": 79417,
+    "characters": 284688,
+    "bytes": 287485,
+    "gzipBytes": 72206,
+    "totalJavaScriptBytes": 312718,
+    "totalJavaScriptGzipBytes": 79475,
     "javascriptFiles": 6
   },
   "imports": [
@@ -65,90 +66,25 @@
       "name": "SIcon",
       "bytes": 18986,
       "gzipBytes": 7098,
-      "retained": [
+      "retainedNameStrings": [
         "SIcon"
-      ],
-      "peerModules": []
+      ]
     },
     {
       "name": "SCombobox",
       "bytes": 34315,
       "gzipBytes": 12713,
-      "retained": [
+      "retainedNameStrings": [
         "SIcon",
         "SForm",
         "SCombobox"
-      ],
-      "peerModules": []
-    },
-    {
-      "name": "SBtn",
-      "bytes": 18637,
-      "gzipBytes": 6910,
-      "retained": [
-        "SBtn"
-      ],
-      "peerModules": []
-    },
-    {
-      "name": "STimeGrid",
-      "bytes": 46206,
-      "gzipBytes": 15847,
-      "retained": [
-        "STimeGrid",
-        "SIcon",
-        "SBtn"
-      ],
-      "peerModules": []
-    },
-    {
-      "name": "SMonthCalendar",
-      "bytes": 32171,
-      "gzipBytes": 11873,
-      "retained": [
-        "SMonthCalendar",
-        "SBadge",
-        "SIcon"
-      ],
-      "peerModules": []
-    },
-    {
-      "name": "SPagination",
-      "bytes": 23122,
-      "gzipBytes": 8754,
-      "retained": [
-        "SPagination",
-        "SIcon",
-        "SBtn"
-      ],
-      "peerModules": []
-    },
-    {
-      "name": "SConfirmAction",
-      "bytes": 21073,
-      "gzipBytes": 7859,
-      "retained": [
-        "SConfirmAction",
-        "SBtn"
-      ],
-      "peerModules": []
-    },
-    {
-      "name": "SLoadingOverlay",
-      "bytes": 34702,
-      "gzipBytes": 12335,
-      "retained": [
-        "SLoadingOverlay",
-        "SProgressLinear",
-        "SProgressCircular"
-      ],
-      "peerModules": []
+      ]
     },
     {
       "name": "all_plugin",
-      "bytes": 222222,
-      "gzipBytes": 64864,
-      "retained": [
+      "bytes": 222438,
+      "gzipBytes": 64919,
+      "retainedNameStrings": [
         "STimeGrid",
         "SPagination",
         "SLoadingOverlay",
@@ -199,8 +135,56 @@
         "SAvatar",
         "SStepper",
         "SBarChart"
-      ],
-      "peerModules": []
+      ]
+    },
+    {
+      "name": "STimeGrid",
+      "bytes": 46206,
+      "gzipBytes": 15847,
+      "retainedNameStrings": [
+        "STimeGrid",
+        "SIcon",
+        "SBtn"
+      ]
+    },
+    {
+      "name": "SMonthCalendar",
+      "bytes": 32171,
+      "gzipBytes": 11873,
+      "retainedNameStrings": [
+        "SMonthCalendar",
+        "SBadge",
+        "SIcon"
+      ]
+    },
+    {
+      "name": "SPagination",
+      "bytes": 23211,
+      "gzipBytes": 8781,
+      "retainedNameStrings": [
+        "SPagination",
+        "SIcon",
+        "SBtn"
+      ]
+    },
+    {
+      "name": "SConfirmAction",
+      "bytes": 21073,
+      "gzipBytes": 7859,
+      "retainedNameStrings": [
+        "SConfirmAction",
+        "SBtn"
+      ]
+    },
+    {
+      "name": "SLoadingOverlay",
+      "bytes": 34702,
+      "gzipBytes": 12335,
+      "retainedNameStrings": [
+        "SLoadingOverlay",
+        "SProgressLinear",
+        "SProgressCircular"
+      ]
     }
   ]
 }
