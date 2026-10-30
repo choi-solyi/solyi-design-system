@@ -382,8 +382,9 @@
       "registration": "global",
       "components": [
         "SCard",
-        "SSelect",
+        "SRadioGroup",
         "SCheckbox",
+        "SSelect",
         "SDatePicker",
         "SFileInput",
         "SAutocomplete"

@@ -9,6 +9,7 @@ const fail = ref(false)
 const busy = ref(false)
 const done = ref(false)
 const serverError = ref('')
+const validationNotice = ref('')
 const nameRules = [
   sRules.required('이름을 입력해 주세요.'),
   sRules.minLength(3, '이름을 3자 이상 입력해 주세요.'),
@@ -19,6 +20,7 @@ async function save(event: SFormSubmitEvent) {
   if (busy.value) return
   done.value = false
   serverError.value = ''
+  validationNotice.value = ''
   const result = await event
   if (!result?.valid) {
     form.value?.focus()
@@ -32,6 +34,13 @@ async function save(event: SFormSubmitEvent) {
         '가상 요청 실패입니다. 입력값은 유지됩니다. 실패 옵션을 끄고 다시 확인하세요.'
     else done.value = true
   }, 400)
+}
+function clearValidation() {
+  if (busy.value) return
+  form.value?.resetValidation()
+  serverError.value = ''
+  done.value = false
+  validationNotice.value = '검증 표시를 지웠어요. 입력값은 유지됩니다.'
 }
 onBeforeUnmount(() => clearTimeout(timer))
 </script>
@@ -67,8 +76,9 @@ onBeforeUnmount(() => clearTimeout(timer))
       <SAlert v-if="done" tone="success" title="✓ 가상 입력을 확인했어요." live="polite" />
       <div class="sol-actions">
         <SBtn type="submit" variant="primary" :loading="busy">프로젝트 확인</SBtn>
-        <SBtn @click="form?.resetValidation()">검증 표시 지우기</SBtn>
+        <SBtn :disabled="busy" @click="clearValidation">검증 표시 지우기</SBtn>
       </div>
+      <p id="recipe-form-validation-result" role="status">{{ validationNotice }}</p>
     </SForm>
   </SCard>
 </template>

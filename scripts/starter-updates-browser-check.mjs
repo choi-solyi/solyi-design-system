@@ -54,7 +54,7 @@ try{
     assert.equal(await updates.getByRole('img',{name:'Information · 정보',exact:true}).count(),1)
     assert.equal(await updates.getByText('✓ Complete · 완료',{exact:true}).isVisible(),true)
     const save=updates.getByRole('button',{name:'Save · 저장',exact:true});await save.click();assert.equal(await save.getAttribute('aria-busy'),'true');await page.waitForFunction(()=>document.querySelector('.starter-updates [aria-label="Save · 저장"]').getAttribute('aria-busy')!=='true')
-    await page.locator('#recipe-date-mode').selectOption('single');await page.locator('#recipe-date-weekday').check();await page.locator('#recipe-date').fill('2026-10-28');await page.locator('#recipe-amount').focus()
+    await page.locator('#recipe-date-mode input[value=single]').check();await page.locator('#recipe-date-weekday').check();await page.locator('#recipe-date').fill('2026-10-28');await page.locator('#recipe-amount').focus()
     assert.match(await page.locator('#recipe-date').inputValue(),/^2026-10-28 \(/);assert.equal(await updates.getByText('완료값: "2026-10-28"',{exact:true}).count(),1)
     await updates.locator('.sol-ui-number-presets').getByRole('button',{name:'6 개',exact:true}).click();await page.locator('#recipe-number-format').check();await page.locator('#recipe-amount').blur()
     assert.equal(await page.locator('#recipe-amount').inputValue(),'6.0');assert.equal(await updates.getByText('숫자 모델: 6',{exact:true}).count(),1)

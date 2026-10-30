@@ -52,9 +52,9 @@ const iconSave=$('button[aria-label="예제 저장"]');iconSave.click();await ti
 await mount('form');
 const formName=$('#recipe-form-name');$('form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(15);await tick();
 assert.equal(formName.getAttribute('aria-invalid'),'true','SForm validates the real STextField rules');assert.equal(d.activeElement,formName,'SForm failure focuses the exposed field ref');
-const clearValidation=[...d.querySelectorAll('button')].find(x=>x.textContent.includes('검증 표시 지우기'));clearValidation.click();await tick();assert.equal(formName.getAttribute('aria-invalid'),'false');
+const clearValidation=[...d.querySelectorAll('button')].find(x=>x.textContent.includes('검증 표시 지우기'));clearValidation.click();await tick();assert.equal(formName.getAttribute('aria-invalid'),'false');assert.match($('#recipe-form-validation-result').textContent,/입력값은 유지/);
 formName.value='가상 프로젝트';formName.dispatchEvent(new w.Event('input',{bubbles:true}));$('#recipe-form-fail').click();await tick();$('form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(440);await tick();assert.match($('#app').textContent,/가상 요청 실패/);assert.equal(formName.value,'가상 프로젝트','A server failure preserves the entered value');
-$('#recipe-form-fail').click();await tick();$('form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(440);await tick();assert.match($('#app').textContent,/가상 입력을 확인/);await unmount();
+$('#recipe-form-fail').click();await tick();$('form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(440);await tick();assert.match($('#app').textContent,/가상 입력을 확인/);clearValidation.click();await tick();assert.equal(formName.value,'가상 프로젝트');assert.doesNotMatch($('#app').textContent,/가상 입력을 확인/);await unmount();
 await mount('error-summary');$('form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(15);await tick();assert.equal(d.activeElement.id,'recipe-summary');const summaryLink=$('#recipe-summary a');summaryLink.click();await tick();assert.equal(d.activeElement.id,'recipe-summary-name');await unmount();
 await mount('chart-tree');const tree=$('[role=tree]'),first=tree.querySelector('[role=treeitem]');first.focus();key(first,'ArrowRight');await tick();assert.equal(first.getAttribute('aria-expanded'),'true');key(first,'ArrowDown');await tick();assert.equal(d.activeElement.getAttribute('data-tree-id'),'garden');key(d.activeElement,'Enter');await tick();assert.equal(d.activeElement.getAttribute('aria-selected'),'true');key(d.activeElement,'ArrowLeft');await tick();assert.equal(d.activeElement,first);key(first,'ArrowLeft');await tick();assert.equal(first.getAttribute('aria-expanded'),'false');assert.ok(first.querySelector('[role=group]').hidden);await unmount();
 await mount('compare');const radios=[...d.querySelectorAll('input[type=radio]')];assert.equal(radios.length,2);radios[1].closest('label').click();await tick();assert.ok(radios[1].checked);await unmount();
@@ -98,9 +98,8 @@ dateInput.dispatchEvent(new w.Event('input', { bubbles: true }))
 key(dateInput, 'Enter')
 await tick()
 assert.match(inputsRegion.textContent, /"start":"2026-10-23","end":"2026-10-24"/)
-const dateMode = $('#recipe-date-mode')
-dateMode.value = 'single'
-dateMode.dispatchEvent(new w.Event('change', { bubbles: true }))
+const dateMode = $('#recipe-date-mode input[value="single"]')
+dateMode.click()
 await tick()
 assert.equal(dateInput.value, '')
 assert.equal(dateInput.placeholder, 'YYYY-MM-DD')

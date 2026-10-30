@@ -1,4 +1,4 @@
-import {createApp,computed,defineComponent,h,ref,shallowRef,Teleport} from 'vue'
+import {createApp,computed,defineComponent,h,nextTick,onErrorCaptured,ref,shallowRef,Teleport} from 'vue'
 import type {Component,ComponentPublicInstance} from 'vue'
 import {VApp} from 'vuetify/components/VApp'
 import {VThemeProvider} from 'vuetify/components/VThemeProvider'
@@ -14,8 +14,9 @@ export interface InlinePreviewDefinition {
   part?:string
   view?:string
   label:string
+  onError?:(error:unknown)=>void
 }
-interface PreviewEntry extends InlinePreviewDefinition { component:Component }
+interface PreviewEntry extends InlinePreviewDefinition { component:Component; failure?:unknown; failed:boolean; ready:boolean }
 type PreviewHandle=ComponentPublicInstance & {confirmLeave?:()=>boolean|Promise<boolean>}
 // The example still renders the real SCard; its title follows the containing h3.
 const DocumentCard=defineComponent({name:'SolDocumentPreviewCard',inheritAttrs:false,setup(_,{attrs,slots}){
@@ -33,10 +34,7 @@ export function createInlinePreviewRuntime(initial:SAppearance){
   const app=createApp({render:()=>h(VApp,{class:'sol-inline-runtime'},()=>entries.value.map(entry=>
     h(Teleport,{to:entry.host,key:entry.host.id},h(VThemeProvider,{withBackground:false},()=>
       h('div',{class:'sol-inline-preview v-application','data-package-version':uiVersion},[
-        h(entry.component,{...(entry.part?{part:entry.part}:{}),...(entry.view==='advanced'?{headingLevel:4,idPrefix:entry.host.id}:{}),ref:(value:unknown)=>{
-          if(value)handles.set(entry.host,value as PreviewHandle)
-          else handles.delete(entry.host)
-        }}),
+        h(entry.component),
       ]),
     )),
   ))})
@@ -50,12 +48,28 @@ export function createInlinePreviewRuntime(initial:SAppearance){
   }
   sync(initial)
   return {
-    mount(definition:InlinePreviewDefinition){
+    async mount(definition:InlinePreviewDefinition){
       if(disposed||entries.value.some(entry=>entry.host===definition.host))return
       const component=definition.view==='advanced'?AdvancedExamples:
         recipeComponents[definition.recipe as keyof typeof recipeComponents]
       if(!component)throw Error('Unknown preview recipe: '+definition.recipe)
-      entries.value=[...entries.value,{...definition,component}]
+      const entry:PreviewEntry={...definition,component,failed:false,ready:false}
+      entry.component=defineComponent({name:'SolDocumentPreviewBoundary',setup(){
+        onErrorCaptured(error=>{
+          entry.failed=true;entry.failure=error
+          entries.value=entries.value.filter(item=>item!==entry)
+          if(entry.ready)void nextTick(()=>{if(!disposed)definition.onError?.(error)})
+          return false
+        })
+        return()=>h(component,{...(entry.part?{part:entry.part}:{}),...(entry.view==='advanced'?{headingLevel:4,idPrefix:entry.host.id}:{}),ref:(value:unknown)=>{
+          if(value)handles.set(entry.host,value as PreviewHandle)
+          else handles.delete(entry.host)
+        }})
+      }})
+      entries.value=[...entries.value,entry]
+      await nextTick()
+      if(entry.failed)throw entry.failure
+      entry.ready=true
     },
     sync,
     async requestLeave(){

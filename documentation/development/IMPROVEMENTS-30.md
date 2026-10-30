@@ -21,8 +21,8 @@
 | 1 | 모든 Examples 중간의 [3] 제거 | 6개 카드가 같은 buttons.vue의 Badge 알림 데모 공유 | 문서 | 공통 [3] 데모 제거, Badge 표시 자체는 독립 예제로 보존 | 로컬 타입·빌드·Components 연결 및 PC/모바일 12개 실제 예제 조작 통과 | f221ec1 CI·공개 357파일·390px 실제 예제 확인 완료 |
 | 2 | Button/ConfirmAction/IconBtn/Badge/Chip/Icon 예제를 각각 자기 기능만 남기고 의미 명확화 | 동일 buttons recipe 확인 | 문서 | buttons·confirm-action·chip·badge·icon·icon-button의 6개 SFC/코드/실행 링크 분리 | 두 번 확인·칩 선택/제거·아이콘 저장/disabled·Badge/Icon 비대화형 표시 통과 | f221ec1 공개 예제까지 완료; 다른 중복 예제는 각 번호에서 추적 |
 | 3 | Autocomplete·비동기 Combobox 열림/닫힘 때 부모 카드 여백 증가 제거 | 로컬 문서와 registry fixture 실제 검색/목록 열기 비교 | 문서 iframe 호스트 | 설치된 1.1.0을 같은 문서 viewport에 직접 마운트 | 1440/390px 카드·문서 높이 불변, Escape 포커스 복귀 | 새 호스트 CI·공개 배포 확인 |
-| 4 | Date 개발 설정 라디오; auto/popover의 얇은 팝업·하단 여백 해결 | 라이브 18px, 같은 npm 독립 fixture 약 525px | 문서 iframe 경계 확인; 패키지 경계 추가 검사 필요 | 미착수 | Chrome 1440/light/violet 비교 실행 | 4 presentation·배치·좁은 화면 |
-| 5 | Form 프로젝트 확인 후 검증 표시 지우기 버튼을 실제 동작시킴 | 미재현 | 판별 중 | 미착수 | 미실행 | 오류·모델·포커스 계약 |
+| 4 | Date 개발 설정 라디오; auto/popover의 얇은 팝업·하단 여백 해결 | 기존 라이브 18px, 같은 npm 독립 fixture 약 525px | 문서 iframe 경계; 패키지 모든 경계의 정상 여부는 단정하지 않음 | 직접 viewport 호스트 + SRadioGroup 설정 | PC/390px 네 presentation 열기·높이 불변·ISO 날짜 선택 실제 확인 | 라디오 수정의 CI·공개 확인 및 전체 배치 회귀 |
+| 5 | Form 프로젝트 확인 후 검증 표시 지우기 버튼을 실제 동작시킴 | 기존 API는 오류를 지움; 성공/서버 피드백이 남아 예제 동작을 알기 어려움 | 문서 예제 피드백 소유 | resetValidation과 예제 소유 피드백 정리, 입력 보존 안내, busy 중 차단 | PC/390px 오류 지우기·정상 제출 후 지우기·값 보존 실제 확인 | CI·공개 확인 |
 | 6 | MultiSelect 목록이 부모를 늘리지 않고 선택 칩이 입력 안에 표시 | 직접 문서와 registry 1.1.0 fixture 양쪽에서 목록 열 때 확장 | 패키지: selection.ts의 일반 흐름 popup, styles.css:180 | 아직 패키지 미수정 | 1440/390px 확장 실제 재현; 다른 팝업 통과에 포함하지 않음 | floating 전환·선택 칩 내부 배치·선택/삭제/키보드, 미게시 버전 구분 |
 | 7 | NumberInput과 RangeSlider 직접 입력의 -/+를 한쪽에 모음 | 미재현 | 판별 중 | 미착수 | 미실행 | step/min/max/readonly 보존 |
 | 8 | RadioGroup에는 radio, Switch에는 switch/단일 선택 차이를 명확히 표시 | 미재현 | 예제 소유 판별 | 미착수 | 미실행 | 용어·접근성 역할 보존 |
@@ -86,6 +86,10 @@
 요구/인수 기준 Page: https://chatgpt.com/space/page_860e6bc2fbac8191a9cf334134dde5fe . 부모가 확인 결과를 대조해 갱신한다. 1·2번 묶음은 공개 배포와 실제 공개 예제까지 확인했다. 나머지 부분 검증을 전체 30건 완료로 해석하지 않는다.
 
 ### 공통 호스트 묶음의 실제 증거
+
+- `21f4170`의 CI [41003242961](https://github.com/choi-solyi/solyi-design-system/actions/runs/41003242961)는 validate/Pages deploy 모두 성공했다. 이후 추가 복구 결함 보완과 4·5번 문서 수정은 별도 커밋으로 구분한다.
+- A2(추가 결함): 호스트의 실패 Promise/실패 CSS 링크/마운트 집합이 일시 실패를 영구 캐시했다. 실패 캐시와 링크를 정리하고 명시적 재시도 버튼을 추가했다. 브라우저의 실패 모듈 URL 캐시 때문에 실패 후 사용자 재시도에는 같은 origin의 새 retry URL을 사용한다. Vue 예제별 error boundary에서 초기/후속 렌더 예외를 fallback에 연결하며 실제 nextTick 렌더 완료 후 aria-busy를 해제한다. `scripts/inline-preview-recovery-browser-check.mjs`가 CSS·module·실제 Vue render 첫 실패 후 같은 페이지 재진입 복구를 실행한다. 테스트용 render 예외는 격리 브라우저 응답에만 주입하며 배포 코드에 테스트 hook을 넣지 않는다. 복구 시험은 `inline-recovery-observations.json`/`inline-recovery-canonical.log`로 구분한다. 30개 번호는 재배열하지 않는다.
+- #4 라디오/네 presentation과 #5 오류·성공 피드백 지우기의 실제 PC/390px 증거는 `date-form-observations.json`, `date-radio-*.png`, `form-clear-*.png`다. 모달 scroll lock의 정상 scrollHeight 감소와 열림으로 인한 불필요한 높이 증가를 구분했다. 기존 SForm/Date 모델·메서드는 수정하지 않았다.
 
 - `f221ec1`의 CI [41001183377](https://github.com/choi-solyi/solyi-design-system/actions/runs/41001183377)는 validate와 Pages deploy 모두 성공했다. 공개 파일 357개의 HTTP 200/SHA-256을 해당 커밋과 대조했다(`examples-live-verification.log`). 공개 starter 390px에서 여섯 예제의 실제 키보드·제거 후 포커스·상태를 확인했다(`example-public-observations.json`). 로컬 PC/390px 검사와 공개 390px 검사는 구분한다.
 - 새 호스트는 별도 로컬 변경이다. `site/inline-previews.js`, `site/vue-examples.js`, `examples/vue-vuetify/src/inline-previews.ts`가 설치된 **npm 1.1.0 그대로**를 한 VApp과 문서 viewport에서 실행한다. 라이브러리 소스·동결 tarball·버전은 수정하지 않는다. 따라서 이번 문서 배포에는 미게시 API가 없으며 1.1.0 안내를 유지할 수 있다. 이후 패키지 수정은 개발 미리보기/출시 전 상태를 분리한 뒤 공개한다.
