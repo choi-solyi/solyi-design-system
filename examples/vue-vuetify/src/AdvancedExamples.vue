@@ -1,7 +1,15 @@
 <script setup>
 import { resolveCategoricalColor } from 'solyi-ui'
 
-const props = defineProps({ part: { type: String, default: '' } })
+const props = defineProps({
+  part: { type: String, default: '' },
+  headingLevel: { type: Number, default: 2 },
+  idPrefix: { type: String, default: '' },
+})
+const previewId = id => (props.idPrefix ? props.idPrefix + '-' + id : id)
+const headingTag = computed(() =>
+  [2, 3, 4, 5, 6].includes(props.headingLevel) ? 'h' + props.headingLevel : 'h2',
+)
 const supportedParts = [
   'segmented',
   'multiselect',
@@ -200,21 +208,31 @@ watch([disabled, readonly], () => {
 </script>
 
 <template>
-  <section v-if="show('segmented')" class="starter-card" aria-labelledby="advanced-title">
-    <h2 id="advanced-title">설정 하나 선택 · SSegmentedControl</h2>
+  <section
+    v-if="show('segmented')"
+    class="starter-card"
+    :aria-labelledby="previewId('advanced-title')"
+  >
+    <component :is="headingTag" :id="previewId('advanced-title')"
+      >설정 하나 선택 · SSegmentedControl</component
+    >
     <p class="starter-hint">
       선택·범위·메뉴·분할 부품을 설치한 solyi-ui에서 가져옵니다. 아래 설정은 이 예제들에만
       적용됩니다. 모든 데이터와 작업은 가상입니다.
     </p>
     <div class="starter-settings starter-demo-settings">
-      <SSwitch id="advanced-disabled" v-model="disabled" label="확장 예시 비활성" /><SSwitch
-        id="advanced-readonly"
+      <SSwitch
+        :id="previewId('advanced-disabled')"
+        v-model="disabled"
+        label="확장 예시 비활성"
+      /><SSwitch
+        :id="previewId('advanced-readonly')"
         v-model="readonly"
         label="확장 예시 읽기 전용"
       />
     </div>
     <SSegmentedControl
-      id="advanced-segment"
+      :id="previewId('advanced-segment')"
       v-model="display"
       label="가상 표시 설정"
       :options="[
@@ -234,17 +252,23 @@ watch([disabled, readonly], () => {
       }}
     </p>
   </section>
-  <section v-if="show('multiselect')" class="starter-card" aria-labelledby="advanced-multi-title">
-    <h2 id="advanced-multi-title">검색 가능한 MultiSelect</h2>
+  <section
+    v-if="show('multiselect')"
+    class="starter-card"
+    :aria-labelledby="previewId('advanced-multi-title')"
+  >
+    <component :is="headingTag" :id="previewId('advanced-multi-title')"
+      >검색 가능한 MultiSelect</component
+    >
     <div v-if="part" class="starter-settings starter-demo-settings">
-      <SSwitch id="advanced-disabled" v-model="disabled" label="예제 비활성" /><SSwitch
-        id="advanced-readonly"
-        v-model="readonly"
-        label="예제 읽기 전용"
-      />
+      <SSwitch
+        :id="previewId('advanced-disabled')"
+        v-model="disabled"
+        label="예제 비활성"
+      /><SSwitch :id="previewId('advanced-readonly')" v-model="readonly" label="예제 읽기 전용" />
     </div>
     <SSelect
-      id="advanced-multi-scenario"
+      :id="previewId('advanced-multi-scenario')"
       v-model="scenario"
       required
       label="가상 목록 동작"
@@ -256,7 +280,7 @@ watch([disabled, readonly], () => {
       help="외부 요청 없이 브라우저 안에서 지연·실패를 흉내 냅니다. '없는값'으로 결과 없음을 확인할 수 있어요."
     />
     <SMultiSelect
-      id="advanced-multi"
+      :id="previewId('advanced-multi')"
       v-model="selected"
       clearable
       label="가상 기록 분류"
@@ -274,17 +298,21 @@ watch([disabled, readonly], () => {
       선택은 유지됩니다.
     </p>
   </section>
-  <section v-if="show('range')" class="starter-card" aria-labelledby="advanced-range-title">
-    <h2 id="advanced-range-title">양끝 RangeSlider</h2>
+  <section
+    v-if="show('range')"
+    class="starter-card"
+    :aria-labelledby="previewId('advanced-range-title')"
+  >
+    <component :is="headingTag" :id="previewId('advanced-range-title')">양끝 RangeSlider</component>
     <div v-if="part" class="starter-settings starter-demo-settings">
-      <SSwitch id="advanced-disabled" v-model="disabled" label="예제 비활성" /><SSwitch
-        id="advanced-readonly"
-        v-model="readonly"
-        label="예제 읽기 전용"
-      />
+      <SSwitch
+        :id="previewId('advanced-disabled')"
+        v-model="disabled"
+        label="예제 비활성"
+      /><SSwitch :id="previewId('advanced-readonly')" v-model="readonly" label="예제 읽기 전용" />
     </div>
     <SRangeSlider
-      id="advanced-range"
+      :id="previewId('advanced-range')"
       v-model="range"
       label="가상 점수 구간"
       lower-label="하한"
@@ -299,7 +327,7 @@ watch([disabled, readonly], () => {
     />
     <div class="starter-control-grid">
       <SNumberInput
-        id="advanced-lower"
+        :id="previewId('advanced-lower')"
         required
         v-model="range[0]"
         label="하한 직접 입력"
@@ -309,7 +337,7 @@ watch([disabled, readonly], () => {
         :disabled="disabled"
         :readonly="readonly"
       /><SNumberInput
-        id="advanced-upper"
+        :id="previewId('advanced-upper')"
         required
         v-model="range[1]"
         label="상한 직접 입력"
@@ -328,9 +356,9 @@ watch([disabled, readonly], () => {
   <section
     v-if="show('split-button', 'context-menu')"
     class="starter-card"
-    aria-labelledby="advanced-actions-title"
+    :aria-labelledby="previewId('advanced-actions-title')"
   >
-    <h2 id="advanced-actions-title">
+    <component :is="headingTag" :id="previewId('advanced-actions-title')">
       {{
         part === 'split-button'
           ? 'SplitButton'
@@ -338,20 +366,20 @@ watch([disabled, readonly], () => {
             ? 'ContextMenu'
             : 'SplitButton · ContextMenu'
       }}
-    </h2>
+    </component>
     <div v-if="part" class="starter-settings starter-demo-settings">
-      <SSwitch id="advanced-disabled" v-model="disabled" label="예제 비활성" /><SSwitch
-        id="advanced-readonly"
-        v-model="readonly"
-        label="예제 읽기 전용"
-      />
+      <SSwitch
+        :id="previewId('advanced-disabled')"
+        v-model="disabled"
+        label="예제 비활성"
+      /><SSwitch :id="previewId('advanced-readonly')" v-model="readonly" label="예제 읽기 전용" />
     </div>
     <p class="starter-hint">
       주 동작과 다른 동작을 분리합니다. 실제 파일을 만들거나 자료를 변경하지 않습니다.
     </p>
     <SSplitBtn
       v-if="show('split-button')"
-      id="advanced-split-button"
+      :id="previewId('advanced-split-button')"
       label="가상 내보내기"
       :items="actions"
       :disabled="disabled"
@@ -364,7 +392,7 @@ watch([disabled, readonly], () => {
     />
     <SContextMenu
       v-if="show('context-menu')"
-      id="advanced-context"
+      :id="previewId('advanced-context')"
       v-model:open="menuOpen"
       label="가상 정원 기록"
       trigger-label="기록 동작 열기"
@@ -380,17 +408,23 @@ watch([disabled, readonly], () => {
     >
     <p class="starter-result" role="status">{{ action }}</p>
   </section>
-  <section v-if="show('split-pane')" class="starter-card" aria-labelledby="advanced-pane-title">
-    <h2 id="advanced-pane-title">ResizableSplitPane</h2>
+  <section
+    v-if="show('split-pane')"
+    class="starter-card"
+    :aria-labelledby="previewId('advanced-pane-title')"
+  >
+    <component :is="headingTag" :id="previewId('advanced-pane-title')"
+      >ResizableSplitPane</component
+    >
     <div v-if="part" class="starter-settings starter-demo-settings">
-      <SSwitch id="advanced-disabled" v-model="disabled" label="예제 비활성" /><SSwitch
-        id="advanced-readonly"
-        v-model="readonly"
-        label="예제 읽기 전용"
-      />
+      <SSwitch
+        :id="previewId('advanced-disabled')"
+        v-model="disabled"
+        label="예제 비활성"
+      /><SSwitch :id="previewId('advanced-readonly')" v-model="readonly" label="예제 읽기 전용" />
     </div>
     <SSelect
-      id="advanced-pane-direction"
+      :id="previewId('advanced-pane-direction')"
       v-model="direction"
       required
       label="개발 설정 · 분할 방향"
@@ -400,7 +434,7 @@ watch([disabled, readonly], () => {
       ]"
     />
     <SResizableSplitPane
-      id="advanced-pane"
+      :id="previewId('advanced-pane')"
       v-model="ratio"
       label="가상 목록과 메모"
       primary-label="가상 목록"
@@ -422,7 +456,7 @@ watch([disabled, readonly], () => {
       >
       <template #secondary
         ><STextarea
-          id="advanced-pane-memo"
+          :id="previewId('advanced-pane-memo')"
           v-model="memo"
           label="유지되는 가상 메모"
           :disabled="disabled"
@@ -434,25 +468,45 @@ watch([disabled, readonly], () => {
       {{ resized }}
     </p>
   </section>
-  <section v-if="show('sortable')" class="starter-card" aria-labelledby="advanced-sortable-title">
-    <h2 id="advanced-sortable-title">정렬 목록 · SSortableList</h2>
+  <section
+    v-if="show('sortable')"
+    class="starter-card"
+    :aria-labelledby="previewId('advanced-sortable-title')"
+  >
+    <component :is="headingTag" :id="previewId('advanced-sortable-title')"
+      >정렬 목록 · SSortableList</component
+    >
     <p class="starter-hint">
       손잡이를 드래그하거나 키보드와 위·아래 이동 버튼으로 순서를 제안합니다. 원본 객체는
       유지합니다.
     </p>
     <div class="starter-settings">
-      <SCheckbox id="advanced-sort-accept" v-model="acceptOrder" label="새 순서 반영" />
       <SCheckbox
-        id="advanced-sort-lock"
+        :id="previewId('advanced-sort-accept')"
+        v-model="acceptOrder"
+        label="새 순서 반영"
+      />
+      <SCheckbox
+        :id="previewId('advanced-sort-lock')"
         v-model="lockSecond"
         label="두 번째 항목 자체의 이동 막기"
       />
-      <SSwitch v-if="part" id="advanced-sort-disabled" v-model="disabled" label="정렬 비활성" />
-      <SSwitch v-if="part" id="advanced-sort-readonly" v-model="readonly" label="정렬 보기 전용" />
+      <SSwitch
+        v-if="part"
+        :id="previewId('advanced-sort-disabled')"
+        v-model="disabled"
+        label="정렬 비활성"
+      />
+      <SSwitch
+        v-if="part"
+        :id="previewId('advanced-sort-readonly')"
+        v-model="readonly"
+        label="정렬 보기 전용"
+      />
       <SBtn @click="sortableItems = [...sortableItems].reverse()">외부 목록 변경 시연</SBtn>
     </div>
     <SSortableList
-      id="advanced-sortable"
+      :id="previewId('advanced-sortable')"
       label="가상 항목 순서"
       :model-value="sortableItems"
       :item-key="item => item.id"
@@ -480,33 +534,61 @@ watch([disabled, readonly], () => {
   <section
     v-if="show('month-calendar')"
     class="starter-card"
-    aria-labelledby="advanced-month-title"
+    :aria-labelledby="previewId('advanced-month-title')"
   >
-    <h2 id="advanced-month-title">월간 달력 · SMonthCalendar</h2>
+    <component :is="headingTag" :id="previewId('advanced-month-title')"
+      >월간 달력 · SMonthCalendar</component
+    >
     <p class="starter-hint">
       월과 날짜는 부모가 반영할 때 바뀝니다. 오늘 이동과 키보드 탐색은 선택을 자동 저장하지
       않습니다. 날짜별 자료가 늦게 와도 선택은 남습니다.
     </p>
     <div class="starter-settings">
       <SCheckbox
-        id="advanced-month-accept"
+        :id="previewId('advanced-month-accept')"
         v-model="calendarAcceptMonth"
         label="표시 월 제안 반영"
       />
       <SCheckbox
-        id="advanced-month-accept-date"
+        :id="previewId('advanced-month-accept-date')"
         v-model="calendarAcceptDate"
         label="선택 날짜 제안 반영"
       />
-      <SCheckbox id="advanced-month-monday" v-model="calendarMonday" label="월요일 시작" />
-      <SCheckbox id="advanced-month-loading" v-model="calendarLoading" label="자료 loading" />
-      <SCheckbox id="advanced-month-empty" v-model="calendarEmpty" label="날짜별 자료 없음" />
-      <SCheckbox id="advanced-month-blocked" v-model="calendarBlocked" label="10일 선택 막기" />
-      <SSwitch v-if="part" id="advanced-month-disabled" v-model="disabled" label="달력 비활성" />
-      <SSwitch v-if="part" id="advanced-month-readonly" v-model="readonly" label="달력 보기 전용" />
+      <SCheckbox
+        :id="previewId('advanced-month-monday')"
+        v-model="calendarMonday"
+        label="월요일 시작"
+      />
+      <SCheckbox
+        :id="previewId('advanced-month-loading')"
+        v-model="calendarLoading"
+        label="자료 loading"
+      />
+      <SCheckbox
+        :id="previewId('advanced-month-empty')"
+        v-model="calendarEmpty"
+        label="날짜별 자료 없음"
+      />
+      <SCheckbox
+        :id="previewId('advanced-month-blocked')"
+        v-model="calendarBlocked"
+        label="10일 선택 막기"
+      />
+      <SSwitch
+        v-if="part"
+        :id="previewId('advanced-month-disabled')"
+        v-model="disabled"
+        label="달력 비활성"
+      />
+      <SSwitch
+        v-if="part"
+        :id="previewId('advanced-month-readonly')"
+        v-model="readonly"
+        label="달력 보기 전용"
+      />
     </div>
     <SMonthCalendar
-      id="advanced-month"
+      :id="previewId('advanced-month')"
       label="범용 날짜 상태"
       :month="calendarMonth"
       :model-value="calendarDate"
@@ -528,41 +610,63 @@ watch([disabled, readonly], () => {
         >
       </template>
     </SMonthCalendar>
-    <p id="advanced-month-result" class="starter-hint">
+    <p :id="previewId('advanced-month-result')" class="starter-hint">
       표시 월: {{ calendarMonth }} · 선택 ISO: {{ calendarDate }}
     </p>
   </section>
-  <section v-if="show('time-grid')" class="starter-card" aria-labelledby="advanced-time-grid-title">
-    <h2 id="advanced-time-grid-title">시간 그리드 · 변경 제안</h2>
+  <section
+    v-if="show('time-grid')"
+    class="starter-card"
+    :aria-labelledby="previewId('advanced-time-grid-title')"
+  >
+    <component :is="headingTag" :id="previewId('advanced-time-grid-title')"
+      >시간 그리드 · 변경 제안</component
+    >
     <p class="starter-hint">
       기본은 읽기 전용이며 편집을 켜면 이동·크기 변경·복제를 제안합니다. 아래 반영 체크를 끄면
       원본은 유지됩니다. 시간대·충돌·새 key·저장은 소비 앱에서 소유합니다.
     </p>
     <div class="starter-settings">
-      <SCheckbox id="advanced-time-grid-empty" v-model="gridEmpty" label="빈 항목" /><SCheckbox
-        id="advanced-time-grid-loading"
+      <SCheckbox
+        :id="previewId('advanced-time-grid-empty')"
+        v-model="gridEmpty"
+        label="빈 항목"
+      /><SCheckbox
+        :id="previewId('advanced-time-grid-loading')"
         v-model="gridLoading"
         label="불러오는 중"
       />
     </div>
     <div class="starter-settings">
-      <SCheckbox id="advanced-time-grid-edit" v-model="gridEditable" label="변경 제안 허용" />
-      <SCheckbox id="advanced-time-grid-disabled" v-model="gridDisabled" label="전체 조작 비활성" />
       <SCheckbox
-        id="advanced-time-grid-lock"
+        :id="previewId('advanced-time-grid-edit')"
+        v-model="gridEditable"
+        label="변경 제안 허용"
+      />
+      <SCheckbox
+        :id="previewId('advanced-time-grid-disabled')"
+        v-model="gridDisabled"
+        label="전체 조작 비활성"
+      />
+      <SCheckbox
+        :id="previewId('advanced-time-grid-lock')"
         v-model="gridLockedFirst"
         label="첫 항목 조작 비활성"
       />
       <SCheckbox
-        id="advanced-time-grid-pending"
+        :id="previewId('advanced-time-grid-pending')"
         v-model="gridPendingFirst"
         label="첫 항목 반영 대기"
       />
-      <SCheckbox id="advanced-time-grid-accept" v-model="gridAccept" label="부모에서 제안 반영" />
-      <SBtn id="advanced-time-grid-reset" @click="resetGrid">원본으로 외부 갱신</SBtn>
+      <SCheckbox
+        :id="previewId('advanced-time-grid-accept')"
+        v-model="gridAccept"
+        label="부모에서 제안 반영"
+      />
+      <SBtn :id="previewId('advanced-time-grid-reset')" @click="resetGrid">원본으로 외부 갱신</SBtn>
     </div>
     <STimeGrid
-      id="advanced-time-grid"
+      :id="previewId('advanced-time-grid')"
       label="범용 시간 항목"
       :items="gridEmpty ? [] : gridItems"
       :columns="gridColumns"
@@ -587,7 +691,7 @@ watch([disabled, readonly], () => {
       @cancel="cancelGrid"
       help="각 항목에 Tab으로 초점을 둘 수 있습니다. 좁은 화면에서는 가로로 스크롤하고 목록으로 전체 이름을 확인하세요."
     />
-    <p id="advanced-time-grid-result" class="starter-hint" role="status">
+    <p :id="previewId('advanced-time-grid-result')" class="starter-hint" role="status">
       {{gridPreview ? '미리보기 · '+gridPreview.to.columnKey+' · '+gridPreview.to.startMinute+'–'+gridPreview.to.endMinute : gridResult}}
     </p>
   </section>

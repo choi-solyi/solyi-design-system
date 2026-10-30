@@ -18,26 +18,26 @@
 
 | 번호 | 원문 요구의 추적 범위 | 재현 | 원인 소유 | 변경 | 검증 | 미완료 |
 |---|---|---|---|---|---|---|
-| 1 | 모든 Examples 중간의 [3] 제거 | 6개 카드가 같은 buttons.vue의 Badge 알림 데모 공유 | 문서 | 공통 [3] 데모 제거, Badge 표시 자체는 독립 예제로 보존 | 로컬 타입·빌드·Components 연결 및 PC/모바일 12개 실제 예제 조작 통과 | 공개 배포 후 확인 전까지 전체 완료 아님 |
-| 2 | Button/ConfirmAction/IconBtn/Badge/Chip/Icon 예제를 각각 자기 기능만 남기고 의미 명확화 | 동일 buttons recipe 확인 | 문서 | buttons·confirm-action·chip·badge·icon·icon-button의 6개 SFC/코드/실행 링크 분리 | 두 번 확인·칩 선택/제거·아이콘 저장/disabled·Badge/Icon 비대화형 표시 통과 | 공개 배포 후 확인; 다른 중복 예제는 각 번호에서 추적 |
-| 3 | Autocomplete·비동기 Combobox 열림/닫힘 때 부모 카드 여백 증가 제거 | 미재현 | iframe 측정 공통 후보 | 미착수 | 미실행 | 독립 소비 화면과 비교 |
+| 1 | 모든 Examples 중간의 [3] 제거 | 6개 카드가 같은 buttons.vue의 Badge 알림 데모 공유 | 문서 | 공통 [3] 데모 제거, Badge 표시 자체는 독립 예제로 보존 | 로컬 타입·빌드·Components 연결 및 PC/모바일 12개 실제 예제 조작 통과 | f221ec1 CI·공개 357파일·390px 실제 예제 확인 완료 |
+| 2 | Button/ConfirmAction/IconBtn/Badge/Chip/Icon 예제를 각각 자기 기능만 남기고 의미 명확화 | 동일 buttons recipe 확인 | 문서 | buttons·confirm-action·chip·badge·icon·icon-button의 6개 SFC/코드/실행 링크 분리 | 두 번 확인·칩 선택/제거·아이콘 저장/disabled·Badge/Icon 비대화형 표시 통과 | f221ec1 공개 예제까지 완료; 다른 중복 예제는 각 번호에서 추적 |
+| 3 | Autocomplete·비동기 Combobox 열림/닫힘 때 부모 카드 여백 증가 제거 | 로컬 문서와 registry fixture 실제 검색/목록 열기 비교 | 문서 iframe 호스트 | 설치된 1.1.0을 같은 문서 viewport에 직접 마운트 | 1440/390px 카드·문서 높이 불변, Escape 포커스 복귀 | 새 호스트 CI·공개 배포 확인 |
 | 4 | Date 개발 설정 라디오; auto/popover의 얇은 팝업·하단 여백 해결 | 라이브 18px, 같은 npm 독립 fixture 약 525px | 문서 iframe 경계 확인; 패키지 경계 추가 검사 필요 | 미착수 | Chrome 1440/light/violet 비교 실행 | 4 presentation·배치·좁은 화면 |
 | 5 | Form 프로젝트 확인 후 검증 표시 지우기 버튼을 실제 동작시킴 | 미재현 | 판별 중 | 미착수 | 미실행 | 오류·모델·포커스 계약 |
-| 6 | MultiSelect 목록이 부모를 늘리지 않고 선택 칩이 입력 안에 표시 | 부모 픽셀 관찰 | 판별 중 | 미착수 | 미실행 | 선택·삭제·검색·키보드 |
+| 6 | MultiSelect 목록이 부모를 늘리지 않고 선택 칩이 입력 안에 표시 | 직접 문서와 registry 1.1.0 fixture 양쪽에서 목록 열 때 확장 | 패키지: selection.ts의 일반 흐름 popup, styles.css:180 | 아직 패키지 미수정 | 1440/390px 확장 실제 재현; 다른 팝업 통과에 포함하지 않음 | floating 전환·선택 칩 내부 배치·선택/삭제/키보드, 미게시 버전 구분 |
 | 7 | NumberInput과 RangeSlider 직접 입력의 -/+를 한쪽에 모음 | 미재현 | 판별 중 | 미착수 | 미실행 | step/min/max/readonly 보존 |
 | 8 | RadioGroup에는 radio, Switch에는 switch/단일 선택 차이를 명확히 표시 | 미재현 | 예제 소유 판별 | 미착수 | 미실행 | 용어·접근성 역할 보존 |
 | 9 | TextField loading이 실제 움직임을 표현; clear 횟수 설명 또는 불필요 표시 정리 | 미재현 | motion/예제 판별 | 미착수 | 미실행 | 입력 상태·reduced-motion |
 | 10 | Time 손잡이 의미·X/↑/꺾쇠 혼잡 개선, 시/분 오른쪽 단위, 완료 우측·확인색 | 미재현 | 판별 중 | 미착수 | 미실행 | native/list/수동/scrub 취소 |
 | 11 | Accordion 1개 및 3~5개 예제 | 미재현 | 문서 | 미착수 | 미실행 | 독립/복수 열기·키보드 |
 | 12 | Breadcrumb/Pagination 예제 분리, 숫자 stepper 한쪽, 처음/끝 아이콘 개선 | 미재현 | 문서·패키지 판별 | 미착수 | 미실행 | 두 공개 페이지 모델 보존 |
-| 13 | ContextMenu trigger의 메뉴 의미, 깜빡임·부모 하단 여백 개선 | 미재현 | 판별 중 | 미착수 | 미실행 | 클릭/키보드/닫기/포커스 |
+| 13 | ContextMenu trigger의 메뉴 의미, 깜빡임·부모 하단 여백 개선 | 문서·registry fixture에서 실제 메뉴 열기 비교 | 문서 호스트 경계; trigger 의미는 추가 개선 검토 | 같은 문서 viewport 호스트, 동시 Advanced 예제 ID 분리 | 1440/390px 카드·문서 불변, 메뉴 viewport 경계·Escape 포커스 | trigger 의미·선택/disabled/readonly 추가 확인, CI·공개 배포 |
 | 14 | Stepper 연결선·중복 완료 영역 제거, 라벨 아래 변형, reset 좌/이전다음 우·색 | 미재현 | 판별 중 | 미착수 | 미실행 | 단계 이동/완료/양식 |
 | 15 | Tabs와 라인·패널의 시각 연결 강화, 카드 내용도 탭과 연결 | 미재현 | 판별 중 | 미착수 | 미실행 | active/hover/focus/키보드 |
 | 16 | Tree 화살표 외 부모 항목 행 전체로 펼침 | 미재현 | 판별 중 | 미착수 | 미실행 | 선택/확장/키보드 역할 |
-| 17 | Dialog busyScope 설명 명확화, 사이드패널이 카드 내부에 뜨거나 과도하게 길어지는 문제 | 미재현 | iframe/패키지 판별 | 미착수 | 미실행 | header/actions/body scroll·닫기 |
+| 17 | Dialog busyScope 설명 명확화, 사이드패널이 카드 내부에 뜨거나 과도하게 길어지는 문제 | 기존 iframe이 viewport 경계; registry fixture는 전체 화면 사용 | 문서 호스트 | 같은 문서 VApp/overlay stack 사용 | 1440/390px Drawer, 여러 줄 설명·긴 본문·고정 header/actions·body scroll, busyScope all Escape 차단/완료 후 복귀 | busyScope 안내 UX 추가 검토, CI·공개 배포 |
 | 18 | Linear/Circular/Overlay 반복 모션 실제 동작, 중복 예제는 하나 안에서 구분 | no-preference의 Linear/Circular는 양쪽 실행, reduce는 의도한 정지 | 사용자 설정·예제 상태 전환 추가 판별 | 미착수 | 실제 350ms 전후 transform/currentTime 비교 실행 | Overlay·전환·모션 상태 안내·중복 예제 |
 | 19 | Popover/Tooltip 의미·트리거 구분, 불필요한 중복과 하단 여백 제거 | 라이브 iframe 207→480px, 카드 +273px | 문서 embed 측정의 최소 480px 확인 | 미착수 | Chrome 1440/light/violet 실제 열기 비교 실행 | hover/focus/click·포커스·부모 높이 불변 |
-| 20 | Snackbar가 카드가 아닌 전체 페이지 우측 하단에 표시 | 미재현 | iframe/패키지 판별 | 미착수 | 미실행 | 위치·live region·닫기 |
+| 20 | Snackbar가 카드가 아닌 전체 페이지 우측 하단에 표시 | registry와 직접 문서에서 화면 우측 하단 확인; 기존 iframe의 body가 경계 | 문서 호스트, 패키지 Teleport body는 기존 지원 | iframe 대신 같은 문서에 설치 1.1.0 마운트 | 1440/390px viewport 우측/하단·높이 불변·닫기 실제 확인 | CI·공개 배포 확인 |
 | 21 | Avatar와 프로필/메뉴 의미 구분, 화면에 없는 입력 샘플 코드 혼입 제거 | 미재현 | 예제 소유 판별 | 미착수 | 미실행 | 화면/코드 동일 원본 |
 | 22 | Chart 명칭과 실제 bar·원형·line 등 유형 선택 기능 | 미재현 | 신규 확장 범위 확인 | 미착수 | 미실행 | 실제 렌더·데이터·표 대안 |
 | 23 | Card 항목 링크가 iframe 안에서 starter를 여는 동작 개선 | 미재현 | 문서 링크/탐색 판별 | 미착수 | 미실행 | 링크 의미·탐색 대상 |
@@ -83,4 +83,14 @@
 
 독립 검토 후 여섯 예제 각각에 다른 다섯 주 컨트롤의 재혼입을 막는 negative assertion을 추가했다. ConfirmAction의 Escape/blur는 설치본 실제 예제 runtime에서, Escape/Tab blur/기본 timeout은 실제 Chrome에서 실행했다. 기본 timeout 확인은 한 폭에서만 반복하여 불필요한 대기를 줄였다. 근거는 `example-keyboard-browser.log` 및 `example-browser.mjs`, `example-runtime-fixed.log`다. 1·2번은 이 보완과 최종 공개 검증 전까지 전체 완료로 표시하지 않는다.
 
-요구/인수 기준 Page: https://chatgpt.com/space/page_860e6bc2fbac8191a9cf334134dde5fe . 부모가 확인 결과를 대조해 갱신한다. 현재 30건 모두 미완료이며 이 문서의 초기 재현 결과를 전체 완료로 해석하지 않는다.
+요구/인수 기준 Page: https://chatgpt.com/space/page_860e6bc2fbac8191a9cf334134dde5fe . 부모가 확인 결과를 대조해 갱신한다. 1·2번 묶음은 공개 배포와 실제 공개 예제까지 확인했다. 나머지 부분 검증을 전체 30건 완료로 해석하지 않는다.
+
+### 공통 호스트 묶음의 실제 증거
+
+- `f221ec1`의 CI [41001183377](https://github.com/choi-solyi/solyi-design-system/actions/runs/41001183377)는 validate와 Pages deploy 모두 성공했다. 공개 파일 357개의 HTTP 200/SHA-256을 해당 커밋과 대조했다(`examples-live-verification.log`). 공개 starter 390px에서 여섯 예제의 실제 키보드·제거 후 포커스·상태를 확인했다(`example-public-observations.json`). 로컬 PC/390px 검사와 공개 390px 검사는 구분한다.
+- 새 호스트는 별도 로컬 변경이다. `site/inline-previews.js`, `site/vue-examples.js`, `examples/vue-vuetify/src/inline-previews.ts`가 설치된 **npm 1.1.0 그대로**를 한 VApp과 문서 viewport에서 실행한다. 라이브러리 소스·동결 tarball·버전은 수정하지 않는다. 따라서 이번 문서 배포에는 미게시 API가 없으며 1.1.0 안내를 유지할 수 있다. 이후 패키지 수정은 개발 미리보기/출시 전 상태를 분리한 뒤 공개한다.
+- Date/Popover의 1440/390px 실제 열기 4건에서 카드와 문서 높이 변화는 0px, 사용 가능한 팝업 높이와 viewport 경계 및 Escape 포커스를 확인했다(`inline-observations.json`). #4의 radio 설정, #19의 의미/소유 분리는 아직 남았다. 이것을 두 번호 전체 완료로 확대하지 않는다.
+- #3 Autocomplete/async Combobox, #13 ContextMenu, #17 Drawer, #20 Snackbar의 PC/390px 실제 조작 10건은 통과했다. #6 MultiSelect 2건은 별도 결함 재현이다(`host-cases-observations.json`, `host-*-open.png`). Drawer는 실제 `.sol-ui-dialog-heading`/`.sol-ui-dialog-actions` rect가 본문 스크롤 전후 같고, busyScope all 중 Escape 차단 후 완료 시 닫기/포커스 복귀를 확인했다.
+- 새로 공식 registry에서 설치한 독립 fixture에서도 같은 7종을 PC/390px에서 비교했다. MultiSelect만 일반 흐름 확장을 재현하고, 나머지는 카드 높이 불변이었다(`registry-host-observations.json`). 문서와 독립 fixture는 같은 1.1.0/테마/상위 viewport를 사용하지만 내부 앵커/컨테이너 크기는 다르다. Date의 기존 얇은 iframe 경계에 대한 정확한 동일 앵커 counterfactual 검증은 아직 남았으며 패키지 모든 경계가 정상이라고 단정하지 않는다.
+- 기존 violet/light 검사에 더해 sage/dark/compact, sand/light/comfortable, sand/dark/compact의 390px Date/Popover 6건이 통과했다. 여러 직접 캔버스의 document ID 중복도 검사했다(`inline-appearance-observations.json`). 경로 이탈 시 열린 팝업과 runtime 제거, 실제 모듈 503 시 접근 가능한 별도 예제 링크도 실제 Chrome에서 확인했다(`inline-lifecycle-browser.log`).
+- 타입·starter/문서 빌드·공개 allowlist·36개 canonical 예제 인벤토리·ARIA/브리지/guard 정리·Components 연결·65개 공개 샘플 포맷/구문 검사가 통과했다. JSDOM의 IntersectionObserver는 교차 지연 로드를 위한 스텁이며 Vue 픽셀 동작 통과의 근거가 아니다. 실제 Vue 검증은 위 Chrome 증거로 구분한다. guard cleanup 중 async 이탈 결과가 true로 돌아가던 신규 경합도 abort 확인으로 수정했고 기존 보수적 취소 검사를 유지했다.

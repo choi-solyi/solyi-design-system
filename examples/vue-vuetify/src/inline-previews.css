@@ -1,0 +1,13 @@
+/* Scope example layout to document canvases; the package owns component styling. */
+.sol-inline-runtime,.sol-inline-runtime>.v-application__wrap{display:contents;}
+.sol-inline-preview{display:block;min-width:0;min-height:0;background:transparent;color:var(--sol-color-text);}
+.sol-inline-preview .starter-card{margin:0;border:0;padding:var(--sol-space-3);background:transparent;}
+.sol-inline-preview .sol-surface-heading,.sol-inline-preview .starter-card>h4{font-size:var(--sol-text-lg);line-height:var(--sol-line-heading);margin:0;}
+.sol-inline-preview .starter-native-form{display:grid;gap:var(--sol-space-4);min-width:0;}
+.sol-inline-preview .starter-native-form>*{min-width:0;}
+.sol-inline-preview .starter-settings,.sol-inline-preview .starter-actions{display:flex;flex-wrap:wrap;gap:var(--sol-space-3);align-items:start;}
+.sol-inline-preview .starter-settings>.sol-field{flex:1 1 240px;}
+.sol-inline-preview .starter-demo-settings{padding-block:var(--sol-space-3);}
+.sol-inline-preview .starter-control-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sol-space-4);align-items:start;}
+.sol-inline-preview .starter-api-output pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:var(--sol-space-3);background:var(--sol-color-surface-alt);border-radius:var(--sol-radius-inset);font-size:var(--sol-text-xs);}
+@media(max-width:680px){.sol-inline-preview .starter-control-grid{grid-template-columns:minmax(0,1fr);}}

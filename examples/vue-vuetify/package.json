@@ -11,6 +11,7 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "prebuild": "node ../../scripts/starter-notices.mjs",
+    "postbuild": "node ../../scripts/build-inline-previews.mjs",
     "check:recipes": "vue-tsc -p tsconfig.recipes.json"
   },
   "dependencies": {

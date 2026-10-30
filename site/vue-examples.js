@@ -1,4 +1,5 @@
 import {vueRecipes} from './vue-recipes-data.js';
+import {mountInlinePreviews} from './inline-previews.js';
 
 const compositions = new Set([
   'navigation', 'identity-progress', 'chart-tree', 'inputs',
@@ -98,6 +99,8 @@ export function mountVueExamples(root, codeSample) {
 export function mountVuePreviews(root) {
   const controller=new AbortController(),{signal}=controller,origin=location.origin,frames=new Set();
   const pending=new Map();let requestId=0;
+  const inlineDefinitions=[];
+  const viewportExamples=new Set(['sautocomplete','scombobox','sdate-picker','stime-picker','smulti-select','scontext-menu','sdialog','spopover','ssnackbar','ssplit-btn']);
   const parts={
     inputs:[['date','단일 날짜와 기간','#extra-range-form'],['files','로컬 파일과 드롭','#extra-file-drop'],['autocomplete','자동완성 검색','#extra-autocomplete']],
     'advanced-inputs':[['textarea','Textarea','#advanced-note'],['number','숫자 증감','#advanced-number-form'],['multiselect','다중 선택과 태그','#advanced-tags']],
@@ -106,7 +109,7 @@ export function mountVuePreviews(root) {
   };
   const appearance=()=>({theme:document.documentElement.dataset.theme,mode:document.documentElement.dataset.mode,density:document.documentElement.dataset.density,motionPolicy:document.documentElement.dataset.motionPolicy});
   const sync=frame=>frame.contentWindow?.postMessage({type:'solyi:appearance',appearance:appearance()},origin);
-  function canvas(section,id,part,label,view='recipes'){
+  function canvas(section,id,part,label,view='recipes',inline=false){
     const box=document.createElement('div');box.className='vue-live-part';
     const heading=part?section.querySelector('#'+part):null;
     if(heading?.classList.contains('document-alias-heading'))box.append(heading);
@@ -114,13 +117,17 @@ export function mountVuePreviews(root) {
     url.searchParams.set('view',view);url.searchParams.set('example',id);url.searchParams.set('embed','1');
     if(part)url.searchParams.set('part',part);
     for(const [key,value] of Object.entries(appearance()))if(value)url.searchParams.set(key,value);
+    if(inline){
+      const host=document.createElement('div');host.className='inline-preview-canvas';host.dataset.recipe=id;if(part)host.dataset.part=part;
+      inlineDefinitions.push({host,recipe:id,part,view,label,fallback:url.pathname+url.search});box.append(host);return box;
+    }
     frame.src=url.pathname+url.search;frame.className='vue-recipe-frame';frame.title=label+' · 실제 패키지 예제';frame.loading='lazy';frame.height='320';frame.dataset.recipe=id;if(part)frame.dataset.part=part;frame.setAttribute('aria-busy','true');
     frame.addEventListener('load',()=>sync(frame),{signal});frames.add(frame);box.append(frame);
     return box;
   }
   for(const host of root.querySelectorAll('[data-component-example]')){
     const label=host.closest('.component-reference').querySelector('h3').textContent;
-    host.append(canvas(host,host.dataset.componentExample,host.dataset.previewPart,label,host.dataset.previewView));
+    host.append(canvas(host,host.dataset.componentExample,host.dataset.previewPart,label,host.dataset.previewView,viewportExamples.has(host.closest('.component-reference').id)));
   }
   for(const section of root.querySelectorAll('section.section')){
     const id=section.id,recipe=vueRecipes[id];if(!recipe)continue;
@@ -142,6 +149,7 @@ export function mountVuePreviews(root) {
     }
     for(const heading of aliases)if(!heading.isConnected)first.prepend(heading);
   }
+  const inlinePreviews=mountInlinePreviews(inlineDefinitions,appearance);
   window.addEventListener('message',event=>{
     if(event.origin!==origin)return;const frame=[...frames].find(item=>item.contentWindow===event.source);if(!frame)return;
     const request=pending.get(event.data?.id);
@@ -154,9 +162,10 @@ export function mountVuePreviews(root) {
       const height=Math.max(128,Math.min(6000,Math.ceil(event.data.height)));if(frame.height!==String(height))frame.height=String(height);
     }
   },{signal});
-  const observer=new MutationObserver(()=>frames.forEach(sync));observer.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-mode','data-density','data-motion-policy']});frames.forEach(sync);
-  const cleanup=()=>{controller.abort();observer.disconnect();frames.clear();for(const item of pending.values()){clearTimeout(item.timer);item.resolve(false);}pending.clear();};
+  const observer=new MutationObserver(()=>{frames.forEach(sync);inlinePreviews.sync();});observer.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-mode','data-density','data-motion-policy']});frames.forEach(sync);
+  const cleanup=()=>{controller.abort();observer.disconnect();inlinePreviews.dispose();frames.clear();for(const item of pending.values()){clearTimeout(item.timer);item.resolve(false);}pending.clear();};
   cleanup.requestLeave=async()=>{
+    if(signal.aborted||!await inlinePreviews.requestLeave()||signal.aborted)return false;
     for(const frame of frames){if(frame.dataset.recipe!=='workflow'||frame.hasAttribute('aria-busy'))continue;
       const id='leave-'+Date.now()+'-'+(++requestId);
       const allowed=await new Promise(resolve=>{const timer=setTimeout(()=>{pending.delete(id);resolve(false);},2000);pending.set(id,{frame,resolve,timer});frame.contentWindow?.postMessage({type:'solyi:recipe-leave',id},origin);});

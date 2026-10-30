@@ -55,6 +55,9 @@ if (catalogue.current) {
   }, null, 2) + '\n')
 }
 await mkdir(path.join(out,'starter'),{recursive:true});
-for(const name of starterFiles)await copyFile(path.join(root,'examples/vue-vuetify/dist',name),path.join(out,'starter',name));
+for(const name of starterFiles){
+  await mkdir(path.dirname(path.join(out,'starter',name)),{recursive:true});
+  await copyFile(path.join(root,'examples/vue-vuetify/dist',name),path.join(out,'starter',name));
+}
 await writeFile(path.join(out, '.nojekyll'), '');
 console.log('Built docs/ from the allowlisted site files and shared tokens.json.');
