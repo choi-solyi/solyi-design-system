@@ -70,10 +70,17 @@
 
 아직 완료 판정 없음. 공통 원인을 재현한 뒤 원문 외 발견은 요구 번호와 섞지 않고 근거를 적는다.
 
+- A1: 기존 Combobox 예제는 정본 registry에 있지만 starter 탐색 메뉴에는 없었다. `RecipeExamples.vue` 입력 그룹에 연결하고 `recipe-navigation-check.mjs`에서 registry의 모든 예제가 정확히 한 개의 메뉴 링크를 갖는지 비교한다. 예전 고정 개수 30은 이 누락을 감추고 있었다. 이는 새 기능 제안이 아니라 기존 공개 예제의 탐색 누락 수정이다.
+- R1(개발 중 발견·공개 배포 전 수정): Chip 예제 분리 때 원래의 nextTick 후 결과 포커스 복원을 누락했다. `recipes/chip.vue`에 안정적인 결과 ref와 포커스 복원을 복구하고, ConfirmAction의 확정 후 비활성화에도 같은 원칙을 적용했다. 설치본 runtime의 실제 activeElement 및 Chrome의 Enter 제거 후 결과 포커스가 양 폭에서 통과했다. 상태 문구만 바뀌는 검사를 키보드 검증으로 대신하지 않는다.
+
 초기 실행 근거: `qa-output/improvements-30/initial-observations.json`, `initial-document-*.png`, `initial-package-*.png`. 독립 fixture는 공식 registry에서 solyi-ui 1.1.0 / Vue 3.5.44 / Vuetify 4.3.0을 새로 설치했다. 모듈 junction 생성은 OS 접근 거부로 실행되지 않았고 재시도하지 않았다. 정상 npm 설치로 별도 fixture를 구성했으며 기존 소비 앱·기존 설치본을 수정하지 않았다. Autocomplete는 첫 probe의 focus만으로 패널이 열리지 않아 이 probe를 재현 완료로 보지 않는다. 검색 입력까지 수행하는 추가 확인이 필요하다.
 
 1·2번 로컬 검증 근거: `example-types.log`, `example-final-build.log`, `example-docs-build.log`, `example-observations.json`, `example-*-390.png`, `example-*-1100.png` (위 QA 폴더). 실제 npm 1.1.0 API만 사용하며 패키지 소스·배포 tarball·릴리즈 목록은 변경하지 않았다. 이 첫 문서 수정 배포에는 미게시 API가 없다. 새 패키지 기능은 안정판 1.1.0 예제에 섞지 않는다.
 
 첫 CI `40997142825`는 배포 전에 중단됐다. 원인은 실제 예제가 36개가 되었는데 `vue-recipes-runtime-check.mjs`가 31개를 고정 비교한 것이다. 원래 31개 전체와 새 5개의 정확한 등록 목록을 검사하고 새 확인/칩/아이콘 저장 동작도 추가 검증하도록 보완했다. 수정 후 로컬 installed runtime은 36개 mount·ARIA/ID와 기존 동작·새 동작 모두 통과했다(`example-runtime-fixed.log`). 첫 CI의 실패를 공개 반영 완료로 표시하지 않는다.
+
+후속 CI `40998452160`은 탐색 메뉴 고정 개수 30에서 중단됐다. 메뉴에 실제 Combobox 누락도 있었으므로 숫자를 36으로 바꾸는 대신 정본 registry의 모든 예제와 실제 메뉴 href 목록을 정확히 대조하고 중복 ID도 검사한다. 실제 탐색 runtime(`navigation-inventory.log`)과 390px Chrome의 메뉴 펼침→Combobox Enter 이동→제목 포커스(`menu-browser.json`, `combobox-menu-390.png`)가 통과했다.
+
+독립 검토 후 여섯 예제 각각에 다른 다섯 주 컨트롤의 재혼입을 막는 negative assertion을 추가했다. ConfirmAction의 Escape/blur는 설치본 실제 예제 runtime에서, Escape/Tab blur/기본 timeout은 실제 Chrome에서 실행했다. 기본 timeout 확인은 한 폭에서만 반복하여 불필요한 대기를 줄였다. 근거는 `example-keyboard-browser.log` 및 `example-browser.mjs`, `example-runtime-fixed.log`다. 1·2번은 이 보완과 최종 공개 검증 전까지 전체 완료로 표시하지 않는다.
 
 요구/인수 기준 Page: https://chatgpt.com/space/page_860e6bc2fbac8191a9cf334134dde5fe . 부모가 확인 결과를 대조해 갱신한다. 현재 30건 모두 미완료이며 이 문서의 초기 재현 결과를 전체 완료로 해석하지 않는다.

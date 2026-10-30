@@ -16,6 +16,7 @@ const groups: { label: string; items: RecipeId[] }[] = [
       'selection',
       'advanced-inputs',
       'inputs',
+      'combobox',
       'time',
       'form',
       'composition',

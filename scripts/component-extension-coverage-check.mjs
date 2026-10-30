@@ -55,6 +55,7 @@ const registry=await readFile(new URL('../packages/vue-ui/src/index.ts',import.m
 const ownedExamples=['SBtn','SConfirmAction','SChip','SBadge','SIcon','SIconBtn'].map(name=>componentReferences.find(item=>item.name===name))
 assert.equal(new Set(ownedExamples.map(item=>item.example)).size,6,'Each display/action component owns a distinct example and Sample Code source')
 for(const item of ownedExamples)assert.match(componentExampleSources[item.example],new RegExp('<'+item.name+'(?:\\s|>)'),'The owned example renders its actual public component')
+for(const item of ownedExamples)for(const other of ownedExamples.filter(other=>other.name!==item.name))assert.doesNotMatch(componentExampleSources[item.example],new RegExp('<'+other.name+'(?:\\s|>)'),item.name+' must not include the unrelated '+other.name+' demo')
 assert.ok(!componentExampleSources.buttons.includes('<SBadge'),'A shared notification badge must not reappear in every Button example')
 console.log('PASS: '+report.length+' new/extended Components menu/search/routes, 3 panels, API additions, real consumer source/links; generic slots/methods match declarations and excluded scheduler is absent.')
 for(const item of report)console.log(item.name+' → #component/'+item.id+' → '+item.link)

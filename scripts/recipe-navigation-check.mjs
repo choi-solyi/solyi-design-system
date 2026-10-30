@@ -16,7 +16,7 @@ const {build}=await import(new URL('node_modules/vite/dist/node/index.js',consum
 const {default:vue}=await import(new URL('node_modules/@vitejs/plugin-vue/dist/index.mjs',consumer));
 const {createVueAutoImport}=await import(new URL('auto-import.config.js',consumer));
 const entry=new URL('.runtime-test/recipe-nav-entry.js',consumer);await mkdir(new URL('./',entry),{recursive:true});
-await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';export * from 'solyi-ui';export {default as RecipeExamples} from '../src/RecipeExamples.vue';`);
+await writeFile(entry,`export {createApp,h,ref,nextTick} from 'vue';export * from 'solyi-ui';export {recipeComponents} from '../src/recipe-registry.ts';export {default as RecipeExamples} from '../src/RecipeExamples.vue';`);
 const built=await build({root:fileURLToPath(consumer),configFile:false,plugins:[vue(),createVueAutoImport({generate:false})],resolve:{dedupe:['vue','vuetify','@solyi/core','solyi-ui'],alias:source?[{find:/^solyi-ui$/,replacement:fileURLToPath(new URL('packages/vue-ui/src/index.ts',root))}]:[]},logLevel:'error',build:{lib:{entry:fileURLToPath(entry),formats:['es']},write:false,minify:false,rolldownOptions:{external:['vue']}}});
 const chunks=(Array.isArray(built)?built:[built]).flatMap(r=>r.output).filter(x=>x.type==='chunk'),out=new URL('.runtime-test/recipe-nav-bundle/',consumer);await mkdir(out,{recursive:true});for(const chunk of chunks){assert.ok(!chunk.fileName.includes('..'));await mkdir(new URL('./',new URL(chunk.fileName,out)),{recursive:true});await writeFile(new URL(chunk.fileName,out),chunk.code);}
 const api=await import(new URL(chunks.find(c=>c.isEntry).fileName+'?progress='+Date.now(),out));
@@ -45,7 +45,10 @@ async function navigationTo(id) {
   }))
 }
 w.history.replaceState(null,'','/starter/?view=recipes&example=time&keep=1#anchor');await mount();
-assert.equal(d.querySelectorAll('#recipe-navigation a').length,30);assert.equal(new Set([...d.querySelectorAll('#recipe-navigation a')].map(e=>e.id)).size,30);assert.equal(d.querySelectorAll('.recipe-nav-group').length,5);
+const navigationLinks=[...d.querySelectorAll('#recipe-navigation a')];
+const registeredRecipes=Object.keys(api.recipeComponents).sort();
+assert.deepEqual(navigationLinks.map(link=>new URL(link.href).searchParams.get('example')).sort(),registeredRecipes,'Every actual recipe has exactly one discoverable menu entry, including Combobox');
+assert.equal(new Set(navigationLinks.map(link=>link.id)).size,registeredRecipes.length,'Menu IDs are unique');assert.equal(d.querySelectorAll('.recipe-nav-group').length,5);
 assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-time');assert.equal($('#recipe-current-title').textContent,'시간 선택');assert.equal(d.querySelector('#recipe-menu-toggle'),null);assert.notEqual($('#recipe-navigation').style.display,'none');
 $('#recipe-link-buttons').click();await navigationTo('buttons');assert.equal(new URL(w.location.href).searchParams.get('example'),'buttons');assert.equal(new URL(w.location.href).searchParams.get('keep'),'1');assert.equal(w.location.hash,'#anchor');assert.equal(d.activeElement.id,'recipe-current-title');
 const length=w.history.length;$('#recipe-link-buttons').click();await tick();assert.equal(w.history.length,length,'Selecting the current example does not add history');
@@ -60,6 +63,7 @@ $('#recipe-link-dialog').click();await navigationTo('dialog');assert.equal($('#r
 $('#recipe-menu-toggle').focus();resize(true);await tick();assert.equal(d.activeElement.id,'recipe-link-dialog');resize(false);await tick();assert.notEqual($('#recipe-navigation').style.display,'none','A breakpoint cannot hide the focused item');assert.equal(d.activeElement.id,'recipe-link-dialog');
 const outside=d.createElement('button');outside.textContent='Outside';d.body.append(outside);outside.focus();await tick();assert.equal($('#recipe-navigation').style.display,'none');assert.equal(d.activeElement,outside);outside.remove();
 unmount();assert.equal(query.listeners.size,0);w.history.replaceState(null,'','/starter/?view=recipes&example=unknown&keep=1');await mount();assert.equal(new URL(w.location.href).searchParams.get('example'),'buttons');assert.equal(new URL(w.location.href).searchParams.get('keep'),'1');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-buttons');unmount();
-assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: actual recipe explorer, all30 unique grouped links, direct/invalid URL, preserved query/hash, same-item history, back/forward, current title/selection, narrow disclosure/Escape/outside focus, breakpoint focus preservation and cleanup. Real layout is checked separately.');
+w.history.replaceState(null,'','/starter/?view=recipes&example=buttons');await mount();if(d.querySelector('#recipe-menu-toggle')){$('#recipe-menu-toggle').click();await tick();}$('#recipe-link-combobox').click();await navigationTo('combobox');assert.equal($('#recipe-navigation [aria-current=page]').id,'recipe-link-combobox');unmount();
+assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: actual recipe explorer, all '+registeredRecipes.length+' canonical recipes have unique grouped links, Combobox navigation, direct/invalid URL, preserved query/hash, same-item history, back/forward, current title/selection, narrow disclosure/Escape/outside focus, breakpoint focus preservation and cleanup. Real layout is checked separately.');
 
 const adapter=await readFile(new URL('src/adapter.css',consumer),'utf8');assert.match(adapter,/\.starter-main>header,\.recipe-explorer>header/,'Only page headers receive the adapter margin');assert.doesNotMatch(adapter,/\.starter-main\s+header:not/,'Page layout must not override a package popover header');

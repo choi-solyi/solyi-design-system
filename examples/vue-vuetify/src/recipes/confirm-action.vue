@@ -4,6 +4,12 @@ import { useSolLocale } from 'solyi-ui'
 const locale = useSolLocale()
 const removed = ref(false)
 const english = computed(() => locale.value.code === 'en-US')
+const removalResult = ref<HTMLElement | null>(null)
+async function removeDraft() {
+  removed.value = true
+  await nextTick()
+  removalResult.value?.focus()
+}
 </script>
 <template>
   <SCard :heading-level="2" :title="english ? 'Confirm before removing' : '두 번 눌러 제거 확인'">
@@ -20,7 +26,7 @@ const english = computed(() => locale.value.code === 'en-US')
         :confirm-label="english ? 'Press again to remove' : '한 번 더 눌러 제거'"
         tone="danger"
         :disabled="removed"
-        @confirm="removed = true"
+        @confirm="removeDraft"
       />
       <SConfirmAction
         :label="english ? 'Disabled action' : '비활성 동작'"
@@ -28,7 +34,7 @@ const english = computed(() => locale.value.code === 'en-US')
         disabled
       />
     </div>
-    <p role="status">
+    <p id="recipe-confirm-action-result" ref="removalResult" role="status" tabindex="-1">
       {{
         removed
           ? english

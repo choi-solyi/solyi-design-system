@@ -5,6 +5,12 @@ const locale = useSolLocale()
 const selected = ref(false),
   removed = ref(false)
 const english = computed(() => locale.value.code === 'en-US')
+const removalResult = ref<HTMLElement | null>(null)
+async function removeChip() {
+  removed.value = true
+  await nextTick()
+  removalResult.value?.focus()
+}
 </script>
 <template>
   <SCard :heading-level="2" :title="english ? 'Chip labels and selection' : '칩 표시·선택·제거'">
@@ -20,11 +26,11 @@ const english = computed(() => locale.value.code === 'en-US')
         v-if="!removed"
         removable
         :label="english ? 'Remove this label' : '이 라벨 제거'"
-        @remove="removed = true"
+        @remove="removeChip"
       />
       <SChip disabled selectable :label="english ? 'Disabled selection' : '비활성 선택'" />
     </div>
-    <p role="status">
+    <p id="recipe-chip-result" ref="removalResult" role="status" tabindex="-1">
       {{ english ? 'Review selected: ' : '검토 선택: '
       }}{{ selected ? (english ? 'yes' : '선택됨') : english ? 'no' : '선택 안 됨' }} ·
       {{
