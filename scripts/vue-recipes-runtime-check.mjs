@@ -29,7 +29,21 @@ async function mount(id,props={}){app=createApp(recipeComponents[id],props);app.
 async function unmount(){app.unmount();vuetify.unmount();await tick();}
 function checkRefs(){for(const el of d.querySelectorAll('[aria-labelledby],[aria-describedby]'))for(const attr of ['aria-labelledby','aria-describedby'])for(const id of (el.getAttribute(attr)||'').split(/\s+/).filter(Boolean))assert.ok(d.getElementById(id),'Missing '+id);}
 for(const id of Object.keys(recipeComponents)){await mount(id);checkRefs();assert.ok($('#app').textContent.trim(),id);const ids=[...d.querySelectorAll('[id]')].map(x=>x.id);assert.equal(ids.length,new Set(ids).size,id+' duplicate IDs');await unmount();}
-assert.equal(Object.keys(recipeComponents).length,31);
+const originalRecipes=['color-examples','writing','buttons','fields','choices','feedback','dialog','selection','help','accordion','navigation','advanced-inputs','content-tabs','action-menu','identity-progress','progress','time','chart-tree','form','search','compare','empty','data','inputs','responses','composition','layouts','workflow','error-summary','bulk-recovery','combobox'];
+const ownedDisplayRecipes=['confirm-action','chip','badge','icon','icon-button'];
+assert.deepEqual(Object.keys(recipeComponents).sort(),[...originalRecipes,...ownedDisplayRecipes].sort(),'Preserve every original recipe and register every newly separated example');
+await mount('confirm-action');
+const draftAction=[...d.querySelectorAll('button')].find(button=>button.textContent.trim()==='초안 제거');
+assert.ok(draftAction);draftAction.click();await tick();assert.match($('#app').textContent,/초안이 남아 있습니다/);
+const confirmDraft=[...d.querySelectorAll('button')].find(button=>button.textContent.trim()==='한 번 더 눌러 제거');
+assert.ok(confirmDraft);confirmDraft.click();await tick();assert.match($('#app').textContent,/가상 초안을 제거했습니다/);assert.equal(draftAction.disabled,true);await unmount();
+await mount('chip');
+const selectableChip=[...d.querySelectorAll('button')].find(button=>button.textContent.trim()==='검토 선택');
+assert.ok(selectableChip);selectableChip.click();await tick();assert.equal(selectableChip.getAttribute('aria-pressed'),'true');
+const removeChip=[...d.querySelectorAll('button')].find(button=>button.getAttribute('aria-label')?.includes('이 라벨 제거'));
+assert.ok(removeChip);removeChip.click();await tick();assert.match($('#app').textContent,/라벨 제거됨/);await unmount();
+await mount('icon-button');
+const iconSave=$('button[aria-label="예제 저장"]');iconSave.click();await tick();assert.match($('#app').textContent,/저장 중/);await wait(750);await tick();assert.match($('#app').textContent,/가상 저장을 완료했습니다/);assert.equal($('button[aria-label="삭제 (사용 불가)"]').disabled,true);await unmount();
 await mount('form');
 const formName=$('#recipe-form-name');$('form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(15);await tick();
 assert.equal(formName.getAttribute('aria-invalid'),'true','SForm validates the real STextField rules');assert.equal(d.activeElement,formName,'SForm failure focuses the exposed field ref');
@@ -87,4 +101,4 @@ assert.equal(dateInput.value, '')
 assert.equal(dateInput.placeholder, 'YYYY-MM-DD')
 await unmount()
 for(const part of ['date','files','autocomplete']){await mount('inputs',{part});assert.equal(d.querySelectorAll('h2').length,1,'Standalone part keeps heading level2: '+part);assert.equal(d.querySelectorAll('h3').length,0);await unmount();}
-assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: all 31 actual package-consuming Vue SFCs mount, ARIA references and IDs; tree keyboard/collapse/selection, whole-card radio, synthetic local file select/drop/reselect/remove, autocomplete edit/retry/selection, workflow and bulk focus. Synthetic DOM is not visual or native keyboard QA.');
+assert.deepEqual(warnings,[]);assert.deepEqual(errors,[]);dom.window.close();console.log('PASS: all '+Object.keys(recipeComponents).length+' actual package-consuming Vue SFCs mount, original plus owned-example registry, ARIA references and IDs; confirm twice, chip select/remove, icon save/disabled, tree keyboard/collapse/selection, whole-card radio, synthetic local file select/drop/reselect/remove, autocomplete edit/retry/selection, workflow and bulk focus. Synthetic DOM is not visual or native keyboard QA.');

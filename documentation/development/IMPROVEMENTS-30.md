@@ -74,4 +74,6 @@
 
 1·2번 로컬 검증 근거: `example-types.log`, `example-final-build.log`, `example-docs-build.log`, `example-observations.json`, `example-*-390.png`, `example-*-1100.png` (위 QA 폴더). 실제 npm 1.1.0 API만 사용하며 패키지 소스·배포 tarball·릴리즈 목록은 변경하지 않았다. 이 첫 문서 수정 배포에는 미게시 API가 없다. 새 패키지 기능은 안정판 1.1.0 예제에 섞지 않는다.
 
+첫 CI `40997142825`는 배포 전에 중단됐다. 원인은 실제 예제가 36개가 되었는데 `vue-recipes-runtime-check.mjs`가 31개를 고정 비교한 것이다. 원래 31개 전체와 새 5개의 정확한 등록 목록을 검사하고 새 확인/칩/아이콘 저장 동작도 추가 검증하도록 보완했다. 수정 후 로컬 installed runtime은 36개 mount·ARIA/ID와 기존 동작·새 동작 모두 통과했다(`example-runtime-fixed.log`). 첫 CI의 실패를 공개 반영 완료로 표시하지 않는다.
+
 요구/인수 기준 Page: https://chatgpt.com/space/page_860e6bc2fbac8191a9cf334134dde5fe . 부모가 확인 결과를 대조해 갱신한다. 현재 30건 모두 미완료이며 이 문서의 초기 재현 결과를 전체 완료로 해석하지 않는다.
