@@ -10,6 +10,7 @@ import type {
 } from 'solyi-ui'
 
 defineProps<{ part?: string }>()
+const imagePreview = ref(true)
 const mode = ref<string | null>('range'),
   date = ref<DateValue>(null)
 const dateMode = computed(() => (mode.value === 'single' ? 'single' : 'range'))
@@ -138,14 +139,20 @@ const loader = computed<SolOptionLoader | undefined>(() => {
       v-if="!part || part === 'files'"
       title="로컬 파일 선택과 드롭"
     >
+      <SCheckbox
+        id="recipe-files-preview"
+        v-model="imagePreview"
+        label="선택한 이미지의 로컬 미리보기"
+      />
       <SFileInput
+        :preview="imagePreview"
         id="recipe-files"
         v-model="files"
         label="가상 첨부 파일"
         accept=".txt,.png,.jpg,.jpeg,.pdf"
         :max-files="3"
         :max-file-size="2 * 1024 * 1024"
-        help="파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다."
+        help="선택한 이미지는 이 화면에서만 로컬 썸네일로 표시합니다. 파일을 외부로 보내지 않으며 제거하거나 화면을 닫으면 미리보기 URL을 해제합니다."
       />
     </SCard>
     <SCard

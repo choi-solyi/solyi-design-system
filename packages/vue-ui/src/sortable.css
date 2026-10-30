@@ -8,5 +8,12 @@
 .sol-ui-sortable-moves {display:flex;gap:var(--sol-space-1);}
 .sol-ui-sortable-status {display:block;min-block-size:1lh;}
 .sol-ui-sortable-handle {touch-action:none;user-select:none;cursor:grab;}
+.sol-ui-sortable .sol-ui-sortable-handle {border-color:transparent;background:transparent;}
+.sol-ui-sortable-row[data-controls=hidden] {grid-template-columns:minmax(0,1fr);}
+.sol-ui-sortable-row[data-controls=hidden]>.sol-ui-sortable-handle,.sol-ui-sortable-row[data-controls=hidden]>.sol-ui-sortable-moves {display:none;}
+.sol-ui-sortable-move {transition:transform var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}
+.sol-ui-sortable-ghost {position:fixed;inset:auto;margin:0;pointer-events:none;box-sizing:border-box;z-index:var(--sol-layer-floating);padding:var(--sol-space-3);border:1px solid var(--sol-color-accent);border-radius:var(--sol-radius-control);box-shadow:var(--sol-elevation-floating);background:var(--sol-color-selected-surface);color:var(--sol-color-selected-text);font-family:var(--sol-font-sans);overflow-wrap:anywhere;}
+@media(prefers-reduced-motion:reduce){.sol-ui-sortable-move {transition:none;}}
+[data-motion-policy=reduced] .sol-ui-sortable-move {transition:none;}
 .sol-ui-sortable-handle[aria-pressed=true] {cursor:grabbing;}
 .sol-ui-sortable-handle:disabled {touch-action:pan-y;cursor:default;}

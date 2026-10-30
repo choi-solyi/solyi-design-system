@@ -43,11 +43,11 @@
 | 23 | Card 링크가 iframe 안에서 starter를 여는 동작 | 예제 링크 target 없음 | 문서 | 새 탭임을 표시하고 _blank/noopener 지정 | 실제 popup URL·opener null·부모 URL 유지 확인 | 개발 완료·최종 통합 전 |
 | 24 | Container/Row/Column을 Style 레이아웃으로 이동 | Components 메뉴/카드에 배치 도구 혼합 | 문서 | Style 안내/API·검색·메뉴 이전, 세 export와 구 component/code/api 링크 유지 | PC/390 실제 구 링크→Style/API/Sample Code·hash 확인, 계약 검사·이동 후 DOM 회귀 보완 | 개발 완료·최종 통합 전 |
 | 25 | Table loading/error 정렬 헤더 배경·테두리 안정 | SBtn disabled 공통 스타일이 헤더 sort에 적용 | 패키지 CSS | Table sort disabled에만 투명 배경/테두리 유지·native disabled/접근성 보존 | 설치본 3테마 PC/390/RTL normal/loading/error 실제 computed 배경/테두리/높이 및 disabled 확인 | 개발 완료·최종 통합 전 |
-| 26 | Calendar 월 제목·일요일색·날짜 상단정렬·+N/항목/ⓘ 실제 접근, 테마색·인접 이전다음·연도선택 | 미재현 | 판별 중 | 미착수 | 미실행 | ISO/marker·overflow·키보드 |
-| 27 | Sortable 무테 손잡이·이동 모션, disabled/readonly 조작 숨김 | 부모 픽셀 관찰 | 판별 중 | 미착수 | 미실행 | drag/화살표/취소·reduced-motion |
-| 28 | TimeGrid 위치 흔들림 제거·설명 정리·실제 생성/삭제/drag 이동/양끝 resize/복제·현재시각선 갱신 | 미재현 | 패키지/소비 예제 판별 | 미착수 | 미실행 | controlled 제안·저장 없음·실제 조작 |
-| 29 | FileInput 이미지 파일 미리보기 | 미재현 | 패키지/소비 예제 판별 | 미착수 | 미실행 | 타입·취소·객체 URL 해제 |
-| 30 | 실제 연결 버튼·토글/그룹 기능 | 미재현 | 기존 Segmented/API 비교 | 미착수 | 미실행 | 선택 모델·키보드·폼 의미 |
+| 26 | Calendar 제목·일요일·날짜 상단·전체 항목·아이콘 의미·색·인접 화살표·연도 이동 | 기존 작은 제목/중앙 정렬/상세 발견성 부족 | 패키지+예제 | 토큰 toolbar/큰 제목/일요일 danger·날짜 top·전체 상세 focus·year controlled 입력, 예제 ⓘ 제거 | 설치본 3테마 PC/390/RTL year 수락·거절/ISO 보존/마커3개·focus 확인, source 계약 통과 | 마지막 Enter 폼 제출 방지 보완과 최종 1.1.1 재검증 전 |
+| 27 | Sortable bare grip·가시적 이동·disabled/readonly 조작 숨김 | 테두리 버튼·순간 재정렬·회색 조작 | 패키지 | 투명 손잡이·이동 전환·드래그 label ghost·숨김·focus 복귀 | 설치본 실제 CSSTransition·배열 불변/순서·포커스·ghost/commit·숨김, source invalid/empty 포함 회귀 통과 | 마지막 숨김 focus 보완·touch/reduce 및 최종 후보 확인 전 |
+| 28 | TimeGrid 위치 안정·CRUD·직접 drag/edge resize·duplicate·live clock·제어/잠금 의미 | 도움말/로딩 추가로 grid top 변동·손잡이 발견성 부족·생성/삭제/clock 부재 | 패키지+예제 | 아래 상태/키 안내·body drag·짧은 edge resize·opt-in create/remove 요청·현재 분 시각선·실제 부모 수락/거절 | 설치본 3테마 PC/390/RTL CRUD/drag/짧은 resize/duplicate/취소/수락거절/disabled/item lock/keyboard Delete·60초 clock DOM 갱신, CDP 실제 touch move/cancel 통과 | 최종 1.1.1 산출물·전체 회귀 전 |
+| 29 | FileInput 이미지 미리보기 | 메타데이터만 제공 | 패키지+예제 | preview 기본 true·image MIME 로컬 URL·실패/제거/옵션 해제/unmount 정리 | 설치본 PNG decode·숨김/재표시·실패 fallback·전 URL revoke 확인, 3테마/390/RTL | 최종 1.1.1 타입/SSR/전체 회귀 전 |
+| 30 | 연결 명령 버튼/선택 토글 | 단일 선택 SegmentedControl 기존 제공·명령 그룹 부재 | 신규 SBtnGroup+기존 재사용 | label/orientation/default slot·자식별 상태/행동, 선택은 기존 SegmentedControl | 실제 명령/복원 focus·가로/세로·native radio 방향키·모바일/RTL 통과, type/global/export 등록 | 세로 전환 radius 애니메이션 제거 보완과 최종 후보 등록/타입/SSR 확인 전 |
 
 ## 진행 순서와 완료 경계
 

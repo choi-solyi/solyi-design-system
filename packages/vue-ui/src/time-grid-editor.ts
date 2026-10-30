@@ -312,7 +312,20 @@ export function useTimeGridEditor(
     document.removeEventListener('pointerdown', outside, true)
     window.removeEventListener('blur', blur)
   })
-  function handles(item: TimeGridEntry<unknown>, minutes: number): VNode[] {
+  function pointerProps(item: TimeGridEntry<unknown>) {
+    return {
+      'data-draggable': !blocked(item.key, 'move') ? 'true' : undefined,
+      onPointerdown: (event: PointerEvent) => {
+        if (blocked(item.key, 'move') || (event.target as Element).closest('button,a,input,textarea,select,[contenteditable]')) return
+        operation.cancel('configuration', false)
+        pointer.down(event, item.key, 'move')
+      },
+      onLostpointercapture: pointer.lost,
+      onDragstart: (event: DragEvent) => event.preventDefault(),
+      onClick: (event: MouseEvent) => { pointer.consumeClick(event, item.key) },
+    }
+  }
+  function handles(item: TimeGridEntry<unknown>, _minutes: number): VNode[] {
     if (p.readonly) return []
     const button = (action: TimeGridAction, icon: 'grip' | 'chevron', rotate: 0 | 180 = 0) =>
       h(
@@ -340,8 +353,7 @@ export function useTimeGridEditor(
         [h(SIcon, { name: icon, size: 16, rotate, decorative: true })],
       )
     return [
-      ...(p.allowMove ? [button('move', 'grip')] : []),
-      ...(p.allowResize && minutes >= 90
+      ...(p.allowResize
         ? [button('resize-start', 'chevron', 180), button('resize-end', 'chevron')]
         : []),
     ]
@@ -513,6 +525,7 @@ export function useTimeGridEditor(
     blocked,
     pending,
     handles,
+    pointerProps,
     agendaActions,
     renderToolbar,
     preview,

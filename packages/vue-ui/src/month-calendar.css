@@ -1,6 +1,10 @@
 .sol-ui-month-calendar {min-inline-size:0;}
-.sol-ui-month-toolbar {display:flex;align-items:center;gap:var(--sol-space-2);flex-wrap:wrap;}
-.sol-ui-month-toolbar h3 {flex:1;min-inline-size:0;margin:0;text-align:center;font-size:var(--sol-text-md);overflow-wrap:anywhere;}
+.sol-ui-month-toolbar {display:flex;align-items:center;gap:var(--sol-space-2);flex-wrap:wrap;padding:var(--sol-space-3);background:var(--sol-color-accent-soft);border-radius:var(--sol-radius-control);}
+.sol-ui-month-toolbar h3 {flex:1;min-inline-size:0;margin:0;text-align:start;font-size:var(--sol-text-xl);color:var(--sol-color-accent);overflow-wrap:anywhere;}
+.sol-ui-month-navigation {display:flex;gap:var(--sol-space-1);}
+.sol-ui-month-navigation>.sol-button {inline-size:var(--sol-control-height);padding:0;}
+.sol-ui-month-year {display:flex;align-items:center;gap:var(--sol-space-1);}
+.sol-ui-month-year .sol-input {inline-size:calc(var(--sol-control-height) * 2.5);padding-inline:var(--sol-space-2);}
 .sol-ui-month-toolbar>.sol-button {min-inline-size:var(--sol-control-height);min-block-size:var(--sol-control-height);}
 .sol-ui-month-table {table-layout:fixed;border-collapse:separate;border-spacing:var(--sol-space-1);inline-size:100%;margin-block:var(--sol-space-2);}
 .sol-ui-month-table th,.sol-ui-month-table td {padding:0;vertical-align:top;min-inline-size:0;}
@@ -8,7 +12,9 @@
 .sol-ui-month-table abbr {text-decoration:none;}
 .sol-ui-month-cell {min-block-size:calc(var(--sol-text-sm) * var(--sol-line-body) + var(--sol-text-xs) * var(--sol-line-body) * 3 + var(--sol-space-4) * 3);min-inline-size:0;overflow-wrap:anywhere;}
 .sol-ui-month-day.sol-button {display:flex;flex-direction:column;align-items:stretch;gap:var(--sol-space-1);white-space:normal;inline-size:100%;min-inline-size:0;min-block-size:calc(var(--sol-text-sm) * var(--sol-line-body) + var(--sol-text-xs) * var(--sol-line-body) * 3 + var(--sol-space-4) * 3);padding:var(--sol-space-1);font-variant-numeric:tabular-nums;box-sizing:border-box;}
-.sol-ui-month-number {display:block;text-align:center;}
+.sol-ui-month-day.sol-button {justify-content:flex-start;background:var(--sol-color-surface-alt);}
+.sol-ui-month-number {display:block;text-align:start;font-weight:600;}
+.sol-ui-month-table th[data-sunday=true],.sol-ui-month-day[data-sunday=true]:not([aria-pressed=true]) .sol-ui-month-number {color:var(--sol-color-danger);}
 .sol-ui-month-day[data-today=true] .sol-ui-month-number {text-decoration:underline;text-decoration-thickness:var(--sol-focus-width);text-underline-offset:var(--sol-space-1);}
 .sol-ui-month-day[aria-pressed=true] {background:var(--sol-color-selected-surface);color:var(--sol-color-selected-text);border-color:var(--sol-color-selected-indicator);}
 .sol-ui-month-day[aria-disabled=true] {border-style:dashed;}
@@ -21,7 +27,9 @@
 .sol-ui-month-details h4,.sol-ui-month-details p {margin:0;}
 .sol-ui-month-details ul {margin-block:var(--sol-space-1);padding-inline-start:var(--sol-space-4);}
 .sol-ui-month-details li {overflow-wrap:anywhere;}
+.sol-ui-month-details .sol-ui-badge,.sol-ui-month-details .sol-ui-badge>span {white-space:normal;overflow:visible;text-overflow:clip;}
 @media (max-width:800px) {
+  .sol-ui-month-toolbar h3 {flex-basis:100%;}
   .sol-ui-month-cell,.sol-ui-month-day.sol-button {min-block-size:calc(var(--sol-control-height) * 2);}
   .sol-ui-month-marker,.sol-ui-month-more {display:none;}
   .sol-ui-month-marker-count {display:inline-flex;align-self:center;justify-content:center;min-inline-size:var(--sol-space-4);max-inline-size:100%;padding-inline:var(--sol-space-1);border:1px solid var(--sol-color-control-border);border-radius:var(--sol-radius-small);background:var(--sol-color-surface-alt);color:var(--sol-color-text);font-size:var(--sol-text-xs);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}

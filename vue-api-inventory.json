@@ -1,6 +1,6 @@
 {
   "documentVersion": "1.1.0",
-  "componentCount": 50,
+  "componentCount": 51,
   "components": [
     "STimeGrid",
     "SPagination",
@@ -23,6 +23,7 @@
     "STree",
     "SProgressLinear",
     "SProgressCircular",
+    "SBtnGroup",
     "SBtn",
     "STextField",
     "SDialog",
@@ -667,6 +668,21 @@
         "SSelect",
         "SCheckbox",
         "SBarChart"
+      ]
+    },
+    {
+      "id": "button-group",
+      "route": "component",
+      "label": "연결 버튼과 선택 토글",
+      "source": "examples/vue-vuetify/src/recipes/button-group.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STextarea",
+        "SSelect",
+        "SBtnGroup",
+        "SBtn",
+        "SSegmentedControl"
       ]
     }
   ],

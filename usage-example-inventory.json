@@ -533,6 +533,15 @@
       "recipe": "chart.vue",
       "status": "typed-and-runtime-checked",
       "title": "Chart 유형과 자료"
+    },
+    {
+      "route": "component",
+      "section": "button-group",
+      "label": "연결 버튼과 선택 토글",
+      "kind": "vue-recipe",
+      "recipe": "button-group.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "연결 버튼과 선택 토글"
     }
   ]
 }

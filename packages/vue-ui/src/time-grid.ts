@@ -1,4 +1,5 @@
-import { computed, defineComponent, h, ref, watch, nextTick, mergeProps } from 'vue'
+import { computed, defineComponent, h, ref, watch, nextTick, mergeProps, onMounted, onBeforeUnmount } from 'vue'
+import { parseDateOnly } from '@solyi/core/date'
 import type { AllowedComponentProps, PropType, SlotsType, VNode, VNodeProps } from 'vue'
 import { formatSolDate, formatSolNumber, useSolLocale } from './locale'
 import type { SolLocale } from './locale'
@@ -15,6 +16,7 @@ import type {
   TimeGridSnapshot,
 } from './time-grid-values'
 import { useTimeGridEditor } from './time-grid-editor'
+import { SBtn } from './button'
 import type {
   TimeGridAction,
   TimeGridCancelReason,
@@ -32,6 +34,9 @@ export type SolTimeGridProposal = TimeGridProposal
 export type SolTimeGridKey = TimeGridKey
 export type SolTimeGridColumn = TimeGridColumn
 export type SolTimeGridBand = TimeGridBand
+export interface SolTimeGridCreateRequest { readonly columnKey: string; readonly startMinute: number; readonly endMinute: number; readonly input: 'pointer' | 'keyboard' | 'button' }
+export interface SolTimeGridRemoveRequest { readonly key: SolTimeGridKey; readonly input: 'keyboard' | 'button' }
+export interface SolTimeGridCurrentTime { readonly date: string; readonly minute: number }
 export interface SolTimeGridItemScope<T> {
   readonly item: Readonly<T>
   readonly key: SolTimeGridKey
@@ -78,12 +83,18 @@ export interface SolTimeGridProps<T> extends AllowedComponentProps, VNodeProps {
   allowMove?: boolean
   allowResize?: boolean
   allowDuplicate?: boolean
+  allowCreate?: boolean
+  allowRemove?: boolean
+  showCurrentTime?: boolean
+  currentTime?: SolTimeGridCurrentTime
   pendingKeys?: readonly SolTimeGridKey[]
   isItemDisabled?: (item: T) => boolean
   onStart?: (proposal: SolTimeGridProposal) => void
   onPreview?: (proposal: SolTimeGridProposal) => void
   onCommit?: (proposal: SolTimeGridProposal) => void
   onCancel?: (result: SolTimeGridCancellation) => void
+  onCreate?: (request: SolTimeGridCreateRequest) => void
+  onRemove?: (request: SolTimeGridRemoveRequest) => void
 }
 export interface SolTimeGridHandle {
   focus(key?: SolTimeGridKey): void
@@ -103,6 +114,8 @@ export interface SolTimeGridComponent {
   ): VNode & { __ctx?: SolTimeGridContext<T> }
 }
 export interface SolTimeGridEmit {
+  (event: 'create', request: SolTimeGridCreateRequest): void
+  (event: 'remove', request: SolTimeGridRemoveRequest): void
   (event: 'start' | 'preview' | 'commit', proposal: SolTimeGridProposal): void
   (event: 'cancel', result: SolTimeGridCancellation): void
 }
@@ -133,17 +146,36 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
     allowMove: { type: Boolean, default: true },
     allowResize: Boolean,
     allowDuplicate: Boolean,
+    allowCreate: Boolean,
+    allowRemove: Boolean,
+    showCurrentTime: Boolean,
+    currentTime: Object as PropType<SolTimeGridCurrentTime>,
     pendingKeys: { type: Array as PropType<readonly SolTimeGridKey[]>, default: () => [] },
     isItemDisabled: Function as PropType<(item: unknown) => boolean>,
   },
   slots: Object as SlotsType<SolTimeGridSlots<unknown>>,
   emits: {
+    create: (_request: SolTimeGridCreateRequest) => true,
+    remove: (_request: SolTimeGridRemoveRequest) => true,
     start: (_proposal: SolTimeGridProposal) => true,
     preview: (_proposal: SolTimeGridProposal) => true,
     commit: (_proposal: SolTimeGridProposal) => true,
     cancel: (_result: SolTimeGridCancellation) => true,
   },
   setup(p, { attrs, slots, emit, expose }) {
+    const localTime = ref<SolTimeGridCurrentTime | null>(null)
+    let clock: ReturnType<typeof setTimeout> | undefined, mounted = false
+    const current = computed(() => p.currentTime ?? localTime.value)
+    function syncClock() {
+      clearTimeout(clock)
+      if (!mounted || !p.showCurrentTime || p.currentTime) return
+      const now = new Date()
+      localTime.value = { date: `${now.getFullYear().toString().padStart(4, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`, minute: now.getHours() * 60 + now.getMinutes() }
+      clock = setTimeout(syncClock, 60000 - Date.now() % 60000)
+    }
+    onMounted(() => { mounted = true;syncClock();document.addEventListener('visibilitychange', syncClock) })
+    watch(() => [p.showCurrentTime, p.currentTime], syncClock)
+    onBeforeUnmount(() => { mounted = false;clearTimeout(clock);document.removeEventListener('visibilitychange', syncClock) })
     const l = useSolLocale(() => p.locale),
       scroll = ref<HTMLElement | null>(null),
       host = ref<HTMLElement | null>(null),
@@ -206,6 +238,19 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
         cancel: (value) => emit('cancel', value),
       },
     )
+    const canCreate = () => p.allowCreate && !p.readonly && !p.disabled && !p.loading && editor.valid.value && !!snapshot.value
+    function create(columnKey: string, minute: number, input: SolTimeGridCreateRequest['input']) {
+      const data = snapshot.value
+      if (!canCreate() || !data?.columns.some(column => column.key === columnKey)) return
+      const startMinute = Math.max(data.startMinute, Math.min(data.endMinute - p.snapMinutes, data.startMinute + Math.round((minute - data.startMinute) / p.snapMinutes) * p.snapMinutes))
+      editor.cancel()
+      emit('create', Object.freeze({ columnKey, startMinute, endMinute: Math.min(data.endMinute, startMinute + p.snapMinutes), input }))
+    }
+    function remove(key: SolTimeGridKey, input: SolTimeGridRemoveRequest['input']) {
+      if (!p.allowRemove || !snapshot.value?.entries.some(entry => entry.key === key) || editor.scope(key).disabled || p.readonly) return
+      editor.cancel()
+      emit('remove', Object.freeze({ key, input }))
+    }
     expose({
       focus,
       cancel: () => {
@@ -260,21 +305,11 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
           'aria-busy': p.loading ? 'true' : undefined,
         },
         [
-          h('h3', { id: p.id + '-label' }, p.label),
+          h('div', { class: 'sol-ui-time-grid-top' }, [h('h3', { id: p.id + '-label' }, p.label),p.allowCreate ? h(SBtn, { disabled: !canCreate() || !data.columns.length, style: { visibility: p.readonly ? 'hidden' : undefined }, onClick: () => data.columns[0] && create(data.columns[0].key, data.startMinute, 'button') }, () => l.value.timeGridAdd) : null]),
           p.help || slots.help
             ? h('div', { class: 'sol-ui-hint', id: p.id + '-help' }, slots.help?.() || p.help)
             : null,
           error ? h('p', { class: 'sol-ui-error', role: 'alert' }, error) : null,
-          !p.readonly
-            ? h('p', { class: 'sol-ui-hint', id: p.id + '-keys' }, l.value.timeGridKeys)
-            : null,
-          p.loading
-            ? h(
-                'p',
-                { class: 'sol-ui-hint', role: 'status' },
-                l.value.timeGridLoading || l.value.loading,
-              )
-            : null,
           data.columns.length
             ? h(
                 'div',
@@ -348,8 +383,22 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                             'aria-labelledby': p.id + '-column-' + index,
                             class: 'sol-ui-time-grid-column',
                             style: { height: bodyHeight },
+                            tabindex: canCreate() ? 0 : undefined,
+                            'aria-describedby': canCreate() ? p.id + '-keys' : undefined,
+                            onClick: (event: MouseEvent) => {
+                              if (!canCreate() || (event.target as Element).closest('.sol-ui-time-grid-item,button,a,input,textarea,select,[contenteditable]')) return
+                              const box = (event.currentTarget as HTMLElement).getBoundingClientRect()
+                              create(column.key, data.startMinute + (event.clientY - box.top) / box.height * span, 'pointer')
+                            },
+                            onKeydown: (event: KeyboardEvent) => {
+                              if (event.target === event.currentTarget && !event.isComposing && ['Enter', 'Insert'].includes(event.key) && canCreate()) {
+                                event.preventDefault();event.stopPropagation();create(column.key, data.startMinute, 'keyboard')
+                              }
+                            },
                           },
                           [
+                            p.showCurrentTime && current.value && parseDateOnly(current.value.date) && Number.isInteger(current.value.minute) && current.value.minute >= data.startMinute && current.value.minute < data.endMinute && (!column.date || column.date === current.value.date)
+                              ? h('div', { class: 'sol-ui-time-grid-now', role: 'img', 'aria-label': l.value.timeGridCurrent + ' ' + time(current.value.minute), style: { top: top(current.value.minute) } }, h('span', time(current.value.minute))) : null,
                             ...ticks.map((minute) =>
                               h('div', {
                                 key: 'line-' + minute,
@@ -426,6 +475,10 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                   'data-active': String(editor.state.value?.key === entry.key),
                                   'aria-busy': editor.pending(entry.key) ? 'true' : undefined,
                                   'aria-describedby': !p.readonly ? p.id + '-keys' : undefined,
+                                  ...editor.pointerProps(entry),
+                                  onKeydown: (event: KeyboardEvent) => {
+                                    if (event.target === event.currentTarget && !event.isComposing && event.key === 'Delete' && p.allowRemove && !p.readonly) { event.preventDefault();event.stopPropagation();remove(entry.key, 'keyboard') }
+                                  },
                                   'aria-label':
                                     entry.label +
                                     ' · ' +
@@ -474,9 +527,11 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
               )
             : null,
           !p.readonly ? editor.status() : null,
+          !p.readonly ? h('p', {class:'sol-ui-hint',id:p.id+'-keys'},l.value.timeGridKeys) : null,
+          p.loading ? h('p', {class:'sol-ui-hint',role:'status'},l.value.timeGridLoading || l.value.loading) : null,
           editor.renderToolbar(),
           data.entries.length
-            ? h('details', { class: 'sol-ui-time-grid-agenda' }, [
+            ? h('details', { class: 'sol-ui-time-grid-agenda', open: !p.readonly }, [
                 h('summary', l.value.timeGridList || p.label),
                 h(
                   'ul',
@@ -501,6 +556,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                           )
                         : null,
                       editor.agendaActions(entry),
+                      p.allowRemove && !p.readonly ? h(SBtn, { disabled: editor.scope(entry.key).disabled, 'aria-label': l.value.timeGridRemove + ' · ' + entry.label, onClick: () => remove(entry.key, 'button') }, () => l.value.timeGridRemove) : null,
                     ])
                   }),
                 ),

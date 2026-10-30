@@ -108,7 +108,6 @@ const calendarMarkers = Object.freeze({
       id: 'a',
       label: '첫 번째 범주',
       category: resolveCategoricalColor('example-a').category,
-      icon: 'copy',
     }),
     Object.freeze({
       id: 'b',
@@ -118,9 +117,18 @@ const calendarMarkers = Object.freeze({
     Object.freeze({ id: 'c', label: '세 번째 상태는 추가 개수로 안내합니다' }),
   ]),
 })
+const gridToday = new Date(),
+  gridTomorrow = new Date(gridToday)
+gridTomorrow.setDate(gridTomorrow.getDate() + 1)
+const gridDay = date =>
+  date.getFullYear() +
+  '-' +
+  String(date.getMonth() + 1).padStart(2, '0') +
+  '-' +
+  String(date.getDate()).padStart(2, '0')
 const gridColumns = Object.freeze([
-  { key: 'one', label: '열 A', date: '2026-10-28' },
-  { key: 'two', label: '열 B', date: '2026-10-29' },
+  { key: 'one', label: '열 A', date: gridDay(gridToday) },
+  { key: 'two', label: '열 B', date: gridDay(gridTomorrow) },
 ])
 const gridSeed = Object.freeze([
   Object.freeze({ id: 'a', column: 'one', start: 480, end: 570, title: '첫 번째 항목' }),
@@ -141,7 +149,7 @@ const gridSeed = Object.freeze([
   Object.freeze({ id: 'd', column: 'two', start: 780, end: 840, title: '두 번째 열 항목' }),
 ])
 const gridItems = ref(gridSeed),
-  gridEditable = ref(false),
+  gridEditable = ref(true),
   gridDisabled = ref(false),
   gridLockedFirst = ref(false),
   gridPendingFirst = ref(false),
@@ -159,7 +167,10 @@ function acceptGridProposal(proposal) {
     proposal.to.startMinute +
     '–' +
     proposal.to.endMinute
-  if (!gridAccept.value) return
+  if (!gridAccept.value) {
+    gridResult.value += ' · 부모가 반영하지 않아 원본 유지'
+    return
+  }
   const original = gridItems.value.find(item => item.id === proposal.key)
   if (!original) return
   const next = Object.freeze({
@@ -176,6 +187,33 @@ function acceptGridProposal(proposal) {
       ? [...gridItems.value, next]
       : gridItems.value.map(item => (item.id === proposal.key ? next : item)),
   )
+}
+function createGrid(request) {
+  gridPreview.value = null
+  gridResult.value =
+    '추가 요청 · ' + request.columnKey + ' · ' + request.startMinute + '–' + request.endMinute
+  if (!gridAccept.value) {
+    gridResult.value += ' · 원본 유지'
+    return
+  }
+  const item = Object.freeze({
+    id: 'new-' + ++gridCopy,
+    column: request.columnKey,
+    start: request.startMinute,
+    end: request.endMinute,
+    title: '새 가상 항목 ' + gridCopy,
+  })
+  gridItems.value = Object.freeze([...(gridEmpty.value ? [] : gridItems.value), item])
+  gridEmpty.value = false
+}
+function removeGrid(request) {
+  gridPreview.value = null
+  gridResult.value = '삭제 요청 · ' + request.key
+  if (!gridAccept.value) {
+    gridResult.value += ' · 원본 유지'
+    return
+  }
+  gridItems.value = Object.freeze(gridItems.value.filter(item => item.id !== request.key))
 }
 function resetGrid() {
   gridItems.value = Object.freeze([...gridSeed])
@@ -602,14 +640,11 @@ watch([disabled, readonly], () => {
       @update:month="next => { if (calendarAcceptMonth) calendarMonth = next }"
       @update:model-value="next => { if (calendarAcceptDate) calendarDate = next }"
     >
-      <template #cell="{ date, disabled: unavailable }">
-        <small
-          v-if="date.endsWith('-28')"
-          :aria-label="unavailable ? '선택 불가 추가 정보' : '추가 정보'"
-          >ⓘ</small
-        >
-      </template>
     </SMonthCalendar>
+    <p class="starter-hint">
+      항목이나 +N이 있는 날짜를 누르면 아래 상세 목록에서 전체 내용을 읽습니다. 키보드는 날짜를
+      선택한 뒤 Tab으로 목록을 읽고 Escape로 달력에 돌아옵니다.
+    </p>
     <p :id="previewId('advanced-month-result')" class="starter-hint">
       표시 월: {{ calendarMonth }} · 선택 ISO: {{ calendarDate }}
     </p>
@@ -623,8 +658,9 @@ watch([disabled, readonly], () => {
       >시간 그리드 · 변경 제안</component
     >
     <p class="starter-hint">
-      기본은 읽기 전용이며 편집을 켜면 이동·크기 변경·복제를 제안합니다. 아래 반영 체크를 끄면
-      원본은 유지됩니다. 시간대·충돌·새 key·저장은 소비 앱에서 소유합니다.
+      카드 본문을 드래그해 이동하고 위·아래 가장자리로 시간을 조절합니다. 빈 칸을 누르거나 오른쪽 위
+      추가 버튼으로 항목을 만들 수 있습니다. 반영 체크를 끄면 생성·삭제·이동 요청을 보여주되 원본은
+      유지합니다. 새 key·충돌·저장은 소비 앱에서 소유합니다.
     </p>
     <div class="starter-settings">
       <SCheckbox
@@ -641,17 +677,17 @@ watch([disabled, readonly], () => {
       <SCheckbox
         :id="previewId('advanced-time-grid-edit')"
         v-model="gridEditable"
-        label="변경 제안 허용"
+        label="편집 켜기 · 끄면 보기 전용"
       />
       <SCheckbox
         :id="previewId('advanced-time-grid-disabled')"
         v-model="gridDisabled"
-        label="전체 조작 비활성"
+        label="편집 잠금 · 추가·드래그·삭제 방지"
       />
       <SCheckbox
         :id="previewId('advanced-time-grid-lock')"
         v-model="gridLockedFirst"
-        label="첫 항목 조작 비활성"
+        label="첫 항목만 잠금 · 항목별 권한 예제"
       />
       <SCheckbox
         :id="previewId('advanced-time-grid-pending')"
@@ -661,7 +697,7 @@ watch([disabled, readonly], () => {
       <SCheckbox
         :id="previewId('advanced-time-grid-accept')"
         v-model="gridAccept"
-        label="부모에서 제안 반영"
+        label="요청을 실제 항목에 반영 · 끄면 원본 유지"
       />
       <SBtn :id="previewId('advanced-time-grid-reset')" @click="resetGrid">원본으로 외부 갱신</SBtn>
     </div>
@@ -683,13 +719,18 @@ watch([disabled, readonly], () => {
       :disabled="gridDisabled"
       allow-resize
       allow-duplicate
+      allow-create
+      allow-remove
+      show-current-time
+      @create="createGrid"
+      @remove="removeGrid"
       :snap-minutes="15"
       :pending-keys="gridPendingFirst ? ['a'] : []"
       :is-item-disabled="item=>gridLockedFirst && item.id==='a'"
       @preview="gridPreview=$event"
       @commit="acceptGridProposal"
       @cancel="cancelGrid"
-      help="각 항목에 Tab으로 초점을 둘 수 있습니다. 좁은 화면에서는 가로로 스크롤하고 목록으로 전체 이름을 확인하세요."
+      help="카드 드래그: 이동 · 위/아래 가장자리: 시간 조절 · 항목 Enter/Space: 키보드 편집 · Delete: 삭제 요청. 아래 목록에서도 이동·조절·복제·삭제할 수 있습니다. 빨간 현재 시각선은 표시 중인 날짜와 08~18시 범위에서 분마다 갱신됩니다."
     />
     <p :id="previewId('advanced-time-grid-result')" class="starter-hint" role="status">
       {{gridPreview ? '미리보기 · '+gridPreview.to.columnKey+' · '+gridPreview.to.startMinute+'–'+gridPreview.to.endMinute : gridResult}}

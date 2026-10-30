@@ -20,6 +20,7 @@ declare module 'vue' {
     STree: typeof import('./index')['STree'];
     SProgressLinear: typeof import('./index')['SProgressLinear'];
     SProgressCircular: typeof import('./index')['SProgressCircular'];
+    SBtnGroup: typeof import('./index')['SBtnGroup'];
     SBtn: typeof import('./index')['SBtn'];
     STextField: typeof import('./index')['STextField'];
     SDialog: typeof import('./index')['SDialog'];

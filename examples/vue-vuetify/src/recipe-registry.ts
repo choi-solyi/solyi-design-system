@@ -44,6 +44,7 @@ import Recipe42 from './recipes/tooltip.vue'
 import Recipe43 from './recipes/popover.vue'
 import Recipe44 from './recipes/avatar.vue'
 import Recipe45 from './recipes/chart.vue'
+import Recipe46 from './recipes/button-group.vue'
 
 export const recipeComponents = {
   'color-examples': Recipe0,
@@ -92,6 +93,7 @@ export const recipeComponents = {
   popover: Recipe43,
   avatar: Recipe44,
   chart: Recipe45,
+  'button-group': Recipe46,
 }
 export const recipeLabels = {
   'color-examples': '의미색 UI 조합',
@@ -140,4 +142,5 @@ export const recipeLabels = {
   popover: '대화형 추가 정보',
   avatar: '사용자 이미지와 대체 글자',
   chart: 'Chart 유형과 자료',
+  'button-group': '연결 버튼과 선택 토글',
 }

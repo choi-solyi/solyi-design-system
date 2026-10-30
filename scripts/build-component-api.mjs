@@ -116,6 +116,7 @@ const records = [
   ['SBadge','표시·레이아웃','상태와 개수를 비대화형 표시로 전달합니다.','component','badge'],
   ['SIcon','표시·레이아웃','공통 선 아이콘을 장식 또는 접근 가능한 이미지로 표시합니다.','component','icon'],
   ['SIconBtn','동작','접근 가능한 이름을 갖는 아이콘 전용 버튼입니다.','component','icon-button'],
+  ['SBtnGroup','동작','서로 관련된 명령 버튼을 연결합니다. 선택 토글은 기존 SSegmentedControl을 조합하고 각 버튼의 상태와 행동은 소비 화면이 소유합니다.','component','button-group'],
   ['SBtn','동작','버튼의 기본·보조·로딩·비활성 상태를 구분합니다.','component','buttons'],
   ['SConfirmAction','동작','같은 버튼을 두 번 눌러 의도를 확인합니다. 실제 비동기 작업과 오류는 소비 앱에서 처리합니다.','component','confirm-action'],
   ['SSplitBtn','동작','대표 행동과 추가 행동 메뉴를 한 묶음으로 제공합니다.','component','action-menu'],
@@ -192,6 +193,7 @@ for (const [name, group, description, exampleRoute, example] of records) {
     props.find(prop => prop.name === 'busy').description = '외부 작업 상태입니다. 본문을 inert로 잠그며 폼 값은 유지합니다. 슬롯에 busy/busyScope를 전달하고 작업 결과를 자동 처리하지 않습니다.'
     props.find(prop => prop.name === 'busyScope').description = '기본 body는 본문만 잠그고 닫기와 액션은 허용합니다. all은 feedback·액션·닫기·Escape·바깥 클릭도 잠급니다. 부모가 modelValue=false로 닫는 제어는 유지합니다.'
   }
+  if (name === 'SFileInput') props.find(prop=>prop.name==='preview').description = '기본 true입니다. 선택한 image MIME 파일을 브라우저 로컬 URL로 미리 봅니다. false면 썸네일을 만들지 않으며 제거·실패·unmount 시 URL을 해제합니다. 파일을 업로드하지 않습니다.'
   if (name === 'SBarChart') {
     props.find(prop=>prop.name==='type').description = '표현 유형입니다. bar가 기존 기본값이며 line은 순서에 따른 변화, pie는 항목 합계의 비율입니다. SBarChart export와 동일 자료 표를 유지합니다.'
   }

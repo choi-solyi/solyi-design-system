@@ -6,6 +6,8 @@ import {componentExampleOwners,componentCatalogue,renderComponentReferences} fro
 import {getDocumentSearchEntries,resolveDocumentLocation} from '../site/topics.js'
 import {findDocumentResults} from '../site/doc-search.js'
 const expectations=[
+ ['SBtnGroup','Button Group',['label','orientation'],[],['default'],[]],
+ ['SFileInput','File Input',['preview','accept','maxFiles','maxFileSize'],['change','remove','reject'],[],['focus','clear','validate','resetValidation']],
  ['SAvatar','Avatar',['label','initials','src'],['error'],['default'],[]],
  ['STooltip','Tooltip',['label','text'],['open','close'],['activator'],[]],
  ['SPopover','Popover',['label','title'],['open','close'],['activator','default','actions'],[]],

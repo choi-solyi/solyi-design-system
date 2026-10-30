@@ -110,6 +110,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
   setup(p, { attrs, slots, emit, expose }) {
     const l = useSolLocale(() => p.locale),
       host = ref<HTMLElement | null>(null),
+      details = ref<HTMLElement | null>(null),
       buttons = new Map<string, HTMLButtonElement>()
     const mountedToday = localToday(),
       today = computed(() => (p.today === undefined ? mountedToday : p.today))
@@ -209,10 +210,21 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
       emit('update:month', month)
       emit('month-change', { month, previousMonth, reason })
     }
+    function changeYear(input: HTMLInputElement) {
+      const value = Number(input.value), previous = Number(p.month.slice(0, 4))
+      if (/^\d{1,4}$/.test(input.value) && Number.isInteger(value) && value >= 1 && value <= 9999)
+        requestMonth(String(value).padStart(4, '0') + p.month.slice(4), value < previous ? 'previous' : 'next')
+      void nextTick(() => { input.value = p.month.slice(0, 4) })
+    }
     function choose(date: string, reason: SolCalendarChange['reason']) {
       if (unavailable(date)) return
       pending = undefined
       active.value = date
+      if (reason === 'pointer' && state.value.days.get(date)?.markers.length) void nextTick(() => {
+        if (disposed) return
+        details.value?.focus({ preventScroll: true })
+        details.value?.scrollIntoView?.({ block: 'nearest' })
+      })
       if (date === p.modelValue) return
       const previousValue = p.modelValue
       emit('update:modelValue', date)
@@ -336,13 +348,21 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
         [
           h('p', { id: p.id + '-label', class: 'sol-label' }, p.label),
           h('div', { class: 'sol-ui-month-toolbar' }, [
-            nav(-1),
             h(
               'h3',
               { id: p.id + '-month', 'aria-live': 'polite', 'aria-atomic': 'true' },
               monthName,
             ),
-            nav(1),
+            h('label', { class: 'sol-ui-month-year' }, [
+              h('span', { class: 'sol-label' }, l.value.monthCalendarYear),
+              h('input', { class: 'sol-input', type: 'number', min: 1, max: 9999, step: 1, inputmode: 'numeric', value: grid.valid ? p.month.slice(0, 4) : '', disabled: p.disabled || !grid.valid,
+                onChange: (event: Event) => changeYear(event.currentTarget as HTMLInputElement),
+                onKeydown: (event: KeyboardEvent) => {
+                  if (event.key === 'Enter' && !event.isComposing) { event.preventDefault();changeYear(event.currentTarget as HTMLInputElement) }
+                },
+              }),
+            ]),
+            h('div', { class: 'sol-ui-month-navigation' }, [nav(-1), nav(1)]),
             h(
               'button',
               {
@@ -376,7 +396,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                     options = { year: undefined, month: undefined, day: undefined } as const
                   return h(
                     'th',
-                    { scope: 'col' },
+                    { scope: 'col', 'data-sunday': day === 0 ? 'true' : undefined },
                     h(
                       'abbr',
                       { title: formatSolDate(date, l.value, { ...options, weekday: 'long' }) },
@@ -448,6 +468,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                             'aria-label': label,
                             'aria-describedby': p.id + '-keys',
                             'data-today': isToday ? 'true' : undefined,
+                            'data-sunday': cell.weekday === 0 ? 'true' : undefined,
                             onFocus: () => {
                               pending = undefined
                               active.value = cell.iso
@@ -530,9 +551,15 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                 'section',
                 {
                   class: 'sol-ui-month-details',
+                  ref: details,
                   tabindex: 0,
                   role: 'region',
                   'aria-labelledby': p.id + '-details-label',
+                  onKeydown: (event: KeyboardEvent) => {
+                    if (event.key === 'Escape' && !event.isComposing) {
+                      event.preventDefault();event.stopPropagation();focusDate(active.value)
+                    }
+                  },
                 },
                 [
                   h('h4', { id: p.id + '-details-label' }, [

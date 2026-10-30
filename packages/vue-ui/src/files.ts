@@ -31,8 +31,22 @@ export function validateSFiles(incoming:readonly File[],existing:readonly File[]
   return {files,rejected};
 }
 
-export const SFileInput=/* @__PURE__ */ defineComponent({name:'SFileInput',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as PropType<readonly File[]>,default:()=>[]},accept:{type:String,default:'.txt,.png,.jpg,.jpeg,.pdf'},maxFiles:{type:Number,default:3},maxFileSize:{type:Number,default:2*1024*1024},drop:{type:Boolean,default:true}},emits:{'update:modelValue':(_files:File[])=>true,change:(_files:File[])=>true,reject:(_items:SFileRejection[])=>true,remove:(_file:File)=>true,invalid:(_message:string)=>true},setup(p,{attrs,slots,emit,expose}){
+export const SFileInput=/* @__PURE__ */ defineComponent({name:'SFileInput',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:Array as PropType<readonly File[]>,default:()=>[]},accept:{type:String,default:'.txt,.png,.jpg,.jpeg,.pdf'},maxFiles:{type:Number,default:3},maxFileSize:{type:Number,default:2*1024*1024},preview:{type:Boolean,default:true},drop:{type:Boolean,default:true}},emits:{'update:modelValue':(_files:File[])=>true,change:(_files:File[])=>true,reject:(_items:SFileRejection[])=>true,remove:(_file:File)=>true,invalid:(_message:string)=>true},setup(p,{attrs,slots,emit,expose}){
   const l=useSolLocale(()=>p.locale),root=ref<HTMLElement|null>(null),input=ref<HTMLInputElement|null>(null),button=ref<{$el?:HTMLElement}|null>(null),dragging=ref(false),rejected=ref<SFileRejection[]>([]),localError=ref('');let depth=0;
+  const previews = ref(new Map<File,string>()), failedPreviews = new Set<File>()
+  function revoke(url: string) { if (typeof window !== 'undefined') window.URL.revokeObjectURL?.(url) }
+  function syncPreviews() {
+    const wanted = p.preview ? new Set(p.modelValue.filter(file => file.type.startsWith('image/'))) : new Set<File>()
+    for (const [file,url] of previews.value) if (!wanted.has(file)) { revoke(url);previews.value.delete(file) }
+    for (const file of failedPreviews) if (!wanted.has(file)) failedPreviews.delete(file)
+    if (typeof window === 'undefined' || typeof window.URL.createObjectURL !== 'function') return
+    for (const file of wanted) if (!previews.value.has(file) && !failedPreviews.has(file)) {
+      try { previews.value.set(file,window.URL.createObjectURL(file)) } catch { failedPreviews.add(file) }
+    }
+  }
+  watch(()=>[p.modelValue,p.preview],syncPreviews,{deep:true})
+  onMounted(syncPreviews)
+  onBeforeUnmount(()=>{for(const url of previews.value.values())revoke(url);previews.value.clear();failedPreviews.clear()})
   const available=()=>!fieldDisabled(p)&&!fieldReadonly(p);
   function resetDrag() {
     depth = 0
@@ -80,7 +94,7 @@ export const SFileInput=/* @__PURE__ */ defineComponent({name:'SFileInput',inher
       ]),
       ...fieldMessages(p,slots,error),
       rejected.value.length?h('div',{class:'sol-notice danger',role:'alert'},[h('strong',l.value.filesRejected),h('ul',rejected.value.map((item,i)=>h('li',{key:i},item.file.name+': '+item.message)))]):null,
-      h('ul',{class:'sol-ui-file-list'},p.modelValue.map((file,i)=>{const info=describeSFile(file,l.value);return h('li',{key:i},[h('div',{class:'sol-ui-file-meta'},[h('strong',file.name),h('span',{class:'sol-hint'},[info.extension,info.mediaType,info.size].join(' · '))]),h(SBtn,{variant:'inline',disabled:!available(),'aria-label':l.value.remove(file.name),onClick:()=>remove(file)},()=>l.value.fileRemove)]);})),
+      h('ul',{class:'sol-ui-file-list'},p.modelValue.map((file,i)=>{const info=describeSFile(file,l.value);return h('li',{key:i},[previews.value.has(file)?h('img',{class:'sol-ui-file-preview',src:previews.value.get(file),alt:'','aria-hidden':'true',loading:'lazy',decoding:'async',onError:()=>{const url=previews.value.get(file);if(url)revoke(url);previews.value.delete(file);failedPreviews.add(file)}}):null,h('div',{class:'sol-ui-file-meta'},[h('strong',file.name),h('span',{class:'sol-hint'},[info.extension,info.mediaType,info.size].join(' · '))]),h(SBtn,{variant:'inline',disabled:!available(),'aria-label':l.value.remove(file.name),onClick:()=>remove(file)},()=>l.value.fileRemove)]);})),
       h(SBtn,{variant:'inline',disabled:!available()||!p.modelValue.length,onClick:clear},()=>l.value.filesClear)
     ]);
   };

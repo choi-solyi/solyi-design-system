@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref, watch, TransitionGroup } from 'vue'
 import type { AllowedComponentProps, PropType, SlotsType, VNode, VNodeProps } from 'vue'
 import { displayFieldProps, fieldDescription, fieldMessages } from './controls'
 import { useSolLocale } from './locale'
@@ -109,6 +109,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
       host = ref<HTMLElement | null>(null),
       revision = ref(0),
       list = ref<HTMLElement | null>(null)
+    const dragPreview = ref<{ key: SolSortableKey; left: number; top: number; width: number } | null>(null)
     const handles = new Map<SolSortableKey, HTMLButtonElement>(),
       upButtons = new Map<SolSortableKey, HTMLButtonElement>(),
       downButtons = new Map<SolSortableKey, HTMLButtonElement>(),
@@ -310,6 +311,12 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
       emit('preview', value)
     }
     const pointer = createSortablePointer({
+      visual: (key, _x, y) => {
+        const box = key === null ? undefined : rows.get(key)?.getBoundingClientRect()
+        dragPreview.value = key !== null && box && typeof y === 'number'
+          ? { key, left: box.left, top: Math.max(8, Math.min(y - box.height / 2, window.innerHeight - box.height - 8)), width: box.width }
+          : null
+      },
       list: () => list.value,
       row: key => rows.get(key),
       keys: () => session?.snapshot.keys || state.value.snapshot?.keys || [],
@@ -366,7 +373,14 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
     watch(
       () => [p.disabled, p.readonly],
       () => {
-        if (p.disabled || p.readonly) cancel('disabled', false)
+        if (p.disabled || p.readonly) {
+          const previous = typeof document !== 'undefined' ? document.activeElement : null
+          const inside = previous instanceof HTMLElement && host.value?.contains(previous) && (previous.matches('.sol-ui-sortable-handle') || previous.closest('.sol-ui-sortable-moves'))
+          cancel('disabled', false)
+          if (inside) void nextTick(() => {
+            if (!disposed && (document.activeElement === document.body || document.activeElement === previous)) host.value?.focus({ preventScroll: true })
+          })
+        }
       },
       { flush: 'sync' },
     )
@@ -431,7 +445,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
           h(
             'ol',
             { ref: list, class: 'sol-ui-sortable-list', 'aria-labelledby': p.id + '-label' },
-            items.map((item, index) => {
+            [h(TransitionGroup, { name: 'sol-ui-sortable', css: false }, () => items.map((item, index) => {
               const itemKey = snapshot?.keys[index] ?? 'invalid-' + index,
                 label = state.value.labels[index] || l.value.record + ' ' + (index + 1),
                 active = session?.key === itemKey
@@ -448,6 +462,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
                   class: 'sol-ui-sortable-row',
                   'data-active': active ? 'true' : undefined,
                   'data-disabled': state.value.locked.has(itemKey) ? 'true' : undefined,
+                  'data-controls': disabled ? 'hidden' : undefined,
                   'data-insert':
                     session?.to === index && session.to !== from
                       ? session.to > from
@@ -521,8 +536,9 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
                   ),
                 ],
               )
-            }),
-          ),
+            })),
+          ]),
+          dragPreview.value ? h('div', { popover: 'manual', class: 'sol-ui-sortable-ghost', 'aria-hidden': 'true', style: { left: dragPreview.value.left + 'px', top: dragPreview.value.top + 'px', width: dragPreview.value.width + 'px' }, ref: (element: unknown) => { if (element instanceof HTMLElement) { try { element.showPopover?.() } catch { element.removeAttribute('popover') } } } }, labelFor(dragPreview.value.key)) : null,
           !items.length
             ? h('div', { class: 'sol-hint' }, slots.empty?.() || l.value.noResults)
             : null,

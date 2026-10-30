@@ -11,6 +11,7 @@ interface Options {
   move(to: number): void
   finish(): void
   cancel(reason: PointerCancel, restore?: boolean): void
+  visual?(key: SortableKey | null, x?: number, y?: number): void
 }
 interface Press {
   id: number
@@ -71,6 +72,7 @@ export function createSortablePointer(options: Options) {
   function stop(suppress = true) {
     const previous = current
     current = undefined
+    options.visual?.(null)
     if (frame) cancelAnimationFrame(frame)
     frame = 0
     lastFrame = 0
@@ -182,6 +184,7 @@ export function createSortablePointer(options: Options) {
     }
     hit(press)
     if (current === press && !frame) frame = requestAnimationFrame(scroll)
+    if (current === press) options.visual?.(press.key, press.x, press.y)
   }
   function up(event: PointerEvent) {
     const press = current

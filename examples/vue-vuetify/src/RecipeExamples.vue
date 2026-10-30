@@ -8,7 +8,7 @@ type RecipePosition = { session: string; index: number }
 const groups: { label: string; items: RecipeId[] }[] = [
   {
     label: '기본 표현',
-    items: ['color-examples', 'writing', 'buttons', 'confirm-action', 'chip', 'badge', 'icon', 'icon-button', 'fields', 'choices', 'feedback'],
+    items: ['color-examples', 'writing', 'buttons', 'button-group', 'confirm-action', 'chip', 'badge', 'icon', 'icon-button', 'fields', 'choices', 'feedback'],
   },
   {
     label: '입력과 선택',

@@ -1,6 +1,6 @@
 import {STimeGrid} from './time-grid';
 export {STimeGrid};
-export type {SolTimeGridProposal,SolTimeGridCoordinate,SolTimeGridAction,SolTimeGridInput,SolTimeGridCancelReason,SolTimeGridCancellation,SolTimeGridKey,SolTimeGridColumn,SolTimeGridBand,SolTimeGridProps,SolTimeGridItemScope,SolTimeGridBandScope,SolTimeGridSlots,SolTimeGridHandle} from './time-grid';
+export type {SolTimeGridCreateRequest,SolTimeGridRemoveRequest,SolTimeGridCurrentTime,SolTimeGridProposal,SolTimeGridCoordinate,SolTimeGridAction,SolTimeGridInput,SolTimeGridCancelReason,SolTimeGridCancellation,SolTimeGridKey,SolTimeGridColumn,SolTimeGridBand,SolTimeGridProps,SolTimeGridItemScope,SolTimeGridBandScope,SolTimeGridSlots,SolTimeGridHandle} from './time-grid';
 import {SPagination} from './pagination';
 export {SPagination};
 export type {SolPaginationHandle} from './pagination';
@@ -79,6 +79,8 @@ function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
   return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
 }
+import {SBtnGroup} from './button-group';
+export {SBtnGroup};
 import {SBtn} from './button';
 export {SBtn};
 export type {ButtonVariant,SButtonTone} from './button';
@@ -202,6 +204,7 @@ export interface SComponents {
   STree: typeof STree
   SProgressLinear: typeof SProgressLinear
   SProgressCircular: typeof SProgressCircular
+  SBtnGroup: typeof SBtnGroup
   SBtn: typeof SBtn
   STextField: typeof STextField
   SDialog: typeof SDialog
@@ -254,6 +257,7 @@ export const sComponents: SComponents = {
   STree,
   SProgressLinear,
   SProgressCircular,
+  SBtnGroup,
   SBtn,
   STextField,
   SDialog,
