@@ -90,13 +90,7 @@
       "registration": "global",
       "components": [
         "SCard",
-        "SBtn",
-        "SConfirmAction",
-        "SIcon",
-        "SChip",
-        "SBadge",
-        "SIconBtn",
-        "STooltip"
+        "SBtn"
       ]
     },
     {
@@ -496,6 +490,61 @@
         "SIcon",
         "SBtn",
         "SCheckbox"
+      ]
+    },
+    {
+      "id": "confirm-action",
+      "route": "component",
+      "label": "두 번 눌러 확인",
+      "source": "examples/vue-vuetify/src/recipes/confirm-action.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SConfirmAction"
+      ]
+    },
+    {
+      "id": "chip",
+      "route": "component",
+      "label": "칩 표시·선택·제거",
+      "source": "examples/vue-vuetify/src/recipes/chip.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SChip"
+      ]
+    },
+    {
+      "id": "badge",
+      "route": "component",
+      "label": "배지 상태 표시",
+      "source": "examples/vue-vuetify/src/recipes/badge.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBadge"
+      ]
+    },
+    {
+      "id": "icon",
+      "route": "component",
+      "label": "아이콘의 의미와 장식",
+      "source": "examples/vue-vuetify/src/recipes/icon.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SIcon"
+      ]
+    },
+    {
+      "id": "icon-button",
+      "route": "component",
+      "label": "아이콘 전용 버튼",
+      "source": "examples/vue-vuetify/src/recipes/icon-button.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SIconBtn"
       ]
     }
   ],

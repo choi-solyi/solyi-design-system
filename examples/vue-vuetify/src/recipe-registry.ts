@@ -29,6 +29,11 @@ import Recipe27 from './recipes/workflow.vue'
 import Recipe28 from './recipes/error-summary.vue'
 import Recipe29 from './recipes/bulk-recovery.vue'
 import Recipe30 from './recipes/combobox.vue'
+import Recipe31 from './recipes/confirm-action.vue'
+import Recipe32 from './recipes/chip.vue'
+import Recipe33 from './recipes/badge.vue'
+import Recipe34 from './recipes/icon.vue'
+import Recipe35 from './recipes/icon-button.vue'
 
 export const recipeComponents = {
   'color-examples': Recipe0,
@@ -62,6 +67,11 @@ export const recipeComponents = {
   'error-summary': Recipe28,
   'bulk-recovery': Recipe29,
   combobox: Recipe30,
+  'confirm-action': Recipe31,
+  chip: Recipe32,
+  badge: Recipe33,
+  icon: Recipe34,
+  'icon-button': Recipe35,
 }
 export const recipeLabels = {
   'color-examples': '의미색 UI 조합',
@@ -95,4 +105,9 @@ export const recipeLabels = {
   'error-summary': '오류 요약과 이동',
   'bulk-recovery': '일부 실패와 재시도',
   combobox: '자유 입력과 후보 선택',
+  'confirm-action': '두 번 눌러 확인',
+  chip: '칩 표시·선택·제거',
+  badge: '배지 상태 표시',
+  icon: '아이콘의 의미와 장식',
+  'icon-button': '아이콘 전용 버튼',
 }

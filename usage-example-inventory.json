@@ -1,6 +1,6 @@
 {
   "baseline": "a6ad6bf",
-  "count": 45,
+  "count": 50,
   "examples": [
     {
       "route": "style",
@@ -394,6 +394,51 @@
       "recipe": "combobox.vue",
       "status": "source-implemented",
       "title": "자유 입력과 후보 선택"
+    },
+    {
+      "route": "component",
+      "section": "confirm-action",
+      "label": "SConfirmAction 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "confirm-action.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "두 번 눌러 확인"
+    },
+    {
+      "route": "component",
+      "section": "chip",
+      "label": "SChip 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "chip.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "칩 표시·선택·제거"
+    },
+    {
+      "route": "component",
+      "section": "badge",
+      "label": "SBadge 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "badge.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "배지 상태 표시"
+    },
+    {
+      "route": "component",
+      "section": "icon",
+      "label": "SIcon 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "icon.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "아이콘의 의미와 장식"
+    },
+    {
+      "route": "component",
+      "section": "icon-button",
+      "label": "SIconBtn 사용 예시",
+      "kind": "vue-recipe",
+      "recipe": "icon-button.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "아이콘 전용 버튼"
     }
   ]
 }
