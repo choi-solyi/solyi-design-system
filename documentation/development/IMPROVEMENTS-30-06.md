@@ -16,7 +16,7 @@
 | 범위 | 결과 |
 |---|---|
 | 소스 빌드·타입 | 통과 |
-| `input-control-runtime-check.mjs --source` | 입력 8종의 빈값/change/clear/form/배열 불변성/readonly/IME 계약 통과 |
+| `input-control-runtime-check.mjs --source --multiselect-frame=intrinsic` | 입력 8종의 빈값/change/clear/form/배열 불변성/readonly/IME 계약 통과 |
 | `vue-expansion-runtime-check.mjs --source` | 선택·제한·비동기 최신 결과·Escape/포커스 및 기존 확장 회귀 통과 |
 | 별도 tarball 설치·소비 앱 타입/빌드 | 통과. 설치 JS와 빌드 JS 바이트 일치 확인. 소비 타입 검사는 기존과 같이 skipLibCheck 사용 |
 | `multiselect-browser-check.mjs --consumer=qa-output/improvements-30/development-consumer` | violet/light PC, sage/dark/compact 390px/en, sand/light 390px/실제 RTL 모두 통과 |
@@ -41,3 +41,12 @@ raw Node import는 Vuetify CSS를 읽지 못하는 기존 실행 방식의 한�
 ## 상태 구분
 
 6번의 두 요구인 부모 높이를 늘리지 않는 목록과 입력 내부 선택 칩은 개발본 구현·독립 소비 검증을 완료했다. npm 게시·공개 문서 설치본 반영·외부 소비 앱 업데이트는 하지 않았다. 물리 휴대폰, 실제 소프트 키보드, 스크린리더 검증은 미실행이다. 나머지 30개 요구 전체 완료를 뜻하지 않는다.
+
+### 설치본 계약 검사 보완
+
+source 여부만으로 새 프레임 기대값을 결정하던 검사를 수정했다. 기본 호출은 **실제로 설치된 package.json**의 1.1.0(legacy)/1.1.1(intrinsic)을 구분한다. 아직 1.1.0 기반인 미게시 개발 tarball과 source milestone은 명시적으로 계약을 지정한다. 알 수 없는 버전/계약은 실패한다.
+
+- 개발 tarball 실제 설치 경로: `node scripts/input-control-runtime-check.mjs --consumer=qa-output/improvements-30/development-consumer --multiselect-frame=intrinsic` → 입력 8종 전체 통과.
+- 공식 registry 1.1.0 baseline: `node scripts/input-control-runtime-check.mjs --consumer=qa-output/improvements-30/registry-consumer` → 기존 프레임·clear 계약 전체 통과.
+- 근거: `multiselect-installed-control-runtime.log`, `multiselect-baseline-control-runtime.log`. 두 실행 모두 `--source`를 사용하지 않았다.
+- 전체 작업 후 준비할 실제 1.1.1 tarball에서는 override 없이 기본 installed 검사를 다시 실행해야 한다. 현재 개발본을 1.1.1 공식 후보로 오인하지 않는다.

@@ -1,8 +1,16 @@
 import assert from 'node:assert/strict'
-import {writeFile} from 'node:fs/promises'
+import {readFile,writeFile} from 'node:fs/promises'
 import {fileURLToPath} from 'node:url'
 import {JSDOM} from 'jsdom'
-const root=new URL('../',import.meta.url),consumer=new URL('examples/package-consumer/',root),source=process.argv.includes('--source')
+const root=new URL('../',import.meta.url),target=process.argv.find(arg=>arg.startsWith('--consumer='))?.slice(11),source=process.argv.includes('--source')
+const consumer=new URL(target?target.replace(/\/?$/,'/'):'examples/package-consumer/',root)
+if(target)assert.ok(consumer.href.startsWith(new URL('qa-output/',root).href),'Explicit consumers stay in ignored QA output')
+const frameOverride=process.argv.find(arg=>arg.startsWith('--multiselect-frame='))?.split('=')[1]
+if(frameOverride)assert.ok(['legacy','intrinsic'].includes(frameOverride),'Use legacy or intrinsic frame contract')
+if(source)assert.ok(frameOverride,'Unpublished source needs an explicit --multiselect-frame contract')
+const metadata=JSON.parse(await readFile(new URL(source?'packages/vue-ui/package.json':'node_modules/solyi-ui/package.json',source?root:consumer),'utf8'))
+const frameContract=frameOverride||({'1.1.0':'legacy','1.1.1':'intrinsic'}[metadata.version])
+assert.ok(frameContract,'Unknown package version: specify --multiselect-frame explicitly')
 const dom=new JSDOM('<div id="app"></div>',{url:'https://example.test',pretendToBeVisual:true}),w=dom.window,d=w.document
 for(const key of ['window','document','Element','Node','HTMLElement','HTMLInputElement','HTMLTextAreaElement','SVGElement','ShadowRoot','Document','MutationObserver','Event','MouseEvent','KeyboardEvent','FocusEvent','getComputedStyle'])Object.defineProperty(globalThis,key,{value:key==='window'?w:key==='document'?d:w[key],configurable:true})
 globalThis.requestAnimationFrame=w.requestAnimationFrame.bind(w);globalThis.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};globalThis.CSS={supports:()=>false}
@@ -47,7 +55,7 @@ for(const kind of ['STextField','STextarea','SSelect','SNumberInput','SAutocompl
  for(const mode of ['disabled','readonly','formDisabled','formReadonly']){
   await mount(kind);if(mode==='disabled')disabled.value=true;if(mode==='readonly')readonly.value=true;if(mode==='formDisabled')formDisabled.value=true;if(mode==='formReadonly')formReadonly.value=true;await tick();assert.equal(d.querySelector('.sol-ui-input-clear'),null);handle.clear();$('#slot-clear').click();await tick();assert.deepEqual(value.value,initial(kind));assert.equal(events.clears.length,0);assert.equal(events.updates.length,0);await unmount()
  }
- await mount(kind,false);clearable.value=false;await tick();if(kind==='SMultiSelect'&&source){const frame=$('.sol-ui-input-frame');assert.ok(frame.contains($('#input')),'MultiSelect retains its intrinsic value frame without optional decorations');assert.equal(frame.querySelectorAll('.sol-ui-multi-tags [role=listitem]').length,1,'Selected chips remain inside that input frame');}else assert.equal(d.querySelector('.sol-ui-input-frame,.sol-ui-input-enhanced'),null);assert.equal(d.querySelector('.sol-ui-input-clear'),null);await unmount()
+ await mount(kind,false);clearable.value=false;await tick();if(kind==='SMultiSelect'&&frameContract==='intrinsic'){const frame=$('.sol-ui-input-frame');assert.ok(frame.contains($('#input')),'MultiSelect retains its intrinsic value frame without optional decorations');assert.equal(frame.querySelectorAll('.sol-ui-multi-tags [role=listitem]').length,1,'Selected chips remain inside that input frame');}else assert.equal(d.querySelector('.sol-ui-input-frame,.sol-ui-input-enhanced'),null);assert.equal(d.querySelector('.sol-ui-input-clear'),null);await unmount()
  if(kind==='STextField'){await mount(kind,false);assert.equal(d.querySelector('.v-field--prepended'),null,'A clear-only VTextField does not reserve an empty leading icon area');handle.clear();await tick();assert.equal($('#input').value,'');await unmount()}
  await mount(kind);accept.value=false;required.value=true;await tick();$('.sol-ui-input-clear').click();await tick();assert.deepEqual(value.value,initial(kind));assert.equal($('#input').value,initialText(kind));assert.equal(d.querySelector('#input-error'),null);assert.equal(events.clears.length,1);await unmount()
  await mount(kind);loading.value=true;locale.value='en-US';await tick();assert.ok($('.sol-ui-input-loading[role=progressbar]').getAttribute('aria-label').includes('Working'));assert.equal($('.sol-ui-input-clear').getAttribute('aria-label'),'Field Clear');assert.equal($('[data-slot-loading]').getAttribute('data-slot-loading'),'true');await unmount()
