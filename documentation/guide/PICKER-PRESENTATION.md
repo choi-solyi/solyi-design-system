@@ -1,6 +1,6 @@
 # Date/TimePicker 표시 방식
 
-미게시 1.1.0 개발 후보의 SDatePicker/STimePicker 옵션입니다. 공개 npm 1.0.0의 기능으로 설명하지 않습니다.
+npm 1.1.0의 SDatePicker/STimePicker 옵션입니다. 공개 npm 1.0.0의 기능으로 설명하지 않습니다.
 
 ```vue
 <script setup lang="ts">

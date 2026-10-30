@@ -2,7 +2,7 @@
 
 ## 현재 설치 경로
 
-[Getting started의 설치](https://ui.solyi.kr/#start/install)는 solyi-ui 1.0.0의 npm·pnpm 명령과 직접 설치 파일을 제공합니다. 정확한 파일·URL·해시는 현재 패키지 정보를 기준으로 합니다.
+[Getting started의 설치](https://ui.solyi.kr/#start/install)는 solyi-ui 1.1.0의 npm·pnpm 명령과 직접 설치 파일을 제공합니다. 정확한 파일·URL·해시는 현재 패키지 정보를 기준으로 합니다.
 
 공통 스타일·토큰·폰트가 포함된 `solyi-ui`를 설치합니다. Vue와 Vuetify는 peer dependency이며 UI 번들 안에 중복 포함하지 않습니다. Node·Vue·Vuetify 범위는 [호환 안내](COMPATIBILITY.md)를 확인합니다.
 
@@ -20,7 +20,7 @@ pnpm add solyi-ui vue vuetify
 
 ## 무결성과 반복 설치
 
-`releases/1.0.0/`에는 solyi-ui tarball, `manifest.json`, `SHA256SUMS`가 있습니다. [현재 패키지 정보](https://ui.solyi.kr/releases/index.json)에서 파일명·크기·SHA-256 및 npm lockfile의 SHA-512 integrity를 확인합니다.
+`releases/1.1.0/`에는 solyi-ui tarball, `manifest.json`, `SHA256SUMS`가 있습니다. [현재 패키지 정보](https://ui.solyi.kr/releases/index.json)의 버전과 해당 버전 manifest에서 파일명·크기·SHA-256 및 npm lockfile의 SHA-512 integrity를 확인합니다.
 
 PowerShell에서 파일을 내려받은 뒤 해시를 비교할 수 있습니다.
 
@@ -33,6 +33,8 @@ Get-FileHash 파일명.tgz -Algorithm SHA256
 ```sh
 npm ci --ignore-scripts
 ```
+
+기존 `releases/1.0.0/` 다운로드와 원본 해시는 보존합니다. [버전별 변경 이력](../../CHANGELOG.md), [GitHub Releases](https://github.com/choi-solyi/solyi-design-system/releases)와 [이전 문서 기록](../releases/README.md)은 최신 설치 파일 목록과 별개인 누적 이력입니다.
 
 ## 업데이트
 

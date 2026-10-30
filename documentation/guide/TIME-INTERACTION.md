@@ -1,4 +1,4 @@
-# TimePicker 확장 · 미게시
+# TimePicker 확장 · 1.1.0
 
 native 호환을 유지한 직접 입력 제어·목록·초기 위치·키보드 및 별도 opt-in 스크러빙을 추가합니다. npm 1.0.0에는 새 옵션이 없습니다.
 
@@ -84,4 +84,4 @@ readonly/disabled/빈 그리드는 입력 손잡이를 Tab에서 제외합니다
 
 [스크러빙 런타임](../../scripts/time-scrub-runtime-check.mjs)은 모델·폼 값을 쓰지 않는 preview, 최종 1회 commit, 8가지 취소 경로, 포인터 identity·경계 반전·draft blur·포커스와 선택 복원·locale/readonly·목록 취소·listener 정리를 통과했습니다. 자체 선언은 26개와 negative fixture가 통과했습니다. [스크러빙 Chrome](../../scripts/time-scrub-browser-check.mjs)은 현재 dist의 72개 테마/밀도/locale/폭 조합에서 실제 capture/release·폼 값 유지·키 반복 commit·Escape 선택 복원·목록 가장자리 자동 스크롤 취소·페이지 스크롤을 확인했습니다. 320px touch는 Chrome 에뮬레이션이며 input commit/pointercancel과 목록 본문 pan을 확인했습니다.
 
-새 tarball의 격리 설치·타입·빌드·runtime·Chrome 검증을 완료했습니다. 전체 배포 파이프라인의 동결 1.0.0 hash 게이트는 미통과로 유지합니다. 외부 선언 769건의 동일 조건 baseline 비교와 소비자 영향은 [입력 확장 검증](../development/INPUT-EXTENSIONS-VALIDATION.md)에 기록했습니다. 물리 터치 기기·스크린리더는 미검증입니다. npm 게시·push·운영 배포·외부 소비 프로젝트 수정은 하지 않습니다.
+새 tarball의 격리 설치·타입·빌드·runtime·Chrome 검증을 완료했습니다. 최종 1.1.0 배포 파이프라인을 통과했고 동결 1.0.0 원본은 보존합니다. 외부 선언 769건의 동일 조건 baseline 비교와 소비자 영향은 [입력 확장 검증](../development/INPUT-EXTENSIONS-VALIDATION.md)에 기록했습니다. 물리 터치 기기·스크린리더는 미검증입니다. npm 1.1.0 게시·공식 registry 설치·문서 배포를 완료했으며 외부 소비 프로젝트 수정은 별도입니다.

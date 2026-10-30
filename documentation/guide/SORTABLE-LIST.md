@@ -1,4 +1,4 @@
-# SSortableList · 미게시
+# SSortableList · 1.1.0
 
 임의 객체의 순서를 한 목록 안에서 바꾸는 controlled 컴포넌트입니다. 부모의 배열과 객체를 직접 수정하지 않습니다. 포인터·키보드 조작 중에는 삽입 위치와 preview만 바꾸고, 확정 시 새 배열을 제안합니다. 부모가 반영하지 않으면 원래 순서가 남습니다. 교차 목록·트리·가상 목록·업무별 정렬 규칙은 제공하지 않습니다.
 
@@ -50,4 +50,4 @@ native list/li/button, aria-pressed, polite 상태 안내를 사용합니다. li
 
 기초 helper 140개 조합, frozen 객체/identity·잘못된 key, runtime 취소·포커스·controlled 거부, strict generic 정상/오류 SFC, 실제 Chrome 72개 테마/모드/density/locale/폭 조합을 확인합니다. Chrome은 실제 Space/Enter/Tab과 pointer capture, nested/window 자동 스크롤·취소를 검사하며 320px touch emulation으로 탭·드래그·pointercancel·본문 pan을 구분합니다. 물리 터치 기기·스크린리더·Safari는 미검증입니다.
 
-패키지와 운영 문서의 버전은 아직 1.0.0으로 동결되어 있습니다. 개발 tarball을 공개 1.0.0 대신 덮어쓰지 않습니다. npm 게시·원격 push·운영 배포·외부 소비 프로젝트 갱신은 별도 승인 전까지 하지 않습니다. 외부 선언 769건과 동결 hash 게이트는 [입력 확장 검증](../development/INPUT-EXTENSIONS-VALIDATION.md)의 제약을 유지합니다.
+npm 1.1.0에 게시했고 문서·starter에 연결했습니다. 기존 1.0.0 파일·모델 계약은 보존합니다. 외부 선언 기준과 설치 검증 범위는 [게시 기록](../development/NPM-1.1.0-PUBLICATION.md)을 참고하세요. 소비 프로젝트의 의존성 갱신은 별도입니다.

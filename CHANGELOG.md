@@ -1,6 +1,8 @@
 # 변경 이력
 
-## 1.1.0 후보 · 미게시
+## 1.1.0 · 2026-10-29 · 한국시간
+
+공식 npm 게시: 2026-10-29T07:40:08.664Z. 기존 1.0.0 API와 Vue/Vuetify peer 범위를 유지하는 추가 기능 버전입니다. GitHub Release 발행일은 별도 표시됩니다.
 
 - 게시 전 공통 UI 보완: 버튼 loading은 크기와 역할 색을 유지하고 disabled 버튼·입력은 기존 surface-alt를 사용합니다. 짧은 trailing의 불필요한 줄바꿈과 Segmented 선택선·hover 밑줄 중복을 정리합니다.
 - SDataTable과 SPagination에 같은 siblingCount·compactPagination 설정을 제공합니다. 좁은 화면에서도 주변 번호를 유지하며 명시적으로 간단 표시를 선택할 수 있습니다. 두 컴포넌트의 설정 비교 예제를 추가합니다.
@@ -15,14 +17,14 @@
 - Dialog에 feedback/actions-start 슬롯과 busy/busyScope를 추가합니다. 기본 body 잠금은 닫기를 허용하고 all은 완료까지 내부 조작과 닫기를 막습니다. 외부 모델 제어와 기존 슬롯은 유지합니다.
 
 - Vue defineComponent의 순수 초기화 42곳에 PURE 표시를 추가합니다. 개별 import의 불필요한 컴포넌트 보존을 줄이며 setup·watch·이벤트·스타일 동작은 유지합니다.
-- 최종 공개 50종에 맞춰 버전별 source/gzip/전체 JS 및 실제 설치본 개별 import 크기 검사를 추가합니다. 기존 1.0.0 파일과 176,000자 기준은 보존합니다. 1.1.0은 로컬 후보이며 npm 게시·운영 배포와 릴리스 동결은 아직 수행하지 않았습니다.
+- 최종 공개 50종에 맞춰 버전별 source/gzip/전체 JS 및 실제 설치본 개별 import 크기 검사를 추가합니다. 기존 1.0.0 파일과 176,000자 기준은 보존합니다. 1.1.0 후보의 동결·npm 게시·공식 registry 설치 검증을 완료했습니다.
 - 공통 입력 8종의 opt-in 내부 clear action과 별도 자유 입력 SCombobox를 추가합니다. 기존 빈 값·change·폼 제출 계약을 보존하며 문서·starter 예제를 제공합니다.
 
 - SMonthCalendar를 추가합니다. ISO 선택과 표시 월을 controlled로 관리하며 범용 marker·키보드 탐색·로딩·모바일 marker 개수와 전체 자료 표시를 제공합니다. 기존 DatePicker 입력 API와 저장 형식은 유지합니다.
 - SSortableList의 isItemDisabled와 슬롯 disabled를 보완합니다. 조작 중 항목 비활성화 시 취소하고 가능한 다른 손잡이로 초점을 복원합니다.
 
-- SSortableList를 추가합니다. 임의 객체와 stable key를 받는 controlled 목록으로 키보드·이동 버튼·손잡이 드래그, preview/최종 제안/취소, 자동 스크롤과 포커스 복원을 제공합니다. 기존 42개 API를 보존하며 타입·전역 등록·Components 문서와 starter를 연결합니다.
-- 문서 헤더의 UI 데모 바로가기, 컴포넌트 미리보기 제목과 섹션 이동 버튼을 추가하고 Examples/코드 카드의 모서리 배경을 바로잡습니다. 이 항목은 로컬 개발본이며 운영 배포를 포함하지 않습니다.
+- SSortableList를 추가합니다. 임의 객체와 stable key를 받는 controlled 목록으로 키보드·이동 버튼·손잡이 드래그, preview/최종 제안/취소, 자동 스크롤과 포커스 복원을 제공합니다. 기존 API를 보존하며 타입·전역 등록·Components 문서와 starter를 연결합니다.
+- 문서 헤더의 UI 데모 바로가기, 컴포넌트 미리보기 제목과 섹션 이동 버튼을 추가하고 Examples/코드 카드의 모서리 배경을 바로잡습니다. 1.1.0 문서 사이트와 실행 예제에 반영했습니다.
 
 - STimePicker 입력·목록 손잡이를 opt-in으로 추가합니다. preview는 모델·폼 값을 유지하며 release에서 확정하고 Escape·pointercancel·capture 상실·외부 값/설정 변경 시 취소합니다. 키보드·목록 자동 스크롤과 optional ko/en locale 키를 함께 제공합니다.
 
@@ -33,9 +35,9 @@
 - SChip·SBadge·SIcon·SIconBtn을 추가하고 개별 import·전역 등록·타입·문서 예제를 연결합니다.
 - 기존 버튼·locale·아이콘·테마·밀도·포커스·터치 목표 토큰을 재사용합니다. SIconBtn은 SBtn의 loading·disabled 동작을 유지합니다.
 - controlled 선택·삭제, SVG 접근성, 배지 설명 연결, 타입 계약과 의미색 대비 검사를 추가합니다.
-- 기존 API와 peer 범위를 유지합니다. npm 게시·운영 문서 배포·소비 앱 업데이트는 포함하지 않습니다.
+- 기존 API와 peer 범위를 유지합니다. npm 1.1.0과 문서 사이트에 반영했으며 소비 앱 업데이트는 각 앱에서 별도로 진행합니다.
 
-## 2026-10-24 · 한국시간
+## 1.0.0 · 2026-10-24 · 한국시간
 
 - `solyi-ui` 1.0.0은 Vue 3용 S 컴포넌트와 공통 토큰·CSS·helper·타입을 하나의 패키지로 제공합니다.
 - 버튼·입력·폼 검증·레이아웃·표·선택·탐색·알림·오버레이·날짜/시간·파일·차트·트리·진행 표시를 38개 S 컴포넌트로 제공합니다.
@@ -47,3 +49,7 @@
 - 전역 등록·Vue 자동 import·TypeScript·lint·테마 설정과 소비 앱용 DESIGN.md를 제공합니다.
 - Vue 3.5.44·Vuetify 4.3.0·Node 22.23.3을 검증 기준으로 하며, peer 범위 전체와 모든 실기기의 동작을 검증했다는 뜻은 아닙니다. 외부 선언 및 비동기 검증의 지원 경계는 설치·폼 안내를 따릅니다.
 - 재사용 코드는 MIT이며 로고·캐릭터·개인 콘텐츠는 배포 패키지와 MIT 적용 범위에서 제외합니다.
+
+## 이전 문서 개발 이력
+
+1.0.0 이전 문서·로컬 후보 기록은 [원본 보관 목록](documentation/releases/README.md)에 보존합니다. 당시의 미게시·검토 문구는 npm 릴리즈 상태로 재해석하지 않습니다.

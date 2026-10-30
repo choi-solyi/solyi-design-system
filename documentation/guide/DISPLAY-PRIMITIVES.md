@@ -1,6 +1,6 @@
 # Chip · Badge · Icon · Icon Button
 
-이 문서는 아직 게시되지 않은 개발 브랜치의 추가 API입니다. npm `solyi-ui@1.0.0`에는 아래 네 컴포넌트가 없습니다. 기존 API를 유지하는 minor 버전(예: 1.1.0)의 후보이며 게시·운영 문서 배포·소비 앱 업데이트는 별도로 결정합니다.
+이 문서는 npm `solyi-ui@1.1.0`에 포함된 SChip·SBadge·SIcon·SIconBtn 안내입니다. 1.0.0에는 이 네 컴포넌트가 없으며 기존 API와 peer 범위는 유지합니다.
 
 ## 연결과 공통 스타일
 

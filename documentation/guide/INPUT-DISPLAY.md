@@ -1,6 +1,6 @@
-# 날짜·숫자 표시 확장 · 미게시
+# 날짜·숫자 표시 확장 · 1.1.0
 
-이 안내는 `feat/input-display`의 개발 API입니다. npm 1.0.0에는 새 옵션이 없으며 게시·버전 변경·외부 소비 앱 교체는 포함하지 않습니다. 기존 옵션을 생략한 기본 동작과 이벤트 payload, 폼 검증·readonly 계약은 유지합니다.
+npm 1.1.0에 포함된 날짜·숫자 표시 옵션입니다. 1.0.0의 기본 동작과 이벤트 payload, 폼 검증·readonly 계약을 유지합니다.
 
 ## SDatePicker
 
@@ -41,4 +41,4 @@ formatter와 name을 함께 쓰면 현재 숫자 모델을 기존 `formatSolNumb
 
 30개 공유 SFC의 source alias runtime·strict source 타입 검사, source 기반 starter와 문서 빌드, 27개 문서/82개 링크 검사도 통과했습니다. 문서 빌드의 첫 시도는 starter 폰트 산출물이 없어 실패했으며 source 기반 starter를 먼저 생성해 해결했습니다.
 
-이 작은 단위에서는 새 tarball의 설치 소비 검증과 전체 배포 파이프라인을 아직 실행하지 않았습니다. 동결 1.0.0과 다른 개발 산출물을 같은 릴리스로 바꾸는 검사는 삭제·완화하지 않습니다. 실제 모바일·Safari·화면 낭독기도 미검증입니다. 다음 단위는 STimePicker의 기존 min 기준 step/readonly를 보존하는 opt-in 입력·스크롤·scrubbing 설계와 구현입니다.
+최종 1.1.0의 타입·설치·빌드·runtime 및 문서 배포 검증을 완료했습니다. [게시 기록](../development/NPM-1.1.0-PUBLICATION.md)을 참고하세요. 기존 1.0.0 파일과 검사는 보존합니다. 실제 모바일·Safari·화면 낭독기는 별도 미검증입니다.

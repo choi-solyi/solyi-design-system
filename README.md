@@ -1,6 +1,6 @@
 # Sol UI
 
-Sol UI 1.0.0은 Vue 3와 Vuetify를 사용하는 프로젝트를 위한 UI 라이브러리입니다. `solyi-ui`에 포함된 S 컴포넌트와 공통 토큰·CSS로 색, 글꼴, 간격, 밀도와 상태 표현을 함께 사용합니다.
+Sol UI 1.1.0은 Vue 3와 Vuetify를 사용하는 프로젝트를 위한 UI 라이브러리입니다. `solyi-ui`에 포함된 S 컴포넌트와 공통 토큰·CSS로 색, 글꼴, 간격, 밀도와 상태 표현을 함께 사용합니다.
 
 ## 설치
 
@@ -61,6 +61,16 @@ createApp(App)
 버튼·입력·폼·표·탐색·알림·오버레이·날짜/시간·파일·진행 표시 등은 공개 S API를 제공합니다. 검색·편집·비교·복구·화면틀은 해당 컴포넌트를 조합한 예제입니다. 문서 코드와 실행 화면은 같은 SFC와 실제 패키지를 사용합니다.
 
 테마는 Violet·Sage·Sand, 화면 모드는 라이트·다크, 밀도는 기본·컴팩트를 제공합니다. 원본 V 컴포넌트도 공통 테마와 함께 사용할 수 있으며 모든 V API가 S API와 같다는 뜻은 아닙니다. 자동 검사만으로 전체 접근성 준수나 모든 브라우저 호환을 주장하지 않습니다.
+
+## 릴리즈와 변경 이력
+
+현재 npm 버전은 [solyi-ui 1.1.0](https://www.npmjs.com/package/solyi-ui/v/1.1.0)입니다. 50개 공개 S 컴포넌트와 기존 API를 유지하며 입력·선택·정렬·달력·시간 그리드 등을 확장했습니다.
+
+- [버전별 변경 이력](CHANGELOG.md) · [문서 릴리즈 페이지](https://ui.solyi.kr/#releases/changelog)
+- [GitHub Releases](https://github.com/choi-solyi/solyi-design-system/releases) · [1.0.0 이전 원본 기록](documentation/releases/README.md)
+- [npm 게시·설치 검증](documentation/development/NPM-1.1.0-PUBLICATION.md)
+
+1.0.0의 파일·날짜·설명과 이전 문서 기록은 보존합니다. npm 패키지 내부 README를 포함한 게시 파일은 바꾸지 않으며 최신 사용 안내는 이 저장소와 문서를 기준으로 합니다. 소비 앱의 의존성 갱신과 배포는 별도입니다.
 
 ## 개발
 

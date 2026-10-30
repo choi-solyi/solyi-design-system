@@ -1,0 +1,25 @@
+# 이전 릴리즈 원본 기록
+
+1.0.0 날짜와 설명은 원본 CHANGELOG를 그대로 보존합니다. 0.x는 당시 문서/개발/로컬 후보 기록이며 npm의 solyi-ui 버전과 동일한 의미가 아닙니다. 수정된 날짜나 게시 상태를 소급 부여하지 않았습니다. 각 파일은 다운로드 manifest의 sourceRef 시점 원문이며 archive.json의 SHA-256으로 확인합니다.
+
+- [1.0.0 원문](1.0.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/56a981378bae6c19ed8db04cb6292e295bf0d56b/CHANGELOG.md)
+- [0.14.3 원문](0.14.3.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/80679e28c1afe41a238d22f1b5dbc6679f4ca85e/CHANGELOG.md)
+- [0.14.2 원문](0.14.2.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/0e8a5b1b23af7b27f335e3466f5ee7810accea5b/CHANGELOG.md)
+- [0.14.1 원문](0.14.1.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/1b2d8ae3f24f6d509546694c7f3e489e9dc6d920/CHANGELOG.md)
+- [0.14.0 원문](0.14.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/0dc51d1bd4f32474dafcb8c9add90cc7bcec4c3f/CHANGELOG.md)
+- [0.13.0 원문](0.13.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/af510cc0eed8d2cc74830d3c19e0c249485495db/CHANGELOG.md)
+- [0.12.3 원문](0.12.3.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/062fbf26c10b672420c7bed9934b96ac5e525cad/CHANGELOG.md)
+- [0.12.2 원문](0.12.2.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/7215e6ee9a0a0b311ed4c4ca044109c418defcc7/CHANGELOG.md)
+- [0.12.1 원문](0.12.1.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/dbbfbefd05871fa5251e6d6473e6267df5ead56e/CHANGELOG.md)
+- [0.12.0 원문](0.12.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/09d5d4c70c7f84598e31baea5425bb5dd60a9fef/CHANGELOG.md)
+- [0.11.2 원문](0.11.2.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/f000029e75e35c7f2ea2d4711a46dbcfc20455d5/CHANGELOG.md)
+- [0.11.1 원문](0.11.1.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/020198f4f2a08842345d6a83ec212c98d66ce66d/CHANGELOG.md)
+- [0.11.0 원문](0.11.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/a8d66cd2bb76a44a0e0b08856aca706c4c3ae016/CHANGELOG.md)
+- [0.10.0 원문](0.10.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/a1a2be871b750eec5ce4c231a8ffd7baed9d3894/CHANGELOG.md)
+- [0.9.1 원문](0.9.1.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/42bbadeb1ff60a140b2f2219d3cad111b1be2c96/CHANGELOG.md)
+- [0.9.0 원문](0.9.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/92d66456ca1d0d206ae208f9061cb9702b828bb1/CHANGELOG.md)
+- [0.8.1 원문](0.8.1.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/72bf0500f00b94abac1287c197ffc3dc6ecdb7dc/CHANGELOG.md)
+- [0.7.1 원문](0.7.1.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/7ad4deda5cf3e4c1d836ac7eff3d75912ace4e1b/CHANGELOG.md)
+- [0.7.0 원문](0.7.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/6965d2ee49eddf2d31e0a91a4e268e93a8e859b4/CHANGELOG.md)
+- [0.6.0 원문](0.6.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/17defab4e57ac6f55f2817be786c9dbeff13e1cd/CHANGELOG.md)
+- [0.5.0 원문](0.5.0.txt) · [원본 Git 기록](https://github.com/choi-solyi/solyi-design-system/blob/b8648faa619a2e36a38be6d95e123d1e245473ad/CHANGELOG.md)

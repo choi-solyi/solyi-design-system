@@ -1,6 +1,6 @@
-# SMonthCalendar · 미게시
+# SMonthCalendar · 1.1.0
 
-입력 팝업인 SDatePicker와 별개인 월간 조회·탐색 컴포넌트입니다. 선택 날짜와 표시 월을 부모가 관리하며 저장값을 timezone으로 변환하거나 업무별 휴가·공휴일·주말 규칙을 추가하지 않습니다. 공개 npm 1.0.0에는 아직 없습니다.
+입력 팝업인 SDatePicker와 별개인 월간 조회·탐색 컴포넌트입니다. 선택 날짜와 표시 월을 부모가 관리하며 저장값을 timezone으로 변환하거나 업무별 휴가·공휴일·주말 규칙을 추가하지 않습니다. npm 1.1.0부터 제공하며 1.0.0에는 없습니다.
 
 ## 공개 계약
 
@@ -49,4 +49,4 @@ SMonthCalendar는 root 개별 import, SolyiUI 플러그인과 solyi-ui/global �
 
 기존 커스텀 달력의 선택 ISO를 modelValue에, 별도 표시 월을 month에 연결합니다. 날짜별 업무 데이터를 id/label/tone/icon map으로 변환하고 isDateDisabled는 앱에 둡니다. month-change에서 데이터를 요청하더라도 선택을 초기화하지 않고, 새 데이터와 loading만 갱신합니다. 서버 저장·timezone·업무 규칙은 소비 프로젝트 책임입니다. SSR이나 업무 timezone의 ‘오늘’은 명시적 today ISO로 전달합니다.
 
-기존 DatePicker/API·ISO 저장 형식·Vue/Vuetify peer 범위를 바꾸지 않았습니다. 새 외부 의존성·공통 토큰은 없습니다. 현재 버전 metadata는 private 1.0.0으로 유지하며 다음 minor가 후보입니다. [크기 한도와 동결 gate 실패](../development/BUNDLE-GROWTH-REVIEW.md)가 해소되기 전 공개 출시 가능 상태로 표현하지 않습니다. npm 게시·push·운영 배포·외부 소비 앱 변경은 하지 않았습니다.
+기존 DatePicker/API·ISO 저장 형식·Vue/Vuetify peer 범위는 유지합니다. npm 1.1.0에 게시했고 문서·starter에 연결했습니다. 최종 크기 기준·설치 검증은 [게시 기록](../development/NPM-1.1.0-PUBLICATION.md)을 참고하세요. 소비 앱 변경은 별도입니다.
