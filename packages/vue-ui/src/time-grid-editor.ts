@@ -1,13 +1,11 @@
 import { computed, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { ComputedRef, Ref, VNode } from 'vue'
-import { SBtn } from './button'
 import { SIcon } from './primitives'
 import { formatSolDate } from './locale'
 import type { SolLocale } from './locale'
 import { useTimeGridInteraction } from './time-grid-interaction'
 import type { TimeGridInteractionSource } from './time-grid-interaction'
 import { createTimeGridPointer } from './time-grid-pointer'
-import { proposeTimeGridCoordinate, sameTimeGridCoordinate } from './time-grid-proposal'
 import type {
   TimeGridAction,
   TimeGridCancelReason,
@@ -51,8 +49,7 @@ export function useTimeGridEditor(
   view: View,
   events: Events,
 ) {
-  const toolbar = ref<HTMLElement | null>(null),
-    message = ref<'' | 'commit' | 'cancel' | 'unchanged'>(''),
+  const message = ref<'' | 'commit' | 'cancel' | 'unchanged'>(''),
     l = view.locale
   const validKey = (key: unknown) =>
     typeof key === 'string' ? !!key.trim() : typeof key === 'number' && Number.isFinite(key)
@@ -115,16 +112,7 @@ export function useTimeGridEditor(
     ],
     snap: () => p.snapMinutes,
     blocked,
-    focus: (key, target) => {
-      if (target === 'toolbar') {
-        const button = toolbar.value?.querySelector<HTMLElement>('button:not(:disabled)')
-        if (button) {
-          button.focus()
-          return
-        }
-      }
-      view.focus(key)
-    },
+    focus: view.focus,
     prepareRestore: (key) => {
       const previous = typeof document === 'undefined' ? null : document.activeElement,
         owned = !!previous && !!view.host.value?.contains(previous)
@@ -193,25 +181,6 @@ export function useTimeGridEditor(
       timeSteps * p.snapMinutes
     operation.preview(minute, column.key, input)
   }
-  function canStep(timeSteps: number, columnSteps = 0) {
-    const current = operation.state.value,
-      columns = source()?.columns
-    if (!current || !columns || blocked(current.key, current.action)) return false
-    const index = columns.findIndex((column) => column.key === current.to.columnKey),
-      column = columns[index + columnSteps]
-    if (!column) return false
-    try {
-      const minute =
-        (current.action === 'resize-end' ? current.to.endMinute : current.to.startMinute) +
-        timeSteps * p.snapMinutes
-      return !sameTimeGridCoordinate(
-        current.to,
-        proposeTimeGridCoordinate(current.from, current.action, minute, column.key, p.snapMinutes),
-      )
-    } catch {
-      return false
-    }
-  }
   function keydown(event: KeyboardEvent) {
     if (event.isComposing || event.defaultPrevented) return
     const target = event.target instanceof HTMLElement ? event.target : null,
@@ -277,20 +246,6 @@ export function useTimeGridEditor(
       return
     void nextTick(() => {
       if (!operation.state.value || view.host.value?.contains(document.activeElement)) return
-      // Reaching a boundary disables the focused step button. Browsers may move
-      // focus to body; keep the intent and move to an available toolbar action.
-      if (
-        document.activeElement === document.body &&
-        event.target instanceof HTMLElement &&
-        view.host.value?.contains(event.target) &&
-        event.target.matches(':disabled')
-      ) {
-        const available = toolbar.value?.querySelector<HTMLElement>('button:not(:disabled)')
-        if (available) {
-          available.focus()
-          return
-        }
-      }
       operation.cancel('blur', false)
     })
   }
@@ -347,7 +302,7 @@ export function useTimeGridEditor(
           onDragstart: (event: DragEvent) => event.preventDefault(),
           onClick: (event: MouseEvent) => {
             if (!pointer.consumeClick(event, item.key))
-              operation.begin(item.key, action, 'button', 'toolbar')
+              operation.begin(item.key, action, 'button')
           },
         },
         [h(SIcon, { name: icon, size: 16, rotate, decorative: true })],
@@ -357,93 +312,6 @@ export function useTimeGridEditor(
         ? [button('resize-start', 'chevron', 180), button('resize-end', 'chevron')]
         : []),
     ]
-  }
-  function agendaActions(item: TimeGridEntry<unknown>) {
-    if (p.readonly) return null
-    const actions: TimeGridAction[] = [
-      ...(p.allowMove ? ['move' as const] : []),
-      ...(p.allowResize ? ['resize-start' as const, 'resize-end' as const] : []),
-      ...(p.allowDuplicate ? ['duplicate' as const] : []),
-    ]
-    return h(
-      'div',
-      { class: 'sol-actions' },
-      actions.map((action) =>
-        h(
-          SBtn,
-          {
-            key: action,
-            disabled: !!blocked(item.key, action),
-            'aria-label': actionLabel(action) + ' · ' + item.label,
-            onClick: () => operation.begin(item.key, action, 'button', 'toolbar'),
-          },
-          () => actionLabel(action),
-        ),
-      ),
-    )
-  }
-  function renderToolbar() {
-    const current = operation.state.value
-    if (!current) return null
-    const move = current.action === 'move' || current.action === 'duplicate',
-      rtl = !!view.host.value && getComputedStyle(view.host.value).direction === 'rtl'
-    const button = (
-      label: string,
-      disabled: boolean,
-      click: () => void,
-      rotate: 0 | 90 | 180 | 270,
-    ) =>
-      h(SBtn, { disabled, 'aria-label': label, onClick: click }, () =>
-        h(SIcon, { name: 'arrow', rotate, decorative: true }),
-      )
-    return h(
-      'div',
-      {
-        ref: toolbar,
-        class: 'sol-ui-time-grid-toolbar',
-        role: 'group',
-        'aria-label': l.value.timeGridActions || actionLabel(current.action),
-      },
-      [
-        ...(move
-          ? [
-              button(
-                l.value.timeGridPreviousColumn || 'Previous column',
-                !canStep(0, -1),
-                () => step(0, -1),
-                rtl ? 0 : 180,
-              ),
-              button(
-                l.value.timeGridNextColumn || 'Next column',
-                !canStep(0, 1),
-                () => step(0, 1),
-                rtl ? 180 : 0,
-              ),
-            ]
-          : []),
-        button(l.value.timeGridEarlier || 'Earlier', !canStep(-1), () => step(-1), 270),
-        button(l.value.timeGridLater || 'Later', !canStep(1), () => step(1), 90),
-        h('div', { class: 'sol-ui-time-grid-toolbar-actions' }, [
-          h(
-            SBtn,
-            {
-              variant: 'primary',
-              disabled:
-                !!blocked(current.key, current.action) ||
-                (current.action !== 'duplicate' &&
-                  sameTimeGridCoordinate(current.from, current.to)),
-              onClick: () => operation.commit(),
-            },
-            () => l.value.timeGridApply || l.value.done,
-          ),
-          h(
-            SBtn,
-            { onClick: () => operation.cancel('button') },
-            () => l.value.timeGridCancel || l.value.close,
-          ),
-        ]),
-      ],
-    )
   }
   function preview(columnKey: string) {
     const current = operation.state.value
@@ -519,15 +387,15 @@ export function useTimeGridEditor(
   }
   return {
     state: operation.state,
-    events: { onKeydown: keydown, onFocusout: focusout },
+    begin: operation.begin,
+    events: { onPointerdownCapture: pointer.clearClick, onKeydown: keydown, onFocusout: focusout },
     cancel: () => operation.cancel('api'),
     valid: computed(() => configurationValid.value && disabledItems.value.valid),
     blocked,
     pending,
     handles,
     pointerProps,
-    agendaActions,
-    renderToolbar,
+    consumeClick: pointer.consumeClick,
     preview,
     status,
     scope: (key: TimeGridKey) => ({

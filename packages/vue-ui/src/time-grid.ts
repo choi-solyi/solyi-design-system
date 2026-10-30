@@ -17,6 +17,9 @@ import type {
 } from './time-grid-values'
 import { useTimeGridEditor } from './time-grid-editor'
 import { SBtn } from './button'
+import { SIcon } from './primitives'
+import { useActionMenu } from './actions'
+import type { SolMenuItem } from './actions'
 import type {
   TimeGridAction,
   TimeGridCancelReason,
@@ -35,6 +38,7 @@ export type SolTimeGridKey = TimeGridKey
 export type SolTimeGridColumn = TimeGridColumn
 export type SolTimeGridBand = TimeGridBand
 export interface SolTimeGridCreateRequest { readonly columnKey: string; readonly startMinute: number; readonly endMinute: number; readonly input: 'pointer' | 'keyboard' | 'button' }
+export interface SolTimeGridEditRequest { readonly key: SolTimeGridKey; readonly input: 'keyboard' | 'button' }
 export interface SolTimeGridRemoveRequest { readonly key: SolTimeGridKey; readonly input: 'keyboard' | 'button' }
 export interface SolTimeGridCurrentTime { readonly date: string; readonly minute: number }
 export interface SolTimeGridItemScope<T> {
@@ -85,6 +89,7 @@ export interface SolTimeGridProps<T> extends AllowedComponentProps, VNodeProps {
   allowDuplicate?: boolean
   allowCreate?: boolean
   allowRemove?: boolean
+  allowEdit?: boolean
   showCurrentTime?: boolean
   currentTime?: SolTimeGridCurrentTime
   pendingKeys?: readonly SolTimeGridKey[]
@@ -95,6 +100,7 @@ export interface SolTimeGridProps<T> extends AllowedComponentProps, VNodeProps {
   onCancel?: (result: SolTimeGridCancellation) => void
   onCreate?: (request: SolTimeGridCreateRequest) => void
   onRemove?: (request: SolTimeGridRemoveRequest) => void
+  onEdit?: (request: SolTimeGridEditRequest) => void
 }
 export interface SolTimeGridHandle {
   focus(key?: SolTimeGridKey): void
@@ -116,6 +122,7 @@ export interface SolTimeGridComponent {
 export interface SolTimeGridEmit {
   (event: 'create', request: SolTimeGridCreateRequest): void
   (event: 'remove', request: SolTimeGridRemoveRequest): void
+  (event: 'edit', request: SolTimeGridEditRequest): void
   (event: 'start' | 'preview' | 'commit', proposal: SolTimeGridProposal): void
   (event: 'cancel', result: SolTimeGridCancellation): void
 }
@@ -148,6 +155,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
     allowDuplicate: Boolean,
     allowCreate: Boolean,
     allowRemove: Boolean,
+    allowEdit: Boolean,
     showCurrentTime: Boolean,
     currentTime: Object as PropType<SolTimeGridCurrentTime>,
     pendingKeys: { type: Array as PropType<readonly SolTimeGridKey[]>, default: () => [] },
@@ -157,6 +165,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
   emits: {
     create: (_request: SolTimeGridCreateRequest) => true,
     remove: (_request: SolTimeGridRemoveRequest) => true,
+    edit: (_request: SolTimeGridEditRequest) => true,
     start: (_proposal: SolTimeGridProposal) => true,
     preview: (_proposal: SolTimeGridProposal) => true,
     commit: (_proposal: SolTimeGridProposal) => true,
@@ -250,8 +259,43 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
     function remove(key: SolTimeGridKey, input: SolTimeGridRemoveRequest['input']) {
       if (!p.allowRemove || !snapshot.value?.entries.some(entry => entry.key === key) || editor.scope(key).disabled || p.readonly) return
       editor.cancel()
+      if (itemMenu.expanded.value && menuKey.value === key && menuOrigin?.isConnected) menuOrigin.focus()
       emit('remove', Object.freeze({ key, input }))
     }
+    let menuOrigin: HTMLElement | null = null
+    const menuKey = ref<SolTimeGridKey>(), menuInput = ref<'keyboard' | 'button'>('button')
+    const menuItems = computed<readonly SolMenuItem[]>(() => [
+      ...(p.allowDuplicate ? [{ id: 'duplicate', label: l.value.timeGridDuplicate || 'Duplicate', disabled: menuKey.value === undefined || editor.scope(menuKey.value).disabled }] : []),
+      ...(p.allowEdit ? [{ id: 'edit', label: l.value.timeGridEdit || l.value.done, disabled: menuKey.value === undefined || editor.scope(menuKey.value).disabled }] : []),
+      ...(p.allowRemove ? [{ id: 'remove', label: l.value.timeGridRemove || l.value.remove(''), danger: true, disabled: menuKey.value === undefined || editor.scope(menuKey.value).disabled }] : []),
+    ])
+    const itemMenu = useActionMenu({
+      get id() { return p.id + '-actions' }, get label() { return l.value.moreActions },
+      get items() { return menuItems.value }, get disabled() { return p.disabled || p.loading },
+      get readonly() { return p.readonly }, open: undefined,
+    }, (event, value?: unknown) => {
+      if (event !== 'select' || menuKey.value === undefined || editor.scope(menuKey.value).disabled || p.readonly) return
+      if (value === 'duplicate' && p.allowDuplicate) editor.begin(menuKey.value, 'duplicate', menuInput.value)
+      else if (value === 'remove') remove(menuKey.value, menuInput.value)
+      else if (value === 'edit' && p.allowEdit) { editor.cancel();if (menuOrigin?.isConnected) menuOrigin.focus();emit('edit', Object.freeze({ key: menuKey.value, input: menuInput.value })) }
+    }, host)
+    function openMenu(event: MouseEvent | KeyboardEvent, key: SolTimeGridKey, context = false) {
+      if (p.readonly || editor.scope(key).disabled || !menuItems.value.length) return
+      event.preventDefault();event.stopPropagation();editor.cancel()
+      menuOrigin = event.currentTarget as HTMLElement
+      menuKey.value = key;menuInput.value = event.type === 'keydown' ? 'keyboard' : 'button'
+      itemMenu.open(event.currentTarget as HTMLElement, context && event instanceof MouseEvent ? { x: event.clientX, y: event.clientY } : undefined)
+    }
+    function menuButton(entry: { key: SolTimeGridKey; label: string }) {
+      return !p.readonly && (p.allowEdit || p.allowRemove || p.allowDuplicate) ? h('button', {
+        type: 'button', class: 'sol-button subtle sol-ui-time-grid-menu-trigger',
+        disabled: editor.scope(entry.key).disabled, 'aria-label': l.value.moreActions + ' · ' + entry.label,
+        'aria-haspopup': 'menu', 'aria-expanded': String(itemMenu.expanded.value && menuKey.value === entry.key),
+        'aria-controls': itemMenu.expanded.value && menuKey.value === entry.key ? p.id + '-actions-menu' : undefined,
+        onClick: (event: MouseEvent) => openMenu(event, entry.key),
+      }, h(SIcon, { name: 'more', rotate: 90, decorative: true })) : null
+    }
+    watch(snapshot, () => { if (menuKey.value !== undefined && !snapshot.value?.entries.some(entry => entry.key === menuKey.value)) itemMenu.close('programmatic', false) })
     expose({
       focus,
       cancel: () => {
@@ -394,7 +438,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                             tabindex: canCreate() ? 0 : undefined,
                             'aria-describedby': canCreate() ? p.id + '-keys' : undefined,
                             onClick: (event: MouseEvent) => {
-                              if (!canCreate() || (event.target as Element).closest('.sol-ui-time-grid-item,button,a,input,textarea,select,[contenteditable]')) return
+                              if (editor.consumeClick(event) || !canCreate() || (event.target as Element).closest('.sol-ui-time-grid-item,button,a,input,textarea,select,[contenteditable]')) return
                               const box = (event.currentTarget as HTMLElement).getBoundingClientRect()
                               create(column.key, data.startMinute + (event.clientY - box.top) / box.height * span, 'pointer')
                             },
@@ -484,7 +528,9 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                   'aria-busy': editor.pending(entry.key) ? 'true' : undefined,
                                   'aria-describedby': !p.readonly ? p.id + '-keys' : undefined,
                                   ...editor.pointerProps(entry),
+                                  onContextmenu: (event: MouseEvent) => openMenu(event, entry.key, true),
                                   onKeydown: (event: KeyboardEvent) => {
+                                    if (event.key === 'ContextMenu' || event.key === 'F10' && event.shiftKey) { openMenu(event, entry.key); return }
                                     if (event.target === event.currentTarget && !event.isComposing && event.key === 'Delete' && p.allowRemove && !p.readonly) { event.preventDefault();event.stopPropagation();remove(entry.key, 'keyboard') }
                                   },
                                   'aria-label':
@@ -518,6 +564,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                       time(entry.startMinute) + '–' + time(entry.endMinute),
                                     ),
                                   ]),
+                                  menuButton(entry),
                                   ...editor.handles(
                                     entry,
                                     Math.max(30, entry.visibleEnd - entry.visibleStart),
@@ -537,7 +584,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
           !p.readonly ? editor.status() : null,
           !p.readonly ? h('p', {class:'sol-ui-hint',id:p.id+'-keys'},l.value.timeGridKeys) : null,
           p.loading ? h('p', {class:'sol-ui-hint',role:'status'},l.value.timeGridLoading || l.value.loading) : null,
-          editor.renderToolbar(),
+          itemMenu.render(),
           data.entries.length
             ? h('details', { class: 'sol-ui-time-grid-agenda', open: !p.readonly }, [
                 h('summary', l.value.timeGridList || p.label),
@@ -563,8 +610,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                             l.value.timeGridPending || l.value.progressPending,
                           )
                         : null,
-                      editor.agendaActions(entry),
-                      p.allowRemove && !p.readonly ? h(SBtn, { disabled: editor.scope(entry.key).disabled, 'aria-label': l.value.timeGridRemove + ' · ' + entry.label, onClick: () => remove(entry.key, 'button') }, () => l.value.timeGridRemove) : null,
+                      menuButton(entry),
                     ])
                   }),
                 ),

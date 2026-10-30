@@ -4,12 +4,11 @@
 .sol-ui-sortable-row[data-insert=before] {box-shadow:inset 0 var(--sol-focus-width) 0 var(--sol-color-focus);}
 .sol-ui-sortable-row[data-insert=after] {box-shadow:inset 0 calc(-1 * var(--sol-focus-width)) 0 var(--sol-color-focus);}
 .sol-ui-sortable .sol-ui-sortable-handle,.sol-ui-sortable-moves>.sol-button {inline-size:var(--sol-control-height);min-inline-size:var(--sol-control-height);min-block-size:var(--sol-control-height);padding:0;}
-.sol-ui-sortable-content {min-inline-size:0;overflow-wrap:anywhere;}
+.sol-ui-sortable-content {grid-column:2;min-inline-size:0;overflow-wrap:anywhere;}
 .sol-ui-sortable-moves {display:flex;gap:var(--sol-space-1);}
 .sol-ui-sortable-status {display:block;min-block-size:1lh;}
 .sol-ui-sortable-handle {touch-action:none;user-select:none;cursor:grab;}
 .sol-ui-sortable .sol-ui-sortable-handle {border-color:transparent;background:transparent;}
-.sol-ui-sortable-row[data-controls=hidden] {grid-template-columns:minmax(0,1fr);}
 .sol-ui-sortable-row[data-controls=hidden]>.sol-ui-sortable-handle,.sol-ui-sortable-row[data-controls=hidden]>.sol-ui-sortable-moves {display:none;}
 .sol-ui-sortable-move {transition:transform var(--sol-motion-duration-state) var(--sol-motion-easing-standard);}
 .sol-ui-sortable-ghost {position:fixed;inset:auto;margin:0;pointer-events:none;box-sizing:border-box;z-index:var(--sol-layer-floating);padding:var(--sol-space-3);border:1px solid var(--sol-color-accent);border-radius:var(--sol-radius-control);box-shadow:var(--sol-elevation-floating);background:var(--sol-color-selected-surface);color:var(--sol-color-selected-text);font-family:var(--sol-font-sans);overflow-wrap:anywhere;}
@@ -17,3 +16,7 @@
 [data-motion-policy=reduced] .sol-ui-sortable-move {transition:none;}
 .sol-ui-sortable-handle[aria-pressed=true] {cursor:grabbing;}
 .sol-ui-sortable-handle:disabled {touch-action:pan-y;cursor:default;}
+
+.sol-ui-sortable .sol-ui-sortable-handle:focus:not(:focus-visible),.sol-ui-sortable .sol-ui-sortable-handle:active:not(:focus-visible) {outline:0;box-shadow:none;border-color:transparent;}
+
+.sol-ui-sortable .sol-ui-sortable-handle[data-pointer-focus=true]:focus {outline:0;box-shadow:none;border-color:transparent;}

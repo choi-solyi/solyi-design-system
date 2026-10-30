@@ -105,6 +105,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
     end: (_result: SolSortableEnd<unknown>) => true,
   },
   setup(p, { attrs, slots, emit, expose }) {
+    const pointerFocus = ref<SolSortableKey>()
     const l = useSolLocale(() => p.locale),
       host = ref<HTMLElement | null>(null),
       revision = ref(0),
@@ -484,8 +485,9 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
                       'aria-label': l.value.sortableHandle!(label),
                       'aria-pressed': String(active),
                       'aria-describedby': p.id + '-keys',
-                      onKeydown: (event: KeyboardEvent) => key(event, itemKey),
-                      onPointerdown: (event: PointerEvent) => pointerdown(event, itemKey),
+                      'data-pointer-focus': pointerFocus.value === itemKey ? 'true' : undefined,
+                      onKeydown: (event: KeyboardEvent) => { pointerFocus.value=undefined;key(event, itemKey) },
+                      onPointerdown: (event: PointerEvent) => { pointerFocus.value=itemKey;pointerdown(event, itemKey) },
                       onDragstart: (event: DragEvent) => event.preventDefault(),
                       onClick: (event: MouseEvent) => {
                         if (pointer.consumeClick(event)) return
@@ -493,6 +495,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
                         else begin(itemKey)
                       },
                       onBlur: () => {
+                        pointerFocus.value=undefined
                         if (session?.key === itemKey || pointer.key() === itemKey)
                           cancel('blur', false)
                       },

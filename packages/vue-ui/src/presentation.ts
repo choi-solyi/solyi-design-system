@@ -191,7 +191,7 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
                         ]),
                       ],
                     ),
-                    p.type === 'pie' ? h('ol', { class: 'sol-ui-chart-legend' }, p.items.map((item, index) => h('li', { key: item.id }, [h('span', { 'aria-hidden': 'true', class: 'sol-ui-chart-swatch', style: { background: category(index) } }), `${item.label}: ${formatSolNumber(item.value, l.value)}`]))) : null,
+                    p.type === 'pie' ? h('ol', { class: 'sol-ui-chart-legend' }, p.items.map((item, index) => h('li', { key: item.id }, [h('span', { 'aria-hidden': 'true', class: 'sol-ui-chart-order' }, [h('span', { class: 'sol-ui-chart-swatch', style: { background: category(index) } }), String(index + 1) + '.']), h('span', { class: 'sol-ui-chart-name' }, item.label), h('span', { class: 'sol-ui-chart-value' }, [h('span', { class: 'sol-ui-chart-value-label' }, (p.valueLabel || l.value.chartValue) + ' '), formatSolNumber(item.value, l.value)])]))) : null,
                     h(
                       'table',
                       { class: ['sol-ui-chart-table', p.showTable ? '' : 'sol-ui-sr-only'] },

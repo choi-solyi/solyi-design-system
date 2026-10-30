@@ -277,6 +277,19 @@
       ]
     },
     {
+      "id": "progress-circular",
+      "route": "component",
+      "label": "원형 진행과 로딩",
+      "source": "examples/vue-vuetify/src/recipes/progress-circular.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SSelect",
+        "SCheckbox",
+        "SProgressCircular"
+      ]
+    },
+    {
       "id": "time",
       "route": "component",
       "label": "시간 선택",

@@ -193,6 +193,15 @@
     },
     {
       "route": "component",
+      "section": "progress-circular",
+      "label": "실제 Vue 패키지 사용",
+      "kind": "vue-recipe",
+      "recipe": "progress-circular.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "원형 진행과 로딩"
+    },
+    {
+      "route": "component",
       "section": "time",
       "label": "같은 시간 입력과 로컬 연결",
       "kind": "vue-recipe",

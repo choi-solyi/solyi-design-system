@@ -33,7 +33,7 @@ const groups: { label: string; items: RecipeId[] }[] = [
   },
   {
     label: '자료와 상태',
-    items: ['data', 'search', 'compare', 'empty', 'responses', 'progress', 'chart', 'chart-tree'],
+    items: ['data', 'search', 'compare', 'empty', 'responses', 'progress', 'progress-circular', 'chart', 'chart-tree'],
   },
   {
     label: '화면과 작업 흐름',

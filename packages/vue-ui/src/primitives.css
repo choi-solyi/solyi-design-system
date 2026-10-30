@@ -74,6 +74,7 @@
   white-space: nowrap;
 }
 .sol-ui-chip-main {
+  min-block-size: var(--sol-button-height);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +97,7 @@
 .sol-ui-chip button:disabled {
   cursor: default;
 }
-.sol-ui-chip-main:is(button),
+.sol-ui-chip-main,
 .sol-ui-chip-remove {
   min-block-size: var(--sol-button-height);
 }
@@ -133,6 +134,9 @@
   text-decoration: underline;
 }
 .sol-ui-badge {
+  border:0;
+  box-shadow:none;
+  cursor:default;
   padding: var(--sol-space-1) var(--sol-space-2);
 }
 .sol-ui-badge-anchor {
@@ -168,7 +172,7 @@
   min-inline-size: 0;
 }
 @media (max-width: 680px), (pointer: coarse) {
-  .sol-ui-chip-main:is(button),
+  .sol-ui-chip-main,
   .sol-ui-chip-remove {
     min-block-size: var(--sol-touch-target-min);
   }

@@ -78,3 +78,39 @@
 현재 사용자 입력/인증 대기나 기능 미완료 차단은 없다. 물리 기기/AT/실제 OS 키보드는 미검증 범위이며 공개 반영·npm 게시·소비 앱 업데이트는 이번 후보 준비와 별도다.
 
 원격 CI는 main push/PR/workflow_dispatch에서만 실행되는 기존 설정이며 이번 개발 브랜치 push에는 실행하지 않는다. 로컬 필수 pipeline을 검증했으며 원격 CI·운영 배포·실제 registry1.1.1 설치는 아직 실행하지 않았다. 최종 tarball과 두 내부 lock의 SHA-512, 소스 동결/문서 동결 사본 SHA-256을 마지막으로 대조해 모두 일치했다. 최종 소스에 대한 npm run check와 release-preparation 검사도 다시 통과했다.
+
+## 공개판 추가 피드백 · 2026-10-30
+
+이 절은 원래 1~30번의 검증 기록을 대체하지 않고 공개판 사용 후 발견된 별도 결함을 추적합니다. 공개 npm은 1.1.0이며 아래 수정은 미게시 1.1.1 후보 작업입니다.
+
+| 요청 | 원인·수정 | 확인 상태 |
+|---|---|---|
+| Circular 자체 예제 | 공유 비교 안내로 원형 항목의 실제 예제가 가려짐. 독립 canonical recipe와 Components canvas 연결 | 격리 설치본 3테마 실제 렌더 확인 |
+| 전체화면 LoadingOverlay | fullscreen scrim이 요청한 중립 배경을 드러내지 못함. 기존 surface-alt 토큰으로 범위 한정 | 3테마 실제 표시·자동 종료 및 캡처 확인 |
+| Badge | 기본 border가 버튼 인상을 강화. 비대화형·그림자 없음·경계 없음으로 정리 | 3테마 렌더 확인, 키보드 버튼으로 만들지 않음 |
+| Card 링크 | 예제의 native 링크가 브랜드 스타일을 적용하지 않음. 해당 링크만 스타일 적용 | 새 탭 의미·초점 테두리·실제 화면 확인 |
+| Chart 범례 | 번호/이름/값을 같은 텍스트 흐름에 배치. 별도 열과 보이는 값 단위로 구분 | 자체 실행 화면은 확인, 원본 첨부 픽셀은 아래 차단 |
+| Chip 높이 | passive span에는 button의 최소 높이 규칙이 적용되지 않음. 공통 main rail 높이 적용 | 표시/선택/제거/disabled 네 높이 차이 1px 미만, 3테마 |
+| Calendar | 로딩 설명을 표 앞에 조건부 추가. 상세 영역이 항상 열려 반응이 불분명하고 iframe 안에서 초점 이동. 표 뒤 예약 상태 영역·상세 닫기/재열기·same-document host | 3테마 로딩 반복 위치 불변, 전체 marker·닫기·다른 날짜·재열기 |
+| Sortable | 숨긴 grip track까지 제거해 라벨이 당겨짐. pointerdown의 기본 초점을 막은 뒤 programmatic focus로 keyboard ring 잔류. track 유지와 포인터/키보드 표시 분리 | 잠금 전후 x좌표 동일·grip 숨김·클릭 무테두리·키보드 테두리, 3테마 |
+| TimeGrid | 드래그 click 억제가 항목 key에만 적용되어 빈 열로 retarget된 click은 create에 도달 가능. host click 억제·새 deliberate pointerdown 해제. 여러 보조 버튼 대신 공통 메뉴 호스트 재사용, allowEdit/edit 요청과 부모의 실제 내용·시간 편집 연결 | 일반 pointer move/양끝 resize는 ID·개수·create 불변 확인. 메뉴 취소/저장/삭제 및 controlled 거절 확인. 최종 설치본 전체 결과는 아래 명령 로그와 일치시킨 뒤 판정 |
+
+### 재발 방지
+
+- 과거 검사는 드래그 뒤 바뀐 시각만 확인하고 생성 이벤트·ID 집합·개수 불변을 확인하지 않았습니다. 한 흐름의 생성→본문 이동→양끝 resize→내용 수정→메뉴 삭제를 검증합니다. 원본 사용자 화면의 복제 현상은 일반 경로에서 재현되지 않았으며, 소스에서 확인한 빈 열 click 억제 누락과 구분합니다.
+- touch cancel 검사는 새 메뉴 버튼을 누른 채 drag가 시작됐다고 가정했습니다. pointer event target을 기록해 본문 지점을 사용하고 실제 preview 상태 진입 후 cancel을 검증합니다. 진단 중 실패를 통과로 바꾸지 않습니다.
+- 상태/요소 존재와 단위 테스트만으로 사용자 조작 완료를 선언하지 않습니다. 같은 설치 bytes, 실제 조작, 전후 모델과 초점, 캡처를 함께 확인합니다. 물리 휴대폰과 스크린리더 실행은 수행하지 않았습니다.
+- 재현 스크립트: scripts/public-ui-followup-browser-check.mjs, scripts/time-grid-interaction-browser-check.mjs. 설치 경로는 --consumer로 명시하며 소스 alias를 쓰지 않습니다.
+
+### 첨부 원본 접근 차단
+
+Library libfile_2828e3a7c4988191bda84f104081b1cf의 공식 materialize는 Windows에서 os.setxattr 미지원으로 실패했습니다. 최종 chart-legend.png는 생성되지 않았고 실제 원본 픽셀을 확인했다고 주장하지 않습니다. WSL 확인도 E_ACCESSDENIED로 거부되어 재시도·helper 수정·직접 다운로드 우회를 하지 않았습니다. OCR은 픽셀 확인의 대체 증거가 아닙니다.
+
+### 현재 실행 결과와 출시 차단
+
+- 임시 QA tarball SHA-256: 58c249f2245d7d2d6cd068ed241a0fcaa4a8d15c41eedf50c54b60b511ae6a0e, 5988517 bytes. 기존 artifacts/release-assets/docs/releases의 동결 1.0.0·1.1.0·이전 1.1.1 후보는 아직 교체하지 않았습니다.
+- 최종 QA 설치본: TimeGrid pointer move/양끝 resize, 내용 편집 취소/저장, 메뉴 삭제, controlled 거절, ID/개수/create 불변, 명시적 legacy duplicate 메뉴가 Violet 1100 / Sage dark 390 / Sand RTL 390에서 통과했습니다. Sage CDP touch는 본문 이동·양끝 조절·pointercancel과 실제 preview 진입을 확인했습니다. 물리 기기 실행은 아닙니다.
+- UI 외관/상태는 Violet 1100 / Sage dark compact 390 / Sand 390에서 통과했습니다. 이 외관 검사 설치본과 최종 QA 설치본의 dist/styles.css bytes가 일치합니다. 실제 Chip/Badge/Chart/Loading 캡처를 열어 확인했습니다. 전체 공개 사이트/최종 URL 검증은 아직 실행하지 않았습니다.
+- 설치본 TypeScript 5.9.3 양성/음성 edit 요청 계약(skipLibCheck=true), 자체 소스 빌드·선언, SSR, TimeGrid 기존 상태 전이 runtime, proposal/value 불변성, Components 색인/검색/예제 연결 및 릴리즈 이력 검사 통과. 동결 후보 갱신 후 전체 pipeline은 미실행입니다.
+- 크기: source 298031자 / gzip 75645, 전체 JS 326032 bytes / gzip 합 82927. 기존 source·전체 JS·전체 plugin 한도는 통과했지만 named STimeGrid gzip 17,861 > 17,408(453 bytes 초과)로 필수 검사는 실패합니다. 한도나 검사를 변경하지 않았으며 이 상태로 main/배포/최종 artifact 동결을 진행하지 않습니다.
+- 원본 PNG 실제 픽셀 확인 차단과 named import 예산 문제를 남깁니다. 기존 공개 1.1.0은 유지하고 npm 1.1.1은 게시하지 않았습니다.

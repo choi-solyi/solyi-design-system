@@ -215,6 +215,61 @@ function removeGrid(request) {
   }
   gridItems.value = Object.freeze(gridItems.value.filter(item => item.id !== request.key))
 }
+const gridEditOpen = ref(false),
+  gridEditKey = ref(null),
+  gridEditTitle = ref(''),
+  gridEditStart = ref(480),
+  gridEditEnd = ref(540),
+  gridEditColumn = ref('one')
+function editGrid(request) {
+  const item = gridItems.value.find(item => item.id === request.key)
+  if (!item) return
+  gridEditKey.value = item.id
+  gridEditTitle.value = item.title
+  gridEditStart.value = item.start
+  gridEditEnd.value = item.end
+  gridEditColumn.value = item.column
+  gridEditOpen.value = true
+}
+const gridEditInvalid = computed(
+  () =>
+    !gridEditTitle.value.trim() ||
+    !Number.isInteger(gridEditStart.value) ||
+    !Number.isInteger(gridEditEnd.value) ||
+    gridEditStart.value < 480 ||
+    gridEditEnd.value > 1080 ||
+    gridEditStart.value >= gridEditEnd.value ||
+    gridEditStart.value % 15 !== 0 ||
+    gridEditEnd.value % 15 !== 0,
+)
+function saveGridEdit() {
+  if (
+    gridEditInvalid.value ||
+    gridDisabled.value ||
+    gridLoading.value ||
+    !gridEditable.value ||
+    (gridPendingFirst.value && gridEditKey.value === 'a') ||
+    (gridLockedFirst.value && gridEditKey.value === 'a')
+  )
+    return
+  gridResult.value = '수정 요청 · ' + gridEditKey.value
+  if (gridAccept.value)
+    gridItems.value = Object.freeze(
+      gridItems.value.map(item =>
+        item.id === gridEditKey.value
+          ? Object.freeze({
+              ...item,
+              title: gridEditTitle.value.trim(),
+              start: gridEditStart.value,
+              end: gridEditEnd.value,
+              column: gridEditColumn.value,
+            })
+          : item,
+      ),
+    )
+  else gridResult.value += ' · 원본 유지'
+  gridEditOpen.value = false
+}
 function resetGrid() {
   gridItems.value = Object.freeze([...gridSeed])
   gridPreview.value = null
@@ -718,9 +773,10 @@ watch([disabled, readonly], () => {
       :readonly="!gridEditable"
       :disabled="gridDisabled"
       allow-resize
-      allow-duplicate
       allow-create
       allow-remove
+      allow-edit
+      @edit="editGrid"
       show-current-time
       @create="createGrid"
       @remove="removeGrid"
@@ -730,8 +786,50 @@ watch([disabled, readonly], () => {
       @preview="gridPreview=$event"
       @commit="acceptGridProposal"
       @cancel="cancelGrid"
-      help="카드 드래그: 이동 · 위/아래 가장자리: 시간 조절 · 항목 Space: 키보드 편집 시작 · Enter: 변경 확정 · Escape: 취소 · Delete: 삭제 요청. 아래 목록에서도 이동·조절·복제·삭제할 수 있습니다. 빨간 현재 시각선은 표시 중인 날짜와 08~18시 범위에서 분마다 갱신됩니다."
+      help="카드 드래그: 이동 · 위/아래 가장자리: 시간 조절 · 항목 Space: 키보드 편집 시작 · Enter: 변경 확정 · Escape: 취소 · Delete: 삭제 요청. 우클릭 또는 세로점 메뉴에서 내용·시간을 수정하거나 삭제합니다. 빨간 현재 시각선은 표시 중인 날짜와 08~18시 범위에서 분마다 갱신됩니다."
     />
+    <SDialog
+      :id="previewId('advanced-time-grid-edit-dialog')"
+      v-model="gridEditOpen"
+      title="항목 수정"
+    >
+      <STextField
+        :id="previewId('advanced-time-grid-edit-title')"
+        v-model="gridEditTitle"
+        label="항목 내용"
+      />
+      <SSelect
+        :id="previewId('advanced-time-grid-edit-column')"
+        v-model="gridEditColumn"
+        label="열"
+        :options="gridColumns.map(column => ({ value: column.key, label: column.label }))"
+      />
+      <SNumberInput
+        :id="previewId('advanced-time-grid-edit-start')"
+        v-model="gridEditStart"
+        label="시작 · 분"
+        :min="480"
+        :max="1065"
+        :step="15"
+      />
+      <SNumberInput
+        :id="previewId('advanced-time-grid-edit-end')"
+        v-model="gridEditEnd"
+        label="종료 · 분"
+        :min="495"
+        :max="1080"
+        :step="15"
+      />
+      <template #actions>
+        <SBtn @click="gridEditOpen = false">취소</SBtn>
+        <SBtn
+          variant="primary"
+          :disabled="gridEditInvalid || gridDisabled || gridLoading || !gridEditable"
+          @click="saveGridEdit"
+          >저장</SBtn
+        >
+      </template>
+    </SDialog>
     <p :id="previewId('advanced-time-grid-result')" class="starter-hint" role="status">
       {{gridPreview ? '미리보기 · '+gridPreview.to.columnKey+' · '+gridPreview.to.startMinute+'–'+gridPreview.to.endMinute : gridResult}}
     </p>

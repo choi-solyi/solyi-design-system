@@ -49,7 +49,11 @@ function retry(event: MouseEvent) {
     <SCard description="제목 링크와 보조 버튼을 독립적으로 조작할 수 있습니다.">
       <template #leading><SIcon name="folder" decorative /></template>
       <template #title
-        ><a href="?view=recipes&amp;example=empty" target="_blank" rel="noopener"
+        ><a
+          class="starter-link sol-ui-card-link"
+          href="?view=recipes&amp;example=empty"
+          target="_blank"
+          rel="noopener"
           >항목 미리보기 · 새 탭 <SIcon name="external" decorative :size="16" /></a
       ></template>
       <template #meta><SBadge :content="bookmarked ? '보관됨' : '예제'" /></template>
@@ -59,3 +63,22 @@ function retry(event: MouseEvent) {
     </SCard>
   </div>
 </template>
+
+<style scoped>
+.sol-ui-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sol-space-1);
+  color: var(--sol-color-accent);
+  text-decoration: none;
+}
+.sol-ui-card-link:hover {
+  text-decoration: underline;
+  text-underline-offset: var(--sol-space-1);
+}
+.sol-ui-card-link:focus-visible {
+  outline: var(--sol-focus-width) solid var(--sol-color-focus);
+  outline-offset: var(--sol-focus-offset);
+  border-radius: var(--sol-radius-small);
+}
+</style>

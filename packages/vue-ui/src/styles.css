@@ -446,3 +446,23 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-button--subtle.v-btn[data-tone] {--sol-ui-tone-background:var(--sol-tone-bg);}
 .sol-ui-button--inline.v-btn[data-tone] {--sol-ui-tone-background:transparent;--sol-ui-tone-border:transparent;}
 .sol-ui-button.v-btn[data-tone]:not(:disabled):not([aria-disabled=true]),.sol-ui-button.v-btn[data-tone]:is(:hover,:focus-visible,:active):not(:disabled):not([aria-disabled=true]) {background:var(--sol-ui-tone-background);color:var(--sol-ui-tone-text);border-color:var(--sol-ui-tone-border);}
+
+.sol-ui-month-loading {min-block-size:2lh;margin:0;}
+.sol-ui-picker-host:has(.sol-ui-loading-host)>.v-overlay__scrim {background:var(--sol-color-surface-alt);opacity:.8;}
+.sol-ui-loading-viewport {background:color-mix(in srgb,var(--sol-color-surface-alt) 80%,transparent);}
+
+.sol-ui-chart-legend {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));padding:0;list-style:none;}
+.sol-ui-chart-legend li {display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--sol-space-2);}
+.sol-ui-chart-order {display:inline-flex;align-items:center;gap:var(--sol-space-1);color:var(--sol-color-muted);font-variant-numeric:tabular-nums;}
+.sol-ui-chart-name {overflow-wrap:anywhere;}
+.sol-ui-chart-value {font-weight:600;font-variant-numeric:tabular-nums;text-align:end;}
+
+.sol-ui-time-grid-item>.sol-ui-time-grid-menu-trigger {position:absolute;inset-inline-end:0;top:0;min-inline-size:0;min-block-size:0;padding:var(--sol-space-1);inline-size:var(--sol-control-height);block-size:min(100%,var(--sol-control-height));}
+.sol-ui-time-grid-item-title,.sol-ui-time-grid-item-time {padding-inline-end:var(--sol-control-height);}
+
+.sol-ui-month-details[hidden] {display:none;}
+.sol-ui-month-details-close {justify-self:end;}
+
+.sol-ui-chart-legend li {padding-block:var(--sol-space-2);}
+.sol-ui-chart-value {display:inline-flex;align-items:baseline;gap:var(--sol-space-1);white-space:nowrap;}
+.sol-ui-chart-value-label {font-size:var(--sol-text-xs);font-weight:400;color:var(--sol-color-muted);}

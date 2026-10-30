@@ -218,6 +218,8 @@ export function createTimeGridPointer(options: Options) {
     )
       return
     stop()
+    suppressKey = undefined
+    suppressUntil = 0
     const scroll = options.scroll()
     if (!scroll) return
     const range = options.range(),
@@ -256,13 +258,14 @@ export function createTimeGridPointer(options: Options) {
     down,
     stop,
     isDragging: () => !!gesture?.dragging,
+    clearClick: () => { if (!gesture) { suppressKey = undefined;suppressUntil = 0 } },
     lost: (event: PointerEvent) => {
       if (gesture?.id === event.pointerId) cancel('capture')
     },
-    consumeClick: (event: MouseEvent, key: TimeGridKey) => {
+    consumeClick: (event: MouseEvent, key?: TimeGridKey) => {
       if (
         (event.detail > 0 || ('pointerType' in event && event.pointerType === 'touch')) &&
-        key === suppressKey &&
+        (key === undefined || key === suppressKey) &&
         performance.now() < suppressUntil
       ) {
         event.preventDefault()

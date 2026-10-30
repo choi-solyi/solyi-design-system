@@ -7,6 +7,7 @@ import type { SolCategoryId } from '@solyi/core'
 import { displayFieldProps, fieldDescription, fieldMessages } from './controls'
 import { formatSolDate, useSolLocale, withVisibleNumberLabel } from './locale'
 import { SBadge, SIcon } from './primitives'
+import { SBtn } from './button'
 import type { SolTone } from './primitives'
 import {
   calendarMonthLayout,
@@ -116,7 +117,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
       today = computed(() => (p.today === undefined ? mountedToday : p.today))
     const firstDay = computed(() => (p.firstDay === undefined ? l.value.firstDay : p.firstDay))
     const layout = computed(() => calendarMonthLayout(p.month, firstDay.value))
-    const active = ref(initialCalendarDate(p.month, p.modelValue, today.value))
+    const active = ref(initialCalendarDate(p.month, p.modelValue, today.value)), detailsOpen = ref(true)
     let disposed = false,
       pending: { month: string; date: string; origin: Element | null } | undefined
     const state = computed(() => {
@@ -217,15 +218,16 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
       void nextTick(() => { input.value = p.month.slice(0, 4) })
     }
     function choose(date: string, reason: SolCalendarChange['reason']) {
-      if (unavailable(date)) return
+      if (p.disabled || p.loading || state.value.invalid || !state.value.days.has(date)) return
       pending = undefined
       active.value = date
+      detailsOpen.value = true
       if (reason === 'pointer' && state.value.days.get(date)?.markers.length) void nextTick(() => {
         if (disposed) return
         details.value?.focus({ preventScroll: true })
         details.value?.scrollIntoView?.({ block: 'nearest' })
       })
-      if (date === p.modelValue) return
+      if (unavailable(date) || date === p.modelValue) return
       const previousValue = p.modelValue
       emit('update:modelValue', date)
       emit('change', { value: date, previousValue, reason })
@@ -377,13 +379,6 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
           h('p', { id: p.id + '-keys', class: 'sol-hint' }, l.value.monthCalendarKeys),
           p.readonly
             ? h('p', { id: p.id + '-readonly', class: 'sol-hint' }, l.value.monthCalendarReadonly)
-            : null,
-          busy
-            ? h(
-                'p',
-                { id: p.id + '-loading', class: 'sol-hint', role: 'status' },
-                l.value.monthCalendarLoading,
-              )
             : null,
           h('table', { class: 'sol-ui-month-table', 'aria-labelledby': p.id + '-month' }, [
             h(
@@ -546,22 +541,25 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
               ),
             ),
           ]),
+          h('p', { id:p.id+'-loading',class:'sol-hint sol-ui-month-loading',role:busy?'status':undefined,'aria-hidden':busy?undefined:'true' }, busy?l.value.monthCalendarLoading:''),
           !empty || busy
             ? h(
                 'section',
                 {
                   class: 'sol-ui-month-details',
+                  hidden: !detailsOpen.value,
                   ref: details,
                   tabindex: 0,
                   role: 'region',
                   'aria-labelledby': p.id + '-details-label',
                   onKeydown: (event: KeyboardEvent) => {
                     if (event.key === 'Escape' && !event.isComposing) {
-                      event.preventDefault();event.stopPropagation();focusDate(active.value)
+                      event.preventDefault();event.stopPropagation();detailsOpen.value=false;focusDate(active.value)
                     }
                   },
                 },
                 [
+                  h(SBtn, { class: 'sol-ui-month-details-close', variant: 'subtle', onClick: () => { detailsOpen.value=false;focusDate(active.value) } }, () => l.value.close),
                   h('h4', { id: p.id + '-details-label' }, [
                     active.value ? formatSolDate(active.value, l.value) + ' · ' : '',
                     l.value.monthCalendarDetails,

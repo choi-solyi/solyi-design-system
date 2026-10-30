@@ -145,7 +145,7 @@ const records = [
   ['SAlert','피드백','화면에 남아 있어야 하는 정보·성공·오류를 전달합니다.','component','feedback'],
   ['SDialog','피드백','현재 맥락의 모달 또는 사이드 패널을 표시합니다.','component','dialog'],
   ['SPopover','피드백','실행 가능한 추가 정보를 작은 패널에 표시합니다.','component','popover'],
-  ['SProgressCircular','피드백','수치가 알려진 진행률과 무한 로딩을 원형으로 표시합니다.','component','progress'],
+  ['SProgressCircular','피드백','수치가 알려진 진행률과 무한 로딩을 원형으로 표시합니다.','component','progress-circular'],
   ['SProgressLinear','피드백','수치가 알려진 진행률과 무한 로딩을 선형으로 표시합니다.','component','progress'],
   ['SSnackbar','피드백','짧은 상태를 초점을 빼앗지 않고 알립니다.','component','feedback'],
   ['STooltip','피드백','초점·클릭으로 짧은 비대화형 설명을 표시합니다.','component','tooltip'],

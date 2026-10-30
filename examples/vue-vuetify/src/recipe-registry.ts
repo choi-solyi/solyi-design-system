@@ -14,37 +14,38 @@ import Recipe12 from './recipes/content-tabs.vue'
 import Recipe13 from './recipes/action-menu.vue'
 import Recipe14 from './recipes/identity-progress.vue'
 import Recipe15 from './recipes/progress.vue'
-import Recipe16 from './recipes/time.vue'
-import Recipe17 from './recipes/chart-tree.vue'
-import Recipe18 from './recipes/form.vue'
-import Recipe19 from './recipes/search.vue'
-import Recipe20 from './recipes/compare.vue'
-import Recipe21 from './recipes/empty.vue'
-import Recipe22 from './recipes/data.vue'
-import Recipe23 from './recipes/inputs.vue'
-import Recipe24 from './recipes/responses.vue'
-import Recipe25 from './recipes/composition.vue'
-import Recipe26 from './recipes/layouts.vue'
-import Recipe27 from './recipes/workflow.vue'
-import Recipe28 from './recipes/error-summary.vue'
-import Recipe29 from './recipes/bulk-recovery.vue'
-import Recipe30 from './recipes/combobox.vue'
-import Recipe31 from './recipes/confirm-action.vue'
-import Recipe32 from './recipes/chip.vue'
-import Recipe33 from './recipes/badge.vue'
-import Recipe34 from './recipes/icon.vue'
-import Recipe35 from './recipes/icon-button.vue'
-import Recipe36 from './recipes/checkbox.vue'
-import Recipe37 from './recipes/radio-group.vue'
-import Recipe38 from './recipes/switch.vue'
-import Recipe39 from './recipes/select.vue'
-import Recipe40 from './recipes/breadcrumbs.vue'
-import Recipe41 from './recipes/pagination.vue'
-import Recipe42 from './recipes/tooltip.vue'
-import Recipe43 from './recipes/popover.vue'
-import Recipe44 from './recipes/avatar.vue'
-import Recipe45 from './recipes/chart.vue'
-import Recipe46 from './recipes/button-group.vue'
+import Recipe16 from './recipes/progress-circular.vue'
+import Recipe17 from './recipes/time.vue'
+import Recipe18 from './recipes/chart-tree.vue'
+import Recipe19 from './recipes/form.vue'
+import Recipe20 from './recipes/search.vue'
+import Recipe21 from './recipes/compare.vue'
+import Recipe22 from './recipes/empty.vue'
+import Recipe23 from './recipes/data.vue'
+import Recipe24 from './recipes/inputs.vue'
+import Recipe25 from './recipes/responses.vue'
+import Recipe26 from './recipes/composition.vue'
+import Recipe27 from './recipes/layouts.vue'
+import Recipe28 from './recipes/workflow.vue'
+import Recipe29 from './recipes/error-summary.vue'
+import Recipe30 from './recipes/bulk-recovery.vue'
+import Recipe31 from './recipes/combobox.vue'
+import Recipe32 from './recipes/confirm-action.vue'
+import Recipe33 from './recipes/chip.vue'
+import Recipe34 from './recipes/badge.vue'
+import Recipe35 from './recipes/icon.vue'
+import Recipe36 from './recipes/icon-button.vue'
+import Recipe37 from './recipes/checkbox.vue'
+import Recipe38 from './recipes/radio-group.vue'
+import Recipe39 from './recipes/switch.vue'
+import Recipe40 from './recipes/select.vue'
+import Recipe41 from './recipes/breadcrumbs.vue'
+import Recipe42 from './recipes/pagination.vue'
+import Recipe43 from './recipes/tooltip.vue'
+import Recipe44 from './recipes/popover.vue'
+import Recipe45 from './recipes/avatar.vue'
+import Recipe46 from './recipes/chart.vue'
+import Recipe47 from './recipes/button-group.vue'
 
 export const recipeComponents = {
   'color-examples': Recipe0,
@@ -63,37 +64,38 @@ export const recipeComponents = {
   'action-menu': Recipe13,
   'identity-progress': Recipe14,
   progress: Recipe15,
-  time: Recipe16,
-  'chart-tree': Recipe17,
-  form: Recipe18,
-  search: Recipe19,
-  compare: Recipe20,
-  empty: Recipe21,
-  data: Recipe22,
-  inputs: Recipe23,
-  responses: Recipe24,
-  composition: Recipe25,
-  layouts: Recipe26,
-  workflow: Recipe27,
-  'error-summary': Recipe28,
-  'bulk-recovery': Recipe29,
-  combobox: Recipe30,
-  'confirm-action': Recipe31,
-  chip: Recipe32,
-  badge: Recipe33,
-  icon: Recipe34,
-  'icon-button': Recipe35,
-  checkbox: Recipe36,
-  'radio-group': Recipe37,
-  switch: Recipe38,
-  select: Recipe39,
-  breadcrumbs: Recipe40,
-  pagination: Recipe41,
-  tooltip: Recipe42,
-  popover: Recipe43,
-  avatar: Recipe44,
-  chart: Recipe45,
-  'button-group': Recipe46,
+  'progress-circular': Recipe16,
+  time: Recipe17,
+  'chart-tree': Recipe18,
+  form: Recipe19,
+  search: Recipe20,
+  compare: Recipe21,
+  empty: Recipe22,
+  data: Recipe23,
+  inputs: Recipe24,
+  responses: Recipe25,
+  composition: Recipe26,
+  layouts: Recipe27,
+  workflow: Recipe28,
+  'error-summary': Recipe29,
+  'bulk-recovery': Recipe30,
+  combobox: Recipe31,
+  'confirm-action': Recipe32,
+  chip: Recipe33,
+  badge: Recipe34,
+  icon: Recipe35,
+  'icon-button': Recipe36,
+  checkbox: Recipe37,
+  'radio-group': Recipe38,
+  switch: Recipe39,
+  select: Recipe40,
+  breadcrumbs: Recipe41,
+  pagination: Recipe42,
+  tooltip: Recipe43,
+  popover: Recipe44,
+  avatar: Recipe45,
+  chart: Recipe46,
+  'button-group': Recipe47,
 }
 export const recipeLabels = {
   'color-examples': '의미색 UI 조합',
@@ -112,6 +114,7 @@ export const recipeLabels = {
   'action-menu': '행동 메뉴',
   'identity-progress': '사용자와 단계',
   progress: '진행 바와 원형 로딩',
+  'progress-circular': '원형 진행과 로딩',
   time: '시간 선택',
   'chart-tree': '차트와 트리',
   form: '폼 검증',
