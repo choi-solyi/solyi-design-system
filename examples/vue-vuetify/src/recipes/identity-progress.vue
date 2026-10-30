@@ -20,6 +20,7 @@ const steps = [
   { id: 'review', label: '검토' },
 ]
 const current = computed(() => steps[stage.value].id)
+const labelPosition = ref<string | null>('inline')
 const completed = computed(() => steps.slice(0, done.value ? 3 : stage.value).map(item => item.id))
 async function move(delta: number) {
   error.value = ''
@@ -63,20 +64,22 @@ async function reset() {
       <p role="status">{{ result }}</p>
     </div>
     <template v-if="!part || part === 'steps'">
+      <SRadioGroup
+        id="recipe-step-layout"
+        v-model="labelPosition"
+        label="단계 이름 위치"
+        :options="[
+          { value: 'inline', label: '숫자 오른쪽' },
+          { value: 'below', label: '숫자 아래' },
+        ]"
+      />
       <SStepper
         id="recipe-steps"
         :model-value="current"
         :items="steps"
         :completed="completed"
+        :label-position="labelPosition === 'below' ? 'below' : 'inline'"
         label="가상 작성 단계"
-      />
-      <SProgressLinear
-        id="recipe-step-progress"
-        label="완료한 단계"
-        :model-value="done ? 3 : stage"
-        :min="0"
-        :max="3"
-        :show-message="false"
       />
       <template v-if="!done">
         <STextField
@@ -108,11 +111,27 @@ async function reset() {
       <p v-else id="recipe-step-result" ref="finalResult" role="status" tabindex="-1">
         ✓ 가상 단계를 완료했어요. 실제 프로젝트는 만들지 않습니다.
       </p>
-      <div class="sol-actions">
-        <SBtn :disabled="stage === 0" @click="move(-1)">이전 단계</SBtn>
-        <SBtn :disabled="done" @click="move(1)">{{ stage === 2 ? '가상 완료' : '다음 단계' }}</SBtn>
+      <div class="recipe-step-actions">
         <SBtn @click="reset">처음부터</SBtn>
+        <div class="sol-actions">
+          <SBtn :disabled="stage === 0 || done" @click="move(-1)">이전 단계</SBtn>
+          <SBtn variant="primary" :disabled="done" @click="move(1)">{{
+            stage === 2 ? '가상 완료' : '다음 단계'
+          }}</SBtn>
+        </div>
       </div>
     </template>
   </SCard>
 </template>
+<style scoped>
+.recipe-step-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sol-space-2);
+  flex-wrap: wrap;
+}
+.recipe-step-actions > .sol-actions {
+  margin-inline-start: auto;
+}
+</style>

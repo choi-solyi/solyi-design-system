@@ -252,8 +252,8 @@
         "SCard",
         "SAvatar",
         "SSplitBtn",
+        "SRadioGroup",
         "SStepper",
-        "SProgressLinear",
         "STextField",
         "SSelect",
         "SBtn"

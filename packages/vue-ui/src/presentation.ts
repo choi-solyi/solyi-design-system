@@ -19,16 +19,16 @@ export const SAvatar=/* @__PURE__ */ defineComponent({name:'SAvatar',inheritAttr
 }});
 
 export interface SStep {id:string;label:string;description?:string;disabled?:boolean}
-export const SStepper=/* @__PURE__ */ defineComponent({name:'SStepper',inheritAttrs:false,props:{id:{type:String,required:true},label:String,items:{type:Array as PropType<readonly SStep[]>,required:true},modelValue:{type:String as PropType<string|null>,default:null},completed:{type:Array as PropType<readonly string[]>,default:()=>[]},interactive:Boolean,disabled:Boolean,readonly:Boolean,locale:Object as PropType<Partial<SolLocale>>},emits:{'update:modelValue':(_id:string)=>true,change:(_id:string)=>true},setup(p,{attrs,emit}){
+export const SStepper=/* @__PURE__ */ defineComponent({name:'SStepper',inheritAttrs:false,props:{id:{type:String,required:true},label:String,labelPosition:{type:String as PropType<'inline'|'below'>,default:'inline'},items:{type:Array as PropType<readonly SStep[]>,required:true},modelValue:{type:String as PropType<string|null>,default:null},completed:{type:Array as PropType<readonly string[]>,default:()=>[]},interactive:Boolean,disabled:Boolean,readonly:Boolean,locale:Object as PropType<Partial<SolLocale>>},emits:{'update:modelValue':(_id:string)=>true,change:(_id:string)=>true},setup(p,{attrs,emit}){
   const l=useSolLocale(()=>p.locale);
   const choose=(item:SStep)=>{if(p.interactive&&!p.disabled&&!p.readonly&&!item.disabled&&p.modelValue!==item.id){emit('update:modelValue',item.id);emit('change',item.id);}};
-  return()=>h('nav',{...attrs,id:p.id,class:['sol-ui-stepper',attrs.class],'aria-label':p.label||l.value.steps},h('ol',p.items.map((item,index)=>{
+  return()=>h('nav',{...attrs,id:p.id,class:['sol-ui-stepper',attrs.class],'data-label-position':p.labelPosition,'aria-label':p.label||l.value.steps},h('ol',p.items.map((item,index)=>{
     const current=p.modelValue===item.id,done=p.completed.includes(item.id),content=()=>[
       h('span',{class:'sol-ui-step-number','aria-hidden':'true'},done?'✓':formatSolNumber(index+1,l.value)),
       h('span',{class:'sol-ui-step-copy'},[h('span',item.label),item.description?h('span',{class:'sol-hint'},item.description):null]),
       current||done?h('span',{class:'sol-ui-sr-only'},current?l.value.currentStep:l.value.completeStep):null
     ];
-    return h('li',{key:item.id,'aria-current':current?'step':undefined,'data-state':current?'current':done?'complete':'upcoming'},p.interactive?h(SBtn,{variant:'subtle',disabled:p.disabled||!!item.disabled,'aria-disabled':p.readonly?'true':undefined,onClick:()=>choose(item)},content):h('div',{class:'sol-ui-step-content','aria-disabled':item.disabled?'true':undefined},content()));
+    return h('li',{key:item.id,'aria-current':current?'step':undefined,'data-state':current?'current':done?'complete':'upcoming'},[p.interactive?h(SBtn,{variant:'subtle',disabled:p.disabled||!!item.disabled,'aria-disabled':p.readonly?'true':undefined,onClick:()=>choose(item)},content):h('div',{class:'sol-ui-step-content','aria-disabled':item.disabled?'true':undefined},content()),index<p.items.length-1?h('span',{class:'sol-ui-step-connector','aria-hidden':'true'}):null]);
   })));
 }});
 

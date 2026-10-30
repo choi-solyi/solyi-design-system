@@ -30,10 +30,10 @@
 | 10 | Time 손잡이 의미·X/↑/꺾쇠 혼잡 개선, 시/분 오른쪽 단위, 완료 우측·확인색 | 입력 내 손잡이와 단위/확인 배치 확인 | 패키지 | 이름 있는 grip 별도 줄·오른쪽 단위·우측 primary 확인 | 설치본 Chrome PC/390px/RTL 선택 확정·grip 키보드, 기존 source 계약 검사 | 개발 완료·최종 통합 전, npm 1.1.0 미포함 |
 | 11 | Accordion 1개 및 3~5개 예제 | 단일만 제공 확인 | 문서 | 단일+독립 4개 | 실제 summary Enter·동시 열림·독립 닫기·3테마 | 개발 완료·최종 통합 전, 공개 미반영 |
 | 12 | Breadcrumb/Pagination 예제 분리, 숫자 stepper 한쪽, 처음/끝 아이콘 개선 | 공용 navigation 예제·이중 SVG·좁은 화면 첫끝 숨김 확인 | 문서·패키지 | 독립 예제·새 chevrons 1개·같은 폭·모바일 첫끝 유지 | 설치본 Chrome 이동/포커스·1003/주변3·수락/거절·첫끝·RTL·넘침, 소유/메뉴/코드 일치 검사 | 개발 완료·최종 통합 전, legacy navigation 링크 보존 |
-| 13 | ContextMenu trigger의 메뉴 의미, 깜빡임·부모 하단 여백 개선 | 문서·registry fixture에서 실제 메뉴 열기 비교 | 문서 호스트 경계; trigger 의미는 추가 개선 검토 | 같은 문서 viewport 호스트, 동시 Advanced 예제 ID 분리 | 1440/390px 카드·문서 불변, 메뉴 viewport 경계·Escape 포커스 | trigger 의미·선택/disabled/readonly 추가 확인, CI·공개 배포 |
-| 14 | Stepper 연결선·중복 완료 영역 제거, 라벨 아래 변형, reset 좌/이전다음 우·색 | 미재현 | 판별 중 | 미착수 | 미실행 | 단계 이동/완료/양식 |
-| 15 | Tabs와 라인·패널의 시각 연결 강화, 카드 내용도 탭과 연결 | 미재현 | 판별 중 | 미착수 | 미실행 | active/hover/focus/키보드 |
-| 16 | Tree 화살표 외 부모 항목 행 전체로 펼침 | 미재현 | 판별 중 | 미착수 | 미실행 | 선택/확장/키보드 역할 |
+| 13 | ContextMenu 펼침 표시·깜빡임·부모 빈 공간 | 펼침 단서 부족, iframe 호스트 높이 문제는 기존 수정 | 문서 호스트+패키지 표시 | 버튼에 chevron 추가·메뉴 의미 보존 | 설치본 PC/390/RTL에서 연속 프레임 x/y 변화 0·부모/card/scrollHeight 변화 0, 우클릭/Shift+F10/선택/Escape focus | 개발 완료·최종 통합 전, 공개 미반영 |
+| 14 | Stepper 연결선·이름 아래 옵션·중복 진행 제거·초기화 왼쪽/이전다음 오른쪽·색상 | 예제 중복 진행막대·배치와 패키지 표현 부족 | 문서+패키지 | additive labelPosition 기본 inline/below·연결선, 예제 actions와 primary 정리 | 설치본 3테마/390/RTL 연결선·아래 배치·실제 입력→검토→완료→초기화 및 포커스 | 개발 완료·최종 통합 전, npm 1.1.0 미포함 |
+| 15 | Tabs와 기준선/내용 패널 연결 | gap·분리된 둥근 패널 확인 | 패키지 CSS | 수평 탭을 붙이고 패널과 기준선 공유, 수직 계약 보존 | 설치본 3테마/390/RTL 경계 y 오차 0·방향키 disabled 건너뜀·패널 입력 유지 | 개발 완료·최종 통합 전 |
+| 16 | Tree 화살표 외 부모 항목 행 전체 펼침 | 기존 row는 선택만 수행 | 패키지 | 부모 row 클릭 시 기존 선택+펼침, disclosure와 방향키 보존 | 설치본 실제 라벨/행 클릭·접기·ArrowRight 자식 focus·ArrowLeft·선택 유지, source 42 SFC 회귀 통과 | 개발 완료·최종 통합 전 |
 | 17 | Dialog busyScope 설명 명확화, 사이드패널이 카드 내부에 뜨거나 과도하게 길어지는 문제 | 기존 iframe이 viewport 경계; registry fixture는 전체 화면 사용 | 문서 호스트 | 같은 문서 VApp/overlay stack 사용 | 1440/390px Drawer, 여러 줄 설명·긴 본문·고정 header/actions·body scroll, busyScope all Escape 차단/완료 후 복귀 | busyScope 안내 UX 추가 검토, CI·공개 배포 |
 | 18 | Linear/Circular/Overlay 반복 모션 실제 동작, 중복 예제는 하나 안에서 구분 | no-preference의 Linear/Circular는 양쪽 실행, reduce는 의도한 정지 | 사용자 설정·예제 상태 전환 추가 판별 | 미착수 | 실제 350ms 전후 transform/currentTime 비교 실행 | Overlay·전환·모션 상태 안내·중복 예제 |
 | 19 | Popover/Tooltip 의미·트리거 구분, 불필요한 중복과 하단 여백 제거 | 라이브 iframe 207→480px, 카드 +273px | 문서 embed 측정의 최소 480px 확인 | 미착수 | Chrome 1440/light/violet 실제 열기 비교 실행 | hover/focus/click·포커스·부모 높이 불변 |
