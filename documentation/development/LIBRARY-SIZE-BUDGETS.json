@@ -129,6 +129,95 @@
           "maxGzipBytes": 13312
         }
       }
+    },
+    "1.1.1": {
+      "baseline": "f5b9f21 plus agenda focus recovery; 51 APIs, existing 1.1.0 ceilings preserved. Built-source diagnostic: 75471 gzip; named SBtnGroup 6779 gzip. Installed candidate gate remains required.",
+      "components": [
+        "STimeGrid",
+        "SPagination",
+        "SLoadingOverlay",
+        "SEmptyState",
+        "SConfirmAction",
+        "SMonthCalendar",
+        "SSortableList",
+        "SChip",
+        "SBadge",
+        "SIcon",
+        "SIconBtn",
+        "SForm",
+        "SContainer",
+        "SRow",
+        "SCol",
+        "SCard",
+        "SAlert",
+        "STree",
+        "SProgressLinear",
+        "SProgressCircular",
+        "SBtnGroup",
+        "SBtn",
+        "STextField",
+        "SDialog",
+        "SDataTable",
+        "SCheckbox",
+        "SRadioGroup",
+        "SSwitch",
+        "SSelect",
+        "STextarea",
+        "SNumberInput",
+        "STabs",
+        "SSnackbar",
+        "SDatePicker",
+        "STimePicker",
+        "SSegmentedControl",
+        "SMultiSelect",
+        "SRangeSlider",
+        "SSplitBtn",
+        "SContextMenu",
+        "SResizableSplitPane",
+        "STooltip",
+        "SPopover",
+        "SAccordion",
+        "SFileInput",
+        "SAutocomplete",
+        "SCombobox",
+        "SBreadcrumbs",
+        "SAvatar",
+        "SStepper",
+        "SBarChart"
+      ],
+      "maxCharactersExclusive": 300000,
+      "maxGzipBytes": 76800,
+      "maxTotalJavaScriptBytes": 330000,
+      "maxTotalJavaScriptGzipBytes": 83968,
+      "imports": {
+        "SIcon": {
+          "maxGzipBytes": 8192
+        },
+        "SCombobox": {
+          "maxGzipBytes": 14336
+        },
+        "all_plugin": {
+          "maxGzipBytes": 67584
+        },
+        "STimeGrid": {
+          "maxGzipBytes": 17408
+        },
+        "SMonthCalendar": {
+          "maxGzipBytes": 13312
+        },
+        "SPagination": {
+          "maxGzipBytes": 9216
+        },
+        "SConfirmAction": {
+          "maxGzipBytes": 8192
+        },
+        "SLoadingOverlay": {
+          "maxGzipBytes": 13312
+        },
+        "SBtnGroup": {
+          "maxGzipBytes": 8192
+        }
+      }
     }
   }
 }

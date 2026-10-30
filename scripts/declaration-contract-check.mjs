@@ -74,6 +74,11 @@ import {createApp,h} from 'vue'
 import type {SolSortableProps,SolSortableSlots,SolTimeGridProps,SolTimeGridSlots,SolTimeGridHandle} from './index'
 import type { SolIconName, SolTone, SolDateDisplayFormatter, SolNumberDisplayFormatter, SolNumberPreset } from './index'
 import type { GlobalComponents } from 'vue'
+import {solIconPaths} from 'solyi-ui/icons'
+import type {SolIconName as PathIconName} from 'solyi-ui/icons'
+const edgeIcon:PathIconName='chevrons'
+const edgePath:string=solIconPaths[edgeIcon]
+void edgePath
 type TabsProps = InstanceType<typeof STabs>['$props']
 type PaneProps = InstanceType<typeof SResizableSplitPane>['$props']
 const tabs: TabsProps = { id: 'tabs', label: 'Tabs', modelValue: 'a', items: [], error: 'Info' }

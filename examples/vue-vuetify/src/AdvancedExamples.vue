@@ -730,7 +730,7 @@ watch([disabled, readonly], () => {
       @preview="gridPreview=$event"
       @commit="acceptGridProposal"
       @cancel="cancelGrid"
-      help="카드 드래그: 이동 · 위/아래 가장자리: 시간 조절 · 항목 Enter/Space: 키보드 편집 · Delete: 삭제 요청. 아래 목록에서도 이동·조절·복제·삭제할 수 있습니다. 빨간 현재 시각선은 표시 중인 날짜와 08~18시 범위에서 분마다 갱신됩니다."
+      help="카드 드래그: 이동 · 위/아래 가장자리: 시간 조절 · 항목 Space: 키보드 편집 시작 · Enter: 변경 확정 · Escape: 취소 · Delete: 삭제 요청. 아래 목록에서도 이동·조절·복제·삭제할 수 있습니다. 빨간 현재 시각선은 표시 중인 날짜와 08~18시 범위에서 분마다 갱신됩니다."
     />
     <p :id="previewId('advanced-time-grid-result')" class="starter-hint" role="status">
       {{gridPreview ? '미리보기 · '+gridPreview.to.columnKey+' · '+gridPreview.to.startMinute+'–'+gridPreview.to.endMinute : gridResult}}

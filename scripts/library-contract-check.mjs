@@ -89,4 +89,4 @@ console.log('PASS: UI publication metadata and private Core, single-package cont
 assert.deepEqual(await readFile(new URL('packages/core/dist/date-only.js',root)),await readFile(new URL('site/date-only.js',root)));
 assert.match(library,/\.\/core\/date-only\.js/,'Shared date math resolves inside the package');
 
-assert.match(styles,/\.sol-ui-time-panel>\.sol-button:last-child\{margin-top:var\(--sol-space-2\)/,'Time picker Done has an8px token gap');
+assert.match(styles,/\.sol-ui-time-actions\{[^}]*justify-content:flex-end[^}]*margin-block-start:var\(--sol-space-2\)/,'Time picker Done keeps its token gap and right-aligned action wrapper');

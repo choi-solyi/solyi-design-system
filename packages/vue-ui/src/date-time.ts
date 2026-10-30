@@ -1174,7 +1174,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
     const validate = validation.validate
 
     function renderTimePopup(node: VNodeChild) {
-      if (!p.pickerPresentation) return h(Teleport, {to:'body'}, [node])
+      if (!p.pickerPresentation) return h(Teleport, {to:input.value?.closest('dialog,.v-overlay__content') || 'body'}, [node])
       return h(PickerHost, {
         open: opened.value, id:p.id+'-panel', labelledby:p.id+'-title',
         anchor:input.value?.closest<HTMLElement>('.sol-ui-input-frame,.sol-time-entry') || input.value,
@@ -1410,7 +1410,8 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
             ? h(
                 'div',
                 {
-                  ref: panel,
+                  ref: (node: unknown) => { panel.value = node as HTMLElement | null; if (!p.pickerPresentation && panel.value?.isConnected) panel.value.showPopover?.() },
+                  popover: p.pickerPresentation ? undefined : 'manual',
                   id: p.pickerPresentation ? undefined : p.id + '-panel',
                   class: p.pickerPresentation ? 'sol-ui-time-content' : 'sol-time-panel sol-ui-time-panel',
                   role: p.pickerPresentation ? undefined : 'dialog',

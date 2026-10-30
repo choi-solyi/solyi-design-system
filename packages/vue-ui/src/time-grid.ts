@@ -180,7 +180,8 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
       scroll = ref<HTMLElement | null>(null),
       host = ref<HTMLElement | null>(null),
       nodes = new Map<SolTimeGridKey, HTMLElement>(),
-      columnNodes = new Map<string, HTMLElement>()
+      columnNodes = new Map<string, HTMLElement>(),
+      agendaNodes = new Map<SolTimeGridKey, HTMLElement>()
     const snapshot = computed<TimeGridSnapshot<unknown> | null>((previous) => {
       try {
         const next = readTimeGrid(
@@ -259,11 +260,18 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
     } satisfies SolTimeGridHandle)
     watch(snapshot, async () => {
       if (typeof document === 'undefined') return
-      const active = document.activeElement,
-        key = [...nodes].find(([, node]) => active && node.contains(active))?.[0]
+      const active = document.activeElement
+      const rows = [...agendaNodes]
+      const index = rows.findIndex(([, node]) => !!active && node.contains(active))
+      const key = rows[index]?.[0] ?? [...nodes].find(([, node]) => !!active && node.contains(active))?.[0]
       if (key === undefined || !active) return
+      const next = [...rows.slice(index + 1), ...rows.slice(0, index).reverse()].map(([key]) => key)
       await nextTick()
-      if (!active.isConnected && document.activeElement === document.body) focus(key)
+      if (!active.isConnected && document.activeElement === document.body) {
+        const row = next.map(key => agendaNodes.get(key)).find(Boolean)
+        if (index >= 0 && row) (row.querySelector<HTMLElement>('button:not(:disabled)') || row).focus()
+        else focus(key)
+      }
     })
     return () => {
       const data = snapshot.value,
@@ -537,7 +545,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                   'ul',
                   data.entries.map((entry) => {
                     const column = data.columns.find((column) => column.key === entry.columnKey)!
-                    return h('li', { key: entry.key }, [
+                    return h('li', { key: entry.key, tabindex: -1, ref: (node: unknown) => { if (node instanceof HTMLElement) agendaNodes.set(entry.key, node); else agendaNodes.delete(entry.key) } }, [
                       h('strong', entry.label),
                       h(
                         'span',

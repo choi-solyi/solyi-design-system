@@ -164,6 +164,7 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-calendar-month {font-size:var(--sol-text-lg);font-weight:650;margin:0;}
 .sol-ui-picker-top {display:flex;align-items:center;justify-content:space-between;gap:var(--sol-space-2);}
 .sol-ui-picker-top>.sol-button {flex:none;white-space:nowrap;}
+.sol-ui-time-panel:popover-open {margin:0;inset:auto;}
 .sol-ui-time-panel {width:min(320px,calc(100% - 16px));max-height:calc(100dvh - 16px);overflow:auto;}
 .sol-ui-calendar .sol-calendar-top>.sol-button {white-space:nowrap;}
 .sol-ui-calendar .sol-calendar-top>strong,.sol-ui-picker-top>strong {min-width:0;overflow-wrap:anywhere;}

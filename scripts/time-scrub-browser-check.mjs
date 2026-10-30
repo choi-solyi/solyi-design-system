@@ -78,6 +78,8 @@ try {
     assert.deepEqual(await page.locator('#time').evaluate(input => [input === document.activeElement, input.selectionStart, input.selectionEnd]), [true, 1, 4])
     await grip.focus(); await page.keyboard.down('ArrowUp'); await page.keyboard.down('ArrowUp'); assert.equal((await get()).value, '09:37')
     await page.keyboard.up('ArrowUp'); assert.equal((await get()).value, '10:07')
+    await grip.focus();const beforeKeyboardCancel=await get();await page.keyboard.down('ArrowUp');await page.keyboard.press('Escape');await page.keyboard.up('ArrowUp');
+    assert.equal((await get()).value,beforeKeyboardCancel.value,'Grip ArrowUp then Escape cancels without committing');assert.equal((await get()).commits.length,beforeKeyboardCancel.commits.length);assert.equal((await get()).cancels.at(-1).reason,'escape');
     await open()
     const list = page.getByRole('listbox'), listBox = await list.boundingBox()
     // Drag a dedicated row handle to the bottom edge and retain it while RAF scrolls.

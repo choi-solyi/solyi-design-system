@@ -15,6 +15,9 @@ h(api.SMultiSelect,{id:'multi',label:'Multiple',modelValue:['a'],options:[{value
 h(api.SConfirmAction,{label:'Confirm'}),h(api.SEmptyState,{title:'Empty'}),
 h(api.SLoadingOverlay,{modelValue:true,title:'Working',delay:0},()=>h('p','Content')),
 h(api.SPagination,{modelValue:1,pageCount:3}),
+h(api.SBtnGroup,{label:'Connected commands'},()=>h(api.SBtn,null,()=> 'Group command')),
+h(api.SBtnGroup,{label:'Empty commands'},()=>null),
+h(api.SFileInput,{id:'files',label:'Files',modelValue:[],preview:true}),
 h(api.SMonthCalendar,{id:'month',label:'Month',month:'2026-10',modelValue:'2026-10-28'}),
 h(api.STimeGrid,{id:'grid',label:'Grid',items:[item],columns:[{key:'one',label:'One',date:'2026-10-28'}],itemKey:i=>i.id,itemLabel:i=>i.title,itemColumn:i=>i.column,itemStart:i=>i.start,itemEnd:i=>i.end,readonly:false,allowResize:true,allowDuplicate:true}),
 h(api.SDialog,{id:'dialog',title:'Dialog',modelValue:false}),
@@ -27,7 +30,7 @@ const result=await build({root:fileURLToPath(consumer),configFile:false,logLevel
 const output=new URL('.ssr-check.mjs',consumer)
 await writeFile(output,result.output.find(chunk=>chunk.type==='chunk').code)
 const {render}=await import(output),html=await render()
-for(const text of ['Combo','Draft','Multiple','Alpha','Confirm','Empty','Content','Grid','Entry','One','Date','Time'])assert.ok(html.includes(text),text+' renders from the installed package')
+for(const text of ['Combo','Draft','Multiple','Alpha','Confirm','Empty','Content','Grid','Entry','One','Date','Time','Connected commands','Group command','Empty commands','Files'])assert.ok(html.includes(text),text+' renders from the installed package')
 assert.match(html,/sol-ui-time-grid/)
 assert.match(html,/sol-ui-pagination/)
 assert.ok(!html.includes('[object Object]'))
