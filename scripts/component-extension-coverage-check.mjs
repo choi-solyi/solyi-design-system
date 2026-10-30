@@ -2,10 +2,13 @@ import assert from 'node:assert/strict'
 import {JSDOM} from 'jsdom'
 import {readFile} from 'node:fs/promises'
 import {componentReferences,componentExampleSources} from '../site/component-api-data.js'
-import {componentCatalogue,renderComponentReferences} from '../site/component-api.js'
+import {componentExampleOwners,componentCatalogue,renderComponentReferences} from '../site/component-api.js'
 import {getDocumentSearchEntries,resolveDocumentLocation} from '../site/topics.js'
 import {findDocumentResults} from '../site/doc-search.js'
 const expectations=[
+ ['SAvatar','Avatar',['label','initials','src'],['error'],['default'],[]],
+ ['STooltip','Tooltip',['label','text'],['open','close'],['activator'],[]],
+ ['SPopover','Popover',['label','title'],['open','close'],['activator','default','actions'],[]],
  ['SDialog','Dialog',['busy','busyScope'],['update:modelValue','close'],['default','actions','actions-start','feedback'],[]],
  ['SSwitch','Switch',['hideLabel','label'],['update:modelValue'],[],[]],
  ['SCard','Card',['description'],[],['leading','title','description','meta','default','actions'],[]],
@@ -41,7 +44,7 @@ for(const [name,korean,props,events,slots,methods] of expectations){
  assert.deepEqual([...card.querySelectorAll('[data-component-tab]')].map(tab=>tab.textContent),['Examples','Sample Code','API'])
  assert.ok(new RegExp('<'+name+'(?:\\s|>)').test(componentExampleSources[component.example]),name+' is actually in the linked consumer source')
  assert.equal(card.querySelector('.component-code-panel pre code').textContent,componentExampleSources[component.example])
- const canvas=card.querySelector('[data-component-example]'),preview={recipe:canvas.dataset.componentExample,view:canvas.dataset.previewView,part:canvas.dataset.previewPart}
+ const owner=componentExampleOwners[name];if(owner)assert.equal(card.querySelector('[data-shared-component-example]')?.getAttribute('href'),'#component/'+owner);const canvas=(owner?d.getElementById(owner):card).querySelector('[data-component-example]'),preview={recipe:canvas.dataset.componentExample,view:canvas.dataset.previewView,part:canvas.dataset.previewPart}
  const link=card.querySelector('.code-example-footer a[href^="./starter/"]').getAttribute('href'),url=new URL(link,'https://example.test/')
  assert.equal(url.searchParams.get('view'),preview.view);assert.equal(url.searchParams.get('example'),preview.recipe);if(preview.part)assert.equal(url.searchParams.get('part'),preview.part)
  report.push({name,id,korean,preview,link})
@@ -64,6 +67,9 @@ for(const [name,id,forbidden] of [
  ['SSelect','select',['SCheckbox','SSwitch','SRadioGroup']],
  ['SBreadcrumbs','breadcrumbs',['SPagination','SDataTable','SDrawer','SToast']],
  ['SPagination','pagination',['SBreadcrumbs','SDataTable','SDrawer','SToast']],
+ ['SAvatar','avatar',['SStepper','SSplitBtn','STextField']],
+ ['STooltip','tooltip',['SPopover']],
+ ['SPopover','popover',['STooltip']],
 ]){
  const item=componentReferences.find(component=>component.name===name);assert.equal(item.example,id)
  assert.match(componentExampleSources[id],new RegExp('<'+name+'(?:\\s|>)'))

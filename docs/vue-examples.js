@@ -100,7 +100,7 @@ export function mountVuePreviews(root) {
   const controller=new AbortController(),{signal}=controller,origin=location.origin,frames=new Set();
   const pending=new Map();let requestId=0;
   const inlineDefinitions=[];
-  const viewportExamples=new Set(['sautocomplete','scombobox','sdate-picker','stime-picker','smulti-select','scontext-menu','sdialog','spopover','ssnackbar','ssplit-btn']);
+  const viewportExamples=new Set(['sautocomplete','scombobox','sdate-picker','stime-picker','smulti-select','scontext-menu','sdialog','spopover','stooltip','sprogress-linear','ssnackbar','ssplit-btn']);
   const parts={
     inputs:[['date','단일 날짜와 기간','#extra-range-form'],['files','로컬 파일과 드롭','#extra-file-drop'],['autocomplete','자동완성 검색','#extra-autocomplete']],
     'advanced-inputs':[['textarea','Textarea','#advanced-note'],['number','숫자 증감','#advanced-number-form'],['multiselect','다중 선택과 태그','#advanced-tags']],

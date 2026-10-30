@@ -19,11 +19,11 @@ export const STooltip=/* @__PURE__ */ defineComponent({name:'STooltip',inheritAt
   function leave(){hovered=false;clearTimeout(timer);timer=setTimeout(()=>{if(!hovered&&!focused)request(false,'outside');},120);}
   function focus(){focused=true;clearTimeout(timer);request(true);}
   function blur(){focused=false;if(!hovered)request(false,'focus');}
-  function escape(e:KeyboardEvent){if(e.key==='Escape'&&open.value){e.preventDefault();e.stopPropagation();request(false,'escape');}}
+  function escape(e:KeyboardEvent){if(e.key==='Escape'&&!e.isComposing&&open.value){e.preventDefault();e.stopPropagation();request(false,'escape');}}
   const outside=(e:Event)=>{if(open.value&&!root.value?.contains(e.target as Node))request(false,'outside');};
   watch(open,(value,old)=>{if(value)emit('open');else if(old)emit('close',reason);});
   watch(()=>[p.disabled,p.readonly],()=>{if(p.disabled||p.readonly)request(false,'disabled');});
-  onMounted(()=>document.addEventListener('pointerdown',outside));onBeforeUnmount(()=>{clearTimeout(timer);document.removeEventListener('pointerdown',outside);});
+  onMounted(()=>{document.addEventListener('pointerdown',outside);document.addEventListener('keydown',escape,true);});onBeforeUnmount(()=>{clearTimeout(timer);document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape,true);});
   return()=>{
     const trigger={id:p.id+'-trigger',disabled:p.disabled,'aria-disabled':p.readonly?'true':undefined,'aria-describedby':[attrs['aria-describedby'],open.value?p.id:undefined].filter(Boolean).join(' ')||undefined,onPointerenter:enter,onPointerleave:leave,onFocus:focus,onBlur:blur,onClick:()=>request(true),onKeydown:escape};
     return h('span',{...attrs,ref:root,class:['sol-ui-disclosure',attrs.class],onKeydown:escape},[

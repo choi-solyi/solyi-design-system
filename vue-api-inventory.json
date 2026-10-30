@@ -618,6 +618,56 @@
         "SBtn",
         "SPagination"
       ]
+    },
+    {
+      "id": "tooltip",
+      "route": "component",
+      "label": "짧은 도움말",
+      "source": "examples/vue-vuetify/src/recipes/tooltip.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "STooltip",
+        "SIconBtn"
+      ]
+    },
+    {
+      "id": "popover",
+      "route": "component",
+      "label": "대화형 추가 정보",
+      "source": "examples/vue-vuetify/src/recipes/popover.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SPopover",
+        "SBtn",
+        "SIcon"
+      ]
+    },
+    {
+      "id": "avatar",
+      "route": "component",
+      "label": "사용자 이미지와 대체 글자",
+      "source": "examples/vue-vuetify/src/recipes/avatar.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SAvatar"
+      ]
+    },
+    {
+      "id": "chart",
+      "route": "component",
+      "label": "Chart 유형과 자료",
+      "source": "examples/vue-vuetify/src/recipes/chart.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SRadioGroup",
+        "SSelect",
+        "SCheckbox",
+        "SBarChart"
+      ]
     }
   ],
   "scope": "Component exports are separate from app-state compositions. Core CSS/icon helpers and the document shell are not all independent Vue components.",

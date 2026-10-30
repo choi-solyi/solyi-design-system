@@ -7,7 +7,7 @@ export const componentConceptNames={
  SSortableList:'Sortable List',
  SChip:'Chip',SBadge:'Badge',SIcon:'Icon',SIconBtn:'Icon Button',
  SAccordion:'Accordion',SAlert:'Alert',SAutocomplete:'Autocomplete',SAvatar:'Avatar',
- SBarChart:'Bar Chart',SBreadcrumbs:'Breadcrumbs',SBtn:'Button',SCard:'Card',
+ SBarChart:'Chart',SBreadcrumbs:'Breadcrumbs',SBtn:'Button',SCard:'Card',
  SCheckbox:'Checkbox',SCol:'Column',SContainer:'Container',SContextMenu:'Context Menu',
  SDataTable:'Data Table',SDatePicker:'Date Picker',SDialog:'Dialog',SFileInput:'File Input',
  SForm:'Form',SMultiSelect:'Multi Select',SNumberInput:'Number Input',SPopover:'Popover',

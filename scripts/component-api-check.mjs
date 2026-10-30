@@ -4,7 +4,7 @@ import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {JSDOM} from 'jsdom';
 import {componentReferences,componentExampleSources} from '../site/component-api-data.js';
-import {componentCatalogue,renderComponentReferences,mountComponentReferences,revealComponentTarget} from '../site/component-api.js';
+import {layoutComponentNames,componentExampleOwners,componentCatalogue,renderComponentReferences,mountComponentReferences,revealComponentTarget} from '../site/component-api.js';
 import {componentConcept,componentConceptNames,componentLegacyAnchors} from '../site/component-catalog.js';
 import {getTopicCatalogue,resolveDocumentLocation} from '../site/topics.js';
 
@@ -25,11 +25,13 @@ assert.deepEqual(getTopicCatalogue('start')[0].items.slice(0,7).map(item=>item.i
 assert.deepEqual(getTopicCatalogue('releases')[0].items.map(item=>item.id),['changelog']);
 const copySources=new Map();let copyId=0;
 const escape=value=>value.replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
-const dom=new JSDOM(renderComponentReferences({section:(id,title,description,body)=>`<section id="${id}" class="section"><h2>${title}</h2><p>${description}</p>${body}</section>`,codeSample(label,source){const id='sample-'+(++copyId);copySources.set(id,source);return `<details class="code-example"><summary>${label}</summary><div class="code-body"><div class="code-toolbar"><span>${label}</span><button type="button" data-copy-snippet="${id}">복사</button></div><pre><code>${escape(source)}</code></pre></div></details>`;}}),{url:'https://example.test/#component/sbtn'}),document=dom.window.document;
+const dom=new JSDOM(renderComponentReferences({section:(id,title,description,body)=>`<section id="${id}" class="section"><h2>${title}</h2><p>${description}</p>${body}</section>`,codeSample(label,source){const id='sample-'+(++copyId);copySources.set(id,source);return `<details class="code-example"><summary>${label}</summary><div class="code-body"><div class="code-toolbar"><span>${label}</span><button type="button" data-copy-snippet="${id}">복사</button></div><pre><code>${escape(source)}</code></pre></div></details>`;}},{includeLayouts:true}),{url:'https://example.test/#component/sbtn'}),document=dom.window.document;
+assert.deepEqual(layoutComponentNames,['SCol','SContainer','SRow']);for(const name of layoutComponentNames){const item=componentReferences.find(c=>c.name===name);assert.equal(componentCatalogue().flatMap(group=>group.items).some(c=>c.id===item.id),false);for(const suffix of ['', '-api','-code','-examples'])assert.deepEqual(resolveDocumentLocation('#component/'+item.id+suffix),{route:'style',anchor:item.id+suffix});}
+const layoutMarkup=renderComponentReferences({section:(_id,_title,_description,body)=>body},{layout:true});const layoutDocument=new JSDOM(layoutMarkup).window.document;assert.deepEqual([...layoutDocument.querySelectorAll('.component-api-name')].map(el=>el.textContent).sort(),layoutComponentNames.toSorted());
 const seenIds=[...document.querySelectorAll('[id]')].map(element=>element.id);assert.equal(new Set(seenIds).size,seenIds.length);
 assert.equal(document.querySelectorAll('code.component-api-name').length,names.length);
 assert.equal(document.querySelectorAll('code.component-api-name[aria-label]').length,0,'Static code retains its native text without prohibited naming');
-const mapping={date:'inputs',files:'inputs',autocomplete:'inputs',chart:'chart-tree',tree:'chart-tree'};
+const mapping={date:'inputs',files:'inputs',autocomplete:'inputs',tree:'chart-tree'};
 const advanced=await readFile(new URL('examples/vue-vuetify/src/AdvancedExamples.vue',root),'utf8');
 for(const component of componentReferences){
   const card=document.getElementById(component.id);assert.ok(card,component.name+' reference');
@@ -42,7 +44,7 @@ for(const component of componentReferences){
   assert.equal(document.getElementById(component.id+'-api').hidden,true,'API is initially hidden');
   assert.equal(document.getElementById(component.id+'-examples').hidden,false,'Examples is initially visible');
   assert.equal(document.getElementById(component.id+'-code').hidden,true,'Sample Code is initially hidden');
-  assert.ok(card.querySelector('[data-component-example]'),'Inline sample exists without a second link');
+  if(componentExampleOwners[component.name]){const link=card.querySelector('[data-shared-component-example]');assert.equal(link?.getAttribute('href'),'#component/'+componentExampleOwners[component.name]);assert.ok(document.getElementById(componentExampleOwners[component.name]).querySelector('[data-component-example]'));assert.equal(card.querySelector('[data-component-example]'),null,'Shared progress example is not mounted twice');}else assert.ok(card.querySelector('[data-component-example]'),'Owned inline sample exists');
   assert.equal(card.querySelector('#'+component.id+'-examples .code-example'),null,'Examples only contains the running canvas');
   const code=document.getElementById(component.id+'-code');assert.equal(code.querySelector('details,summary'),null,'Sample Code has no nested accordion');
   assert.equal(code.querySelector('pre code').textContent,example,'Visible code is the canonical SFC');
@@ -82,7 +84,9 @@ for(const name of ['STextField','STextarea']){
  assert.match(component.events.find(item=>item.name==='clear')?.signature||'',/SolInputClearEvent<string>/);
  for(const slot of ['leading','trailing','indicator','status','loading'])assert.equal(component.slots.find(item=>item.name===slot)?.scope,'SolInputControlScope');
  assert.equal(component.methods.find(item=>item.name==='clear')?.signature,'() => void');
- assert.match(componentExampleSources[component.example],/\bclearable\b/);assert.match(componentExampleSources[component.example],/@clear=/);
+ assert.match(componentExampleSources[component.example],/\bclearable\b/);
+ if(component.name==='STextField')assert.doesNotMatch(componentExampleSources[component.example],/clearCount|지운 횟수/,'TextField clear remains available without the removed demonstration counter');
+ else assert.match(componentExampleSources[component.example],/@clear=/);
 }
 assert.equal(componentReferences.find(component=>component.name==='STextField').events.some(event=>event.name==='change'),false,'Do not invent a TextField change event while adding clear');
 {

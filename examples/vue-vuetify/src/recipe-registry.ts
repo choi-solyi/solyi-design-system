@@ -40,6 +40,10 @@ import Recipe38 from './recipes/switch.vue'
 import Recipe39 from './recipes/select.vue'
 import Recipe40 from './recipes/breadcrumbs.vue'
 import Recipe41 from './recipes/pagination.vue'
+import Recipe42 from './recipes/tooltip.vue'
+import Recipe43 from './recipes/popover.vue'
+import Recipe44 from './recipes/avatar.vue'
+import Recipe45 from './recipes/chart.vue'
 
 export const recipeComponents = {
   'color-examples': Recipe0,
@@ -84,6 +88,10 @@ export const recipeComponents = {
   select: Recipe39,
   breadcrumbs: Recipe40,
   pagination: Recipe41,
+  tooltip: Recipe42,
+  popover: Recipe43,
+  avatar: Recipe44,
+  chart: Recipe45,
 }
 export const recipeLabels = {
   'color-examples': '의미색 UI 조합',
@@ -128,4 +136,8 @@ export const recipeLabels = {
   select: 'Select · 목록 선택',
   breadcrumbs: 'Breadcrumbs · 현재 위치',
   pagination: 'Pagination · 페이지 이동',
+  tooltip: '짧은 도움말',
+  popover: '대화형 추가 정보',
+  avatar: '사용자 이미지와 대체 글자',
+  chart: 'Chart 유형과 자료',
 }

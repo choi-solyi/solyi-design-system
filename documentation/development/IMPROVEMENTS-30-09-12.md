@@ -18,3 +18,5 @@
 - 로컬 증거: `qa-output/recipe-09-12/observations.json`, `*-violet.png`, `*-sage.png`, `*-sand.png`. Pagination 다크 모바일과 Accordion RTL 캡처를 직접 확인했다.
 
 검사 fixture의 초기 theme bridge 인자·Vue import, Accordion을 button으로 찾던 선택자, Vuetify RTL 설정 누락은 수정했다. 제품 회귀로 허위 분류하지 않는다. 물리 휴대폰·스크린리더·실제 소프트 키보드는 미검증이다. 이 묶음의 포인터 scrub 전체 회귀·최종 1.1.1 tarball/크기/SSR/출시 검사는 최종 후보에서 기존 검사를 재사용한다. 이번 설치본은 명시적 미게시 실험 tarball이며 동결 1.1.0 파일을 덮어쓰지 않았다.
+
+독립 검토 후 #10 최종 필수 범위를 명확히 한다. legacy/auto/popover/dialog 각각의 크기·스크롤·초점 복귀, native와 list의 선택/확정/취소, 옮긴 grip의 ArrowUp→Escape 후 모델과 cancel 이벤트, 기존 pointer drag/cancel/blur/외부 모델 변경/disabled 전환 회귀를 최종 후보에서 확인한다. 이번 15회 검증을 이 전체 경로 통과로 확대하지 않는다. `chevrons`도 최종 tarball 번들 및 `solyi-ui/icons` 타입 소비를 확인해야 한다.

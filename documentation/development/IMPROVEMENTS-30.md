@@ -34,15 +34,15 @@
 | 14 | Stepper 연결선·이름 아래 옵션·중복 진행 제거·초기화 왼쪽/이전다음 오른쪽·색상 | 예제 중복 진행막대·배치와 패키지 표현 부족 | 문서+패키지 | additive labelPosition 기본 inline/below·연결선, 예제 actions와 primary 정리 | 설치본 3테마/390/RTL 연결선·아래 배치·실제 입력→검토→완료→초기화 및 포커스 | 개발 완료·최종 통합 전, npm 1.1.0 미포함 |
 | 15 | Tabs와 기준선/내용 패널 연결 | gap·분리된 둥근 패널 확인 | 패키지 CSS | 수평 탭을 붙이고 패널과 기준선 공유, 수직 계약 보존 | 설치본 3테마/390/RTL 경계 y 오차 0·방향키 disabled 건너뜀·패널 입력 유지 | 개발 완료·최종 통합 전 |
 | 16 | Tree 화살표 외 부모 항목 행 전체 펼침 | 기존 row는 선택만 수행 | 패키지 | 부모 row 클릭 시 기존 선택+펼침, disclosure와 방향키 보존 | 설치본 실제 라벨/행 클릭·접기·ArrowRight 자식 focus·ArrowLeft·선택 유지, source 42 SFC 회귀 통과 | 개발 완료·최종 통합 전 |
-| 17 | Dialog busyScope 설명 명확화, 사이드패널이 카드 내부에 뜨거나 과도하게 길어지는 문제 | 기존 iframe이 viewport 경계; registry fixture는 전체 화면 사용 | 문서 호스트 | 같은 문서 VApp/overlay stack 사용 | 1440/390px Drawer, 여러 줄 설명·긴 본문·고정 header/actions·body scroll, busyScope all Escape 차단/완료 후 복귀 | busyScope 안내 UX 추가 검토, CI·공개 배포 |
-| 18 | Linear/Circular/Overlay 반복 모션 실제 동작, 중복 예제는 하나 안에서 구분 | no-preference의 Linear/Circular는 양쪽 실행, reduce는 의도한 정지 | 사용자 설정·예제 상태 전환 추가 판별 | 미착수 | 실제 350ms 전후 transform/currentTime 비교 실행 | Overlay·전환·모션 상태 안내·중복 예제 |
-| 19 | Popover/Tooltip 의미·트리거 구분, 불필요한 중복과 하단 여백 제거 | 라이브 iframe 207→480px, 카드 +273px | 문서 embed 측정의 최소 480px 확인 | 미착수 | Chrome 1440/light/violet 실제 열기 비교 실행 | hover/focus/click·포커스·부모 높이 불변 |
-| 20 | Snackbar가 카드가 아닌 전체 페이지 우측 하단에 표시 | registry와 직접 문서에서 화면 우측 하단 확인; 기존 iframe의 body가 경계 | 문서 호스트, 패키지 Teleport body는 기존 지원 | iframe 대신 같은 문서에 설치 1.1.0 마운트 | 1440/390px viewport 우측/하단·높이 불변·닫기 실제 확인 | CI·공개 배포 확인 |
-| 21 | Avatar와 프로필/메뉴 의미 구분, 화면에 없는 입력 샘플 코드 혼입 제거 | 미재현 | 예제 소유 판별 | 미착수 | 미실행 | 화면/코드 동일 원본 |
-| 22 | Chart 명칭과 실제 bar·원형·line 등 유형 선택 기능 | 미재현 | 신규 확장 범위 확인 | 미착수 | 미실행 | 실제 렌더·데이터·표 대안 |
-| 23 | Card 항목 링크가 iframe 안에서 starter를 여는 동작 개선 | 미재현 | 문서 링크/탐색 판별 | 미착수 | 미실행 | 링크 의미·탐색 대상 |
-| 24 | Column/Container/Row 안내를 Components에서 Style 레이아웃으로 이동 검토·반영 | 미재현 | 문서 탐색 | 미착수 | 미실행 | 공개 export 유지·검색/기존 링크 |
-| 25 | DataTable loading/error에서 헤더 이름·변경일의 회색 배경/테두리 불일치 | 미재현 | 판별 중 | 미착수 | 미실행 | 정상/로딩/오류 및 테마 |
+| 17 | Dialog busyScope 설명, 긴 본문 옆패널 viewport | iframe 호스트 문제와 설명 부족 | 문서 | 처리 중에만 잠금이 적용됨과 두 범위 설명 보강 | 로컬 실제 Drawer PC/390/가로760×390 높이·본문 scroll·header/actions 고정·all Escape 잠금·완료/복귀 확인 | 개발 완료·최종 통합 전 |
+| 18 | Linear/Circular/Overlay 실제 모션 및 한 카드 비교 | 기존 모션은 허용 설정에서 동작·예제 3중 중복 | 문서 | 비교 카드 하나, 다른 API 예제는 소유 카드 연결·세 API 유지·기기 모션 감소 안내 | 실제 3테마 1100/390에서 막대/SVG/Overlay 시간·transform 변화 및 reduce 확인, 정확한 shared-owner 계약 검사 | 개발 완료·최종 통합 전 |
+| 19 | Tooltip/Popover 의미·트리거 구분·부모 여백 | iframe 높이 문제, hover-only Escape 패키지 결함 추가 확인 | 문서+패키지 | 독립 예제·info 도움말/chevron 추가정보·Tooltip document Escape capture 및 IME 보존 | 문서 3테마 높이/hover/focus/확인/복귀, 설치본 hover Escape reason·바깥 focus·IME 확인, source runtime 회귀 | 개발 완료·최종 통합 전, npm 1.1.0 hover Escape 미수정 |
+| 20 | Snackbar 전체 페이지 우측 하단 | 기존 패키지 body Teleport 정상·문서 iframe viewport 문제 | 문서 호스트 | 기존 공통 호스트 재사용 | 로컬 문서 3테마 PC/390에서 전체 viewport 하단과 닫기/기존 계약 확인 | 개발 완료·최종 통합 전 |
+| 21 | Avatar와 메뉴 의미 및 Sample Code 역할 일치 | Avatar가 Stepper/사용자 메뉴 조합 소스 공유 | 문서 | Avatar 전용 소스·대체 글자/접근성 이름 설명, 가짜 메뉴 제거 | 3테마 실제 Avatar 이름/버튼 부재/코드에 Stepper·메뉴 부재 확인, 소유 negative 검사 | 개발 완료·최종 통합 전 |
+| 22 | Chart 명칭·bar/line/pie 실제 유형 | 기존 bar-only 구현 | 문서+패키지 | 기존 SBarChart/export·bar 기본값 유지, additive type 및 SChartType·동일 표·원형 번호/범례 | 설치본 3테마/390/RTL 3유형 실제 geometry·동일 자료·zero/empty/loading 확인, 자체 SVG로 새 엔진/라이선스 없음 | 개발 완료·최종 1.1.1 문서 런타임 전환·통합 전 |
+| 23 | Card 링크가 iframe 안에서 starter를 여는 동작 | 예제 링크 target 없음 | 문서 | 새 탭임을 표시하고 _blank/noopener 지정 | 실제 popup URL·opener null·부모 URL 유지 확인 | 개발 완료·최종 통합 전 |
+| 24 | Container/Row/Column을 Style 레이아웃으로 이동 | Components 메뉴/카드에 배치 도구 혼합 | 문서 | Style 안내/API·검색·메뉴 이전, 세 export와 구 component/code/api 링크 유지 | PC/390 실제 구 링크→Style/API/Sample Code·hash 확인, 계약 검사·이동 후 DOM 회귀 보완 | 개발 완료·최종 통합 전 |
+| 25 | Table loading/error 정렬 헤더 배경·테두리 안정 | SBtn disabled 공통 스타일이 헤더 sort에 적용 | 패키지 CSS | Table sort disabled에만 투명 배경/테두리 유지·native disabled/접근성 보존 | 설치본 3테마 PC/390/RTL normal/loading/error 실제 computed 배경/테두리/높이 및 disabled 확인 | 개발 완료·최종 통합 전 |
 | 26 | Calendar 월 제목·일요일색·날짜 상단정렬·+N/항목/ⓘ 실제 접근, 테마색·인접 이전다음·연도선택 | 미재현 | 판별 중 | 미착수 | 미실행 | ISO/marker·overflow·키보드 |
 | 27 | Sortable 무테 손잡이·이동 모션, disabled/readonly 조작 숨김 | 부모 픽셀 관찰 | 판별 중 | 미착수 | 미실행 | drag/화살표/취소·reduced-motion |
 | 28 | TimeGrid 위치 흔들림 제거·설명 정리·실제 생성/삭제/drag 이동/양끝 resize/복제·현재시각선 갱신 | 미재현 | 패키지/소비 예제 판별 | 미착수 | 미실행 | controlled 제안·저장 없음·실제 조작 |

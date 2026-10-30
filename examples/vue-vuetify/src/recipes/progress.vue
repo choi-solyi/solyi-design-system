@@ -35,9 +35,18 @@ const options = [
       :options="options"
       required
     />
-    <SCheckbox id="recipe-progress-motion" v-model="animated" label="처리 중 반복 모션" />
+    <SCheckbox
+      id="recipe-progress-motion"
+      v-model="animated"
+      label="아래 두 진행 표시의 처리 중 반복 모션"
+    />
+    <p class="sol-hint">
+      반복 모션은 진행률을 모르는 처리 중 상태에 적용합니다. 기기의 모션 감소 설정에서는 회전·이동을
+      줄이고 상태 문구를 유지합니다.
+    </p>
     <SCheckbox id="recipe-progress-value" v-model="showValue" label="수치 표시" />
     <SCheckbox id="recipe-progress-message" v-model="showMessage" label="상태 문구 표시" />
+    <h3>가로 진행 · Progress Linear</h3>
     <SProgressLinear
       id="recipe-linear"
       label="선형 진행"
@@ -47,6 +56,7 @@ const options = [
       :show-value="showValue"
       :show-message="showMessage"
     />
+    <h3>원형 진행 · Progress Circular</h3>
     <SProgressCircular
       id="recipe-circular"
       label="원형 진행"
@@ -58,6 +68,11 @@ const options = [
     />
     <p>
       알 수 없는 진행률에는 퍼센트를 만들지 않습니다. 움직임 줄이기 설정에서는 정적으로 표시합니다.
+    </p>
+    <h3>작업 영역 위에 표시 · Loading Overlay</h3>
+    <p>
+      위 두 진행 표시는 수치를 읽는 요소이고, Overlay는 기존 작업 영역 위에 처리 상태를 겹쳐
+      보여주는 래퍼입니다. 작업 완료 여부는 부모가 제어합니다.
     </p>
     <SSelect
       id="recipe-loading-scope"

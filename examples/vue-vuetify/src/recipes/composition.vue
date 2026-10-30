@@ -48,7 +48,10 @@ function retry(event: MouseEvent) {
     </SCard>
     <SCard description="제목 링크와 보조 버튼을 독립적으로 조작할 수 있습니다.">
       <template #leading><SIcon name="folder" decorative /></template>
-      <template #title><a href="?view=recipes&amp;example=empty">항목 미리보기</a></template>
+      <template #title
+        ><a href="?view=recipes&amp;example=empty" target="_blank" rel="noopener"
+          >항목 미리보기 · 새 탭 <SIcon name="external" decorative :size="16" /></a
+      ></template>
       <template #meta><SBadge :content="bookmarked ? '보관됨' : '예제'" /></template>
       <template #actions>
         <SBtn @click="bookmarked = !bookmarked">{{ bookmarked ? '보관 해제' : '보관' }}</SBtn>

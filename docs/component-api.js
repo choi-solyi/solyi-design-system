@@ -4,7 +4,10 @@ import {componentConcept,componentConceptCatalogue,componentGroupOrder} from './
 
 const apiEscape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 export const componentGroups=componentGroupOrder;
-export function componentCatalogue(){return componentConceptCatalogue(componentReferences);}
+// One comparison canvas, with independent API references and stable old anchors.
+export const componentExampleOwners={SProgressCircular:'sprogress-linear',SLoadingOverlay:'sprogress-linear'};
+export const layoutComponentNames=['SCol','SContainer','SRow'];
+export function componentCatalogue(){return componentConceptCatalogue(componentReferences.filter(item=>!layoutComponentNames.includes(item.name)));}
 function componentSampleCode(h,component){
  const source=componentExampleSources[component.example];
  const registered=h.codeSample?.('Vue · SFC',source);
@@ -16,12 +19,14 @@ function apiTable(caption, columns, rows) {
   if (!rows.length) return '<p class="sol-hint">이 컴포넌트가 별도로 선언한 항목은 없습니다.</p>';
   return `<div class="api-table-scroll" tabindex="0" role="region" aria-label="${apiEscape(caption)}"><table class="api-table api-table--${columns.length}"><caption>${apiEscape(caption)}</caption><thead><tr>${columns.map(column=>`<th scope="col">${column}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
 }
-export function renderComponentReferences(h) {
-  return componentCatalogue().map(({group,items},index)=>h.section('api-group-'+index,group,'컴포넌트 이름의 ABC 순서로 찾습니다.',
+export function renderComponentReferences(h,{layout=false,includeLayouts=false}={}) {
+  const catalogue=layout?componentConceptCatalogue(componentReferences.filter(item=>layoutComponentNames.includes(item.name))):includeLayouts?componentConceptCatalogue(componentReferences):componentCatalogue();
+  return catalogue.filter(group=>group.items.length).map(({group,items},index)=>h.section((layout?'layout-api-group-':'api-group-')+index,group,'컴포넌트 이름의 ABC 순서로 찾습니다.',
     items.map(item=>{
       const component=componentReferences.find(component=>component.id===item.id);
       const name=apiEscape(component.name),concept=apiEscape(componentConcept(component)),id=component.id;
       const preview=componentPreview(component);
+      const exampleOwner=componentExampleOwners[component.name];
       const code=componentSampleCode(h,component);
       return `<article class="component-reference sol-card" id="${id}" aria-labelledby="${id}-title">
         <div class="component-reference-heading"><h3 id="${id}-title">${concept}</h3><code class="component-api-name">${name}</code></div>
@@ -32,7 +37,7 @@ export function renderComponentReferences(h) {
           <button type="button" role="tab" id="${id}-api-tab" data-component-tab="api" tabindex="-1" aria-selected="false" aria-controls="${id}-api">API</button>
         </div>
         <div id="${id}-examples" class="component-example-panel" role="tabpanel" aria-labelledby="${id}-examples-tab">
-          <div class="component-example-canvas" data-component-example="${preview.recipe}" data-preview-view="${preview.view}" data-preview-part="${preview.part}"></div>
+          ${exampleOwner?`<p>가로 진행·원형 진행·작업 영역 로딩은 <a data-shared-component-example="${exampleOwner}" href="#component/${exampleOwner}">진행과 로딩 예제 모음</a> 한 카드에서 비교합니다. 이 항목의 API는 별도로 유지합니다.</p>`:`<div class="component-example-canvas" data-component-example="${preview.recipe}" data-preview-view="${preview.view}" data-preview-part="${preview.part}"></div>`}
         </div>
         <div id="${id}-code" class="component-code-panel" role="tabpanel" aria-labelledby="${id}-code-tab" hidden>${code}</div>
         <div id="${id}-api" class="component-api" role="tabpanel" aria-labelledby="${id}-api-tab" hidden><h4>API</h4>
@@ -50,8 +55,8 @@ export function renderComponentReferences(h) {
 }
 
 function componentPreview(component) {
- const aliases={date:['inputs','date'],files:['inputs','files'],autocomplete:['inputs','autocomplete'],chart:['chart-tree','chart'],tree:['chart-tree','tree']};
- const parts={STimeGrid:'time-grid',STextarea:'textarea',SNumberInput:'number',SMultiSelect:'multiselect',SAvatar:'avatar',SStepper:'steps',SSegmentedControl:'segmented',SRangeSlider:'range',SContextMenu:'context-menu',SResizableSplitPane:'split-pane'};
+ const aliases={date:['inputs','date'],files:['inputs','files'],autocomplete:['inputs','autocomplete'],tree:['chart-tree','tree']};
+ const parts={STimeGrid:'time-grid',STextarea:'textarea',SNumberInput:'number',SMultiSelect:'multiselect',SStepper:'steps',SSegmentedControl:'segmented',SRangeSlider:'range',SContextMenu:'context-menu',SResizableSplitPane:'split-pane'};
  const [recipe,part]=aliases[component.example]||[component.example,component.name==='SSortableList'?'sortable':component.name==='SMonthCalendar'?'month-calendar':parts[component.name]||''];
  return {recipe,part,view:component.example==='advanced-vue'?'advanced':'recipes'};
 }
@@ -73,7 +78,7 @@ export function mountComponentReferences(root,{onNavigate=()=>{}}={}) {
   function activate(index,focus=false){
    const tab=tabs[index],anchor=tab.getAttribute('aria-controls');revealComponentTarget(root,anchor);
    if(focus)tab.focus({preventScroll:true});
-   const hash='#component/'+anchor;if(location.hash!==hash)history.pushState(null,'',hash);onNavigate(hash);
+   const hash='#'+(root.dataset?.page==='style'?'style':'component')+'/'+anchor;if(location.hash!==hash)history.pushState(null,'',hash);onNavigate(hash);
   }
   tabs.forEach((tab,index)=>{
    tab.addEventListener('click',()=>activate(index),{signal});

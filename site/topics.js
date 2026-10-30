@@ -1,11 +1,11 @@
 /* Continuous parent documents with grouped component references and compatible deep links. */
 import {solIcon} from './icons.js';
-import {componentCatalogue,revealComponentTarget} from './component-api.js';
+import {layoutComponentNames,componentCatalogue,revealComponentTarget} from './component-api.js';
 import {componentReferences} from './component-api-data.js';
 import {componentLegacyAnchors} from './component-catalog.js';
 const documentSections={
  start:[['start-here','시작 순서'],['install','설치'],['registration','공통 등록'],['auto-import','자동 import'],['forms','폼 검증'],['appearance','테마·화면 설정'],['update','업데이트'],['ai-guide','AI guide'],['starter','실제 패키지 실행'],['adoption','CSS·JSON 적용'],['themes','테마'],['density','밀도'],['locale','공통 locale'],['advanced-vue','선택·동작·분할'],['scope','검증·출처'],['principles','시스템 원칙']],
- style:[['principles','Core 원칙'],['tokens','색 토큰'],['type','타이포그래피'],['space','간격·밀도·모서리'],['accessibility','접근성 기준'],['color-examples','컬러 적용 예시'],['motion','모션'],['icons','아이콘'],['layers','레이어와 그림자'],['writing','UI 문구']],
+ style:[['layout','Vue 레이아웃'],['scontainer','Container'],['srow','Row'],['scol','Column'],['principles','Core 원칙'],['tokens','색 토큰'],['type','타이포그래피'],['space','간격·밀도·모서리'],['accessibility','접근성 기준'],['color-examples','컬러 적용 예시'],['motion','모션'],['icons','아이콘'],['layers','레이어와 그림자'],['writing','UI 문구']],
  component:componentCatalogue().flatMap(group=>group.items.map(item=>[item.id,item.label])),
  pattern:[['form','폼 검증과 회복'],['search','검색과 상세'],['compare','비교 선택'],['empty','빈 상태'],['data','표와 목록'],['date','날짜 선택'],['files','파일 선택·드롭'],['autocomplete','자동완성 검색'],['responses','로딩·권한·오류'],['composition','조합 규칙'],['layouts','화면 템플릿'],['workflow','편집·이탈·삭제·Undo'],['error-summary','오류 요약'],['not-found','앱용 404'],['bulk-recovery','일괄 작업·부분 실패']],
  releases:[['changelog','변경 이력']],
@@ -18,7 +18,7 @@ export function resolveDocumentLocation(hash){
  if((requested==='theme'||route==='releases')&&anchor==='packages'){route='start';target='install';}
  else if((requested==='theme'||route==='releases')&&anchor==='versioning'){route='releases';target='changelog';}
  else if(route==='start')target=({'vue-components':'registration',installation:'install'})[anchor]||anchor;
- else if(route==='component')target=componentLegacyAnchors[anchor]||anchor;
+ else if(route==='component'){target=componentLegacyAnchors[anchor]||anchor;if(/^s(?:col|container|row)(?:-(?:api|code|examples))?$/.test(target))route='style';}
  return {route:documentNames[route]?route:'start',anchor:documentNames[route]?target:''};
 }
 const documentSearchNames={
@@ -63,7 +63,7 @@ export function getDocumentSearchEntries(root,route){
  const entries=[{route,id:'',group:documentNames[route],label:documentNames[route],title:plain(intro.querySelector('h1')),description:plain(intro.querySelector('p')),text:plain(intro)}];
  const sections=[...(documentSections[route]||[])];for(const [id,label,selector]of documentAliases[route]||[])if(!sections.some(x=>x[0]===id))sections.push([id,label,selector]);
  for(const [id,label,selector]of sections){const fallback=selector||(documentAliases[route]||[]).find(x=>x[0]===id)?.[2],node=root.querySelector('#'+id)||(fallback&&root.querySelector(fallback));if(!node)throw Error('Search destination missing: '+route+'/'+id);
-  const component=componentReferences.find(component=>route==='component'&&component.id===id);
+  const component=componentReferences.find(component=>(route==='component'||route==='style'&&layoutComponentNames.includes(component.name))&&component.id===id);
   const context=node.matches('section.section,.component-reference')?node:node.closest('.demo')||node.closest('section.section')||node;
   const summary=Array.from(context.querySelectorAll('.section-header>p,p,.sol-hint')).find(p=>plain(p)&&!p.closest('pre,[role="status"]'));
   const title=plain(context.querySelector('h2,h3,h4'))||label,text=plain(context),description=component?.description||plain(summary)||label+' · '+title;

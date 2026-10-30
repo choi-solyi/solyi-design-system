@@ -46,10 +46,15 @@ onBeforeUnmount(() => clearTimeout(timer))
       v-model="busyScope"
       label="작업 중 잠금 범위"
       :options="[
-        { value: 'body', label: '본문만 · 닫기 가능' },
-        { value: 'all', label: '전체 · 완료 후 닫기' },
+        { value: 'body', label: '처리 중 본문 입력만 잠금 · 닫기 가능' },
+        { value: 'all', label: '처리 중 창 전체 잠금 · 완료 후 닫기' },
       ]"
     />
+    <p class="sol-hint">
+      창을 연 뒤 ‘가상 처리’를 눌렀을 때만 잠금이 적용됩니다. 본문 잠금은 입력을 막고 닫기는
+      허용합니다. 전체 잠금은 제목의 닫기·바깥 클릭·Escape도 처리 완료까지 막습니다. 약 1.2초 후
+      자동 완료되며 실제 저장 작업은 없습니다.
+    </p>
     <SBtn id="recipe-dialog-open" @click="open = true">창 열기</SBtn>
     <SDialog
       id="recipe-dialog"

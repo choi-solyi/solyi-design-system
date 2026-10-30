@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {moduleOrder} from './site-manifest.mjs';
 import {expansionChecks} from './expansion-tests.mjs';
+import {layoutComponentNames,componentExampleOwners} from '../site/component-api.js';
 import {componentReferences,componentExampleSources} from '../site/component-api-data.js';
 const html=await readFile(new URL('../docs/index.html',import.meta.url),'utf8');
 const tokenSource=JSON.parse(await readFile(new URL('../tokens.json',import.meta.url),'utf8'));
@@ -94,11 +95,11 @@ assert.ok($('#contrast-results').textContent.includes('dark'));
 $('#token-search').value='no-such-token';fire($('#token-search'),'input');assert.match($('#token-grid').textContent,/일치하는 토큰/);
 await route('component');
 integrity();for(const name of ['SConfirmAction','SEmptyState','SLoadingOverlay','SPagination','STimeGrid'])assert.ok(componentReferences.some(item=>item.name===name),name+' has a public document');assert.equal(componentReferences.length,50,'Every current S API has a document reference');
-assert.equal(d.querySelectorAll('main .component-reference').length,50);
-assert.equal(d.querySelectorAll('main [data-component-example]').length,50,'Canonical cards mount the real package preview surface');
+assert.equal(d.querySelectorAll('main .component-reference').length,componentReferences.length-layoutComponentNames.length);for(const name of layoutComponentNames){const item=componentReferences.find(c=>c.name===name);assert.equal(d.getElementById(item.id),null,'Layout moved out of Components: '+name);}
+assert.deepEqual(componentExampleOwners,{SProgressCircular:'sprogress-linear',SLoadingOverlay:'sprogress-linear'},'Only the requested progress comparison shares one canvas');assert.equal(d.querySelectorAll('main [data-component-example]').length,componentReferences.length-layoutComponentNames.length-Object.keys(componentExampleOwners).length,'Every nonshared API owns its canvas');for(const [name,owner]of Object.entries(componentExampleOwners)){const component=componentReferences.find(item=>item.name===name),link=d.querySelector('#'+component.id+' [data-shared-component-example]');assert.equal(link?.getAttribute('href'),'#component/'+owner);assert.ok(d.querySelector('#'+owner+' [data-component-example]'));}
 assert.equal(d.querySelector('#component-examples'),null,'No second legacy component gallery');
 assert.equal(d.querySelector('#button-feedback'),null,'Retired native component demo is not rendered');
-for(const component of componentReferences){
+for(const component of componentReferences.filter(item=>!layoutComponentNames.includes(item.name))){
   const card=$('#'+component.id),tabs=[...card.querySelectorAll('[data-component-tab]')];
   assert.deepEqual(tabs.map(tab=>tab.dataset.componentTab),['examples','code','api']);
   assert.equal(tabs[0].getAttribute('aria-selected'),'true');
@@ -106,6 +107,15 @@ for(const component of componentReferences){
   assert.equal($('#'+component.id+'-code').hidden,true);
   assert.equal($('#'+component.id+'-api').hidden,true);
 }
+for(const name of layoutComponentNames){
+ const component=componentReferences.find(item=>item.name===name);
+ await route('component/'+component.id);
+ assert.equal(d.querySelector('main').dataset.page,'style','Old layout URL resolves to Style');
+ const card=$('#'+component.id);assert.ok(card.querySelector('[data-component-example]'));
+ click('#'+component.id+'-code-tab');assert.equal(w.location.hash,'#style/'+component.id+'-code');assert.equal($('#'+component.id+'-code').hidden,false);assert.ok(card.querySelector('pre code').textContent.includes('<SContainer'));
+ await route('component/'+component.id+'-api');assert.equal(d.querySelector('main').dataset.page,'style');assert.equal($('#'+component.id+'-api').hidden,false,'Old API anchor is preserved');integrity();
+}
+await route('component');
 const mountedReferences=previewMounts,buttonCard=$('#sbtn');
 click('#sbtn-code-tab');assert.equal(w.location.hash,'#component/sbtn-code');assert.equal($('#sbtn-code').hidden,false);
 assert.ok($('#sbtn-code pre code .token'),'The app runs Prism on the canonical SFC');

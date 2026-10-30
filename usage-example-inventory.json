@@ -124,7 +124,8 @@
       "kind": "vue-recipe",
       "recipe": "help.vue",
       "status": "typed-and-runtime-checked",
-      "title": "설명과 추가 정보"
+      "title": "설명과 추가 정보",
+      "delivery": "standalone-composition"
     },
     {
       "route": "component",
@@ -496,6 +497,42 @@
       "recipe": "pagination.vue",
       "status": "typed-and-runtime-checked",
       "title": "Pagination · 페이지 이동"
+    },
+    {
+      "route": "component",
+      "section": "tooltip",
+      "label": "짧은 도움말",
+      "kind": "vue-recipe",
+      "recipe": "tooltip.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "짧은 도움말"
+    },
+    {
+      "route": "component",
+      "section": "popover",
+      "label": "대화형 추가 정보",
+      "kind": "vue-recipe",
+      "recipe": "popover.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "대화형 추가 정보"
+    },
+    {
+      "route": "component",
+      "section": "avatar",
+      "label": "사용자 이미지와 대체 글자",
+      "kind": "vue-recipe",
+      "recipe": "avatar.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "사용자 이미지와 대체 글자"
+    },
+    {
+      "route": "component",
+      "section": "chart",
+      "label": "Chart 유형과 자료",
+      "kind": "vue-recipe",
+      "recipe": "chart.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "Chart 유형과 자료"
     }
   ]
 }

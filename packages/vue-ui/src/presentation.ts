@@ -37,6 +37,7 @@ export interface SBarChartItem {
   label: string
   value: number
 }
+export type SChartType = 'bar' | 'line' | 'pie'
 
 export const SBarChart = /* @__PURE__ */ defineComponent({
   name: 'SBarChart',
@@ -45,6 +46,7 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
     id: { type: String, required: true },
     label: { type: String, required: true },
     items: { type: Array as PropType<readonly SBarChartItem[]>, required: true },
+    type: { type: String as PropType<SChartType>, default: 'bar' },
     max: Number,
     loading: Boolean,
     showTable: { type: Boolean, default: true },
@@ -88,6 +90,24 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
       const plotWidth = Math.max(0, chartWidth.value - 32)
       const step = plotWidth / p.items.length
       const labelLimit = Math.max(1, Math.min(8, Math.floor((step - 8) / 12)))
+      const total = p.items.reduce((sum, item) => sum + item.value, 0)
+      const point = (index: number) => [16 + step * (index + 0.5), 164 - (p.items[index].value / limit.value) * 140]
+      const category = (index: number) => `var(--sol-color-categorical-${index % 8 + 1}-foreground)`
+      let angle = -Math.PI / 2
+      const pie = () => total === 0
+        ? [h('circle', { cx: chartWidth.value / 2, cy: 96, r: 72, fill: 'none', stroke: 'var(--sol-color-control-border)' })]
+        : p.items.filter(item => item.value > 0).map(item => {
+            const index = p.items.indexOf(item), ratio = item.value / total, start = angle
+            angle += ratio * Math.PI * 2
+            const cx = chartWidth.value / 2, cy = 96, radius = 72
+            const position = (value: number) => `${cx + radius * Math.cos(value)} ${cy + radius * Math.sin(value)}`
+            const label = `${index + 1}. ${item.label}: ${formatSolNumber(item.value, l.value)}`
+            return h('g', { key: item.id }, [
+              ratio >= 1 ? h('circle', { cx, cy, r: radius, fill: category(index) }, h('title', label))
+                : h('path', { d: `M ${cx} ${cy} L ${position(start)} A ${radius} ${radius} 0 ${ratio > 0.5 ? 1 : 0} 1 ${position(angle)} Z`, fill: category(index), stroke: 'var(--sol-color-surface)', 'stroke-width': 1 }, h('title', label)),
+              h('text', { x: cx + radius * .65 * Math.cos(start + ratio * Math.PI), y: cy + radius * .65 * Math.sin(start + ratio * Math.PI), 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: `var(--sol-color-categorical-${index % 8 + 1}-background)`, 'font-size': 12 }, String(index + 1)),
+            ])
+          })
 
       return h(
         'figure',
@@ -95,6 +115,7 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
           ...attrs,
           id: p.id,
           class: ['sol-ui-bar-chart', attrs.class],
+          'data-chart-type': p.type,
           'aria-labelledby': p.id + '-caption',
           'aria-busy': String(p.loading),
         },
@@ -102,7 +123,7 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
           h('figcaption', { id: p.id + '-caption' }, p.label),
           p.loading
             ? h('p', { role: 'status' }, l.value.tableLoading)
-            : !valid.value
+            : !valid.value || p.type === 'pie' && !Number.isFinite(total)
               ? h('p', { role: 'alert' }, l.value.chartInvalid)
               : !p.items.length
                 ? h('p', { role: 'status' }, l.value.tableEmpty)
@@ -118,6 +139,7 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
                       },
                       [
                         h('title', { id: p.id + '-svg-title' }, p.label),
+                        ...(p.type === 'pie' ? pie() : [
                         h('line', {
                           x1: 16,
                           y1: 164,
@@ -125,10 +147,11 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
                           y2: 164,
                           stroke: 'var(--sol-color-control-border)',
                         }),
+                        p.type === 'line' ? h('polyline', { points: p.items.map((_item, index) => point(index).join(',')).join(' '), fill: 'none', stroke: 'var(--sol-color-accent)', 'stroke-width': 2 }) : null,
                         ...p.items.map((item, index) => {
                           const width = Math.min(48, step * 0.6)
                           const x = 16 + step * (index + 0.5)
-                          const height = (140 * item.value) / limit.value
+                          const height = (item.value / limit.value) * 140
                           const characters = Array.from(item.label)
                           const label =
                             characters.length > labelLimit
@@ -136,7 +159,7 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
                               : item.label
 
                           return h('g', { key: item.id }, [
-                            h('rect', {
+                            p.type === 'line' ? h('circle', { cx: x, cy: 164 - height, r: 4, fill: 'var(--sol-color-accent)' }) : h('rect', {
                               x: x - width / 2,
                               y: 164 - height,
                               width,
@@ -165,8 +188,10 @@ export const SBarChart = /* @__PURE__ */ defineComponent({
                             ),
                           ])
                         }),
+                        ]),
                       ],
                     ),
+                    p.type === 'pie' ? h('ol', { class: 'sol-ui-chart-legend' }, p.items.map((item, index) => h('li', { key: item.id }, [h('span', { 'aria-hidden': 'true', class: 'sol-ui-chart-swatch', style: { background: category(index) } }), `${item.label}: ${formatSolNumber(item.value, l.value)}`]))) : null,
                     h(
                       'table',
                       { class: ['sol-ui-chart-table', p.showTable ? '' : 'sol-ui-sr-only'] },

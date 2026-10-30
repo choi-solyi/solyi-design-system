@@ -27,7 +27,7 @@ export {validateSFiles,describeSFile} from './files';
 export type {SDisclosureCloseReason} from './disclosures';
 export type {SFileInputHandle,SFileLimits,SFileRejection,SFileRejectionCode} from './files';
 export type {SAutocompleteHandle} from './autocomplete';
-export type {SBreadcrumbItem,SStep,SBarChartItem} from './presentation';
+export type {SBreadcrumbItem,SStep,SBarChartItem,SChartType} from './presentation';
 export {SCard,SAlert,STree,SEmptyState};
 export type {SolCardSlots,SolEmptyStateSlots} from './surfaces';
 export type {STreeItem} from './tree';

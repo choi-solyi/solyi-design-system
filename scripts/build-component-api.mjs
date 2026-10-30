@@ -143,12 +143,12 @@ const records = [
   ['STree','탐색','계층 자료의 펼침과 선택을 구분합니다.','component','tree'],
   ['SAlert','피드백','화면에 남아 있어야 하는 정보·성공·오류를 전달합니다.','component','feedback'],
   ['SDialog','피드백','현재 맥락의 모달 또는 사이드 패널을 표시합니다.','component','dialog'],
-  ['SPopover','피드백','실행 가능한 추가 정보를 작은 패널에 표시합니다.','component','help'],
+  ['SPopover','피드백','실행 가능한 추가 정보를 작은 패널에 표시합니다.','component','popover'],
   ['SProgressCircular','피드백','수치가 알려진 진행률과 무한 로딩을 원형으로 표시합니다.','component','progress'],
   ['SProgressLinear','피드백','수치가 알려진 진행률과 무한 로딩을 선형으로 표시합니다.','component','progress'],
   ['SSnackbar','피드백','짧은 상태를 초점을 빼앗지 않고 알립니다.','component','feedback'],
-  ['STooltip','피드백','초점·클릭으로 짧은 비대화형 설명을 표시합니다.','component','help'],
-  ['SAvatar','표시·레이아웃','이미지 또는 대체 글자로 대상을 표시합니다.','component','identity-progress'],
+  ['STooltip','피드백','초점·클릭으로 짧은 비대화형 설명을 표시합니다.','component','tooltip'],
+  ['SAvatar','표시·레이아웃','이미지 또는 대체 글자로 대상을 표시합니다.','component','avatar'],
   ['SBarChart','표시·레이아웃','작은 수치 비교를 차트와 같은 자료의 표로 제공합니다.','component','chart'],
   ['SCard','표시·레이아웃','제목·내용·하단 행동을 한 표면으로 묶습니다.','pattern','composition'],
   ['SEmptyState','표시·레이아웃','빈 자료의 설명과 다음 행동을 표시합니다. 로딩·오류 상태는 별도로 구성합니다.','component','empty'],
@@ -191,6 +191,9 @@ for (const [name, group, description, exampleRoute, example] of records) {
   if (name === 'SDialog') {
     props.find(prop => prop.name === 'busy').description = '외부 작업 상태입니다. 본문을 inert로 잠그며 폼 값은 유지합니다. 슬롯에 busy/busyScope를 전달하고 작업 결과를 자동 처리하지 않습니다.'
     props.find(prop => prop.name === 'busyScope').description = '기본 body는 본문만 잠그고 닫기와 액션은 허용합니다. all은 feedback·액션·닫기·Escape·바깥 클릭도 잠급니다. 부모가 modelValue=false로 닫는 제어는 유지합니다.'
+  }
+  if (name === 'SBarChart') {
+    props.find(prop=>prop.name==='type').description = '표현 유형입니다. bar가 기존 기본값이며 line은 순서에 따른 변화, pie는 항목 합계의 비율입니다. SBarChart export와 동일 자료 표를 유지합니다.'
   }
   if (name === 'SLoadingOverlay') {
     props.find(prop => prop.name === 'modelValue').description = '실제 작업 상태입니다. 표시 타이머는 이 값을 변경하거나 update:modelValue를 보내지 않습니다. aria-busy는 이 모델을 반영합니다.'
@@ -304,7 +307,7 @@ const index=files.get('index.ts'),publicComponents=entries(index.symbols.get('sC
 assert.deepEqual(references.map(x=>x.name).sort(),publicComponents.sort(),'Every public S component has one component reference; no imaginary API');
 for (const ref of references) {assert.equal(new Set(ref.props.map(x=>x.name)).size,ref.props.length,ref.name+' unique props');assert.ok(ref.props.length||ref.passthrough,ref.name+' props parsed');}
 const versions=Object.fromEntries(await Promise.all(['core','vue-ui'].map(async name=>[name,JSON.parse(await readFile(new URL('packages/'+name+'/package.json',root),'utf8')).version])));
-const recipeFiles={date:'inputs',files:'inputs',autocomplete:'inputs',chart:'chart-tree',tree:'chart-tree'};
+const recipeFiles={date:'inputs',files:'inputs',autocomplete:'inputs',tree:'chart-tree'};
 const exampleSources=Object.fromEntries(await Promise.all([...new Set(references.map(ref=>ref.example))].map(async example=>[example,await readFile(new URL(example==='advanced-vue'?'examples/vue-vuetify/src/AdvancedExamples.vue':'examples/vue-vuetify/src/recipes/'+(recipeFiles[example]||example)+'.vue',root),'utf8')])));
 for(const [example,source] of Object.entries(exampleSources))assert.equal(source,await formatPublicSample(source,'vue'),example+': component examples retain the canonical public SFC format');
 const code='// Generated from packages/vue-ui/src by scripts/build-component-api.mjs.\nexport const componentReferences='+JSON.stringify(references,null,2)+';\nexport const componentReferenceVersions='+JSON.stringify(versions)+';\nexport const componentExampleSources='+JSON.stringify(exampleSources,null,2)+';\n';

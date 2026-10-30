@@ -29,15 +29,15 @@ const groups: { label: string; items: RecipeId[] }[] = [
   },
   {
     label: '탐색과 오버레이',
-    items: ['dialog', 'help', 'accordion', 'breadcrumbs', 'pagination', 'navigation', 'content-tabs', 'action-menu'],
+    items: ['dialog', 'tooltip', 'popover', 'help', 'accordion', 'breadcrumbs', 'pagination', 'navigation', 'content-tabs', 'action-menu'],
   },
   {
     label: '자료와 상태',
-    items: ['data', 'search', 'compare', 'empty', 'responses', 'progress', 'chart-tree'],
+    items: ['data', 'search', 'compare', 'empty', 'responses', 'progress', 'chart', 'chart-tree'],
   },
   {
     label: '화면과 작업 흐름',
-    items: ['layouts', 'workflow', 'bulk-recovery', 'identity-progress'],
+    items: ['layouts', 'workflow', 'bulk-recovery', 'avatar', 'identity-progress'],
   },
 ]
 const media = window.matchMedia('(min-width: 1100px)')
