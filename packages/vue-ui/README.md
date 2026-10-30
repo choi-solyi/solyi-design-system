@@ -1,6 +1,6 @@
 # solyi-ui
 
-solyi-ui 1.0.0은 Vue 3용 S 컴포넌트를 제공하는 UI 라이브러리입니다. Vue 3.5 / Vuetify 4.3을 peer로 사용합니다. Core 토큰·CSS·helper·폰트는 이 패키지에 포함되어 @solyi/core를 따로 설치하지 않습니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
+solyi-ui는 Vue 3용 S 컴포넌트를 제공하는 UI 라이브러리입니다. Vue 3.5 / Vuetify 4.3을 peer로 사용합니다. Core 토큰·CSS·helper·폰트는 이 패키지에 포함되어 @solyi/core를 따로 설치하지 않습니다. 검증 기준은 Vue 3.5.44 / Vuetify 4.3.0이며 라이브러리에 런타임을 중복 번들하지 않습니다.
 
 ## 한 번 등록
 
@@ -55,19 +55,19 @@ SDatePicker·STimePicker도 연결했습니다. 단일/range의 ISO 모델과 Da
 
 `leading/trailing/indicator/status/loading` slot은 `{hasValue,disabled,readonly,loading,error,clear}`를 받습니다. `loading`은 진행 표시입니다. 편집을 막으려면 disabled/readonly를 함께 제어합니다. 새 공통 옵션이나 slot을 사용하면 공개 clear와 scope.clear가 같은 강화 경로를 사용합니다. 새 기능의 타입은 `SolInputHandle`, `SolInputClearEvent<T>`, `SolInputControlScope`이며 Number의 기존 preset scope는 `SolNumberPresetScope`·`SolNumberInputSlots`로도 제공합니다. 입력 8종 source·문서·starter 검증과 새 tarball·공개 배포는 구분하며 후자는 아직 하지 않았습니다.
 
-## 범주 팔레트 (1.1.0 개발 후보)
+## 범주 팔레트
 
 `resolveCategoricalColor(key, {theme:'violet', mode:'light'})`는 문자열/유한 숫자 key를 고정된 `c1`–`c8`에 대응시키고 `category/index/foreground/background/border`를 반환하는 순수 함수입니다. 옵션은 DOM 테마를 읽지 않으며 기본값은 violet/light입니다. `solyi-ui` 또는 `solyi-ui/tokens`에서 import할 수 있습니다. 테마·명암에 관계없이 같은 key의 category는 유지하며 색만 바뀝니다. 분류 충돌은 가능하므로 색을 식별자나 유일한 구분 수단으로 사용하지 마세요.
 
 CSS는 `--sol-color-categorical-1-foreground/background/border`부터 8번까지 제공합니다. semantic tone과 별도이며 팔레트 확장 시 기존 여덟 bucket/ID의 매핑을 바꾸지 않습니다. SMonthCalendar marker에 `category: resolveCategoricalColor(key).category`를 주면 CSS 역할을 통해 현재 테마에 맞춰 표시합니다. 기존 `tone`을 함께 지정하면 의미 상태 tone을 우선합니다. marker label과 기존 ISO 모델은 유지합니다.
 
-## 시간 그리드 (1.1.0 개발 후보)
+## 시간 그리드
 
 `STimeGrid<T>`는 readonly 객체 배열과 `itemKey/itemLabel/itemColumn/itemStart/itemEnd` accessor를 받습니다. 열은 고유 `key/label`과 선택적 ISO `date`를 가지며, 항목의 시작·끝은 해당 열의 0–1440 정수 분입니다. 표시 범위 밖 항목은 잘라 표시하지만 원본 시간은 바꾸지 않습니다. 겹침은 시각적으로 배치하며 시간대·DST·업무 충돌·저장 형식은 앱에서 처리합니다.
 
 기본 `readonly=true`입니다. `readonly=false`로 이동을 켜고 `allowResize/allowDuplicate`를 선택할 수 있습니다. `start/preview/commit/cancel`은 원본 객체 대신 frozen `{key,action,from,to,input}`을 전달하며 cancel에는 `reason`이 더해집니다. 부모가 commit을 받아 새 배열을 주기 전까지 자료는 바뀌지 않습니다. 복제의 새 key·객체, 비동기 오류와 `pendingKeys`, `isItemDisabled`는 부모가 관리합니다. listener의 Promise를 자동으로 기다리지 않습니다.
 
-`snapMinutes` 기본값은 15이며 자정 기준입니다. 열만 바꾸면 기존 비정렬 시간을 유지하고 경계는 하루 안으로 제한합니다. 기존 TimePicker의 min 기준 step은 바꾸지 않습니다. 항목에서 Space로 시작하고 방향키로 시간·열을 이동하며 Shift/Page는 10단계 간격, Home/End는 하루 경계, Enter/Space는 제안, Escape는 취소입니다. 전체 목록의 이동·시작/끝 조절·복제 버튼으로 같은 작업을 수행할 수 있습니다. 터치는 항목 선택 후 손잡이를 드래그하며 빈 영역의 스크롤은 유지합니다. `focus(key?)`와 `cancel()`을 제공합니다.
+`snapMinutes` 기본값은 15이며 자정 기준입니다. 열만 바꾸면 기존 비정렬 시간을 유지하고 경계는 하루 안으로 제한합니다. 기존 TimePicker의 min 기준 step은 바꾸지 않습니다. 항목에서 Space로 시작하고 방향키로 시간·열을 이동하며 Shift/Page는 10단계 간격, Home/End는 하루 경계, Enter/Space는 제안, Escape는 취소입니다. 전체 목록의 이동·시작/끝 조절·복제 버튼으로 같은 작업을 수행할 수 있습니다. 터치는 항목 본문으로 이동하고 위·아래 가장자리로 시간을 조절합니다. 빈 영역의 스크롤은 유지합니다. `focus(key?)`와 `cancel()`을 제공합니다.
 
 `disabled/readonly/loading/pending` 전환, 원본 좌표·열·설정 변경, 포커스 이탈과 포인터 취소는 진행 중 제안을 취소합니다. 소스와 무관한 부모 렌더나 같은 자료의 배열 재생성은 제안을 유지합니다. 좁은 화면은 가로 스크롤과 전체 목록을 사용하며 실제 OS 키보드·스크린리더·실기기 터치는 소비 앱에서 추가 확인해야 합니다.
 
@@ -75,8 +75,21 @@ CSS는 `--sol-color-categorical-1-foreground/background/border`부터 8번까지
 
 `SPagination`과 `SDataTable`은 같은 `siblingCount`(기본 1, 양옆 각각 0–5)를 받습니다. 처음·마지막 번호를 포함하고 번호가 생략된 곳만 줄임표를 표시합니다. 페이지 500/전체 1003에서 3을 지정하면 1, …, 497–503, …, 1003을 표시합니다. `SPagination`의 modelValue/update:modelValue와 Table의 page/update:page 계약은 유지합니다.
 
-좁은 화면에서도 주변 번호를 유지하고 줄바꿈합니다. 독립 Pagination은 좁은 화면의 중복 처음/마지막 아이콘만 줄이고 해당 번호로 이동할 수 있습니다. `compactPagination=true`를 명시하면 현재 번호와 이동 버튼 중심으로 표시합니다. 이 옵션은 행 간격의 global density와 별도입니다. starter navigation에서는 두 컴포넌트에 같은 설정을 적용하고 1003페이지 예제를 조작할 수 있습니다.
+좁은 화면에서도 주변 번호를 유지하고 줄바꿈합니다. 독립 Pagination은 좁은 화면에서도 같은 크기의 처음/마지막 chevrons 아이콘을 유지합니다. `compactPagination=true`를 명시하면 현재 번호와 이동 버튼 중심으로 표시합니다. 이 옵션은 행 간격의 global density와 별도입니다. starter navigation에서는 두 컴포넌트에 같은 설정을 적용하고 1003페이지 예제를 조작할 수 있습니다.
 
 ## 소비 프로젝트 AI 지침
 
 패키지의 `DESIGN.md`는 소비 앱의 UI 지침입니다. 프로젝트 루트로 복사하고 AI 도구의 프로젝트 지침에서 참조하세요. 파일명만으로 자동 적용되지는 않습니다. 패키지와 문서 사이트는 루트의 같은 원본을 사용합니다.
+
+## 1.1.1 미게시 후보의 추가 기능
+
+이 README는 1.1.1 후보에 포함됩니다. npm 안정 버전 1.1.0에는 아래 변경이 아직 포함되지 않습니다. 기존 50개 컴포넌트 export는 유지하며 SBtnGroup을 더해 51개가 됩니다.
+
+- SBtnGroup은 필수 label, orientation(horizontal/vertical), default slot을 제공하는 연결 명령 버튼 레이아웃입니다. 각 SBtn의 disabled/loading/action과 기본 Tab 순서를 보존합니다. 단일 선택 토글은 기존 SSegmentedControl을 사용합니다.
+- SFileInput의 preview는 기본 true입니다. 이미지 MIME 파일을 로컬 Blob URL로 보여주고, 제거·표시 해제·실패·unmount 때 URL을 정리합니다. 업로드하지 않으며 파일명·유형·크기 정보도 유지합니다.
+- STimeGrid의 allowCreate/allowRemove는 기본 false입니다. create는 frozen {columnKey,startMinute,endMinute,input}, remove는 frozen {key,input}을 요청합니다. 부모가 배열을 반영하거나 거절하며 ID 생성·삭제·저장은 부모 책임입니다. showCurrentTime은 기본 false이며 currentTime:{date,minute}로 표시 기준을 제어할 수 있습니다. 기본 시계는 클라이언트에서 분 경계와 화면 복귀 때 갱신합니다.
+- SBarChart export와 bar 기본값은 유지하고 type:'bar'|'line'|'pie'를 제공합니다. 자체 SVG와 같은 데이터 표를 사용하며 새 chart 엔진 의존성은 없습니다.
+- SStepper의 labelPosition은 기본 inline, 선택값 below입니다. MonthCalendar는 기존 ISO 모델을 유지하며 연도 이동과 전체 marker 상세를 제공합니다. MultiSelect는 기존 배열 모델을 유지하고 선택 칩을 입력 내부에 배치합니다.
+- TimePicker의 기존 native/list와 opt-in pickerPresentation은 별개입니다. 시·분 단위와 우측 완료 버튼, 외부 grip 안내를 다듬었으며 min 기준 step·폼·preview/commit/cancel 계약을 유지합니다.
+
+후보 예제·API·상태 회귀는 개발 브랜치에서 검증합니다. 물리 기기·스크린리더 지원 전체를 인증한 결과는 아닙니다.
