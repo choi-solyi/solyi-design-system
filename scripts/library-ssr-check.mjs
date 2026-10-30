@@ -2,13 +2,16 @@
 import assert from 'node:assert/strict'
 import {writeFile} from 'node:fs/promises'
 import {fileURLToPath} from 'node:url'
-const consumer=new URL('../examples/package-consumer/',import.meta.url)
+const root=new URL('../',import.meta.url),target=process.argv.find(arg=>arg.startsWith('--consumer='))?.slice(11)
+const consumer=new URL(target?target.replace(/\/?$/,'/'):'examples/package-consumer/',root)
+if(target)assert.ok(consumer.href.startsWith(new URL('qa-output/',root).href),'Explicit candidates stay in ignored QA fixtures')
 assert.equal(typeof document,'undefined')
 const entry=new URL('.ssr-check-entry.ts',consumer)
 await writeFile(entry,`import {createSSRApp,h} from 'vue';import {renderToString} from 'vue/server-renderer';
 import * as api from 'solyi-ui';
 export async function render(){const item={id:'a',title:'Entry',column:'one',start:480,end:540};const app=createSSRApp({render:()=>h('main',[
 h(api.SCombobox,{id:'combo',label:'Combo',modelValue:'Draft',options:[]}),
+h(api.SMultiSelect,{id:'multi',label:'Multiple',modelValue:['a'],options:[{value:'a',label:'Alpha'}]}),
 h(api.SConfirmAction,{label:'Confirm'}),h(api.SEmptyState,{title:'Empty'}),
 h(api.SLoadingOverlay,{modelValue:true,title:'Working',delay:0},()=>h('p','Content')),
 h(api.SPagination,{modelValue:1,pageCount:3}),
@@ -24,7 +27,7 @@ const result=await build({root:fileURLToPath(consumer),configFile:false,logLevel
 const output=new URL('.ssr-check.mjs',consumer)
 await writeFile(output,result.output.find(chunk=>chunk.type==='chunk').code)
 const {render}=await import(output),html=await render()
-for(const text of ['Combo','Draft','Confirm','Empty','Content','Grid','Entry','One','Date','Time'])assert.ok(html.includes(text),text+' renders from the installed package')
+for(const text of ['Combo','Draft','Multiple','Alpha','Confirm','Empty','Content','Grid','Entry','One','Date','Time'])assert.ok(html.includes(text),text+' renders from the installed package')
 assert.match(html,/sol-ui-time-grid/)
 assert.match(html,/sol-ui-pagination/)
 assert.ok(!html.includes('[object Object]'))

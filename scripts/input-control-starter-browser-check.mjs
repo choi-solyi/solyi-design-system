@@ -32,7 +32,7 @@ try{
   const field=input.locator('xpath=ancestor::*[contains(@class,"sol-ui-field") or contains(@class,"sol-field")][1]')
   if(kind==='text')await input.fill('Example clear content')
   else if(kind==='autocomplete')await input.fill('no-matching-option')
-  else if(kind==='multiselect'){await input.click();await page.getByRole('option').first().click();assert.equal(await field.locator('.sol-ui-tags li').count(),1)}
+  else if(kind==='multiselect'){await input.click();await page.getByRole('option').first().click();assert.equal(await field.locator('.sol-ui-tags').getByRole('listitem').count(),1)}
   else if(kind==='date')await input.fill('2026-10-28')
   else if(kind==='time'&&!await input.inputValue()){
    if(await input.evaluate(element=>element.readOnly)){await field.locator('.sol-ui-input-trigger').click();await page.locator('#'+id+'-panel [role=option]').first().click()}
@@ -42,7 +42,7 @@ try{
   assert.equal(await field.locator('.sol-ui-input-clear').count(),1,name+' actually opts into the new clear action')
   await field.locator('.sol-ui-input-clear').tap();assert.equal(await input.inputValue(),'');assert.equal(await field.locator('.sol-ui-input-clear').count(),0);assert.equal(await input.evaluate(element=>element===document.activeElement),true)
   if(kind==='time')assert.equal(await page.locator('#'+id+'-panel').count(),0)
-  if(kind==='multiselect')assert.equal(await field.locator('.sol-ui-tags li').count(),0)
+  if(kind==='multiselect')assert.equal(await field.locator('.sol-ui-tags').getByRole('listitem').count(),0)
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false)
   records.push({name,example,part,id,href:url.pathname+url.search,clear:true,focus:true});console.log('PASS: actual starter '+name+' → '+example+(part?'/'+part:''))
  }

@@ -21,9 +21,9 @@
 | 1 | 모든 Examples 중간의 [3] 제거 | 6개 카드가 같은 buttons.vue의 Badge 알림 데모 공유 | 문서 | 공통 [3] 데모 제거, Badge 표시 자체는 독립 예제로 보존 | 로컬 타입·빌드·Components 연결 및 PC/모바일 12개 실제 예제 조작 통과 | f221ec1 CI·공개 357파일·390px 실제 예제 확인 완료 |
 | 2 | Button/ConfirmAction/IconBtn/Badge/Chip/Icon 예제를 각각 자기 기능만 남기고 의미 명확화 | 동일 buttons recipe 확인 | 문서 | buttons·confirm-action·chip·badge·icon·icon-button의 6개 SFC/코드/실행 링크 분리 | 두 번 확인·칩 선택/제거·아이콘 저장/disabled·Badge/Icon 비대화형 표시 통과 | f221ec1 공개 예제까지 완료; 다른 중복 예제는 각 번호에서 추적 |
 | 3 | Autocomplete·비동기 Combobox 열림/닫힘 때 부모 카드 여백 증가 제거 | 로컬 문서와 registry fixture 실제 검색/목록 열기 비교 | 문서 iframe 호스트 | 설치된 1.1.0을 같은 문서 viewport에 직접 마운트 | 1440/390px 카드·문서 높이 불변, Escape 포커스 복귀 | 새 호스트 CI·공개 배포 확인 |
-| 4 | Date 개발 설정 라디오; auto/popover의 얇은 팝업·하단 여백 해결 | 기존 라이브 18px, 같은 npm 독립 fixture 약 525px | 문서 iframe 경계; 패키지 모든 경계의 정상 여부는 단정하지 않음 | 직접 viewport 호스트 + SRadioGroup 설정 | PC/390px 네 presentation 열기·높이 불변·ISO 날짜 선택 실제 확인 | 라디오 수정의 CI·공개 확인 및 전체 배치 회귀 |
-| 5 | Form 프로젝트 확인 후 검증 표시 지우기 버튼을 실제 동작시킴 | 기존 API는 오류를 지움; 성공/서버 피드백이 남아 예제 동작을 알기 어려움 | 문서 예제 피드백 소유 | resetValidation과 예제 소유 피드백 정리, 입력 보존 안내, busy 중 차단 | PC/390px 오류 지우기·정상 제출 후 지우기·값 보존 실제 확인 | CI·공개 확인 |
-| 6 | MultiSelect 목록이 부모를 늘리지 않고 선택 칩이 입력 안에 표시 | 직접 문서와 registry 1.1.0 fixture 양쪽에서 목록 열 때 확장 | 패키지: selection.ts의 일반 흐름 popup, styles.css:180 | 아직 패키지 미수정 | 1440/390px 확장 실제 재현; 다른 팝업 통과에 포함하지 않음 | floating 전환·선택 칩 내부 배치·선택/삭제/키보드, 미게시 버전 구분 |
+| 4 | Date 개발 설정 라디오; auto/popover의 얇은 팝업·하단 여백 해결 | 기존 라이브 18px, 같은 npm 독립 fixture 약 525px | 문서 iframe 경계; 패키지 모든 경계의 정상 여부는 단정하지 않음 | 직접 viewport 호스트 + SRadioGroup 설정 | PC/390px 네 presentation 열기·높이 불변·ISO 날짜 선택 실제 확인 | a2550f5 CI·공개 390px 네 표시 방식 확인 완료; 특수 배치 경계는 별도 회귀 |
+| 5 | Form 프로젝트 확인 후 검증 표시 지우기 버튼을 실제 동작시킴 | 기존 API는 오류를 지움; 성공/서버 피드백이 남아 예제 동작을 알기 어려움 | 문서 예제 피드백 소유 | resetValidation과 예제 소유 피드백 정리, 입력 보존 안내, busy 중 차단 | PC/390px 및 a2550f5 공개 390px 오류/성공 지우기·값 보존 확인 | 추가 미완료 없음 |
+| 6 | MultiSelect 목록이 부모를 늘리지 않고 선택 칩이 입력 안에 표시 | registry 1.1.0과 독립 fixture에서 확장 재현 | 패키지 일반 흐름 popup/외부 선택 목록 | 전용 개발 브랜치에서 floating·입력 내부 SChip·Escape 계층 보완 | 개발 tarball의 3테마/PC·390px/RTL·키보드·터치·SSR·타입·예산 통과 | npm/공개 1.1.0 미반영. [실행 근거](IMPROVEMENTS-30-06.md) |
 | 7 | NumberInput과 RangeSlider 직접 입력의 -/+를 한쪽에 모음 | 미재현 | 판별 중 | 미착수 | 미실행 | step/min/max/readonly 보존 |
 | 8 | RadioGroup에는 radio, Switch에는 switch/단일 선택 차이를 명확히 표시 | 미재현 | 예제 소유 판별 | 미착수 | 미실행 | 용어·접근성 역할 보존 |
 | 9 | TextField loading이 실제 움직임을 표현; clear 횟수 설명 또는 불필요 표시 정리 | 미재현 | motion/예제 판별 | 미착수 | 미실행 | 입력 상태·reduced-motion |
@@ -98,3 +98,5 @@
 - 새로 공식 registry에서 설치한 독립 fixture에서도 같은 7종을 PC/390px에서 비교했다. MultiSelect만 일반 흐름 확장을 재현하고, 나머지는 카드 높이 불변이었다(`registry-host-observations.json`). 문서와 독립 fixture는 같은 1.1.0/테마/상위 viewport를 사용하지만 내부 앵커/컨테이너 크기는 다르다. Date의 기존 얇은 iframe 경계에 대한 정확한 동일 앵커 counterfactual 검증은 아직 남았으며 패키지 모든 경계가 정상이라고 단정하지 않는다.
 - 기존 violet/light 검사에 더해 sage/dark/compact, sand/light/comfortable, sand/dark/compact의 390px Date/Popover 6건이 통과했다. 여러 직접 캔버스의 document ID 중복도 검사했다(`inline-appearance-observations.json`). 경로 이탈 시 열린 팝업과 runtime 제거, 실제 모듈 503 시 접근 가능한 별도 예제 링크도 실제 Chrome에서 확인했다(`inline-lifecycle-browser.log`).
 - 타입·starter/문서 빌드·공개 allowlist·36개 canonical 예제 인벤토리·ARIA/브리지/guard 정리·Components 연결·65개 공개 샘플 포맷/구문 검사가 통과했다. JSDOM의 IntersectionObserver는 교차 지연 로드를 위한 스텁이며 Vue 픽셀 동작 통과의 근거가 아니다. 실제 Vue 검증은 위 Chrome 증거로 구분한다. guard cleanup 중 async 이탈 결과가 true로 돌아가던 신규 경합도 abort 확인으로 수정했고 기존 보수적 취소 검사를 유지했다.
+
+최신 공개 문서: a2550f5 / CI 41004668042 validate·Pages deploy 성공. 변경 공개 파일 5개 SHA-256과 공개 390px 날짜 네 표시 방식·Form 동작을 확인했다. 6번 소스 변경은 feat/improvements-30-package에만 있으며 공개 1.1.0과 분리한다.

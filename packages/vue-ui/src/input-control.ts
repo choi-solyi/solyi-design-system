@@ -92,11 +92,11 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
       options.focus()
     })
   }
-  const enhanced = () =>
-    options.always ||
+  const decorated = () =>
     p.clearable ||
     p.loading ||
     ['leading', 'trailing', 'indicator', 'status', 'loading'].some(name => !!slots[name])
+  const enhanced = () => options.always || decorated()
   function indicator() {
     return (
       slots.indicator?.(scope()) ||
@@ -196,5 +196,5 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
       ? { ...(slots.leading ? { 'prepend-inner': leading } : {}), 'append-inner': () => rail() }
       : {}
   }
-  return { clear, scope, enhanced, native, vuetifySlots }
+  return { clear, scope, decorated, enhanced, native, vuetifySlots }
 }

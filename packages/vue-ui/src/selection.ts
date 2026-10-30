@@ -1,11 +1,13 @@
 import {useSFieldValidation,fieldError,externalFieldError,fieldDisabled,fieldReadonly} from './form';
-import {defineComponent,h,ref,watch,nextTick,onMounted,onBeforeUnmount} from 'vue';
+import {computed,defineComponent,h,ref,watch,nextTick,onMounted,onBeforeUnmount} from 'vue';
 import type {PropType,SlotsType} from 'vue';
 import {inputControlProps,useInputControl} from './input-control';
 import type {SolInputClearEvent,SolInputControlSlots} from './input-control';
 import {commonFieldProps,fieldDescription,fieldLabel,fieldMessages} from './controls';
 import type {SolOption} from './controls';
 import {useSolLocale,formatSolNumber} from './locale';
+import {useFloatingPanel} from './floating';
+import {SChip} from './primitives';
 
 export const SSegmentedControl=/* @__PURE__ */ defineComponent({name:'SSegmentedControl',inheritAttrs:false,props:{...commonFieldProps,modelValue:{type:String as PropType<string|null>,default:null},options:{type:Array as PropType<readonly SolOption[]>,required:true},name:String},emits:{'update:modelValue':(_v:string)=>true,change:(_v:string)=>true},setup(p,{attrs,slots,emit,expose}){
  const l=useSolLocale(()=>p.locale),inputs=new Map<string,HTMLInputElement>();
@@ -44,6 +46,7 @@ export const SMultiSelect = /* @__PURE__ */ defineComponent({
   setup(p, { attrs, slots, emit, expose }) {
     const l = useSolLocale(() => p.locale),
       host = ref<HTMLElement | null>(null),
+      panel = ref<HTMLElement | null>(null),
       input = ref<HTMLInputElement | null>(null),
       query = ref(''),
       opened = ref(false),
@@ -52,6 +55,12 @@ export const SMultiSelect = /* @__PURE__ */ defineComponent({
       busy = ref(false),
       loadError = ref(''),
       localError = ref('')
+    const anchor = computed(
+      () => input.value?.closest<HTMLElement>('.sol-ui-input-frame') || input.value,
+    )
+    const { position } = useFloatingPanel(opened, anchor, panel, true, true, {
+      visualViewport: true,
+    })
     const labels = new Map<string, string>()
     let cancelledComposition = false,
       composing = false,
@@ -178,6 +187,7 @@ export const SMultiSelect = /* @__PURE__ */ defineComponent({
       if (e.isComposing || composing || fieldDisabled(p)) return
       if (e.key === 'Escape' && opened.value) {
         e.preventDefault()
+        e.stopPropagation()
         close()
         return
       }
@@ -193,7 +203,9 @@ export const SMultiSelect = /* @__PURE__ */ defineComponent({
         active.value =
           list[(index + (e.key === 'ArrowDown' ? 1 : -1) + list.length) % list.length]?.value || ''
         void nextTick(() =>
-          host.value?.querySelector('[data-active="true"]')?.scrollIntoView?.({ block: 'nearest' }),
+          panel.value
+            ?.querySelector('[data-active="true"]')
+            ?.scrollIntoView?.({ block: 'nearest' }),
         )
       } else if (e.key === 'Enter' && opened.value) {
         e.preventDefault()
@@ -266,6 +278,7 @@ export const SMultiSelect = /* @__PURE__ */ defineComponent({
       }),
       validate = validation.validate
     const control = useInputControl(p, slots, {
+      always: true,
       locale: () => l.value,
       hasValue: () => selected().length > 0 || query.value.length > 0,
       disabled: () => fieldDisabled(p),
@@ -308,7 +321,8 @@ export const SMultiSelect = /* @__PURE__ */ defineComponent({
         ),
     })
     function clear() {
-      if (control.enhanced()) {
+      // The intrinsic chip frame must not change the existing undecorated clear contract.
+      if (control.decorated()) {
         control.clear()
         return
       }
@@ -320,173 +334,211 @@ export const SMultiSelect = /* @__PURE__ */ defineComponent({
     return () => {
       const error = fieldError(p) || localError.value,
         list = visible()
-      return h('div', { ref: host, class: 'sol-field sol-ui-native-field sol-ui-multiselect' }, [
-        fieldLabel(p, slots, l.value.required),
-        selected().length
-          ? h(
-              'ul',
-              { class: 'sol-ui-tags', 'aria-label': p.label + ' ' + l.value.selectedItems },
-              selected().map(value =>
-                h('li', { key: value }, [
-                  h('span', labels.get(value) || value),
-                  h(
-                    'button',
-                    {
-                      type: 'button',
-                      class: 'sol-button inline-action',
-                      disabled: fieldDisabled(p) || fieldReadonly(p),
-                      'aria-label': l.value.remove(labels.get(value) || value),
-                      onClick: () => remove(value),
-                    },
-                    '×',
-                  ),
-                ]),
-              ),
-            )
-          : null,
-        control.native(
-          h('input', {
-            ...attrs,
-            ref: input,
-            id: p.id,
-            type: 'text',
-            class: ['sol-input', attrs.class],
-            role: 'combobox',
-            value: query.value,
-            placeholder: p.placeholder,
-            disabled: fieldDisabled(p),
-            readonly: fieldReadonly(p),
-            autocomplete: 'off',
-            'aria-autocomplete': 'list',
-            'aria-expanded': String(opened.value),
-            'aria-controls': opened.value ? p.id + '-list' : undefined,
-            'aria-activedescendant':
-              opened.value &&
-              !busy.value &&
-              !loadError.value &&
-              list.some(o => o.value === active.value)
-                ? p.id + '-option-' + list.findIndex(o => o.value === active.value)
-                : undefined,
-            'aria-required': p.required ? 'true' : undefined,
-            'aria-invalid': error ? 'true' : undefined,
-            'aria-describedby': fieldDescription(
-              p,
-              slots,
-              error,
-              [p.id + '-count', attrs['aria-describedby']].filter(Boolean).join(' '),
-            ),
-            onClick: open,
-            onInput: (e: Event) => {
-              if (fieldDisabled(p) || fieldReadonly(p)) return
-              query.value = (e.target as HTMLInputElement).value
-              if (!composing) {
-                if (!opened.value) opened.value = true
-                search()
-              }
-            },
-            onCompositionstart: () => {
-              cancelledComposition = false
-              composing = true
-              stop()
-            },
-            onCompositionend: (e: CompositionEvent) => {
-              if (cancelledComposition) {
-                cancelledComposition = false
-                composing = false
-                ;(e.target as HTMLInputElement).value = query.value
-                return
-              }
-              composing = false
-              query.value = (e.target as HTMLInputElement).value
-              if (!fieldDisabled(p) && !fieldReadonly(p)) {
-                opened.value = true
-                search()
-              }
-            },
-            onKeydown: key,
-            onInvalid: (e: Event) => {
-              e.preventDefault()
-              validate()
+      return h(
+        'div',
+        {
+          ref: host,
+          class: 'sol-field sol-ui-native-field sol-ui-multiselect',
+          onKeydown: (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && opened.value && !event.isComposing && !composing) {
+              event.preventDefault()
+              event.stopPropagation()
+              close()
               input.value?.focus()
-            },
-          }),
-        ),
-        opened.value
-          ? h('div', { class: 'sol-ui-multi-popup' }, [
-              h(
-                'ul',
-                {
-                  id: p.id + '-list',
-                  role: 'listbox',
-                  'aria-label': p.label,
-                  'aria-multiselectable': 'true',
-                  'aria-busy': String(busy.value),
-                  class: 'sol-ui-multi-options',
+            }
+          },
+        },
+        [
+          fieldLabel(p, slots, l.value.required),
+          control.native(
+            h('span', { class: 'sol-ui-multi-entry' }, [
+              selected().length
+                ? h(
+                    'span',
+                    {
+                      class: 'sol-ui-tags sol-ui-multi-tags',
+                      role: 'list',
+                      'aria-label': p.label + ' ' + l.value.selectedItems,
+                    },
+                    selected().map(value =>
+                      h(
+                        'span',
+                        { key: value, role: 'listitem' },
+                        h(SChip, {
+                          label: labels.get(value) || value,
+                          size: 'sm',
+                          removable: !fieldReadonly(p),
+                          disabled: fieldDisabled(p),
+                          removeLabel: l.value.remove(labels.get(value) || value),
+                          onRemove: () => remove(value),
+                        }),
+                      ),
+                    ),
+                  )
+                : null,
+              h('input', {
+                ...attrs,
+                ref: input,
+                id: p.id,
+                type: 'text',
+                class: ['sol-input sol-ui-input-native sol-ui-multi-query', attrs.class],
+                role: 'combobox',
+                value: query.value,
+                placeholder: p.placeholder,
+                disabled: fieldDisabled(p),
+                readonly: fieldReadonly(p),
+                autocomplete: 'off',
+                'aria-autocomplete': 'list',
+                'aria-busy': p.loading || busy.value ? 'true' : undefined,
+                'aria-expanded': String(opened.value),
+                'aria-controls': opened.value ? p.id + '-list' : undefined,
+                'aria-activedescendant':
+                  opened.value &&
+                  !busy.value &&
+                  !loadError.value &&
+                  list.some(o => o.value === active.value)
+                    ? p.id + '-option-' + list.findIndex(o => o.value === active.value)
+                    : undefined,
+                'aria-required': p.required ? 'true' : undefined,
+                'aria-invalid': error ? 'true' : undefined,
+                'aria-describedby': fieldDescription(
+                  p,
+                  slots,
+                  error,
+                  [p.id + '-count', attrs['aria-describedby']].filter(Boolean).join(' '),
+                ),
+                onClick: open,
+                onInput: (e: Event) => {
+                  if (fieldDisabled(p) || fieldReadonly(p)) return
+                  query.value = (e.target as HTMLInputElement).value
+                  if (!composing) {
+                    if (!opened.value) opened.value = true
+                    search()
+                  }
                 },
-                !busy.value && !loadError.value
-                  ? list.map((o, i) =>
-                      h(
-                        'li',
-                        {
-                          key: o.value,
-                          id: p.id + '-option-' + i,
-                          role: 'option',
-                          'aria-selected': String(selected().includes(o.value)),
-                          'aria-disabled': o.disabled ? 'true' : undefined,
-                          'data-active': String(active.value === o.value),
-                          onPointerdown: (e: PointerEvent) => e.preventDefault(),
-                          onClick: () => toggle(o),
-                        },
-                        [
+                onCompositionstart: () => {
+                  cancelledComposition = false
+                  composing = true
+                  stop()
+                },
+                onCompositionend: (e: CompositionEvent) => {
+                  if (cancelledComposition) {
+                    cancelledComposition = false
+                    composing = false
+                    ;(e.target as HTMLInputElement).value = query.value
+                    return
+                  }
+                  composing = false
+                  query.value = (e.target as HTMLInputElement).value
+                  if (!fieldDisabled(p) && !fieldReadonly(p)) {
+                    opened.value = true
+                    search()
+                  }
+                },
+                onKeydown: key,
+                onInvalid: (e: Event) => {
+                  e.preventDefault()
+                  validate()
+                  input.value?.focus()
+                },
+              }),
+            ]),
+          ),
+          opened.value
+            ? h(
+                'div',
+                {
+                  ref: panel,
+                  popover: 'manual',
+                  hidden: !opened.value,
+                  class: 'sol-ui-floating sol-ui-multi-popup',
+                  style: position.value,
+                  onKeydown: (event: KeyboardEvent) => {
+                    if (event.key === 'Escape') {
+                      event.preventDefault()
+                      event.stopPropagation()
+                      close()
+                      input.value?.focus()
+                    }
+                  },
+                },
+                [
+                  h(
+                    'ul',
+                    {
+                      id: p.id + '-list',
+                      role: 'listbox',
+                      'aria-label': p.label,
+                      'aria-multiselectable': 'true',
+                      'aria-busy': String(busy.value),
+                      class: 'sol-ui-multi-options',
+                    },
+                    !busy.value && !loadError.value
+                      ? list.map((o, i) =>
                           h(
-                            'span',
-                            { 'aria-hidden': 'true' },
-                            selected().includes(o.value) ? '✓' : '○',
+                            'li',
+                            {
+                              key: o.value,
+                              id: p.id + '-option-' + i,
+                              role: 'option',
+                              'aria-selected': String(selected().includes(o.value)),
+                              'aria-disabled': o.disabled ? 'true' : undefined,
+                              'data-active': String(active.value === o.value),
+                              onPointerdown: (e: PointerEvent) => e.preventDefault(),
+                              onClick: () => toggle(o),
+                            },
+                            [
+                              h(
+                                'span',
+                                { 'aria-hidden': 'true' },
+                                selected().includes(o.value) ? '✓' : '○',
+                              ),
+                              h('span', o.label),
+                              o.disabled ? h('small', l.value.unavailable) : null,
+                            ],
                           ),
-                          h('span', o.label),
-                          o.disabled ? h('small', l.value.unavailable) : null,
-                        ],
-                      ),
-                    )
-                  : [],
-              ),
-              busy.value
-                ? h('p', { role: 'status', class: 'sol-hint' }, l.value.loading)
-                : loadError.value
-                  ? h('div', { role: 'alert' }, [
-                      h('p', { class: 'sol-error' }, loadError.value),
-                      h(
-                        'button',
-                        {
-                          type: 'button',
-                          class: 'sol-button inline-action',
-                          onClick: () => {
-                            input.value?.focus()
-                            void load()
-                          },
-                          onKeydown: (e: KeyboardEvent) => {
-                            if (e.key === 'Escape') {
-                              e.preventDefault()
-                              close()
-                              input.value?.focus()
-                            }
-                          },
-                        },
-                        l.value.retry,
-                      ),
-                    ])
-                  : !list.length
-                    ? h('p', { role: 'status', class: 'sol-hint' }, l.value.noResults)
-                    : null,
-            ])
-          : null,
-        h(
-          'span',
-          { id: p.id + '-count', class: 'sol-hint', role: 'status' },
-          l.value.selectionCount(selected().length, p.maxSelected),
-        ),
-        ...fieldMessages(p, slots, error),
-      ])
+                        )
+                      : [],
+                  ),
+                  busy.value
+                    ? h('p', { role: 'status', class: 'sol-hint' }, l.value.loading)
+                    : loadError.value
+                      ? h('div', { role: 'alert' }, [
+                          h('p', { class: 'sol-error' }, loadError.value),
+                          h(
+                            'button',
+                            {
+                              type: 'button',
+                              class: 'sol-button inline-action',
+                              onClick: () => {
+                                input.value?.focus()
+                                void load()
+                              },
+                              onKeydown: (e: KeyboardEvent) => {
+                                if (e.key === 'Escape') {
+                                  e.preventDefault()
+                                  close()
+                                  input.value?.focus()
+                                }
+                              },
+                            },
+                            l.value.retry,
+                          ),
+                        ])
+                      : !list.length
+                        ? h('p', { role: 'status', class: 'sol-hint' }, l.value.noResults)
+                        : null,
+                ],
+              )
+            : null,
+          h(
+            'span',
+            { id: p.id + '-count', class: 'sol-hint', role: 'status' },
+            l.value.selectionCount(selected().length, p.maxSelected),
+          ),
+          ...fieldMessages(p, slots, error),
+        ],
+      )
     }
   },
 })
