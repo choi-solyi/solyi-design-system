@@ -233,6 +233,7 @@ function editGrid(request) {
 }
 const gridEditInvalid = computed(
   () =>
+    !gridColumns.some(column => column.key === gridEditColumn.value) ||
     !gridEditTitle.value.trim() ||
     !Number.isInteger(gridEditStart.value) ||
     !Number.isInteger(gridEditEnd.value) ||

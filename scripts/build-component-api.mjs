@@ -246,7 +246,7 @@ for (const [name, group, description, exampleRoute, example] of records) {
     props.find(prop => prop.name === 'placement').description = 'opt-in 연결 팝업의 logical 시작/끝 위치입니다. 화면 경계에서 flip/shift하며 모달에서는 위치 기준으로 사용하지 않습니다.'
   }
   const emits = resolve(property(component.node,component.file,'emits'),component.file);
-  const events = entries(emits.node,emits.file).map(([name,fn])=>({name,signature:signature(fn),description:name==='update:modelValue'?'소비 앱의 모델 값을 갱신합니다.':name.startsWith('update:')?'해당 상태의 변경을 소비 앱에 전달합니다.':name==='invalid'?'검증 실패 문구를 전달합니다.':name==='close'?(fn.parameters?.length?'닫힌 이유를 전달합니다.':'닫힌 뒤 전달합니다.'):name==='open'?'패널이 열린 뒤 전달합니다.':name==='retry'?'소비 앱에 재시도 처리를 요청합니다.':`${name} 동작이 발생했을 때 전달합니다.`}));
+  const events = entries(emits.node,emits.file).map(([name,value])=>{const fn=resolve(value,emits.file).node;return {name,signature:signature(fn),description:name==='update:modelValue'?'소비 앱의 모델 값을 갱신합니다.':name.startsWith('update:')?'해당 상태의 변경을 소비 앱에 전달합니다.':name==='invalid'?'검증 실패 문구를 전달합니다.':name==='close'?(fn.parameters?.length?'닫힌 이유를 전달합니다.':'닫힌 뒤 전달합니다.'):name==='open'?'패널이 열린 뒤 전달합니다.':name==='retry'?'소비 앱에 재시도 처리를 요청합니다.':`${name} 동작이 발생했을 때 전달합니다.`}});
     if (name === 'SCombobox') {
       events.find(event => event.name === 'change').description = '확정된 표시 문자열 value와 reason(select/custom/clear)을 전달합니다. select에만 option 복사본을 포함하고 option.value는 후보 ID입니다. clear는 이미 빈 모델에도 알림을 보냅니다. 부모가 제안을 거부하면 화면은 부모 모델로 복원됩니다.'
       events.find(event => event.name === 'search').description = 'IME 조합 중에는 보내지 않고, debounce 전의 검색 문자열을 전달합니다. 실제 로더는 debounce/AbortSignal/stale 응답 무시를 적용합니다.'

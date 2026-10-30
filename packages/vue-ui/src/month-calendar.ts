@@ -1,3 +1,4 @@
+import {localDateKey as localToday} from './local-date'
 import { computed, defineComponent, h, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import type { PropType, SlotsType, VNode } from 'vue'
 import { parseDateOnly } from '@solyi/core/date'
@@ -7,7 +8,6 @@ import type { SolCategoryId } from '@solyi/core'
 import { displayFieldProps, fieldDescription, fieldMessages } from './controls'
 import { formatSolDate, useSolLocale, withVisibleNumberLabel } from './locale'
 import { SBadge, SIcon } from './primitives'
-import { SBtn } from './button'
 import type { SolTone } from './primitives'
 import {
   calendarMonthLayout,
@@ -81,10 +81,7 @@ const navigation = new Set([
   'PageUp',
   'PageDown',
 ])
-function localToday() {
-  const now = new Date()
-  return `${String(now.getFullYear()).padStart(4, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
-}
+
 
 /** Standalone controlled calendar; no form normalization, data fetching or timezone conversion. */
 export const SMonthCalendar = /* @__PURE__ */ defineComponent({
@@ -559,7 +556,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                   },
                 },
                 [
-                  h(SBtn, { class: 'sol-ui-month-details-close', variant: 'subtle', onClick: () => { detailsOpen.value=false;focusDate(active.value) } }, () => l.value.close),
+                  h('button', { type:'button',class: 'sol-button subtle sol-ui-month-details-close', onClick: () => { detailsOpen.value=false;focusDate(active.value) } }, l.value.close),
                   h('h4', { id: p.id + '-details-label' }, [
                     active.value ? formatSolDate(active.value, l.value) + ' · ' : '',
                     l.value.monthCalendarDetails,

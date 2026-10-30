@@ -114,3 +114,13 @@ Library libfile_2828e3a7c4988191bda84f104081b1cf의 공식 materialize는 Window
 - 설치본 TypeScript 5.9.3 양성/음성 edit 요청 계약(skipLibCheck=true), 자체 소스 빌드·선언, SSR, TimeGrid 기존 상태 전이 runtime, proposal/value 불변성, Components 색인/검색/예제 연결 및 릴리즈 이력 검사 통과. 동결 후보 갱신 후 전체 pipeline은 미실행입니다.
 - 크기: source 298031자 / gzip 75645, 전체 JS 326032 bytes / gzip 합 82927. 기존 source·전체 JS·전체 plugin 한도는 통과했지만 named STimeGrid gzip 17,861 > 17,408(453 bytes 초과)로 필수 검사는 실패합니다. 한도나 검사를 변경하지 않았으며 이 상태로 main/배포/최종 artifact 동결을 진행하지 않습니다.
 - 원본 PNG 실제 픽셀 확인 차단과 named import 예산 문제를 남깁니다. 기존 공개 1.1.0은 유지하고 npm 1.1.1은 게시하지 않았습니다.
+
+### 추가 최적화와 차단 해소
+
+- 크기 한도는 변경하지 않았습니다. 사용하지 않는 컴포넌트 props/emits 펼치기 때문에 남던 객체를 제거하고, 공유 기본값과 형식은 유지했습니다. 같은 메뉴의 열기·리스너 등록/해제를 공통화했으며 닫기·키보드·초점 동작은 유지합니다. 모듈 분리 실험은 전체 크기를 늘려 최종 코드에 넣지 않았습니다.
+- TimeGrid/Calendar의 단순 조작은 기존 native 버튼 토큰을 사용합니다. 고정 아이콘은 공개 SIcon과 SVG 렌더러를 공유해 불필요한 component/watch를 만들지 않습니다. 공개 SIcon 검증과 의미/장식 접근성은 보존합니다.
+- HH:mm과 로컬 날짜 생성을 공통화했습니다. ko/en의 1,441개 분 좌표(24:00 포함)를 기존 Intl 결과와 비교했고 min 기준 step·윤년·앞자리 연도·로컬 날짜 의미를 보존합니다.
+- 최종 QA 설치본의 기존 51 API·source/전체 JS·9개 개별 import 예산 모두 PASS. 전체 plugin gzip 67,573 / 67,584, TimeGrid 17,179 / 17,408. 전체 결과는 PUBLIC-UI-FOLLOWUP-SIZE-RESULT.json에 보존합니다.
+- 세 테마 실제 UI와 TimeGrid 연속 조작도 통과했습니다. 실제 pointer drag 뒤 빈 열로 retarget된 click을 명시적으로 주입해 create·ID·개수 불변을 확인하고, 별도 새 pointerdown의 의도적 생성은 허용되는지도 확인했습니다. 주입한 click과 실제 pointer/touch 검증은 구분하며 사용자 원래 복제 경로를 재현했다고 확대하지 않습니다.
+- 원본 Chart 픽셀은 부모가 정상 cloud Library 경로로 확인했습니다. 값 [2,4,0,5]와 다음 순번이 붙어 월요일:22., 화요일:43., 수요일:04.로 읽히던 결함입니다. 최종 검사는 자동 순번 없음·명시 순번 하나·네 이름/정확한 값·인접 항목 간격을 확인합니다. PC/모바일 캡처를 직접 열어 1. 월요일 / 기록 수 2 등의 분리를 확인했습니다. 로컬 materialize 실패를 다시 시도하지 않았으며 부모의 원본 픽셀 확인으로 첨부 수용 기준 차단을 해소합니다.
+- 이전 미게시 후보 두 사본을 qa-output/public-followups/superseded-63747f6/에 복사·checksum 검증했습니다. 공식 npm latest=1.1.0, 1.1.1은 E404 확인. 새 후보는 별도 artifacts/candidates/1.1.1-public-ui에 만들고, 기존 1.0.0/1.1.0과 기존 artifacts/candidates/1.1.1-final 원본은 보존합니다. 전체 출시 pipeline·공개 배포는 이 시점에 아직 실행 전입니다.

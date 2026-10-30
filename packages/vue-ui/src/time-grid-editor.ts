@@ -1,6 +1,7 @@
 import { computed, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { ComputedRef, Ref, VNode } from 'vue'
-import { SIcon } from './primitives'
+import { renderSolIcon } from './primitives'
+import { solIconPaths } from '@solyi/core/icons'
 import { formatSolDate } from './locale'
 import type { SolLocale } from './locale'
 import { useTimeGridInteraction } from './time-grid-interaction'
@@ -282,7 +283,7 @@ export function useTimeGridEditor(
   }
   function handles(item: TimeGridEntry<unknown>, _minutes: number): VNode[] {
     if (p.readonly) return []
-    const button = (action: TimeGridAction, icon: 'grip' | 'chevron', rotate: 0 | 180 = 0) =>
+    const button = (action: TimeGridAction, rotate: 0 | 180 = 0) =>
       h(
         'button',
         {
@@ -305,11 +306,11 @@ export function useTimeGridEditor(
               operation.begin(item.key, action, 'button')
           },
         },
-        [h(SIcon, { name: icon, size: 16, rotate, decorative: true })],
+        [renderSolIcon(solIconPaths.chevron, 16, rotate)],
       )
     return [
       ...(p.allowResize
-        ? [button('resize-start', 'chevron', 180), button('resize-end', 'chevron')]
+        ? [button('resize-start', 180), button('resize-end')]
         : []),
     ]
   }

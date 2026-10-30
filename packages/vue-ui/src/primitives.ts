@@ -10,11 +10,10 @@ export type SolTone = 'neutral' | 'accent' | 'info' | 'success' | 'warning' | 'd
 export type SolTagVariant = 'filled' | 'outlined' | 'subtle'
 export type SolTagSize = 'sm' | 'md'
 
-const tagProps = {
-  tone: { type: String as PropType<SolTone>, default: 'neutral' },
-  variant: { type: String as PropType<SolTagVariant>, default: 'subtle' },
-  size: { type: String as PropType<SolTagSize>, default: 'md' },
-}
+const tagTone = { type: String as PropType<SolTone>, default: 'neutral' }
+const tagVariant = { type: String as PropType<SolTagVariant>, default: 'subtle' }
+const tagSize = { type: String as PropType<SolTagSize>, default: 'md' }
+
 const iconSize = { type: Number as PropType<16 | 20 | 24>, default: 20 }
 
 function textContent(nodes: readonly VNode[] | undefined): string {
@@ -33,6 +32,32 @@ function textContent(nodes: readonly VNode[] | undefined): string {
     })
     .join('')
     .trim()
+}
+
+/** Shared SVG renderer. Internal constant icons are decorative unless an explicit label is supplied. */
+export function renderSolIcon(path: string | undefined, size: number, rotate: number, attrs: Record<string,unknown> = {}, label?: string) {
+  return h(
+    'svg',
+    {
+      ...attrs,
+      class: ['sol-icon', 'sol-ui-icon-display', 'size-' + size, attrs.class],
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      'stroke-width': 1.6,
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round',
+      focusable: 'false',
+      role: label ? 'img' : undefined,
+      'aria-label': label,
+      'aria-hidden': label ? undefined : 'true',
+    },
+    path
+      ? [h('path', { d: path, transform: rotate ? `rotate(${rotate} 12 12)` : undefined })]
+      : [],
+  )
 }
 
 export const SIcon = /* @__PURE__ */ defineComponent({
@@ -62,28 +87,7 @@ export const SIcon = /* @__PURE__ */ defineComponent({
       const meaningful = p.decorative !== true && !!p.label?.trim()
       const path = Object.hasOwn(solIconPaths, p.name) ? solIconPaths[p.name] : undefined
       const rotate = [0, 90, 180, 270].includes(p.rotate) ? p.rotate : 0
-      return h(
-        'svg',
-        {
-          ...attrs,
-          class: ['sol-icon', 'sol-ui-icon-display', 'size-' + size, attrs.class],
-          width: size,
-          height: size,
-          viewBox: '0 0 24 24',
-          fill: 'none',
-          stroke: 'currentColor',
-          'stroke-width': 1.6,
-          'stroke-linecap': 'round',
-          'stroke-linejoin': 'round',
-          focusable: 'false',
-          role: meaningful ? 'img' : undefined,
-          'aria-label': meaningful ? p.label : undefined,
-          'aria-hidden': meaningful ? undefined : 'true',
-        },
-        path
-          ? [h('path', { d: path, transform: rotate ? `rotate(${rotate} 12 12)` : undefined })]
-          : [],
-      )
+      return renderSolIcon(path, size, rotate, attrs, meaningful ? p.label : undefined)
     }
   },
 })
@@ -92,7 +96,9 @@ export const SChip = /* @__PURE__ */ defineComponent({
   name: 'SChip',
   inheritAttrs: false,
   props: {
-    ...tagProps,
+    tone: tagTone,
+    variant: tagVariant,
+    size: tagSize,
     label: String,
     selectable: Boolean,
     selected: Boolean,
@@ -182,7 +188,9 @@ export const SBadge = /* @__PURE__ */ defineComponent({
   name: 'SBadge',
   inheritAttrs: false,
   props: {
-    ...tagProps,
+    tone: tagTone,
+    variant: tagVariant,
+    size: tagSize,
     id: String,
     content: [String, Number],
     label: String,

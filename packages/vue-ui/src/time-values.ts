@@ -1,12 +1,16 @@
 import { parseTimeOnly } from '@solyi/core/date'
 
+/** Shared ISO wall-minute display; ko/en use the same clock digits. Supports the grid's 24:00 boundary. */
+export function formatTimeMinute(minutes: number): string {
+  return String(Math.floor(minutes / 60)).padStart(2, '0') + ':' + String(minutes % 60).padStart(2, '0')
+}
+
 /** Finite same-day clock grid, aligned to min rather than midnight. */
 export function timeChoices(min: string, max: string, step: number): readonly string[] {
   const start = parseTimeOnly(min)?.minutes, end = parseTimeOnly(max)?.minutes
   if (start === undefined || end === undefined || start > end || !Number.isInteger(step) || step <= 0) return []
   return Array.from({ length: Math.floor((end - start) / step) + 1 }, (_, index) => {
-    const minutes = start + index * step
-    return String(Math.floor(minutes / 60)).padStart(2, '0') + ':' + String(minutes % 60).padStart(2, '0')
+    return formatTimeMinute(start + index * step)
   })
 }
 

@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict'
+import{localDateKey}from'../packages/vue-ui/src/local-date.ts'
+import {formatTimeMinute,timeChoices} from '../packages/vue-ui/src/time-values.ts'
 import {readTimeGrid,timeGridLanes,timeGridTicks} from '../packages/vue-ui/src/time-grid-values.ts'
 const columns=Object.freeze([Object.freeze({key:'a',label:'A',date:'2026-10-28'}),Object.freeze({key:'b',label:'B'})])
 const items=Object.freeze([Object.freeze({id:'one',column:'a',start:0,end:30,label:'One'}),Object.freeze({id:'two',column:'a',start:10,end:40,label:'Two'}),Object.freeze({id:'three',column:'a',start:50,end:55,label:'Short'}),Object.freeze({id:1,column:'b',start:1430,end:1440,label:'Day end'})])
@@ -17,3 +19,14 @@ assert.throws(()=>readTimeGrid(items,columns,access,0,1441),TypeError)
 assert.throws(()=>readTimeGrid([{id:'x',column:'missing',start:0,end:20,label:'X'}],columns,access,0,1440),TypeError)
 assert.throws(()=>readTimeGrid(items,columns,access,0,1440,[{id:'b',label:'Band',startMinute:70,endMinute:60}]),TypeError)
 console.log('PASS: frozen source preservation, overlap packing, short-item duration, range clipping, hour ticks, stable keys, strict ISO dates and invalid coordinates/bands.')
+
+for(const code of ['ko-KR','en-US']) {
+ const digits=new Intl.NumberFormat(code,{maximumSignificantDigits:21,minimumIntegerDigits:2,useGrouping:false})
+ for(let minute=0;minute<=1440;minute++)assert.equal(formatTimeMinute(minute),digits.format(Math.floor(minute/60))+':'+digits.format(minute%60),code+' clock display at '+minute)
+}
+assert.deepEqual(timeChoices('08:07','08:52',15),['08:07','08:22','08:37','08:52'],'Shared formatter preserves min-aligned time choices')
+console.log('PASS: all 1,441 wall-minute labels match the previous ko/en Intl display, including 24:00.')
+
+assert.equal(localDateKey(new Date(2026,0,2,23,59)),'2026-01-02','Local clock date must not use UTC conversion')
+assert.equal(localDateKey(new Date(2024,1,29,0,0)),'2024-02-29')
+const earlyYear=new Date(2026,0,2);earlyYear.setFullYear(7);assert.equal(localDateKey(earlyYear),'0007-01-02')

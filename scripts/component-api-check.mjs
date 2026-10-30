@@ -113,3 +113,5 @@ for(const name of ['SSelect','SNumberInput','SAutocomplete','STimePicker']){
  assert.equal(component.methods.find(item=>item.name==='clear')?.signature,'() => void');assert.match(componentExampleSources[component.example],/\bclearable\b/);
 }
 dom.window.close();console.log(`PASS: ${names.length} real API contracts and concept headings/badges; English concept-ABC groups without duplicate legacy menu; canonical Examples/Sample Code/API panels, unchanged SFC copy, no nested code accordion, roving keys/deep links and preserved iframe/draft; grid passthrough and form contracts.`);
+
+for(const name of ['SSplitBtn','SContextMenu']){const events=componentReferences.find(c=>c.name===name).events;assert.match(events.find(e=>e.name==='select').signature,/: string\)/,name+' shared select validator retains its payload type');assert.match(events.find(e=>e.name==='update:open').signature,/: boolean\)/,name+' open model payload');assert.match(events.find(e=>e.name==='close').signature,/: SolMenuCloseReason\)/,name+' close reason payload')}

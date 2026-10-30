@@ -1,7 +1,7 @@
 import { computed, defineComponent, h, ref, watch, nextTick, mergeProps, onMounted, onBeforeUnmount } from 'vue'
 import { parseDateOnly } from '@solyi/core/date'
 import type { AllowedComponentProps, PropType, SlotsType, VNode, VNodeProps } from 'vue'
-import { formatSolDate, formatSolNumber, useSolLocale } from './locale'
+import { formatSolDate, useSolLocale } from './locale'
 import type { SolLocale } from './locale'
 import {
   readTimeGrid,
@@ -16,8 +16,10 @@ import type {
   TimeGridSnapshot,
 } from './time-grid-values'
 import { useTimeGridEditor } from './time-grid-editor'
-import { SBtn } from './button'
-import { SIcon } from './primitives'
+import { formatTimeMinute } from './time-values'
+import { localDateKey } from './local-date'
+import { renderSolIcon } from './primitives'
+import { solIconPaths } from '@solyi/core/icons'
 import { useActionMenu } from './actions'
 import type { SolMenuItem } from './actions'
 import type {
@@ -179,7 +181,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
       clearTimeout(clock)
       if (!mounted || !p.showCurrentTime || p.currentTime) return
       const now = new Date()
-      localTime.value = { date: `${now.getFullYear().toString().padStart(4, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`, minute: now.getHours() * 60 + now.getMinutes() }
+      localTime.value = { date: localDateKey(now), minute: now.getHours() * 60 + now.getMinutes() }
       clock = setTimeout(syncClock, 60000 - Date.now() % 60000)
     }
     onMounted(() => { mounted = true;syncClock();document.addEventListener('visibilitychange', syncClock) })
@@ -218,13 +220,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
         : nodes.values().next().value || scroll.value || host.value
       )?.focus()
     }
-    const time = (minute: number) =>
-      formatSolNumber(Math.floor(minute / 60), l.value, {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      }) +
-      ':' +
-      formatSolNumber(minute % 60, l.value, { minimumIntegerDigits: 2, useGrouping: false })
+    const time = formatTimeMinute
     const layouts = computed(() => {
       const data = snapshot.value
       return new Map(
@@ -256,14 +252,16 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
       editor.cancel()
       emit('create', Object.freeze({ columnKey, startMinute, endMinute: Math.min(data.endMinute, startMinute + p.snapMinutes), input }))
     }
-    function remove(key: SolTimeGridKey, input: SolTimeGridRemoveRequest['input']) {
-      if (!p.allowRemove || !snapshot.value?.entries.some(entry => entry.key === key) || editor.scope(key).disabled || p.readonly) return
+    function requestItem(kind: 'edit' | 'remove', key: SolTimeGridKey, input: SolTimeGridRemoveRequest['input']) {
+      if (!(kind === 'edit' ? p.allowEdit : p.allowRemove) || !snapshot.value?.entries.some(entry => entry.key === key) || editor.scope(key).disabled || p.readonly) return
       editor.cancel()
       if (itemMenu.expanded.value && menuKey.value === key && menuOrigin?.isConnected) menuOrigin.focus()
-      emit('remove', Object.freeze({ key, input }))
+      // Both public events carry the same immutable item request shape.
+      ;(emit as (event: 'edit' | 'remove', request: SolTimeGridEditRequest) => void)(kind, Object.freeze({ key, input }))
     }
     let menuOrigin: HTMLElement | null = null
-    const menuKey = ref<SolTimeGridKey>(), menuInput = ref<'keyboard' | 'button'>('button')
+    let menuInput: 'keyboard' | 'button' = 'button'
+    const menuKey = ref<SolTimeGridKey>()
     const menuItems = computed<readonly SolMenuItem[]>(() => [
       ...(p.allowDuplicate ? [{ id: 'duplicate', label: l.value.timeGridDuplicate || 'Duplicate', disabled: menuKey.value === undefined || editor.scope(menuKey.value).disabled }] : []),
       ...(p.allowEdit ? [{ id: 'edit', label: l.value.timeGridEdit || l.value.done, disabled: menuKey.value === undefined || editor.scope(menuKey.value).disabled }] : []),
@@ -274,16 +272,15 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
       get items() { return menuItems.value }, get disabled() { return p.disabled || p.loading },
       get readonly() { return p.readonly }, open: undefined,
     }, (event, value?: unknown) => {
-      if (event !== 'select' || menuKey.value === undefined || editor.scope(menuKey.value).disabled || p.readonly) return
-      if (value === 'duplicate' && p.allowDuplicate) editor.begin(menuKey.value, 'duplicate', menuInput.value)
-      else if (value === 'remove') remove(menuKey.value, menuInput.value)
-      else if (value === 'edit' && p.allowEdit) { editor.cancel();if (menuOrigin?.isConnected) menuOrigin.focus();emit('edit', Object.freeze({ key: menuKey.value, input: menuInput.value })) }
+      if (event !== 'select' || menuKey.value === undefined) return
+      if (value === 'duplicate' && p.allowDuplicate) editor.begin(menuKey.value, 'duplicate', menuInput)
+      else if (value === 'edit' || value === 'remove') requestItem(value, menuKey.value, menuInput)
     }, host)
     function openMenu(event: MouseEvent | KeyboardEvent, key: SolTimeGridKey, context = false) {
       if (p.readonly || editor.scope(key).disabled || !menuItems.value.length) return
       event.preventDefault();event.stopPropagation();editor.cancel()
       menuOrigin = event.currentTarget as HTMLElement
-      menuKey.value = key;menuInput.value = event.type === 'keydown' ? 'keyboard' : 'button'
+      menuKey.value = key;menuInput = event.type === 'keydown' || event.detail === 0 ? 'keyboard' : 'button'
       itemMenu.open(event.currentTarget as HTMLElement, context && event instanceof MouseEvent ? { x: event.clientX, y: event.clientY } : undefined)
     }
     function menuButton(entry: { key: SolTimeGridKey; label: string }) {
@@ -293,7 +290,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
         'aria-haspopup': 'menu', 'aria-expanded': String(itemMenu.expanded.value && menuKey.value === entry.key),
         'aria-controls': itemMenu.expanded.value && menuKey.value === entry.key ? p.id + '-actions-menu' : undefined,
         onClick: (event: MouseEvent) => openMenu(event, entry.key),
-      }, h(SIcon, { name: 'more', rotate: 90, decorative: true })) : null
+      }, renderSolIcon(solIconPaths.more, 20, 90)) : null
     }
     watch(snapshot, () => { if (menuKey.value !== undefined && !snapshot.value?.entries.some(entry => entry.key === menuKey.value)) itemMenu.close('programmatic', false) })
     expose({
@@ -357,7 +354,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
           'aria-busy': p.loading ? 'true' : undefined,
         },
         [
-          h('div', { class: 'sol-ui-time-grid-top' }, [h('h3', { id: p.id + '-label' }, p.label),p.allowCreate ? h(SBtn, { disabled: !canCreate() || !data.columns.length, style: { visibility: p.readonly ? 'hidden' : undefined }, onClick: () => data.columns[0] && create(data.columns[0].key, data.startMinute, 'button') }, () => l.value.timeGridAdd) : null]),
+          h('div', { class: 'sol-ui-time-grid-top' }, [h('h3', { id: p.id + '-label' }, p.label),p.allowCreate ? h('button', { type:'button',class:'sol-button',disabled: !canCreate() || !data.columns.length, style: { visibility: p.readonly ? 'hidden' : undefined }, onClick: () => data.columns[0] && create(data.columns[0].key, data.startMinute, 'button') }, l.value.timeGridAdd) : null]),
           p.help || slots.help
             ? h('div', { class: 'sol-ui-hint', id: p.id + '-help' }, slots.help?.() || p.help)
             : null,
@@ -531,7 +528,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                   onContextmenu: (event: MouseEvent) => openMenu(event, entry.key, true),
                                   onKeydown: (event: KeyboardEvent) => {
                                     if (event.key === 'ContextMenu' || event.key === 'F10' && event.shiftKey) { openMenu(event, entry.key); return }
-                                    if (event.target === event.currentTarget && !event.isComposing && event.key === 'Delete' && p.allowRemove && !p.readonly) { event.preventDefault();event.stopPropagation();remove(entry.key, 'keyboard') }
+                                    if (event.target === event.currentTarget && !event.isComposing && event.key === 'Delete' && p.allowRemove && !p.readonly) { event.preventDefault();event.stopPropagation();requestItem('remove', entry.key, 'keyboard') }
                                   },
                                   'aria-label':
                                     entry.label +
