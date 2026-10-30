@@ -33,7 +33,7 @@ try{
   await page.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort())
   await page.clock.install({time:new Date('2026-10-30T10:13:00Z')})
   const query=extra=>new URLSearchParams({...appearance,...extra})
-  async function doc(id){console.log('CHECK',appearance.theme,id);await page.goto(origin+'/?'+query({})+'#component/'+id,{waitUntil:'domcontentloaded'});const card=page.locator('#'+id);await card.waitFor({state:'visible'});await card.scrollIntoViewIfNeeded();return card}
+  async function doc(id){console.log('CHECK',appearance.theme,id);await page.goto(origin+'/?'+query({})+'#component/'+id,{waitUntil:'domcontentloaded'});const card=page.locator('#'+id);await card.waitFor({state:'visible'});await card.scrollIntoViewIfNeeded();const canvas=card.locator('[data-component-example]');await canvas.waitFor({state:'visible'});if(await card.locator('iframe').count())await card.locator('iframe:not([aria-busy])').waitFor({state:'visible'});else await card.locator('.inline-preview-canvas:not([aria-busy])').waitFor({state:'visible'});return card}
   const scope=async card=>await card.locator('iframe').count()?card.locator('iframe').first().contentFrame():card
   const shot=async name=>page.screenshot({path:fileURLToPath(new URL(appearance.theme+'-'+name+'.png',out))})
 

@@ -144,3 +144,9 @@ Library libfile_2828e3a7c4988191bda84f104081b1cf의 공식 materialize는 Window
 - 기능/접근성 또는 예산을 줄이지 않고 TimeGrid named import gzip 17,861→17,214(한도 17,408), 전체 plugin 67,568(한도 67,584)을 통과했습니다. 공유 메뉴 별도 모듈 실험은 전체 크기를 늘려 반영하지 않았습니다.
 - 설치된 최종 tarball의 TimePicker legacy/auto/popover/dialog × native/list × parent 경계 48경로 PASS. 포인터 scrub 회귀도 320/768/1440px × 각 24 theme/mode/density/locale 조합에서 capture/release, preview, 키보드 commit/Escape, 목록 edge scroll/cancel, 페이지 scroll PASS입니다.
 - main/공개 배포 및 공개 URL 검증은 이 기록 시점에 아직 전입니다. npm 1.1.1은 미게시·게시 대기이며 소비 앱은 변경하지 않습니다. 물리 휴대폰/실제 스크린리더 검증으로 확대하지 않습니다.
+
+### 공개 후 검증의 로딩 대기 보완
+
+- main 950c790의 CI/Pages 41075068133 성공. 공개 추적 파일 365개가 HTTP 200 및 git blob SHA-256 일치입니다.
+- 첫 공개 Circular 검사는 iframe의 aria-busy=true 상태에서 즉시 count를 읽어 0으로 실패했습니다. 동일 공개 화면에서 ready 후 실제 원형 1개를 확인했으며 제품 누락이 아니었습니다. 검사 호스트가 ready 상태가 될 때까지 기다리도록 보완했습니다. 중간 시도의 inline ID prefix가 자식 17개까지 선택한 strict-mode 오류도 호스트 class 하나로 좁혔습니다. 기존 기능 assertion은 삭제·완화하지 않았습니다.
+- 공개 Violet PC와 Sage dark compact 390 흐름 통과, 공개 Chart PC/모바일 범례의 실제 픽셀에서 순번·요일·기록 수 2/4/0/5가 분리됨을 확인했습니다. Sand 및 전체 결과는 qa-output/public-followups/live-site/results.json에 회수합니다. 패키지 및 docs 파일은 이 검사 보완으로 바뀌지 않으며 동결 hash는 동일합니다.
