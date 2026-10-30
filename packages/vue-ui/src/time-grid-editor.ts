@@ -268,16 +268,25 @@ export function useTimeGridEditor(
     document.removeEventListener('pointerdown', outside, true)
     window.removeEventListener('blur', blur)
   })
-  function pointerProps(item: TimeGridEntry<unknown>) {
+  function controlProps(key: TimeGridKey, action: TimeGridAction) {
     return {
-      'data-draggable': !blocked(item.key, 'move') ? 'true' : undefined,
+      'data-draggable': !blocked(key, action) ? 'true' : undefined,
       onPointerdown: (event: PointerEvent) => {
-        if (blocked(item.key, 'move') || (event.target as Element).closest('button,a,input,textarea,select,[contenteditable]')) return
+        if (blocked(key, action)) return
         operation.cancel('configuration', false)
-        pointer.down(event, item.key, 'move')
+        pointer.down(event, key, action)
       },
       onLostpointercapture: pointer.lost,
       onDragstart: (event: DragEvent) => event.preventDefault(),
+    }
+  }
+  function pointerProps(item: TimeGridEntry<unknown>) {
+    const control = controlProps(item.key, 'move')
+    return {
+      ...control,
+      onPointerdown: (event: PointerEvent) => {
+        if (!(event.target as Element).closest('button,a,input,textarea,select,[contenteditable]')) control.onPointerdown(event)
+      },
       onClick: (event: MouseEvent) => { pointer.consumeClick(event, item.key) },
     }
   }
@@ -293,14 +302,7 @@ export function useTimeGridEditor(
           'aria-label': actionLabel(action) + ' · ' + item.label,
           disabled: !!blocked(item.key, action),
           'aria-describedby': view.keysId,
-          onPointerdown: (event: PointerEvent) => {
-            if (!blocked(item.key, action)) {
-              operation.cancel('configuration', false)
-              pointer.down(event, item.key, action)
-            }
-          },
-          onLostpointercapture: pointer.lost,
-          onDragstart: (event: DragEvent) => event.preventDefault(),
+          ...controlProps(item.key, action),
           onClick: (event: MouseEvent) => {
             if (!pointer.consumeClick(event, item.key))
               operation.begin(item.key, action, 'button')
@@ -396,6 +398,7 @@ export function useTimeGridEditor(
     pending,
     handles,
     pointerProps,
+    controlProps,
     consumeClick: pointer.consumeClick,
     preview,
     status,

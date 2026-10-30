@@ -466,3 +466,5 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-chart-legend li {padding-block:var(--sol-space-2);}
 .sol-ui-chart-value {display:inline-flex;align-items:baseline;gap:var(--sol-space-1);white-space:nowrap;}
 .sol-ui-chart-value-label {font-size:var(--sol-text-xs);font-weight:400;color:var(--sol-color-muted);}
+
+.sol-ui-time-grid-menu-trigger[data-draggable=true] {touch-action:none;}

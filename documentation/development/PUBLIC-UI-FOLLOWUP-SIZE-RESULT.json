@@ -55,11 +55,11 @@
     "SBarChart"
   ],
   "metrics": {
-    "characters": 297373,
-    "bytes": 300103,
-    "gzipBytes": 75532,
-    "totalJavaScriptBytes": 325374,
-    "totalJavaScriptGzipBytes": 82814,
+    "characters": 297254,
+    "bytes": 299984,
+    "gzipBytes": 75571,
+    "totalJavaScriptBytes": 325255,
+    "totalJavaScriptGzipBytes": 82853,
     "javascriptFiles": 6
   },
   "imports": [
@@ -83,8 +83,8 @@
     },
     {
       "name": "all_plugin",
-      "bytes": 231821,
-      "gzipBytes": 67573,
+      "bytes": 231649,
+      "gzipBytes": 67568,
       "retainedNameStrings": [
         "STimeGrid",
         "SPagination",
@@ -141,8 +141,8 @@
     },
     {
       "name": "STimeGrid",
-      "bytes": 50461,
-      "gzipBytes": 17179,
+      "bytes": 50289,
+      "gzipBytes": 17214,
       "retainedNameStrings": [
         "STimeGrid"
       ]

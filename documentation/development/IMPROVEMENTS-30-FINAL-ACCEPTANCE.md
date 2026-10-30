@@ -124,3 +124,13 @@ Library libfile_2828e3a7c4988191bda84f104081b1cf의 공식 materialize는 Window
 - 세 테마 실제 UI와 TimeGrid 연속 조작도 통과했습니다. 실제 pointer drag 뒤 빈 열로 retarget된 click을 명시적으로 주입해 create·ID·개수 불변을 확인하고, 별도 새 pointerdown의 의도적 생성은 허용되는지도 확인했습니다. 주입한 click과 실제 pointer/touch 검증은 구분하며 사용자 원래 복제 경로를 재현했다고 확대하지 않습니다.
 - 원본 Chart 픽셀은 부모가 정상 cloud Library 경로로 확인했습니다. 값 [2,4,0,5]와 다음 순번이 붙어 월요일:22., 화요일:43., 수요일:04.로 읽히던 결함입니다. 최종 검사는 자동 순번 없음·명시 순번 하나·네 이름/정확한 값·인접 항목 간격을 확인합니다. PC/모바일 캡처를 직접 열어 1. 월요일 / 기록 수 2 등의 분리를 확인했습니다. 로컬 materialize 실패를 다시 시도하지 않았으며 부모의 원본 픽셀 확인으로 첨부 수용 기준 차단을 해소합니다.
 - 이전 미게시 후보 두 사본을 qa-output/public-followups/superseded-63747f6/에 복사·checksum 검증했습니다. 공식 npm latest=1.1.0, 1.1.1은 E404 확인. 새 후보는 별도 artifacts/candidates/1.1.1-public-ui에 만들고, 기존 1.0.0/1.1.0과 기존 artifacts/candidates/1.1.1-final 원본은 보존합니다. 전체 출시 pipeline·공개 배포는 이 시점에 아직 실행 전입니다.
+
+### 실제 빌드 사이트의 밀집 touch 결함과 후속 후보
+
+8a5127e의 첫 후보(1e3b3425…93880)는 전체 파이프라인을 통과했지만 실제 빌드 사이트의 Sage 390px 연속 조작에서 새 결함이 발견돼 최종 완료로 처리하지 않았습니다. 일정이 세 열로 겹치면 메뉴 버튼의 터치 면적이 카드 본문을 덮어 이동 제스처가 시작되지 않았습니다. 기존 fixture는 더 넓은 두 열 항목을 움직여 이 조건을 놓쳤습니다.
+
+- 메뉴 버튼의 tap은 메뉴 열기, drag는 카드 이동으로 구분합니다. 본문·edge·메뉴에 같은 포인터 제어를 적용하며 agenda 버튼은 드래그하지 않습니다.
+- 500ms 클릭 억제 대신 새 pointerdown까지의 입력 순서를 사용하고 시작 지점이 항목인 retarget click으로 빈 캔버스 생성을 하지 않습니다. 키보드·보조기술 방식의 detail=0 activation은 별도로 허용합니다.
+- 지연 600ms 뒤의 retarget click, 실제 새 pointerdown 생성, detail=0 생성, mouse/touch 메뉴 영역 drag, 양끝 resize·취소·메뉴 비활성화를 검증했습니다. 3테마 browser와 기존 상태 전이 runtime 모두 통과했습니다. 물리 보조기술 테스트와는 구분합니다.
+- 예산은 그대로이며 전체 plugin 67,568 / 67,584, TimeGrid 17,214 / 17,408입니다. 후속 후보는 artifacts/candidates/1.1.1-public-ui-rc2에서 다시 동결하고 실제 사이트 전체 흐름을 재확인합니다. 1e3b3425… 후보의 전체 pipeline PASS를 후속 후보 PASS로 대신하지 않습니다.
+- scripts/public-ui-live-browser-check.mjs는 실제 문서 Components와 starter에서 같은 흐름을 재현합니다. prod DOM에서는 keyed article identity·개수·표시 시각을 단계마다 확인하고, 수정/삭제 요청 상태가 new-1 키임을 확인합니다. 원시 모델 ID/이벤트 배열은 설치 fixture에서 별도로 확인합니다.

@@ -26,13 +26,21 @@ interface Gesture {
   width: number
   height: number
 }
-/** Pointer capture is restricted to explicit handles; the canvas keeps native pan. */
+/** Only item gestures capture pointers; the blank canvas keeps native pan. */
 export function createTimeGridPointer(options: Options) {
   let gesture: Gesture | null = null,
     frame = 0,
     resize: ResizeObserver | undefined,
     suppressKey: TimeGridKey | undefined,
-    suppressUntil = 0
+    canvasPress = false
+  const moveOptions = { capture: true, passive: false }
+  function bind(method: 'addEventListener' | 'removeEventListener') {
+    window[method]('pointermove', move as EventListener, moveOptions)
+    window[method]('pointerup', up as EventListener, true)
+    window[method]('pointercancel', cancelPointer as EventListener, true)
+    window[method]('pointerdown', otherPointer as EventListener, true)
+    window[method]('blur', outside)
+  }
   function stop() {
     const current = gesture
     gesture = null
@@ -40,15 +48,10 @@ export function createTimeGridPointer(options: Options) {
     frame = 0
     resize?.disconnect()
     resize = undefined
-    window.removeEventListener('pointermove', move, true)
-    window.removeEventListener('pointerup', up, true)
-    window.removeEventListener('pointercancel', cancelPointer, true)
-    window.removeEventListener('pointerdown', otherPointer, true)
-    window.removeEventListener('blur', outside)
+    bind('removeEventListener')
     if (current) {
       if (current.dragging) {
         suppressKey = current.key
-        suppressUntil = performance.now() + 500
       }
       try {
         if (current.owner.hasPointerCapture(current.id))
@@ -219,7 +222,6 @@ export function createTimeGridPointer(options: Options) {
       return
     stop()
     suppressKey = undefined
-    suppressUntil = 0
     const scroll = options.scroll()
     if (!scroll) return
     const range = options.range(),
@@ -248,31 +250,29 @@ export function createTimeGridPointer(options: Options) {
       stop()
       return
     }
-    window.addEventListener('pointermove', move, { capture: true, passive: false })
-    window.addEventListener('pointerup', up, true)
-    window.addEventListener('pointercancel', cancelPointer, true)
-    window.addEventListener('pointerdown', otherPointer, true)
-    window.addEventListener('blur', outside)
+    bind('addEventListener')
   }
   return {
     down,
     stop,
     isDragging: () => !!gesture?.dragging,
-    clearClick: () => { if (!gesture) { suppressKey = undefined;suppressUntil = 0 } },
+    clearClick: (event: PointerEvent) => { if (!gesture) { suppressKey = undefined;canvasPress = !(event.target as Element).closest('.sol-ui-time-grid-item') } },
     lost: (event: PointerEvent) => {
       if (gesture?.id === event.pointerId) cancel('capture')
     },
     consumeClick: (event: MouseEvent, key?: TimeGridKey) => {
+      const pointerClick = event.detail > 0 || ('pointerType' in event && event.pointerType === 'touch')
       if (
-        (event.detail > 0 || ('pointerType' in event && event.pointerType === 'touch')) &&
-        (key === undefined || key === suppressKey) &&
-        performance.now() < suppressUntil
+        pointerClick &&
+        suppressKey !== undefined &&
+        (key === undefined || key === suppressKey)
       ) {
         event.preventDefault()
         event.stopPropagation()
         return true
       }
-      return false
+      // Creation needs a press in canvas space, never a retargeted item click.
+      return pointerClick && key === undefined && !canvasPress
     },
   }
 }

@@ -283,13 +283,14 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
       menuKey.value = key;menuInput = event.type === 'keydown' || event.detail === 0 ? 'keyboard' : 'button'
       itemMenu.open(event.currentTarget as HTMLElement, context && event instanceof MouseEvent ? { x: event.clientX, y: event.clientY } : undefined)
     }
-    function menuButton(entry: { key: SolTimeGridKey; label: string }) {
+    function menuButton(entry: { key: SolTimeGridKey; label: string }, movable = false) {
       return !p.readonly && (p.allowEdit || p.allowRemove || p.allowDuplicate) ? h('button', {
         type: 'button', class: 'sol-button subtle sol-ui-time-grid-menu-trigger',
         disabled: editor.scope(entry.key).disabled, 'aria-label': l.value.moreActions + ' · ' + entry.label,
         'aria-haspopup': 'menu', 'aria-expanded': String(itemMenu.expanded.value && menuKey.value === entry.key),
         'aria-controls': itemMenu.expanded.value && menuKey.value === entry.key ? p.id + '-actions-menu' : undefined,
-        onClick: (event: MouseEvent) => openMenu(event, entry.key),
+        ...(movable ? editor.controlProps(entry.key, 'move') : {}),
+        onClick: (event: MouseEvent) => { if (!editor.consumeClick(event, entry.key)) openMenu(event, entry.key) },
       }, renderSolIcon(solIconPaths.more, 20, 90)) : null
     }
     watch(snapshot, () => { if (menuKey.value !== undefined && !snapshot.value?.entries.some(entry => entry.key === menuKey.value)) itemMenu.close('programmatic', false) })
@@ -561,7 +562,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
                                       time(entry.startMinute) + '–' + time(entry.endMinute),
                                     ),
                                   ]),
-                                  menuButton(entry),
+                                  menuButton(entry, true),
                                   ...editor.handles(
                                     entry,
                                     Math.max(30, entry.visibleEnd - entry.visibleStart),
