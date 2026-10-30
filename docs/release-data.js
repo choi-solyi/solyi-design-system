@@ -5,7 +5,7 @@ export const packageReleases={
   "releases": [
     {
       "release": "1.1.1",
-      "sourceRef": "0674273420690b93149b26b1a6a0c06c6d0566bd",
+      "sourceRef": "3058dc7589611d3508572061ce5b65b5f9d8eac6",
       "compatibility": {
         "node": "^22.18.0 || >=24.12.0",
         "vue": "3.5.44",
@@ -24,9 +24,9 @@ export const packageReleases={
           "name": "solyi-ui",
           "version": "1.1.1",
           "file": "solyi-ui-1.1.1.tgz",
-          "bytes": 5987420,
-          "sha256": "10381632323b8e23d4c8c0ca079b62b1997343c0f6cee0e975f74ed8c2440ff7",
-          "integrity": "sha512-wn7lf+DgyTeJs3IdoMEMP7xhECX4OMDRMoKAvXGI9+mfDLNyUGivYnKVJmPM/NDUDC+plx7v8hY8wGkFVaPzlQ=="
+          "bytes": 5988837,
+          "sha256": "439d336fbb812b25e63f880390fba4282c3838d87c10e4a2134d80ee2a8696f5",
+          "integrity": "sha512-FPqnHoQhS4s5hjCgmKMWQJQAoS33HRUrnIv95kXzUm55xaBTVCjZQBLrtdMNpSC+CmBX4mx87aTcbWqOg8EXYg=="
         }
       ]
     }

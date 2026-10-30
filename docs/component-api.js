@@ -5,7 +5,7 @@ import {componentConcept,componentConceptCatalogue,componentGroupOrder} from './
 const apiEscape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 export const componentGroups=componentGroupOrder;
 // One comparison canvas, with independent API references and stable old anchors.
-export const componentExampleOwners={SProgressCircular:'sprogress-linear',SLoadingOverlay:'sprogress-linear'};
+export const componentExampleOwners={SLoadingOverlay:'sprogress-linear'};
 export const layoutComponentNames=['SCol','SContainer','SRow'];
 export function componentCatalogue(){return componentConceptCatalogue(componentReferences.filter(item=>!layoutComponentNames.includes(item.name)));}
 function componentSampleCode(h,component){

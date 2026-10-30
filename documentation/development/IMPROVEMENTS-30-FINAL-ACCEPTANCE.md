@@ -134,3 +134,13 @@ Library libfile_2828e3a7c4988191bda84f104081b1cf의 공식 materialize는 Window
 - 지연 600ms 뒤의 retarget click, 실제 새 pointerdown 생성, detail=0 생성, mouse/touch 메뉴 영역 drag, 양끝 resize·취소·메뉴 비활성화를 검증했습니다. 3테마 browser와 기존 상태 전이 runtime 모두 통과했습니다. 물리 보조기술 테스트와는 구분합니다.
 - 예산은 그대로이며 전체 plugin 67,568 / 67,584, TimeGrid 17,214 / 17,408입니다. 후속 후보는 artifacts/candidates/1.1.1-public-ui-rc2에서 다시 동결하고 실제 사이트 전체 흐름을 재확인합니다. 1e3b3425… 후보의 전체 pipeline PASS를 후속 후보 PASS로 대신하지 않습니다.
 - scripts/public-ui-live-browser-check.mjs는 실제 문서 Components와 starter에서 같은 흐름을 재현합니다. prod DOM에서는 keyed article identity·개수·표시 시각을 단계마다 확인하고, 수정/삭제 요청 상태가 new-1 키임을 확인합니다. 원시 모델 ID/이벤트 배열은 설치 fixture에서 별도로 확인합니다.
+
+### 후속 rc2 최종 후보 검증
+
+- 소스 3058dc7589611d3508572061ce5b65b5f9d8eac6에서 새 후보를 동결했습니다. UI tarball 5,988,837 bytes, SHA-256 439d336fbb812b25e63f880390fba4282c3838d87c10e4a2134d80ee2a8696f5. artifacts/candidates/1.1.1-public-ui-rc2, release-assets/1.1.1, docs/releases/1.1.1 세 사본이 일치하며 두 내부 소비 예제의 설치 JS도 소스 dist와 같습니다. 공개 1.0.0/1.1.0 tarball hash는 변경하지 않았습니다.
+- npm run library:prepare 전체 필수 파이프라인 PASS(exit 0). 빌드·타입·독립 새 설치·SSR·공개 선언·51 API·크기·라이선스·문서 계약을 기존 검사로 확인했습니다. 기록: qa-output/public-followups/rc2-pipeline.log.
+- 실제 빌드된 문서와 starter의 PC Violet 1100 / Sage dark compact 390 / Sand 390 끝간 흐름 PASS. Calendar 반복 loading 위치 불변/+N/닫기/재진입, Sortable 잠금 정렬/취소/포커스, TimeGrid 생성→본문 이동→양끝 조절→취소/거절→내용 편집→메뉴 삭제 및 좁은 touch 경로를 확인했습니다. 기록: scripts/public-ui-live-browser-check.mjs 및 qa-output/public-followups/built-site/results.json.
+- Chart는 월·화·수·목요일의 값 [2,4,0,5], 순번 한 개, 네 항목 사이 간격을 실제 DOM 및 캡처로 대조합니다. 좁은 화면 캡처가 범례를 포함하도록 캡처 위치를 명시했습니다.
+- 기능/접근성 또는 예산을 줄이지 않고 TimeGrid named import gzip 17,861→17,214(한도 17,408), 전체 plugin 67,568(한도 67,584)을 통과했습니다. 공유 메뉴 별도 모듈 실험은 전체 크기를 늘려 반영하지 않았습니다.
+- 설치된 최종 tarball의 TimePicker legacy/auto/popover/dialog × native/list × parent 경계 48경로 PASS. 포인터 scrub 회귀도 320/768/1440px × 각 24 theme/mode/density/locale 조합에서 capture/release, preview, 키보드 commit/Escape, 목록 edge scroll/cancel, 페이지 scroll PASS입니다.
+- main/공개 배포 및 공개 URL 검증은 이 기록 시점에 아직 전입니다. npm 1.1.1은 미게시·게시 대기이며 소비 앱은 변경하지 않습니다. 물리 휴대폰/실제 스크린리더 검증으로 확대하지 않습니다.
