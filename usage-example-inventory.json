@@ -1,6 +1,6 @@
 {
   "baseline": "a6ad6bf",
-  "count": 54,
+  "count": 56,
   "examples": [
     {
       "route": "style",
@@ -142,7 +142,8 @@
       "kind": "vue-recipe",
       "recipe": "navigation.vue",
       "status": "typed-and-runtime-checked",
-      "title": "경로·패널·알림"
+      "title": "탐색 컨트롤 비교 · 기존 조합",
+      "delivery": "standalone-composition"
     },
     {
       "route": "component",
@@ -477,6 +478,24 @@
       "recipe": "select.vue",
       "status": "typed-and-runtime-checked",
       "title": "Select · 목록 선택"
+    },
+    {
+      "route": "component",
+      "section": "breadcrumbs",
+      "label": "Breadcrumbs · 현재 위치",
+      "kind": "vue-recipe",
+      "recipe": "breadcrumbs.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "Breadcrumbs · 현재 위치"
+    },
+    {
+      "route": "component",
+      "section": "pagination",
+      "label": "Pagination · 페이지 이동",
+      "kind": "vue-recipe",
+      "recipe": "pagination.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "Pagination · 페이지 이동"
     }
   ]
 }

@@ -24,7 +24,7 @@ for(const route of ['start','style','component','pattern','releases','licensing'
 assert.ok(seen.has('advanced-vue'),'Advanced API references use the actual shared consumer');seen.delete('advanced-vue');
 const inventory=JSON.parse(await readFile(new URL('usage-example-inventory.json',base),'utf8'));
 const standaloneRecipes=inventory.examples.filter(item=>item.delivery==='standalone-composition').map(item=>item.section);
-assert.deepEqual(standaloneRecipes.sort(),['choices','selection'],'Only the explicitly preserved mixed compositions move out of component canvases');
+assert.deepEqual(standaloneRecipes.sort(),['choices','navigation','selection'],'Only the explicitly preserved mixed compositions move out of component canvases');
 const expectedRecipes=[...new Set(inventory.examples.filter(item=>item.recipe&&item.delivery!=='standalone-composition').map(item=>item.section))];
 assert.deepEqual([...seen].sort(),expectedRecipes.sort(),'Every canonical recipe has a real document canvas');
 w.location.hash='#pattern';await pause();const frame=d.querySelector('iframe[data-recipe=workflow]'),sent=[];assert.ok(frame);frame.contentWindow.postMessage=(data,origin)=>sent.push({data,origin});

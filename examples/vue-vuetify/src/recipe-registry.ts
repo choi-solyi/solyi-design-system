@@ -38,6 +38,8 @@ import Recipe36 from './recipes/checkbox.vue'
 import Recipe37 from './recipes/radio-group.vue'
 import Recipe38 from './recipes/switch.vue'
 import Recipe39 from './recipes/select.vue'
+import Recipe40 from './recipes/breadcrumbs.vue'
+import Recipe41 from './recipes/pagination.vue'
 
 export const recipeComponents = {
   'color-examples': Recipe0,
@@ -80,6 +82,8 @@ export const recipeComponents = {
   'radio-group': Recipe37,
   switch: Recipe38,
   select: Recipe39,
+  breadcrumbs: Recipe40,
+  pagination: Recipe41,
 }
 export const recipeLabels = {
   'color-examples': '의미색 UI 조합',
@@ -92,7 +96,7 @@ export const recipeLabels = {
   selection: '선택의 의미 비교 · 기존 조합',
   help: '설명과 추가 정보',
   accordion: '상세 펼치기',
-  navigation: '경로·패널·알림',
+  navigation: '탐색 컨트롤 비교 · 기존 조합',
   'advanced-inputs': '여러 줄·숫자·다중 선택',
   'content-tabs': '탭과 패널',
   'action-menu': '행동 메뉴',
@@ -122,4 +126,6 @@ export const recipeLabels = {
   'radio-group': 'Radio Group · 한 가지 선택',
   switch: 'Switch · 즉시 설정',
   select: 'Select · 목록 선택',
+  breadcrumbs: 'Breadcrumbs · 현재 위치',
+  pagination: 'Pagination · 페이지 이동',
 }

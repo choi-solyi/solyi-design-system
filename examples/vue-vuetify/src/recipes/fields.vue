@@ -1,8 +1,7 @@
 <script setup lang="ts">
 const field = useTemplateRef<{ focus(): void }>('field')
 const serverRejected = ref(false)
-const showInputLoading = ref(false),
-  clearCount = ref(0)
+const showInputLoading = ref(false)
 const value = ref(''),
   submitted = ref(false)
 const error = computed(() =>
@@ -22,7 +21,6 @@ function check() {
         v-model="value"
         clearable
         :loading="showInputLoading"
-        @clear="clearCount++"
         label="가상 기록 제목"
         required
         help="3자 이상. 이 페이지 메모리에만 남습니다."
@@ -36,8 +34,12 @@ function check() {
           ><span class="sol-hint">{{ value.length }}자</span></template
         >
       </STextField>
-      <SCheckbox id="recipe-field-loading" v-model="showInputLoading" label="입력 로딩 표시" />
-      <p role="status">입력 내부 X로 지운 횟수: {{ clearCount }}</p>
+      <SCheckbox id="recipe-field-loading" v-model="showInputLoading" label="로딩 상태 시연 켜기" />
+      <p class="sol-hint">
+        로딩은 입력값과 별개인 작업 상태입니다. 동작 줄이기 설정에서는 회전 대신 상태 문구로
+        안내합니다.
+      </p>
+      <p role="status">{{ showInputLoading ? '불러오는 중…' : '대기 중' }}</p>
       <STextField
         id="recipe-readonly"
         model-value="읽기 전용 예시"

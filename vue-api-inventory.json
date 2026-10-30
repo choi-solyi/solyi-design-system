@@ -189,7 +189,7 @@
     {
       "id": "navigation",
       "route": "component",
-      "label": "경로·패널·알림",
+      "label": "탐색 컨트롤 비교 · 기존 조합",
       "source": "examples/vue-vuetify/src/recipes/navigation.vue",
       "registration": "global",
       "components": [
@@ -591,6 +591,32 @@
       "components": [
         "SCard",
         "SSelect"
+      ]
+    },
+    {
+      "id": "breadcrumbs",
+      "route": "component",
+      "label": "Breadcrumbs · 현재 위치",
+      "source": "examples/vue-vuetify/src/recipes/breadcrumbs.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SBreadcrumbs",
+        "SBtn"
+      ]
+    },
+    {
+      "id": "pagination",
+      "route": "component",
+      "label": "Pagination · 페이지 이동",
+      "source": "examples/vue-vuetify/src/recipes/pagination.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SNumberInput",
+        "SCheckbox",
+        "SBtn",
+        "SPagination"
       ]
     }
   ],

@@ -26,7 +26,7 @@ export const SPagination=/* @__PURE__ */ defineComponent({
    const edge=(direction:'first'|'previous'|'next'|'last')=>{
     const previous=direction==='first'||direction==='previous',target=direction==='first'?1:direction==='last'?count:current+(previous?-1:1)
     const label=direction==='first'?(l.value.firstPage||l.value.pageLabel(1,count)):direction==='last'?(l.value.lastPage||l.value.pageLabel(count,count)):previous?l.value.previousPage:l.value.nextPage
-    return h(SBtn,{key:direction,class:'sol-ui-pagination-edge','data-edge':direction,'aria-label':label,disabled:unavailable||(previous?current<=1:current>=count),onClick:(event:MouseEvent)=>void move(target,event)},()=>Array.from({length:direction==='first'||direction==='last'?2:1},()=>h(SIcon,{name:'chevron',size:16,rotate:(previous!==isRtl.value)?90:270,decorative:true})))
+    return h(SBtn,{key:direction,class:'sol-ui-pagination-edge','data-edge':direction,'aria-label':label,disabled:unavailable||(previous?current<=1:current>=count),onClick:(event:MouseEvent)=>void move(target,event)},()=>h(SIcon,{name:direction==='first'||direction==='last'?'chevrons':'chevron',size:16,rotate:(previous!==isRtl.value)?90:270,decorative:true}))
    }
    return h('div',{...attrs,ref:host,class:['sol-ui-pagination',attrs.class],'aria-busy':p.loading?'true':undefined},[
     h('nav',{class:'sol-pagination','data-compact':p.compactPagination?'true':undefined,'aria-label':p.label||attrs['aria-label']||l.value.pages(l.value.record)},[

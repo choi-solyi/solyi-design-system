@@ -2,7 +2,7 @@
 export const solIconPaths = Object.freeze({
   check:'m5 12 4 4L19 6', close:'m6 6 12 12M18 6 6 18', copy:'M9 9h12v12H9V9ZM15 9V3H3v12h6',
   arrow:'M4 12h16m-6-6 6 6-6 6', external:'M14 4h6v6m0-6L10 14M10 4H4v16h16v-6',
-  chevron:'m6 9 6 6 6-6', search:'M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',
+  chevron:'m6 9 6 6 6-6', chevrons:'m6 5 6 6 6-6M6 13l6 6 6-6', search:'M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',
   menu:'M4 6h16M4 12h16M4 18h16', more:'M5 12h.01M12 12h.01M19 12h.01',
   grip:'M8 5h.01M16 5h.01M8 12h.01M16 12h.01M8 19h.01M16 19h.01',
   info:'M12 11v6m0-10v.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',

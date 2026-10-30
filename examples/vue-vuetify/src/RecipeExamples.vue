@@ -29,7 +29,7 @@ const groups: { label: string; items: RecipeId[] }[] = [
   },
   {
     label: '탐색과 오버레이',
-    items: ['dialog', 'help', 'accordion', 'navigation', 'content-tabs', 'action-menu'],
+    items: ['dialog', 'help', 'accordion', 'breadcrumbs', 'pagination', 'navigation', 'content-tabs', 'action-menu'],
   },
   {
     label: '자료와 상태',

@@ -23051,42 +23051,41 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 }), kw = { class: "sol-hint" }, Aw = { role: "status" }, jw = /* @__PURE__ */ H({
 	__name: "fields",
 	setup(e) {
-		let t = ai("field"), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(0), a = /* @__PURE__ */ F(""), o = /* @__PURE__ */ F(!1), s = Y(() => o.value && a.value.trim().length < 3 ? "3자 이상 입력해 주세요." : "");
-		function c() {
-			o.value = !0, s.value && z(() => t.value?.focus());
+		let t = ai("field"), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(""), a = /* @__PURE__ */ F(!1), o = Y(() => a.value && i.value.trim().length < 3 ? "3자 이상 입력해 주세요." : "");
+		function s() {
+			a.value = !0, o.value && z(() => t.value?.focus());
 		}
-		return (e, l) => {
-			let u = U("SIcon"), d = U("STextField"), f = U("SCheckbox"), p = U("SBtn"), m = U("SAlert"), h = U("SCard");
-			return W(), G(h, {
+		return (e, c) => {
+			let l = U("SIcon"), u = U("STextField"), d = U("SCheckbox"), f = U("SBtn"), p = U("SAlert"), m = U("SCard");
+			return W(), G(m, {
 				"heading-level": 2,
 				title: "텍스트 입력"
 			}, {
 				default: B(() => [K("form", {
 					class: "sol-stack",
-					onSubmit: du(c, ["prevent"]),
+					onSubmit: du(s, ["prevent"]),
 					novalidate: ""
 				}, [
-					q(d, {
+					q(u, {
 						id: "recipe-field",
 						ref_key: "field",
 						ref: t,
-						modelValue: L(a),
-						"onUpdate:modelValue": l[0] ||= (e) => /* @__PURE__ */ P(a) ? a.value = e : null,
+						modelValue: L(i),
+						"onUpdate:modelValue": c[0] ||= (e) => /* @__PURE__ */ P(i) ? i.value = e : null,
 						clearable: "",
 						loading: L(r),
-						onClear: l[1] ||= (e) => i.value++,
 						label: "가상 기록 제목",
 						required: "",
 						help: "3자 이상. 이 페이지 메모리에만 남습니다.",
-						error: L(s),
+						error: L(o),
 						"server-error": L(n) ? "이미 사용 중인 가상 이름입니다. 다른 이름을 입력해 주세요." : ""
 					}, {
-						leading: B(() => [q(u, {
+						leading: B(() => [q(l, {
 							name: "edit",
 							decorative: "",
 							size: 16
 						})]),
-						trailing: B(() => [K("span", kw, N(L(a).length) + "자", 1)]),
+						trailing: B(() => [K("span", kw, N(L(i).length) + "자", 1)]),
 						_: 1
 					}, 8, [
 						"modelValue",
@@ -23094,38 +23093,39 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"error",
 						"server-error"
 					]),
-					q(f, {
+					q(d, {
 						id: "recipe-field-loading",
 						modelValue: L(r),
-						"onUpdate:modelValue": l[2] ||= (e) => /* @__PURE__ */ P(r) ? r.value = e : null,
-						label: "입력 로딩 표시"
+						"onUpdate:modelValue": c[1] ||= (e) => /* @__PURE__ */ P(r) ? r.value = e : null,
+						label: "로딩 상태 시연 켜기"
 					}, null, 8, ["modelValue"]),
-					K("p", Aw, "입력 내부 X로 지운 횟수: " + N(L(i)), 1),
-					q(d, {
+					c[4] ||= K("p", { class: "sol-hint" }, " 로딩은 입력값과 별개인 작업 상태입니다. 동작 줄이기 설정에서는 회전 대신 상태 문구로 안내합니다. ", -1),
+					K("p", Aw, N(L(r) ? "불러오는 중…" : "대기 중"), 1),
+					q(u, {
 						id: "recipe-readonly",
 						"model-value": "읽기 전용 예시",
 						label: "수정할 수 없는 값",
 						readonly: ""
 					}),
-					q(d, {
+					q(u, {
 						id: "recipe-disabled-field",
 						"model-value": "아직 만들 수 없어요",
 						label: "공유 주소 · 비활성",
 						disabled: ""
 					}),
-					q(p, {
+					q(f, {
 						type: "submit",
 						variant: "primary"
 					}, {
-						default: B(() => [...l[3] ||= [J("입력 확인", -1)]]),
+						default: B(() => [...c[2] ||= [J("입력 확인", -1)]]),
 						_: 1
 					}),
-					L(o) && !L(s) && !L(n) ? (W(), G(m, {
+					L(a) && !L(o) && !L(n) ? (W(), G(p, {
 						key: 0,
 						tone: "success",
 						title: "✓ 사용할 수 있는 이름입니다."
 					}, {
-						default: B(() => [...l[4] ||= [K("p", null, "예시 입력값입니다.", -1)]]),
+						default: B(() => [...c[3] ||= [K("p", null, "예시 입력값입니다.", -1)]]),
 						_: 1
 					})) : Ts("v-if", !0)
 				], 32)]),
@@ -23479,30 +23479,78 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Uw = { role: "status" }, Ww = /* @__PURE__ */ H({
+}), Uw = {
+	class: "sol-stack",
+	"aria-label": "단일 및 여러 추가 설명"
+}, Ww = { role: "status" }, Gw = /* @__PURE__ */ H({
 	__name: "accordion",
 	setup(e) {
-		let t = /* @__PURE__ */ F(!1);
-		return (e, n) => {
-			let r = U("SAccordion"), i = U("SCard");
-			return W(), G(i, {
+		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F({}), r = [
+			{
+				id: "purpose",
+				label: "언제 사용하나요?",
+				text: "필요할 때 확인하는 추가 설명을 제공합니다."
+			},
+			{
+				id: "content",
+				label: "어떤 내용을 넣나요?",
+				text: "짧은 설명이나 보조 정보를 담습니다."
+			},
+			{
+				id: "keyboard",
+				label: "키보드로 여는 방법",
+				text: "제목 버튼에 초점을 두고 Enter 또는 Space를 누릅니다."
+			},
+			{
+				id: "independent",
+				label: "여러 항목을 함께 열 수 있나요?",
+				text: "이 예제의 항목은 서로 독립적으로 열고 닫힙니다."
+			}
+		];
+		return (e, i) => {
+			let a = U("SAccordion"), o = U("SCard");
+			return W(), hs("section", Uw, [q(o, {
 				"heading-level": 2,
-				title: "상세 펼침"
+				title: "추가 설명 한 개"
 			}, {
-				default: B(() => [q(r, {
+				default: B(() => [q(a, {
 					id: "recipe-accordion",
 					modelValue: L(t),
-					"onUpdate:modelValue": n[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+					"onUpdate:modelValue": i[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
 					label: "가상 기록의 상세"
 				}, {
-					default: B(() => [...n[1] ||= [K("p", null, "접으면 이 안의 링크가 Tab 순서에서 제외됩니다.", -1), K("a", { href: "https://choi-solyi.github.io/solyi-design-system/" }, "문서 홈", -1)]]),
+					default: B(() => [...i[1] ||= [K("p", null, "접으면 이 안의 링크가 Tab 순서에서 제외됩니다.", -1), K("a", {
+						href: "https://ui.solyi.kr/",
+						target: "_blank",
+						rel: "noopener"
+					}, "문서 홈 · 새 창", -1)]]),
 					_: 1
-				}, 8, ["modelValue"]), K("p", Uw, N(L(t) ? "상세를 펼쳤어요." : "상세를 접었어요."), 1)]),
+				}, 8, ["modelValue"]), K("p", Ww, N(L(t) ? "상세를 펼쳤어요." : "상세를 접었어요."), 1)]),
 				_: 1
-			});
+			}), q(o, {
+				"heading-level": 2,
+				title: "추가 설명 여러 개 · 독립적으로 열기"
+			}, {
+				default: B(() => [i[2] ||= K("p", null, "각 항목을 별도로 여닫습니다. 한 항목을 열어도 다른 항목은 닫히지 않습니다.", -1), (W(), hs(as, null, da(r, (e) => q(a, {
+					key: e.id,
+					id: "recipe-accordion-multi-" + e.id,
+					modelValue: L(n)[e.id],
+					"onUpdate:modelValue": (t) => L(n)[e.id] = t,
+					label: e.label
+				}, {
+					default: B(() => [K("p", null, N(e.text), 1)]),
+					_: 2
+				}, 1032, [
+					"id",
+					"modelValue",
+					"onUpdate:modelValue",
+					"label"
+				])), 64))]),
+				_: 1
+			})]);
 		};
 	}
-}), Gw = { role: "status" }, Kw = { class: "sol-actions" }, qw = /* @__PURE__ */ H({
+}), Kw = { role: "status" }, qw = { class: "sol-actions" }, Jw = /* @__PURE__ */ H({
 	__name: "navigation",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(1), a = /* @__PURE__ */ F(20), o = /* @__PURE__ */ F(!0), s = /* @__PURE__ */ F(1), c = /* @__PURE__ */ F(3), l = /* @__PURE__ */ F(!1), u = Y(() => [{
@@ -23578,7 +23626,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"sibling-count",
 						"compact-pagination"
 					]),
-					K("p", Gw, "부모 페이지 " + N(L(i)) + " · 마지막 제안 " + N(L(s)), 1),
+					K("p", Kw, "부모 페이지 " + N(L(i)) + " · 마지막 제안 " + N(L(s)), 1),
 					q(y, {
 						caption: "같은 페이지 설정을 사용하는 Table",
 						columns: [{
@@ -23603,7 +23651,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						items: L(p),
 						onNavigate: m[4] ||= (e) => r.value = !1
 					}, null, 8, ["items"]),
-					K("div", Kw, [
+					K("div", qw, [
 						q(_, { onClick: m[5] ||= (e) => r.value = !0 }, {
 							default: B(() => [...m[11] ||= [J("가상 상세로 이동", -1)]]),
 							_: 1
@@ -23641,16 +23689,16 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Jw = {
+}), Yw = {
 	key: 1,
 	role: "status"
-}, Yw = {
+}, Xw = {
 	key: 5,
 	role: "status"
-}, Xw = {
+}, Zw = {
 	key: 6,
 	role: "status"
-}, Zw = /* @__PURE__ */ H({
+}, Qw = /* @__PURE__ */ H({
 	__name: "advanced-inputs",
 	props: { part: {} },
 	setup(e) {
@@ -23688,7 +23736,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						label: "가상 기록 설명",
 						maxlength: 120
 					}, null, 8, ["modelValue"])) : Ts("v-if", !0),
-					!e.part || e.part === "textarea" ? (W(), hs("p", Jw, "내용 지움: " + N(L(n)) + "회", 1)) : Ts("v-if", !0),
+					!e.part || e.part === "textarea" ? (W(), hs("p", Yw, "내용 지움: " + N(L(n)) + "회", 1)) : Ts("v-if", !0),
 					!e.part || e.part === "number" ? (W(), G(d, {
 						key: 2,
 						id: "recipe-number-format",
@@ -23728,14 +23776,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						options: s,
 						"max-selected": 2
 					}, null, 8, ["modelValue"])) : Ts("v-if", !0),
-					e.part ? Ts("v-if", !0) : (W(), hs("p", Yw, N(L(a)) + "개 · " + N(L(o).join(", ") || "선택 없음"), 1)),
-					e.part === "number" ? (W(), hs("p", Xw, "숫자 모델: " + N(L(a) === null ? "null" : L(a)), 1)) : Ts("v-if", !0)
+					e.part ? Ts("v-if", !0) : (W(), hs("p", Xw, N(L(a)) + "개 · " + N(L(o).join(", ") || "선택 없음"), 1)),
+					e.part === "number" ? (W(), hs("p", Zw, "숫자 모델: " + N(L(a) === null ? "null" : L(a)), 1)) : Ts("v-if", !0)
 				]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), Qw = /* @__PURE__ */ H({
+}), $w = /* @__PURE__ */ H({
 	__name: "content-tabs",
 	setup(e) {
 		let t = /* @__PURE__ */ F("summary"), n = /* @__PURE__ */ F(""), r = [
@@ -23779,7 +23827,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), $w = { role: "status" }, eT = /* @__PURE__ */ H({
+}), eT = { role: "status" }, tT = /* @__PURE__ */ H({
 	__name: "action-menu",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = [
@@ -23820,16 +23868,16 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...r[3] ||= [K("p", null, "우클릭·Shift+F10 또는 표시된 동작 버튼으로 엽니다.", -1)]]),
 						_: 1
 					}),
-					K("p", $w, N(L(t)), 1)
+					K("p", eT, N(L(t)), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), tT = {
+}), nT = {
 	key: 0,
 	class: "sol-actions"
-}, nT = { role: "status" }, rT = { class: "sol-actions" }, iT = /* @__PURE__ */ H({
+}, rT = { role: "status" }, iT = { class: "sol-actions" }, aT = /* @__PURE__ */ H({
 	__name: "identity-progress",
 	props: { part: {} },
 	setup(e) {
@@ -23865,7 +23913,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: e.part ? void 0 : "가상 사용자와 단계"
 			}, {
-				default: B(() => [!e.part || e.part === "avatar" ? (W(), hs("div", tT, [
+				default: B(() => [!e.part || e.part === "avatar" ? (W(), hs("div", nT, [
 					q(y, {
 						label: "가상 사용자 민하",
 						initials: "민"
@@ -23877,7 +23925,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						onPrimary: v[0] ||= (e) => u.value = "가상 사용자 정보",
 						onSelect: v[1] ||= (e) => u.value = e
 					}),
-					K("p", nT, N(L(u)), 1)
+					K("p", rT, N(L(u)), 1)
 				])) : Ts("v-if", !0), !e.part || e.part === "steps" ? (W(), hs(as, { key: 1 }, [
 					q(x, {
 						id: "recipe-steps",
@@ -23935,7 +23983,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						ref: r,
 						tabindex: "-1"
 					}, N(L(s)) + " · " + N(L(c)) + " · 서버에 저장하지 않는 가상 검토입니다. ", 513))], 64)),
-					K("div", rT, [
+					K("div", iT, [
 						q(T, {
 							disabled: L(a) === 0,
 							onClick: v[4] ||= (e) => h(-1)
@@ -23960,7 +24008,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, 8, ["title"]);
 		};
 	}
-}), aT = { class: "sol-actions" }, oT = /* @__PURE__ */ H({
+}), oT = { class: "sol-actions" }, sT = /* @__PURE__ */ H({
 	__name: "progress",
 	setup(e) {
 		let t = /* @__PURE__ */ F("indeterminate"), n = /* @__PURE__ */ F(!0), r = /* @__PURE__ */ F(!0), i = /* @__PURE__ */ F(!0), a = Y(() => t.value), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F("container"), c = /* @__PURE__ */ F(!0), l = /* @__PURE__ */ F(!1), u;
@@ -24084,7 +24132,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"hide-content": L(l)
 					}, {
 						default: B(() => [q(v, { title: "독립 작업 영역" }, {
-							default: B(() => [u[11] ||= K("p", null, "짧은 작업은 표시를 지연해 깜빡임을 줄입니다.", -1), K("div", aT, [q(_, {
+							default: B(() => [u[11] ||= K("p", null, "짧은 작업은 표시를 지연해 깜빡임을 줄입니다.", -1), K("div", oT, [q(_, {
 								id: "recipe-loading-start",
 								onClick: u[7] ||= (e) => d(1200)
 							}, {
@@ -24111,7 +24159,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), sT = { role: "status" }, cT = { role: "status" }, lT = { role: "status" }, uT = /* @__PURE__ */ H({
+}), cT = { role: "status" }, lT = { role: "status" }, uT = { role: "status" }, dT = /* @__PURE__ */ H({
 	__name: "time",
 	setup(e) {
 		let t = /* @__PURE__ */ F("09:00"), n = /* @__PURE__ */ F("legacy"), r = Y(() => n.value === "auto" || n.value === "popover" || n.value === "dialog" ? n.value : void 0), i = /* @__PURE__ */ F(null), a = /* @__PURE__ */ F(!1), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F(""), c = /* @__PURE__ */ F("09:07"), l = /* @__PURE__ */ F(!1), u = /* @__PURE__ */ F(10);
@@ -24168,7 +24216,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						required: "",
 						help: "HH:mm 또는 HHmm으로 입력하거나 Alt+↓로 패널을 엽니다."
 					}, null, 8, ["picker-presentation", "modelValue"]),
-					K("p", sT, "완료값: " + N(L(t) || "없음") + " · 실제 알림을 예약하지 않습니다.", 1),
+					K("p", cT, "완료값: " + N(L(t) || "없음") + " · 실제 알림을 예약하지 않습니다.", 1),
 					q(_, {
 						id: "recipe-time-manual",
 						modelValue: L(a),
@@ -24236,14 +24284,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"scroll-to-current-time",
 						"initial-scroll-value"
 					]),
-					K("p", cT, N(L(s)), 1),
-					K("p", lT, "목록 완료값: " + N(L(i) || "선택 없음"), 1)
+					K("p", lT, N(L(s)), 1),
+					K("p", uT, "목록 완료값: " + N(L(i) || "선택 없음"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), dT = { role: "status" }, fT = { role: "status" }, pT = /* @__PURE__ */ H({
+}), fT = { role: "status" }, pT = { role: "status" }, mT = /* @__PURE__ */ H({
 	__name: "chart-tree",
 	props: { part: {} },
 	setup(e) {
@@ -24304,7 +24352,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							label: "지난주"
 						}]
 					}, null, 8, ["modelValue"]),
-					K("p", dT, "총 " + N(L(o)) + "개 기록 · 가상 자료", 1),
+					K("p", fT, "총 " + N(L(o)) + "개 기록 · 가상 자료", 1),
 					q(u, {
 						id: "recipe-chart",
 						label: "가상 활동 횟수 · 차트와 같은 자료",
@@ -24320,15 +24368,15 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					"onUpdate:expanded": c[2] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
 					label: "가상 기록 폴더",
 					items: i
-				}, null, 8, ["modelValue", "expanded"]), K("p", fT, "선택: " + N(L(t) || "없음"), 1)], 64)) : Ts("v-if", !0)]),
+				}, null, 8, ["modelValue", "expanded"]), K("p", pT, "선택: " + N(L(t) || "없음"), 1)], 64)) : Ts("v-if", !0)]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), mT = { class: "sol-actions" }, hT = {
+}), hT = { class: "sol-actions" }, gT = {
 	id: "recipe-form-validation-result",
 	role: "status"
-}, gT = /* @__PURE__ */ H({
+}, _T = /* @__PURE__ */ H({
 	__name: "form",
 	setup(e) {
 		let t = ai("form"), n = /* @__PURE__ */ F(""), r = /* @__PURE__ */ F("note"), i = /* @__PURE__ */ F(!1), a = /* @__PURE__ */ F(!1), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F(""), c = /* @__PURE__ */ F(""), l = [MS.required("이름을 입력해 주세요."), MS.minLength(3, "이름을 3자 이상 입력해 주세요.")], u;
@@ -24407,7 +24455,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							title: "✓ 가상 입력을 확인했어요.",
 							live: "polite"
 						})) : Ts("v-if", !0),
-						K("div", mT, [q(y, {
+						K("div", hT, [q(y, {
 							type: "submit",
 							variant: "primary",
 							loading: L(a)
@@ -24421,7 +24469,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							default: B(() => [...u[4] ||= [J("검증 표시 지우기", -1)]]),
 							_: 1
 						}, 8, ["disabled"])]),
-						K("p", hT, N(L(c)), 1)
+						K("p", gT, N(L(c)), 1)
 					]),
 					_: 1
 				}, 512)]),
@@ -24429,7 +24477,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), _T = { class: "sol-filterbar" }, vT = { role: "status" }, yT = /* @__PURE__ */ H({
+}), vT = { class: "sol-filterbar" }, yT = { role: "status" }, bT = /* @__PURE__ */ H({
 	__name: "search",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = /* @__PURE__ */ F("all"), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(""), a = [
@@ -24453,7 +24501,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				title: "검색과 상세"
 			}, {
 				default: B(() => [
-					K("div", _T, [q(s, {
+					K("div", vT, [q(s, {
 						id: "recipe-search",
 						modelValue: L(t),
 						"onUpdate:modelValue": a[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
@@ -24480,7 +24528,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						],
 						required: ""
 					}, null, 8, ["modelValue"])]),
-					K("p", vT, "결과 " + N(L(o).length) + "개", 1),
+					K("p", yT, "결과 " + N(L(o).length) + "개", 1),
 					(W(!0), hs(as, null, da(L(o), (e) => (W(), G(u, {
 						key: e.name,
 						title: e.name
@@ -24519,7 +24567,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), bT = { role: "status" }, xT = /* @__PURE__ */ H({
+}), xT = { role: "status" }, ST = /* @__PURE__ */ H({
 	__name: "compare",
 	setup(e) {
 		let t = /* @__PURE__ */ F("simple"), n = [{
@@ -24545,12 +24593,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					label: "작업 방식",
 					layout: "cards",
 					options: n
-				}, null, 8, ["modelValue"]), K("p", bT, "선택: " + N(L(t) === "simple" ? "가볍게 기록" : "차근차근 정리"), 1)]),
+				}, null, 8, ["modelValue"]), K("p", xT, "선택: " + N(L(t) === "simple" ? "가볍게 기록" : "차근차근 정리"), 1)]),
 				_: 1
 			});
 		};
 	}
-}), ST = { role: "status" }, CT = /* @__PURE__ */ H({
+}), CT = { role: "status" }, wT = /* @__PURE__ */ H({
 	__name: "empty",
 	setup(e) {
 		let t = Nx(), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(null), i = /* @__PURE__ */ F(null);
@@ -24595,10 +24643,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					_: 1
 				})]),
 				_: 1
-			}, 8, ["title", "description"])), K("p", ST, N(L(t).code === "en-US" ? "Items: " : "항목 수: ") + N(+!!L(n)), 1)], 64);
+			}, 8, ["title", "description"])), K("p", CT, N(L(t).code === "en-US" ? "Items: " : "항목 수: ") + N(+!!L(n)), 1)], 64);
 		};
 	}
-}), wT = /* @__PURE__ */ H({
+}), TT = /* @__PURE__ */ H({
 	__name: "data",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = /* @__PURE__ */ F(1), r = /* @__PURE__ */ F([]), i = /* @__PURE__ */ F({
@@ -24741,10 +24789,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), TT = ["aria-labelledby"], ET = {
+}), ET = ["aria-labelledby"], DT = {
 	key: 0,
 	id: "recipe-inputs-title"
-}, DT = { role: "status" }, OT = { role: "status" }, kT = /* @__PURE__ */ H({
+}, OT = { role: "status" }, kT = { role: "status" }, AT = /* @__PURE__ */ H({
 	__name: "inputs",
 	props: { part: {} },
 	setup(e) {
@@ -24785,7 +24833,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				class: "sol-stack",
 				"aria-labelledby": e.part ? void 0 : "recipe-inputs-title"
 			}, [
-				e.part ? Ts("v-if", !0) : (W(), hs("h2", ET, "로컬 입력 조합")),
+				e.part ? Ts("v-if", !0) : (W(), hs("h2", DT, "로컬 입력 조합")),
 				!e.part || e.part === "date" ? (W(), G(x, {
 					key: 1,
 					"heading-level": e.part ? 2 : 3,
@@ -24878,7 +24926,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							"placement",
 							"display-formatter"
 						]),
-						K("p", DT, "완료값: " + N(JSON.stringify(L(n))), 1)
+						K("p", OT, "완료값: " + N(JSON.stringify(L(n))), 1)
 					]),
 					_: 1
 				}, 8, ["heading-level"])) : Ts("v-if", !0),
@@ -24942,14 +24990,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							"options",
 							"load-options"
 						]),
-						K("p", OT, "선택값: " + N(L(d) || "없음"), 1)
+						K("p", kT, "선택값: " + N(L(d) || "없음"), 1)
 					]),
 					_: 1
 				}, 8, ["heading-level"])) : Ts("v-if", !0)
-			], 8, TT);
+			], 8, ET);
 		};
 	}
-}), AT = /* @__PURE__ */ H({
+}), jT = /* @__PURE__ */ H({
 	__name: "responses",
 	setup(e) {
 		let t = /* @__PURE__ */ F("ready"), n = ai("resultPanel");
@@ -25046,7 +25094,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), jT = { class: "sol-stack" }, MT = { class: "sol-filterbar" }, NT = /* @__PURE__ */ H({
+}), MT = { class: "sol-stack" }, NT = { class: "sol-filterbar" }, PT = /* @__PURE__ */ H({
 	__name: "composition",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = /* @__PURE__ */ F("all"), r = /* @__PURE__ */ F(!0), i = /* @__PURE__ */ F(!1), a = ai("resultPanel");
@@ -25058,11 +25106,11 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 		}
 		return (e, s) => {
 			let c = U("STextField"), l = U("SSelect"), u = U("SBtn"), d = U("SAlert"), f = U("SCard"), p = U("SIcon"), m = U("SBadge");
-			return W(), hs("div", jT, [q(f, {
+			return W(), hs("div", MT, [q(f, {
 				"heading-level": 2,
 				title: "컨트롤과 보조 행동의 관계"
 			}, {
-				default: B(() => [K("div", MT, [q(c, {
+				default: B(() => [K("div", NT, [q(c, {
 					id: "recipe-composition-query",
 					modelValue: L(t),
 					"onUpdate:modelValue": s[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
@@ -25119,13 +25167,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			})]);
 		};
 	}
-}), PT = {
+}), FT = {
 	class: "sol-actions",
 	"aria-label": "가상 화면"
-}, FT = {
+}, IT = {
 	key: 0,
 	class: "sol-actions"
-}, IT = { role: "status" }, LT = /* @__PURE__ */ H({
+}, LT = { role: "status" }, RT = /* @__PURE__ */ H({
 	__name: "layouts",
 	setup(e) {
 		let t = ai("heading"), n = /* @__PURE__ */ F("list"), r = /* @__PURE__ */ F("작은 정원"), i = /* @__PURE__ */ F("가상 사용자"), a = /* @__PURE__ */ F("");
@@ -25138,7 +25186,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: "설정·목록·상세 화면틀"
 			}, {
-				actions: B(() => [K("nav", PT, [
+				actions: B(() => [K("nav", FT, [
 					q(c, { onClick: s[0] ||= (e) => o("list") }, {
 						default: B(() => [...s[6] ||= [J("목록", -1)]]),
 						_: 1
@@ -25174,7 +25222,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 									ref: t,
 									tabindex: "-1"
 								}, N(L(n) === "list" ? "목록" : L(n) === "detail" ? "상세" : "설정"), 513),
-								L(n) === "list" ? (W(), hs("div", FT, [(W(), hs(as, null, da(["작은 정원", "조용한 책장"], (e) => q(c, {
+								L(n) === "list" ? (W(), hs("div", IT, [(W(), hs(as, null, da(["작은 정원", "조용한 책장"], (e) => q(c, {
 									key: e,
 									onClick: (t) => {
 										r.value = e, o("detail");
@@ -25208,7 +25256,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 									})]),
 									_: 1
 								})),
-								K("p", IT, N(L(a)), 1)
+								K("p", LT, N(L(a)), 1)
 							])]),
 							_: 1
 						})]),
@@ -25220,7 +25268,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), RT = { class: "sol-actions" }, zT = { class: "sol-actions" }, BT = /* @__PURE__ */ H({
+}), zT = { class: "sol-actions" }, BT = { class: "sol-actions" }, VT = /* @__PURE__ */ H({
 	__name: "workflow",
 	setup(e, { expose: t }) {
 		let n = ai("editTitle"), r = ai("nameField"), i = ai("editButton"), a = ai("undoButton"), o = /* @__PURE__ */ F({
@@ -25312,7 +25360,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"onUpdate:modelValue": t[1] ||= (e) => L(s).note = e,
 						label: "기록 설명"
 					}, null, 8, ["modelValue"]),
-					K("div", RT, [
+					K("div", zT, [
 						q(p, {
 							type: "submit",
 							variant: "primary"
@@ -25329,7 +25377,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							_: 1
 						})
 					])
-				], 32)) : (W(), hs(as, { key: 2 }, [K("p", null, N(L(o).title) + " · " + N(L(o).note), 1), K("div", zT, [q(p, {
+				], 32)) : (W(), hs(as, { key: 2 }, [K("p", null, N(L(o).title) + " · " + N(L(o).note), 1), K("div", BT, [q(p, {
 					id: "recipe-edit",
 					ref_key: "editButton",
 					ref: i,
@@ -25366,10 +25414,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), VT = ["href", "onClick"], HT = {
+}), HT = ["href", "onClick"], UT = {
 	key: 1,
 	role: "status"
-}, UT = /* @__PURE__ */ H({
+}, WT = /* @__PURE__ */ H({
 	__name: "error-summary",
 	setup(e) {
 		let t = ai("summary"), n = ai("nameField"), r = ai("countField"), i = /* @__PURE__ */ F(""), a = /* @__PURE__ */ F(null), o = /* @__PURE__ */ F(!1), s = [MS.required("이름을 입력해 주세요."), MS.minLength(3, "이름을 3자 이상 입력해 주세요.")], c = Y(() => o.value ? [{
@@ -25411,7 +25459,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							default: B(() => [K("ul", null, [(W(!0), hs(as, null, da(L(c), (e) => (W(), hs("li", { key: e.id }, [K("a", {
 								href: "#" + e.id,
 								onClick: du((t) => e.focus(), ["prevent"])
-							}, N(e.label) + " 확인하기", 9, VT)]))), 128))])]),
+							}, N(e.label) + " 확인하기", 9, HT)]))), 128))])]),
 							_: 1
 						}, 512)) : Ts("v-if", !0),
 						q(f, {
@@ -25442,7 +25490,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							default: B(() => [...u[2] ||= [J("가상 입력 확인", -1)]]),
 							_: 1
 						}),
-						L(o) && !L(c).length ? (W(), hs("p", HT, "✓ 두 입력을 확인했어요.")) : Ts("v-if", !0)
+						L(o) && !L(c).length ? (W(), hs("p", UT, "✓ 두 입력을 확인했어요.")) : Ts("v-if", !0)
 					]),
 					_: 1
 				})]),
@@ -25450,7 +25498,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), WT = { class: "sol-actions" }, GT = /* @__PURE__ */ H({
+}), GT = { class: "sol-actions" }, KT = /* @__PURE__ */ H({
 	__name: "bulk-recovery",
 	setup(e) {
 		let t = ai("resultPanel"), n = ai("runButton"), r = ai("retryButton"), i = /* @__PURE__ */ F([
@@ -25509,7 +25557,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"label",
 						"disabled"
 					]), K("p", null, N(e.state) + " · 처리 " + N(e.attempts) + "회", 1)]))), 128)),
-					K("div", WT, [q(u, {
+					K("div", GT, [q(u, {
 						ref_key: "runButton",
 						ref: n,
 						loading: L(o),
@@ -25543,10 +25591,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), KT = { class: "sol-stack" }, qT = {
+}), qT = { class: "sol-stack" }, JT = {
 	id: "recipe-combobox-result",
 	role: "status"
-}, JT = { class: "sol-actions" }, YT = /* @__PURE__ */ H({
+}, YT = { class: "sol-actions" }, XT = /* @__PURE__ */ H({
 	__name: "combobox",
 	setup(e) {
 		let t = /* @__PURE__ */ F(null), n = /* @__PURE__ */ F(null), r = /* @__PURE__ */ F(null), i = /* @__PURE__ */ F(null), a = /* @__PURE__ */ F(null), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F(!1), c = /* @__PURE__ */ F(!1), l = [
@@ -25587,7 +25635,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				title: "자유 입력과 후보 선택",
 				"heading-level": 2
 			}, {
-				default: B(() => [K("div", KT, [
+				default: B(() => [K("div", qT, [
 					q(p, {
 						id: "recipe-combobox",
 						ref_key: "combo",
@@ -25613,8 +25661,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"readonly",
 						"disabled"
 					]),
-					K("p", qT, " 확정값: " + N(L(t) ?? "없음") + " · reason: " + N(L(i)?.reason ?? "없음") + " · option ID: " + N(L(i)?.reason === "select" ? L(i).option.value : "없음"), 1),
-					K("div", JT, [q(m, { onClick: d[2] ||= (e) => L(a)?.clear() }, {
+					K("p", JT, " 확정값: " + N(L(t) ?? "없음") + " · reason: " + N(L(i)?.reason ?? "없음") + " · option ID: " + N(L(i)?.reason === "select" ? L(i).option.value : "없음"), 1),
+					K("div", YT, [q(m, { onClick: d[2] ||= (e) => L(a)?.clear() }, {
 						default: B(() => [...d[9] ||= [J("메서드로 지우기", -1)]]),
 						_: 1
 					}), q(m, { onClick: d[3] ||= (e) => L(a)?.focus() }, {
@@ -25665,7 +25713,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), XT = { class: "sol-actions" }, ZT = { class: "sol-hint" }, QT = /* @__PURE__ */ H({
+}), ZT = { class: "sol-actions" }, QT = { class: "sol-hint" }, $T = /* @__PURE__ */ H({
 	__name: "confirm-action",
 	setup(e) {
 		let t = Nx(), n = /* @__PURE__ */ F(!1), r = Y(() => t.value.code === "en-US"), i = /* @__PURE__ */ F(null);
@@ -25680,7 +25728,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, {
 				default: B(() => [
 					K("p", null, N(L(r) ? "The first press asks for confirmation. The second removes this fictional draft." : "한 번 누르면 확인 문구로 바뀌고, 한 번 더 누르면 이 화면의 가상 초안이 제거됩니다."), 1),
-					K("div", XT, [q(o, {
+					K("div", ZT, [q(o, {
 						label: L(r) ? "Remove draft" : "초안 제거",
 						"confirm-label": L(r) ? "Press again to remove" : "한 번 더 눌러 제거",
 						tone: "danger",
@@ -25702,13 +25750,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						role: "status",
 						tabindex: "-1"
 					}, N(L(n) ? L(r) ? "The fictional draft was removed." : "가상 초안을 제거했습니다." : L(r) ? "The draft is still here." : "초안이 남아 있습니다."), 513),
-					K("p", ZT, N(L(r) ? "Escape, moving focus away or waiting cancels the confirmation." : "Escape, 다른 곳으로 초점 이동 또는 시간이 지나면 확인 상태가 취소됩니다."), 1)
+					K("p", QT, N(L(r) ? "Escape, moving focus away or waiting cancels the confirmation." : "Escape, 다른 곳으로 초점 이동 또는 시간이 지나면 확인 상태가 취소됩니다."), 1)
 				]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), $T = { class: "sol-actions" }, eE = /* @__PURE__ */ H({
+}), eE = { class: "sol-actions" }, tE = /* @__PURE__ */ H({
 	__name: "chip",
 	setup(e) {
 		let t = Nx(), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1), i = Y(() => t.value.code === "en-US"), a = /* @__PURE__ */ F(null);
@@ -25721,7 +25769,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: L(i) ? "Chip labels and selection" : "칩 표시·선택·제거"
 			}, {
-				default: B(() => [K("div", $T, [
+				default: B(() => [K("div", eE, [
 					q(s, { label: L(i) ? "Display label" : "표시용 라벨" }, null, 8, ["label"]),
 					q(s, {
 						selected: L(n),
@@ -25752,7 +25800,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, 8, ["title"]);
 		};
 	}
-}), tE = { class: "sol-actions" }, nE = /* @__PURE__ */ H({
+}), nE = { class: "sol-actions" }, rE = /* @__PURE__ */ H({
 	__name: "badge",
 	setup(e) {
 		let t = Nx(), n = Y(() => t.value.code === "en-US");
@@ -25762,7 +25810,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: L(n) ? "Badge status indicators" : "배지로 상태 표시"
 			}, {
-				default: B(() => [K("p", null, N(L(n) ? "Badges describe a status; they are not action buttons." : "배지는 상태를 설명하는 표시이며 누르는 버튼이 아닙니다."), 1), K("div", tE, [
+				default: B(() => [K("p", null, N(L(n) ? "Badges describe a status; they are not action buttons." : "배지는 상태를 설명하는 표시이며 누르는 버튼이 아닙니다."), 1), K("div", nE, [
 					q(r, {
 						tone: "success",
 						content: L(n) ? "Complete" : "완료"
@@ -25783,7 +25831,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, 8, ["title"]);
 		};
 	}
-}), rE = { class: "sol-actions" }, iE = { class: "sol-hint" }, aE = /* @__PURE__ */ H({
+}), iE = { class: "sol-actions" }, aE = { class: "sol-hint" }, oE = /* @__PURE__ */ H({
 	__name: "icon",
 	setup(e) {
 		let t = Nx(), n = Y(() => t.value.code === "en-US");
@@ -25793,7 +25841,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: L(n) ? "Icons with and without text" : "아이콘과 설명"
 			}, {
-				default: B(() => [K("div", rE, [
+				default: B(() => [K("div", iE, [
 					q(r, {
 						name: "info",
 						label: L(n) ? "Information" : "정보"
@@ -25811,12 +25859,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						rotate: 270,
 						label: L(n) ? "Next direction" : "다음 방향"
 					}, null, 8, ["label"])
-				]), K("p", iE, N(L(n) ? "Decorative icons beside visible text are hidden from assistive technology. An icon alone needs a label." : "옆에 설명이 있는 장식 아이콘은 중복 낭독하지 않습니다. 아이콘만 표시할 때는 label로 의미를 전달합니다."), 1)]),
+				]), K("p", aE, N(L(n) ? "Decorative icons beside visible text are hidden from assistive technology. An icon alone needs a label." : "옆에 설명이 있는 장식 아이콘은 중복 낭독하지 않습니다. 아이콘만 표시할 때는 label로 의미를 전달합니다."), 1)]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), oE = { class: "sol-actions" }, sE = { role: "status" }, cE = /* @__PURE__ */ H({
+}), sE = { class: "sol-actions" }, cE = { role: "status" }, lE = /* @__PURE__ */ H({
 	__name: "icon-button",
 	setup(e) {
 		let t = Nx(), n = Y(() => t.value.code === "en-US"), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(!1), a;
@@ -25833,7 +25881,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, {
 				default: B(() => [
 					K("p", null, N(L(n) ? "Save performs a fictional local task. Delete demonstrates a disabled action." : "저장 아이콘은 가상 로컬 작업을 실행하고, 삭제 아이콘은 비활성 상태를 보여줍니다."), 1),
-					K("div", oE, [q(a, {
+					K("div", sE, [q(a, {
 						icon: "save",
 						label: L(n) ? "Save example" : "예제 저장",
 						title: L(n) ? "Save example" : "예제 저장",
@@ -25850,13 +25898,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						tone: "danger",
 						disabled: ""
 					}, null, 8, ["label", "title"])]),
-					K("p", sE, N(L(r) ? L(n) ? "Saving…" : "저장 중…" : L(i) ? L(n) ? "The fictional task finished." : "가상 저장을 완료했습니다." : L(n) ? "Ready to save." : "저장할 수 있습니다."), 1)
+					K("p", cE, N(L(r) ? L(n) ? "Saving…" : "저장 중…" : L(i) ? L(n) ? "The fictional task finished." : "가상 저장을 완료했습니다." : L(n) ? "Ready to save." : "저장할 수 있습니다."), 1)
 				]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), lE = { role: "status" }, uE = /* @__PURE__ */ H({
+}), uE = { role: "status" }, dE = /* @__PURE__ */ H({
 	__name: "checkbox",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!0), n = /* @__PURE__ */ F(!1);
@@ -25885,13 +25933,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						label: "선택할 수 없는 항목",
 						disabled: ""
 					}),
-					K("p", lE, " 완료 " + N(L(t) ? "포함" : "제외") + " · 보관 " + N(L(n) ? "포함" : "제외"), 1)
+					K("p", uE, " 완료 " + N(L(t) ? "포함" : "제외") + " · 보관 " + N(L(n) ? "포함" : "제외"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), dE = { role: "status" }, fE = /* @__PURE__ */ H({
+}), fE = { role: "status" }, pE = /* @__PURE__ */ H({
 	__name: "radio-group",
 	setup(e) {
 		let t = /* @__PURE__ */ F("brief"), n = [
@@ -25925,13 +25973,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						options: n,
 						required: ""
 					}, null, 8, ["modelValue"]),
-					K("p", dE, "선택한 표시: " + N(L(t) === "brief" ? "간단히" : "자세히"), 1)
+					K("p", fE, "선택한 표시: " + N(L(t) === "brief" ? "간단히" : "자세히"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), pE = { class: "sol-actions" }, mE = { role: "status" }, hE = /* @__PURE__ */ H({
+}), mE = { class: "sol-actions" }, hE = { role: "status" }, gE = /* @__PURE__ */ H({
 	__name: "switch",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1);
@@ -25955,7 +26003,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"onUpdate:modelValue": i[1] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
 						label: "즉시 알림 켜기 · Switch"
 					}, null, 8, ["modelValue"]),
-					K("div", pE, [i[3] ||= K("label", {
+					K("div", mE, [i[3] ||= K("label", {
 						id: "recipe-switch-external-label",
 						for: "recipe-switch-external"
 					}, "외부 라벨을 쓰는 설정", -1), q(o, {
@@ -25966,13 +26014,103 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"hide-label": "",
 						"aria-labelledby": "recipe-switch-external-label"
 					}, null, 8, ["modelValue"])]),
-					K("p", mE, " 항목 " + N(L(t) ? "선택" : "미선택") + " · 알림 " + N(L(n) ? "켜짐" : "꺼짐") + " · 외부 설정 " + N(L(r) ? "켜짐" : "꺼짐"), 1)
+					K("p", hE, " 항목 " + N(L(t) ? "선택" : "미선택") + " · 알림 " + N(L(n) ? "켜짐" : "꺼짐") + " · 외부 설정 " + N(L(r) ? "켜짐" : "꺼짐"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), gE = { role: "status" }, _E = {
+}), _E = { role: "status" }, vE = /* @__PURE__ */ H({
+	__name: "select",
+	setup(e) {
+		let t = /* @__PURE__ */ F("recent");
+		return (e, n) => {
+			let r = U("SSelect"), i = U("SCard");
+			return W(), G(i, {
+				"heading-level": 2,
+				title: "목록에서 한 가지 선택 · Select"
+			}, {
+				default: B(() => [q(r, {
+					id: "recipe-owned-select",
+					modelValue: L(t),
+					"onUpdate:modelValue": n[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+					label: "정렬 기준",
+					clearable: "",
+					options: [
+						{
+							value: "recent",
+							label: "최근 수정순"
+						},
+						{
+							value: "name",
+							label: "이름순"
+						},
+						{
+							value: "reserved",
+							label: "준비 중인 기준",
+							disabled: !0
+						}
+					]
+				}, null, 8, ["modelValue"]), K("p", _E, "선택값: " + N(L(t) ?? "없음"), 1)]),
+				_: 1
+			});
+		};
+	}
+}), yE = { class: "sol-actions" }, bE = /* @__PURE__ */ H({
+	__name: "breadcrumbs",
+	setup(e) {
+		let t = /* @__PURE__ */ F("detail"), n = /* @__PURE__ */ F(null), r = [
+			{
+				id: "home",
+				label: "기록함"
+			},
+			{
+				id: "list",
+				label: "기록 목록"
+			},
+			{
+				id: "detail",
+				label: "항목 상세"
+			}
+		], i = Y(() => r.slice(0, t.value === "home" ? 1 : t.value === "list" ? 2 : 3));
+		function a(e) {
+			t.value = e, z(() => n.value?.focus());
+		}
+		function o(e) {
+			(e.id === "home" || e.id === "list" || e.id === "detail") && a(e.id);
+		}
+		return (e, t) => {
+			let r = U("SBreadcrumbs"), s = U("SBtn"), c = U("SCard");
+			return W(), G(c, {
+				"heading-level": 2,
+				title: "현재 위치와 상위 경로 · Breadcrumbs"
+			}, {
+				default: B(() => [
+					t[4] ||= K("p", null, "상위 위치를 누르면 예제의 현재 위치가 바뀝니다.", -1),
+					q(r, {
+						label: "예제 경로",
+						items: L(i),
+						onNavigate: o
+					}, null, 8, ["items"]),
+					K("h3", {
+						id: "recipe-breadcrumb-view",
+						ref_key: "title",
+						ref: n,
+						tabindex: "-1"
+					}, N(L(i)[L(i).length - 1].label), 513),
+					K("div", yE, [q(s, { onClick: t[0] ||= (e) => a("list") }, {
+						default: B(() => [...t[2] ||= [J("목록 보기", -1)]]),
+						_: 1
+					}), q(s, { onClick: t[1] ||= (e) => a("detail") }, {
+						default: B(() => [...t[3] ||= [J("상세 보기", -1)]]),
+						_: 1
+					})])
+				]),
+				_: 1
+			});
+		};
+	}
+}), xE = { class: "sol-stack" }, SE = { role: "status" }, CE = {
 	"color-examples": ww,
 	writing: Tw,
 	buttons: Ow,
@@ -25982,95 +26120,138 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 	dialog: Lw,
 	selection: Bw,
 	help: Hw,
-	accordion: Ww,
-	navigation: qw,
-	"advanced-inputs": Zw,
-	"content-tabs": Qw,
-	"action-menu": eT,
-	"identity-progress": iT,
-	progress: oT,
-	time: uT,
-	"chart-tree": pT,
-	form: gT,
-	search: yT,
-	compare: xT,
-	empty: CT,
-	data: wT,
-	inputs: kT,
-	responses: AT,
-	composition: NT,
-	layouts: LT,
-	workflow: BT,
-	"error-summary": UT,
-	"bulk-recovery": GT,
-	combobox: YT,
-	"confirm-action": QT,
-	chip: eE,
-	badge: nE,
-	icon: aE,
-	"icon-button": cE,
-	checkbox: uE,
-	"radio-group": fE,
-	switch: hE,
-	select: /* @__PURE__ */ H({
-		__name: "select",
+	accordion: Gw,
+	navigation: Jw,
+	"advanced-inputs": Qw,
+	"content-tabs": $w,
+	"action-menu": tT,
+	"identity-progress": aT,
+	progress: sT,
+	time: dT,
+	"chart-tree": mT,
+	form: _T,
+	search: bT,
+	compare: ST,
+	empty: wT,
+	data: TT,
+	inputs: AT,
+	responses: jT,
+	composition: PT,
+	layouts: RT,
+	workflow: VT,
+	"error-summary": WT,
+	"bulk-recovery": KT,
+	combobox: XT,
+	"confirm-action": $T,
+	chip: tE,
+	badge: rE,
+	icon: oE,
+	"icon-button": lE,
+	checkbox: dE,
+	"radio-group": pE,
+	switch: gE,
+	select: vE,
+	breadcrumbs: bE,
+	pagination: /* @__PURE__ */ H({
+		__name: "pagination",
 		setup(e) {
-			let t = /* @__PURE__ */ F("recent");
-			return (e, n) => {
-				let r = U("SSelect"), i = U("SCard");
-				return W(), G(i, {
+			let t = /* @__PURE__ */ F(1), n = /* @__PURE__ */ F(20), r = /* @__PURE__ */ F(3), i = /* @__PURE__ */ F(!0), a = /* @__PURE__ */ F(!1), o = /* @__PURE__ */ F(null);
+			function s(e) {
+				o.value = e, i.value && (t.value = e);
+			}
+			function c() {
+				n.value = 1003, t.value = 500, o.value = null;
+			}
+			return V(n, (e) => {
+				t.value = Math.max(1, Math.min(t.value, Math.max(1, e ?? 0)));
+			}), (e, l) => {
+				let u = U("SNumberInput"), d = U("SCheckbox"), f = U("SBtn"), p = U("SPagination"), m = U("SCard");
+				return W(), G(m, {
 					"heading-level": 2,
-					title: "목록에서 한 가지 선택 · Select"
+					title: "부모가 수락하는 페이지 이동 · Pagination"
 				}, {
-					default: B(() => [q(r, {
-						id: "recipe-owned-select",
-						modelValue: L(t),
-						"onUpdate:modelValue": n[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
-						label: "정렬 기준",
-						clearable: "",
-						options: [
-							{
-								value: "recent",
-								label: "최근 수정순"
-							},
-							{
-								value: "name",
-								label: "이름순"
-							},
-							{
-								value: "reserved",
-								label: "준비 중인 기준",
-								disabled: !0
-							}
-						]
-					}, null, 8, ["modelValue"]), K("p", gE, "선택값: " + N(L(t) ?? "없음"), 1)]),
+					default: B(() => [
+						K("fieldset", xE, [
+							l[5] ||= K("legend", null, "예제 설정", -1),
+							q(u, {
+								id: "recipe-pagination-count",
+								modelValue: L(n),
+								"onUpdate:modelValue": l[0] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
+								label: "페이지 수",
+								min: 0,
+								step: 1
+							}, null, 8, ["modelValue"]),
+							q(u, {
+								id: "recipe-pagination-siblings",
+								modelValue: L(r),
+								"onUpdate:modelValue": l[1] ||= (e) => /* @__PURE__ */ P(r) ? r.value = e : null,
+								label: "현재 페이지 양옆의 번호 수",
+								min: 0,
+								max: 5,
+								step: 1
+							}, null, 8, ["modelValue"]),
+							q(d, {
+								id: "recipe-pagination-accept",
+								modelValue: L(i),
+								"onUpdate:modelValue": l[2] ||= (e) => /* @__PURE__ */ P(i) ? i.value = e : null,
+								label: "이동 제안을 부모가 반영"
+							}, null, 8, ["modelValue"]),
+							q(d, {
+								id: "recipe-pagination-compact",
+								modelValue: L(a),
+								"onUpdate:modelValue": l[3] ||= (e) => /* @__PURE__ */ P(a) ? a.value = e : null,
+								label: "주변 번호를 접어서 표시"
+							}, null, 8, ["modelValue"]),
+							q(f, {
+								id: "recipe-pagination-many",
+								onClick: c
+							}, {
+								default: B(() => [...l[4] ||= [J("1003페이지 중 500페이지 보기", -1)]]),
+								_: 1
+							})
+						]),
+						q(p, {
+							"model-value": L(t),
+							"page-count": L(n) ?? 0,
+							"sibling-count": L(r) ?? 1,
+							"compact-pagination": L(a),
+							label: "예제 페이지",
+							"onUpdate:modelValue": s
+						}, null, 8, [
+							"model-value",
+							"page-count",
+							"sibling-count",
+							"compact-pagination"
+						]),
+						K("p", SE, "부모 페이지 " + N(L(t)) + " · 최근 제안 " + N(L(o) ?? "아직 없음"), 1)
+					]),
 					_: 1
 				});
 			};
 		}
 	})
-}, vE = ["aria-labelledby"], yE = { class: "starter-settings starter-demo-settings" }, bE = {
+}, wE = ["aria-labelledby"], TE = { class: "starter-settings starter-demo-settings" }, EE = {
 	class: "starter-result",
 	role: "status"
-}, xE = ["aria-labelledby"], SE = {
+}, DE = ["aria-labelledby"], OE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, CE = { class: "starter-hint" }, wE = ["aria-labelledby"], TE = {
+}, kE = { class: "starter-hint" }, AE = ["aria-labelledby"], jE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, EE = { class: "starter-control-grid" }, DE = ["aria-labelledby"], OE = {
+}, ME = { class: "starter-control-grid" }, NE = ["aria-labelledby"], PE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, kE = {
+}, FE = {
 	class: "starter-result",
 	role: "status"
-}, AE = ["aria-labelledby"], jE = {
+}, IE = ["aria-labelledby"], LE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, ME = {
+}, RE = {
 	class: "starter-hint",
 	role: "status"
-}, NE = ["aria-labelledby"], PE = { class: "starter-settings" }, FE = { role: "status" }, IE = { class: "starter-hint" }, LE = ["aria-labelledby"], RE = { class: "starter-settings" }, zE = ["aria-label"], BE = ["id"], VE = ["aria-labelledby"], HE = { class: "starter-settings" }, UE = { class: "starter-settings" }, WE = ["id"], GE = {
+}, zE = ["aria-labelledby"], BE = { class: "starter-settings" }, VE = { role: "status" }, HE = { class: "starter-hint" }, UE = ["aria-labelledby"], WE = { class: "starter-settings" }, GE = ["aria-label"], KE = ["id"], qE = ["aria-labelledby"], JE = { class: "starter-settings" }, YE = { class: "starter-settings" }, XE = ["id"], ZE = {
 	__name: "AdvancedExamples",
 	props: {
 		part: {
@@ -26293,7 +26474,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[47] ||= K("p", { class: "starter-hint" }, " 선택·범위·메뉴·분할 부품을 설치한 solyi-ui에서 가져옵니다. 아래 설정은 이 예제들에만 적용됩니다. 모든 데이터와 작업은 가상입니다. ", -1),
-					K("div", yE, [q(i, {
+					K("div", TE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[0] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26333,8 +26514,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", bE, N(L(l) === "brief" ? "가상 기록 4개" : "가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정"), 1)
-				], 8, vE)) : Ts("v-if", !0),
+					K("p", EE, N(L(l) === "brief" ? "가상 기록 4개" : "가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정"), 1)
+				], 8, wE)) : Ts("v-if", !0),
 				o("multiselect") ? (W(), hs("section", {
 					key: 1,
 					class: "starter-card",
@@ -26344,7 +26525,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...t[48] ||= [J("검색 가능한 MultiSelect", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", SE, [q(i, {
+					L(a) ? (W(), hs("div", OE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[3] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26398,8 +26579,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", CE, " 완료 값: " + N(JSON.stringify(L(u))) + " · 가상 요청 " + N(L(f)) + "회. 검색을 바꾸어도 기존 선택은 유지됩니다. ", 1)
-				], 8, xE)) : Ts("v-if", !0),
+					K("p", kE, " 완료 값: " + N(JSON.stringify(L(u))) + " · 가상 요청 " + N(L(f)) + "회. 검색을 바꾸어도 기존 선택은 유지됩니다. ", 1)
+				], 8, DE)) : Ts("v-if", !0),
 				o("range") ? (W(), hs("section", {
 					key: 2,
 					class: "starter-card",
@@ -26409,7 +26590,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...t[49] ||= [J("양끝 RangeSlider", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", TE, [q(i, {
+					L(a) ? (W(), hs("div", jE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[7] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26441,7 +26622,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("div", EE, [q(Oe, {
+					K("div", ME, [q(Oe, {
 						id: n("advanced-lower"),
 						required: "",
 						modelValue: L(h)[0],
@@ -26477,7 +26658,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"readonly"
 					])]),
 					t[50] ||= K("p", { class: "starter-hint" }, " 숫자 입력도 같은 값을 사용합니다. 터치 보조기술의 사용자별 동작은 실제 기기에서 별도 확인해야 합니다. ", -1)
-				], 8, wE)) : Ts("v-if", !0),
+				], 8, AE)) : Ts("v-if", !0),
 				o("split-button", "context-menu") ? (W(), hs("section", {
 					key: 3,
 					class: "starter-card",
@@ -26487,7 +26668,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [J(N(L(a) === "split-button" ? "SplitButton" : L(a) === "context-menu" ? "ContextMenu" : "SplitButton · ContextMenu"), 1)]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", OE, [q(i, {
+					L(a) ? (W(), hs("div", PE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[12] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26535,8 +26716,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					])) : Ts("v-if", !0),
-					K("p", kE, N(L(g)), 1)
-				], 8, DE)) : Ts("v-if", !0),
+					K("p", FE, N(L(g)), 1)
+				], 8, NE)) : Ts("v-if", !0),
 				o("split-pane") ? (W(), hs("section", {
 					key: 4,
 					class: "starter-card",
@@ -26546,7 +26727,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...t[53] ||= [J("ResizableSplitPane", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", jE, [q(i, {
+					L(a) ? (W(), hs("div", LE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[16] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26615,8 +26796,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", ME, " 저장 비율 " + N(L(S)) + "% · " + N(L(T) ? "좁은 폭: 위아래 높이 조절" : "크기 조절 가능") + " · " + N(L(E)), 1)
-				], 8, AE)) : Ts("v-if", !0),
+					K("p", RE, " 저장 비율 " + N(L(S)) + "% · " + N(L(T) ? "좁은 폭: 위아래 높이 조절" : "크기 조절 가능") + " · " + N(L(E)), 1)
+				], 8, IE)) : Ts("v-if", !0),
 				o("sortable") ? (W(), hs("section", {
 					key: 5,
 					class: "starter-card",
@@ -26627,7 +26808,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[58] ||= K("p", { class: "starter-hint" }, " 손잡이를 드래그하거나 키보드와 위·아래 이동 버튼으로 순서를 제안합니다. 원본 객체는 유지합니다. ", -1),
-					K("div", PE, [
+					K("div", BE, [
 						q(Ne, {
 							id: n("advanced-sort-accept"),
 							modelValue: L(O),
@@ -26693,9 +26874,9 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", FE, N(L(A)), 1),
-					K("p", IE, "확정 순서: " + N(L(D).map((e) => e.id).join(" → ")), 1)
-				], 8, NE)) : Ts("v-if", !0),
+					K("p", VE, N(L(A)), 1),
+					K("p", HE, "확정 순서: " + N(L(D).map((e) => e.id).join(" → ")), 1)
+				], 8, zE)) : Ts("v-if", !0),
 				o("month-calendar") ? (W(), hs("section", {
 					key: 6,
 					class: "starter-card",
@@ -26706,7 +26887,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[60] ||= K("p", { class: "starter-hint" }, " 월과 날짜는 부모가 반영할 때 바뀝니다. 오늘 이동과 키보드 탐색은 선택을 자동 저장하지 않습니다. 날짜별 자료가 늦게 와도 선택은 남습니다. ", -1),
-					K("div", RE, [
+					K("div", WE, [
 						q(Ne, {
 							id: n("advanced-month-accept"),
 							modelValue: L(te),
@@ -26780,7 +26961,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						cell: B(({ date: e, disabled: t }) => [e.endsWith("-28") ? (W(), hs("small", {
 							key: 0,
 							"aria-label": t ? "선택 불가 추가 정보" : "추가 정보"
-						}, "ⓘ", 8, zE)) : Ts("v-if", !0)]),
+						}, "ⓘ", 8, GE)) : Ts("v-if", !0)]),
 						_: 1
 					}, 8, [
 						"id",
@@ -26796,8 +26977,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					K("p", {
 						id: n("advanced-month-result"),
 						class: "starter-hint"
-					}, " 표시 월: " + N(L(j)) + " · 선택 ISO: " + N(L(ee)), 9, BE)
-				], 8, LE)) : Ts("v-if", !0),
+					}, " 표시 월: " + N(L(j)) + " · 선택 ISO: " + N(L(ee)), 9, KE)
+				], 8, UE)) : Ts("v-if", !0),
 				o("time-grid") ? (W(), hs("section", {
 					key: 7,
 					class: "starter-card",
@@ -26808,7 +26989,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[63] ||= K("p", { class: "starter-hint" }, " 기본은 읽기 전용이며 편집을 켜면 이동·크기 변경·복제를 제안합니다. 아래 반영 체크를 끄면 원본은 유지됩니다. 시간대·충돌·새 key·저장은 소비 앱에서 소유합니다. ", -1),
-					K("div", HE, [q(Ne, {
+					K("div", JE, [q(Ne, {
 						id: n("advanced-time-grid-empty"),
 						modelValue: L(xe),
 						"onUpdate:modelValue": t[38] ||= (e) => /* @__PURE__ */ P(xe) ? xe.value = e : null,
@@ -26819,7 +27000,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"onUpdate:modelValue": t[39] ||= (e) => /* @__PURE__ */ P(Se) ? Se.value = e : null,
 						label: "불러오는 중"
 					}, null, 8, ["id", "modelValue"])]),
-					K("div", UE, [
+					K("div", YE, [
 						q(Ne, {
 							id: n("advanced-time-grid-edit"),
 							modelValue: L(de),
@@ -26903,12 +27084,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						id: n("advanced-time-grid-result"),
 						class: "starter-hint",
 						role: "status"
-					}, N(L(he) ? "미리보기 · " + L(he).to.columnKey + " · " + L(he).to.startMinute + "–" + L(he).to.endMinute : L(ge)), 9, WE)
-				], 8, VE)) : Ts("v-if", !0)
+					}, N(L(he) ? "미리보기 · " + L(he).to.columnKey + " · " + L(he).to.startMinute + "–" + L(he).to.endMinute : L(ge)), 9, XE)
+				], 8, qE)) : Ts("v-if", !0)
 			], 64);
 		};
 	}
-}, KE = /* @__PURE__ */ H({
+}, QE = /* @__PURE__ */ H({
 	name: "SolDocumentPreviewCard",
 	inheritAttrs: !1,
 	setup(e, { attrs: t, slots: n }) {
@@ -26921,7 +27102,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 		};
 	}
 });
-function qE(e) {
+function $E(e) {
 	let t = document.createElement("div");
 	t.dataset.inlinePreviewRuntime = "", document.body.append(t);
 	let n = /* @__PURE__ */ I([]), r = /* @__PURE__ */ F("ko-KR"), i = /* @__PURE__ */ new Map(), a = pw({ components: {
@@ -26935,7 +27116,7 @@ function qE(e) {
 		"data-package-version": uw
 	}, [X(e.component)]))))) });
 	Mx(o, Y(() => ({ code: r.value }))), o.use(a);
-	for (let [e, t] of Object.entries(vw)) o.component(e, e === "SCard" ? KE : t);
+	for (let [e, t] of Object.entries(vw)) o.component(e, e === "SCard" ? QE : t);
 	o.mount(t);
 	let s = !1;
 	function c(e) {
@@ -26944,7 +27125,7 @@ function qE(e) {
 	return c(e), {
 		async mount(e) {
 			if (s || n.value.some((t) => t.host === e.host)) return;
-			let t = e.view === "advanced" ? GE : _E[e.recipe];
+			let t = e.view === "advanced" ? ZE : CE[e.recipe];
 			if (!t) throw Error("Unknown preview recipe: " + e.recipe);
 			let r = {
 				...e,
@@ -26981,4 +27162,4 @@ function qE(e) {
 		}
 	};
 }
-export { qE as createInlinePreviewRuntime };
+export { $E as createInlinePreviewRuntime };

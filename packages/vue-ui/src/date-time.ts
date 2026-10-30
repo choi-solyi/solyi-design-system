@@ -1217,7 +1217,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                 if (scrub.source.value === 'input') scrub.cancel('blur', false)
               },
             },
-            h(SIcon, { name: 'arrow', rotate: 270, decorative: true }),
+            [h(SIcon, { name: 'grip', decorative: true }), h('span', { class: 'sol-ui-time-scrub-label' }, l.value.timeScrub!('input'))],
           )
         : null
     }
@@ -1260,7 +1260,6 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
       validate: validation.validate,
       focus: validation.focus,
       element: () => input.value,
-      actions: renderGrip,
       trigger: pickerButton,
     })
     function clear() {
@@ -1366,12 +1365,8 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
           : null,
         control.enhanced()
           ? control.native(entry)
-          : h('div', { class: ['sol-time-entry', p.scrubbable && 'sol-ui-time-entry--scrub'] }, [
-              entry,
-              renderGrip(),
-              pickerButton(l.value.time),
-            ]),
-        ,
+          : h('div', { class: 'sol-time-entry' }, [entry, pickerButton(l.value.time)]),
+        p.scrubbable ? h('div', { class: 'sol-ui-time-scrub-actions' }, [renderGrip()]) : null,
         h(
           'span',
           { id: p.id + '-format', class: 'sol-hint' },
@@ -1492,7 +1487,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                                             event.stopPropagation()
                                           },
                                         },
-                                        h(SIcon, { name: 'arrow', rotate: 270, decorative: true }),
+                                        h(SIcon, { name: 'grip', decorative: true }),
                                       )
                                     : null,
                                 ],
@@ -1501,12 +1496,13 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                           : h('p', { role: 'status', class: 'sol-hint' }, l.value.noResults),
                       )
                     : h('div', { class: 'sol-time-options' }, [
-                        h('label', { class: 'sol-field' }, [
-                          h('span', { class: 'sol-label' }, l.value.hour),
+                        h('label', { class: 'sol-ui-time-unit' }, [
+                          h('span', { class: 'sol-ui-sr-only' }, l.value.hour),
                           h(
                             'select',
                             {
                               ref: hourSelect,
+                              'aria-label': l.value.hour,
                               class: 'sol-select',
                               value: hour.value,
                               onChange: (event: Event) => {
@@ -1519,13 +1515,15 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                               ...hours.map(n => h('option', { value: pad(n) }, pad(n))),
                             ],
                           ),
+                          h('span', { class: 'sol-ui-time-unit-label', 'aria-hidden': 'true' }, l.value.hour),
                         ]),
-                        h('label', { class: 'sol-field' }, [
-                          h('span', { class: 'sol-label' }, l.value.minute),
+                        h('label', { class: 'sol-ui-time-unit' }, [
+                          h('span', { class: 'sol-ui-sr-only' }, l.value.minute),
                           h(
                             'select',
                             {
                               ref: minuteSelect,
+                              'aria-label': l.value.minute,
                               class: 'sol-select',
                               value: minute.value,
                               onChange: (event: Event) => {
@@ -1538,32 +1536,35 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                               ...minutes.map(n => h('option', { value: pad(n) }, pad(n))),
                             ],
                           ),
+                          h('span', { class: 'sol-ui-time-unit-label', 'aria-hidden': 'true' }, l.value.minute),
                         ]),
                       ]),
-                  h(
-                    'button',
-                    {
-                      type: 'button',
-                      class: 'sol-button',
-                      disabled: p.presentation === 'list' && !active.value,
-                      onClick: () => {
-                        if (p.presentation === 'list') {
-                          choose(active.value)
-                          return
-                        }
-                        if (!hour.value) {
-                          hourSelect.value?.focus()
-                          return
-                        }
-                        if (!minute.value) {
-                          minuteSelect.value?.focus()
-                          return
-                        }
-                        if (validate()) close('select')
+                  h('div', { class: 'sol-ui-time-actions' }, [
+                    h(
+                      'button',
+                      {
+                        type: 'button',
+                        class: 'sol-button primary sol-ui-time-confirm',
+                        disabled: p.presentation === 'list' && !active.value,
+                        onClick: () => {
+                          if (p.presentation === 'list') {
+                            choose(active.value)
+                            return
+                          }
+                          if (!hour.value) {
+                            hourSelect.value?.focus()
+                            return
+                          }
+                          if (!minute.value) {
+                            minuteSelect.value?.focus()
+                            return
+                          }
+                          if (validate()) close('select')
+                        },
                       },
-                    },
-                    l.value.done,
-                  ),
+                      l.value.done,
+                    ),
+                  ]),
                 ],
               )
             : null,

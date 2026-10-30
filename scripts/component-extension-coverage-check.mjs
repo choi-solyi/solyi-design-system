@@ -62,6 +62,8 @@ for(const [name,id,forbidden] of [
  ['SRadioGroup','radio-group',['SCheckbox','SSwitch','SSelect']],
  ['SSwitch','switch',['SRadioGroup','SSelect']],
  ['SSelect','select',['SCheckbox','SSwitch','SRadioGroup']],
+ ['SBreadcrumbs','breadcrumbs',['SPagination','SDataTable','SDrawer','SToast']],
+ ['SPagination','pagination',['SBreadcrumbs','SDataTable','SDrawer','SToast']],
 ]){
  const item=componentReferences.find(component=>component.name===name);assert.equal(item.example,id)
  assert.match(componentExampleSources[id],new RegExp('<'+name+'(?:\\s|>)'))

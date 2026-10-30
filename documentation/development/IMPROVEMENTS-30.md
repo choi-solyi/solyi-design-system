@@ -26,10 +26,10 @@
 | 6 | MultiSelect 목록이 부모를 늘리지 않고 선택 칩이 입력 안에 표시 | registry 1.1.0과 독립 fixture에서 확장 재현 | 패키지 일반 흐름 popup/외부 선택 목록 | 전용 개발 브랜치에서 floating·입력 내부 SChip·Escape 계층 보완 | 개발 tarball의 3테마/PC·390px/RTL·키보드·터치·SSR·타입·예산 통과 | npm/공개 1.1.0 미반영. [실행 근거](IMPROVEMENTS-30-06.md) |
 | 7 | NumberInput과 Range 직접 입력의 -/+를 한쪽에 모음 | 기존 양 끝 버튼 재현 | 패키지 NumberInput 렌더링 | 감소/증가 그룹을 논리적 끝 쪽에 배치; 모델/step 로직 유지 | 3테마 PC·390px/RTL 소비 UI·폼·키보드 및 기존 39개 전이 통과 | 개발본 완료; 최종 1.1.1 통합/반영 대기. [근거](IMPROVEMENTS-30-07-08.md) |
 | 8 | checkbox/switch/radio 의미를 보존하며 전용 예제로 구분 | 기존 혼합 예제 재현 | 문서 소유 | 4개 전용 SFC/Components/코드/starter, Switch의 checkbox 비교 명시 | 타입·40개 SFC·메뉴·3테마 12개 실제 페이지/키보드 통과 | 개발 브랜치 완료; 최종 일괄 반영 대기. [근거](IMPROVEMENTS-30-07-08.md) |
-| 9 | TextField loading이 실제 움직임을 표현; clear 횟수 설명 또는 불필요 표시 정리 | 미재현 | motion/예제 판별 | 미착수 | 미실행 | 입력 상태·reduced-motion |
-| 10 | Time 손잡이 의미·X/↑/꺾쇠 혼잡 개선, 시/분 오른쪽 단위, 완료 우측·확인색 | 미재현 | 판별 중 | 미착수 | 미실행 | native/list/수동/scrub 취소 |
-| 11 | Accordion 1개 및 3~5개 예제 | 미재현 | 문서 | 미착수 | 미실행 | 독립/복수 열기·키보드 |
-| 12 | Breadcrumb/Pagination 예제 분리, 숫자 stepper 한쪽, 처음/끝 아이콘 개선 | 미재현 | 문서·패키지 판별 | 미착수 | 미실행 | 두 공개 페이지 모델 보존 |
+| 9 | TextField loading이 실제 움직임을 표현; clear 횟수 설명 또는 불필요 표시 정리 | no-preference 회전 확인, reduce에서는 의도적으로 정지 | 예제 설명 | 불필요 clear 횟수 제거·상태 안내 | 설치본 Chrome 3테마/390px·실제 animation 시간 변화·reduce 확인 | 개발 완료·최종 통합 전, 공개 미반영 |
+| 10 | Time 손잡이 의미·X/↑/꺾쇠 혼잡 개선, 시/분 오른쪽 단위, 완료 우측·확인색 | 입력 내 손잡이와 단위/확인 배치 확인 | 패키지 | 이름 있는 grip 별도 줄·오른쪽 단위·우측 primary 확인 | 설치본 Chrome PC/390px/RTL 선택 확정·grip 키보드, 기존 source 계약 검사 | 개발 완료·최종 통합 전, npm 1.1.0 미포함 |
+| 11 | Accordion 1개 및 3~5개 예제 | 단일만 제공 확인 | 문서 | 단일+독립 4개 | 실제 summary Enter·동시 열림·독립 닫기·3테마 | 개발 완료·최종 통합 전, 공개 미반영 |
+| 12 | Breadcrumb/Pagination 예제 분리, 숫자 stepper 한쪽, 처음/끝 아이콘 개선 | 공용 navigation 예제·이중 SVG·좁은 화면 첫끝 숨김 확인 | 문서·패키지 | 독립 예제·새 chevrons 1개·같은 폭·모바일 첫끝 유지 | 설치본 Chrome 이동/포커스·1003/주변3·수락/거절·첫끝·RTL·넘침, 소유/메뉴/코드 일치 검사 | 개발 완료·최종 통합 전, legacy navigation 링크 보존 |
 | 13 | ContextMenu trigger의 메뉴 의미, 깜빡임·부모 하단 여백 개선 | 문서·registry fixture에서 실제 메뉴 열기 비교 | 문서 호스트 경계; trigger 의미는 추가 개선 검토 | 같은 문서 viewport 호스트, 동시 Advanced 예제 ID 분리 | 1440/390px 카드·문서 불변, 메뉴 viewport 경계·Escape 포커스 | trigger 의미·선택/disabled/readonly 추가 확인, CI·공개 배포 |
 | 14 | Stepper 연결선·중복 완료 영역 제거, 라벨 아래 변형, reset 좌/이전다음 우·색 | 미재현 | 판별 중 | 미착수 | 미실행 | 단계 이동/완료/양식 |
 | 15 | Tabs와 라인·패널의 시각 연결 강화, 카드 내용도 탭과 연결 | 미재현 | 판별 중 | 미착수 | 미실행 | active/hover/focus/키보드 |
