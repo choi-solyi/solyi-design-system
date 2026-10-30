@@ -23,5 +23,6 @@
     "prismjs": "1.30.0",
     "rrweb-cssom": "0.8.0",
     "vue-eslint-parser": "10.4.1"
-  }
+  },
+  "solyiArtifacts": "artifacts/candidates/1.1.1"
 }

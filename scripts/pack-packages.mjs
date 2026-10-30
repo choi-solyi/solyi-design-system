@@ -4,8 +4,8 @@ import path from 'node:path'
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
-import {packageTarball} from './package-identity.mjs';
-const root=new URL('../',import.meta.url),out=new URL('artifacts/',root);
+import {packageTarball,artifactDirectory} from './package-identity.mjs';
+const root=new URL('../',import.meta.url),out=new URL(artifactDirectory(),root);
 await mkdir(out,{recursive:true});
 const npm=process.platform==='win32'?'npm.cmd':'npm',records=[];
 for(const name of ['core','vue-ui']){

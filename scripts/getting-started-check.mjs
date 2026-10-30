@@ -9,7 +9,7 @@ import {ESLint} from 'eslint';
 const root = new URL('../', import.meta.url), read = name => readFile(new URL(name, root), 'utf8');
 const index = JSON.parse(await read('release-assets/index.json'));
 const current = JSON.parse(await read(`release-assets/${index.current}/manifest.json`));
-const catalogue = {current: index.current, releases: [current]};
+const catalogue = {current: index.current, published:'1.1.0', releases: [current]};
 const source = await read('site/getting-started.js');
 const loaded = source.replace("import {packageReleases} from './release-data.js';", `const packageReleases=${JSON.stringify(catalogue)};`);
 const {renderGettingStarted, mountGettingStarted, gettingStartedSnippets: snippets, currentInstallCommand, currentTarballInstallCommand} = await import('data:text/javascript,' + encodeURIComponent(loaded));
@@ -31,6 +31,7 @@ for (const item of current.packages.filter(item => item.name === 'solyi-ui')) {
   assert.ok(document.querySelector(`a[href="./releases/${current.release}/${item.file}"]`));
 }
 assert.equal(currentInstallCommand(), 'npm install solyi-ui');
+if(current.release!=='1.1.0'){assert.ok(html.includes('미게시 후보'));assert.ok(copied.some(item=>item.code==='npm install --save-exact solyi-ui@1.1.0'),'Pinned npm command uses the published stable version, not an unavailable candidate');}
 assert.ok(copied.some(item => item.code === 'pnpm add solyi-ui'));
 assert.doesNotMatch(currentInstallCommand(), /--save-exact|@latest|vue@|vuetify@/);
 assert.ok(copied.some(item => item.label.includes('직접 설치') && /npm install vue@\d/.test(item.code)), 'Explicit peer installation remains available for environments without peer auto-install');

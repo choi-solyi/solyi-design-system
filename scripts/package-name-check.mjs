@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import {readFile,stat} from 'node:fs/promises';
-import {packageMetadata,packageTarball,releasePackage,historicalUiName} from './package-identity.mjs';
+import {packageMetadata,packageTarball,releasePackage,historicalUiName,artifactDirectory} from './package-identity.mjs';
 import {releaseCatalogue} from './releases.mjs';
 const root=new URL('../',import.meta.url),read=file=>readFile(new URL(file,root),'utf8');
 const ui=packageMetadata('vue-ui'),core=packageMetadata('core');
 assert.equal(ui.name,'solyi-ui');assert.equal(core.name,'@solyi/core');assert.deepEqual(Object.keys(ui.peerDependencies).sort(),['vue','vuetify']);for(const field of ['dependencies','optionalDependencies','peerDependencies'])assert.equal(ui[field]?.[core.name],undefined,'No separate Core '+field);assert.equal(ui.private,false);assert.equal(JSON.parse(await read('package.json')).private,true,'Workspace remains private');assert.equal(core.private,true);assert.equal(ui.license,'MIT');
 assert.match(ui.description,/Vue 3/);assert.equal(packageTarball(ui),'solyi-ui-'+ui.version+'.tgz');
-const reports=JSON.parse(await read('artifacts/pack-report.json'));assert.ok(reports.some(p=>p.name===ui.name&&p.filename===packageTarball(ui)));assert.ok(!reports.some(p=>p.name===historicalUiName));
+const reports=JSON.parse(await read(artifactDirectory()+'pack-report.json'));assert.ok(reports.some(p=>p.name===ui.name&&p.filename===packageTarball(ui)));assert.ok(!reports.some(p=>p.name===historicalUiName));
 for(const project of ['examples/package-consumer','examples/vue-vuetify']){
  const manifest=JSON.parse(await read(project+'/package.json')),lock=JSON.parse(await read(project+'/package-lock.json'));
  assert.equal(manifest.dependencies[historicalUiName],undefined);assert.equal(manifest.dependencies[core.name],undefined);assert.ok(manifest.dependencies[ui.name].endsWith('/'+packageTarball(ui)));

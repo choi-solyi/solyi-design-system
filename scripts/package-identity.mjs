@@ -10,3 +10,10 @@ export function releasePackage(release,role){
  if(matches.length!==1)throw Error('Release must contain one '+role+' package');
  return matches[0];
 }
+
+// Candidate outputs use a fresh directory; existing tarballs remain immutable.
+export function artifactDirectory(){
+ const value=JSON.parse(readFileSync(new URL('../package.json',import.meta.url),'utf8')).solyiArtifacts||'artifacts';
+ if(!new RegExp('^artifacts(?:/[a-zA-Z0-9._-]+)*$').test(value)||value.split('/').some(part=>part==='.'||part==='..'))throw Error('Artifacts must stay inside the workspace artifacts directory');
+ return value+'/';
+}

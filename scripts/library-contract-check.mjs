@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import {readFile,readdir,stat} from 'node:fs/promises';
-import {currentPackageNames} from './package-identity.mjs';
+import {currentPackageNames,artifactDirectory} from './package-identity.mjs';
 import {assertSourceBudget,measureSource} from './library-size-budget.mjs';
 const root=new URL('../',import.meta.url),json=async file=>JSON.parse(await readFile(new URL(file,root),'utf8'));
-const packs=await json('artifacts/pack-report.json');
+const packs=await json(artifactDirectory()+'pack-report.json');
 const ui=await json('packages/vue-ui/package.json'),core=await json('packages/core/package.json');
 const projects=['examples/package-consumer','examples/vue-vuetify'];
 const filesUnder=async directory=>{

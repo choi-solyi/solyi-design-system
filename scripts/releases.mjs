@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir, copyFile, stat } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
-import { releasePackage, packageTarball } from './package-identity.mjs'
+import {releasePackage, packageTarball,artifactDirectory} from './package-identity.mjs'
 const root = new URL('../', import.meta.url),
   assets = new URL('release-assets/', root)
 const json = async url => JSON.parse(await readFile(url, 'utf8'))
@@ -132,14 +132,14 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     if (!semver(release)) throw Error('Usage: node scripts/releases.mjs <x.y.z> | --check')
     const version = (await json(new URL('package.json', root))).version
     if (version !== release) throw Error('Documentation release must match package.json')
-    const reports = await json(new URL('artifacts/pack-report.json', root)),
+    const reports = await json(new URL(artifactDirectory()+'pack-report.json', root)),
       packages = []
     for (const name of ['core', 'vue-ui']) {
       const pkg = await json(new URL('packages/' + name + '/package.json', root)),
         report = reports.find(p => p.name === pkg.name && p.version === pkg.version)
       if (!report) throw Error('Run package pipeline first')
       const file = packageTarball(pkg),
-        bytes = await readFile(new URL('artifacts/' + file, root)),
+        bytes = await readFile(new URL(artifactDirectory() + file, root)),
         hash = digest(bytes)
       if (hash.integrity !== report.integrity) throw Error('Pack report does not match ' + file)
       packages.push({ name: pkg.name, version: pkg.version, file, bytes: bytes.length, ...hash })
@@ -160,7 +160,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
       await mkdir(assets, { recursive: true })
       await mkdir(destination)
       for (const pkg of packages)
-        await copyFile(new URL('artifacts/' + pkg.file, root), new URL(pkg.file, destination))
+        await copyFile(new URL(artifactDirectory() + pkg.file, root), new URL(pkg.file, destination))
       const sourceRef = execFileSync('git', ['rev-parse', 'HEAD'], {
         cwd: fileURLToPath(root),
         encoding: 'utf8',

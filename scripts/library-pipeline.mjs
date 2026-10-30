@@ -1,7 +1,7 @@
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {readFileSync,writeFileSync} from 'node:fs';
-import {packageMetadata,packageTarball} from './package-identity.mjs';
+import {packageMetadata,packageTarball,artifactDirectory} from './package-identity.mjs';
 import assert from 'node:assert/strict'
 const root=new URL('../',import.meta.url),npm=process.platform==='win32'?'npm.cmd':'npm';
 assert.equal(
@@ -12,7 +12,7 @@ assert.equal(
 const run=(label,dir,command,args)=>{console.log('\n'+label);execFileSync(command,args,{cwd:fileURLToPath(new URL(dir,root)),stdio:'inherit',shell:process.platform==='win32'&&command===npm});};
 const node=(label,file,...args)=>run(label,'',process.execPath,[file,...args]);
 // Core is an internal build unit; a new consumer installs only the UI tarball.
-const packageTarballs=['../../artifacts/'+packageTarball(packageMetadata('vue-ui'))];
+const packageTarballs=['../../'+artifactDirectory()+packageTarball(packageMetadata('vue-ui'))];
 const installArgs=['--ignore-scripts','--no-audit','--no-fund','--registry=https://registry.npmjs.org'];
 node('1/10 Framework-independent clean bootstrap', 'scripts/core-bootstrap-check.mjs')
 node('1/10 Internal shared Core','scripts/build-packages.mjs','--core');

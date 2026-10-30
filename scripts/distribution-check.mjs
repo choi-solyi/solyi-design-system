@@ -11,7 +11,7 @@ import {
   assertImmutableRelease,
   assertPackageVersions,
 } from './releases.mjs'
-import { releasePackage, historicalUiName } from './package-identity.mjs'
+import {releasePackage, historicalUiName,artifactDirectory} from './package-identity.mjs'
 const root = new URL('../', import.meta.url),
   docs = new URL('docs/', root),
   fixture = new URL('.tooling/http-consumer-' + Date.now() + '/', root),
@@ -42,7 +42,7 @@ for (const release of catalogue.releases)
   await verifyRelease(new URL('releases/' + release.release + '/', docs))
 for (const pkg of current.packages)
   assert.deepEqual(
-    digest(await readFile(new URL('artifacts/' + pkg.file, root))),
+    digest(await readFile(new URL(artifactDirectory() + pkg.file, root))),
     { sha256: pkg.sha256, integrity: pkg.integrity },
     'Fresh build matches frozen package ' + pkg.name,
   )

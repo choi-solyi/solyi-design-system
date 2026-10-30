@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {artifactDirectory} from './package-identity.mjs';
 const base=new URL('../examples/vue-vuetify/',import.meta.url);
 const starterHtml=await readFile(new URL('dist/index.html',base),'utf8');assert.match(starterHtml,/<meta\s+name="description"\s+content="[^"]+"/,'Published starter includes an informative meta description');
 const pkg=JSON.parse(await readFile(new URL('package.json',base),'utf8')),lock=JSON.parse(await readFile(new URL('package-lock.json',base),'utf8'));
 const packageVersions=Object.fromEntries(await Promise.all(['core','vue-ui'].map(async name=>[name,JSON.parse(await readFile(new URL('../../packages/'+name+'/package.json',base),'utf8')).version])));
-assert.deepEqual(pkg.dependencies,{'solyi-ui':`file:../../artifacts/solyi-ui-${packageVersions['vue-ui']}.tgz`,vue:'3.5.44',vuetify:'4.3.0'});
+assert.deepEqual(pkg.dependencies,{'solyi-ui':`file:../../${artifactDirectory()}solyi-ui-${packageVersions['vue-ui']}.tgz`,vue:'3.5.44',vuetify:'4.3.0'});
 assert.deepEqual(pkg.devDependencies,{vite:'8.3.4','@vitejs/plugin-vue':'6.0.10',typescript:'5.9.3','vue-tsc':'3.3.13','unplugin-auto-import':'21.1.0'});
 for(const [name,entry] of Object.entries(lock.packages)){if(!name)continue;assert.ok(name.startsWith('node_modules/'),`No local project linkage ${name}`);assert.ok(!entry.link);if(entry.resolved){assert.ok((name.startsWith('node_modules/@solyi/')||name==='node_modules/solyi-ui')?entry.resolved.startsWith('file:')&&entry.resolved.endsWith('.tgz'):entry.resolved.startsWith('https://registry.npmjs.org/'),`Official registry or own tarball ${name}`);assert.match(entry.integrity,/^sha512-/,`Integrity ${name}`);}assert.ok(entry.license,`License recorded ${name}`);}
 for(const name of ['tokens.css','tokens.json'])assert.deepEqual(await readFile(new URL(`node_modules/solyi-ui/dist/core/${name}`,base)),await readFile(new URL(`../docs/${name}`,import.meta.url)),`Installed Core shares generated ${name}`);

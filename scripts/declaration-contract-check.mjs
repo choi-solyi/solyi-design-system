@@ -69,7 +69,7 @@ const entries = installed
 const declarationCount = entries.length
 assert.ok(declarationCount > 10, 'All own public declaration files are checked')
 const fixture = normalize(path.join(ownRoot, 'navigation-contract.ts'))
-memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker, SSortableList, SPagination, SDataTable } from './index'
+memory.set(fixture, `import { STabs, SResizableSplitPane, SChip, SBadge, SIcon, SIconBtn, SBtn, SDatePicker, SNumberInput, STimePicker, SSortableList, SPagination, SDataTable, SBtnGroup, SFileInput } from './index'
 import {createApp,h} from 'vue'
 import type {SolSortableProps,SolSortableSlots,SolTimeGridProps,SolTimeGridSlots,SolTimeGridHandle} from './index'
 import type { SolIconName, SolTone, SolDateDisplayFormatter, SolNumberDisplayFormatter, SolNumberPreset } from './index'
@@ -102,6 +102,14 @@ const chip: ChipProps = { label: 'Design', selected: true, selectable: true }
 const badge: BadgeProps = { content: 0, label: 'No notifications', tone: 'neutral' }
 const oldButton: InstanceType<typeof SBtn>['$props'] = {}
 const globalIconButton: GlobalComponents['SIconBtn'] = SIconBtn
+const globalGroup:GlobalComponents['SBtnGroup']=SBtnGroup
+const group:InstanceType<typeof SBtnGroup>['$props']={label:'Commands',orientation:'vertical'}
+// @ts-expect-error Groups require their accessible label.
+const unnamedGroup:InstanceType<typeof SBtnGroup>['$props']={orientation:'horizontal'}
+// @ts-expect-error A layout group does not own child toggle state.
+const groupModel:InstanceType<typeof SBtnGroup>['$props']={label:'Commands',modelValue:'a'}
+const filePreview:InstanceType<typeof SFileInput>['$props']={id:'files',label:'Files',modelValue:[],preview:false}
+void [globalGroup,group,unnamedGroup,groupModel,filePreview]
 const iconName: SolIconName = 'copy'
 const tone: SolTone = 'neutral'
 // @ts-expect-error Accessible label is required for icon buttons.

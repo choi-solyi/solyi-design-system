@@ -41,7 +41,9 @@ for (const name of siteFiles) {
   }
 }
 const catalogue=await releaseCatalogue();
+const {releaseHistory}=await import('../site/changelog-data.js');
 const publicCatalogue = {
+  published: releaseHistory[0]?.version || catalogue.current,
   current: catalogue.current,
   releases: catalogue.releases.filter(release => release.release === catalogue.current),
 }
