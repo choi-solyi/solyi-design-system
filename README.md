@@ -1,6 +1,6 @@
 # Sol UI
 
-> 개발 브랜치는 **1.1.1 미게시 후보**를 준비합니다. npm 안정 버전은 여전히 **1.1.0**이며, 아래 게시 이력과 동결 파일을 유지합니다. 후보는 기존 50개 export를 보존하고 SBtnGroup을 추가한 51개 API입니다. 운영 문서 반영과 npm 게시는 아직 하지 않았습니다.
+> 문서·UI 데모는 **1.1.1 미게시 후보**입니다. npm 안정 버전은 **1.1.0**이며, 1.1.1 게시는 대기 중입니다.
 
 Sol UI 1.1.0은 Vue 3와 Vuetify를 사용하는 프로젝트를 위한 UI 라이브러리입니다. `solyi-ui`에 포함된 S 컴포넌트와 공통 토큰·CSS로 색, 글꼴, 간격, 밀도와 상태 표현을 함께 사용합니다.
 
@@ -66,7 +66,7 @@ createApp(App)
 
 ## 릴리즈와 변경 이력
 
-현재 npm 버전은 [solyi-ui 1.1.0](https://www.npmjs.com/package/solyi-ui/v/1.1.0)입니다. 50개 공개 S 컴포넌트와 기존 API를 유지하며 입력·선택·정렬·달력·시간 그리드 등을 확장했습니다.
+현재 npm 버전은 [solyi-ui 1.1.0](https://www.npmjs.com/package/solyi-ui/v/1.1.0)입니다. Chip·Badge·아이콘, 정렬 목록·달력·TimeGrid를 추가하고 입력과 Dialog를 개선했습니다.
 
 - [버전별 변경 이력](CHANGELOG.md) · [문서 릴리즈 페이지](https://ui.solyi.kr/#releases/changelog)
 - [GitHub Releases](https://github.com/choi-solyi/solyi-design-system/releases)
