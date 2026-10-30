@@ -1,6 +1,6 @@
 /* The actual starter SFC + installed tarballs, in synthetic DOM. Not visual/native-keyboard QA. */
 import assert from 'node:assert/strict';
-import {writeFile,mkdir} from 'node:fs/promises';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {JSDOM,VirtualConsole} from 'jsdom';
 const source=process.argv.includes('--source');
@@ -31,7 +31,9 @@ function checkRefs(){for(const el of d.querySelectorAll('[aria-labelledby],[aria
 for(const id of Object.keys(recipeComponents)){await mount(id);checkRefs();assert.ok($('#app').textContent.trim(),id);const ids=[...d.querySelectorAll('[id]')].map(x=>x.id);assert.equal(ids.length,new Set(ids).size,id+' duplicate IDs');await unmount();}
 const originalRecipes=['color-examples','writing','buttons','fields','choices','feedback','dialog','selection','help','accordion','navigation','advanced-inputs','content-tabs','action-menu','identity-progress','progress','time','chart-tree','form','search','compare','empty','data','inputs','responses','composition','layouts','workflow','error-summary','bulk-recovery','combobox'];
 const ownedDisplayRecipes=['confirm-action','chip','badge','icon','icon-button'];
-assert.deepEqual(Object.keys(recipeComponents).sort(),[...originalRecipes,...ownedDisplayRecipes].sort(),'Preserve every original recipe and register every newly separated example');
+const expectedRecipes=[...new Set(JSON.parse(await readFile(new URL('usage-example-inventory.json',root),'utf8')).examples.filter(item=>item.recipe).map(item=>item.section))];
+assert.deepEqual(Object.keys(recipeComponents).sort(),expectedRecipes.sort(),'Every canonical inventory entry is registered and executed');
+for(const id of [...originalRecipes,...ownedDisplayRecipes])assert.ok(recipeComponents[id],'Preserve original and newly owned direct recipe URLs: '+id);
 await mount('confirm-action');
 const draftAction=[...d.querySelectorAll('button')].find(button=>button.textContent.trim()==='초안 제거');
 assert.ok(draftAction);draftAction.click();await tick();assert.match($('#app').textContent,/초안이 남아 있습니다/);
