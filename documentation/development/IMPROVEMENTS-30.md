@@ -24,8 +24,8 @@
 | 4 | Date 개발 설정 라디오; auto/popover의 얇은 팝업·하단 여백 해결 | 기존 라이브 18px, 같은 npm 독립 fixture 약 525px | 문서 iframe 경계; 패키지 모든 경계의 정상 여부는 단정하지 않음 | 직접 viewport 호스트 + SRadioGroup 설정 | PC/390px 네 presentation 열기·높이 불변·ISO 날짜 선택 실제 확인 | a2550f5 CI·공개 390px 네 표시 방식 확인 완료; 특수 배치 경계는 별도 회귀 |
 | 5 | Form 프로젝트 확인 후 검증 표시 지우기 버튼을 실제 동작시킴 | 기존 API는 오류를 지움; 성공/서버 피드백이 남아 예제 동작을 알기 어려움 | 문서 예제 피드백 소유 | resetValidation과 예제 소유 피드백 정리, 입력 보존 안내, busy 중 차단 | PC/390px 및 a2550f5 공개 390px 오류/성공 지우기·값 보존 확인 | 추가 미완료 없음 |
 | 6 | MultiSelect 목록이 부모를 늘리지 않고 선택 칩이 입력 안에 표시 | registry 1.1.0과 독립 fixture에서 확장 재현 | 패키지 일반 흐름 popup/외부 선택 목록 | 전용 개발 브랜치에서 floating·입력 내부 SChip·Escape 계층 보완 | 개발 tarball의 3테마/PC·390px/RTL·키보드·터치·SSR·타입·예산 통과 | npm/공개 1.1.0 미반영. [실행 근거](IMPROVEMENTS-30-06.md) |
-| 7 | NumberInput과 RangeSlider 직접 입력의 -/+를 한쪽에 모음 | 미재현 | 판별 중 | 미착수 | 미실행 | step/min/max/readonly 보존 |
-| 8 | RadioGroup에는 radio, Switch에는 switch/단일 선택 차이를 명확히 표시 | 미재현 | 예제 소유 판별 | 미착수 | 미실행 | 용어·접근성 역할 보존 |
+| 7 | NumberInput과 Range 직접 입력의 -/+를 한쪽에 모음 | 기존 양 끝 버튼 재현 | 패키지 NumberInput 렌더링 | 감소/증가 그룹을 논리적 끝 쪽에 배치; 모델/step 로직 유지 | 3테마 PC·390px/RTL 소비 UI·폼·키보드 및 기존 39개 전이 통과 | 개발본 완료; 최종 1.1.1 통합/반영 대기. [근거](IMPROVEMENTS-30-07-08.md) |
+| 8 | checkbox/switch/radio 의미를 보존하며 전용 예제로 구분 | 기존 혼합 예제 재현 | 문서 소유 | 4개 전용 SFC/Components/코드/starter, Switch의 checkbox 비교 명시 | 타입·40개 SFC·메뉴·3테마 12개 실제 페이지/키보드 통과 | 개발 브랜치 완료; 최종 일괄 반영 대기. [근거](IMPROVEMENTS-30-07-08.md) |
 | 9 | TextField loading이 실제 움직임을 표현; clear 횟수 설명 또는 불필요 표시 정리 | 미재현 | motion/예제 판별 | 미착수 | 미실행 | 입력 상태·reduced-motion |
 | 10 | Time 손잡이 의미·X/↑/꺾쇠 혼잡 개선, 시/분 오른쪽 단위, 완료 우측·확인색 | 미재현 | 판별 중 | 미착수 | 미실행 | native/list/수동/scrub 취소 |
 | 11 | Accordion 1개 및 3~5개 예제 | 미재현 | 문서 | 미착수 | 미실행 | 독립/복수 열기·키보드 |

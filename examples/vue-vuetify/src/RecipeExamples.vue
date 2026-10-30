@@ -13,6 +13,10 @@ const groups: { label: string; items: RecipeId[] }[] = [
   {
     label: '입력과 선택',
     items: [
+      'checkbox',
+      'radio-group',
+      'switch',
+      'select',
       'selection',
       'advanced-inputs',
       'inputs',

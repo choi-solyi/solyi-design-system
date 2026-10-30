@@ -57,5 +57,16 @@ assert.equal(new Set(ownedExamples.map(item=>item.example)).size,6,'Each display
 for(const item of ownedExamples)assert.match(componentExampleSources[item.example],new RegExp('<'+item.name+'(?:\\s|>)'),'The owned example renders its actual public component')
 for(const item of ownedExamples)for(const other of ownedExamples.filter(other=>other.name!==item.name))assert.doesNotMatch(componentExampleSources[item.example],new RegExp('<'+other.name+'(?:\\s|>)'),item.name+' must not include the unrelated '+other.name+' demo')
 assert.ok(!componentExampleSources.buttons.includes('<SBadge'),'A shared notification badge must not reappear in every Button example')
+for(const [name,id,forbidden] of [
+ ['SCheckbox','checkbox',['SRadioGroup','SSwitch','SSelect']],
+ ['SRadioGroup','radio-group',['SCheckbox','SSwitch','SSelect']],
+ ['SSwitch','switch',['SRadioGroup','SSelect']],
+ ['SSelect','select',['SCheckbox','SSwitch','SRadioGroup']],
+]){
+ const item=componentReferences.find(component=>component.name===name);assert.equal(item.example,id)
+ assert.match(componentExampleSources[id],new RegExp('<'+name+'(?:\\s|>)'))
+ for(const other of forbidden)assert.doesNotMatch(componentExampleSources[id],new RegExp('<'+other+'(?:\\s|>)'),name+' example must not regain unrelated '+other+' controls')
+}
+assert.match(componentExampleSources.switch,/<SCheckbox\s/,'The Switch example deliberately compares a separate checkbox selection with an immediate switch setting')
 console.log('PASS: '+report.length+' new/extended Components menu/search/routes, 3 panels, API additions, real consumer source/links; generic slots/methods match declarations and excluded scheduler is absent.')
 for(const item of report)console.log(item.name+' → #component/'+item.id+' → '+item.link)

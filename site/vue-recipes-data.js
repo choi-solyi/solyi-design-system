@@ -22,7 +22,7 @@ export const vueRecipes={
   },
   "choices": {
     "route": "component",
-    "label": "체크·단일 선택·스위치",
+    "label": "선택 컨트롤 비교 · 기존 조합",
     "source": "<script setup lang=\"ts\">\nconst include = ref(true),\n  archived = ref(false),\n  view = ref<string | null>('list'),\n  sort = ref<string | null>('recent')\nconst options = [\n  { value: 'list', label: '목록' },\n  { value: 'cards', label: '카드' },\n  { value: 'map', label: '지도 · 비활성', disabled: true },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"익숙한 기본 선택\">\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-include\"\n      v-model=\"include\"\n      label=\"완료한 항목 포함\"\n    />\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-archived\"\n      v-model=\"archived\"\n      label=\"보관한 항목 포함\"\n    />\n    <SCheckbox class=\"sol-choice-row\" id=\"recipe-unavailable\" label=\"공유 항목 · 비활성\" disabled />\n    <SRadioGroup\n      class=\"sol-choice-row\"\n      id=\"recipe-view\"\n      v-model=\"view\"\n      label=\"보기 방식\"\n      :options=\"options\"\n    />\n    <SSelect\n      id=\"recipe-sort\"\n      v-model=\"sort\"\n      clearable\n      label=\"정렬 기준\"\n      :options=\"[\n        { value: 'recent', label: '최근 변경순' },\n        { value: 'name', label: '이름순' },\n      ]\"\n    >\n      <template #indicator><SIcon name=\"chevron\" decorative :size=\"16\" /></template>\n    </SSelect>\n    <p role=\"status\">\n      완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }} · {{ view }} ·\n      {{ sort }}\n    </p>\n  </SCard>\n</template>\n"
   },
   "feedback": {
@@ -37,7 +37,7 @@ export const vueRecipes={
   },
   "selection": {
     "route": "component",
-    "label": "선택과 검색",
+    "label": "선택의 의미 비교 · 기존 조합",
     "source": "<script setup lang=\"ts\">\nconst multiple = ref(false),\n  single = ref<string | null>('brief'),\n  immediate = ref(false)\nconst options = [\n  { value: 'brief', label: '간단히' },\n  { value: 'full', label: '자세히' },\n]\nconst hideSwitchLabel = ref(true)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"선택의 의미\">\n    <SCheckbox\n      class=\"sol-choice-row\"\n      id=\"recipe-multiple\"\n      v-model=\"multiple\"\n      label=\"자료 포함 · 다중 선택의 한 항목\"\n    />\n    <SRadioGroup\n      class=\"sol-choice-row\"\n      id=\"recipe-single\"\n      v-model=\"single\"\n      label=\"한 가지 표시 방식\"\n      :options=\"options\"\n    />\n    <SCheckbox\n      id=\"recipe-switch-label\"\n      v-model=\"hideSwitchLabel\"\n      label=\"외부 설정명이 있을 때 오른쪽 라벨 숨기기\"\n    />\n    <div class=\"sol-actions\">\n      <label id=\"recipe-immediate-label\" for=\"recipe-immediate\">바뀌면 바로 적용</label\n      ><SSwitch\n        id=\"recipe-immediate\"\n        v-model=\"immediate\"\n        label=\"바뀌면 바로 적용\"\n        :hide-label=\"hideSwitchLabel\"\n        aria-labelledby=\"recipe-immediate-label\"\n      />\n    </div>\n    <p role=\"status\">\n      자료 {{ multiple ? '포함' : '제외' }} · {{ single }} · 즉시 설정\n      {{ immediate ? '켬' : '끔' }}\n    </p>\n  </SCard>\n</template>\n"
   },
   "help": {
@@ -179,5 +179,25 @@ export const vueRecipes={
     "route": "component",
     "label": "아이콘 전용 버튼",
     "source": "<script setup lang=\"ts\">\nimport { useSolLocale } from 'solyi-ui'\n\nconst locale = useSolLocale()\nconst english = computed(() => locale.value.code === 'en-US')\nconst busy = ref(false),\n  saved = ref(false)\nlet timer: ReturnType<typeof setTimeout>\nfunction save() {\n  if (busy.value) return\n  busy.value = true\n  saved.value = false\n  timer = setTimeout(() => {\n    busy.value = false\n    saved.value = true\n  }, 700)\n}\nonBeforeUnmount(() => clearTimeout(timer))\n</script>\n<template>\n  <SCard :heading-level=\"2\" :title=\"english ? 'Icon-only actions' : '아이콘 버튼 동작'\">\n    <p>\n      {{\n        english\n          ? 'Save performs a fictional local task. Delete demonstrates a disabled action.'\n          : '저장 아이콘은 가상 로컬 작업을 실행하고, 삭제 아이콘은 비활성 상태를 보여줍니다.'\n      }}\n    </p>\n    <div class=\"sol-actions\">\n      <SIconBtn\n        icon=\"save\"\n        :label=\"english ? 'Save example' : '예제 저장'\"\n        :title=\"english ? 'Save example' : '예제 저장'\"\n        :loading=\"busy\"\n        @click=\"save\"\n      />\n      <SIconBtn\n        icon=\"trash\"\n        :label=\"english ? 'Delete (unavailable)' : '삭제 (사용 불가)'\"\n        :title=\"english ? 'Delete (unavailable)' : '삭제 (사용 불가)'\"\n        tone=\"danger\"\n        disabled\n      />\n    </div>\n    <p role=\"status\">\n      {{\n        busy\n          ? english\n            ? 'Saving…'\n            : '저장 중…'\n          : saved\n            ? english\n              ? 'The fictional task finished.'\n              : '가상 저장을 완료했습니다.'\n            : english\n              ? 'Ready to save.'\n              : '저장할 수 있습니다.'\n      }}\n    </p>\n  </SCard>\n</template>\n"
+  },
+  "checkbox": {
+    "route": "component",
+    "label": "Checkbox · 독립 선택",
+    "source": "<script setup lang=\"ts\">\nconst include = ref(true),\n  archived = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"독립된 항목 선택 · Checkbox\">\n    <p>각 항목을 따로 선택합니다. 하나를 선택해도 다른 항목의 선택은 바뀌지 않습니다.</p>\n    <SCheckbox id=\"recipe-checkbox-include\" v-model=\"include\" label=\"완료한 항목 포함\" />\n    <SCheckbox id=\"recipe-checkbox-archived\" v-model=\"archived\" label=\"보관한 항목 포함\" />\n    <SCheckbox id=\"recipe-checkbox-disabled\" label=\"선택할 수 없는 항목\" disabled />\n    <p role=\"status\">\n      완료 {{ include ? '포함' : '제외' }} · 보관 {{ archived ? '포함' : '제외' }}\n    </p>\n  </SCard>\n</template>\n"
+  },
+  "radio-group": {
+    "route": "component",
+    "label": "Radio Group · 한 가지 선택",
+    "source": "<script setup lang=\"ts\">\nconst choice = ref<string | null>('brief')\nconst options = [\n  { value: 'brief', label: '간단히' },\n  { value: 'full', label: '자세히' },\n  { value: 'reserved', label: '준비 중인 표시', disabled: true },\n]\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"서로 배타적인 한 가지 선택 · Radio Group\">\n    <p>같은 그룹에서는 하나만 선택합니다. 방향키로 선택을 옮길 수 있습니다.</p>\n    <SRadioGroup\n      id=\"recipe-radio-choice\"\n      v-model=\"choice\"\n      label=\"표시 방법\"\n      :options=\"options\"\n      required\n    />\n    <p role=\"status\">선택한 표시: {{ choice === 'brief' ? '간단히' : '자세히' }}</p>\n  </SCard>\n</template>\n"
+  },
+  "switch": {
+    "route": "component",
+    "label": "Switch · 즉시 설정",
+    "source": "<script setup lang=\"ts\">\nconst chosen = ref(false),\n  enabled = ref(false),\n  external = ref(false)\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"선택과 즉시 설정의 차이 · Switch\">\n    <p>\n      체크박스는 항목의 선택을 확인하고, 스위치는 설정을 즉시 켜거나 끕니다. 모양을 합쳐도 같은\n      의미가 되지는 않습니다.\n    </p>\n    <SCheckbox\n      id=\"recipe-switch-choice\"\n      v-model=\"chosen\"\n      label=\"확인 후 적용할 항목 선택 · Checkbox\"\n    />\n    <SSwitch id=\"recipe-switch-enabled\" v-model=\"enabled\" label=\"즉시 알림 켜기 · Switch\" />\n    <div class=\"sol-actions\">\n      <label id=\"recipe-switch-external-label\" for=\"recipe-switch-external\"\n        >외부 라벨을 쓰는 설정</label\n      >\n      <SSwitch\n        id=\"recipe-switch-external\"\n        v-model=\"external\"\n        label=\"외부 라벨을 쓰는 설정\"\n        hide-label\n        aria-labelledby=\"recipe-switch-external-label\"\n      />\n    </div>\n    <p role=\"status\">\n      항목 {{ chosen ? '선택' : '미선택' }} · 알림 {{ enabled ? '켜짐' : '꺼짐' }} · 외부 설정\n      {{ external ? '켜짐' : '꺼짐' }}\n    </p>\n  </SCard>\n</template>\n"
+  },
+  "select": {
+    "route": "component",
+    "label": "Select · 목록 선택",
+    "source": "<script setup lang=\"ts\">\nconst selected = ref<string | null>('recent')\n</script>\n<template>\n  <SCard :heading-level=\"2\" title=\"목록에서 한 가지 선택 · Select\">\n    <SSelect\n      id=\"recipe-owned-select\"\n      v-model=\"selected\"\n      label=\"정렬 기준\"\n      clearable\n      :options=\"[\n        { value: 'recent', label: '최근 수정순' },\n        { value: 'name', label: '이름순' },\n        { value: 'reserved', label: '준비 중인 기준', disabled: true },\n      ]\"\n    />\n    <p role=\"status\">선택값: {{ selected ?? '없음' }}</p>\n  </SCard>\n</template>\n"
   }
 };

@@ -319,11 +319,6 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
           value: p.modelValue === null ? '' : formatSolNumber(p.modelValue, l.value),
         }) : null,
         h('div', { class: ['sol-ui-number', p.unit ? 'sol-ui-number--unit' : undefined] }, [
-          h('button', {
-            type: 'button', class: 'sol-button',
-            disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(-1) === null,
-            'aria-label': p.label + ' ' + l.value.decrease, onClick: () => nudge(-1),
-          }, '−'),
           control.native(h('input', mergeProps({ onFocus: beginEdit }, {
             ...attrs, ref: input, id: p.id, type: 'text', inputmode: 'decimal',
             class: ['sol-input', attrs.class], value: displayValue(),
@@ -353,11 +348,18 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
             },
           }))),
           p.unit ? h('span', { class: 'sol-ui-number-unit', 'aria-hidden': 'true' }, p.unit) : null,
-          h('button', {
+          h('div', { class: 'sol-ui-number-stepper', role: 'group', 'aria-labelledby': p.id + '-label' }, [
+            h('button', {
+            type: 'button', class: 'sol-button',
+            disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(-1) === null,
+            'aria-label': p.label + ' ' + l.value.decrease, onClick: () => nudge(-1),
+          }, '−'),
+            h('button', {
             type: 'button', class: 'sol-button',
             disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(1) === null,
             'aria-label': p.label + ' ' + l.value.increase, onClick: () => nudge(1),
           }, '+'),
+          ]),
         ]),
         p.presets.length || slots.presets ? h('div', {
           class: 'sol-ui-number-presets', role: 'group', 'aria-labelledby': p.id + '-label',

@@ -22,7 +22,10 @@ for(const route of ['start','style','component','pattern','releases','licensing'
   assert.equal(d.querySelectorAll('.demo-stage>button,.demo-stage>form').length,0,'The canonical Vue canvas replaces active native examples');
 }
 assert.ok(seen.has('advanced-vue'),'Advanced API references use the actual shared consumer');seen.delete('advanced-vue');
-const expectedRecipes=[...new Set(JSON.parse(await readFile(new URL('usage-example-inventory.json',base),'utf8')).examples.filter(item=>item.recipe).map(item=>item.section))];
+const inventory=JSON.parse(await readFile(new URL('usage-example-inventory.json',base),'utf8'));
+const standaloneRecipes=inventory.examples.filter(item=>item.delivery==='standalone-composition').map(item=>item.section);
+assert.deepEqual(standaloneRecipes.sort(),['choices','selection'],'Only the explicitly preserved mixed compositions move out of component canvases');
+const expectedRecipes=[...new Set(inventory.examples.filter(item=>item.recipe&&item.delivery!=='standalone-composition').map(item=>item.section))];
 assert.deepEqual([...seen].sort(),expectedRecipes.sort(),'Every canonical recipe has a real document canvas');
 w.location.hash='#pattern';await pause();const frame=d.querySelector('iframe[data-recipe=workflow]'),sent=[];assert.ok(frame);frame.contentWindow.postMessage=(data,origin)=>sent.push({data,origin});
 const message=(data,origin=w.location.origin,source=frame.contentWindow)=>w.dispatchEvent(new w.MessageEvent('message',{origin,source,data}));

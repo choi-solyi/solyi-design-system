@@ -112,9 +112,10 @@ fieldset.sol-ui-native-field {border:0;padding:0;margin:0;display:grid;gap:var(-
 .sol-ui-native-field>.sol-label {margin:0;}
 .sol-ui-field-footer {display:flex;gap:var(--sol-space-3);align-items:start;justify-content:space-between;}
 .sol-ui-counter {margin-inline-start:auto;white-space:nowrap;text-align:end;}
-.sol-ui-number {display:grid;grid-template-columns:var(--sol-control-height) minmax(0,1fr) var(--sol-control-height);gap:var(--sol-space-2);}
-.sol-ui-number>.sol-button {height:var(--sol-control-height);padding:0;font-size:20px;}
-.sol-ui-number--unit {grid-template-columns:var(--sol-control-height) minmax(0,1fr) auto var(--sol-control-height);}
+.sol-ui-number {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--sol-space-2);}
+.sol-ui-number-stepper {display:grid;grid-template-columns:repeat(2,var(--sol-control-height));gap:var(--sol-space-1);align-items:center;}
+.sol-ui-number-stepper>.sol-button {height:var(--sol-control-height);padding:0;font-size:20px;}
+.sol-ui-number--unit {grid-template-columns:minmax(0,1fr) auto auto;}
 .sol-ui-number--unit input {font-variant-numeric:tabular-nums;text-align:end;}
 .sol-ui-number-unit {align-self:center;max-inline-size:calc(var(--sol-control-height) * 2);overflow-wrap:anywhere;color:var(--sol-color-muted);font-size:var(--sol-text-sm);}
 .sol-ui-number-presets {display:flex;flex-wrap:wrap;gap:var(--sol-space-2);}

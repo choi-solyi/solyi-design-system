@@ -1,6 +1,6 @@
 {
   "baseline": "a6ad6bf",
-  "count": 50,
+  "count": 54,
   "examples": [
     {
       "route": "style",
@@ -77,7 +77,8 @@
       "kind": "vue-recipe",
       "recipe": "choices.vue",
       "status": "typed-and-runtime-checked",
-      "title": "체크·단일 선택·스위치"
+      "title": "선택 컨트롤 비교 · 기존 조합",
+      "delivery": "standalone-composition"
     },
     {
       "route": "component",
@@ -113,7 +114,8 @@
       "kind": "vue-recipe",
       "recipe": "selection.vue",
       "status": "typed-and-runtime-checked",
-      "title": "선택과 검색"
+      "title": "선택의 의미 비교 · 기존 조합",
+      "delivery": "standalone-composition"
     },
     {
       "route": "component",
@@ -439,6 +441,42 @@
       "recipe": "icon-button.vue",
       "status": "typed-and-runtime-checked",
       "title": "아이콘 전용 버튼"
+    },
+    {
+      "route": "component",
+      "section": "checkbox",
+      "label": "Checkbox · 독립 선택",
+      "kind": "vue-recipe",
+      "recipe": "checkbox.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "Checkbox · 독립 선택"
+    },
+    {
+      "route": "component",
+      "section": "radio-group",
+      "label": "Radio Group · 한 가지 선택",
+      "kind": "vue-recipe",
+      "recipe": "radio-group.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "Radio Group · 한 가지 선택"
+    },
+    {
+      "route": "component",
+      "section": "switch",
+      "label": "Switch · 즉시 설정",
+      "kind": "vue-recipe",
+      "recipe": "switch.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "Switch · 즉시 설정"
+    },
+    {
+      "route": "component",
+      "section": "select",
+      "label": "Select · 목록 선택",
+      "kind": "vue-recipe",
+      "recipe": "select.vue",
+      "status": "typed-and-runtime-checked",
+      "title": "Select · 목록 선택"
     }
   ]
 }

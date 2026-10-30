@@ -111,7 +111,7 @@
     {
       "id": "choices",
       "route": "component",
-      "label": "체크·단일 선택·스위치",
+      "label": "선택 컨트롤 비교 · 기존 조합",
       "source": "examples/vue-vuetify/src/recipes/choices.vue",
       "registration": "global",
       "components": [
@@ -153,7 +153,7 @@
     {
       "id": "selection",
       "route": "component",
-      "label": "선택과 검색",
+      "label": "선택의 의미 비교 · 기존 조합",
       "source": "examples/vue-vuetify/src/recipes/selection.vue",
       "registration": "global",
       "components": [
@@ -546,6 +546,51 @@
       "components": [
         "SCard",
         "SIconBtn"
+      ]
+    },
+    {
+      "id": "checkbox",
+      "route": "component",
+      "label": "Checkbox · 독립 선택",
+      "source": "examples/vue-vuetify/src/recipes/checkbox.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SCheckbox"
+      ]
+    },
+    {
+      "id": "radio-group",
+      "route": "component",
+      "label": "Radio Group · 한 가지 선택",
+      "source": "examples/vue-vuetify/src/recipes/radio-group.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SRadioGroup"
+      ]
+    },
+    {
+      "id": "switch",
+      "route": "component",
+      "label": "Switch · 즉시 설정",
+      "source": "examples/vue-vuetify/src/recipes/switch.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SCheckbox",
+        "SSwitch"
+      ]
+    },
+    {
+      "id": "select",
+      "route": "component",
+      "label": "Select · 목록 선택",
+      "source": "examples/vue-vuetify/src/recipes/select.vue",
+      "registration": "global",
+      "components": [
+        "SCard",
+        "SSelect"
       ]
     }
   ],

@@ -25816,7 +25816,163 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, 8, ["title"]);
 		};
 	}
-}), oE = { class: "sol-actions" }, sE = { role: "status" }, cE = {
+}), oE = { class: "sol-actions" }, sE = { role: "status" }, cE = /* @__PURE__ */ H({
+	__name: "icon-button",
+	setup(e) {
+		let t = Nx(), n = Y(() => t.value.code === "en-US"), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(!1), a;
+		function o() {
+			r.value || (r.value = !0, i.value = !1, a = setTimeout(() => {
+				r.value = !1, i.value = !0;
+			}, 700));
+		}
+		return Qi(() => clearTimeout(a)), (e, t) => {
+			let a = U("SIconBtn"), s = U("SCard");
+			return W(), G(s, {
+				"heading-level": 2,
+				title: L(n) ? "Icon-only actions" : "아이콘 버튼 동작"
+			}, {
+				default: B(() => [
+					K("p", null, N(L(n) ? "Save performs a fictional local task. Delete demonstrates a disabled action." : "저장 아이콘은 가상 로컬 작업을 실행하고, 삭제 아이콘은 비활성 상태를 보여줍니다."), 1),
+					K("div", oE, [q(a, {
+						icon: "save",
+						label: L(n) ? "Save example" : "예제 저장",
+						title: L(n) ? "Save example" : "예제 저장",
+						loading: L(r),
+						onClick: o
+					}, null, 8, [
+						"label",
+						"title",
+						"loading"
+					]), q(a, {
+						icon: "trash",
+						label: L(n) ? "Delete (unavailable)" : "삭제 (사용 불가)",
+						title: L(n) ? "Delete (unavailable)" : "삭제 (사용 불가)",
+						tone: "danger",
+						disabled: ""
+					}, null, 8, ["label", "title"])]),
+					K("p", sE, N(L(r) ? L(n) ? "Saving…" : "저장 중…" : L(i) ? L(n) ? "The fictional task finished." : "가상 저장을 완료했습니다." : L(n) ? "Ready to save." : "저장할 수 있습니다."), 1)
+				]),
+				_: 1
+			}, 8, ["title"]);
+		};
+	}
+}), lE = { role: "status" }, uE = /* @__PURE__ */ H({
+	__name: "checkbox",
+	setup(e) {
+		let t = /* @__PURE__ */ F(!0), n = /* @__PURE__ */ F(!1);
+		return (e, r) => {
+			let i = U("SCheckbox"), a = U("SCard");
+			return W(), G(a, {
+				"heading-level": 2,
+				title: "독립된 항목 선택 · Checkbox"
+			}, {
+				default: B(() => [
+					r[2] ||= K("p", null, "각 항목을 따로 선택합니다. 하나를 선택해도 다른 항목의 선택은 바뀌지 않습니다.", -1),
+					q(i, {
+						id: "recipe-checkbox-include",
+						modelValue: L(t),
+						"onUpdate:modelValue": r[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+						label: "완료한 항목 포함"
+					}, null, 8, ["modelValue"]),
+					q(i, {
+						id: "recipe-checkbox-archived",
+						modelValue: L(n),
+						"onUpdate:modelValue": r[1] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
+						label: "보관한 항목 포함"
+					}, null, 8, ["modelValue"]),
+					q(i, {
+						id: "recipe-checkbox-disabled",
+						label: "선택할 수 없는 항목",
+						disabled: ""
+					}),
+					K("p", lE, " 완료 " + N(L(t) ? "포함" : "제외") + " · 보관 " + N(L(n) ? "포함" : "제외"), 1)
+				]),
+				_: 1
+			});
+		};
+	}
+}), dE = { role: "status" }, fE = /* @__PURE__ */ H({
+	__name: "radio-group",
+	setup(e) {
+		let t = /* @__PURE__ */ F("brief"), n = [
+			{
+				value: "brief",
+				label: "간단히"
+			},
+			{
+				value: "full",
+				label: "자세히"
+			},
+			{
+				value: "reserved",
+				label: "준비 중인 표시",
+				disabled: !0
+			}
+		];
+		return (e, r) => {
+			let i = U("SRadioGroup"), a = U("SCard");
+			return W(), G(a, {
+				"heading-level": 2,
+				title: "서로 배타적인 한 가지 선택 · Radio Group"
+			}, {
+				default: B(() => [
+					r[1] ||= K("p", null, "같은 그룹에서는 하나만 선택합니다. 방향키로 선택을 옮길 수 있습니다.", -1),
+					q(i, {
+						id: "recipe-radio-choice",
+						modelValue: L(t),
+						"onUpdate:modelValue": r[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+						label: "표시 방법",
+						options: n,
+						required: ""
+					}, null, 8, ["modelValue"]),
+					K("p", dE, "선택한 표시: " + N(L(t) === "brief" ? "간단히" : "자세히"), 1)
+				]),
+				_: 1
+			});
+		};
+	}
+}), pE = { class: "sol-actions" }, mE = { role: "status" }, hE = /* @__PURE__ */ H({
+	__name: "switch",
+	setup(e) {
+		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1);
+		return (e, i) => {
+			let a = U("SCheckbox"), o = U("SSwitch"), s = U("SCard");
+			return W(), G(s, {
+				"heading-level": 2,
+				title: "선택과 즉시 설정의 차이 · Switch"
+			}, {
+				default: B(() => [
+					i[4] ||= K("p", null, " 체크박스는 항목의 선택을 확인하고, 스위치는 설정을 즉시 켜거나 끕니다. 모양을 합쳐도 같은 의미가 되지는 않습니다. ", -1),
+					q(a, {
+						id: "recipe-switch-choice",
+						modelValue: L(t),
+						"onUpdate:modelValue": i[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+						label: "확인 후 적용할 항목 선택 · Checkbox"
+					}, null, 8, ["modelValue"]),
+					q(o, {
+						id: "recipe-switch-enabled",
+						modelValue: L(n),
+						"onUpdate:modelValue": i[1] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
+						label: "즉시 알림 켜기 · Switch"
+					}, null, 8, ["modelValue"]),
+					K("div", pE, [i[3] ||= K("label", {
+						id: "recipe-switch-external-label",
+						for: "recipe-switch-external"
+					}, "외부 라벨을 쓰는 설정", -1), q(o, {
+						id: "recipe-switch-external",
+						modelValue: L(r),
+						"onUpdate:modelValue": i[2] ||= (e) => /* @__PURE__ */ P(r) ? r.value = e : null,
+						label: "외부 라벨을 쓰는 설정",
+						"hide-label": "",
+						"aria-labelledby": "recipe-switch-external-label"
+					}, null, 8, ["modelValue"])]),
+					K("p", mE, " 항목 " + N(L(t) ? "선택" : "미선택") + " · 알림 " + N(L(n) ? "켜짐" : "꺼짐") + " · 외부 설정 " + N(L(r) ? "켜짐" : "꺼짐"), 1)
+				]),
+				_: 1
+			});
+		};
+	}
+}), gE = { role: "status" }, _E = {
 	"color-examples": ww,
 	writing: Tw,
 	buttons: Ow,
@@ -25852,69 +26008,69 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 	chip: eE,
 	badge: nE,
 	icon: aE,
-	"icon-button": /* @__PURE__ */ H({
-		__name: "icon-button",
+	"icon-button": cE,
+	checkbox: uE,
+	"radio-group": fE,
+	switch: hE,
+	select: /* @__PURE__ */ H({
+		__name: "select",
 		setup(e) {
-			let t = Nx(), n = Y(() => t.value.code === "en-US"), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(!1), a;
-			function o() {
-				r.value || (r.value = !0, i.value = !1, a = setTimeout(() => {
-					r.value = !1, i.value = !0;
-				}, 700));
-			}
-			return Qi(() => clearTimeout(a)), (e, t) => {
-				let a = U("SIconBtn"), s = U("SCard");
-				return W(), G(s, {
+			let t = /* @__PURE__ */ F("recent");
+			return (e, n) => {
+				let r = U("SSelect"), i = U("SCard");
+				return W(), G(i, {
 					"heading-level": 2,
-					title: L(n) ? "Icon-only actions" : "아이콘 버튼 동작"
+					title: "목록에서 한 가지 선택 · Select"
 				}, {
-					default: B(() => [
-						K("p", null, N(L(n) ? "Save performs a fictional local task. Delete demonstrates a disabled action." : "저장 아이콘은 가상 로컬 작업을 실행하고, 삭제 아이콘은 비활성 상태를 보여줍니다."), 1),
-						K("div", oE, [q(a, {
-							icon: "save",
-							label: L(n) ? "Save example" : "예제 저장",
-							title: L(n) ? "Save example" : "예제 저장",
-							loading: L(r),
-							onClick: o
-						}, null, 8, [
-							"label",
-							"title",
-							"loading"
-						]), q(a, {
-							icon: "trash",
-							label: L(n) ? "Delete (unavailable)" : "삭제 (사용 불가)",
-							title: L(n) ? "Delete (unavailable)" : "삭제 (사용 불가)",
-							tone: "danger",
-							disabled: ""
-						}, null, 8, ["label", "title"])]),
-						K("p", sE, N(L(r) ? L(n) ? "Saving…" : "저장 중…" : L(i) ? L(n) ? "The fictional task finished." : "가상 저장을 완료했습니다." : L(n) ? "Ready to save." : "저장할 수 있습니다."), 1)
-					]),
+					default: B(() => [q(r, {
+						id: "recipe-owned-select",
+						modelValue: L(t),
+						"onUpdate:modelValue": n[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+						label: "정렬 기준",
+						clearable: "",
+						options: [
+							{
+								value: "recent",
+								label: "최근 수정순"
+							},
+							{
+								value: "name",
+								label: "이름순"
+							},
+							{
+								value: "reserved",
+								label: "준비 중인 기준",
+								disabled: !0
+							}
+						]
+					}, null, 8, ["modelValue"]), K("p", gE, "선택값: " + N(L(t) ?? "없음"), 1)]),
 					_: 1
-				}, 8, ["title"]);
+				});
 			};
 		}
 	})
-}, lE = ["aria-labelledby"], uE = { class: "starter-settings starter-demo-settings" }, dE = {
-	class: "starter-result",
-	role: "status"
-}, fE = ["aria-labelledby"], pE = {
-	key: 0,
-	class: "starter-settings starter-demo-settings"
-}, mE = { class: "starter-hint" }, hE = ["aria-labelledby"], gE = {
-	key: 0,
-	class: "starter-settings starter-demo-settings"
-}, _E = { class: "starter-control-grid" }, vE = ["aria-labelledby"], yE = {
-	key: 0,
-	class: "starter-settings starter-demo-settings"
-}, bE = {
+}, vE = ["aria-labelledby"], yE = { class: "starter-settings starter-demo-settings" }, bE = {
 	class: "starter-result",
 	role: "status"
 }, xE = ["aria-labelledby"], SE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, CE = {
+}, CE = { class: "starter-hint" }, wE = ["aria-labelledby"], TE = {
+	key: 0,
+	class: "starter-settings starter-demo-settings"
+}, EE = { class: "starter-control-grid" }, DE = ["aria-labelledby"], OE = {
+	key: 0,
+	class: "starter-settings starter-demo-settings"
+}, kE = {
+	class: "starter-result",
+	role: "status"
+}, AE = ["aria-labelledby"], jE = {
+	key: 0,
+	class: "starter-settings starter-demo-settings"
+}, ME = {
 	class: "starter-hint",
 	role: "status"
-}, wE = ["aria-labelledby"], TE = { class: "starter-settings" }, EE = { role: "status" }, DE = { class: "starter-hint" }, OE = ["aria-labelledby"], kE = { class: "starter-settings" }, AE = ["aria-label"], jE = ["id"], ME = ["aria-labelledby"], NE = { class: "starter-settings" }, PE = { class: "starter-settings" }, FE = ["id"], IE = {
+}, NE = ["aria-labelledby"], PE = { class: "starter-settings" }, FE = { role: "status" }, IE = { class: "starter-hint" }, LE = ["aria-labelledby"], RE = { class: "starter-settings" }, zE = ["aria-label"], BE = ["id"], VE = ["aria-labelledby"], HE = { class: "starter-settings" }, UE = { class: "starter-settings" }, WE = ["id"], GE = {
 	__name: "AdvancedExamples",
 	props: {
 		part: {
@@ -26137,7 +26293,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[47] ||= K("p", { class: "starter-hint" }, " 선택·범위·메뉴·분할 부품을 설치한 solyi-ui에서 가져옵니다. 아래 설정은 이 예제들에만 적용됩니다. 모든 데이터와 작업은 가상입니다. ", -1),
-					K("div", uE, [q(i, {
+					K("div", yE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[0] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26177,8 +26333,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", dE, N(L(l) === "brief" ? "가상 기록 4개" : "가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정"), 1)
-				], 8, lE)) : Ts("v-if", !0),
+					K("p", bE, N(L(l) === "brief" ? "가상 기록 4개" : "가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정"), 1)
+				], 8, vE)) : Ts("v-if", !0),
 				o("multiselect") ? (W(), hs("section", {
 					key: 1,
 					class: "starter-card",
@@ -26188,7 +26344,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...t[48] ||= [J("검색 가능한 MultiSelect", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", pE, [q(i, {
+					L(a) ? (W(), hs("div", SE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[3] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26242,8 +26398,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", mE, " 완료 값: " + N(JSON.stringify(L(u))) + " · 가상 요청 " + N(L(f)) + "회. 검색을 바꾸어도 기존 선택은 유지됩니다. ", 1)
-				], 8, fE)) : Ts("v-if", !0),
+					K("p", CE, " 완료 값: " + N(JSON.stringify(L(u))) + " · 가상 요청 " + N(L(f)) + "회. 검색을 바꾸어도 기존 선택은 유지됩니다. ", 1)
+				], 8, xE)) : Ts("v-if", !0),
 				o("range") ? (W(), hs("section", {
 					key: 2,
 					class: "starter-card",
@@ -26253,7 +26409,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...t[49] ||= [J("양끝 RangeSlider", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", gE, [q(i, {
+					L(a) ? (W(), hs("div", TE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[7] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26285,7 +26441,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("div", _E, [q(Oe, {
+					K("div", EE, [q(Oe, {
 						id: n("advanced-lower"),
 						required: "",
 						modelValue: L(h)[0],
@@ -26321,7 +26477,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"readonly"
 					])]),
 					t[50] ||= K("p", { class: "starter-hint" }, " 숫자 입력도 같은 값을 사용합니다. 터치 보조기술의 사용자별 동작은 실제 기기에서 별도 확인해야 합니다. ", -1)
-				], 8, hE)) : Ts("v-if", !0),
+				], 8, wE)) : Ts("v-if", !0),
 				o("split-button", "context-menu") ? (W(), hs("section", {
 					key: 3,
 					class: "starter-card",
@@ -26331,7 +26487,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [J(N(L(a) === "split-button" ? "SplitButton" : L(a) === "context-menu" ? "ContextMenu" : "SplitButton · ContextMenu"), 1)]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", yE, [q(i, {
+					L(a) ? (W(), hs("div", OE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[12] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26379,8 +26535,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					])) : Ts("v-if", !0),
-					K("p", bE, N(L(g)), 1)
-				], 8, vE)) : Ts("v-if", !0),
+					K("p", kE, N(L(g)), 1)
+				], 8, DE)) : Ts("v-if", !0),
 				o("split-pane") ? (W(), hs("section", {
 					key: 4,
 					class: "starter-card",
@@ -26390,7 +26546,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...t[53] ||= [J("ResizableSplitPane", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", SE, [q(i, {
+					L(a) ? (W(), hs("div", jE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[16] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26459,8 +26615,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", CE, " 저장 비율 " + N(L(S)) + "% · " + N(L(T) ? "좁은 폭: 위아래 높이 조절" : "크기 조절 가능") + " · " + N(L(E)), 1)
-				], 8, xE)) : Ts("v-if", !0),
+					K("p", ME, " 저장 비율 " + N(L(S)) + "% · " + N(L(T) ? "좁은 폭: 위아래 높이 조절" : "크기 조절 가능") + " · " + N(L(E)), 1)
+				], 8, AE)) : Ts("v-if", !0),
 				o("sortable") ? (W(), hs("section", {
 					key: 5,
 					class: "starter-card",
@@ -26471,7 +26627,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[58] ||= K("p", { class: "starter-hint" }, " 손잡이를 드래그하거나 키보드와 위·아래 이동 버튼으로 순서를 제안합니다. 원본 객체는 유지합니다. ", -1),
-					K("div", TE, [
+					K("div", PE, [
 						q(Ne, {
 							id: n("advanced-sort-accept"),
 							modelValue: L(O),
@@ -26537,9 +26693,9 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"disabled",
 						"readonly"
 					]),
-					K("p", EE, N(L(A)), 1),
-					K("p", DE, "확정 순서: " + N(L(D).map((e) => e.id).join(" → ")), 1)
-				], 8, wE)) : Ts("v-if", !0),
+					K("p", FE, N(L(A)), 1),
+					K("p", IE, "확정 순서: " + N(L(D).map((e) => e.id).join(" → ")), 1)
+				], 8, NE)) : Ts("v-if", !0),
 				o("month-calendar") ? (W(), hs("section", {
 					key: 6,
 					class: "starter-card",
@@ -26550,7 +26706,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[60] ||= K("p", { class: "starter-hint" }, " 월과 날짜는 부모가 반영할 때 바뀝니다. 오늘 이동과 키보드 탐색은 선택을 자동 저장하지 않습니다. 날짜별 자료가 늦게 와도 선택은 남습니다. ", -1),
-					K("div", kE, [
+					K("div", RE, [
 						q(Ne, {
 							id: n("advanced-month-accept"),
 							modelValue: L(te),
@@ -26624,7 +26780,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						cell: B(({ date: e, disabled: t }) => [e.endsWith("-28") ? (W(), hs("small", {
 							key: 0,
 							"aria-label": t ? "선택 불가 추가 정보" : "추가 정보"
-						}, "ⓘ", 8, AE)) : Ts("v-if", !0)]),
+						}, "ⓘ", 8, zE)) : Ts("v-if", !0)]),
 						_: 1
 					}, 8, [
 						"id",
@@ -26640,8 +26796,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					K("p", {
 						id: n("advanced-month-result"),
 						class: "starter-hint"
-					}, " 표시 월: " + N(L(j)) + " · 선택 ISO: " + N(L(ee)), 9, jE)
-				], 8, OE)) : Ts("v-if", !0),
+					}, " 표시 월: " + N(L(j)) + " · 선택 ISO: " + N(L(ee)), 9, BE)
+				], 8, LE)) : Ts("v-if", !0),
 				o("time-grid") ? (W(), hs("section", {
 					key: 7,
 					class: "starter-card",
@@ -26652,7 +26808,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						_: 1
 					}, 8, ["id"])),
 					t[63] ||= K("p", { class: "starter-hint" }, " 기본은 읽기 전용이며 편집을 켜면 이동·크기 변경·복제를 제안합니다. 아래 반영 체크를 끄면 원본은 유지됩니다. 시간대·충돌·새 key·저장은 소비 앱에서 소유합니다. ", -1),
-					K("div", NE, [q(Ne, {
+					K("div", HE, [q(Ne, {
 						id: n("advanced-time-grid-empty"),
 						modelValue: L(xe),
 						"onUpdate:modelValue": t[38] ||= (e) => /* @__PURE__ */ P(xe) ? xe.value = e : null,
@@ -26663,7 +26819,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"onUpdate:modelValue": t[39] ||= (e) => /* @__PURE__ */ P(Se) ? Se.value = e : null,
 						label: "불러오는 중"
 					}, null, 8, ["id", "modelValue"])]),
-					K("div", PE, [
+					K("div", UE, [
 						q(Ne, {
 							id: n("advanced-time-grid-edit"),
 							modelValue: L(de),
@@ -26747,12 +26903,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						id: n("advanced-time-grid-result"),
 						class: "starter-hint",
 						role: "status"
-					}, N(L(he) ? "미리보기 · " + L(he).to.columnKey + " · " + L(he).to.startMinute + "–" + L(he).to.endMinute : L(ge)), 9, FE)
-				], 8, ME)) : Ts("v-if", !0)
+					}, N(L(he) ? "미리보기 · " + L(he).to.columnKey + " · " + L(he).to.startMinute + "–" + L(he).to.endMinute : L(ge)), 9, WE)
+				], 8, VE)) : Ts("v-if", !0)
 			], 64);
 		};
 	}
-}, LE = /* @__PURE__ */ H({
+}, KE = /* @__PURE__ */ H({
 	name: "SolDocumentPreviewCard",
 	inheritAttrs: !1,
 	setup(e, { attrs: t, slots: n }) {
@@ -26765,7 +26921,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 		};
 	}
 });
-function RE(e) {
+function qE(e) {
 	let t = document.createElement("div");
 	t.dataset.inlinePreviewRuntime = "", document.body.append(t);
 	let n = /* @__PURE__ */ I([]), r = /* @__PURE__ */ F("ko-KR"), i = /* @__PURE__ */ new Map(), a = pw({ components: {
@@ -26779,7 +26935,7 @@ function RE(e) {
 		"data-package-version": uw
 	}, [X(e.component)]))))) });
 	Mx(o, Y(() => ({ code: r.value }))), o.use(a);
-	for (let [e, t] of Object.entries(vw)) o.component(e, e === "SCard" ? LE : t);
+	for (let [e, t] of Object.entries(vw)) o.component(e, e === "SCard" ? KE : t);
 	o.mount(t);
 	let s = !1;
 	function c(e) {
@@ -26788,7 +26944,7 @@ function RE(e) {
 	return c(e), {
 		async mount(e) {
 			if (s || n.value.some((t) => t.host === e.host)) return;
-			let t = e.view === "advanced" ? IE : cE[e.recipe];
+			let t = e.view === "advanced" ? GE : _E[e.recipe];
 			if (!t) throw Error("Unknown preview recipe: " + e.recipe);
 			let r = {
 				...e,
@@ -26825,4 +26981,4 @@ function RE(e) {
 		}
 	};
 }
-export { RE as createInlinePreviewRuntime };
+export { qE as createInlinePreviewRuntime };

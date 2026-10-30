@@ -34,6 +34,10 @@ import Recipe32 from './recipes/chip.vue'
 import Recipe33 from './recipes/badge.vue'
 import Recipe34 from './recipes/icon.vue'
 import Recipe35 from './recipes/icon-button.vue'
+import Recipe36 from './recipes/checkbox.vue'
+import Recipe37 from './recipes/radio-group.vue'
+import Recipe38 from './recipes/switch.vue'
+import Recipe39 from './recipes/select.vue'
 
 export const recipeComponents = {
   'color-examples': Recipe0,
@@ -72,16 +76,20 @@ export const recipeComponents = {
   badge: Recipe33,
   icon: Recipe34,
   'icon-button': Recipe35,
+  checkbox: Recipe36,
+  'radio-group': Recipe37,
+  switch: Recipe38,
+  select: Recipe39,
 }
 export const recipeLabels = {
   'color-examples': '의미색 UI 조합',
   writing: 'UI 문구 적용',
   buttons: '버튼 상태와 동작',
   fields: '필드와 검증',
-  choices: '체크·단일 선택·스위치',
+  choices: '선택 컨트롤 비교 · 기존 조합',
   feedback: '알림과 스낵바',
   dialog: '대화상자 열기와 복귀',
-  selection: '선택과 검색',
+  selection: '선택의 의미 비교 · 기존 조합',
   help: '설명과 추가 정보',
   accordion: '상세 펼치기',
   navigation: '경로·패널·알림',
@@ -110,4 +118,8 @@ export const recipeLabels = {
   badge: '배지 상태 표시',
   icon: '아이콘의 의미와 장식',
   'icon-button': '아이콘 전용 버튼',
+  checkbox: 'Checkbox · 독립 선택',
+  'radio-group': 'Radio Group · 한 가지 선택',
+  switch: 'Switch · 즉시 설정',
+  select: 'Select · 목록 선택',
 }
