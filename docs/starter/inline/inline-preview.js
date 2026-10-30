@@ -20,27 +20,27 @@ var r = {}, i = [], a = () => {}, o = () => !1, s = (e) => e.charCodeAt(0) === 1
 }, d = Object.prototype.hasOwnProperty, f = (e, t) => d.call(e, t), p = Array.isArray, m = (e) => w(e) === "[object Map]", h = (e) => w(e) === "[object Set]", g = (e) => w(e) === "[object Date]", _ = (e) => w(e) === "[object RegExp]", v = (e) => typeof e == "function", y = (e) => typeof e == "string", b = (e) => typeof e == "symbol", x = (e) => typeof e == "object" && !!e, S = (e) => (x(e) || v(e)) && v(e.then) && v(e.catch), C = Object.prototype.toString, w = (e) => C.call(e), T = (e) => w(e).slice(8, -1), E = (e) => w(e) === "[object Object]", D = (e) => y(e) && e !== "NaN" && e[0] !== "-" && "" + parseInt(e, 10) === e, O = /* @__PURE__ */ n(",key,ref,ref_for,ref_key,onVnodeBeforeMount,onVnodeMounted,onVnodeBeforeUpdate,onVnodeUpdated,onVnodeBeforeUnmount,onVnodeUnmounted"), k = (e) => {
 	let t = /* @__PURE__ */ Object.create(null);
 	return ((n) => t[n] || (t[n] = e(n)));
-}, A = /-\w/g, j = k((e) => e.replace(A, (e) => e.slice(1).toUpperCase())), ee = /\B([A-Z])/g, te = k((e) => e.replace(ee, "-$1").toLowerCase()), ne = k((e) => e.charAt(0).toUpperCase() + e.slice(1)), re = k((e) => e ? `on${ne(e)}` : ""), ie = (e, t) => !Object.is(e, t), ae = (e, ...t) => {
+}, A = /-\w/g, j = k((e) => e.replace(A, (e) => e.slice(1).toUpperCase())), ee = /\B([A-Z])/g, M = k((e) => e.replace(ee, "-$1").toLowerCase()), te = k((e) => e.charAt(0).toUpperCase() + e.slice(1)), ne = k((e) => e ? `on${te(e)}` : ""), re = (e, t) => !Object.is(e, t), ie = (e, ...t) => {
 	for (let n = 0; n < e.length; n++) e[n](...t);
-}, oe = (e, t, n, r = !1) => {
+}, ae = (e, t, n, r = !1) => {
 	Object.defineProperty(e, t, {
 		configurable: !0,
 		enumerable: !1,
 		writable: r,
 		value: n
 	});
-}, se = (e) => {
+}, oe = (e) => {
 	let t = parseFloat(e);
 	return isNaN(t) ? e : t;
-}, ce = (e) => {
+}, se = (e) => {
 	let t = y(e) ? Number(e) : NaN;
 	return isNaN(t) ? e : t;
-}, le, ue = () => le ||= typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : typeof global < "u" ? global : {}, de = /* @__PURE__ */ n("Infinity,undefined,NaN,isFinite,isNaN,parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,BigInt,console,Error,Symbol");
-function M(e) {
+}, ce, le = () => ce ||= typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : typeof global < "u" ? global : {}, ue = /* @__PURE__ */ n("Infinity,undefined,NaN,isFinite,isNaN,parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,BigInt,console,Error,Symbol");
+function de(e) {
 	if (p(e)) {
 		let t = {};
 		for (let n = 0; n < e.length; n++) {
-			let r = e[n], i = y(r) ? he(r) : M(r);
+			let r = e[n], i = y(r) ? he(r) : de(r);
 			if (i) for (let e in i) t[e] = i[e];
 		}
 		return t;
@@ -70,7 +70,7 @@ function ge(e) {
 function _e(e) {
 	if (!e) return null;
 	let { class: t, style: n } = e;
-	return t && !y(t) && (e.class = ge(t)), n && (e.style = M(n)), e;
+	return t && !y(t) && (e.class = ge(t)), n && (e.style = de(n)), e;
 }
 var ve = /* @__PURE__ */ n("itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,playsinline,readonly");
 function ye(e) {
@@ -307,7 +307,7 @@ function qe(e) {
 	try {
 		We(e);
 		let n = e.fn(e._value);
-		(t.version === 0 || ie(n, e._value)) && (e.flags |= 128, e._value = n, t.version++);
+		(t.version === 0 || re(n, e._value)) && (e.flags |= 128, e._value = n, t.version++);
 	} catch (e) {
 		throw t.version++, e;
 	} finally {
@@ -640,7 +640,7 @@ var Ot = class {
 			if (!/* @__PURE__ */ rn(n) && !/* @__PURE__ */ nn(n) && (i = /* @__PURE__ */ on(i), n = /* @__PURE__ */ on(n)), !a && /* @__PURE__ */ P(i) && !/* @__PURE__ */ P(n)) return e || (i.value = n), !0;
 		}
 		let o = a ? Number(t) < e.length : f(e, t), s = Reflect.set(e, t, n, /* @__PURE__ */ P(e) ? e : r);
-		return e === /* @__PURE__ */ on(r) && s && (o ? ie(n, i) && ft(e, "set", t, n, i) : ft(e, "add", t, n)), s;
+		return e === /* @__PURE__ */ on(r) && s && (o ? re(n, i) && ft(e, "set", t, n, i) : ft(e, "add", t, n)), s;
 	}
 	deleteProperty(e, t) {
 		let n = f(e, t), r = e[t], i = Reflect.deleteProperty(e, t);
@@ -688,7 +688,7 @@ function zt(e, t) {
 	let n = {
 		get(n) {
 			let r = this.__v_raw, i = /* @__PURE__ */ on(r), a = /* @__PURE__ */ on(n);
-			e || (ie(n, a) && dt(i, "get", n), dt(i, "get", a));
+			e || (re(n, a) && dt(i, "get", n), dt(i, "get", a));
 			let { has: o } = It(i), s = t ? Ft : e ? ln : cn;
 			if (o.call(i, n)) return s(r.get(n));
 			if (o.call(i, a)) return s(r.get(a));
@@ -700,7 +700,7 @@ function zt(e, t) {
 		},
 		has(t) {
 			let n = this.__v_raw, r = /* @__PURE__ */ on(n), i = /* @__PURE__ */ on(t);
-			return e || (ie(t, i) && dt(r, "has", t), dt(r, "has", i)), t === i ? n.has(t) : n.has(t) || n.has(i);
+			return e || (re(t, i) && dt(r, "has", t), dt(r, "has", i)), t === i ? n.has(t) : n.has(t) || n.has(i);
 		},
 		forEach(n, r) {
 			let i = this, a = i.__v_raw, o = /* @__PURE__ */ on(a), s = t ? Ft : e ? ln : cn;
@@ -715,14 +715,14 @@ function zt(e, t) {
 	} : {
 		add(e) {
 			let n = /* @__PURE__ */ on(this), r = It(n), i = /* @__PURE__ */ on(e), a = !t && !/* @__PURE__ */ rn(e) && !/* @__PURE__ */ nn(e) ? i : e;
-			return r.has.call(n, a) || ie(e, a) && r.has.call(n, e) || ie(i, a) && r.has.call(n, i) || (n.add(a), ft(n, "add", a, a)), this;
+			return r.has.call(n, a) || re(e, a) && r.has.call(n, e) || re(i, a) && r.has.call(n, i) || (n.add(a), ft(n, "add", a, a)), this;
 		},
 		set(e, n) {
 			t || /* @__PURE__ */ rn(n) || /* @__PURE__ */ nn(n) || (n = /* @__PURE__ */ on(n));
 			let r = /* @__PURE__ */ on(this), { has: i, get: a } = It(r), o = i.call(r, e);
 			o ||= (e = /* @__PURE__ */ on(e), i.call(r, e));
 			let s = a.call(r, e);
-			return r.set(e, n), o ? ie(n, s) && ft(r, "set", e, n, s) : ft(r, "add", e, n), this;
+			return r.set(e, n), o ? re(n, s) && ft(r, "set", e, n, s) : ft(r, "add", e, n), this;
 		},
 		delete(e) {
 			let t = /* @__PURE__ */ on(this), { has: n, get: r } = It(t), i = n.call(t, e);
@@ -806,7 +806,7 @@ function on(e) {
 	return t ? /* @__PURE__ */ on(t) : e;
 }
 function sn(e) {
-	return !f(e, "__v_skip") && Object.isExtensible(e) && oe(e, "__v_skip", !0), e;
+	return !f(e, "__v_skip") && Object.isExtensible(e) && ae(e, "__v_skip", !0), e;
 }
 var cn = (e) => x(e) ? /* @__PURE__ */ Xt(e) : e, ln = (e) => x(e) ? /* @__PURE__ */ Qt(e) : e;
 // @__NO_SIDE_EFFECTS__
@@ -833,7 +833,7 @@ var dn = class {
 	}
 	set value(e) {
 		let t = this._rawValue, n = this.__v_isShallow || /* @__PURE__ */ rn(e) || /* @__PURE__ */ nn(e);
-		e = n ? e : /* @__PURE__ */ on(e), ie(e, t) && (this._rawValue = e, this._value = n ? e : cn(e), this.dep.trigger());
+		e = n ? e : /* @__PURE__ */ on(e), re(e, t) && (this._rawValue = e, this._value = n ? e : cn(e), this.dep.trigger());
 	}
 };
 function fn(e) {
@@ -1000,7 +1000,7 @@ function jn(e, t, n = r) {
 		if (m.flags & 1 && (m.dirty || e)) {
 			if (t) {
 				let n = m.run();
-				if (e || o || y || (b ? n.some((e, t) => ie(e, C[t])) : ie(n, C))) {
+				if (e || o || y || (b ? n.some((e, t) => re(e, C[t])) : re(n, C))) {
 					let e = On;
 					et();
 					try {
@@ -1902,7 +1902,7 @@ function Ti({ props: e }) {
 	let t = e && e[yi];
 	return typeof t == "string" && Si(t, 1);
 }
-var Ei = ue().requestIdleCallback || ((e) => setTimeout(e, 1)), Di = ue().cancelIdleCallback || ((e) => clearTimeout(e)), Oi = (e = 1e4) => (t) => {
+var Ei = le().requestIdleCallback || ((e) => setTimeout(e, 1)), Di = le().cancelIdleCallback || ((e) => clearTimeout(e)), Oi = (e = 1e4) => (t) => {
 	let n = Ei(t, { timeout: e });
 	return () => Di(n);
 };
@@ -2049,14 +2049,14 @@ var Li = (e) => e.type.__isKeepAlive, Ri = {
 		r.activate = (e, t, n, r, i) => {
 			let a = e.component;
 			l(e, t, n, 0, s), c(a.vnode, e, t, n, a, s, r, e.slotScopeIds, i), Po(() => {
-				a.isDeactivated = !1, a.a && ae(a.a);
+				a.isDeactivated = !1, a.a && ie(a.a);
 				let t = e.props && e.props.onVnodeMounted;
 				t && As(t, a.parent, e);
 			}, s);
 		}, r.deactivate = (e) => {
 			let t = e.component;
 			Wo(t.m), Wo(t.a), l(e, f, null, 1, s), Po(() => {
-				t.da && ae(t.da);
+				t.da && ie(t.da);
 				let n = e.props && e.props.onVnodeUnmounted;
 				n && As(n, t.parent, e), t.isDeactivated = !0;
 			}, s);
@@ -2177,14 +2177,14 @@ function la(e, t, n = !0, r = !1) {
 		let n = i.type;
 		if (e === ia) {
 			let e = ec(n, !1);
-			if (e && (e === t || e === j(t) || e === ne(j(t)))) return n;
+			if (e && (e === t || e === j(t) || e === te(j(t)))) return n;
 		}
 		let a = ua(i[e] || n[e], t) || ua(i.appContext[e], t);
 		return !a && r ? n : a;
 	}
 }
 function ua(e, t) {
-	return e && (e[t] || e[j(t)] || e[ne(j(t))]);
+	return e && (e[t] || e[j(t)] || e[te(j(t))]);
 }
 function da(e, t, n, r) {
 	let i, a = n && n[r], o = p(e);
@@ -2248,7 +2248,7 @@ function ma(e) {
 }
 function ha(e, t) {
 	let n = {};
-	for (let r in e) n[t && /[A-Z]/.test(r) ? `on:${r}` : re(r)] = e[r];
+	for (let r in e) n[t && /[A-Z]/.test(r) ? `on:${r}` : ne(r)] = e[r];
 	return n;
 }
 var ga = (e) => e ? Vs(e) ? $s(e) : ga(e.parent) : null, _a = /* @__PURE__ */ l(/* @__PURE__ */ Object.create(null), {
@@ -2309,7 +2309,7 @@ var ga = (e) => e ? Vs(e) ? $s(e) : ga(e.parent) : null, _a = /* @__PURE__ */ l(
 		if (t !== Symbol.unscopables) return ya.get(e, t, e);
 	},
 	has(e, t) {
-		return t[0] !== "_" && !de(t);
+		return t[0] !== "_" && !ue(t);
 	}
 });
 function xa() {
@@ -2381,7 +2381,7 @@ var Ia = !0;
 function La(e) {
 	let t = Va(e), n = e.proxy, r = e.ctx;
 	Ia = !1, t.beforeCreate && za(t.beforeCreate, e, "bc");
-	let { data: i, computed: o, methods: s, watch: c, provide: l, inject: u, created: d, beforeMount: f, mounted: m, beforeUpdate: h, updated: g, activated: _, deactivated: y, beforeDestroy: b, beforeUnmount: S, destroyed: C, unmounted: w, render: T, renderTracked: E, renderTriggered: D, errorCaptured: O, serverPrefetch: k, expose: A, inheritAttrs: j, components: ee, directives: te, filters: ne } = t;
+	let { data: i, computed: o, methods: s, watch: c, provide: l, inject: u, created: d, beforeMount: f, mounted: m, beforeUpdate: h, updated: g, activated: _, deactivated: y, beforeDestroy: b, beforeUnmount: S, destroyed: C, unmounted: w, render: T, renderTracked: E, renderTriggered: D, errorCaptured: O, serverPrefetch: k, expose: A, inheritAttrs: j, components: ee, directives: M, filters: te } = t;
 	if (u && Ra(u, r, null), s) for (let e in s) {
 		let t = s[e];
 		v(t) && (r[e] = t.bind(n));
@@ -2410,10 +2410,10 @@ function La(e) {
 		});
 	}
 	d && za(d, e, "c");
-	function re(e, t) {
+	function ne(e, t) {
 		p(t) ? t.forEach((t) => e(t.bind(n))) : t && e(t.bind(n));
 	}
-	if (re(Ji, f), re(Yi, m), re(Xi, h), re(Zi, g), re(Bi, _), re(Vi, y), re(ra, O), re(na, E), re(ta, D), re(Qi, S), re($i, w), re(ea, k), p(A)) {
+	if (ne(Ji, f), ne(Yi, m), ne(Xi, h), ne(Zi, g), ne(Bi, _), ne(Vi, y), ne(ra, O), ne(na, E), ne(ta, D), ne(Qi, S), ne($i, w), ne(ea, k), p(A)) {
 		if (A.length) {
 			let t = e.exposed ||= {};
 			A.forEach((e) => {
@@ -2425,7 +2425,7 @@ function La(e) {
 			});
 		} else e.exposed ||= {};
 	}
-	T && e.render === a && (e.render = T), j != null && (e.inheritAttrs = j), ee && (e.components = ee), te && (e.directives = te), k && ii(e);
+	T && e.render === a && (e.render = T), j != null && (e.inheritAttrs = j), ee && (e.components = ee), M && (e.directives = M), k && ii(e);
 }
 function Ra(e, t, n = a) {
 	p(e) && (e = Ka(e));
@@ -2606,20 +2606,20 @@ function $a(e, t) {
 }
 var eo = null;
 function to(e, t, n = r) {
-	let i = Is(), a = j(t), o = te(t), s = no(e, a), c = _n((s, c) => {
+	let i = Is(), a = j(t), o = M(t), s = no(e, a), c = _n((s, c) => {
 		let l, u = r, d;
 		return wr(() => {
 			let t = e[a];
-			ie(l, t) && (l = t, c());
+			re(l, t) && (l = t, c());
 		}), {
 			get() {
 				return s(), n.get ? n.get(l) : l;
 			},
 			set(e) {
 				let s = n.set ? n.set(e) : e;
-				if (!ie(s, l) && !(u !== r && ie(e, u))) return;
+				if (!re(s, l) && !(u !== r && re(e, u))) return;
 				let f = i.vnode.props, p = !!(f && (t in f || a in f || o in f) && (`onUpdate:${t}` in f || `onUpdate:${a}` in f || `onUpdate:${o}` in f));
-				p || (l = e, c()), i.emit(`update:${t}`, s), ie(e, u) && (ie(e, s) && !ie(s, d) || p && u !== r && !ie(s, l)) && c(), u = e, d = s;
+				p || (l = e, c()), i.emit(`update:${t}`, s), re(e, u) && (re(e, s) && !re(s, d) || p && u !== r && !re(s, l)) && c(), u = e, d = s;
 			}
 		};
 	});
@@ -2633,13 +2633,13 @@ function to(e, t, n = r) {
 		} };
 	}, c;
 }
-var no = (e, t) => t === "modelValue" || t === "model-value" ? e.modelModifiers : e[`${t}Modifiers`] || e[`${j(t)}Modifiers`] || e[`${te(t)}Modifiers`];
+var no = (e, t) => t === "modelValue" || t === "model-value" ? e.modelModifiers : e[`${t}Modifiers`] || e[`${j(t)}Modifiers`] || e[`${M(t)}Modifiers`];
 function ro(e, t, ...n) {
 	if (e.isUnmounted) return;
 	let i = e.vnode.props || r, a = n, o = t.startsWith("update:"), s = o && no(i, t.slice(7));
-	s && (s.trim && (a = n.map((e) => y(e) ? e.trim() : e)), s.number && (a = a.map(se)));
-	let c, l = i[c = re(t)] || i[c = re(j(t))];
-	!l && o && (l = i[c = re(te(t))]), l && Bn(l, e, 6, a);
+	s && (s.trim && (a = n.map((e) => y(e) ? e.trim() : e)), s.number && (a = a.map(oe)));
+	let c, l = i[c = ne(t)] || i[c = ne(j(t))];
+	!l && o && (l = i[c = ne(M(t))]), l && Bn(l, e, 6, a);
 	let u = i[c + "Once"];
 	if (u) {
 		if (!e.emitted) e.emitted = {};
@@ -2662,7 +2662,7 @@ function ao(e, t, n = !1) {
 	return !a && !s ? (x(e) && r.set(e, null), null) : (p(a) ? a.forEach((e) => o[e] = null) : l(o, a), x(e) && r.set(e, o), o);
 }
 function oo(e, t) {
-	return !e || !s(t) ? !1 : (t = t.slice(2), t = t === "Once" ? t : t.replace(/Once$/, ""), f(e, t[0].toLowerCase() + t.slice(1)) || f(e, te(t)) || f(e, t));
+	return !e || !s(t) ? !1 : (t = t.slice(2), t = t === "Once" ? t : t.replace(/Once$/, ""), f(e, t[0].toLowerCase() + t.slice(1)) || f(e, M(t)) || f(e, t));
 }
 function so(e) {
 	let { type: t, vnode: n, proxy: r, withProxy: i, propsOptions: [a], slots: o, attrs: s, emit: l, render: u, renderCache: d, props: f, data: p, setupState: m, ctx: h, inheritAttrs: g } = e, _ = dr(e), v, y;
@@ -2775,7 +2775,7 @@ function bo(e, t, n, r) {
 	} else {
 		xo(e, t, i, a) && (l = !0);
 		let r;
-		for (let a in s) t && (f(t, a) || (r = te(a)) !== a && f(t, r)) || (c ? n && (n[a] !== void 0 || n[r] !== void 0) && (i[a] = So(c, s, a, void 0, e, !0)) : delete i[a]);
+		for (let a in s) t && (f(t, a) || (r = M(a)) !== a && f(t, r)) || (c ? n && (n[a] !== void 0 || n[r] !== void 0) && (i[a] = So(c, s, a, void 0, e, !0)) : delete i[a]);
 		if (a !== s) for (let e in a) t && f(t, e) || (delete a[e], l = !0);
 	}
 	l && ft(e.attrs, "set", "");
@@ -2812,7 +2812,7 @@ function So(e, t, n, r, i, a) {
 			} else r = e;
 			i.ce && i.ce._setProp(n, r);
 		}
-		o[0] && (a && !e ? r = !1 : o[1] && (r === "" || r === te(n)) && (r = !0));
+		o[0] && (a && !e ? r = !1 : o[1] && (r === "" || r === M(n)) && (r = !0));
 	}
 	return r;
 }
@@ -2880,7 +2880,7 @@ var Eo = (e) => e === "_" || e === "_ctx" || e === "$stable", Do = (e) => p(e) ?
 	let r = e.slots = _o();
 	if (e.vnode.shapeFlag & 32) {
 		let e = t._;
-		e ? (jo(r, t, n), n && oe(r, "_", e, !0)) : ko(t, r);
+		e ? (jo(r, t, n), n && ae(r, "_", e, !0)) : ko(t, r);
 	} else t && Ao(e, t);
 }, No = (e, t, n) => {
 	let { vnode: i, slots: a } = e, o = !0, s = r;
@@ -2897,11 +2897,11 @@ function Io(e) {
 	return Lo(e, gi);
 }
 function Lo(e, t) {
-	let n = ue();
+	let n = le();
 	n.__VUE__ = !0;
 	let { insert: o, remove: s, patchProp: c, createElement: l, createText: u, createComment: d, setText: f, setElementText: p, parentNode: m, nextSibling: h, setScopeId: g = a, insertStaticContent: _ } = e, v = (e, t, n, r = null, a = null, o = null, s = void 0, c = null, l = !!t.dynamicChildren) => {
 		if (e === t) return;
-		e && !_s(e, t) && (r = ge(e), M(e, a, o, !0), e = null), t.patchFlag === -2 && (l = !1, t.dynamicChildren = null), t.dynamicChildren && e && e.dynamicChildren && e.dynamicChildren.hasOnce && (t.dynamicChildren === i && (t.dynamicChildren = []), t.dynamicChildren.hasOnce = !0);
+		e && !_s(e, t) && (r = ge(e), de(e, a, o, !0), e = null), t.patchFlag === -2 && (l = !1, t.dynamicChildren = null), t.dynamicChildren && e && e.dynamicChildren && e.dynamicChildren.hasOnce && (t.dynamicChildren === i && (t.dynamicChildren = []), t.dynamicChildren.hasOnce = !0);
 		let { type: u, ref: d, shapeFlag: f } = t;
 		switch (u) {
 			case os:
@@ -2916,7 +2916,7 @@ function Lo(e, t) {
 			case as:
 				ee(e, t, n, r, a, o, s, c, l);
 				break;
-			default: f & 1 ? w(e, t, n, r, a, o, s, c, l) : f & 6 ? te(e, t, n, r, a, o, s, c, l) : (f & 64 || f & 128) && u.process(e, t, n, r, a, o, s, c, l, ve);
+			default: f & 1 ? w(e, t, n, r, a, o, s, c, l) : f & 6 ? M(e, t, n, r, a, o, s, c, l) : (f & 64 || f & 128) && u.process(e, t, n, r, a, o, s, c, l, ve);
 		}
 		d != null && a ? ci(d, e && e.ref, o, t || e, !t) : d == null && e && e.ref != null && ci(e.ref, null, o, e, !0);
 	}, y = (e, t, n, r) => {
@@ -2978,7 +2978,7 @@ function Lo(e, t) {
 		let l = t.el = e.el, { patchFlag: u, dynamicChildren: d, dirs: f } = t;
 		u |= e.patchFlag & 16;
 		let m = e.props || r, h = t.props || r, g;
-		if (n && zo(n, !1), (g = h.onVnodeBeforeUpdate) && As(g, n, t, e), f && gr(t, e, n, "beforeUpdate"), n && zo(n, !0), d && (!e.dynamicChildren || e.dynamicChildren.length !== d.length) && (u = 0, s = !1, d = null), (m.innerHTML && h.innerHTML == null || m.textContent && h.textContent == null) && p(l, ""), d ? A(e.dynamicChildren, d, l, n, i, Ro(t, a), o) : s || se(e, t, l, null, n, i, Ro(t, a), o, !1), u > 0) {
+		if (n && zo(n, !1), (g = h.onVnodeBeforeUpdate) && As(g, n, t, e), f && gr(t, e, n, "beforeUpdate"), n && zo(n, !0), d && (!e.dynamicChildren || e.dynamicChildren.length !== d.length) && (u = 0, s = !1, d = null), (m.innerHTML && h.innerHTML == null || m.textContent && h.textContent == null) && p(l, ""), d ? A(e.dynamicChildren, d, l, n, i, Ro(t, a), o) : s || oe(e, t, l, null, n, i, Ro(t, a), o, !1), u > 0) {
 			if (u & 16) j(l, m, h, n, a);
 			else if (u & 2 && m.class !== h.class && c(l, "class", null, h.class, a), u & 4 && c(l, "style", m.style, h.style, a), u & 8) {
 				let e = t.dynamicProps;
@@ -3009,34 +3009,34 @@ function Lo(e, t) {
 		}
 	}, ee = (e, t, n, r, i, a, s, c, l) => {
 		let d = t.el = e ? e.el : u(""), f = t.anchor = e ? e.anchor : u(""), { patchFlag: p, dynamicChildren: m, slotScopeIds: h } = t;
-		h && (c = c ? c.concat(h) : h), e == null ? (o(d, n, r), o(f, n, r), D(t.children || [], n, f, i, a, s, c, l)) : p > 0 && p & 64 && m && e.dynamicChildren && e.dynamicChildren.length === m.length ? (A(e.dynamicChildren, m, n, i, a, s, c), (t.key != null || i && t === i.subTree) && Vo(e, t, !0)) : se(e, t, n, f, i, a, s, c, l);
-	}, te = (e, t, n, r, i, a, o, s, c) => {
-		t.slotScopeIds = s, e == null ? t.shapeFlag & 512 ? i.ctx.activate(t, n, r, o, c) : ne(t, n, r, i, a, o, c) : re(e, t, c);
-	}, ne = (e, t, n, r, i, a, o) => {
+		h && (c = c ? c.concat(h) : h), e == null ? (o(d, n, r), o(f, n, r), D(t.children || [], n, f, i, a, s, c, l)) : p > 0 && p & 64 && m && e.dynamicChildren && e.dynamicChildren.length === m.length ? (A(e.dynamicChildren, m, n, i, a, s, c), (t.key != null || i && t === i.subTree) && Vo(e, t, !0)) : oe(e, t, n, f, i, a, s, c, l);
+	}, M = (e, t, n, r, i, a, o, s, c) => {
+		t.slotScopeIds = s, e == null ? t.shapeFlag & 512 ? i.ctx.activate(t, n, r, o, c) : te(t, n, r, i, a, o, c) : ne(e, t, c);
+	}, te = (e, t, n, r, i, a, o) => {
 		let s = e.component = Ps(e, r, i);
 		if (Li(e) && (s.ctx.renderer = ve), Us(s, !1, o), s.asyncDep) {
-			if (i && i.registerDep(s, ie, o, a), !e.el) {
+			if (i && i.registerDep(s, re, o, a), !e.el) {
 				let r = s.subTree = q(ss);
 				b(null, r, t, n), e.placeholder = r.el;
 			}
-		} else ie(s, e, t, n, i, a, o);
-	}, re = (e, t, n) => {
+		} else re(s, e, t, n, i, a, o);
+	}, ne = (e, t, n) => {
 		let r = t.component = e.component;
 		if (fo(e, t, n)) {
 			if (r.asyncDep && !r.asyncResolved) {
-				t.el = e.el, t.placeholder = e.placeholder, oe(r, t, n);
+				t.el = e.el, t.placeholder = e.placeholder, ae(r, t, n);
 				return;
 			}
 			r.next = t, r.update();
 		} else t.el = e.el, t.placeholder = e.placeholder, r.vnode = t;
-	}, ie = (e, t, n, r, i, a, o) => {
+	}, re = (e, t, n, r, i, a, o) => {
 		let s = () => {
 			if (e.isMounted) {
 				let { next: t, bu: n, u: r, parent: s, vnode: c } = e;
 				{
 					let n = Uo(e);
 					if (n) {
-						t && (t.el = c.el, oe(e, t, o)), n.asyncDep.then(() => {
+						t && (t.el = c.el, ae(e, t, o)), n.asyncDep.then(() => {
 							Po(() => {
 								e.isUnmounted || l();
 							}, i);
@@ -3045,12 +3045,12 @@ function Lo(e, t) {
 					}
 				}
 				let u = t, d;
-				zo(e, !1), t ? (t.el = c.el, oe(e, t, o)) : t = c, n && ae(n), (d = t.props && t.props.onVnodeBeforeUpdate) && As(d, s, t, c), zo(e, !0);
+				zo(e, !1), t ? (t.el = c.el, ae(e, t, o)) : t = c, n && ie(n), (d = t.props && t.props.onVnodeBeforeUpdate) && As(d, s, t, c), zo(e, !0);
 				let f = so(e), p = e.subTree;
 				e.subTree = f, v(p, f, m(p.el), ge(p), e, i, a), t.el = f.el, u === null && ho(e, f.el), r && Po(r, i), (d = t.props && t.props.onVnodeUpdated) && Po(() => As(d, s, t, c), i);
 			} else {
 				let o, { el: s, props: c } = t, { bm: l, m: u, parent: d, root: f, type: p } = e, m = Pi(t);
-				if (zo(e, !1), l && ae(l), !m && (o = c && c.onVnodeBeforeMount) && As(o, d, t), zo(e, !0), s && be) {
+				if (zo(e, !1), l && ie(l), !m && (o = c && c.onVnodeBeforeMount) && As(o, d, t), zo(e, !0), s && be) {
 					let t = () => {
 						e.subTree = so(e), be(s, e.subTree, e, i, null);
 					};
@@ -3072,24 +3072,24 @@ function Lo(e, t) {
 		e.scope.off();
 		let l = e.update = c.run.bind(c), u = e.job = c.runIfDirty.bind(c);
 		u.i = e, u.id = e.uid, c.scheduler = () => Zn(u), zo(e, !0), l();
-	}, oe = (e, t, n) => {
+	}, ae = (e, t, n) => {
 		t.component = e;
 		let r = e.vnode.props;
 		e.vnode = t, e.next = null, bo(e, t.props, r, n), No(e, t.children, n), et(), er(e), tt();
-	}, se = (e, t, n, r, i, a, o, s, c = !1) => {
+	}, oe = (e, t, n, r, i, a, o, s, c = !1) => {
 		let l = e && e.children, u = e ? e.shapeFlag : 0, d = t.children, { patchFlag: f, shapeFlag: m } = t;
 		if (f > 0) {
 			if (f & 128) {
-				le(l, d, n, r, i, a, o, s, c);
-				return;
-			}
-			if (f & 256) {
 				ce(l, d, n, r, i, a, o, s, c);
 				return;
 			}
+			if (f & 256) {
+				se(l, d, n, r, i, a, o, s, c);
+				return;
+			}
 		}
-		m & 8 ? (u & 16 && he(l, i, a), d !== l && p(n, d)) : u & 16 ? m & 16 ? le(l, d, n, r, i, a, o, s, c) : he(l, i, a, !0) : (u & 8 && p(n, ""), m & 16 && D(d, n, r, i, a, o, s, c));
-	}, ce = (e, t, n, r, a, o, s, c, l) => {
+		m & 8 ? (u & 16 && he(l, i, a), d !== l && p(n, d)) : u & 16 ? m & 16 ? ce(l, d, n, r, i, a, o, s, c) : he(l, i, a, !0) : (u & 8 && p(n, ""), m & 16 && D(d, n, r, i, a, o, s, c));
+	}, se = (e, t, n, r, a, o, s, c, l) => {
 		e ||= i, t ||= i;
 		let u = e.length, d = t.length, f = Math.min(u, d), p = 0;
 		for (; p < f; p++) {
@@ -3097,7 +3097,7 @@ function Lo(e, t) {
 			v(e[p], r, n, null, a, o, s, c, l);
 		}
 		u > d ? he(e, a, o, !0, !1, f) : D(t, n, r, a, o, s, c, l, f);
-	}, le = (e, t, n, r, a, o, s, c, l) => {
+	}, ce = (e, t, n, r, a, o, s, c, l) => {
 		let u = 0, d = t.length, f = e.length - 1, p = d - 1;
 		for (; u <= f && u <= p;) {
 			let r = e[u], i = t[u] = l ? Ds(t[u]) : Es(t[u]);
@@ -3116,7 +3116,7 @@ function Lo(e, t) {
 				let e = p + 1, i = e < d ? t[e].el : r;
 				for (; u <= p;) v(null, t[u] = l ? Ds(t[u]) : Es(t[u]), n, i, a, o, s, c, l), u++;
 			}
-		} else if (u > p) for (; u <= f;) M(e[u], a, o, !0), u++;
+		} else if (u > p) for (; u <= f;) de(e[u], a, o, !0), u++;
 		else {
 			let m = u, h = u, g = /* @__PURE__ */ new Map();
 			for (u = h; u <= p; u++) {
@@ -3128,7 +3128,7 @@ function Lo(e, t) {
 			for (u = m; u <= f; u++) {
 				let r = e[u];
 				if (y >= b) {
-					M(r, a, o, !0);
+					de(r, a, o, !0);
 					continue;
 				}
 				let i;
@@ -3137,22 +3137,22 @@ function Lo(e, t) {
 					i = _;
 					break;
 				}
-				i === void 0 ? M(r, a, o, !0) : (C[i - h] = u + 1, i >= S ? S = i : x = !0, v(r, t[i], n, null, a, o, s, c, l), y++);
+				i === void 0 ? de(r, a, o, !0) : (C[i - h] = u + 1, i >= S ? S = i : x = !0, v(r, t[i], n, null, a, o, s, c, l), y++);
 			}
 			let w = x ? Ho(C) : i;
 			for (_ = w.length - 1, u = b - 1; u >= 0; u--) {
 				let e = h + u, i = t[e], f = t[e + 1], p = e + 1 < d ? f.el || Go(f) : r;
-				C[u] === 0 ? v(null, i, n, p, a, o, s, c, l) : x && (_ < 0 || u !== w[_] ? de(i, n, p, 2) : _--);
+				C[u] === 0 ? v(null, i, n, p, a, o, s, c, l) : x && (_ < 0 || u !== w[_] ? ue(i, n, p, 2) : _--);
 			}
 		}
-	}, de = (e, t, n, r, i = null) => {
+	}, ue = (e, t, n, r, i = null) => {
 		let { el: a, type: c, transition: l, children: u, shapeFlag: d } = e;
-		if (d & 6) de(e.component.subTree, t, n, r);
+		if (d & 6) ue(e.component.subTree, t, n, r);
 		else if (d & 128) e.suspense.move(t, n, r);
 		else if (d & 64) c.move(e, t, n, ve);
 		else if (c === as) {
 			o(a, t, n);
-			for (let e = 0; e < u.length; e++) de(u[e], t, n, r);
+			for (let e = 0; e < u.length; e++) ue(u[e], t, n, r);
 			o(e.anchor, t, n);
 		} else if (c === cs) S(e, t, n);
 		else if (r !== 2 && d & 1 && l) {
@@ -3169,7 +3169,7 @@ function Lo(e, t) {
 				i ? i(a, u, d) : d();
 			}
 		} else o(a, t, n);
-	}, M = (e, t, n, r = !1, i = !1) => {
+	}, de = (e, t, n, r = !1, i = !1) => {
 		let { type: a, props: o, ref: s, children: c, dynamicChildren: l, shapeFlag: u, patchFlag: d, dirs: f, cacheIndex: p, memo: m } = e;
 		if ((d === -2 || l && l.hasOnce) && (i = !1), s != null && (et(), ci(s, null, n, e, !0), tt()), p == null || e.ctx && e.ctx !== t || (t.renderCache[p] = void 0), u & 256) {
 			t.ctx.deactivate(e);
@@ -3211,11 +3211,11 @@ function Lo(e, t) {
 		s(t);
 	}, me = (e, t, n) => {
 		let { bum: r, scope: i, job: a, subTree: o, um: s, m: c, a: l } = e;
-		Wo(c), Wo(l), r && ae(r), i.stop(), a ? (a.flags |= 8, M(o, e, t, n)) : e.vnode.el && o && (o.transition = e.vnode.transition, M(o, e, t, n)), s && Po(s, t), Po(() => {
+		Wo(c), Wo(l), r && ie(r), i.stop(), a ? (a.flags |= 8, de(o, e, t, n)) : e.vnode.el && o && (o.transition = e.vnode.transition, de(o, e, t, n)), s && Po(s, t), Po(() => {
 			e.isUnmounted = !0;
 		}, t);
 	}, he = (e, t, n, r = !1, i = !1, a = 0) => {
-		for (let o = a; o < e.length; o++) M(e[o], t, n, r, i);
+		for (let o = a; o < e.length; o++) de(e[o], t, n, r, i);
 	}, ge = (e) => {
 		if (e.shapeFlag & 6) return ge(e.component.subTree);
 		if (e.shapeFlag & 128) return e.suspense.next();
@@ -3223,16 +3223,16 @@ function Lo(e, t) {
 		return n ? h(n) : t;
 	}, _e = (e, t, n) => {
 		rr(() => {
-			e == null ? t._vnode && M(t._vnode, null, null, !0) : v(t._vnode || null, e, t, null, null, null, n), t._vnode = e;
+			e == null ? t._vnode && de(t._vnode, null, null, !0) : v(t._vnode || null, e, t, null, null, null, n), t._vnode = e;
 		}, e && t._vnode ? void 0 : e && e.component ? e.component.uid : Ns());
 	}, ve = {
 		p: v,
-		um: M,
-		m: de,
+		um: de,
+		m: ue,
 		r: fe,
-		mt: ne,
+		mt: te,
 		mc: D,
-		pc: se,
+		pc: oe,
 		pbc: A,
 		n: ge,
 		o: e
@@ -3328,7 +3328,7 @@ function Zo(e, t, n, r, i, a, o, s, { p: c, um: l, o: { createElement: u } }) {
 function Qo(e, t, n, r, i, a, o, s, c, l, u = !1) {
 	let { p: d, m: f, um: p, n: m, o: { parentNode: h, remove: g } } = l, _, v = is(e);
 	v && t && t.pendingBranch && (_ = t.pendingId, t.deps++);
-	let y = e.props ? ce(e.props.timeout) : void 0, b = a, x = {
+	let y = e.props ? se(e.props.timeout) : void 0, b = a, x = {
 		vnode: e,
 		parent: t,
 		parentComponent: n,
@@ -3512,7 +3512,7 @@ function xs(e, t = null, n = null, r = 0, i = null, a = !1) {
 	if (tc(e) && (e = e.__vccOpts), t) {
 		t = Ss(t);
 		let { class: e, style: n } = t;
-		e && !y(e) && (t.class = ge(e)), x(n) && (/* @__PURE__ */ an(n) && !p(n) && (n = l({}, n)), t.style = M(n));
+		e && !y(e) && (t.class = ge(e)), x(n) && (/* @__PURE__ */ an(n) && !p(n) && (n = l({}, n)), t.style = de(n));
 	}
 	let o = y(e) ? 1 : Ko(e) ? 128 : Ar(e) ? 64 : x(e) ? 4 : v(e) ? 2 : 0;
 	return K(e, t, n, r, i, o, a, !0);
@@ -3603,7 +3603,7 @@ function ks(...e) {
 	for (let n = 0; n < e.length; n++) {
 		let r = e[n];
 		for (let e in r) if (e === "class") t.class !== r.class && (t.class = ge([t.class, r.class]));
-		else if (e === "style") t.style = M([t.style, r.style]);
+		else if (e === "style") t.style = de([t.style, r.style]);
 		else if (s(e)) {
 			let n = t[e], i = r[e];
 			i && n !== i && !(p(n) && n.includes(i)) ? t[e] = n ? [].concat(n, i) : i : i == null && n == null && !c(e) && (t[e] = i);
@@ -3687,7 +3687,7 @@ function Ps(e, t, n) {
 }
 var Fs = null, Is = () => Fs || lr, Ls, Rs;
 {
-	let e = ue(), t = (t, n) => {
+	let e = le(), t = (t, n) => {
 		let r;
 		return (r = e[t]) || (r = e[t] = []), r.push(n), (e) => {
 			r.length > 1 ? r.forEach((t) => t(e)) : r[0](e);
@@ -3821,7 +3821,7 @@ function rc(e, t, n, r) {
 function ic(e, t) {
 	let n = e.memo;
 	if (n.length != t.length) return !1;
-	for (let e = 0; e < n.length; e++) if (ie(n[e], t[e])) return !1;
+	for (let e = 0; e < n.length; e++) if (re(n[e], t[e])) return !1;
 	return fs > 0 && us && us.push(e), !0;
 }
 var ac = "3.5.44", oc = a, sc = Rn, cc = or, lc = cr, uc = {
@@ -3954,7 +3954,7 @@ function Oc(e) {
 	}
 }
 function kc(e) {
-	return ce(e);
+	return se(e);
 }
 function Ac(e, t) {
 	t.split(/\s+/).forEach((t) => t && e.classList.add(t)), (e[xc] || (e[xc] = /* @__PURE__ */ new Set())).add(t);
@@ -4109,7 +4109,7 @@ function Qc(e, t, n) {
 	else if (n ??= "", t.startsWith("--")) Zc.test(n) ? e.setProperty(t, n.replace(Zc, ""), "important") : e.setProperty(t, n);
 	else {
 		let r = tl(e, t);
-		Zc.test(n) ? e.setProperty(te(r), n.replace(Zc, ""), "important") : e[r] = n;
+		Zc.test(n) ? e.setProperty(M(r), n.replace(Zc, ""), "important") : e[r] = n;
 	}
 }
 var $c = [
@@ -4122,7 +4122,7 @@ function tl(e, t) {
 	if (n) return n;
 	let r = j(t);
 	if (r !== "filter" && r in e) return el[t] = r;
-	r = ne(r);
+	r = te(r);
 	for (let n = 0; n < $c.length; n++) {
 		let i = $c[n] + r;
 		if (i in e) return el[t] = i;
@@ -4176,7 +4176,7 @@ var ul = /(Once|Passive|Capture)$/, dl = /^on:?(?:Once|Passive|Capture)$/;
 function fl(e) {
 	let t, n;
 	for (; (n = e.match(ul)) && !dl.test(e);) t ||= {}, e = e.slice(0, e.length - n[1].length), t[n[1].toLowerCase()] = !0;
-	return [e[2] === ":" ? e.slice(3) : te(e.slice(2)), t];
+	return [e[2] === ":" ? e.slice(3) : M(e.slice(2)), t];
 }
 var pl = 0, ml = /* @__PURE__ */ Promise.resolve(), hl = () => pl ||= (ml.then(() => pl = 0), Date.now());
 function gl(e, t) {
@@ -4268,7 +4268,7 @@ var Cl = /* @__NO_SIDE_EFFECTS__ */ ((e, t) => /* @__PURE__ */ Sl(e, t, Su)), wl
 			let { props: n, styles: r } = e, i;
 			if (n && !p(n)) for (let e in n) {
 				let t = n[e];
-				(t === Number || t && t.type === Number) && (e in this._props && (this._props[e] = ce(this._props[e])), (i ||= /* @__PURE__ */ Object.create(null))[j(e)] = !0);
+				(t === Number || t && t.type === Number) && (e in this._props && (this._props[e] = se(this._props[e])), (i ||= /* @__PURE__ */ Object.create(null))[j(e)] = !0);
 			}
 			this._numberProps = i, this._resolveProps(e), this.shadowRoot && this._applyStyles(r), this._connected && this._mount(e);
 		}, t = this._def.__asyncLoader;
@@ -4297,7 +4297,7 @@ var Cl = /* @__NO_SIDE_EFFECTS__ */ ((e, t) => /* @__PURE__ */ Sl(e, t, Su)), wl
 	_setAttr(e) {
 		if (e.startsWith("data-v-")) return;
 		let t = this.hasAttribute(e), n = t ? this.getAttribute(e) : xl, r = j(e);
-		t && this._numberProps && this._numberProps[r] && (n = ce(n)), this._setProp(r, n, !1, !0);
+		t && this._numberProps && this._numberProps[r] && (n = se(n)), this._setProp(r, n, !1, !0);
 	}
 	_getProp(e) {
 		return this._props[e];
@@ -4305,7 +4305,7 @@ var Cl = /* @__NO_SIDE_EFFECTS__ */ ((e, t) => /* @__PURE__ */ Sl(e, t, Su)), wl
 	_setProp(e, t, n = !0, r = !1) {
 		if (t !== this._props[e] && (this._dirty = !0, t === xl ? delete this._props[e] : (this._props[e] = t, e === "key" && this._app && (this._app._ceVNode.key = t)), r && this._instance && this._update(), n)) {
 			let n = this._ob;
-			n && (this._processMutations(n.takeRecords()), n.disconnect()), t === !0 ? this.setAttribute(te(e), "") : typeof t == "string" || typeof t == "number" ? this.setAttribute(te(e), t + "") : t || this.removeAttribute(te(e)), n && n.observe(this, { attributes: !0 });
+			n && (this._processMutations(n.takeRecords()), n.disconnect()), t === !0 ? this.setAttribute(M(e), "") : typeof t == "string" || typeof t == "number" ? this.setAttribute(M(e), t + "") : t || this.removeAttribute(M(e)), n && n.observe(this, { attributes: !0 });
 		}
 	}
 	_update() {
@@ -4322,7 +4322,7 @@ var Cl = /* @__NO_SIDE_EFFECTS__ */ ((e, t) => /* @__PURE__ */ Sl(e, t, Su)), wl
 				this.dispatchEvent(new CustomEvent(e, E(t[0]) ? l({ detail: t }, t[0]) : { detail: t }));
 			};
 			e.emit = (e, ...n) => {
-				t(e, n), te(e) !== e && t(te(e), n);
+				t(e, n), M(e) !== e && t(M(e), n);
 			}, this._setParent();
 		}), t;
 	}
@@ -4514,7 +4514,7 @@ function Ul(e, t, n) {
 }
 var Wl = (e) => {
 	let t = e.props["onUpdate:modelValue"] || !1;
-	return p(t) ? (e) => ae(t, e) : t;
+	return p(t) ? (e) => ie(t, e) : t;
 };
 function Gl(e) {
 	e.target.composing = !0;
@@ -4525,7 +4525,7 @@ function Kl(e) {
 }
 var ql = /* @__PURE__ */ Symbol("_assign"), Jl = /* @__PURE__ */ Symbol("_initialValue");
 function Yl(e, t, n) {
-	return t && (e = e.trim()), n && (e = se(e)), e;
+	return t && (e = e.trim()), n && (e = oe(e)), e;
 }
 var Xl = {
 	created(e, { modifiers: { lazy: t, trim: n, number: r } }, i) {
@@ -4543,7 +4543,7 @@ var Xl = {
 	},
 	beforeUpdate(e, { value: t, oldValue: n, modifiers: { lazy: r, trim: i, number: a } }, o) {
 		if (e[ql] = Wl(o), e.composing) return;
-		let s = (a || e.type === "number") && !/^0\d/.test(e.value) ? se(e.value) : e.value, c = t ?? "";
+		let s = (a || e.type === "number") && !/^0\d/.test(e.value) ? oe(e.value) : e.value, c = t ?? "";
 		if (s === c) return;
 		let l = e.getRootNode();
 		(l instanceof Document || l instanceof ShadowRoot) && l.activeElement === e && e.type !== "range" && (r && t === n || i && e.value.trim() === c) || (e.value = c);
@@ -4595,7 +4595,7 @@ var $l = {
 	deep: !0,
 	created(e, { value: t, modifiers: { number: n } }, r) {
 		e._modelValue = t, ol(e, "change", () => {
-			let t = Array.prototype.filter.call(e.options, (e) => e.selected).map((e) => n ? se(ru(e)) : ru(e)), r = e.multiple, i = r ? h(e._modelValue) ? new Set(t) : t : t[0], a = e._pendingValue = [r, r ? p(i) ? t.slice() : t : i];
+			let t = Array.prototype.filter.call(e.options, (e) => e.selected).map((e) => n ? oe(ru(e)) : ru(e)), r = e.multiple, i = r ? h(e._modelValue) ? new Set(t) : t : t[0], a = e._pendingValue = [r, r ? p(i) ? t.slice() : t : i];
 			try {
 				e[ql](i);
 			} finally {
@@ -4733,7 +4733,7 @@ var lu = [
 	let n = e._withKeys ||= {}, r = t.join(".");
 	return n[r] || (n[r] = ((n) => {
 		if (!("key" in n)) return;
-		let r = te(n.key);
+		let r = M(n.key);
 		if (t.some((e) => e === r || fu[e] === r)) return e(n);
 	}));
 }, mu = /* @__PURE__ */ l({ patchProp: vl }, vc), hu, gu = !1;
@@ -4797,7 +4797,7 @@ var Tu = !1, Eu = () => {
 	callWithAsyncErrorHandling: () => Bn,
 	callWithErrorHandling: () => zn,
 	camelize: () => j,
-	capitalize: () => ne,
+	capitalize: () => te,
 	cloneVNode: () => Cs,
 	compatUtils: () => null,
 	compile: () => Ou,
@@ -4861,7 +4861,7 @@ var Tu = !1, Eu = () => {
 	nodeOps: () => vc,
 	normalizeClass: () => ge,
 	normalizeProps: () => _e,
-	normalizeStyle: () => M,
+	normalizeStyle: () => de,
 	onActivated: () => Bi,
 	onBeforeMount: () => Ji,
 	onBeforeUnmount: () => Qi,
@@ -4905,7 +4905,7 @@ var Tu = !1, Eu = () => {
 	ssrUtils: () => uc,
 	stop: () => Ze,
 	toDisplayString: () => N,
-	toHandlerKey: () => re,
+	toHandlerKey: () => ne,
 	toHandlers: () => ha,
 	toRaw: () => on,
 	toRef: () => R,
@@ -5389,15 +5389,15 @@ function Td(e) {
 		n ? c.get(e)?.delete(r) : t.warn("Events are disabled. Initialize with `createRegistry({ events: true })` to enable.");
 	}
 	function C() {
-		c.clear(), ne();
+		c.clear(), te();
 	}
 	function w(e) {
 		return i.get(e);
 	}
 	function T(e, t = {}, n) {
-		p && ae();
+		p && ie();
 		let r = w(e);
-		if (!r) return oe({
+		if (!r) return ae({
 			...t,
 			id: e
 		});
@@ -5410,12 +5410,12 @@ function Td(e) {
 		}), i.set(e, r), s.clear(), b("update:ticket", r), n && b(n, r), r;
 	}
 	function E(e) {
-		p && ae();
+		p && ie();
 		let t = a.get(e);
 		return t ? t.slice() : void 0;
 	}
 	function D(e) {
-		return p && ae(), o.get(e);
+		return p && ie(), o.get(e);
 	}
 	function O(e) {
 		return i.has(e);
@@ -5444,20 +5444,20 @@ function Td(e) {
 		let t = u.slice();
 		return s.set("values", t), t;
 	}
-	function te() {
+	function M() {
 		r && d.value;
 		let e = s.get("entries");
 		if (!/* @__PURE__ */ Gu(e)) return e;
 		let t = u.map((e) => [e.id, e]);
 		return s.set("entries", t), t;
 	}
-	function ne() {
-		u.length = 0, i.clear(), a.clear(), o.clear(), re(), f = 0, p = !1, m = Infinity, h = -Infinity, b("clear:registry");
+	function te() {
+		u.length = 0, i.clear(), a.clear(), o.clear(), ne(), f = 0, p = !1, m = Infinity, h = -Infinity, b("clear:registry");
 	}
-	function re() {
+	function ne() {
 		s.clear(), g ? _ = !0 : d.value++;
 	}
-	function ie(e) {
+	function re(e) {
 		if (g) return e();
 		g = !0, _ = !1, v = [];
 		try {
@@ -5473,9 +5473,9 @@ function Td(e) {
 			}
 		}
 	}
-	function ae() {
+	function ie() {
 		let e = u.length, t = m === Infinity ? 0 : m, n = h === -Infinity ? e - 1 : Math.min(h, e - 1), r = t === 0 && n === e - 1;
-		if (re(), r) a.clear(), o.clear();
+		if (ne(), r) a.clear(), o.clear();
 		else for (let e = t; e <= n; e++) {
 			let t = u[e];
 			o.delete(t.index), t.valueIsIndex && A(t.value, t.id);
@@ -5486,63 +5486,63 @@ function Td(e) {
 		}
 		p = !1, m = Infinity, h = -Infinity, b("reindex:registry");
 	}
-	function oe(e = {}) {
-		p && ae();
+	function ae(e = {}) {
+		p && ie();
 		let n = i.size, a = /* @__PURE__ */ Wu(e.id), s = e.id ?? /* @__PURE__ */ Qu();
 		if (O(s)) return t.warn(`Ticket "${s}" already exists. Use \`upsert()\` to update or check \`has()\` before registering.`), w(s);
 		let c = /* @__PURE__ */ Gu(e.value), d = n, m = c ? d : e.value, h = e.valueIsIndex ?? c;
 		h && f++;
 		let g = {
-			unregister: () => se(s),
+			unregister: () => oe(s),
 			...e,
 			id: s,
 			index: d,
 			value: m,
 			valueIsIndex: h
 		}, _ = r ? /* @__PURE__ */ Zt(g) : g;
-		return a && l.add(_), i.set(_.id, _), u.push(_), o.set(_.index, _.id), k(_.value, _.id), re(), b("register:ticket", _), _;
+		return a && l.add(_), i.set(_.id, _), u.push(_), o.set(_.index, _.id), k(_.value, _.id), ne(), b("register:ticket", _), _;
 	}
-	function se(e) {
+	function oe(e) {
 		let t = i.get(e);
 		if (!t) return;
 		t.valueIsIndex && f--;
 		let n = t.index;
 		u[n] !== t && (n = u.indexOf(t)), n !== -1 && u.splice(n, 1), i.delete(t.id), o.delete(t.index), A(t.value, t.id);
 		let r = f > 0 && t.index < i.size;
-		r || re(), m = Math.min(m, t.index), r ? ae() : p = !0, b("unregister:ticket", t);
+		r || ne(), m = Math.min(m, t.index), r ? ie() : p = !0, b("unregister:ticket", t);
+	}
+	function se(e) {
+		return re(() => e.map((e) => ae(e)));
 	}
 	function ce(e) {
-		return ie(() => e.map((e) => oe(e)));
-	}
-	function le(e) {
 		let t = { ...e };
 		return delete t.index, delete t.valueIsIndex, delete t.unregister, l.has(e) && delete t.id, e.valueIsIndex && delete t.value, t;
 	}
-	function ue(e) {
+	function le(e) {
 		let t = [], n = /* @__PURE__ */ new Set();
 		for (let r of e) {
 			if (n.has(r)) continue;
 			let e = i.get(r);
 			e && (t.push(e), n.add(r));
 		}
-		return t.length === 0 ? [] : (ie(() => {
+		return t.length === 0 ? [] : (re(() => {
 			let e = 0;
 			for (let t of u) n.has(t.id) || (u[e++] = t);
-			u.length = e, re();
+			u.length = e, ne();
 			for (let e of t) e.valueIsIndex && f--, m = Math.min(m, e.index), i.delete(e.id), o.delete(e.index), A(e.value, e.id);
 			for (let e of t) b("unregister:ticket", e);
-			f > 0 && m < i.size ? ae() : p = !0;
-		}), t.map((e) => le(e)));
+			f > 0 && m < i.size ? ie() : p = !0;
+		}), t.map((e) => ce(e)));
 	}
-	function de(e, t) {
-		p && ae();
+	function ue(e, t) {
+		p && ie();
 		let n = i.get(e);
 		if (!n) return;
 		let r = i.size, a = /* @__PURE__ */ $u(t, 0, r - 1), o = n.index;
-		return o === a ? n : ie(() => (u.splice(o, 1), u.splice(a, 0, n), m = Math.min(o, a), h = Math.max(o, a), ae(), b("update:ticket", n), n));
+		return o === a ? n : re(() => (u.splice(o, 1), u.splice(a, 0, n), m = Math.min(o, a), h = Math.max(o, a), ie(), b("update:ticket", n), n));
 	}
-	function M(e) {
-		if (p && ae(), e.length !== i.size) return;
+	function de(e) {
+		if (p && ie(), e.length !== i.size) return;
 		let t = /* @__PURE__ */ new Set(), n = [];
 		for (let r of e) {
 			if (t.has(r)) return;
@@ -5550,14 +5550,14 @@ function Td(e) {
 			if (!e) return;
 			t.add(r), n.push(e);
 		}
-		ie(() => {
+		re(() => {
 			for (let [e, t] of n.entries()) u[e] = t;
-			m = 0, h = -Infinity, ae();
+			m = 0, h = -Infinity, ie();
 		});
 	}
 	function fe(e = "first", t, n) {
 		if (i.size === 0) return;
-		p && ae();
+		p && ie();
 		let r = u.length;
 		if (!n && /* @__PURE__ */ Gu(t)) return e === "first" ? u[0] : u.at(-1);
 		let a = /* @__PURE__ */ Gu(t) ? void 0 : /* @__PURE__ */ $u(t, 0, r - 1);
@@ -5583,22 +5583,22 @@ function Td(e) {
 		dispose: C,
 		has: O,
 		keys: j,
-		clear: ne,
+		clear: te,
 		browse: E,
-		entries: te,
+		entries: M,
 		values: ee,
 		lookup: D,
 		get: w,
 		upsert: T,
-		register: oe,
-		unregister: se,
-		reindex: ae,
-		move: de,
-		reorder: M,
+		register: ae,
+		unregister: oe,
+		reindex: ie,
+		move: ue,
+		reorder: de,
 		seek: fe,
-		batch: ie,
-		onboard: ce,
-		offboard: ue,
+		batch: re,
+		onboard: se,
+		offboard: le,
 		get size() {
 			return i.size;
 		}
@@ -6588,7 +6588,7 @@ function Rf(e) {
 }
 var zf = () => [Function, Array];
 function Bf(e, t) {
-	return t = "on" + ne(t), !!(e[t] || e[`${t}Once`] || e[`${t}Capture`] || e[`${t}OnceCapture`] || e[`${t}CaptureOnce`]);
+	return t = "on" + te(t), !!(e[t] || e[`${t}Once`] || e[`${t}Capture`] || e[`${t}OnceCapture`] || e[`${t}CaptureOnce`]);
 }
 function Vf(e, ...t) {
 	if (Array.isArray(e)) for (let n of e) n(...t);
@@ -8149,7 +8149,7 @@ var gh = Z({
 				s.value,
 				e.class
 			]),
-			style: M([e.style])
+			style: de([e.style])
 		}, [K("div", { class: "v-application__wrap" }, [t.default?.()])])), {
 			getLayoutItem: i,
 			items: a,
@@ -8179,7 +8179,7 @@ var gh = Z({
 				n.value,
 				e.class
 			]),
-			style: M(e.style)
+			style: de(e.style)
 		}, { default: () => [t.default?.()] }) : t.default?.();
 	}
 }), xh = (e) => String(e).padStart(2, "0"), Sh = ({ y: e, m: t, d: n }) => `${String(e).padStart(4, "0")}-${xh(t)}-${xh(n)}`, Ch = (e, t) => [
@@ -8482,7 +8482,7 @@ var tg = Z({
 				o.value,
 				e.class
 			]),
-			style: M([s.value, e.style])
+			style: de([s.value, e.style])
 		}, t));
 	}
 }), rg = Z({
@@ -8789,7 +8789,7 @@ var yg = mm({
 					},
 					e.class
 				]),
-				style: M([
+				style: de([
 					{ "--v-icon-opacity": e.opacity },
 					o.value ? void 0 : {
 						fontSize: mf(e.size),
@@ -8928,7 +8928,7 @@ var kg = 1.6, Ag = 15, jg = 4, Mg = Z({
 				s.value,
 				e.class
 			]),
-			style: M([
+			style: de([
 				o.value,
 				c.value,
 				{
@@ -8959,7 +8959,7 @@ var kg = 1.6, Ag = 15, jg = 4, Mg = Z({
 				"v-progress-circular__track",
 				l.value
 			]),
-			style: M(u.value),
+			style: de(u.value),
 			d: w.value.track,
 			pathLength: "200",
 			"stroke-linecap": w.value.linecap
@@ -8971,7 +8971,7 @@ var kg = 1.6, Ag = 15, jg = 4, Mg = Z({
 			"stroke-linecap": w.value.linecap
 		}, null)]) : K(as, null, [K("circle", {
 			class: ge(["v-progress-circular__underlay", l.value]),
-			style: M(u.value),
+			style: de(u.value),
 			fill: "transparent",
 			cx: "50%",
 			cy: "50%",
@@ -9213,14 +9213,14 @@ var Hg = Z({
 	props: Hg(),
 	emits: { "update:modelValue": (e) => !0 },
 	setup(e, { slots: t }) {
-		let n = /* @__PURE__ */ I(), r = Lm(e, "modelValue"), { isRtl: i, rtlClasses: a } = th(), { themeClasses: o } = hh(e), { locationStyles: s } = Rg(e), { textColorClasses: c, textColorStyles: l } = qh(() => e.color), { backgroundColorClasses: u, backgroundColorStyles: d } = Jh(() => e.bgColor || e.color), { backgroundColorClasses: f, backgroundColorStyles: p } = Jh(() => e.bufferColor || e.bgColor || e.color), { backgroundColorClasses: m, backgroundColorStyles: h } = Jh(() => e.color), { textColorClasses: g, textColorStyles: _ } = qh(() => e.bgColor), { roundedClasses: v, roundedStyles: y } = Hh(e), { isIntersecting: b } = Jd(n), { state: x, duration: S } = Og(e), C = Y(() => parseFloat(e.max)), w = Y(() => mf(e.height)), T = Y(() => Df(parseFloat(e.bufferValue) / C.value * 100, 0, 100)), E = Y(() => x.value === "initial" ? 0 : Df(parseFloat(r.value) / C.value * 100, 0, 100)), D = Y(() => i.value !== e.reverse), O = Y(() => e.transition === !1 ? void 0 : mf(/* @__PURE__ */ Bu(e.transition) ? e.transition.duration : void 0, "ms")), k = /* @__PURE__ */ R(() => /* @__PURE__ */ Wu(e.bgOpacity) ? void 0 : parseFloat(e.bgOpacity)), A = /* @__PURE__ */ R(() => e.shape === "wavy"), j = /* @__PURE__ */ R(() => !e.indeterminate && (A.value ? e.stopIndicator !== !1 : e.variant === "split" && e.stopIndicator === !0)), ee = Y(() => e.indeterminate ? "fade-transition" : "slide-x-transition"), te = /* @__PURE__ */ I(0), { hasChunks: ne, splitStyles: re, chunksMaskStyles: ie, snapValueToChunk: ae } = Bg(e, te, E, T, D);
-		Im(() => ne.value || A.value, () => {
+		let n = /* @__PURE__ */ I(), r = Lm(e, "modelValue"), { isRtl: i, rtlClasses: a } = th(), { themeClasses: o } = hh(e), { locationStyles: s } = Rg(e), { textColorClasses: c, textColorStyles: l } = qh(() => e.color), { backgroundColorClasses: u, backgroundColorStyles: d } = Jh(() => e.bgColor || e.color), { backgroundColorClasses: f, backgroundColorStyles: p } = Jh(() => e.bufferColor || e.bgColor || e.color), { backgroundColorClasses: m, backgroundColorStyles: h } = Jh(() => e.color), { textColorClasses: g, textColorStyles: _ } = qh(() => e.bgColor), { roundedClasses: v, roundedStyles: y } = Hh(e), { isIntersecting: b } = Jd(n), { state: x, duration: S } = Og(e), C = Y(() => parseFloat(e.max)), w = Y(() => mf(e.height)), T = Y(() => Df(parseFloat(e.bufferValue) / C.value * 100, 0, 100)), E = Y(() => x.value === "initial" ? 0 : Df(parseFloat(r.value) / C.value * 100, 0, 100)), D = Y(() => i.value !== e.reverse), O = Y(() => e.transition === !1 ? void 0 : mf(/* @__PURE__ */ Bu(e.transition) ? e.transition.duration : void 0, "ms")), k = /* @__PURE__ */ R(() => /* @__PURE__ */ Wu(e.bgOpacity) ? void 0 : parseFloat(e.bgOpacity)), A = /* @__PURE__ */ R(() => e.shape === "wavy"), j = /* @__PURE__ */ R(() => !e.indeterminate && (A.value ? e.stopIndicator !== !1 : e.variant === "split" && e.stopIndicator === !0)), ee = Y(() => e.indeterminate ? "fade-transition" : "slide-x-transition"), M = /* @__PURE__ */ I(0), { hasChunks: te, splitStyles: ne, chunksMaskStyles: re, snapValueToChunk: ie } = Bg(e, M, E, T, D);
+		Im(() => te.value || A.value, () => {
 			Gd(n, (e) => {
-				te.value = e[0].contentRect.width;
+				M.value = e[0].contentRect.width;
 			});
 		});
-		let oe = Y(() => ne.value ? ae(T.value) : T.value), se = Y(() => ne.value ? ae(E.value) : E.value), { geometry: ce, svgEl: le, waveEl: ue } = Vg(e, {
-			containerWidth: te,
+		let ae = Y(() => te.value ? ie(T.value) : T.value), oe = Y(() => te.value ? ie(E.value) : E.value), { geometry: se, svgEl: ce, waveEl: le } = Vg(e, {
+			containerWidth: M,
 			value: E,
 			isActive: () => e.active && b.value,
 			duration: () => {
@@ -9229,7 +9229,7 @@ var Hg = Z({
 				return parseFloat(e) * (e.endsWith("ms") ? 1 : 1e3);
 			}
 		});
-		function de(e) {
+		function ue(e) {
 			if (!n.value) return;
 			let { left: t, right: i, width: a } = n.value.getBoundingClientRect(), o = D.value ? a - e.clientX + (i - a) : e.clientX - t;
 			r.value = Math.round(o / a * C.value);
@@ -9237,23 +9237,23 @@ var Hg = Z({
 		function fe() {
 			return K("div", {
 				class: ge(["v-progress-linear__background", u.value]),
-				style: M([
+				style: de([
 					d.value,
 					{
 						opacity: k.value,
 						width: e.stream ? 0 : void 0
 					},
-					e.indeterminate ? {} : re.value?.background
+					e.indeterminate ? {} : ne.value?.background
 				])
 			}, null);
 		}
 		function pe() {
-			if (!ce.value) return null;
-			let { width: t, stroke: n, wavelength: r, center: i, end: a, gap: o, track: s, wave: u, offset: d } = ce.value;
+			if (!se.value) return null;
+			let { width: t, stroke: n, wavelength: r, center: i, end: a, gap: o, track: s, wave: u, offset: d } = se.value;
 			function f() {
 				return K("path", {
 					class: ge(["v-progress-linear__track", g.value]),
-					style: M([_.value, { opacity: k.value }]),
+					style: de([_.value, { opacity: k.value }]),
 					d: s,
 					pathLength: "100"
 				}, null);
@@ -9266,13 +9266,13 @@ var Hg = Z({
 				}, null);
 			}
 			return K("svg", {
-				ref: le,
+				ref: ce,
 				class: ge([
 					"v-progress-linear__wavy",
 					{ "v-progress-linear__wavy--indeterminate": e.indeterminate },
 					c.value
 				]),
-				style: M([l.value, {
+				style: de([l.value, {
 					"--v-progress-linear-stroke": mf(n),
 					"--v-progress-linear-wavelength": mf(r),
 					"--v-progress-linear-wave-offset": d,
@@ -9293,7 +9293,7 @@ var Hg = Z({
 					cy: i
 				}, null),
 				K("path", {
-					ref: ue,
+					ref: le,
 					class: "v-progress-linear__wave"
 				}, null)
 			])]);
@@ -9320,7 +9320,7 @@ var Hg = Z({
 				a.value,
 				e.class
 			]),
-			style: M([
+			style: de([
 				{
 					bottom: e.location === "bottom" ? 0 : void 0,
 					top: e.location === "top" ? 0 : void 0,
@@ -9331,7 +9331,7 @@ var Hg = Z({
 					"--v-progress-chunk-gap": mf(e.chunkGap),
 					...e.absolute ? s.value : {}
 				},
-				A.value ? void 0 : ie.value,
+				A.value ? void 0 : re.value,
 				y.value,
 				e.style
 			]),
@@ -9340,7 +9340,7 @@ var Hg = Z({
 			"aria-valuemin": "0",
 			"aria-valuemax": e.max,
 			"aria-valuenow": e.indeterminate ? void 0 : Math.min(parseFloat(r.value), C.value),
-			onClick: e.clickable && de
+			onClick: e.clickable && ue
 		}, { default: () => [A.value ? pe() : K(as, null, [
 			e.stream && K("div", {
 				key: "stream",
@@ -9358,18 +9358,18 @@ var Hg = Z({
 			(e.variant !== "split" || !e.indeterminate) && fe(),
 			K("div", {
 				class: ge(["v-progress-linear__buffer", f.value]),
-				style: M([
+				style: de([
 					p.value,
 					{
 						opacity: e.bufferOpacity == null ? void 0 : parseFloat(e.bufferOpacity),
-						width: mf(oe.value, "%")
+						width: mf(ae.value, "%")
 					},
-					re.value?.buffer
+					ne.value?.buffer
 				])
 			}, null),
 			j.value && K("div", {
 				class: ge(["v-progress-linear__stop", m.value]),
-				style: M(h.value)
+				style: de(h.value)
 			}, null),
 			q(wc, { name: ee.value }, { default: () => [e.indeterminate ? K("div", { class: "v-progress-linear__indeterminate" }, [e.variant === "split" && K(as, null, [
 				fe(),
@@ -9382,13 +9382,13 @@ var Hg = Z({
 					e,
 					m.value
 				]),
-				style: M(h.value)
+				style: de(h.value)
 			}, null))]) : K("div", {
 				class: ge(["v-progress-linear__determinate", m.value]),
-				style: M([
+				style: de([
 					h.value,
-					{ width: mf(se.value, "%") },
-					re.value?.bar
+					{ width: mf(oe.value, "%") },
+					ne.value?.bar
 				])
 			}, null)] })
 		]), t.default && K("div", { class: "v-progress-linear__content" }, [t.default({
@@ -9796,6 +9796,7 @@ var w_ = {
 	arrow: "M4 12h16m-6-6 6 6-6 6",
 	external: "M14 4h6v6m0-6L10 14M10 4H4v16h16v-6",
 	chevron: "m6 9 6 6 6-6",
+	chevrons: "m6 5 6 6 6-6M6 13l6 6 6-6",
 	search: "M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0",
 	menu: "M4 6h16M4 12h16M4 18h16",
 	more: "M5 12h.01M12 12h.01M19 12h.01",
@@ -11324,19 +11325,19 @@ function Ey(e, { isActive: t, isTop: n, contentEl: r, isSubmenu: i = !1 }) {
 			o.value = k.el;
 		});
 	});
-	let A = qf(), j = Y(() => (e.target === "cursor" || e.contextMenu && !e.target) && y.value ? y.value : A.value ? A.el : Oy(e.target, a) || o.value), ee = Y(() => Array.isArray(j.value) ? void 0 : j.value), te;
+	let A = qf(), j = Y(() => (e.target === "cursor" || e.contextMenu && !e.target) && y.value ? y.value : A.value ? A.el : Oy(e.target, a) || o.value), ee = Y(() => Array.isArray(j.value) ? void 0 : j.value), M;
 	return V(() => !!e.activator, (t) => {
-		t && of ? (te = Me(), te.run(() => {
+		t && of ? (M = Me(), M.run(() => {
 			Dy(e, a, {
 				activatorEl: o,
 				activatorEvents: w
 			});
-		})) : te && te.stop();
+		})) : M && M.stop();
 	}, {
 		flush: "post",
 		immediate: !0
 	}), Pe(() => {
-		S.cancel(), te?.stop();
+		S.cancel(), M?.stop();
 	}), {
 		activatorEl: o,
 		activatorRef: k,
@@ -11662,11 +11663,11 @@ var $y = Z({
 			if (t) return t;
 			let n = y?.value?.getRootNode() || i.proxy?.$el?.getRootNode();
 			return n instanceof ShadowRoot && n;
-		}), { dimensionStyles: A } = Fg(e), j = Fy(), ee = Y(() => e.locationStrategy === "static" ? Qv(e.location) : void 0), { scopeId: te } = Ry();
+		}), { dimensionStyles: A } = Fg(e), j = Fy(), ee = Y(() => e.locationStrategy === "static" ? Qv(e.location) : void 0), { scopeId: M } = Ry();
 		V(() => e.disabled, (e) => {
 			e && (l.value = !1);
 		});
-		let { contentStyles: ne, updateLocation: re } = Zv(e, {
+		let { contentStyles: te, updateLocation: ne } = Zv(e, {
 			isRtl: f,
 			contentEl: s,
 			target: x,
@@ -11678,14 +11679,14 @@ var $y = Z({
 			targetEl: S,
 			target: x,
 			isActive: l,
-			updateLocation: re
+			updateLocation: ne
 		});
-		let ie = vr(Gv, null);
+		let re = vr(Gv, null);
 		i.parent?.type?.name !== "VMenu" && _r(Gv, null);
-		function ae(t) {
-			r("click:outside", t), e.persistent ? pe() : l.value = !1, e.scrim || ie?.closeParents(t);
+		function ie(t) {
+			r("click:outside", t), e.persistent ? pe() : l.value = !1, e.scrim || re?.closeParents(t);
 		}
-		function oe(t) {
+		function ae(t) {
 			return l.value && _.value && (!e.scrim || t.target === o.value || t instanceof MouseEvent && t.shadowTarget === o.value);
 		}
 		Py(e, {
@@ -11693,11 +11694,11 @@ var $y = Z({
 			localTop: _,
 			contentEl: s
 		});
-		let se = !1;
+		let oe = !1;
 		Sr(() => {
 			s.value && (y.value ? Zy.set(s.value, y.value) : Zy.delete(s.value));
 		});
-		function ce(e) {
+		function se(e) {
 			let t = e, n = /* @__PURE__ */ new Set();
 			for (; t;) {
 				let e = t.closest(".v-overlay__content");
@@ -11707,11 +11708,11 @@ var $y = Z({
 			}
 			return !1;
 		}
-		function le() {
+		function ce() {
 			let e = y.value;
 			if (!e || !e.isConnected || e.closest(".v-overlay__content") || s.value?._clickOutside?.lastMousedownWasOutside) return;
 			let t = Uf();
-			if (!((!t || t === document.body) && se || t === e || e.contains(t) || ce(t))) return;
+			if (!((!t || t === document.body) && oe || t === e || e.contains(t) || se(t))) return;
 			let n = e.parentElement, r = n ? Hf(n) : [], i;
 			if (r.includes(e)) i = e;
 			else {
@@ -11723,22 +11724,22 @@ var $y = Z({
 		V(l, (e) => {
 			if (e) {
 				let e = Uf(), t = y.value;
-				se = !!t && (e === t || t.contains(e)), s.value && (s.value.inert = !1), s.value?._clickOutside && (s.value._clickOutside.lastMousedownWasOutside = !1);
-			} else s.value && (s.value.inert = !0), le();
+				oe = !!t && (e === t || t.contains(e)), s.value && (s.value.inert = !1), s.value?._clickOutside && (s.value._clickOutside.lastMousedownWasOutside = !1);
+			} else s.value && (s.value.inert = !0), ce();
 		}, { flush: "post" }), of && V(l, (e) => {
-			e ? window.addEventListener("keydown", ue) : window.removeEventListener("keydown", ue);
+			e ? window.addEventListener("keydown", le) : window.removeEventListener("keydown", le);
 		}, { immediate: !0 }), Qi(() => {
-			of && window.removeEventListener("keydown", ue);
+			of && window.removeEventListener("keydown", le);
 		});
-		function ue(t) {
+		function le(t) {
 			t.key === "Escape" && g.value && (s.value?.contains(Uf()) || r("keydown", t), e.persistent ? pe() : (l.value = !1, s.value?.contains(Uf()) && y.value?.focus()));
 		}
-		function de(e) {
+		function ue(e) {
 			(e.key !== "Escape" || g.value) && r("keydown", e);
 		}
-		let M = Zg();
+		let de = Zg();
 		Im(() => e.closeOnBack, () => {
-			t_(M, () => {
+			t_(de, () => {
 				if (g.value && l.value) return e.persistent ? pe() : l.value = !1, !1;
 			});
 		});
@@ -11794,8 +11795,8 @@ var $y = Z({
 				e.style
 			],
 			ref: a,
-			onKeydown: de
-		}, te, n), [q(Qy, ks({
+			onKeydown: ue
+		}, M, n), [q(Qy, ks({
 			color: h,
 			modelValue: l.value && !!e.scrim,
 			ref: o
@@ -11809,11 +11810,11 @@ var $y = Z({
 		}, { default: () => [hr(K("div", ks({
 			ref: s,
 			class: ["v-overlay__content", e.contentClass],
-			style: [A.value, ne.value]
+			style: [A.value, te.value]
 		}, E.value, e.contentProps), [t.default?.({ isActive: l })]), [[Hc, l.value], [Xy, {
-			handler: ae,
-			closeConditional: oe,
-			include: () => l.value ? [e.contextMenu && !e.openOnClick ? void 0 : y.value, ...Array.from(document.querySelectorAll(".v-overlay__content")).filter(ce)] : []
+			handler: ie,
+			closeConditional: ae,
+			include: () => l.value ? [e.contextMenu && !e.openOnClick ? void 0 : y.value, ...Array.from(document.querySelectorAll(".v-overlay__content")).filter(se)] : []
 		}]])] })])] })])), {
 			activatorEl: y,
 			scrimEl: o,
@@ -11823,7 +11824,7 @@ var $y = Z({
 			rootEl: a,
 			globalTop: g,
 			localTop: _,
-			updateLocation: re,
+			updateLocation: ne,
 			openedByHover: O
 		};
 	}
@@ -12000,7 +12001,7 @@ var cb = Z({
 		return km(() => K("form", {
 			ref: i,
 			class: ge(["v-form", e.class]),
-			style: M(e.style),
+			style: de(e.style),
 			novalidate: !0,
 			onReset: a,
 			onSubmit: o
@@ -12430,7 +12431,7 @@ function wb(e, t = {}) {
 }
 // node_modules/solyi-ui/dist/core/index.js
 var Tb = {
-	version: "1.1.0",
+	version: "1.1.1",
 	format: "Solyi plain JSON export (not a DTCG interchange format)",
 	description: "CSS role tokens shared by the documentation and its examples. Violet is a starting theme, not a permanent brand requirement.",
 	base: {
@@ -12869,7 +12870,7 @@ var Ob = Z({
 				n.value,
 				e.class
 			]),
-			style: M([r.value, e.style])
+			style: de([r.value, e.style])
 		}, t)), {};
 	}
 }), Ab = jv.reduce((e, t) => (e[t] = {
@@ -12880,7 +12881,7 @@ var Ob = Z({
 	],
 	default: !1
 }, e), {}), jb = jv.reduce((e, t) => {
-	let n = "offset" + ne(t);
+	let n = "offset" + te(t);
 	return e[n] = {
 		type: [String, Number],
 		default: null
@@ -13265,7 +13266,7 @@ var Zb = Z({
 				{ "text-error": r.value && !e.disabled && parseFloat(e.value) > parseFloat(r.value) },
 				e.class
 			]),
-			style: M(e.style)
+			style: de(e.style)
 		}, [t.default ? t.default({
 			counter: i.value,
 			max: r.value,
@@ -13287,7 +13288,7 @@ var Zb = Z({
 				{ "v-label--clickable": !!e.onClick },
 				e.class
 			]),
-			style: M(e.style),
+			style: de(e.style),
 			onClick: e.onClick
 		}, [e.text, t.default?.()])), {};
 	}
@@ -13304,7 +13305,7 @@ var Zb = Z({
 				{ "v-field-label--floating": e.floating },
 				e.class
 			]),
-			style: M(e.style)
+			style: de(e.style)
 		}, t)), {};
 	}
 });
@@ -13461,7 +13462,7 @@ var cx = [
 				for: e ? void 0 : v.value
 			};
 		});
-		function te(e) {
+		function M(e) {
 			e.target !== Uf() && e.preventDefault();
 		}
 		return km(() => {
@@ -13503,7 +13504,7 @@ var cx = [
 					f.value,
 					e.style
 				],
-				onClick: te
+				onClick: M
 			}, t), [
 				K("div", { class: "v-field__overlay" }, null),
 				q(Kg, {
@@ -13583,7 +13584,7 @@ var cx = [
 				}, null)]),
 				K("div", {
 					class: ge(["v-field__outline", O.value]),
-					style: M(k.value)
+					style: de(k.value)
 				}, [n && K(as, null, [
 					K("div", { class: "v-field__outline__start" }, null),
 					g.value && K("div", { class: "v-field__outline__notch" }, [q(ix, ks({
@@ -13627,7 +13628,7 @@ var cx = [
 				r.value,
 				e.class
 			]),
-			style: M([i.value, e.style])
+			style: de([i.value, e.style])
 		}, { default: () => [e.active && n.value.map((e, r) => K("div", {
 			class: "v-messages__message",
 			key: `${r}-${n.value}`
@@ -13818,7 +13819,7 @@ var hx = Z({
 					x.value,
 					e.class
 				]),
-				style: M([a.value, e.style])
+				style: de([a.value, e.style])
 			}, [
 				t && K("div", {
 					key: "prepend",
@@ -14071,6 +14072,7 @@ var Sx = {
 	comboboxUncommitted: "입력한 내용을 확정하거나 후보를 선택해 주세요.",
 	comboboxDetails: "후보 전체 내용",
 	inputLoading: "입력 내용을 처리하는 중입니다.",
+	monthCalendarYear: "연도",
 	monthCalendarKeys: "방향키: 하루·한 주 · Home/End: 주 경계 · PageUp/Down: 월 이동(Shift: 연도) · Enter/Space: 날짜 선택 · Escape: 선택일 초점 복귀",
 	monthCalendarInvalid: "달력의 월·날짜·marker 설정을 확인해 주세요.",
 	monthCalendarEmpty: "표시할 날짜별 자료가 없습니다.",
@@ -14157,6 +14159,9 @@ var Sx = {
 	tableLoading: "자료를 불러오는 중이에요.",
 	tableRetry: "다시 시도",
 	tableEmpty: "조건에 맞는 자료가 없어요.",
+	timeGridAdd: "항목 추가",
+	timeGridRemove: "항목 삭제",
+	timeGridCurrent: "현재 시각",
 	timeGridMove: "이동",
 	timeGridResizeStart: "시작 조절",
 	timeGridResizeEnd: "끝 조절",
@@ -14242,6 +14247,7 @@ var Sx = {
 	comboboxUncommitted: "Confirm your text or choose an option.",
 	comboboxDetails: "Full option content",
 	inputLoading: "Working on this input.",
+	monthCalendarYear: "Year",
 	monthCalendarKeys: "Arrows: day/week; Home/End: week boundaries; PageUp/Down: month (Shift: year); Enter/Space: choose a date; Escape: focus the selected date.",
 	monthCalendarInvalid: "Check the calendar month, date and marker configuration.",
 	monthCalendarEmpty: "No date-specific data to show.",
@@ -14328,6 +14334,9 @@ var Sx = {
 	tableLoading: "Loading records.",
 	tableRetry: "Retry",
 	tableEmpty: "No matching records.",
+	timeGridAdd: "Add item",
+	timeGridRemove: "Remove item",
+	timeGridCurrent: "Current time",
 	timeGridMove: "Move",
 	timeGridResizeStart: "Resize start",
 	timeGridResizeEnd: "Resize end",
@@ -15273,7 +15282,20 @@ function oS(e, t, n, r) {
 	}), Qi(() => {
 		g.stop(), document.removeEventListener("pointerdown", S, !0), window.removeEventListener("blur", C);
 	});
-	function w(t, r) {
+	function w(e) {
+		return {
+			"data-draggable": m(e.key, "move") ? void 0 : "true",
+			onPointerdown: (t) => {
+				m(e.key, "move") || t.target.closest("button,a,input,textarea,select,[contenteditable]") || (h.cancel("configuration", !1), g.down(t, e.key, "move"));
+			},
+			onLostpointercapture: g.lost,
+			onDragstart: (e) => e.preventDefault(),
+			onClick: (t) => {
+				g.consumeClick(t, e.key);
+			}
+		};
+	}
+	function T(t, r) {
 		if (e.readonly) return [];
 		let i = (e, r, i = 0) => X("button", {
 			key: e,
@@ -15296,9 +15318,9 @@ function oS(e, t, n, r) {
 			rotate: i,
 			decorative: !0
 		})]);
-		return [...e.allowMove ? [i("move", "grip")] : [], ...e.allowResize && r >= 90 ? [i("resize-start", "chevron", 180), i("resize-end", "chevron")] : []];
+		return [...e.allowResize ? [i("resize-start", "chevron", 180), i("resize-end", "chevron")] : []];
 	}
-	function T(t) {
+	function E(t) {
 		return e.readonly ? null : X("div", { class: "sol-actions" }, [
 			...e.allowMove ? ["move"] : [],
 			...e.allowResize ? ["resize-start", "resize-end"] : [],
@@ -15310,7 +15332,7 @@ function oS(e, t, n, r) {
 			onClick: () => h.begin(t.key, e, "button", "toolbar")
 		}, () => _(e))));
 	}
-	function E() {
+	function D() {
 		let e = h.state.value;
 		if (!e) return null;
 		let t = e.action === "move" || e.action === "duplicate", r = !!n.host.value && getComputedStyle(n.host.value).direction === "rtl", a = (e, t, n, r) => X(Wx, {
@@ -15338,7 +15360,7 @@ function oS(e, t, n, r) {
 			}, () => o.value.timeGridApply || o.value.done), X(Wx, { onClick: () => h.cancel("button") }, () => o.value.timeGridCancel || o.value.close)])
 		]);
 	}
-	function D(t) {
+	function O(t) {
 		let r = h.state.value;
 		if (!r || r.to.columnKey !== t || r.to.startMinute >= e.endMinute || r.to.endMinute <= e.startMinute) return null;
 		let i = Math.max(e.startMinute, r.to.startMinute), a = Math.min(e.endMinute, r.to.endMinute), o = e.endMinute - e.startMinute;
@@ -15352,7 +15374,7 @@ function oS(e, t, n, r) {
 			}
 		}, [X("strong", { class: "sol-ui-time-grid-item-title" }, p(r.key)?.label), X("span", { class: "sol-ui-time-grid-item-time" }, n.time(r.to.startMinute) + "–" + n.time(r.to.endMinute))]);
 	}
-	function O() {
+	function k() {
 		let e = h.state.value, r = e ? t()?.columns.find((t) => t.key === e.to.columnKey) : void 0;
 		return X("output", {
 			class: ["sol-ui-hint sol-ui-time-grid-status", !e && !a.value ? "sol-ui-sr-only" : void 0],
@@ -15371,11 +15393,12 @@ function oS(e, t, n, r) {
 		valid: Y(() => c.value && l.value.valid),
 		blocked: m,
 		pending: f,
-		handles: w,
-		agendaActions: T,
-		renderToolbar: E,
-		preview: D,
-		status: O,
+		handles: T,
+		pointerProps: w,
+		agendaActions: E,
+		renderToolbar: D,
+		preview: O,
+		status: k,
 		scope: (t) => ({
 			active: h.state.value?.key === t,
 			readonly: e.readonly,
@@ -15462,6 +15485,10 @@ var sS = /* @__PURE__ */ H({
 		},
 		allowResize: Boolean,
 		allowDuplicate: Boolean,
+		allowCreate: Boolean,
+		allowRemove: Boolean,
+		showCurrentTime: Boolean,
+		currentTime: Object,
 		pendingKeys: {
 			type: Array,
 			default: () => []
@@ -15470,13 +15497,29 @@ var sS = /* @__PURE__ */ H({
 	},
 	slots: Object,
 	emits: {
+		create: (e) => !0,
+		remove: (e) => !0,
 		start: (e) => !0,
 		preview: (e) => !0,
 		commit: (e) => !0,
 		cancel: (e) => !0
 	},
 	setup(e, { attrs: t, slots: n, emit: r, expose: i }) {
-		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(null), c = /* @__PURE__ */ new Map(), l = /* @__PURE__ */ new Map(), u = Y((t) => {
+		let a = /* @__PURE__ */ F(null), o, s = !1, c = Y(() => e.currentTime ?? a.value);
+		function l() {
+			if (clearTimeout(o), !s || !e.showCurrentTime || e.currentTime) return;
+			let t = /* @__PURE__ */ new Date();
+			a.value = {
+				date: `${t.getFullYear().toString().padStart(4, "0")}-${(t.getMonth() + 1).toString().padStart(2, "0")}-${t.getDate().toString().padStart(2, "0")}`,
+				minute: t.getHours() * 60 + t.getMinutes()
+			}, o = setTimeout(l, 6e4 - Date.now() % 6e4);
+		}
+		Yi(() => {
+			s = !0, l(), document.addEventListener("visibilitychange", l);
+		}), V(() => [e.showCurrentTime, e.currentTime], l), Qi(() => {
+			s = !1, clearTimeout(o), document.removeEventListener("visibilitychange", l);
+		});
+		let u = Nx(() => e.locale), d = /* @__PURE__ */ F(null), f = /* @__PURE__ */ F(null), p = /* @__PURE__ */ new Map(), m = /* @__PURE__ */ new Map(), h = /* @__PURE__ */ new Map(), g = Y((t) => {
 			try {
 				let n = Bx(e.items, e.columns, {
 					key: e.itemKey,
@@ -15489,47 +15532,69 @@ var sS = /* @__PURE__ */ H({
 			} catch {
 				return null;
 			}
-		}), d = (e) => {
-			(e === void 0 ? c.values().next().value || o.value || s.value : c.get(e) || o.value || s.value)?.focus();
-		}, f = (e) => Fx(Math.floor(e / 60), a.value, {
+		}), _ = (e) => {
+			(e === void 0 ? p.values().next().value || d.value || f.value : p.get(e) || d.value || f.value)?.focus();
+		}, v = (e) => Fx(Math.floor(e / 60), u.value, {
 			minimumIntegerDigits: 2,
 			useGrouping: !1
-		}) + ":" + Fx(e % 60, a.value, {
+		}) + ":" + Fx(e % 60, u.value, {
 			minimumIntegerDigits: 2,
 			useGrouping: !1
-		}), p = Y(() => {
-			let e = u.value;
+		}), y = Y(() => {
+			let e = g.value;
 			return new Map(e?.columns.map((t) => [t.key, Hx(e.entries, t.key, e.startMinute, e.endMinute)]) || []);
-		}), m = oS(e, () => u.value, {
-			host: s,
-			scroll: o,
-			nodes: c,
-			columns: l,
-			focus: d,
-			locale: a,
-			time: f,
+		}), b = oS(e, () => g.value, {
+			host: f,
+			scroll: d,
+			nodes: p,
+			columns: m,
+			focus: _,
+			locale: u,
+			time: v,
 			keysId: e.id + "-keys"
 		}, {
 			start: (e) => r("start", e),
 			preview: (e) => r("preview", e),
 			commit: (e) => r("commit", e),
 			cancel: (e) => r("cancel", e)
-		});
+		}), x = () => e.allowCreate && !e.readonly && !e.disabled && !e.loading && b.valid.value && !!g.value;
+		function S(t, n, i) {
+			let a = g.value;
+			if (!x() || !a?.columns.some((e) => e.key === t)) return;
+			let o = Math.max(a.startMinute, Math.min(a.endMinute - e.snapMinutes, a.startMinute + Math.round((n - a.startMinute) / e.snapMinutes) * e.snapMinutes));
+			b.cancel(), r("create", Object.freeze({
+				columnKey: t,
+				startMinute: o,
+				endMinute: Math.min(a.endMinute, o + e.snapMinutes),
+				input: i
+			}));
+		}
+		function C(t, n) {
+			e.allowRemove && g.value?.entries.some((e) => e.key === t) && !b.scope(t).disabled && !e.readonly && (b.cancel(), r("remove", Object.freeze({
+				key: t,
+				input: n
+			})));
+		}
 		return i({
-			focus: d,
+			focus: _,
 			cancel: () => {
-				m.cancel();
+				b.cancel();
 			}
-		}), V(u, async () => {
+		}), V(g, async () => {
 			if (typeof document > "u") return;
-			let e = document.activeElement, t = [...c].find(([, t]) => e && t.contains(e))?.[0];
-			t !== void 0 && e && (await z(), !e.isConnected && document.activeElement === document.body && d(t));
+			let e = document.activeElement, t = [...h], n = t.findIndex(([, t]) => !!e && t.contains(e)), r = t[n]?.[0] ?? [...p].find(([, t]) => !!e && t.contains(e))?.[0];
+			if (r === void 0 || !e) return;
+			let i = [...t.slice(n + 1), ...t.slice(0, n).reverse()].map(([e]) => e);
+			if (await z(), !e.isConnected && document.activeElement === document.body) {
+				let e = i.map((e) => h.get(e)).find(Boolean);
+				n >= 0 && e ? (e.querySelector("button:not(:disabled)") || e).focus() : _(r);
+			}
 		}), () => {
-			let r = u.value, i = e.error || (!r || !m.valid.value ? a.value.timeGridInvalid || a.value.invalidTime : "");
+			let r = g.value, i = e.error || (!r || !b.valid.value ? u.value.timeGridInvalid || u.value.invalidTime : "");
 			if (!r) return X("section", {
-				...ks(t, m.events),
+				...ks(t, b.events),
 				class: ["sol-ui-time-grid", t.class],
-				ref: s,
+				ref: f,
 				tabindex: t.tabindex ?? -1,
 				id: e.id,
 				"aria-labelledby": e.id + "-label"
@@ -15537,17 +15602,21 @@ var sS = /* @__PURE__ */ H({
 				class: "sol-ui-error",
 				role: "alert"
 			}, i)]);
-			let d = r.endMinute - r.startMinute, h = Ux(r.startMinute, r.endMinute), g = (e) => (e - r.startMinute) / d * 100 + "%", _ = (e, t) => (t - e) / d * 100 + "%", v = `calc(var(--sol-control-height) * 1.5) repeat(${r.columns.length},minmax(calc(var(--sol-control-height) * 4),1fr))`, y = `calc(var(--sol-control-height) * ${d / 30})`, b = `calc(var(--sol-control-height) * ${1.5 + 4 * r.columns.length})`;
+			let a = r.endMinute - r.startMinute, o = Ux(r.startMinute, r.endMinute), s = (e) => (e - r.startMinute) / a * 100 + "%", l = (e, t) => (t - e) / a * 100 + "%", _ = `calc(var(--sol-control-height) * 1.5) repeat(${r.columns.length},minmax(calc(var(--sol-control-height) * 4),1fr))`, w = `calc(var(--sol-control-height) * ${a / 30})`, T = `calc(var(--sol-control-height) * ${1.5 + 4 * r.columns.length})`;
 			return X("section", {
-				...ks(t, m.events),
+				...ks(t, b.events),
 				class: ["sol-ui-time-grid", t.class],
-				ref: s,
+				ref: f,
 				tabindex: t.tabindex ?? -1,
 				id: e.id,
 				"aria-labelledby": e.id + "-label",
 				"aria-busy": e.loading ? "true" : void 0
 			}, [
-				X("h3", { id: e.id + "-label" }, e.label),
+				X("div", { class: "sol-ui-time-grid-top" }, [X("h3", { id: e.id + "-label" }, e.label), e.allowCreate ? X(Wx, {
+					disabled: !x() || !r.columns.length,
+					style: { visibility: e.readonly ? "hidden" : void 0 },
+					onClick: () => r.columns[0] && S(r.columns[0].key, r.startMinute, "button")
+				}, () => u.value.timeGridAdd) : null]),
 				e.help || n.help ? X("div", {
 					class: "sol-ui-hint",
 					id: e.id + "-help"
@@ -15556,68 +15625,76 @@ var sS = /* @__PURE__ */ H({
 					class: "sol-ui-error",
 					role: "alert"
 				}, i) : null,
-				e.readonly ? null : X("p", {
-					class: "sol-ui-hint",
-					id: e.id + "-keys"
-				}, a.value.timeGridKeys),
-				e.loading ? X("p", {
-					class: "sol-ui-hint",
-					role: "status"
-				}, a.value.timeGridLoading || a.value.loading) : null,
 				r.columns.length ? X("div", {
-					ref: o,
+					ref: d,
 					class: "sol-ui-time-grid-scroll",
 					tabindex: 0,
 					role: "region",
-					"aria-label": a.value.timeGridScroll || e.label,
+					"aria-label": u.value.timeGridScroll || e.label,
 					"aria-describedby": e.help || n.help ? e.id + "-help" : void 0
 				}, [X("div", {
 					class: "sol-ui-time-grid-head",
 					style: {
-						gridTemplateColumns: v,
-						minWidth: b
+						gridTemplateColumns: _,
+						minWidth: T
 					}
 				}, [X("span", { "aria-hidden": "true" }), ...r.columns.map((t, n) => X("div", {
 					key: t.key,
 					id: e.id + "-column-" + n,
 					class: "sol-ui-time-grid-heading"
-				}, [X("strong", t.label), t.date ? X("time", { datetime: t.date }, Lx(t.date, a.value)) : null]))]), X("div", {
+				}, [X("strong", t.label), t.date ? X("time", { datetime: t.date }, Lx(t.date, u.value)) : null]))]), X("div", {
 					class: "sol-ui-time-grid-body",
 					style: {
-						gridTemplateColumns: v,
-						minWidth: b
+						gridTemplateColumns: _,
+						minWidth: T
 					}
 				}, [X("div", {
 					class: "sol-ui-time-grid-axis",
-					style: { height: y },
+					style: { height: w },
 					"aria-hidden": "true"
-				}, h.map((e) => X("span", {
+				}, o.map((e) => X("span", {
 					key: e,
-					style: { top: g(e) }
-				}, f(e)))), ...r.columns.map((t, i) => X("div", {
+					style: { top: s(e) }
+				}, v(e)))), ...r.columns.map((t, i) => X("div", {
 					key: t.key,
 					ref: (e) => {
-						e ? l.set(t.key, e) : l.delete(t.key);
+						e ? m.set(t.key, e) : m.delete(t.key);
 					},
 					role: "group",
 					"aria-labelledby": e.id + "-column-" + i,
 					class: "sol-ui-time-grid-column",
-					style: { height: y }
+					style: { height: w },
+					tabindex: x() ? 0 : void 0,
+					"aria-describedby": x() ? e.id + "-keys" : void 0,
+					onClick: (e) => {
+						if (!x() || e.target.closest(".sol-ui-time-grid-item,button,a,input,textarea,select,[contenteditable]")) return;
+						let n = e.currentTarget.getBoundingClientRect();
+						S(t.key, r.startMinute + (e.clientY - n.top) / n.height * a, "pointer");
+					},
+					onKeydown: (e) => {
+						e.target === e.currentTarget && !e.isComposing && ["Enter", "Insert"].includes(e.key) && x() && (e.preventDefault(), e.stopPropagation(), S(t.key, r.startMinute, "keyboard"));
+					}
 				}, [
-					...h.map((e) => X("div", {
+					e.showCurrentTime && c.value && wh(c.value.date) && Number.isInteger(c.value.minute) && c.value.minute >= r.startMinute && c.value.minute < r.endMinute && (!t.date || t.date === c.value.date) ? X("div", {
+						class: "sol-ui-time-grid-now",
+						role: "img",
+						"aria-label": u.value.timeGridCurrent + " " + v(c.value.minute),
+						style: { top: s(c.value.minute) }
+					}, X("span", v(c.value.minute))) : null,
+					...o.map((e) => X("div", {
 						key: "line-" + e,
 						class: "sol-ui-time-grid-line",
-						style: { top: g(e) },
+						style: { top: s(e) },
 						"aria-hidden": "true"
 					})),
 					...r.bands.filter((e) => (e.columnKey === void 0 || e.columnKey === t.key) && e.startMinute < r.endMinute && e.endMinute > r.startMinute).map((e) => X("div", {
 						key: "band-" + e.id,
 						class: "sol-ui-time-grid-band",
 						role: "note",
-						"aria-label": e.label + " " + f(e.startMinute) + "–" + f(e.endMinute),
+						"aria-label": e.label + " " + v(e.startMinute) + "–" + v(e.endMinute),
 						style: {
-							top: g(Math.max(e.startMinute, r.startMinute)),
-							height: _(Math.max(e.startMinute, r.startMinute), Math.min(e.endMinute, r.endMinute)),
+							top: s(Math.max(e.startMinute, r.startMinute)),
+							height: l(Math.max(e.startMinute, r.startMinute), Math.min(e.endMinute, r.endMinute)),
 							background: e.category ? `var(--sol-color-categorical-${e.category.slice(1)}-background)` : void 0,
 							color: e.category ? `var(--sol-color-categorical-${e.category.slice(1)}-foreground)` : void 0,
 							borderColor: e.category ? `var(--sol-color-categorical-${e.category.slice(1)}-border)` : void 0
@@ -15626,7 +15703,7 @@ var sS = /* @__PURE__ */ H({
 						band: e,
 						column: t
 					}) || e.label)),
-					...(p.value.get(t.key) || []).map((r) => {
+					...(y.value.get(t.key) || []).map((r) => {
 						let i = {
 							item: r.item,
 							key: r.key,
@@ -15634,41 +15711,67 @@ var sS = /* @__PURE__ */ H({
 							startMinute: r.startMinute,
 							endMinute: r.endMinute,
 							clipped: r.visibleStart !== r.startMinute || r.visibleEnd !== r.endMinute,
-							...m.scope(r.key)
+							...b.scope(r.key)
 						};
 						return X("article", {
 							key: "item:" + typeof r.key + ":" + String(r.key),
 							ref: (e) => {
-								e ? c.set(r.key, e) : c.delete(r.key);
+								e ? p.set(r.key, e) : p.delete(r.key);
 							},
 							tabindex: 0,
 							class: ["sol-ui-time-grid-item", e.readonly ? void 0 : "sol-ui-time-grid-item--editable"],
-							"data-active": String(m.state.value?.key === r.key),
-							"aria-busy": m.pending(r.key) ? "true" : void 0,
+							"data-active": String(b.state.value?.key === r.key),
+							"aria-busy": b.pending(r.key) ? "true" : void 0,
 							"aria-describedby": e.readonly ? void 0 : e.id + "-keys",
-							"aria-label": r.label + " · " + t.label + " · " + f(r.startMinute) + "–" + f(r.endMinute),
+							...b.pointerProps(r),
+							onKeydown: (t) => {
+								t.target === t.currentTarget && !t.isComposing && t.key === "Delete" && e.allowRemove && !e.readonly && (t.preventDefault(), t.stopPropagation(), C(r.key, "keyboard"));
+							},
+							"aria-label": r.label + " · " + t.label + " · " + v(r.startMinute) + "–" + v(r.endMinute),
 							style: {
-								top: g(r.visibleStart),
-								height: _(r.visibleStart, Math.max(r.visibleEnd, r.visibleStart + 30)),
+								top: s(r.visibleStart),
+								height: l(r.visibleStart, Math.max(r.visibleEnd, r.visibleStart + 30)),
 								insetInlineStart: r.lane / r.lanes * 100 + "%",
 								inlineSize: 100 / r.lanes + "%"
 							}
-						}, [...n.item?.(i) || [X("strong", { class: "sol-ui-time-grid-item-title" }, r.label), X("span", { class: "sol-ui-time-grid-item-time" }, f(r.startMinute) + "–" + f(r.endMinute))], ...m.handles(r, Math.max(30, r.visibleEnd - r.visibleStart))]);
+						}, [...n.item?.(i) || [X("strong", { class: "sol-ui-time-grid-item-title" }, r.label), X("span", { class: "sol-ui-time-grid-item-time" }, v(r.startMinute) + "–" + v(r.endMinute))], ...b.handles(r, Math.max(30, r.visibleEnd - r.visibleStart))]);
 					}),
-					m.preview(t.key)
+					b.preview(t.key)
 				]))])]) : null,
-				e.readonly ? null : m.status(),
-				m.renderToolbar(),
-				r.entries.length ? X("details", { class: "sol-ui-time-grid-agenda" }, [X("summary", a.value.timeGridList || e.label), X("ul", r.entries.map((e) => {
-					let t = r.columns.find((t) => t.key === e.columnKey);
-					return X("li", { key: e.key }, [
-						X("strong", e.label),
-						X("span", t.label + (t.date ? " · " + Lx(t.date, a.value) : "") + " · " + f(e.startMinute) + "–" + f(e.endMinute)),
-						m.pending(e.key) ? X("span", { role: "status" }, a.value.timeGridPending || a.value.progressPending) : null,
-						m.agendaActions(e)
+				e.readonly ? null : b.status(),
+				e.readonly ? null : X("p", {
+					class: "sol-ui-hint",
+					id: e.id + "-keys"
+				}, u.value.timeGridKeys),
+				e.loading ? X("p", {
+					class: "sol-ui-hint",
+					role: "status"
+				}, u.value.timeGridLoading || u.value.loading) : null,
+				b.renderToolbar(),
+				r.entries.length ? X("details", {
+					class: "sol-ui-time-grid-agenda",
+					open: !e.readonly
+				}, [X("summary", u.value.timeGridList || e.label), X("ul", r.entries.map((t) => {
+					let n = r.columns.find((e) => e.key === t.columnKey);
+					return X("li", {
+						key: t.key,
+						tabindex: -1,
+						ref: (e) => {
+							e instanceof HTMLElement ? h.set(t.key, e) : h.delete(t.key);
+						}
+					}, [
+						X("strong", t.label),
+						X("span", n.label + (n.date ? " · " + Lx(n.date, u.value) : "") + " · " + v(t.startMinute) + "–" + v(t.endMinute)),
+						b.pending(t.key) ? X("span", { role: "status" }, u.value.timeGridPending || u.value.progressPending) : null,
+						b.agendaActions(t),
+						e.allowRemove && !e.readonly ? X(Wx, {
+							disabled: b.scope(t.key).disabled,
+							"aria-label": u.value.timeGridRemove + " · " + t.label,
+							onClick: () => C(t.key, "button")
+						}, () => u.value.timeGridRemove) : null
 					]);
 				}))]) : null,
-				r.entries.length ? null : X("div", { class: "sol-ui-hint" }, n.empty?.() || a.value.timeGridEmpty || a.value.noResults)
+				r.entries.length ? null : X("div", { class: "sol-ui-hint" }, n.empty?.() || u.value.timeGridEmpty || u.value.noResults)
 			]);
 		};
 	}
@@ -15727,12 +15830,12 @@ var dS = /* @__PURE__ */ H({
 					"aria-label": e === "first" ? i.value.firstPage || i.value.pageLabel(1, n) : e === "last" ? i.value.lastPage || i.value.pageLabel(n, n) : t ? i.value.previousPage : i.value.nextPage,
 					disabled: l || (t ? r <= 1 : r >= n),
 					onClick: (e) => void c(a, e)
-				}, () => Array.from({ length: e === "first" || e === "last" ? 2 : 1 }, () => X(Jx, {
-					name: "chevron",
+				}, () => X(Jx, {
+					name: e === "first" || e === "last" ? "chevrons" : "chevron",
 					size: 16,
 					rotate: t === o.value ? 270 : 90,
 					decorative: !0
-				})));
+				}));
 			};
 			return X("div", {
 				...t,
@@ -15913,21 +16016,21 @@ var mS = {
 		function ee(t) {
 			!T && e.open && p.value === "popover" && !O(t.target) && A("outside");
 		}
-		function te() {
+		function M() {
 			let t = E(), n = document.activeElement;
 			if (!e.open || !D() || !t || !(n instanceof HTMLElement) || n === t || !t.contains(n)) return;
 			let r = t.getBoundingClientRect(), i = n.getBoundingClientRect(), a = parseFloat(getComputedStyle(t).paddingBlockStart) || 0;
 			i.top < r.top + a ? t.scrollTop += i.top - r.top - a : i.bottom > r.bottom - a && (t.scrollTop += i.bottom - r.bottom + a);
 		}
-		function ne(t) {
+		function te(t) {
 			T || p.value !== "popover" || t.relatedTarget && O(t.relatedTarget) || z(() => {
 				!T && e.open && p.value === "popover" && !O(document.activeElement) && A("outside");
 			});
 		}
-		let re = () => {
+		let ne = () => {
 			!T && p.value === "popover" && A("outside");
 		};
-		function ie() {
+		function re() {
 			let e = o.value;
 			if (e) {
 				try {
@@ -15936,16 +16039,16 @@ var mS = {
 				e.open && e.close();
 			}
 		}
-		function ae() {
+		function ie() {
 			let e = o.value;
 			if (!f.value || !e) return;
 			let t = p.value === "popover";
-			(t ? e.matches(":popover-open") : e.open) || (ie(), t ? e.showPopover() : e.showModal());
+			(t ? e.matches(":popover-open") : e.open) || (re(), t ? e.showPopover() : e.showModal());
 		}
-		async function oe(t, r) {
+		async function ae(t, r) {
 			let a = ++x;
 			if (cancelAnimationFrame(S), await z(), b || !e.open || a !== x) return;
-			T = !0, ae(), s.value = E();
+			T = !0, ie(), s.value = E();
 			let o = 0, c = () => {
 				if (b || !e.open || a !== x) return;
 				let s = E();
@@ -15955,7 +16058,7 @@ var mS = {
 				}
 				let d = getComputedStyle(s);
 				l.value = parseFloat(d.paddingBlockStart) || 0, u.value = parseFloat(d.scrollMarginBlockStart) || void 0, z(async () => {
-					!b && e.open && a === x && (m.value ? v() : i.value?.updateLocation?.(new Event("resize")), await z(), !b && e.open && a === x && te());
+					!b && e.open && a === x && (m.value ? v() : i.value?.updateLocation?.(new Event("resize")), await z(), !b && e.open && a === x && M());
 				});
 				let f = document.activeElement, h = !t && r instanceof HTMLElement && r.isConnected && s.contains(r);
 				if ((!t || e.focusOnOpen || p.value === "dialog") && (h || t || !s.contains(f)) && (f === r || f === document.body || O(f))) {
@@ -15967,32 +16070,32 @@ var mS = {
 			S = requestAnimationFrame(c);
 		}
 		V(() => e.open, (e, t) => {
-			if (e) C = !0, w = !1, oe(!0, document.activeElement);
+			if (e) C = !0, w = !1, ae(!0, document.activeElement);
 			else if (t) {
 				x++, cancelAnimationFrame(S);
 				let e = document.activeElement, t = !!E()?.contains(e);
-				T = !0, ie();
+				T = !0, re();
 				let n = f.value ? document.activeElement : null;
 				s.value = null, z(() => {
 					!b && C && t && (document.activeElement === e || document.activeElement === document.body || document.activeElement === n) && k(), T = !1;
 				});
 			}
 		}), V(p, () => {
-			e.open && oe(!1, document.activeElement);
+			e.open && ae(!1, document.activeElement);
 		});
-		let se = () => {
+		let oe = () => {
 			a.value = !!y?.matches;
 		};
-		V(d, () => void z(te)), Yi(() => {
-			y = window.matchMedia("(max-width: 680px)"), c.value = typeof HTMLElement.prototype.showPopover == "function", se(), y.addEventListener("change", se), window.addEventListener("keydown", j, !0), document.addEventListener("focusin", ee), window.addEventListener("blur", re), e.open && oe(!0, document.activeElement);
+		V(d, () => void z(M)), Yi(() => {
+			y = window.matchMedia("(max-width: 680px)"), c.value = typeof HTMLElement.prototype.showPopover == "function", oe(), y.addEventListener("change", oe), window.addEventListener("keydown", j, !0), document.addEventListener("focusin", ee), window.addEventListener("blur", ne), e.open && ae(!0, document.activeElement);
 		}), Qi(() => {
-			b = !0, x++, cancelAnimationFrame(S), y?.removeEventListener("change", se), window.removeEventListener("keydown", j, !0), document.removeEventListener("focusin", ee), window.removeEventListener("blur", re);
+			b = !0, x++, cancelAnimationFrame(S), y?.removeEventListener("change", oe), window.removeEventListener("keydown", j, !0), document.removeEventListener("focusin", ee), window.removeEventListener("blur", ne);
 			let t = document.activeElement, n = e.open && !!E()?.contains(t);
-			ie(), n && z(() => {
+			re(), n && z(() => {
 				(document.activeElement === t || document.activeElement === document.body) && k();
 			});
 		}), r({ content: E });
-		let ce = () => X(eb, {
+		let se = () => X(eb, {
 			ref: i,
 			modelValue: e.open,
 			"onUpdate:modelValue": (e) => {
@@ -16042,8 +16145,8 @@ var mS = {
 					..._.value,
 					position: "fixed"
 				} : void 0,
-				onFocusout: ne,
-				onFocusin: () => void z(te)
+				onFocusout: te,
+				onFocusin: () => void z(M)
 			},
 			"onClick:outside": () => A("outside")
 		}, () => t.default?.());
@@ -16056,7 +16159,7 @@ var mS = {
 			"aria-modal": String(p.value === "dialog"),
 			class: "sol-ui-picker-native-host",
 			onCancel: (e) => e.preventDefault()
-		}, ce())]) : ce();
+		}, se())]) : se();
 	}
 });
 function gS({ modelValue: e = 0, min: t = 0, max: n = 100, state: r = "determinate" } = {}) {
@@ -16601,7 +16704,7 @@ var yS = vS("SProgressLinear", !1), bS = vS("SProgressCircular", !0), xS = /* @_
 				}, [X("span", {
 					class: "sol-tree-row",
 					onClick: () => {
-						l(t.id), u(t.id);
+						l(t.id), u(t.id), o && d(t.id, !s);
 					}
 				}, [X("span", t.label), X("span", {
 					class: "sol-tree-disclosure",
@@ -16684,7 +16787,7 @@ var yS = vS("SProgressLinear", !1), bS = vS("SProgressCircular", !0), xS = /* @_
 			d = !1, u || m(!1, "focus");
 		}
 		function y(e) {
-			e.key === "Escape" && c.value && (e.preventDefault(), e.stopPropagation(), m(!1, "escape"));
+			e.key === "Escape" && !e.isComposing && c.value && (e.preventDefault(), e.stopPropagation(), m(!1, "escape"));
 		}
 		let b = (e) => {
 			c.value && !a.value?.contains(e.target) && m(!1, "outside");
@@ -16693,8 +16796,10 @@ var yS = vS("SProgressLinear", !1), bS = vS("SProgressCircular", !0), xS = /* @_
 			e ? r("open") : t && r("close", p);
 		}), V(() => [e.disabled, e.readonly], () => {
 			(e.disabled || e.readonly) && m(!1, "disabled");
-		}), Yi(() => document.addEventListener("pointerdown", b)), Qi(() => {
-			clearTimeout(f), document.removeEventListener("pointerdown", b);
+		}), Yi(() => {
+			document.addEventListener("pointerdown", b), document.addEventListener("keydown", y, !0);
+		}), Qi(() => {
+			clearTimeout(f), document.removeEventListener("pointerdown", b), document.removeEventListener("keydown", y, !0);
 		}), () => {
 			let r = {
 				id: e.id + "-trigger",
@@ -17088,31 +17193,31 @@ function US(e, t, n) {
 			(!t || t === document.body || t === e || t === i || a?.contains(t)) && n.focus();
 		});
 	}
-	let o = () => n.always || e.clearable || e.loading || [
+	let o = () => e.clearable || e.loading || [
 		"leading",
 		"trailing",
 		"indicator",
 		"status",
 		"loading"
-	].some((e) => !!t[e]);
-	function s() {
+	].some((e) => !!t[e]), s = () => n.always || o();
+	function c() {
 		return t.indicator?.(i()) || X(Jx, {
 			name: n.icon || "chevron",
 			size: 20,
 			decorative: !0
 		});
 	}
-	function c() {
+	function l() {
 		let e = t.leading?.(i());
 		return e?.length ? X("span", { class: "sol-ui-input-leading" }, e) : null;
 	}
-	function l(r = !0) {
-		let o = i(), c = n.locale(), l = HS([
+	function u(r = !0) {
+		let o = i(), s = n.locale(), l = HS([
 			t.trailing?.(o),
 			o.loading ? t.loading?.(o) || X("span", {
 				class: "sol-ui-input-loading",
 				role: "progressbar",
-				"aria-label": c.inputLoading
+				"aria-label": s.inputLoading
 			}, X("span", {
 				class: "sol-ui-input-spinner",
 				"aria-hidden": "true"
@@ -17128,7 +17233,7 @@ function US(e, t, n) {
 			e.clearable && o.hasValue && !o.disabled && !o.readonly ? X("button", {
 				type: "button",
 				class: "sol-button sol-ui-input-clear",
-				"aria-label": e.label + " " + c.clear,
+				"aria-label": e.label + " " + s.clear,
 				onMousedown: (e) => e.preventDefault(),
 				onClick: a
 			}, X(Jx, {
@@ -17137,12 +17242,12 @@ function US(e, t, n) {
 				decorative: !0
 			})) : null,
 			n.actions?.(),
-			n.trigger ? Cs(n.trigger(s()), { class: "sol-ui-input-trigger" }) : r ? t.indicator?.(o) : null
+			n.trigger ? Cs(n.trigger(c()), { class: "sol-ui-input-trigger" }) : r ? t.indicator?.(o) : null
 		]);
 		return l.length ? X("div", { class: "sol-ui-input-rail" }, l) : null;
 	}
-	function u(e, n = {}) {
-		if (!o()) return e;
+	function d(e, n = {}) {
+		if (!s()) return e;
 		let r = i(), a = n.select && !!t.indicator;
 		return X("div", {
 			class: ["sol-ui-input-frame", n.multiline ? "sol-ui-input-frame--multiline" : void 0],
@@ -17150,7 +17255,7 @@ function US(e, t, n) {
 			"data-error": r.error ? "true" : void 0,
 			"aria-busy": r.loading ? "true" : void 0
 		}, [
-			c(),
+			l(),
 			X("span", { class: "sol-ui-input-core" }, [Cs(e, {
 				class: ["sol-ui-input-native", a ? "sol-ui-input-native--indicator" : void 0],
 				"aria-busy": r.loading ? "true" : void 0
@@ -17158,21 +17263,22 @@ function US(e, t, n) {
 				class: "sol-ui-input-overlay-indicator",
 				"aria-hidden": "true"
 			}, t.indicator?.(r)) : null]),
-			l(!n.select)
+			u(!n.select)
 		]);
 	}
-	function d() {
-		return o() ? {
-			...t.leading ? { "prepend-inner": c } : {},
-			"append-inner": () => l()
+	function f() {
+		return s() ? {
+			...t.leading ? { "prepend-inner": l } : {},
+			"append-inner": () => u()
 		} : {};
 	}
 	return {
 		clear: a,
 		scope: i,
-		enhanced: o,
-		native: u,
-		vuetifySlots: d
+		decorated: o,
+		enhanced: s,
+		native: d,
+		vuetifySlots: f
 	};
 }
 function WS(e) {
@@ -17690,13 +17796,6 @@ var $S = (e, t) => {
 					value: e.modelValue === null ? "" : Fx(e.modelValue, a.value)
 				}) : null,
 				X("div", { class: ["sol-ui-number", e.unit ? "sol-ui-number--unit" : void 0] }, [
-					X("button", {
-						type: "button",
-						class: "sol-button",
-						disabled: Q(e) || $(e) || h(-1) === null,
-						"aria-label": e.label + " " + a.value.decrease,
-						onClick: () => g(-1)
-					}, "−"),
 					C.native(X("input", ks({ onFocus: x }, {
 						...t,
 						ref: l,
@@ -17733,13 +17832,23 @@ var $S = (e, t) => {
 						class: "sol-ui-number-unit",
 						"aria-hidden": "true"
 					}, e.unit) : null,
-					X("button", {
+					X("div", {
+						class: "sol-ui-number-stepper",
+						role: "group",
+						"aria-labelledby": e.id + "-label"
+					}, [X("button", {
+						type: "button",
+						class: "sol-button",
+						disabled: Q(e) || $(e) || h(-1) === null,
+						"aria-label": e.label + " " + a.value.decrease,
+						onClick: () => g(-1)
+					}, "−"), X("button", {
 						type: "button",
 						class: "sol-button",
 						disabled: Q(e) || $(e) || h(1) === null,
 						"aria-label": e.label + " " + a.value.increase,
 						onClick: () => g(1)
-					}, "+")
+					}, "+")])
 				]),
 				e.presets.length || n.presets ? X("div", {
 					class: "sol-ui-number-presets",
@@ -17827,6 +17936,10 @@ var fC = /* @__PURE__ */ H({
 			type: Number,
 			default: 2097152
 		},
+		preview: {
+			type: Boolean,
+			default: !0
+		},
 		drop: {
 			type: Boolean,
 			default: !0
@@ -17840,56 +17953,76 @@ var fC = /* @__PURE__ */ H({
 		invalid: (e) => !0
 	},
 	setup(e, { attrs: t, slots: n, emit: r, expose: i }) {
-		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(null), c = /* @__PURE__ */ F(null), l = /* @__PURE__ */ F(!1), u = /* @__PURE__ */ F([]), d = /* @__PURE__ */ F(""), f = 0, p = () => !Q(e) && !$(e);
-		function m() {
+		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(null), c = /* @__PURE__ */ F(null), l = /* @__PURE__ */ F(!1), u = /* @__PURE__ */ F([]), d = /* @__PURE__ */ F(""), f = 0, p = /* @__PURE__ */ F(/* @__PURE__ */ new Map()), m = /* @__PURE__ */ new Set();
+		function h(e) {
+			typeof window < "u" && window.URL.revokeObjectURL?.(e);
+		}
+		function g() {
+			let t = e.preview ? new Set(e.modelValue.filter((e) => e.type.startsWith("image/"))) : /* @__PURE__ */ new Set();
+			for (let [e, n] of p.value) t.has(e) || (h(n), p.value.delete(e));
+			for (let e of m) t.has(e) || m.delete(e);
+			if (typeof window < "u" && typeof window.URL.createObjectURL == "function") {
+				for (let e of t) if (!p.value.has(e) && !m.has(e)) try {
+					p.value.set(e, window.URL.createObjectURL(e));
+				} catch {
+					m.add(e);
+				}
+			}
+		}
+		V(() => [e.modelValue, e.preview], g, { deep: !0 }), Yi(g), Qi(() => {
+			for (let e of p.value.values()) h(e);
+			p.value.clear(), m.clear();
+		});
+		let _ = () => !Q(e) && !$(e);
+		function v() {
 			f = 0, l.value = !1;
 		}
-		let h = () => c.value?.$el?.focus();
-		function g(e) {
+		let y = () => c.value?.$el?.focus();
+		function b(e) {
 			r("update:modelValue", e), r("change", e), d.value = "";
 		}
-		function _(t) {
-			if (!p()) return;
+		function x(t) {
+			if (!_()) return;
 			let n = dC(t, e.modelValue, e, a.value);
-			u.value = n.rejected, n.files.length !== e.modelValue.length && g(n.files), n.rejected.length && r("reject", n.rejected);
+			u.value = n.rejected, n.files.length !== e.modelValue.length && b(n.files), n.rejected.length && r("reject", n.rejected);
 		}
-		function v(e) {
-			_(Array.from(e.target.files || [])), s.value && (s.value.value = "");
+		function S(e) {
+			x(Array.from(e.target.files || [])), s.value && (s.value.value = "");
 		}
-		function y(t) {
-			p() && (g(e.modelValue.filter((e) => e !== t)), u.value = [], r("remove", t), z(h));
+		function C(t) {
+			_() && (b(e.modelValue.filter((e) => e !== t)), u.value = [], r("remove", t), z(y));
 		}
-		function b() {
-			p() && (g([]), u.value = [], s.value && (s.value.value = ""), z(h));
+		function w() {
+			_() && (b([]), u.value = [], s.value && (s.value.value = ""), z(y));
 		}
-		function x() {
+		function T() {
 			let t = e.required && !e.modelValue.length ? a.value.fileRequired : "";
 			return d.value = t, t && r("invalid", t), !IS(e) && !t;
 		}
-		let S = (e) => Array.from(e.dataTransfer?.types || []).includes("Files");
-		function C(t) {
-			S(t) && (t.preventDefault(), e.drop && p() && (f++, l.value = !0));
+		let E = (e) => Array.from(e.dataTransfer?.types || []).includes("Files");
+		function D(t) {
+			E(t) && (t.preventDefault(), e.drop && _() && (f++, l.value = !0));
 		}
-		function w() {
+		function O() {
 			f = Math.max(0, f - 1), f || (l.value = !1);
 		}
-		function T(t) {
-			S(t) && (t.preventDefault(), l.value = e.drop && p(), t.dataTransfer && (t.dataTransfer.dropEffect = l.value ? "copy" : "none"));
+		function k(t) {
+			E(t) && (t.preventDefault(), l.value = e.drop && _(), t.dataTransfer && (t.dataTransfer.dropEffect = l.value ? "copy" : "none"));
 		}
-		function E(t) {
-			S(t) && (t.preventDefault(), t.stopPropagation(), m(), e.drop && _(Array.from(t.dataTransfer?.files || [])));
+		function A(t) {
+			E(t) && (t.preventDefault(), t.stopPropagation(), v(), e.drop && x(Array.from(t.dataTransfer?.files || [])));
 		}
-		function D(e) {
-			S(e) && !o.value?.contains(e.target) && e.preventDefault();
+		function j(e) {
+			E(e) && !o.value?.contains(e.target) && e.preventDefault();
 		}
 		Yi(() => {
-			document.addEventListener("dragover", D), document.addEventListener("drop", D);
+			document.addEventListener("dragover", j), document.addEventListener("drop", j);
 		}), Qi(() => {
-			document.removeEventListener("dragover", D), document.removeEventListener("drop", D);
+			document.removeEventListener("dragover", j), document.removeEventListener("drop", j);
 		});
-		let O = RS(e, () => e.modelValue, {
-			focus: h,
-			validateIntrinsic: x,
+		let ee = RS(e, () => e.modelValue, {
+			focus: y,
+			validateIntrinsic: T,
 			intrinsicError: () => d.value,
 			resetIntrinsic: () => {
 				d.value = "";
@@ -17900,12 +18033,12 @@ var fC = /* @__PURE__ */ H({
 			Q(e),
 			$(e)
 		], () => {
-			e.drop && p() || m();
+			e.drop && _() || v();
 		}), i({
-			...O,
-			clear: b
+			...ee,
+			clear: w
 		}), () => {
-			let r = cC(e), i = LS(e) || d.value, f = e.drop && p() && l.value;
+			let r = cC(e), i = LS(e) || d.value, f = e.drop && _() && l.value;
 			return X("div", {
 				...t,
 				ref: o,
@@ -17923,11 +18056,11 @@ var fC = /* @__PURE__ */ H({
 					class: e.drop ? "sol-dropzone" : "sol-ui-file-chooser",
 					"data-dragging": String(f),
 					"data-drag-state": f ? "over" : "idle",
-					"aria-disabled": p() ? void 0 : "true",
-					onDragenter: C,
-					onDragover: T,
-					onDragleave: w,
-					onDrop: E
+					"aria-disabled": _() ? void 0 : "true",
+					onDragenter: D,
+					onDragover: k,
+					onDragleave: O,
+					onDrop: A
 				}, [
 					e.drop ? X("p", a.value.dropFiles) : null,
 					X("p", {
@@ -17937,11 +18070,11 @@ var fC = /* @__PURE__ */ H({
 					X(Wx, {
 						ref: c,
 						id: e.id + "-choose",
-						disabled: !p(),
+						disabled: !_(),
 						"aria-label": e.label + ": " + a.value.filesChoose,
 						"aria-describedby": [e.id + "-limits", XS(e, n, i)].filter(Boolean).join(" "),
 						onClick: () => {
-							p() && s.value?.click();
+							_() && s.value?.click();
 						}
 					}, () => a.value.filesChoose),
 					X("input", {
@@ -17949,10 +18082,10 @@ var fC = /* @__PURE__ */ H({
 						ref: s,
 						type: "file",
 						hidden: !0,
-						disabled: !p(),
+						disabled: !_(),
 						accept: e.accept,
 						multiple: r.maxFiles > 1,
-						onChange: v
+						onChange: S
 					})
 				]),
 				...ZS(e, n, i),
@@ -17962,21 +18095,36 @@ var fC = /* @__PURE__ */ H({
 				}, [X("strong", a.value.filesRejected), X("ul", u.value.map((e, t) => X("li", { key: t }, e.file.name + ": " + e.message)))]) : null,
 				X("ul", { class: "sol-ui-file-list" }, e.modelValue.map((e, t) => {
 					let n = uC(e, a.value);
-					return X("li", { key: t }, [X("div", { class: "sol-ui-file-meta" }, [X("strong", e.name), X("span", { class: "sol-hint" }, [
-						n.extension,
-						n.mediaType,
-						n.size
-					].join(" · "))]), X(Wx, {
-						variant: "inline",
-						disabled: !p(),
-						"aria-label": a.value.remove(e.name),
-						onClick: () => y(e)
-					}, () => a.value.fileRemove)]);
+					return X("li", { key: t }, [
+						p.value.has(e) ? X("img", {
+							class: "sol-ui-file-preview",
+							src: p.value.get(e),
+							alt: "",
+							"aria-hidden": "true",
+							loading: "lazy",
+							decoding: "async",
+							onError: () => {
+								let t = p.value.get(e);
+								t && h(t), p.value.delete(e), m.add(e);
+							}
+						}) : null,
+						X("div", { class: "sol-ui-file-meta" }, [X("strong", e.name), X("span", { class: "sol-hint" }, [
+							n.extension,
+							n.mediaType,
+							n.size
+						].join(" · "))]),
+						X(Wx, {
+							variant: "inline",
+							disabled: !_(),
+							"aria-label": a.value.remove(e.name),
+							onClick: () => C(e)
+						}, () => a.value.fileRemove)
+					]);
 				})),
 				X(Wx, {
 					variant: "inline",
-					disabled: !p() || !e.modelValue.length,
-					onClick: b
+					disabled: !_() || !e.modelValue.length,
+					onClick: w
 				}, () => a.value.filesClear)
 			]);
 		};
@@ -18087,32 +18235,32 @@ var mC = /* @__PURE__ */ H({
 		function ee() {
 			S() && !b && (r("search", u.value), e.loadOptions ? D.schedule(() => u.value, e.debounce) : A());
 		}
-		function te() {
+		function M() {
 			S() && (l.value || (l.value = !0, r("open")), ee());
 		}
-		function ne(e) {
+		function te(e) {
 			x = e, r("update:modelValue", e), r("change", e), h.value = "";
 		}
-		function re(t) {
-			S() && (u.value = t.target.value, e.modelValue !== null && ne(null), b || te());
+		function ne(t) {
+			S() && (u.value = t.target.value, e.modelValue !== null && te(null), b || M());
 		}
-		function ie(e) {
-			S() && !e.disabled && (ne(e.value), u.value = e.label, k(), s.value?.focus({ preventScroll: !0 }));
+		function re(e) {
+			S() && !e.disabled && (te(e.value), u.value = e.label, k(), s.value?.focus({ preventScroll: !0 }));
 		}
-		function ae() {
-			M.enhanced() ? M.clear() : S() && (ne(null), u.value = "", k(), s.value?.focus({ preventScroll: !0 }), r("clear", {
+		function ie() {
+			de.enhanced() ? de.clear() : S() && (te(null), u.value = "", k(), s.value?.focus({ preventScroll: !0 }), r("clear", {
 				value: null,
 				reason: "clear"
 			}));
 		}
-		function oe() {
+		function ae() {
 			S() && (s.value?.focus({ preventScroll: !0 }), l.value || (l.value = !0, r("open")), j());
 		}
-		function se() {
+		function oe() {
 			let t = e.required && e.modelValue === null ? a.value.chooseAtLeastOne : "";
 			return h.value = t, t && r("invalid", t), !IS(e) && !t;
 		}
-		function ce(t) {
+		function se(t) {
 			if (b || t.isComposing || !S()) return;
 			if (t.key === "Escape" && l.value) {
 				t.preventDefault(), t.stopPropagation(), k(), s.value?.focus();
@@ -18125,12 +18273,12 @@ var mC = /* @__PURE__ */ H({
 			let n = E();
 			if (t.key === "ArrowDown" || t.key === "ArrowUp") {
 				if (t.preventDefault(), !l.value) {
-					te(), e.loadOptions || (d.value = (t.key === "ArrowUp" ? E().at(-1) : E()[0])?.index ?? -1);
+					M(), e.loadOptions || (d.value = (t.key === "ArrowUp" ? E().at(-1) : E()[0])?.index ?? -1);
 					return;
 				}
 				let r = n.findIndex(({ index: e }) => e === d.value), i = t.key === "ArrowDown" ? 1 : -1;
 				d.value = (r < 0 ? i === 1 ? n[0] : n.at(-1) : n[(r + i + n.length) % n.length])?.index ?? -1;
-			} else l.value && d.value >= 0 && T.value[d.value] && (t.key === "Home" || t.key === "End" ? (t.preventDefault(), d.value = (t.key === "Home" ? n[0] : n.at(-1))?.index ?? -1) : t.key === "Enter" && (t.preventDefault(), ie(T.value[d.value])));
+			} else l.value && d.value >= 0 && T.value[d.value] && (t.key === "Home" || t.key === "End" ? (t.preventDefault(), d.value = (t.key === "Home" ? n[0] : n.at(-1))?.index ?? -1) : t.key === "Enter" && (t.preventDefault(), re(T.value[d.value])));
 			t.defaultPrevented && z(() => {
 				let e = c.value, t = e?.querySelector("[aria-selected=\"true\"]");
 				if (!e || !t) return;
@@ -18138,11 +18286,11 @@ var mC = /* @__PURE__ */ H({
 				r.top < n.top ? e.scrollTop -= n.top - r.top : r.bottom > n.bottom && (e.scrollTop += r.bottom - n.bottom);
 			});
 		}
-		function le(e) {
+		function ce(e) {
 			let t = e.relatedTarget;
 			t && !o.value?.contains(t) && k();
 		}
-		let ue = (e) => {
+		let le = (e) => {
 			l.value && !o.value?.contains(e.target) && k();
 		};
 		V(() => [
@@ -18151,17 +18299,17 @@ var mC = /* @__PURE__ */ H({
 			e.loadOptions
 		], () => {
 			k(), e.loadOptions || (f.value = C(e.options));
-		}), Yi(() => document.addEventListener("pointerdown", ue)), Qi(() => {
-			D.dispose(), document.removeEventListener("pointerdown", ue);
+		}), Yi(() => document.addEventListener("pointerdown", le)), Qi(() => {
+			D.dispose(), document.removeEventListener("pointerdown", le);
 		});
-		let de = RS(e, () => e.modelValue, {
+		let ue = RS(e, () => e.modelValue, {
 			focus: () => s.value?.focus(),
-			validateIntrinsic: se,
+			validateIntrinsic: oe,
 			intrinsicError: () => h.value,
 			resetIntrinsic: () => {
 				h.value = "";
 			}
-		}), M = US(e, n, {
+		}), de = US(e, n, {
 			locale: () => a.value,
 			hasValue: () => e.modelValue !== null || u.value.length > 0,
 			disabled: () => Q(e),
@@ -18169,7 +18317,7 @@ var mC = /* @__PURE__ */ H({
 			error: () => LS(e) || h.value,
 			loading: () => p.value,
 			clear: () => {
-				y = b, b = !1, ne(null), u.value = "", m.value = !1, k(), O(), r("clear", {
+				y = b, b = !1, te(null), u.value = "", m.value = !1, k(), O(), r("clear", {
 					value: null,
 					reason: "clear"
 				});
@@ -18177,8 +18325,8 @@ var mC = /* @__PURE__ */ H({
 			reconcile: () => {
 				x = void 0, u.value = e.modelValue === null ? "" : v.get(e.modelValue) || e.modelValue;
 			},
-			validate: de.validate,
-			focus: de.focus,
+			validate: ue.validate,
+			focus: ue.focus,
 			element: () => s.value,
 			trigger: (t) => X("button", {
 				type: "button",
@@ -18190,23 +18338,23 @@ var mC = /* @__PURE__ */ H({
 				"aria-controls": e.id + "-options",
 				onMousedown: (e) => e.preventDefault(),
 				onClick: () => {
-					l.value ? k() : te(), s.value?.focus({ preventScroll: !0 });
+					l.value ? k() : M(), s.value?.focus({ preventScroll: !0 });
 				}
 			}, [t])
 		});
 		return i({
-			...de,
-			clear: ae,
-			retry: oe
+			...ue,
+			clear: ie,
+			retry: ae
 		}), () => {
 			let r = LS(e) || h.value, i = l.value && !p.value && !m.value && d.value >= 0 ? T.value[d.value] : void 0;
 			return X("div", {
 				ref: o,
 				class: ["sol-field sol-ui-autocomplete", t.class],
-				onFocusout: le
+				onFocusout: ce
 			}, [
 				QS(e, n, a.value.required),
-				M.native(X("input", {
+				de.native(X("input", {
 					...t,
 					id: e.id,
 					ref: s,
@@ -18226,14 +18374,14 @@ var mC = /* @__PURE__ */ H({
 					"aria-invalid": r ? "true" : void 0,
 					"aria-describedby": [XS(e, n, r, t["aria-describedby"]), e.id + "-status"].filter(Boolean).join(" "),
 					autocomplete: "off",
-					onClick: te,
-					onInput: re,
-					onKeydown: ce,
+					onClick: M,
+					onInput: ne,
+					onKeydown: se,
 					onCompositionstart: () => {
 						y = !1, b = !0, O();
 					},
 					onCompositionend: (e) => {
-						y ? (y = !1, b = !1, e.target.value = u.value) : (b = !1, re(e));
+						y ? (y = !1, b = !1, e.target.value = u.value) : (b = !1, ne(e));
 					}
 				})),
 				...ZS(e, n, r),
@@ -18258,10 +18406,10 @@ var mC = /* @__PURE__ */ H({
 					"aria-selected": String(d.value === n),
 					"aria-disabled": t.disabled ? "true" : void 0,
 					onMousedown: (e) => e.preventDefault(),
-					onClick: () => ie(t)
+					onClick: () => re(t)
 				}, [X("span", t.label), t.description ? X("span", { class: "sol-hint" }, t.description) : null]))), p.value ? X("p", { class: "sol-ui-combo-message" }, a.value.loading) : m.value ? X("div", { class: "sol-ui-combo-message" }, [X("p", a.value.loadFailed), X(Wx, {
 					variant: "inline",
-					onClick: oe
+					onClick: ae
 				}, () => a.value.retry)]) : T.value.length ? null : X("p", { class: "sol-ui-combo-message" }, a.value.noResults)]),
 				X("p", {
 					id: e.id + "-status",
@@ -18271,7 +18419,7 @@ var mC = /* @__PURE__ */ H({
 				e.clearable ? null : X(Wx, {
 					variant: "inline",
 					disabled: !S() || !u.value && !e.modelValue,
-					onClick: ae
+					onClick: ie
 				}, () => a.value.clear)
 			]);
 		};
@@ -18327,7 +18475,7 @@ var mC = /* @__PURE__ */ H({
 		function ee() {
 			f.value = -1, p.value = !1;
 		}
-		let te = pC({
+		let M = pC({
 			loader: () => e.loadOptions,
 			available: () => d.value && S() && !E,
 			pending: () => {
@@ -18343,48 +18491,48 @@ var mC = /* @__PURE__ */ H({
 				h.value = !1, z(b);
 			}
 		});
-		function ne() {
-			te.stop(), ee(), v.value = !1, d.value && (d.value = !1, r("close"));
+		function te() {
+			M.stop(), ee(), v.value = !1, d.value && (d.value = !1, r("close"));
 		}
-		function re() {
+		function ne() {
 			k = !0, c.value?.focus({ preventScroll: !0 }), k = !1;
 		}
+		function re() {
+			S() && !E && (r("search", u.value), e.loadOptions && M.schedule(u.value, e.debounce));
+		}
 		function ie() {
-			S() && !E && (r("search", u.value), e.loadOptions && te.schedule(u.value, e.debounce));
+			!S() || E || d.value || (d.value = !0, r("open"), re());
 		}
 		function ae() {
-			!S() || E || d.value || (d.value = !0, r("open"), ie());
-		}
-		function oe() {
 			u.value = e.modelValue ?? "", _.value = "";
 		}
-		function se(t) {
+		function oe(t) {
 			let n = ++A;
-			u.value = t.value ?? "", _.value = "", ne(), e.modelValue !== t.value && r("update:modelValue", t.value), r("change", t), z(() => {
-				O || n !== A || (oe(), pe.validate());
+			u.value = t.value ?? "", _.value = "", te(), e.modelValue !== t.value && r("update:modelValue", t.value), r("change", t), z(() => {
+				O || n !== A || (ae(), pe.validate());
 			});
 		}
-		function ce() {
-			S() && !E && (x.value ? se({
+		function se() {
+			S() && !E && (x.value ? oe({
 				value: u.value === "" ? null : u.value,
 				reason: "custom"
-			}) : ne());
+			}) : te());
 		}
-		function le(e) {
-			!S() || e.disabled || E || (se({
+		function ce(e) {
+			!S() || e.disabled || E || (oe({
 				value: e.label,
 				reason: "select",
 				option: { ...e }
-			}), re());
+			}), ne());
 		}
-		function ue(e) {
-			S() && (A++, u.value = e.target.value, ee(), _.value = "", E || (d.value ? ie() : ae()));
+		function le(e) {
+			S() && (A++, u.value = e.target.value, ee(), _.value = "", E || (d.value ? re() : ie()));
+		}
+		function ue() {
+			A++, D = E, E = !1, ae(), te(), ne();
 		}
 		function de() {
-			A++, D = E, E = !1, oe(), ne(), re();
-		}
-		function M() {
-			S() && !E && e.loadOptions && (re(), d.value || (d.value = !0, r("open")), r("search", u.value), te.run(u.value));
+			S() && !E && e.loadOptions && (ne(), d.value || (d.value = !0, r("open")), r("search", u.value), M.run(u.value));
 		}
 		function fe() {
 			return x.value ? a.value.comboboxUncommitted : "";
@@ -18405,7 +18553,7 @@ var mC = /* @__PURE__ */ H({
 			error: () => LS(e),
 			loading: () => h.value,
 			clear: () => {
-				A++, D = E, E = !1, u.value = "", _.value = "", g.value = !1, ne(), e.modelValue !== null && r("update:modelValue", null), r("change", {
+				A++, D = E, E = !1, u.value = "", _.value = "", g.value = !1, te(), e.modelValue !== null && r("update:modelValue", null), r("change", {
 					value: null,
 					reason: "clear"
 				}), r("clear", {
@@ -18413,9 +18561,9 @@ var mC = /* @__PURE__ */ H({
 					reason: "clear"
 				});
 			},
-			reconcile: oe,
+			reconcile: ae,
 			validate: pe.validate,
-			focus: re,
+			focus: ne,
 			element: () => c.value,
 			trigger: (t) => X("button", {
 				type: "button",
@@ -18427,19 +18575,19 @@ var mC = /* @__PURE__ */ H({
 				"aria-expanded": String(d.value),
 				onMousedown: (e) => e.preventDefault(),
 				onClick: () => {
-					d.value ? ne() : ae(), re();
+					d.value ? te() : ie(), ne();
 				}
 			}, [t])
 		});
 		function he(t) {
 			if (!(!S() || E || t.isComposing || t.keyCode === 229)) {
-				if (t.key === "Escape" && (d.value || x.value)) t.preventDefault(), t.stopPropagation(), de();
+				if (t.key === "Escape" && (d.value || x.value)) t.preventDefault(), t.stopPropagation(), ue();
 				else if (t.key === "Enter") {
 					let n = p.value && d.value ? w.value[f.value] : void 0;
-					(n || e.commitOn.includes("enter") || x.value || d.value) && (t.preventDefault(), n ? le(n) : e.commitOn.includes("enter") && ce());
+					(n || e.commitOn.includes("enter") || x.value || d.value) && (t.preventDefault(), n ? ce(n) : e.commitOn.includes("enter") && se());
 				} else {
 					if (t.key === "ArrowDown" || t.key === "ArrowUp") {
-						t.preventDefault(), ae();
+						t.preventDefault(), ie();
 						let e = T(), n = e.findIndex((e) => e.index === f.value), r = t.key === "ArrowDown" ? 1 : -1;
 						f.value = (n < 0 ? r === 1 ? e[0] : e.at(-1) : e[(n + r + e.length) % e.length])?.index ?? -1, p.value = f.value >= 0;
 					} else d.value && p.value && (t.key === "Home" || t.key === "End") && (t.preventDefault(), f.value = (t.key === "Home" ? T()[0] : T().at(-1))?.index ?? -1);
@@ -18452,11 +18600,11 @@ var mC = /* @__PURE__ */ H({
 			if (n && o.value?.contains(n)) return;
 			let r = A;
 			z(() => {
-				O || r !== A || o.value?.contains(document.activeElement) || (!E && e.commitOn.includes("blur") && ce(), ne(), pe.validate());
+				O || r !== A || o.value?.contains(document.activeElement) || (!E && e.commitOn.includes("blur") && se(), te(), pe.validate());
 			});
 		}
 		let _e = (e) => {
-			d.value && !o.value?.contains(e.target) && ne();
+			d.value && !o.value?.contains(e.target) && te();
 		};
 		return V(() => e.options, (t) => {
 			e.loadOptions || (m.value = j(t)), ee();
@@ -18464,13 +18612,13 @@ var mC = /* @__PURE__ */ H({
 			immediate: !0,
 			deep: !0
 		}), V(() => e.modelValue, () => {
-			A++, D ||= E, E = !1, oe(), ne();
+			A++, D ||= E, E = !1, ae(), te();
 		}), V(() => [
 			Q(e),
 			$(e),
 			e.loadOptions
 		], () => {
-			A++, D ||= E, E = !1, oe(), ne(), e.loadOptions || (m.value = j(e.options));
+			A++, D ||= E, E = !1, ae(), te(), e.loadOptions || (m.value = j(e.options));
 		}), V([
 			x,
 			() => e.required,
@@ -18478,11 +18626,11 @@ var mC = /* @__PURE__ */ H({
 		], () => {
 			c.value?.setCustomValidity(Q(e) ? "" : fe());
 		}, { flush: "post" }), Yi(() => document.addEventListener("pointerdown", _e)), Qi(() => {
-			O = !0, A++, te.dispose(), document.removeEventListener("pointerdown", _e);
+			O = !0, A++, M.dispose(), document.removeEventListener("pointerdown", _e);
 		}), i({
 			...pe,
 			clear: me.clear,
-			retry: M
+			retry: de
 		}), () => {
 			let r = LS(e), i = p.value && d.value && !h.value && !g.value ? w.value[f.value] : void 0;
 			return X("div", {
@@ -18511,17 +18659,17 @@ var mC = /* @__PURE__ */ H({
 					"aria-invalid": r ? "true" : void 0,
 					"aria-describedby": [XS(e, n, r, t["aria-describedby"]), e.id + "-status"].filter(Boolean).join(" "),
 					autocomplete: "off",
-					onInput: ue,
+					onInput: le,
 					onKeydown: he,
-					onClick: ae,
+					onClick: ie,
 					onFocus: () => {
-						e.openOnFocus && !k && ae();
+						e.openOnFocus && !k && ie();
 					},
 					onCompositionstart: () => {
-						D = !1, E = !0, te.stop(), ee();
+						D = !1, E = !0, M.stop(), ee();
 					},
 					onCompositionend: (t) => {
-						E = !1, D ? (D = !1, t.target.value = u.value) : o.value?.contains(document.activeElement) ? ue(t) : (A++, u.value = t.target.value, ee(), e.commitOn.includes("blur") && ce(), ne(), pe.validate());
+						E = !1, D ? (D = !1, t.target.value = u.value) : o.value?.contains(document.activeElement) ? le(t) : (A++, u.value = t.target.value, ee(), e.commitOn.includes("blur") && se(), te(), pe.validate());
 					}
 				})))),
 				t.name ? X("input", {
@@ -18539,7 +18687,7 @@ var mC = /* @__PURE__ */ H({
 					class: "sol-ui-floating sol-ui-combo-panel sol-ui-combobox-panel",
 					style: y.value,
 					onKeydown: (e) => {
-						e.key === "Escape" && d.value && (e.preventDefault(), e.stopPropagation(), de());
+						e.key === "Escape" && d.value && (e.preventDefault(), e.stopPropagation(), ue());
 					}
 				}, [
 					X("ul", {
@@ -18555,12 +18703,12 @@ var mC = /* @__PURE__ */ H({
 						"aria-disabled": t.disabled ? "true" : void 0,
 						"aria-label": [t.label, t.description].filter(Boolean).join(" · "),
 						onMousedown: (e) => e.preventDefault(),
-						onClick: () => le(t)
+						onClick: () => ce(t)
 					}, [X("span", { class: "sol-ui-combobox-ellipsis" }, t.label), t.description ? X("span", { class: "sol-hint sol-ui-combobox-ellipsis" }, t.description) : null]))),
 					h.value ? X("p", { class: "sol-ui-combo-message" }, a.value.loading) : g.value ? X("div", { class: "sol-ui-combo-message" }, [X("p", a.value.loadFailed), X("button", {
 						class: "sol-button",
 						type: "button",
-						onClick: M
+						onClick: de
 					}, a.value.retry)]) : w.value.length ? null : X("p", { class: "sol-ui-combo-message" }, a.value.noResults),
 					!h.value && !g.value && w.value.length ? X("details", {
 						open: v.value,
@@ -18660,6 +18808,10 @@ var mC = /* @__PURE__ */ H({
 			required: !0
 		},
 		label: String,
+		labelPosition: {
+			type: String,
+			default: "inline"
+		},
 		items: {
 			type: Array,
 			required: !0
@@ -18689,6 +18841,7 @@ var mC = /* @__PURE__ */ H({
 			...t,
 			id: e.id,
 			class: ["sol-ui-stepper", t.class],
+			"data-label-position": e.labelPosition,
 			"aria-label": e.label || r.value.steps
 		}, X("ol", e.items.map((t, n) => {
 			let a = e.modelValue === t.id, o = e.completed.includes(t.id), s = () => [
@@ -18703,7 +18856,7 @@ var mC = /* @__PURE__ */ H({
 				key: t.id,
 				"aria-current": a ? "step" : void 0,
 				"data-state": a ? "current" : o ? "complete" : "upcoming"
-			}, e.interactive ? X(Wx, {
+			}, [e.interactive ? X(Wx, {
 				variant: "subtle",
 				disabled: e.disabled || !!t.disabled,
 				"aria-disabled": e.readonly ? "true" : void 0,
@@ -18711,7 +18864,10 @@ var mC = /* @__PURE__ */ H({
 			}, s) : X("div", {
 				class: "sol-ui-step-content",
 				"aria-disabled": t.disabled ? "true" : void 0
-			}, s()));
+			}, s()), n < e.items.length - 1 ? X("span", {
+				class: "sol-ui-step-connector",
+				"aria-hidden": "true"
+			}) : null]);
 		})));
 	}
 }), yC = /* @__PURE__ */ H({
@@ -18729,6 +18885,10 @@ var mC = /* @__PURE__ */ H({
 		items: {
 			type: Array,
 			required: !0
+		},
+		type: {
+			type: String,
+			default: "bar"
 		},
 		max: Number,
 		loading: Boolean,
@@ -18753,57 +18913,104 @@ var mC = /* @__PURE__ */ H({
 			});
 			a.observe(e), n(() => a.disconnect());
 		}, { flush: "post" }), () => {
-			let s = Math.max(0, i.value - 32), c = s / e.items.length, l = Math.max(1, Math.min(8, Math.floor((c - 8) / 12)));
+			let s = Math.max(0, i.value - 32), c = s / e.items.length, l = Math.max(1, Math.min(8, Math.floor((c - 8) / 12))), u = e.items.reduce((e, t) => e + t.value, 0), d = (t) => [16 + c * (t + .5), 164 - e.items[t].value / a.value * 140], f = (e) => `var(--sol-color-categorical-${e % 8 + 1}-foreground)`, p = -Math.PI / 2, m = () => u === 0 ? [X("circle", {
+				cx: i.value / 2,
+				cy: 96,
+				r: 72,
+				fill: "none",
+				stroke: "var(--sol-color-control-border)"
+			})] : e.items.filter((e) => e.value > 0).map((t) => {
+				let r = e.items.indexOf(t), a = t.value / u, o = p;
+				p += a * Math.PI * 2;
+				let s = i.value / 2, c = (e) => `${s + 72 * Math.cos(e)} ${96 + 72 * Math.sin(e)}`, l = `${r + 1}. ${t.label}: ${Fx(t.value, n.value)}`;
+				return X("g", { key: t.id }, [a >= 1 ? X("circle", {
+					cx: s,
+					cy: 96,
+					r: 72,
+					fill: f(r)
+				}, X("title", l)) : X("path", {
+					d: `M ${s} 96 L ${c(o)} A 72 72 0 ${+(a > .5)} 1 ${c(p)} Z`,
+					fill: f(r),
+					stroke: "var(--sol-color-surface)",
+					"stroke-width": 1
+				}, X("title", l)), X("text", {
+					x: s + 72 * .65 * Math.cos(o + a * Math.PI),
+					y: 96 + 72 * .65 * Math.sin(o + a * Math.PI),
+					"text-anchor": "middle",
+					"dominant-baseline": "middle",
+					fill: `var(--sol-color-categorical-${r % 8 + 1}-background)`,
+					"font-size": 12
+				}, String(r + 1))]);
+			});
 			return X("figure", {
 				...t,
 				id: e.id,
 				class: ["sol-ui-bar-chart", t.class],
+				"data-chart-type": e.type,
 				"aria-labelledby": e.id + "-caption",
 				"aria-busy": String(e.loading)
-			}, [X("figcaption", { id: e.id + "-caption" }, e.label), e.loading ? X("p", { role: "status" }, n.value.tableLoading) : o.value ? e.items.length ? [X("svg", {
-				ref: r,
-				viewBox: `0 0 ${i.value} 200`,
-				role: "img",
-				"aria-labelledby": e.id + "-svg-title",
-				preserveAspectRatio: "xMidYMid meet"
-			}, [
-				X("title", { id: e.id + "-svg-title" }, e.label),
-				X("line", {
-					x1: 16,
-					y1: 164,
-					x2: 16 + s,
-					y2: 164,
-					stroke: "var(--sol-color-control-border)"
-				}),
-				...e.items.map((e, t) => {
-					let r = Math.min(48, c * .6), i = 16 + c * (t + .5), o = 140 * e.value / a.value, s = Array.from(e.label), u = s.length > l ? s.slice(0, l - 1).join("") + "…" : e.label;
-					return X("g", { key: e.id }, [
-						X("rect", {
-							x: i - r / 2,
-							y: 164 - o,
-							width: r,
-							height: o,
-							fill: "var(--sol-color-accent)"
-						}),
-						X("text", {
-							x: i,
-							y: Math.max(14, 156 - o),
-							"text-anchor": "middle",
-							class: "sol-ui-chart-value"
-						}, Fx(e.value, n.value)),
-						X("text", {
-							x: i,
-							y: 188,
-							"text-anchor": "middle",
-							class: "sol-ui-chart-label"
-						}, u)
-					]);
-				})
-			]), X("table", { class: ["sol-ui-chart-table", e.showTable ? "" : "sol-ui-sr-only"] }, [
-				X("caption", e.label),
-				X("thead", X("tr", [X("th", { scope: "col" }, e.categoryLabel || n.value.chartCategory), X("th", { scope: "col" }, e.valueLabel || n.value.chartValue)])),
-				X("tbody", e.items.map((e) => X("tr", { key: e.id }, [X("th", { scope: "row" }, e.label), X("td", Fx(e.value, n.value))])))
-			])] : X("p", { role: "status" }, n.value.tableEmpty) : X("p", { role: "alert" }, n.value.chartInvalid)]);
+			}, [X("figcaption", { id: e.id + "-caption" }, e.label), e.loading ? X("p", { role: "status" }, n.value.tableLoading) : !o.value || e.type === "pie" && !Number.isFinite(u) ? X("p", { role: "alert" }, n.value.chartInvalid) : e.items.length ? [
+				X("svg", {
+					ref: r,
+					viewBox: `0 0 ${i.value} 200`,
+					role: "img",
+					"aria-labelledby": e.id + "-svg-title",
+					preserveAspectRatio: "xMidYMid meet"
+				}, [X("title", { id: e.id + "-svg-title" }, e.label), ...e.type === "pie" ? m() : [
+					X("line", {
+						x1: 16,
+						y1: 164,
+						x2: 16 + s,
+						y2: 164,
+						stroke: "var(--sol-color-control-border)"
+					}),
+					e.type === "line" ? X("polyline", {
+						points: e.items.map((e, t) => d(t).join(",")).join(" "),
+						fill: "none",
+						stroke: "var(--sol-color-accent)",
+						"stroke-width": 2
+					}) : null,
+					...e.items.map((t, r) => {
+						let i = Math.min(48, c * .6), o = 16 + c * (r + .5), s = t.value / a.value * 140, u = Array.from(t.label), d = u.length > l ? u.slice(0, l - 1).join("") + "…" : t.label;
+						return X("g", { key: t.id }, [
+							e.type === "line" ? X("circle", {
+								cx: o,
+								cy: 164 - s,
+								r: 4,
+								fill: "var(--sol-color-accent)"
+							}) : X("rect", {
+								x: o - i / 2,
+								y: 164 - s,
+								width: i,
+								height: s,
+								fill: "var(--sol-color-accent)"
+							}),
+							X("text", {
+								x: o,
+								y: Math.max(14, 156 - s),
+								"text-anchor": "middle",
+								class: "sol-ui-chart-value"
+							}, Fx(t.value, n.value)),
+							X("text", {
+								x: o,
+								y: 188,
+								"text-anchor": "middle",
+								class: "sol-ui-chart-label"
+							}, d)
+						]);
+					})
+				]]),
+				e.type === "pie" ? X("ol", { class: "sol-ui-chart-legend" }, e.items.map((e, t) => X("li", { key: e.id }, [X("span", {
+					"aria-hidden": "true",
+					class: "sol-ui-chart-swatch",
+					style: { background: f(t) }
+				}), `${e.label}: ${Fx(e.value, n.value)}`]))) : null,
+				X("table", { class: ["sol-ui-chart-table", e.showTable ? "" : "sol-ui-sr-only"] }, [
+					X("caption", e.label),
+					X("thead", X("tr", [X("th", { scope: "col" }, e.categoryLabel || n.value.chartCategory), X("th", { scope: "col" }, e.valueLabel || n.value.chartValue)])),
+					X("tbody", e.items.map((e) => X("tr", { key: e.id }, [X("th", { scope: "row" }, e.label), X("td", Fx(e.value, n.value))])))
+				])
+			] : X("p", { role: "status" }, n.value.tableEmpty)]);
 		};
 	}
 }), bC = /* @__PURE__ */ H({
@@ -18858,7 +19065,8 @@ var mC = /* @__PURE__ */ H({
 		}
 		return () => X("div", {
 			...t,
-			class: ["sol-ui-tabs", t.class]
+			class: ["sol-ui-tabs", t.class],
+			"data-orientation": e.orientation
 		}, [
 			X("div", {
 				class: "sol-label",
@@ -19322,10 +19530,10 @@ var PC = {
 			let n = T(), r = n.error ? w()?.start : typeof n.value == "string" ? n.value : n.value?.start;
 			u.value = wh(r) || DC(), d.value = u.value, f.value = null, l.value = !0;
 		}
-		async function te() {
+		async function M() {
 			await z(), !x && l.value && (m.value?.open || h.value?.content()?.isConnected) && _.get(Sh(u.value))?.focus();
 		}
-		function ne(t) {
+		function te(t) {
 			if (Q(e) || $(e)) return;
 			u.value = t, d.value = t;
 			let n = Sh(t);
@@ -19334,7 +19542,7 @@ var PC = {
 				return;
 			}
 			if (!f.value) {
-				f.value = n, te();
+				f.value = n, M();
 				return;
 			}
 			let [r, i] = [f.value, n].sort();
@@ -19343,7 +19551,7 @@ var PC = {
 				end: i
 			}, "calendar"), j("select");
 		}
-		function re(e) {
+		function ne(e) {
 			if (e.isComposing) return;
 			if (e.key === "Escape") {
 				e.preventDefault(), e.stopPropagation(), j("escape");
@@ -19359,17 +19567,17 @@ var PC = {
 			else if (e.key === "End") t = Dh(u.value, 6 - (Eh(u.value) - C() + 7) % 7);
 			else if (e.key === "PageUp" || e.key === "PageDown") t = Oh(u.value, (e.key === "PageUp" ? -1 : 1) * (e.shiftKey ? 12 : 1));
 			else if (e.key === "Enter" || e.key === " ") {
-				e.preventDefault(), ne(u.value);
+				e.preventDefault(), te(u.value);
 				return;
 			}
-			t && (e.preventDefault(), u.value = t, d.value = t, te());
+			t && (e.preventDefault(), u.value = t, d.value = t, M());
 		}
 		V(l, async (t, n) => {
 			let i = ++b;
 			if (await z(), !(x || i !== b || t !== l.value)) {
 				if (t) {
 					if (e.pickerPresentation) return;
-					m.value?.open || m.value?.showModal(), await te(), !x && l.value && i === b && r("open");
+					m.value?.open || m.value?.showModal(), await M(), !x && l.value && i === b && r("open");
 				} else if (n) {
 					S = !1, m.value?.open && m.value.close();
 					let t = v && !v.disabled ? v : p.value;
@@ -19400,15 +19608,15 @@ var PC = {
 		], () => z(O)), Yi(O), Qi(() => {
 			x = !0, b++, m.value?.open && (m.value.close(), v?.isConnected && v.focus());
 		});
-		let ie = RS(e, () => T().value, {
+		let re = RS(e, () => T().value, {
 			focus: () => p.value?.focus(),
 			validateIntrinsic: A,
 			intrinsicError: () => c.value,
 			resetIntrinsic: () => {
 				c.value = "";
 			}
-		}), ae = ie.validate;
-		function oe(t) {
+		}), ie = re.validate;
+		function ae(t) {
 			return X("button", {
 				ref: g,
 				type: "button",
@@ -19421,7 +19629,7 @@ var PC = {
 				onClick: () => ee(g.value)
 			}, [t]);
 		}
-		let se = US(e, n, {
+		let oe = US(e, n, {
 			locale: () => a.value,
 			hasValue: () => e.modelValue !== null || o.value.length > 0 || f.value !== null,
 			disabled: () => Q(e),
@@ -19436,23 +19644,23 @@ var PC = {
 			reconcile: () => {
 				o.value = OC(e.mode, e.modelValue), c.value = "", f.value = null;
 			},
-			validate: ie.validate,
-			focus: ie.focus,
+			validate: re.validate,
+			focus: re.focus,
 			element: () => p.value,
 			icon: "calendar",
-			trigger: oe
+			trigger: ae
 		});
-		function ce() {
-			se.enhanced() ? se.clear() : Q(e) || $(e) || (k(null, "clear"), r("clear", {
+		function se() {
+			oe.enhanced() ? oe.clear() : Q(e) || $(e) || (k(null, "clear"), r("clear", {
 				value: null,
 				reason: "clear"
 			}));
 		}
 		i({
-			...ie,
-			clear: ce
+			...re,
+			clear: se
 		});
-		function le(t, n) {
+		function ce(t, n) {
 			return e.pickerPresentation ? X(hS, {
 				ref: h,
 				open: l.value,
@@ -19472,7 +19680,7 @@ var PC = {
 				}
 			}, () => X("div", {
 				class: "sol-ui-calendar-content",
-				onKeydown: re
+				onKeydown: ne
 			}, n)) : X("dialog", t, n);
 		}
 		return () => {
@@ -19517,13 +19725,13 @@ var PC = {
 					Q(e) || $(e) || (o.value = t.target.value, c.value &&= T().error);
 				},
 				onBlur: () => {
-					!Q(e) && !$(e) && ae(), s.value = !1;
+					!Q(e) && !$(e) && ie(), s.value = !1;
 				},
 				onInvalid: (e) => {
-					e.preventDefault(), ae(), p.value?.focus();
+					e.preventDefault(), ie(), p.value?.focus();
 				},
 				onKeydown: (e) => {
-					e.isComposing || (e.key === "ArrowDown" && e.altKey ? (e.preventDefault(), ee(p.value)) : e.key === "Enter" && (e.preventDefault(), ae()));
+					e.isComposing || (e.key === "ArrowDown" && e.altKey ? (e.preventDefault(), ee(p.value)) : e.key === "Enter" && (e.preventDefault(), ie()));
 				}
 			}));
 			return X("div", { class: "sol-field sol-ui-native-field sol-ui-date" }, [
@@ -19535,7 +19743,7 @@ var PC = {
 					value: OC(e.mode, e.modelValue),
 					disabled: Q(e)
 				}) : null,
-				se.enhanced() ? se.native(A) : X("div", { class: "sol-date-field" }, [A, oe(NC("calendar"))]),
+				oe.enhanced() ? oe.native(A) : X("div", { class: "sol-date-field" }, [A, ae(NC("calendar"))]),
 				X("span", {
 					id: e.id + "-format",
 					class: "sol-hint"
@@ -19546,16 +19754,16 @@ var PC = {
 					class: "sol-button inline-action sol-ui-picker-clear",
 					disabled: Q(e) || $(e),
 					onClick: () => {
-						ce(), p.value?.focus();
+						se(), p.value?.focus();
 					}
 				}, a.value.clear),
-				le({
+				ce({
 					ref: m,
 					id: e.id + "-calendar",
 					class: "sol-calendar-dialog sol-ui-calendar",
 					"aria-labelledby": e.id + "-title",
 					"aria-describedby": e.id + "-keys",
-					onKeydown: re,
+					onKeydown: ne,
 					onCancel: (e) => {
 						e.preventDefault(), j("escape");
 					},
@@ -19634,7 +19842,7 @@ var PC = {
 							"aria-label": c,
 							"aria-current": n === k ? "date" : void 0,
 							tabindex: n === i ? 0 : -1,
-							onClick: () => ne(t),
+							onClick: () => te(t),
 							onFocus: () => {
 								u.value = t;
 							}
@@ -19647,13 +19855,13 @@ var PC = {
 						type: "button",
 						class: "sol-button inline-action",
 						onClick: () => {
-							u.value = DC(), d.value = u.value, te();
+							u.value = DC(), d.value = u.value, M();
 						}
 					}, a.value.today), X("button", {
 						type: "button",
 						class: "sol-button inline-action",
 						onClick: () => {
-							ce(), se.enhanced() || j("select");
+							se(), oe.enhanced() || j("select");
 						}
 					}, a.value.clear)]),
 					X("p", {
@@ -19717,20 +19925,20 @@ var PC = {
 		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(e.modelValue ?? ""), s = /* @__PURE__ */ F(""), c = /* @__PURE__ */ F(!1), l = /* @__PURE__ */ F(""), u = /* @__PURE__ */ F(""), d = /* @__PURE__ */ F(), f = /* @__PURE__ */ F(null), p = /* @__PURE__ */ F(null), m = /* @__PURE__ */ F(null), h = /* @__PURE__ */ F(null), g = !0, _ = !1, v = /* @__PURE__ */ F(null), y = /* @__PURE__ */ F(null), b = /* @__PURE__ */ F(null), x = /* @__PURE__ */ new Map(), S = /* @__PURE__ */ F(null), C = /* @__PURE__ */ F(), w = /* @__PURE__ */ F({
 			left: "8px",
 			top: "8px"
-		}), T = Y(() => SC(e.min, e.max, e.step)), E, D = 0, O = 0, k = 0, A = null, j = "close", ee = !1, te = () => ({
+		}), T = Y(() => SC(e.min, e.max, e.step)), E, D = 0, O = 0, k = 0, A = null, j = "close", ee = !1, M = () => ({
 			min: kh(e.min)?.minutes ?? NaN,
 			max: kh(e.max)?.minutes ?? NaN
-		}), ne = (t) => {
-			let n = te();
+		}), te = (t) => {
+			let n = M();
 			return Number.isFinite(n.min) && Number.isFinite(n.max) && n.min <= n.max && Number.isInteger(e.step) && e.step > 0 && t >= n.min && t <= n.max && (t - n.min) % e.step === 0;
 		};
-		function re() {
+		function ne() {
 			if (!o.value.trim()) return {
 				value: null,
 				error: e.required ? a.value.timeRequired : ""
 			};
 			let t = kh(o.value);
-			return t && ne(t.minutes) ? {
+			return t && te(t.minutes) ? {
 				value: t.value,
 				error: ""
 			} : {
@@ -19738,23 +19946,23 @@ var PC = {
 				error: a.value.invalidTime
 			};
 		}
-		function ie() {
+		function re() {
 			let e = kh(o.value);
-			l.value = e && Array.from({ length: 60 }, (e, t) => t).some((t) => ne(Math.floor(e.minutes / 60) * 60 + t)) ? e.value.slice(0, 2) : "", u.value = e && ne(e.minutes) ? e.value.slice(3) : "";
+			l.value = e && Array.from({ length: 60 }, (e, t) => t).some((t) => te(Math.floor(e.minutes / 60) * 60 + t)) ? e.value.slice(0, 2) : "", u.value = e && te(e.minutes) ? e.value.slice(3) : "";
 		}
-		function ae() {
-			let t = LS(e) || re().error;
+		function ie() {
+			let t = LS(e) || ne().error;
 			f.value?.setCustomValidity(t), p.value?.setCustomValidity(t);
 		}
-		function oe(t) {
-			Q(e) || $(e) || (o.value = t ?? "", s.value = "", ie(), t !== e.modelValue && (r("update:modelValue", t), r("change", t)), z(ae));
+		function ae(t) {
+			Q(e) || $(e) || (o.value = t ?? "", s.value = "", re(), t !== e.modelValue && (r("update:modelValue", t), r("change", t)), z(ie));
+		}
+		function oe() {
+			ye.cancel("external", !1);
+			let t = ne();
+			return s.value = t.error, t.error ? (r("invalid", t.error), ie(), !1) : (!Q(e) && !$(e) && ae(t.value), !IS(e));
 		}
 		function se() {
-			ye.cancel("external", !1);
-			let t = re();
-			return s.value = t.error, t.error ? (r("invalid", t.error), ae(), !1) : (!Q(e) && !$(e) && oe(t.value), !IS(e));
-		}
-		function ce() {
 			if (e.pickerPresentation || !c.value || !f.value || !h.value) return;
 			let t = N.enhanced(), n = (t && f.value.closest(".sol-ui-input-frame") || f.value).getBoundingClientRect(), r = h.value.getBoundingClientRect(), i = document.documentElement.clientWidth || window.innerWidth;
 			if (t) {
@@ -19771,9 +19979,9 @@ var PC = {
 				top: Math.max(8, Math.min(n.bottom + 6, window.innerHeight - r.height - 8)) + "px"
 			};
 		}
-		function le() {
+		function ce() {
 			let t = kh(e.modelValue);
-			if (t && ne(t.minutes)) return t.value;
+			if (t && te(t.minutes)) return t.value;
 			let n = kh(e.initialScrollValue);
 			if (n) return CC(T.value, n.minutes);
 			if (e.scrollToCurrentTime) {
@@ -19782,31 +19990,31 @@ var PC = {
 			}
 			return T.value[0];
 		}
-		function ue(e = !1) {
+		function le(e = !1) {
 			let t = b.value, n = d.value && x.get(d.value);
 			if (!t || !n) return;
 			let r = t.getBoundingClientRect(), i = n.getBoundingClientRect();
 			e ? t.scrollTop += i.top - r.top - (t.clientHeight - i.height) / 2 : i.top < r.top ? t.scrollTop += i.top - r.top : i.bottom > r.bottom && (t.scrollTop += i.bottom - r.bottom);
 		}
-		function de(t = "close", n = !0) {
+		function ue(t = "close", n = !0) {
 			ye.cancel(t === "escape" ? "escape" : t === "disabled" ? "disabled" : t === "mode" ? "configuration" : "close", !1), c.value && (j = t, c.value = !1, n && !e.pickerPresentation && z(() => {
 				let t = A && !A.disabled ? A : f.value;
 				t?.isConnected && !Q(e) && t.focus();
 			}));
 		}
-		async function M(t, n) {
+		async function de(t, n) {
 			if (Q(e) || $(e)) return;
 			A = n, g = t;
 			let i = c.value;
-			d.value = le(), c.value = !0, await z(), !ee && c.value && f.value && (e.pickerPresentation || (ce(), e.presentation === "list" ? (ue(!0), t && b.value?.focus({ preventScroll: !0 })) : t && v.value?.focus(), i || r("open")));
+			d.value = ce(), c.value = !0, await z(), !ee && c.value && f.value && (e.pickerPresentation || (se(), e.presentation === "list" ? (le(!0), t && b.value?.focus({ preventScroll: !0 })) : t && v.value?.focus(), i || r("open")));
 		}
 		function fe() {
 			if (Q(e) || $(e) || !l.value || !u.value) return;
 			let t = kh(l.value + ":" + u.value);
-			t && ne(t.minutes) ? oe(t.value) : (u.value = "", s.value = "");
+			t && te(t.minutes) ? ae(t.value) : (u.value = "", s.value = "");
 		}
 		function pe(t) {
-			t && T.value.includes(t) && !Q(e) && !$(e) && (d.value = t, oe(t), de("select"));
+			t && T.value.includes(t) && !Q(e) && !$(e) && (d.value = t, ae(t), ue("select"));
 		}
 		function me(t) {
 			if (t.isComposing || Q(e) || $(e) || ye.active.value) return;
@@ -19821,12 +20029,12 @@ var PC = {
 				t.preventDefault(), t.stopPropagation(), pe(d.value);
 				return;
 			} else return;
-			t.preventDefault(), t.stopPropagation(), d.value = T.value[Math.max(0, Math.min(n, T.value.length - 1))], z(() => ue());
+			t.preventDefault(), t.stopPropagation(), d.value = T.value[Math.max(0, Math.min(n, T.value.length - 1))], z(() => le());
 		}
 		let he = (t) => {
 			if (e.pickerPresentation) return;
 			let n = t.target;
-			c.value && !h.value?.contains(n) && n !== f.value && !m.value?.contains(n) && !S.value?.contains(n) && de("outside", !1);
+			c.value && !h.value?.contains(n) && n !== f.value && !m.value?.contains(n) && !S.value?.contains(n) && ue("outside", !1);
 		};
 		function ge() {
 			D && cancelAnimationFrame(D), D = 0, k = 0;
@@ -19873,13 +20081,13 @@ var PC = {
 				}, r("preview", e);
 			},
 			commit: (e) => {
-				oe(e.value), C.value = {
+				ae(e.value), C.value = {
 					kind: "commit",
 					value: e.value
-				}, r("interactionCommit", e), e.source === "list" && de("select");
+				}, r("interactionCommit", e), e.source === "list" && ue("select");
 			},
 			cancel: (e) => {
-				e.source === "list" && (d.value = E, z(() => ue())), C.value = {
+				e.source === "list" && (d.value = E, z(() => le())), C.value = {
 					kind: "cancel",
 					value: e.value
 				}, r("interactionCancel", e);
@@ -19891,17 +20099,17 @@ var PC = {
 			stop: ge
 		}), be = () => {
 			let e = kh(o.value);
-			return e ? CC(T.value, e.minutes) : le();
+			return e ? CC(T.value, e.minutes) : ce();
 		};
 		function xe(e) {
-			de("close", !1), ye.pointer(e, "input", be());
+			ue("close", !1), ye.pointer(e, "input", be());
 		}
 		V(a, () => {
-			s.value &&= re().error, z(ae);
+			s.value &&= ne().error, z(ie);
 		}), V(() => e.modelValue, (e) => {
-			ye.cancel("external"), o.value = e ?? "", s.value = "", ie(), z(ae);
+			ye.cancel("external"), o.value = e ?? "", s.value = "", re(), z(ie);
 		}, { flush: "sync" }), V(() => [Q(e), $(e)], () => {
-			(Q(e) || $(e)) && (ye.cancel("disabled", !1), de("disabled", !Q(e)));
+			(Q(e) || $(e)) && (ye.cancel("disabled", !1), ue("disabled", !Q(e)));
 		}, { flush: "sync" }), V(() => [
 			e.min,
 			e.max,
@@ -19919,21 +20127,21 @@ var PC = {
 			e.required,
 			e.allowManualInput
 		], () => {
-			ie(), d.value && T.value.includes(d.value) || (d.value = le()), z(() => {
-				ae(), ue();
+			re(), d.value && T.value.includes(d.value) || (d.value = ce()), z(() => {
+				ie(), le();
 			});
-		}), V(() => e.presentation, () => de("mode")), V(c, (e, t) => {
+		}), V(() => e.presentation, () => ue("mode")), V(c, (e, t) => {
 			!e && t && (_ = !1, r("close", j));
 		}), V(() => e.pickerPresentation, (e, t) => {
-			ye.cancel("configuration", !1), !!e != !!t && de("mode");
+			ye.cancel("configuration", !1), !!e != !!t && ue("mode");
 		}), Yi(() => {
-			ie(), ae(), document.addEventListener("pointerdown", he), document.addEventListener("focusin", he), window.addEventListener("resize", ce), document.addEventListener("scroll", ce, !0);
+			re(), ie(), document.addEventListener("pointerdown", he), document.addEventListener("focusin", he), window.addEventListener("resize", se), document.addEventListener("scroll", se, !0);
 		}), Qi(() => {
-			ee = !0, ye.cancel("unmount", !1), ge(), document.removeEventListener("pointerdown", he), document.removeEventListener("focusin", he), window.removeEventListener("resize", ce), document.removeEventListener("scroll", ce, !0), h.value?.contains(document.activeElement) && A?.isConnected && A.focus();
+			ee = !0, ye.cancel("unmount", !1), ge(), document.removeEventListener("pointerdown", he), document.removeEventListener("focusin", he), window.removeEventListener("resize", se), document.removeEventListener("scroll", se, !0), h.value?.contains(document.activeElement) && A?.isConnected && A.focus();
 		});
-		let Se = RS(e, () => re().value, {
+		let Se = RS(e, () => ne().value, {
 			focus: () => f.value?.focus(),
-			validateIntrinsic: se,
+			validateIntrinsic: oe,
 			intrinsicError: () => s.value,
 			resetIntrinsic: () => {
 				s.value = "";
@@ -19951,11 +20159,11 @@ var PC = {
 				width: "320px",
 				initialFocus: () => e.presentation === "list" ? b.value : v.value,
 				focusOnOpen: g,
-				onRequestClose: (e) => de(e, e !== "outside"),
+				onRequestClose: (e) => ue(e, e !== "outside"),
 				onReady: () => {
-					!ee && c.value && (_ ? ye.cancel("configuration", !1) : (ue(!0), _ = !0, r("open")));
+					!ee && c.value && (_ ? ye.cancel("configuration", !1) : (le(!0), _ = !0, r("open")));
 				}
-			}, () => t) : X(zr, { to: "body" }, [t]);
+			}, () => t) : X(zr, { to: f.value?.closest("dialog,.v-overlay__content") || "body" }, [t]);
 		}
 		function Te() {
 			return e.scrubbable ? X("div", {
@@ -19972,16 +20180,15 @@ var PC = {
 				"aria-describedby": e.id + "-scrub-keys",
 				onPointerdown: xe,
 				onKeydown: (e) => {
-					ye.active.value || de("close", !1), ye.keyboard(e, be());
+					ye.active.value || ue("close", !1), ye.keyboard(e, be());
 				},
 				onBlur: () => {
 					ye.source.value === "input" && ye.cancel("blur", !1);
 				}
-			}, X(Jx, {
-				name: "arrow",
-				rotate: 270,
+			}, [X(Jx, {
+				name: "grip",
 				decorative: !0
-			})) : null;
+			}), X("span", { class: "sol-ui-time-scrub-label" }, a.value.timeScrub("input"))]) : null;
 		}
 		function Ee(t) {
 			return X("button", {
@@ -19993,7 +20200,7 @@ var PC = {
 				"aria-controls": c.value ? e.id + "-panel" : void 0,
 				"aria-expanded": String(c.value),
 				"aria-label": e.label + " " + a.value.time,
-				onClick: () => c.value ? de() : void M(!0, m.value)
+				onClick: () => c.value ? ue() : void de(!0, m.value)
 			}, [t]);
 		}
 		let N = US(e, n, {
@@ -20003,22 +20210,21 @@ var PC = {
 			readonly: () => $(e),
 			error: () => LS(e) || s.value,
 			clear: () => {
-				ye.cancel("external", !1), de("close", !1), oe(null), d.value = void 0, C.value = void 0, r("clear", {
+				ye.cancel("external", !1), ue("close", !1), ae(null), d.value = void 0, C.value = void 0, r("clear", {
 					value: null,
 					reason: "clear"
 				});
 			},
 			reconcile: () => {
-				o.value = e.modelValue ?? "", s.value = "", ie();
+				o.value = e.modelValue ?? "", s.value = "", re();
 			},
 			validate: Se.validate,
 			focus: Se.focus,
 			element: () => f.value,
-			actions: Te,
 			trigger: Ee
 		});
 		function De() {
-			N.enhanced() ? N.clear() : (ye.cancel("external", !1), !(Q(e) || $(e)) && (oe(null), r("clear", {
+			N.enhanced() ? N.clear() : (ye.cancel("external", !1), !(Q(e) || $(e)) && (ae(null), r("clear", {
 				value: null,
 				reason: "clear"
 			})));
@@ -20029,7 +20235,7 @@ var PC = {
 		});
 		let Oe = (t) => e.id + "-time-" + t.replace(":", "");
 		return () => {
-			let r = LS(e) || s.value, i = (e) => String(e).padStart(2, "0"), m = Array.from({ length: 24 }, (e, t) => t).filter((e) => Array.from({ length: 60 }, (e, t) => t).some((t) => ne(e * 60 + t))), g = Array.from({ length: 60 }, (e, t) => t).filter((e) => l.value !== "" && ne(Number(l.value) * 60 + e)), _ = kh(e.modelValue)?.value, S = (e) => {
+			let r = LS(e) || s.value, i = (e) => String(e).padStart(2, "0"), m = Array.from({ length: 24 }, (e, t) => t).filter((e) => Array.from({ length: 60 }, (e, t) => t).some((t) => te(e * 60 + t))), g = Array.from({ length: 60 }, (e, t) => t).filter((e) => l.value !== "" && te(Number(l.value) * 60 + e)), _ = kh(e.modelValue)?.value, S = (e) => {
 				e.preventDefault(), Ce(), f.value?.focus();
 			}, E = X("input", {
 				...t,
@@ -20054,15 +20260,15 @@ var PC = {
 					(!e.allowManualInput || $(e) || Q(e)) && t.preventDefault();
 				},
 				onInput: (t) => {
-					ye.cancel("external", !1), Q(e) || $(e) || !e.allowManualInput ? t.target.value = o.value : (o.value = t.target.value, ie(), s.value &&= re().error, ae());
+					ye.cancel("external", !1), Q(e) || $(e) || !e.allowManualInput ? t.target.value = o.value : (o.value = t.target.value, re(), s.value &&= ne().error, ie());
 				},
-				onClick: () => void M(!1, f.value),
+				onClick: () => void de(!1, f.value),
 				onBlur: () => {
 					ye.active.value || $(e) || Q(e) || Ce();
 				},
 				onInvalid: S,
 				onKeydown: (e) => {
-					e.isComposing || (e.key === "ArrowDown" && e.altKey ? (e.preventDefault(), M(!0, f.value)) : e.key === "Escape" ? (e.preventDefault(), de("escape")) : e.key === "Enter" && (e.preventDefault(), Ce()));
+					e.isComposing || (e.key === "ArrowDown" && e.altKey ? (e.preventDefault(), de(!0, f.value)) : e.key === "Escape" ? (e.preventDefault(), ue("escape")) : e.key === "Enter" && (e.preventDefault(), Ce()));
 				}
 			});
 			return X("div", { class: "sol-field sol-ui-native-field" }, [
@@ -20080,12 +20286,8 @@ var PC = {
 					autocomplete: "off",
 					onInvalid: S
 				}) : null,
-				N.enhanced() ? N.native(E) : X("div", { class: ["sol-time-entry", e.scrubbable && "sol-ui-time-entry--scrub"] }, [
-					E,
-					Te(),
-					Ee(a.value.time)
-				]),
-				,
+				N.enhanced() ? N.native(E) : X("div", { class: "sol-time-entry" }, [E, Ee(a.value.time)]),
+				e.scrubbable ? X("div", { class: "sol-ui-time-scrub-actions" }, [Te()]) : null,
 				X("span", {
 					id: e.id + "-format",
 					class: "sol-hint"
@@ -20105,24 +20307,27 @@ var PC = {
 					class: "sol-button inline-action sol-ui-picker-clear",
 					disabled: Q(e) || $(e),
 					onClick: () => {
-						de("close", !1), De(), f.value?.focus();
+						ue("close", !1), De(), f.value?.focus();
 					}
 				}, a.value.clear),
 				we(c.value ? X("div", {
-					ref: h,
+					ref: (t) => {
+						h.value = t, !e.pickerPresentation && h.value?.isConnected && h.value.showPopover?.();
+					},
+					popover: e.pickerPresentation ? void 0 : "manual",
 					id: e.pickerPresentation ? void 0 : e.id + "-panel",
 					class: e.pickerPresentation ? "sol-ui-time-content" : "sol-time-panel sol-ui-time-panel",
 					role: e.pickerPresentation ? void 0 : "dialog",
 					"aria-labelledby": e.pickerPresentation ? void 0 : e.id + "-title",
 					style: e.pickerPresentation ? void 0 : w.value,
 					onKeydown: (e) => {
-						e.key === "Escape" && !e.isComposing && (e.preventDefault(), e.stopPropagation(), de("escape"));
+						e.key === "Escape" && !e.isComposing && (e.preventDefault(), e.stopPropagation(), ue("escape"));
 					}
 				}, [
 					X("div", { class: "sol-ui-picker-top" }, [X("strong", { id: e.id + "-title" }, a.value.time), X("button", {
 						type: "button",
 						class: "sol-button inline-action",
-						onClick: () => de()
+						onClick: () => ue()
 					}, a.value.close)]),
 					e.presentation === "list" ? X("div", {
 						ref: b,
@@ -20160,36 +20365,51 @@ var PC = {
 								e.preventDefault(), e.stopPropagation();
 							}
 						}, X(Jx, {
-							name: "arrow",
-							rotate: 270,
+							name: "grip",
 							decorative: !0
 						})) : null
 					])) : X("p", {
 						role: "status",
 						class: "sol-hint"
-					}, a.value.noResults)) : X("div", { class: "sol-time-options" }, [X("label", { class: "sol-field" }, [X("span", { class: "sol-label" }, a.value.hour), X("select", {
-						ref: v,
-						class: "sol-select",
-						value: l.value,
-						onChange: (e) => {
-							l.value = e.target.value, fe();
-						}
-					}, [X("option", { value: "" }, a.value.choose), ...m.map((e) => X("option", { value: i(e) }, i(e)))])]), X("label", { class: "sol-field" }, [X("span", { class: "sol-label" }, a.value.minute), X("select", {
-						ref: y,
-						class: "sol-select",
-						value: u.value,
-						onChange: (e) => {
-							u.value = e.target.value, fe();
-						}
-					}, [X("option", { value: "" }, a.value.choose), ...g.map((e) => X("option", { value: i(e) }, i(e)))])])]),
-					X("button", {
+					}, a.value.noResults)) : X("div", { class: "sol-time-options" }, [X("label", { class: "sol-ui-time-unit" }, [
+						X("span", { class: "sol-ui-sr-only" }, a.value.hour),
+						X("select", {
+							ref: v,
+							"aria-label": a.value.hour,
+							class: "sol-select",
+							value: l.value,
+							onChange: (e) => {
+								l.value = e.target.value, fe();
+							}
+						}, [X("option", { value: "" }, a.value.choose), ...m.map((e) => X("option", { value: i(e) }, i(e)))]),
+						X("span", {
+							class: "sol-ui-time-unit-label",
+							"aria-hidden": "true"
+						}, a.value.hour)
+					]), X("label", { class: "sol-ui-time-unit" }, [
+						X("span", { class: "sol-ui-sr-only" }, a.value.minute),
+						X("select", {
+							ref: y,
+							"aria-label": a.value.minute,
+							class: "sol-select",
+							value: u.value,
+							onChange: (e) => {
+								u.value = e.target.value, fe();
+							}
+						}, [X("option", { value: "" }, a.value.choose), ...g.map((e) => X("option", { value: i(e) }, i(e)))]),
+						X("span", {
+							class: "sol-ui-time-unit-label",
+							"aria-hidden": "true"
+						}, a.value.minute)
+					])]),
+					X("div", { class: "sol-ui-time-actions" }, [X("button", {
 						type: "button",
-						class: "sol-button",
+						class: "sol-button primary sol-ui-time-confirm",
 						disabled: e.presentation === "list" && !d.value,
 						onClick: () => {
-							e.presentation === "list" ? pe(d.value) : l.value ? u.value ? Ce() && de("select") : y.value?.focus() : v.value?.focus();
+							e.presentation === "list" ? pe(d.value) : l.value ? u.value ? Ce() && ue("select") : y.value?.focus() : v.value?.focus();
 						}
-					}, a.value.done)
+					}, a.value.done)])
 				]) : null)
 			]);
 		};
@@ -20296,230 +20516,248 @@ var PC = {
 		clear: (e) => !0
 	},
 	setup(e, { attrs: t, slots: n, emit: r, expose: i }) {
-		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(null), c = /* @__PURE__ */ F(""), l = /* @__PURE__ */ F(!1), u = /* @__PURE__ */ F(""), d = /* @__PURE__ */ F([]), f = /* @__PURE__ */ F(!1), p = /* @__PURE__ */ F(""), m = /* @__PURE__ */ F(""), h = /* @__PURE__ */ new Map(), g = !1, _ = !1, v = 0, y, b, x = !1, S = (e) => {
+		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(null), c = /* @__PURE__ */ F(null), l = /* @__PURE__ */ F(""), u = /* @__PURE__ */ F(!1), d = /* @__PURE__ */ F(""), f = /* @__PURE__ */ F([]), p = /* @__PURE__ */ F(!1), m = /* @__PURE__ */ F(""), h = /* @__PURE__ */ F(""), { position: g } = fS(u, Y(() => c.value?.closest(".sol-ui-input-frame") || c.value), s, !0, !0, { visualViewport: !0 }), _ = /* @__PURE__ */ new Map(), v = !1, y = !1, b = 0, x, S, C = !1, w = (e) => {
 			let t = /* @__PURE__ */ new Set();
-			return e.filter((e) => !!e.value && !t.has(e.value) && !!t.add(e.value)).map((e) => (h.set(e.value, e.label), e));
+			return e.filter((e) => !!e.value && !t.has(e.value) && !!t.add(e.value)).map((e) => (_.set(e.value, e.label), e));
 		};
 		V(() => e.options, (t) => {
-			let n = S(t);
-			e.loadOptions || (d.value = n);
+			let n = w(t);
+			e.loadOptions || (f.value = n);
 		}, {
 			immediate: !0,
 			deep: !0
 		});
-		let C = () => e.loadOptions ? d.value : d.value.filter((e) => e.label.toLowerCase().includes(c.value.trim().toLowerCase())), w = () => C().filter((e) => !e.disabled), T = () => [...new Set(e.modelValue)], E = (t) => T().includes(t.value) || e.maxSelected === void 0 || T().length < e.maxSelected;
-		function D() {
-			clearTimeout(b), b = void 0, y?.abort(), y = void 0, v++, f.value = !1;
+		let T = () => e.loadOptions ? f.value : f.value.filter((e) => e.label.toLowerCase().includes(l.value.trim().toLowerCase())), E = () => T().filter((e) => !e.disabled), D = () => [...new Set(e.modelValue)], O = (t) => D().includes(t.value) || e.maxSelected === void 0 || D().length < e.maxSelected;
+		function k() {
+			clearTimeout(S), S = void 0, x?.abort(), x = void 0, b++, p.value = !1;
 		}
-		async function O() {
-			if (!e.loadOptions || _ || !l.value || Q(e) || $(e)) return;
-			D();
-			let t = v, n = new AbortController();
-			y = n, f.value = !0, p.value = "", d.value = [], u.value = "";
+		async function A() {
+			if (!e.loadOptions || y || !u.value || Q(e) || $(e)) return;
+			k();
+			let t = b, n = new AbortController();
+			x = n, p.value = !0, m.value = "", f.value = [], d.value = "";
 			try {
-				let r = await e.loadOptions(c.value, n.signal);
-				if (x || t !== v || n.signal.aborted) return;
-				d.value = S(r), u.value = w()[0]?.value || "";
+				let r = await e.loadOptions(l.value, n.signal);
+				if (C || t !== b || n.signal.aborted) return;
+				f.value = w(r), d.value = E()[0]?.value || "";
 			} catch {
-				if (x || t !== v || n.signal.aborted) return;
-				p.value = a.value.loadFailed;
+				if (C || t !== b || n.signal.aborted) return;
+				m.value = a.value.loadFailed;
 			} finally {
-				!x && t === v && (f.value = !1);
+				!C && t === b && (p.value = !1);
 			}
 		}
-		function k() {
-			r("search", c.value), e.loadOptions ? (D(), p.value = "", d.value = [], b = setTimeout(() => void O(), Math.max(0, e.debounce))) : u.value = w()[0]?.value || "";
-		}
-		function A() {
-			if (Q(e) || $(e)) return;
-			let t = l.value;
-			l.value = !0, t || (e.loadOptions ? O() : u.value = w()[0]?.value || "");
-		}
 		function j() {
-			l.value && (l.value = !1, u.value = "", D());
+			r("search", l.value), e.loadOptions ? (k(), m.value = "", f.value = [], S = setTimeout(() => void A(), Math.max(0, e.debounce))) : d.value = E()[0]?.value || "";
 		}
 		function ee() {
-			s.value?.setCustomValidity(LS(e) || (e.required && !T().length ? a.value.chooseAtLeastOne : ""));
+			if (Q(e) || $(e)) return;
+			let t = u.value;
+			u.value = !0, t || (e.loadOptions ? A() : d.value = E()[0]?.value || "");
+		}
+		function M() {
+			u.value && (u.value = !1, d.value = "", k());
 		}
 		function te() {
-			return m.value = e.required && !T().length ? a.value.chooseAtLeastOne : "", ee(), m.value && r("invalid", m.value), !IS(e) && !m.value;
+			c.value?.setCustomValidity(LS(e) || (e.required && !D().length ? a.value.chooseAtLeastOne : ""));
 		}
-		function ne(t) {
-			Q(e) || $(e) || (r("update:modelValue", t), r("change", t));
+		function ne() {
+			return h.value = e.required && !D().length ? a.value.chooseAtLeastOne : "", te(), h.value && r("invalid", h.value), !IS(e) && !h.value;
 		}
 		function re(t) {
-			if (Q(e) || $(e) || t.disabled || f.value || p.value) return;
-			let n = T();
-			n.includes(t.value) ? ne(n.filter((e) => e !== t.value)) : E(t) ? ne([...n, t.value]) : (m.value = a.value.selectionLimit(e.maxSelected), r("invalid", m.value)), s.value?.focus();
+			Q(e) || $(e) || (r("update:modelValue", t), r("change", t));
 		}
 		function ie(t) {
-			Q(e) || $(e) || (ne(T().filter((e) => e !== t)), s.value?.focus());
+			if (Q(e) || $(e) || t.disabled || p.value || m.value) return;
+			let n = D();
+			n.includes(t.value) ? re(n.filter((e) => e !== t.value)) : O(t) ? re([...n, t.value]) : (h.value = a.value.selectionLimit(e.maxSelected), r("invalid", h.value)), c.value?.focus();
 		}
 		function ae(t) {
-			if (!(t.isComposing || _ || Q(e))) {
-				if (t.key === "Escape" && l.value) t.preventDefault(), j();
+			Q(e) || $(e) || (re(D().filter((e) => e !== t)), c.value?.focus());
+		}
+		function oe(t) {
+			if (!(t.isComposing || y || Q(e))) {
+				if (t.key === "Escape" && u.value) t.preventDefault(), t.stopPropagation(), M();
 				else if (!$(e)) {
 					if (t.key === "ArrowDown" || t.key === "ArrowUp") {
-						if (t.preventDefault(), !l.value) {
-							A();
+						if (t.preventDefault(), !u.value) {
+							ee();
 							return;
 						}
-						let e = w(), n = e.findIndex((e) => e.value === u.value);
-						u.value = e[(n + (t.key === "ArrowDown" ? 1 : -1) + e.length) % e.length]?.value || "", z(() => o.value?.querySelector("[data-active=\"true\"]")?.scrollIntoView?.({ block: "nearest" }));
-					} else if (t.key === "Enter" && l.value) {
+						let e = E(), n = e.findIndex((e) => e.value === d.value);
+						d.value = e[(n + (t.key === "ArrowDown" ? 1 : -1) + e.length) % e.length]?.value || "", z(() => s.value?.querySelector("[data-active=\"true\"]")?.scrollIntoView?.({ block: "nearest" }));
+					} else if (t.key === "Enter" && u.value) {
 						t.preventDefault();
-						let e = w().find((e) => e.value === u.value);
-						e && re(e);
-					} else t.key === "Backspace" && !c.value && T().length && (t.preventDefault(), ie(T().at(-1)));
+						let e = E().find((e) => e.value === d.value);
+						e && ie(e);
+					} else t.key === "Backspace" && !l.value && D().length && (t.preventDefault(), ae(D().at(-1)));
 				}
 			}
 		}
-		let oe = (e) => {
-			o.value?.contains(e.target) || j();
+		let se = (e) => {
+			o.value?.contains(e.target) || M();
 		};
-		V(l, (e) => {
+		V(u, (e) => {
 			r(e ? "open" : "close");
 		}), V(a, () => {
-			p.value &&= a.value.loadFailed, m.value &&= e.required && !T().length ? a.value.chooseAtLeastOne : a.value.selectionLimit(e.maxSelected), z(ee);
+			m.value &&= a.value.loadFailed, h.value &&= e.required && !D().length ? a.value.chooseAtLeastOne : a.value.selectionLimit(e.maxSelected), z(te);
 		}), V(() => [...e.modelValue], () => {
-			m.value = "", z(ee);
+			h.value = "", z(te);
 		}), V(() => [Q(e), $(e)], () => {
-			(Q(e) || $(e)) && j();
-		}), V(() => [e.required, LS(e)], () => z(ee)), V(() => e.loadOptions, () => {
-			D(), d.value = e.loadOptions ? [] : S(e.options), l.value && e.loadOptions && O();
+			(Q(e) || $(e)) && M();
+		}), V(() => [e.required, LS(e)], () => z(te)), V(() => e.loadOptions, () => {
+			k(), f.value = e.loadOptions ? [] : w(e.options), u.value && e.loadOptions && A();
 		}), Yi(() => {
-			document.addEventListener("pointerdown", oe), document.addEventListener("focusin", oe), ee();
+			document.addEventListener("pointerdown", se), document.addEventListener("focusin", se), te();
 		}), Qi(() => {
-			x = !0, D(), document.removeEventListener("pointerdown", oe), document.removeEventListener("focusin", oe);
+			C = !0, k(), document.removeEventListener("pointerdown", se), document.removeEventListener("focusin", se);
 		});
-		let se = RS(e, () => e.modelValue, {
-			focus: () => s.value?.focus(),
-			validateIntrinsic: te,
-			intrinsicError: () => m.value,
+		let ce = RS(e, () => e.modelValue, {
+			focus: () => c.value?.focus(),
+			validateIntrinsic: ne,
+			intrinsicError: () => h.value,
 			resetIntrinsic: () => {
-				m.value = "";
+				h.value = "";
 			}
-		}), ce = se.validate, le = US(e, n, {
+		}), le = ce.validate, ue = US(e, n, {
+			always: !0,
 			locale: () => a.value,
-			hasValue: () => T().length > 0 || c.value.length > 0,
+			hasValue: () => D().length > 0 || l.value.length > 0,
 			disabled: () => Q(e),
 			readonly: () => $(e),
-			error: () => LS(e) || m.value,
-			loading: () => f.value,
+			error: () => LS(e) || h.value,
+			loading: () => p.value,
 			clear: () => {
-				g = _, _ = !1, ne([]), c.value = "", m.value = "", p.value = "", j(), D(), r("clear", {
+				v = y, y = !1, re([]), l.value = "", h.value = "", m.value = "", M(), k(), r("clear", {
 					value: [],
 					reason: "clear"
 				});
 			},
-			validate: se.validate,
-			focus: se.focus,
-			element: () => s.value,
+			validate: ce.validate,
+			focus: ce.focus,
+			element: () => c.value,
 			trigger: (t) => X("button", {
 				type: "button",
 				class: "sol-button",
 				disabled: Q(e) || $(e),
-				"aria-label": e.label + " " + (l.value ? a.value.close : a.value.choose),
+				"aria-label": e.label + " " + (u.value ? a.value.close : a.value.choose),
 				"aria-haspopup": "listbox",
-				"aria-expanded": String(l.value),
-				"aria-controls": l.value ? e.id + "-list" : void 0,
+				"aria-expanded": String(u.value),
+				"aria-controls": u.value ? e.id + "-list" : void 0,
 				onMousedown: (e) => e.preventDefault(),
 				onClick: () => {
-					l.value ? j() : A(), s.value?.focus({ preventScroll: !0 });
+					u.value ? M() : ee(), c.value?.focus({ preventScroll: !0 });
 				}
 			}, [t])
 		});
-		function ue() {
-			le.enhanced() ? le.clear() : Q(e) || $(e) || (ne([]), r("clear", {
+		function de() {
+			ue.decorated() ? ue.clear() : Q(e) || $(e) || (re([]), r("clear", {
 				value: [],
 				reason: "clear"
 			}));
 		}
 		return i({
-			...se,
-			clear: ue
+			...ce,
+			clear: de
 		}), () => {
-			let r = LS(e) || m.value, i = C();
+			let r = LS(e) || h.value, i = T();
 			return X("div", {
 				ref: o,
-				class: "sol-field sol-ui-native-field sol-ui-multiselect"
+				class: "sol-field sol-ui-native-field sol-ui-multiselect",
+				onKeydown: (e) => {
+					e.key === "Escape" && u.value && !e.isComposing && !y && (e.preventDefault(), e.stopPropagation(), M(), c.value?.focus());
+				}
 			}, [
 				QS(e, n, a.value.required),
-				T().length ? X("ul", {
-					class: "sol-ui-tags",
+				ue.native(X("span", { class: "sol-ui-multi-entry" }, [D().length ? X("span", {
+					class: "sol-ui-tags sol-ui-multi-tags",
+					role: "list",
 					"aria-label": e.label + " " + a.value.selectedItems
-				}, T().map((t) => X("li", { key: t }, [X("span", h.get(t) || t), X("button", {
-					type: "button",
-					class: "sol-button inline-action",
-					disabled: Q(e) || $(e),
-					"aria-label": a.value.remove(h.get(t) || t),
-					onClick: () => ie(t)
-				}, "×")]))) : null,
-				le.native(X("input", {
+				}, D().map((t) => X("span", {
+					key: t,
+					role: "listitem"
+				}, X(Yx, {
+					label: _.get(t) || t,
+					size: "sm",
+					removable: !$(e),
+					disabled: Q(e),
+					removeLabel: a.value.remove(_.get(t) || t),
+					onRemove: () => ae(t)
+				})))) : null, X("input", {
 					...t,
-					ref: s,
+					ref: c,
 					id: e.id,
 					type: "text",
-					class: ["sol-input", t.class],
+					class: ["sol-input sol-ui-input-native sol-ui-multi-query", t.class],
 					role: "combobox",
-					value: c.value,
+					value: l.value,
 					placeholder: e.placeholder,
 					disabled: Q(e),
 					readonly: $(e),
 					autocomplete: "off",
 					"aria-autocomplete": "list",
-					"aria-expanded": String(l.value),
-					"aria-controls": l.value ? e.id + "-list" : void 0,
-					"aria-activedescendant": l.value && !f.value && !p.value && i.some((e) => e.value === u.value) ? e.id + "-option-" + i.findIndex((e) => e.value === u.value) : void 0,
+					"aria-busy": e.loading || p.value ? "true" : void 0,
+					"aria-expanded": String(u.value),
+					"aria-controls": u.value ? e.id + "-list" : void 0,
+					"aria-activedescendant": u.value && !p.value && !m.value && i.some((e) => e.value === d.value) ? e.id + "-option-" + i.findIndex((e) => e.value === d.value) : void 0,
 					"aria-required": e.required ? "true" : void 0,
 					"aria-invalid": r ? "true" : void 0,
 					"aria-describedby": XS(e, n, r, [e.id + "-count", t["aria-describedby"]].filter(Boolean).join(" ")),
-					onClick: A,
+					onClick: ee,
 					onInput: (t) => {
-						Q(e) || $(e) || (c.value = t.target.value, _ || (l.value ||= !0, k()));
+						Q(e) || $(e) || (l.value = t.target.value, y || (u.value ||= !0, j()));
 					},
 					onCompositionstart: () => {
-						g = !1, _ = !0, D();
+						v = !1, y = !0, k();
 					},
 					onCompositionend: (t) => {
-						g ? (g = !1, _ = !1, t.target.value = c.value) : (_ = !1, c.value = t.target.value, !Q(e) && !$(e) && (l.value = !0, k()));
+						v ? (v = !1, y = !1, t.target.value = l.value) : (y = !1, l.value = t.target.value, !Q(e) && !$(e) && (u.value = !0, j()));
 					},
-					onKeydown: ae,
+					onKeydown: oe,
 					onInvalid: (e) => {
-						e.preventDefault(), ce(), s.value?.focus();
+						e.preventDefault(), le(), c.value?.focus();
 					}
-				})),
-				l.value ? X("div", { class: "sol-ui-multi-popup" }, [X("ul", {
+				})])),
+				u.value ? X("div", {
+					ref: s,
+					popover: "manual",
+					hidden: !u.value,
+					class: "sol-ui-floating sol-ui-multi-popup",
+					style: g.value,
+					onKeydown: (e) => {
+						e.key === "Escape" && (e.preventDefault(), e.stopPropagation(), M(), c.value?.focus());
+					}
+				}, [X("ul", {
 					id: e.id + "-list",
 					role: "listbox",
 					"aria-label": e.label,
 					"aria-multiselectable": "true",
-					"aria-busy": String(f.value),
+					"aria-busy": String(p.value),
 					class: "sol-ui-multi-options"
-				}, !f.value && !p.value ? i.map((t, n) => X("li", {
+				}, !p.value && !m.value ? i.map((t, n) => X("li", {
 					key: t.value,
 					id: e.id + "-option-" + n,
 					role: "option",
-					"aria-selected": String(T().includes(t.value)),
+					"aria-selected": String(D().includes(t.value)),
 					"aria-disabled": t.disabled ? "true" : void 0,
-					"data-active": String(u.value === t.value),
+					"data-active": String(d.value === t.value),
 					onPointerdown: (e) => e.preventDefault(),
-					onClick: () => re(t)
+					onClick: () => ie(t)
 				}, [
-					X("span", { "aria-hidden": "true" }, T().includes(t.value) ? "✓" : "○"),
+					X("span", { "aria-hidden": "true" }, D().includes(t.value) ? "✓" : "○"),
 					X("span", t.label),
 					t.disabled ? X("small", a.value.unavailable) : null
-				])) : []), f.value ? X("p", {
+				])) : []), p.value ? X("p", {
 					role: "status",
 					class: "sol-hint"
-				}, a.value.loading) : p.value ? X("div", { role: "alert" }, [X("p", { class: "sol-error" }, p.value), X("button", {
+				}, a.value.loading) : m.value ? X("div", { role: "alert" }, [X("p", { class: "sol-error" }, m.value), X("button", {
 					type: "button",
 					class: "sol-button inline-action",
 					onClick: () => {
-						s.value?.focus(), O();
+						c.value?.focus(), A();
 					},
 					onKeydown: (e) => {
-						e.key === "Escape" && (e.preventDefault(), j(), s.value?.focus());
+						e.key === "Escape" && (e.preventDefault(), M(), c.value?.focus());
 					}
 				}, a.value.retry)]) : i.length ? null : X("p", {
 					role: "status",
@@ -20529,7 +20767,7 @@ var PC = {
 					id: e.id + "-count",
 					class: "sol-hint",
 					role: "status"
-				}, a.value.selectionCount(T().length, e.maxSelected)),
+				}, a.value.selectionCount(D().length, e.maxSelected)),
 				...ZS(e, n, r)
 			]);
 		};
@@ -20925,14 +21163,14 @@ var WC = /* @__PURE__ */ H({
 			X("button", {
 				ref: o,
 				type: "button",
-				class: "sol-button",
+				class: "sol-button sol-ui-context-trigger",
 				disabled: e.disabled,
 				"aria-disabled": e.readonly ? "true" : void 0,
 				"aria-haspopup": "menu",
 				"aria-expanded": String(s.expanded.value),
 				"aria-controls": s.expanded.value ? e.id + "-menu" : void 0,
 				onClick: () => s.expanded.value ? s.close() : s.open(o.value)
-			}, e.triggerLabel || i.value.moreActions),
+			}, [X("span", e.triggerLabel || i.value.moreActions), UC()]),
 			s.render()
 		]);
 	}
@@ -21221,12 +21459,12 @@ function XC(e) {
 			right: a.right
 		};
 	}
-	function c(e = !0) {
-		let o = t;
-		if (t = void 0, n && cancelAnimationFrame(n), n = 0, r = 0, window.removeEventListener("pointermove", f, !0), window.removeEventListener("pointerup", p, !0), window.removeEventListener("pointercancel", m, !0), window.removeEventListener("keydown", g, !0), o?.target.removeEventListener("lostpointercapture", h), o) {
-			e && (i = o.target, a = performance.now() + 500);
+	function c(o = !0) {
+		let s = t;
+		if (t = void 0, e.visual?.(null), n && cancelAnimationFrame(n), n = 0, r = 0, window.removeEventListener("pointermove", f, !0), window.removeEventListener("pointerup", p, !0), window.removeEventListener("pointercancel", m, !0), window.removeEventListener("keydown", g, !0), s?.target.removeEventListener("lostpointercapture", h), s) {
+			o && (i = s.target, a = performance.now() + 500);
 			try {
-				o.target.hasPointerCapture(o.id) && o.target.releasePointerCapture(o.id);
+				s.target.hasPointerCapture(s.id) && s.target.releasePointerCapture(s.id);
 			} catch {}
 		}
 	}
@@ -21287,7 +21525,7 @@ function XC(e) {
 					}
 					if (t !== i) return;
 				}
-				u(i), t === i && !n && (n = requestAnimationFrame(d));
+				u(i), t === i && !n && (n = requestAnimationFrame(d)), t === i && e.visual?.(i.key, i.x, i.y);
 			}
 		}
 	}
@@ -21378,7 +21616,7 @@ var ZC = /* @__PURE__ */ H({
 		end: (e) => !0
 	},
 	setup(e, { attrs: t, slots: n, emit: r, expose: i }) {
-		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(0), c = /* @__PURE__ */ F(null), l = /* @__PURE__ */ new Map(), u = /* @__PURE__ */ new Map(), d = /* @__PURE__ */ new Map(), f = /* @__PURE__ */ new Map(), p = Y(() => {
+		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(0), c = /* @__PURE__ */ F(null), l = /* @__PURE__ */ F(null), u = /* @__PURE__ */ new Map(), d = /* @__PURE__ */ new Map(), f = /* @__PURE__ */ new Map(), p = /* @__PURE__ */ new Map(), m = Y(() => {
 			let t = /* @__PURE__ */ new Set(), n = qC(e.modelValue, e.itemKey);
 			if (!n.valid) return {
 				snapshot: void 0,
@@ -21414,49 +21652,49 @@ var ZC = /* @__PURE__ */ H({
 				labels: r,
 				locked: t
 			};
-		}), m, h = !1, g = /* @__PURE__ */ F(), _ = () => e.disabled || e.readonly || !p.value.snapshot, v = (e) => _() || p.value.locked.has(e), y = (e, t = "") => {
-			let n = p.value.snapshot?.keys.indexOf(e) ?? -1;
-			return n >= 0 ? p.value.labels[n] : t;
+		}), h, g = !1, _ = /* @__PURE__ */ F(), v = () => e.disabled || e.readonly || !m.value.snapshot, y = (e) => v() || m.value.locked.has(e), b = (e, t = "") => {
+			let n = m.value.snapshot?.keys.indexOf(e) ?? -1;
+			return n >= 0 ? m.value.labels[n] : t;
 		};
-		function b(e) {
+		function x(e) {
 			return YC(e.snapshot, e.key, e.to, e.input);
 		}
-		function x(e, t) {
-			g.value = {
+		function S(e, t) {
+			_.value = {
 				kind: e,
 				key: t.key,
-				label: y(t.key),
+				label: b(t.key),
 				to: t.to,
 				count: t.items.length
 			};
 		}
-		function S(t, n, r = "handle", i = 0) {
+		function C(t, n, r = "handle", i = 0) {
 			z(() => {
-				if (h || e.disabled) return;
+				if (g || e.disabled) return;
 				let a = document.activeElement;
 				if (a && a !== document.body && a !== n && !o.value?.contains(a)) return;
-				let s = r === "up" ? u : r === "down" ? d : l, c = v(t) ? void 0 : s.get(t);
-				if (v(t) || c && !c.disabled || (c = l.get(t)), !c || c.disabled) {
-					let e = p.value.snapshot?.keys || [], t = Math.max(0, Math.min(i, e.length - 1));
-					c = [...e.slice(t), ...e.slice(0, t).reverse()].filter((e) => !v(e)).map((e) => l.get(e)).find((e) => e && !e.disabled);
+				let s = r === "up" ? d : r === "down" ? f : u, c = y(t) ? void 0 : s.get(t);
+				if (y(t) || c && !c.disabled || (c = u.get(t)), !c || c.disabled) {
+					let e = m.value.snapshot?.keys || [], t = Math.max(0, Math.min(i, e.length - 1));
+					c = [...e.slice(t), ...e.slice(0, t).reverse()].filter((e) => !y(e)).map((e) => u.get(e)).find((e) => e && !e.disabled);
 				}
 				c && !c.disabled ? c.focus({ preventScroll: !0 }) : o.value?.focus({ preventScroll: !0 });
 			});
 		}
-		function C(e = "api", t = !0) {
-			if (O.stop(), !m) return;
-			let n = m, i = b(n), a = document.activeElement;
-			m = void 0, s.value++, x("cancel", i), r("end", {
+		function w(e = "api", t = !0) {
+			if (k.stop(), !h) return;
+			let n = h, i = x(n), a = document.activeElement;
+			h = void 0, s.value++, S("cancel", i), r("end", {
 				...i,
 				status: "cancel",
 				reason: e
-			}), t && S(n.key, a, "handle", i.from);
+			}), t && C(n.key, a, "handle", i.from);
 		}
-		function w(t, n = "keyboard") {
-			if (v(t)) return !1;
-			let i = p.value.snapshot, a = i.keys.indexOf(t);
+		function T(t, n = "keyboard") {
+			if (y(t)) return !1;
+			let i = m.value.snapshot, a = i.keys.indexOf(t);
 			if (a < 0) return !1;
-			n === "keyboard" && C("api", !1);
+			n === "keyboard" && w("api", !1);
 			let o = {
 				snapshot: i,
 				key: t,
@@ -21465,15 +21703,15 @@ var ZC = /* @__PURE__ */ H({
 				labeler: e.itemLabel,
 				input: n
 			};
-			if (m = o, s.value++, l.get(t)?.focus({ preventScroll: !0 }), m !== o || v(t)) return !1;
-			let c = b(o);
-			return x("start", c), r("start", c), m === o;
+			if (h = o, s.value++, u.get(t)?.focus({ preventScroll: !0 }), h !== o || y(t)) return !1;
+			let c = x(o);
+			return S("start", c), r("start", c), h === o;
 		}
-		function T() {
-			if (!m) return;
-			let e = m, t = b(e), n = document.activeElement;
-			if (O.stop(), m = void 0, s.value++, v(e.key) || !p.value.snapshot || !JC(e.snapshot, p.value.snapshot)) {
-				x("cancel", t), r("end", {
+		function E() {
+			if (!h) return;
+			let e = h, t = x(e), n = document.activeElement;
+			if (k.stop(), h = void 0, s.value++, y(e.key) || !m.value.snapshot || !JC(e.snapshot, m.value.snapshot)) {
+				S("cancel", t), r("end", {
 					...t,
 					status: "cancel",
 					reason: "external"
@@ -21481,48 +21719,48 @@ var ZC = /* @__PURE__ */ H({
 				return;
 			}
 			let i = t.from !== t.to;
-			x(i ? "commit" : "unchanged", t), i && (r("update:modelValue", [...t.items]), r("change", {
+			S(i ? "commit" : "unchanged", t), i && (r("update:modelValue", [...t.items]), r("change", {
 				...t,
 				items: [...t.items]
 			})), r("end", {
 				...t,
 				items: [...t.items],
 				status: i ? "commit" : "unchanged"
-			}), S(e.key, n);
+			}), C(e.key, n);
 		}
-		function E(e, t) {
-			if (v(e)) return;
-			C("api", !1);
-			let n = p.value.snapshot, i = n.keys.indexOf(e), a = YC(n, e, i + t, "button");
+		function D(e, t) {
+			if (y(e)) return;
+			w("api", !1);
+			let n = m.value.snapshot, i = n.keys.indexOf(e), a = YC(n, e, i + t, "button");
 			if (!a) return;
 			let o = document.activeElement;
-			x("commit", a), r("update:modelValue", [...a.items]), r("change", {
+			S("commit", a), r("update:modelValue", [...a.items]), r("change", {
 				...a,
 				items: [...a.items]
 			}), r("end", {
 				...a,
 				items: [...a.items],
 				status: "commit"
-			}), S(e, o, t === -1 ? "up" : "down", i);
+			}), C(e, o, t === -1 ? "up" : "down", i);
 		}
-		function D(e, t) {
+		function O(e, t) {
 			if (e.isComposing || e.altKey || e.ctrlKey || e.metaKey) return;
 			if (e.key === "Tab") {
-				C("tab", !1);
+				w("tab", !1);
 				return;
 			}
-			if (e.key === "Escape" && m) {
-				e.preventDefault(), e.stopPropagation(), C("escape");
+			if (e.key === "Escape" && h) {
+				e.preventDefault(), e.stopPropagation(), w("escape");
 				return;
 			}
-			if (v(t)) return;
+			if (y(t)) return;
 			if (e.key === " " || e.key === "Enter") {
 				if (e.preventDefault(), e.stopPropagation(), e.repeat) return;
-				m?.key === t ? T() : w(t);
+				h?.key === t ? E() : T(t);
 				return;
 			}
-			if (!m || m.key !== t) return;
-			let n = m, i = n.to;
+			if (!h || h.key !== t) return;
+			let n = h, i = n.to;
 			if (e.key === "ArrowUp") i--;
 			else if (e.key === "ArrowDown") i++;
 			else if (e.key === "Home") i = 0;
@@ -21530,53 +21768,67 @@ var ZC = /* @__PURE__ */ H({
 			else return;
 			if (e.preventDefault(), e.stopPropagation(), i = Math.max(0, Math.min(n.snapshot.items.length - 1, i)), i === n.to) return;
 			n.to = i, s.value++;
-			let a = b(n);
-			x("preview", a), r("preview", a);
+			let a = x(n);
+			S("preview", a), r("preview", a);
 		}
-		let O = XC({
+		let k = XC({
+			visual: (e, t, n) => {
+				let r = e === null ? void 0 : p.get(e)?.getBoundingClientRect();
+				l.value = e !== null && r && typeof n == "number" ? {
+					key: e,
+					left: r.left,
+					top: Math.max(8, Math.min(n - r.height / 2, window.innerHeight - r.height - 8)),
+					width: r.width
+				} : null;
+			},
 			list: () => c.value,
-			row: (e) => f.get(e),
-			keys: () => m?.snapshot.keys || p.value.snapshot?.keys || [],
-			enabled: () => !_(),
-			begin: (e) => w(e, "pointer"),
-			finish: T,
-			cancel: C,
+			row: (e) => p.get(e),
+			keys: () => h?.snapshot.keys || m.value.snapshot?.keys || [],
+			enabled: () => !v(),
+			begin: (e) => T(e, "pointer"),
+			finish: E,
+			cancel: w,
 			move: (e) => {
-				if (!m || m.input !== "pointer" || m.to === e) return;
-				m.to = e, s.value++;
-				let t = b(m);
-				x("preview", t), r("preview", t);
+				if (!h || h.input !== "pointer" || h.to === e) return;
+				h.to = e, s.value++;
+				let t = x(h);
+				S("preview", t), r("preview", t);
 			}
 		});
-		function k(e, t) {
-			if (e.button !== 0 || e.isPrimary === !1 || v(t)) return;
-			C("api", !1);
-			let n = p.value.snapshot;
-			O.press(e, t, () => !v(t) && !!p.value.snapshot && JC(n, p.value.snapshot));
+		function A(e, t) {
+			if (e.button !== 0 || e.isPrimary === !1 || y(t)) return;
+			w("api", !1);
+			let n = m.value.snapshot;
+			k.press(e, t, () => !y(t) && !!m.value.snapshot && JC(n, m.value.snapshot));
 		}
-		V(p, (t) => {
-			m && t.locked.has(m.key) ? C("disabled") : O.pending() && !O.valid() && !m ? C("external", !1) : !m || t.snapshot && JC(m.snapshot, t.snapshot) || C(m.snapshot.source === e.modelValue && (m.keyer !== e.itemKey || m.labeler !== e.itemLabel) ? "configuration" : "external");
+		V(m, (t) => {
+			h && t.locked.has(h.key) ? w("disabled") : k.pending() && !k.valid() && !h ? w("external", !1) : !h || t.snapshot && JC(h.snapshot, t.snapshot) || w(h.snapshot.source === e.modelValue && (h.keyer !== e.itemKey || h.labeler !== e.itemLabel) ? "configuration" : "external");
 		}, { flush: "sync" }), V(() => [e.disabled, e.readonly], () => {
-			(e.disabled || e.readonly) && C("disabled", !1);
+			if (e.disabled || e.readonly) {
+				let e = typeof document < "u" ? document.activeElement : null, t = e instanceof HTMLElement && o.value?.contains(e) && (e.matches(".sol-ui-sortable-handle") || e.closest(".sol-ui-sortable-moves"));
+				w("disabled", !1), t && z(() => {
+					g || document.activeElement !== document.body && document.activeElement !== e || o.value?.focus({ preventScroll: !0 });
+				});
+			}
 		}, { flush: "sync" });
-		let A = () => C("blur", !1), j = () => {
-			document.hidden && C("blur", !1);
+		let j = () => w("blur", !1), ee = () => {
+			document.hidden && w("blur", !1);
 		};
 		return Yi(() => {
-			window.addEventListener("blur", A), document.addEventListener("visibilitychange", j);
+			window.addEventListener("blur", j), document.addEventListener("visibilitychange", ee);
 		}), Qi(() => {
-			h = !0, C("unmount", !1), window.removeEventListener("blur", A), document.removeEventListener("visibilitychange", j);
+			g = !0, w("unmount", !1), window.removeEventListener("blur", j), document.removeEventListener("visibilitychange", ee);
 		}), i({
 			focus: (t) => {
 				if (!e.disabled) {
-					let e = t ?? p.value.snapshot?.keys.find((e) => !v(e)), n = e === void 0 || v(e) ? void 0 : l.get(e);
+					let e = t ?? m.value.snapshot?.keys.find((e) => !y(e)), n = e === void 0 || y(e) ? void 0 : u.get(e);
 					n && !n.disabled ? n.focus() : o.value?.focus();
 				}
 			},
-			cancel: () => C("api")
+			cancel: () => w("api")
 		}), () => {
 			s.value;
-			let r = p.value.snapshot, i = r?.items || (Array.isArray(e.modelValue) ? e.modelValue : []), h = e.error || (r ? "" : a.value.sortableInvalid), _ = m?.snapshot.keys.indexOf(m.key) ?? -1, b = XS(e, n, h, e.id + "-keys"), x = g.value, S = x ? a.value.sortableStatus(x.kind, y(x.key, x.label), x.to + 1, x.count) : "";
+			let r = m.value.snapshot, i = r?.items || (Array.isArray(e.modelValue) ? e.modelValue : []), g = e.error || (r ? "" : a.value.sortableInvalid), v = h?.snapshot.keys.indexOf(h.key) ?? -1, x = XS(e, n, g, e.id + "-keys"), S = _.value, C = S ? a.value.sortableStatus(S.kind, b(S.key, S.label), S.to + 1, S.count) : "";
 			return X("div", {
 				...t,
 				ref: o,
@@ -21585,7 +21837,7 @@ var ZC = /* @__PURE__ */ H({
 				tabindex: -1,
 				role: "group",
 				"aria-labelledby": e.id + "-label",
-				"aria-describedby": b,
+				"aria-describedby": x,
 				"aria-disabled": e.disabled ? "true" : void 0
 			}, [
 				X("p", {
@@ -21600,51 +21852,55 @@ var ZC = /* @__PURE__ */ H({
 					ref: c,
 					class: "sol-ui-sortable-list",
 					"aria-labelledby": e.id + "-label"
-				}, i.map((t, o) => {
-					let s = r?.keys[o] ?? "invalid-" + o, c = p.value.labels[o] || a.value.record + " " + (o + 1), h = m?.key === s, g = v(s), y = {
+				}, [X(Pl, {
+					name: "sol-ui-sortable",
+					css: !1
+				}, () => i.map((t, o) => {
+					let s = r?.keys[o] ?? "invalid-" + o, c = m.value.labels[o] || a.value.record + " " + (o + 1), l = h?.key === s, g = y(s), _ = {
 						item: t,
 						index: o,
 						key: s,
-						active: h,
+						active: l,
 						disabled: g
 					};
 					return X("li", {
 						key: s,
 						ref: (e) => {
-							e ? f.set(s, e) : f.delete(s);
+							e ? p.set(s, e) : p.delete(s);
 						},
 						class: "sol-ui-sortable-row",
-						"data-active": h ? "true" : void 0,
-						"data-disabled": p.value.locked.has(s) ? "true" : void 0,
-						"data-insert": m?.to === o && m.to !== _ ? m.to > _ ? "after" : "before" : void 0
+						"data-active": l ? "true" : void 0,
+						"data-disabled": m.value.locked.has(s) ? "true" : void 0,
+						"data-controls": g ? "hidden" : void 0,
+						"data-insert": h?.to === o && h.to !== v ? h.to > v ? "after" : "before" : void 0
 					}, [
 						X("button", {
 							ref: (e) => {
-								e ? l.set(s, e) : l.delete(s);
+								e ? u.set(s, e) : u.delete(s);
 							},
 							type: "button",
 							class: "sol-button sol-ui-sortable-handle",
 							disabled: g,
 							"aria-label": a.value.sortableHandle(c),
-							"aria-pressed": String(h),
+							"aria-pressed": String(l),
 							"aria-describedby": e.id + "-keys",
-							onKeydown: (e) => D(e, s),
-							onPointerdown: (e) => k(e, s),
+							onKeydown: (e) => O(e, s),
+							onPointerdown: (e) => A(e, s),
 							onDragstart: (e) => e.preventDefault(),
 							onClick: (e) => {
-								O.consumeClick(e) || (m?.key === s ? T() : w(s));
+								k.consumeClick(e) || (h?.key === s ? E() : T(s));
 							},
 							onBlur: () => {
-								(m?.key === s || O.key() === s) && C("blur", !1);
+								(h?.key === s || k.key() === s) && w("blur", !1);
 							}
-						}, n["handle-icon"]?.(y) || X(Jx, {
+						}, n["handle-icon"]?.(_) || X(Jx, {
 							name: "grip",
 							decorative: !0
 						})),
-						X("div", { class: "sol-ui-sortable-content" }, [n.item?.(y) || c, p.value.locked.has(s) ? X("span", { class: "sol-hint" }, a.value.unavailable) : null]),
+						X("div", { class: "sol-ui-sortable-content" }, [n.item?.(_) || c, m.value.locked.has(s) ? X("span", { class: "sol-hint" }, a.value.unavailable) : null]),
 						X("div", { class: "sol-ui-sortable-moves" }, [-1, 1].map((t) => X("button", {
 							ref: (e) => {
-								let n = t === -1 ? u : d;
+								let n = t === -1 ? d : f;
 								e ? n.set(s, e) : n.delete(s);
 							},
 							type: "button",
@@ -21652,21 +21908,38 @@ var ZC = /* @__PURE__ */ H({
 							disabled: g || (t === -1 ? o === 0 : o === i.length - 1),
 							"aria-label": a.value.sortableMove(c, t),
 							"aria-describedby": e.id + "-keys",
-							onClick: () => E(s, t)
+							onClick: () => D(s, t)
 						}, X(Jx, {
 							name: "arrow",
 							rotate: t === -1 ? 270 : 90,
 							decorative: !0
 						}))))
 					]);
-				})),
+				}))]),
+				l.value ? X("div", {
+					popover: "manual",
+					class: "sol-ui-sortable-ghost",
+					"aria-hidden": "true",
+					style: {
+						left: l.value.left + "px",
+						top: l.value.top + "px",
+						width: l.value.width + "px"
+					},
+					ref: (e) => {
+						if (e instanceof HTMLElement) try {
+							e.showPopover?.();
+						} catch {
+							e.removeAttribute("popover");
+						}
+					}
+				}, b(l.value.key)) : null,
 				i.length ? null : X("div", { class: "sol-hint" }, n.empty?.() || a.value.noResults),
-				...ZS(e, n, h),
+				...ZS(e, n, g),
 				X("output", {
 					class: "sol-hint sol-ui-sortable-status",
 					role: "status",
 					"aria-live": "polite"
-				}, S)
+				}, C)
 			]);
 		};
 	}
@@ -21811,8 +22084,8 @@ var lw = /* @__PURE__ */ H({
 		"month-change": (e) => !0
 	},
 	setup(e, { attrs: t, slots: n, emit: r, expose: i }) {
-		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ new Map(), c = cw(), l = Y(() => e.today === void 0 ? c : e.today), u = Y(() => e.firstDay === void 0 ? a.value.firstDay : e.firstDay), d = Y(() => tw(e.month, u.value)), f = /* @__PURE__ */ F(rw(e.month, e.modelValue, l.value)), p = !1, m, h = Y(() => {
-			let t = d.value, n = /* @__PURE__ */ new Map(), r = !t.valid || e.modelValue !== null && !wh(e.modelValue) || !wh(l.value) || !Number.isSafeInteger(e.markerLimit) || e.markerLimit < 0 || !e.markers || typeof e.markers != "object" || Array.isArray(e.markers);
+		let a = Nx(() => e.locale), o = /* @__PURE__ */ F(null), s = /* @__PURE__ */ F(null), c = /* @__PURE__ */ new Map(), l = cw(), u = Y(() => e.today === void 0 ? l : e.today), d = Y(() => e.firstDay === void 0 ? a.value.firstDay : e.firstDay), f = Y(() => tw(e.month, d.value)), p = /* @__PURE__ */ F(rw(e.month, e.modelValue, u.value)), m = !1, h, g = Y(() => {
+			let t = f.value, n = /* @__PURE__ */ new Map(), r = !t.valid || e.modelValue !== null && !wh(e.modelValue) || !wh(u.value) || !Number.isSafeInteger(e.markerLimit) || e.markerLimit < 0 || !e.markers || typeof e.markers != "object" || Array.isArray(e.markers);
 			if (t.valid) {
 				for (let i of t.cells) if (i) try {
 					let t = e.isDateDisabled ? e.isDateDisabled(i.iso) : !1, r = e.markers?.[i.iso] ?? [], a = /* @__PURE__ */ new Set();
@@ -21843,26 +22116,26 @@ var lw = /* @__PURE__ */ H({
 				days: n,
 				hasMarkers: [...n.values()].some((e) => e.markers.length > 0)
 			};
-		}), g = (t) => !!(e.disabled || e.readonly || e.loading || h.value.invalid || h.value.days.get(t)?.disabled);
-		function _(t, n = null) {
-			m = void 0, t && $C(t) === e.month && (f.value = t), z(() => {
-				if (p || e.disabled) return;
+		}), _ = (t) => !!(e.disabled || e.readonly || e.loading || g.value.invalid || g.value.days.get(t)?.disabled);
+		function v(t, n = null) {
+			h = void 0, t && $C(t) === e.month && (p.value = t), z(() => {
+				if (m || e.disabled) return;
 				let t = document.activeElement;
 				if (n && t && t !== document.body && t !== n && !o.value?.contains(t)) return;
-				let r = f.value ? s.get(f.value) : void 0;
+				let r = p.value ? c.get(p.value) : void 0;
 				r && !r.disabled ? (r.focus({ preventScroll: !0 }), r.scrollIntoView?.({
 					block: "nearest",
 					inline: "nearest"
 				})) : o.value?.focus({ preventScroll: !0 });
 			});
 		}
-		function v(t, n, i) {
-			if (e.disabled || !d.value.valid || !t) return;
+		function y(t, n, i) {
+			if (e.disabled || !f.value.valid || !t) return;
 			if (t === e.month) {
-				i && _(i, document.activeElement);
+				i && v(i, document.activeElement);
 				return;
 			}
-			m = i ? {
+			h = i ? {
 				month: t,
 				date: i,
 				origin: document.activeElement
@@ -21874,8 +22147,16 @@ var lw = /* @__PURE__ */ H({
 				reason: n
 			});
 		}
-		function y(t, n) {
-			if (g(t) || (m = void 0, f.value = t, t === e.modelValue)) return;
+		function b(t) {
+			let n = Number(t.value), r = Number(e.month.slice(0, 4));
+			/^\d{1,4}$/.test(t.value) && Number.isInteger(n) && n >= 1 && n <= 9999 && y(String(n).padStart(4, "0") + e.month.slice(4), n < r ? "previous" : "next"), z(() => {
+				t.value = e.month.slice(0, 4);
+			});
+		}
+		function x(t, n) {
+			if (_(t) || (h = void 0, p.value = t, n === "pointer" && g.value.days.get(t)?.markers.length && z(() => {
+				m || (s.value?.focus({ preventScroll: !0 }), s.value?.scrollIntoView?.({ block: "nearest" }));
+			}), t === e.modelValue)) return;
 			let i = e.modelValue;
 			r("update:modelValue", t), r("change", {
 				value: t,
@@ -21883,47 +22164,47 @@ var lw = /* @__PURE__ */ H({
 				reason: n
 			});
 		}
-		function b(t, n) {
+		function S(t, n) {
 			if (!(t.isComposing || t.altKey || t.ctrlKey || t.metaKey || e.disabled)) {
 				if (sw.has(t.key)) {
 					t.preventDefault();
-					let r = iw(n, t.key, u.value, t.shiftKey);
+					let r = iw(n, t.key, d.value, t.shiftKey);
 					if (!r) return;
-					$C(r) === e.month ? _(r, t.currentTarget) : v($C(r), "keyboard", r);
-				} else t.key === "Enter" || t.key === " " ? (t.preventDefault(), t.repeat || y(n, "keyboard")) : t.key === "Escape" && (t.preventDefault(), _(rw(e.month, e.modelValue, l.value), t.currentTarget));
+					$C(r) === e.month ? v(r, t.currentTarget) : y($C(r), "keyboard", r);
+				} else t.key === "Enter" || t.key === " " ? (t.preventDefault(), t.repeat || x(n, "keyboard")) : t.key === "Escape" && (t.preventDefault(), v(rw(e.month, e.modelValue, u.value), t.currentTarget));
 			}
 		}
 		return V(() => e.month, () => {
-			let t = m;
-			m = void 0, f.value = t?.month === e.month ? t.date : rw(e.month, e.modelValue, l.value), t?.month === e.month && _(t.date, t.origin);
+			let t = h;
+			h = void 0, p.value = t?.month === e.month ? t.date : rw(e.month, e.modelValue, u.value), t?.month === e.month && v(t.date, t.origin);
 		}, { flush: "post" }), V(() => e.modelValue, () => {
-			o.value?.contains(document.activeElement) || (f.value = rw(e.month, e.modelValue, l.value));
+			o.value?.contains(document.activeElement) || (p.value = rw(e.month, e.modelValue, u.value));
 		}), V(() => e.disabled, (e) => {
-			e && (m = void 0);
+			e && (h = void 0);
 		}), Qi(() => {
-			p = !0, m = void 0, s.clear();
-		}), i({ focus: (e) => _(e ?? f.value) }), () => {
-			let r = d.value, i = e.error || (h.value.invalid ? a.value.monthCalendarInvalid : ""), c = e.loading, u = !c && !h.value.hasMarkers && !h.value.invalid, p = XS(e, n, i, [
+			m = !0, h = void 0, c.clear();
+		}), i({ focus: (e) => v(e ?? p.value) }), () => {
+			let r = f.value, i = e.error || (g.value.invalid ? a.value.monthCalendarInvalid : ""), l = e.loading, d = !l && !g.value.hasMarkers && !g.value.invalid, m = XS(e, n, i, [
 				e.id + "-keys",
-				u ? e.id + "-empty" : "",
-				c ? e.id + "-loading" : "",
+				d ? e.id + "-empty" : "",
+				l ? e.id + "-loading" : "",
 				e.readonly ? e.id + "-readonly" : "",
 				t["aria-describedby"]
-			].filter(Boolean).join(" ")), _ = r.valid ? Lx(e.month + "-01", a.value, {
+			].filter(Boolean).join(" ")), C = r.valid ? Lx(e.month + "-01", a.value, {
 				year: "numeric",
 				month: "long",
 				day: void 0
-			}) : e.month, x = (t) => X("button", {
+			}) : e.month, w = (t) => X("button", {
 				type: "button",
 				class: "sol-button",
 				"aria-label": t === -1 ? a.value.previousMonth : a.value.nextMonth,
 				disabled: e.disabled || !r.valid || nw(e.month, t) === e.month,
-				onClick: () => v(nw(e.month, t), t === -1 ? "previous" : "next")
+				onClick: () => y(nw(e.month, t), t === -1 ? "previous" : "next")
 			}, X(Jx, {
 				name: "chevron",
 				rotate: t === -1 ? 90 : 270,
 				decorative: !0
-			})), S = r.valid ? r.cells : Array.from({ length: 42 }, () => null), C = f.value && h.value.days.get(f.value)?.markers || [];
+			})), T = r.valid ? r.cells : Array.from({ length: 42 }, () => null), E = p.value && g.value.days.get(p.value)?.markers || [];
 			return X("div", {
 				...t,
 				ref: o,
@@ -21932,8 +22213,8 @@ var lw = /* @__PURE__ */ H({
 				role: "group",
 				tabindex: -1,
 				"aria-labelledby": e.id + "-label",
-				"aria-describedby": p,
-				"aria-busy": c ? "true" : void 0,
+				"aria-describedby": m,
+				"aria-busy": l ? "true" : void 0,
 				"aria-disabled": e.disabled ? "true" : void 0
 			}, [
 				X("p", {
@@ -21941,18 +22222,31 @@ var lw = /* @__PURE__ */ H({
 					class: "sol-label"
 				}, e.label),
 				X("div", { class: "sol-ui-month-toolbar" }, [
-					x(-1),
 					X("h3", {
 						id: e.id + "-month",
 						"aria-live": "polite",
 						"aria-atomic": "true"
-					}, _),
-					x(1),
+					}, C),
+					X("label", { class: "sol-ui-month-year" }, [X("span", { class: "sol-label" }, a.value.monthCalendarYear), X("input", {
+						class: "sol-input",
+						type: "number",
+						min: 1,
+						max: 9999,
+						step: 1,
+						inputmode: "numeric",
+						value: r.valid ? e.month.slice(0, 4) : "",
+						disabled: e.disabled || !r.valid,
+						onChange: (e) => b(e.currentTarget),
+						onKeydown: (e) => {
+							e.key === "Enter" && !e.isComposing && (e.preventDefault(), b(e.currentTarget));
+						}
+					})]),
+					X("div", { class: "sol-ui-month-navigation" }, [w(-1), w(1)]),
 					X("button", {
 						type: "button",
 						class: "sol-button",
-						disabled: e.disabled || !r.valid || !wh(l.value),
-						onClick: () => v($C(l.value), "today", l.value)
+						disabled: e.disabled || !r.valid || !wh(u.value),
+						onClick: () => y($C(u.value), "today", u.value)
 					}, a.value.today)
 				]),
 				X("p", {
@@ -21963,7 +22257,7 @@ var lw = /* @__PURE__ */ H({
 					id: e.id + "-readonly",
 					class: "sol-hint"
 				}, a.value.monthCalendarReadonly) : null,
-				c ? X("p", {
+				l ? X("p", {
 					id: e.id + "-loading",
 					class: "sol-hint",
 					role: "status"
@@ -21972,31 +22266,34 @@ var lw = /* @__PURE__ */ H({
 					class: "sol-ui-month-table",
 					"aria-labelledby": e.id + "-month"
 				}, [X("thead", X("tr", Array.from({ length: 7 }, (e, t) => {
-					let n = "2023-01-0" + ((r.valid ? r.weekdays[t] : t) + 1), i = {
+					let n = r.valid ? r.weekdays[t] : t, i = "2023-01-0" + (n + 1), o = {
 						year: void 0,
 						month: void 0,
 						day: void 0
 					};
-					return X("th", { scope: "col" }, X("abbr", { title: Lx(n, a.value, {
-						...i,
+					return X("th", {
+						scope: "col",
+						"data-sunday": n === 0 ? "true" : void 0
+					}, X("abbr", { title: Lx(i, a.value, {
+						...o,
 						weekday: "long"
-					}) }, Lx(n, a.value, {
-						...i,
+					}) }, Lx(i, a.value, {
+						...o,
 						weekday: "short"
 					})));
-				}))), X("tbody", Array.from({ length: 6 }, (t, r) => X("tr", S.slice(r * 7, r * 7 + 7).map((t) => {
+				}))), X("tbody", Array.from({ length: 6 }, (t, r) => X("tr", T.slice(r * 7, r * 7 + 7).map((t) => {
 					if (!t) return X("td", {
 						"aria-hidden": "true",
 						class: "sol-ui-month-spacer"
 					}, X("div", { class: "sol-ui-month-cell" }));
-					let r = h.value.days.get(t.iso), i = e.modelValue === t.iso, o = t.iso === l.value, c = {
+					let r = g.value.days.get(t.iso), i = e.modelValue === t.iso, o = t.iso === u.value, s = {
 						date: t.iso,
 						day: t.day,
 						selected: i,
 						today: o,
-						disabled: g(t.iso),
+						disabled: _(t.iso),
 						markers: r.markers
-					}, u = [
+					}, l = [
 						kx(Lx(t.iso, a.value, {
 							year: "numeric",
 							month: "long",
@@ -22005,7 +22302,7 @@ var lw = /* @__PURE__ */ H({
 						}), String(t.day)),
 						o ? a.value.monthCalendarToday : "",
 						i ? a.value.selected : "",
-						c.disabled ? a.value.unavailable : "",
+						s.disabled ? a.value.unavailable : "",
 						...r.markers.map((e) => e.label),
 						r.markers.length ? a.value.monthCalendarCount(r.markers.length) : ""
 					].filter(Boolean).join(" · ");
@@ -22016,21 +22313,22 @@ var lw = /* @__PURE__ */ H({
 						type: "button",
 						class: "sol-button sol-ui-month-day",
 						ref: (e) => {
-							e ? s.set(t.iso, e) : s.delete(t.iso);
+							e ? c.set(t.iso, e) : c.delete(t.iso);
 						},
-						tabindex: t.iso === f.value ? 0 : -1,
+						tabindex: t.iso === p.value ? 0 : -1,
 						disabled: e.disabled,
-						"aria-disabled": c.disabled ? "true" : void 0,
+						"aria-disabled": s.disabled ? "true" : void 0,
 						"aria-pressed": String(i),
 						"aria-current": o ? "date" : void 0,
-						"aria-label": u,
+						"aria-label": l,
 						"aria-describedby": e.id + "-keys",
 						"data-today": o ? "true" : void 0,
+						"data-sunday": t.weekday === 0 ? "true" : void 0,
 						onFocus: () => {
-							m = void 0, f.value = t.iso;
+							h = void 0, p.value = t.iso;
 						},
-						onClick: (e) => y(t.iso, e.detail ? "pointer" : "keyboard"),
-						onKeydown: (e) => b(e, t.iso)
+						onClick: (e) => x(t.iso, e.detail ? "pointer" : "keyboard"),
+						onKeydown: (e) => S(e, t.iso)
 					}, [
 						X("span", { class: "sol-ui-month-number" }, [String(t.day), i ? X("span", { "aria-hidden": "true" }, " ✓") : null]),
 						...r.markers.slice(0, Math.max(0, e.markerLimit)).map((e, r) => X("span", {
@@ -22059,14 +22357,18 @@ var lw = /* @__PURE__ */ H({
 							"aria-hidden": "true",
 							title: a.value.monthCalendarCount(r.markers.length)
 						}, String(r.markers.length)) : null
-					]), n.cell?.(c)]));
+					]), n.cell?.(s)]));
 				}))))]),
-				!u || c ? X("section", {
+				!d || l ? X("section", {
 					class: "sol-ui-month-details",
+					ref: s,
 					tabindex: 0,
 					role: "region",
-					"aria-labelledby": e.id + "-details-label"
-				}, [X("h4", { id: e.id + "-details-label" }, [f.value ? Lx(f.value, a.value) + " · " : "", a.value.monthCalendarDetails]), C.length ? X("ul", C.map((e) => X("li", { key: e.id }, [e.icon ? X(Jx, {
+					"aria-labelledby": e.id + "-details-label",
+					onKeydown: (e) => {
+						e.key === "Escape" && !e.isComposing && (e.preventDefault(), e.stopPropagation(), v(p.value));
+					}
+				}, [X("h4", { id: e.id + "-details-label" }, [p.value ? Lx(p.value, a.value) + " · " : "", a.value.monthCalendarDetails]), E.length ? X("ul", E.map((e) => X("li", { key: e.id }, [e.icon ? X(Jx, {
 					name: e.icon,
 					size: 16,
 					decorative: !0
@@ -22074,8 +22376,8 @@ var lw = /* @__PURE__ */ H({
 					content: e.label,
 					size: "sm",
 					style: aw(e)
-				}) : X("span", e.label)]))) : X("p", { class: "sol-hint" }, c ? a.value.monthCalendarLoading : a.value.monthCalendarEmpty)]) : null,
-				u ? X("div", {
+				}) : X("span", e.label)]))) : X("p", { class: "sol-hint" }, l ? a.value.monthCalendarLoading : a.value.monthCalendarEmpty)]) : null,
+				d ? X("div", {
 					id: e.id + "-empty",
 					class: "sol-hint"
 				}, n.empty?.() || a.value.monthCalendarEmpty) : null,
@@ -22083,7 +22385,30 @@ var lw = /* @__PURE__ */ H({
 			]);
 		};
 	}
-}), uw = "1.1.0", dw = /* @__PURE__ */ H({
+}), uw = "1.1.1", dw = /* @__PURE__ */ H({
+	name: "SBtnGroup",
+	inheritAttrs: !1,
+	props: {
+		label: {
+			type: String,
+			required: !0
+		},
+		orientation: {
+			type: String,
+			default: "horizontal"
+		}
+	},
+	slots: Object,
+	setup(e, { attrs: t, slots: n }) {
+		return () => X("div", {
+			...t,
+			role: "group",
+			"aria-label": e.label,
+			class: ["sol-ui-button-group", t.class],
+			"data-orientation": e.orientation
+		}, [n.default?.()]);
+	}
+}), fw = /* @__PURE__ */ H({
 	name: "SConfirmAction",
 	inheritAttrs: !1,
 	props: {
@@ -22202,7 +22527,7 @@ var lw = /* @__PURE__ */ H({
 			]);
 		};
 	}
-}), fw = /* @__PURE__ */ H({
+}), pw = /* @__PURE__ */ H({
 	name: "STextField",
 	inheritAttrs: !1,
 	props: {
@@ -22281,7 +22606,7 @@ var lw = /* @__PURE__ */ H({
 		};
 	}
 });
-function pw(e = {}) {
+function mw(e = {}) {
 	let t = {};
 	for (let [e, n] of Object.entries(Tb.themes)) for (let r of ["light", "dark"]) {
 		let i = n[r];
@@ -22358,14 +22683,14 @@ function pw(e = {}) {
 		}
 	});
 }
-function mw(e, t, n) {
+function hw(e, t, n) {
 	let r = t.theme + "-" + t.mode;
 	if (!Object.hasOwn(Tb.themes, t.theme) || !["light", "dark"].includes(t.mode) || t.density !== void 0 && !["comfortable", "compact"].includes(t.density) || !e.themes.value[r]) return !1;
 	let i = n ?? (typeof document > "u" ? void 0 : document.documentElement);
 	if (!i) throw Error("applySolyiAppearance requires a DOM target. Use defaultTheme for SSR.");
 	return i.dataset.theme = t.theme, i.dataset.mode = t.mode, t.density && (i.dataset.density = t.density), e.change(r, !1), !0;
 }
-function hw(e, t) {
+function gw(e, t) {
 	let n = e === "close" ? 16 : 20;
 	return X("svg", {
 		class: [
@@ -22386,7 +22711,7 @@ function hw(e, t) {
 		focusable: "false"
 	}, X("path", { d: D_[e] }));
 }
-var gw = Zx(Wx), _w = /* @__PURE__ */ H({
+var _w = Zx(Wx), vw = /* @__PURE__ */ H({
 	name: "SDialog",
 	inheritAttrs: !1,
 	props: {
@@ -22487,7 +22812,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				tabindex: -1,
 				"aria-busy": e.busy ? "true" : void 0
 			}, [
-				X("div", { class: "sol-ui-dialog-heading" }, [X("div", { class: "sol-surface-heading" }, [e.eyebrow ? X("span", { class: "eyebrow" }, e.eyebrow) : null, X("h2", { id: e.id + "-title" }, e.title)]), X(gw, {
+				X("div", { class: "sol-ui-dialog-heading" }, [X("div", { class: "sol-surface-heading" }, [e.eyebrow ? X("span", { class: "eyebrow" }, e.eyebrow) : null, X("h2", { id: e.id + "-title" }, e.title)]), X(_w, {
 					id: e.id + "-close",
 					ref: a,
 					variant: "subtle",
@@ -22512,19 +22837,19 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			]));
 		};
 	}
-}), vw = {
+}), yw = {
 	STimeGrid: sS,
 	SPagination: dS,
 	SLoadingOverlay: xS,
 	SEmptyState: CS,
-	SConfirmAction: dw,
+	SConfirmAction: fw,
 	SCombobox: hC,
 	SMonthCalendar: lw,
 	SSortableList: ZC,
 	SChip: Yx,
 	SBadge: Xx,
 	SIcon: Jx,
-	SIconBtn: gw,
+	SIconBtn: _w,
 	SForm: zS,
 	SContainer: kb,
 	SRow: Qb,
@@ -22534,9 +22859,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 	STree: TS,
 	SProgressLinear: yS,
 	SProgressCircular: bS,
+	SBtnGroup: dw,
 	SBtn: Wx,
-	STextField: fw,
-	SDialog: _w,
+	STextField: pw,
+	SDialog: vw,
 	SDataTable: /* @__PURE__ */ H({
 		name: "SDataTable",
 		inheritAttrs: !1,
@@ -22756,7 +23082,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							disabled: y() || n === 1,
 							"aria-label": i.value.previousPage,
 							onClick: () => g(n - 1)
-						}, () => hw("chevron", "previous")),
+						}, () => gw("chevron", "previous")),
 						...b.flatMap((e, t) => [t && e - b[t - 1] > 1 ? X("span", {
 							"aria-hidden": "true",
 							class: "sol-ui-page-gap"
@@ -22772,14 +23098,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							disabled: y() || n === f,
 							"aria-label": i.value.nextPage,
 							onClick: () => g(n + 1)
-						}, () => hw("chevron", "next"))
+						}, () => gw("chevron", "next"))
 					]), X("p", {
 						ref: o,
 						role: "status",
 						tabindex: -1,
 						class: "sol-ui-hint sol-ui-table-summary"
 					}, i.value.pageSummary(n, f, e.selected.length))]),
-					X(_w, {
+					X(vw, {
 						locale: i.value,
 						id: d,
 						title: i.value.fullText,
@@ -22818,7 +23144,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 	SAvatar: _C,
 	SStepper: vC,
 	SBarChart: yC
-}, yw = { class: "sol-stack" }, bw = { class: "sol-actions" }, xw = { role: "status" }, Sw = { class: "sol-status sol-tone-badge" }, Cw = { class: "sol-actions" }, ww = /* @__PURE__ */ H({
+}, bw = { class: "sol-stack" }, xw = { class: "sol-actions" }, Sw = { role: "status" }, Cw = { class: "sol-status sol-tone-badge" }, ww = { class: "sol-actions" }, Tw = /* @__PURE__ */ H({
 	__name: "color-examples",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F("info"), r = /* @__PURE__ */ F(""), i = /* @__PURE__ */ F("example-a"), a = Y(() => Db(i.value)), o = (e) => ({
@@ -22862,17 +23188,17 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 		}
 		return (e, l) => {
 			let u = U("SBadge"), d = U("STextField"), f = U("SCard"), p = U("SBtn"), m = U("SAlert"), h = U("SSnackbar");
-			return W(), hs("div", yw, [
+			return W(), hs("div", bw, [
 				q(f, {
 					title: "서로 다른 범주 8색",
 					"heading-level": 2
 				}, {
 					default: B(() => [
 						l[2] ||= K("p", null, "성공·오류와 별도인 분류 색입니다. 색과 함께 항상 이름을 표시합니다.", -1),
-						K("div", bw, [(W(), hs(as, null, da(8, (e) => q(u, {
+						K("div", xw, [(W(), hs(as, null, da(8, (e) => q(u, {
 							key: e,
 							content: `범주 ${e}`,
-							style: M(o(e))
+							style: de(o(e))
 						}, null, 8, ["content", "style"])), 64))]),
 						q(d, {
 							id: "recipe-category-key",
@@ -22880,7 +23206,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							"onUpdate:modelValue": l[0] ||= (e) => /* @__PURE__ */ P(i) ? i.value = e : null,
 							label: "안정적인 분류 key"
 						}, null, 8, ["modelValue"]),
-						K("p", xw, N(L(a).category) + " · 테마와 명암을 바꿔도 분류 ID는 유지합니다.", 1)
+						K("p", Sw, N(L(a).category) + " · 테마와 명암을 바꿔도 분류 ID는 유지합니다.", 1)
 					]),
 					_: 1
 				}),
@@ -22892,8 +23218,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					"data-tone": e.tone
 				}, {
 					default: B(() => [
-						K("span", Sw, N(e.icon) + " " + N(e.label), 1),
-						K("div", Cw, [
+						K("span", Cw, N(e.icon) + " " + N(e.label), 1),
+						K("div", ww, [
 							q(p, {
 								variant: "primary",
 								tone: e.tone,
@@ -22959,7 +23285,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			]);
 		};
 	}
-}), Tw = /* @__PURE__ */ H({
+}), Ew = /* @__PURE__ */ H({
 	__name: "writing",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = /* @__PURE__ */ F(!1), r = Y(() => n.value && !t.value.trim() ? "기록 이름을 입력해 주세요." : "");
@@ -23000,7 +23326,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Ew = { class: "sol-actions" }, Dw = { role: "status" }, Ow = /* @__PURE__ */ H({
+}), Dw = { class: "sol-actions" }, Ow = { role: "status" }, kw = /* @__PURE__ */ H({
 	__name: "buttons",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(""), r;
@@ -23016,7 +23342,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				title: "버튼 상태와 동작"
 			}, {
 				default: B(() => [
-					K("div", Ew, [
+					K("div", Dw, [
 						q(a, {
 							variant: "primary",
 							loading: L(t),
@@ -23041,14 +23367,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							_: 1
 						})
 					]),
-					K("p", Dw, N(L(n)), 1),
+					K("p", Ow, N(L(n)), 1),
 					r[6] ||= K("p", { class: "sol-hint" }, " 확인은 0.7초의 가상 작업을 실행합니다. 처리 중에는 중복 실행을 막고, 비활성 버튼은 조작할 수 없습니다. ", -1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), kw = { class: "sol-hint" }, Aw = { role: "status" }, jw = /* @__PURE__ */ H({
+}), Aw = { class: "sol-hint" }, jw = { role: "status" }, Mw = /* @__PURE__ */ H({
 	__name: "fields",
 	setup(e) {
 		let t = ai("field"), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(""), a = /* @__PURE__ */ F(!1), o = Y(() => a.value && i.value.trim().length < 3 ? "3자 이상 입력해 주세요." : "");
@@ -23085,7 +23411,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							decorative: "",
 							size: 16
 						})]),
-						trailing: B(() => [K("span", kw, N(L(i).length) + "자", 1)]),
+						trailing: B(() => [K("span", Aw, N(L(i).length) + "자", 1)]),
 						_: 1
 					}, 8, [
 						"modelValue",
@@ -23100,7 +23426,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						label: "로딩 상태 시연 켜기"
 					}, null, 8, ["modelValue"]),
 					c[4] ||= K("p", { class: "sol-hint" }, " 로딩은 입력값과 별개인 작업 상태입니다. 동작 줄이기 설정에서는 회전 대신 상태 문구로 안내합니다. ", -1),
-					K("p", Aw, N(L(r) ? "불러오는 중…" : "대기 중"), 1),
+					K("p", jw, N(L(r) ? "불러오는 중…" : "대기 중"), 1),
 					q(u, {
 						id: "recipe-readonly",
 						"model-value": "읽기 전용 예시",
@@ -23133,7 +23459,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Mw = { role: "status" }, Nw = /* @__PURE__ */ H({
+}), Nw = { role: "status" }, Pw = /* @__PURE__ */ H({
 	__name: "choices",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!0), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F("list"), i = /* @__PURE__ */ F("recent"), a = [
@@ -23207,13 +23533,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						})]),
 						_: 1
 					}, 8, ["modelValue"]),
-					K("p", Mw, " 완료 " + N(L(t) ? "포함" : "제외") + " · 보관 " + N(L(n) ? "포함" : "제외") + " · " + N(L(r)) + " · " + N(L(i)), 1)
+					K("p", Nw, " 완료 " + N(L(t) ? "포함" : "제외") + " · 보관 " + N(L(n) ? "포함" : "제외") + " · " + N(L(r)) + " · " + N(L(i)), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), Pw = /* @__PURE__ */ H({
+}), Fw = /* @__PURE__ */ H({
 	__name: "feedback",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1);
@@ -23260,7 +23586,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Fw = { key: 0 }, Iw = { role: "status" }, Lw = /* @__PURE__ */ H({
+}), Iw = { key: 0 }, Lw = { role: "status" }, Rw = /* @__PURE__ */ H({
 	__name: "dialog",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(""), i = /* @__PURE__ */ F("dialog"), a = /* @__PURE__ */ F("one"), o = /* @__PURE__ */ F("body"), s = /* @__PURE__ */ F(!1), c = /* @__PURE__ */ F(""), l;
@@ -23346,7 +23672,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						busy: L(s),
 						"busy-scope": L(o) === "all" ? "all" : "body"
 					}, {
-						feedback: B(() => [K("p", Iw, N(L(c)), 1)]),
+						feedback: B(() => [K("p", Lw, N(L(c)), 1)]),
 						"actions-start": B(({ busy: e }) => [q(p, {
 							variant: "subtle",
 							disabled: e,
@@ -23371,7 +23697,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							_: 1
 						}, 8, ["loading"])]),
 						default: B(() => [
-							L(a) === "none" ? Ts("v-if", !0) : (W(), hs("p", Fw, N(L(a) === "multi" ? "본문만 스크롤되며 제목과 닫기는 자리를 유지합니다. ".repeat(8) : "본문만 스크롤되며 제목과 닫기는 자리를 유지합니다."), 1)),
+							L(a) === "none" ? Ts("v-if", !0) : (W(), hs("p", Iw, N(L(a) === "multi" ? "본문만 스크롤되며 제목과 닫기는 자리를 유지합니다. ".repeat(8) : "본문만 스크롤되며 제목과 닫기는 자리를 유지합니다."), 1)),
 							K("p", null, N(L(o) === "all" ? "전체 잠금 중에는 처리가 끝난 뒤 닫을 수 있습니다." : "Escape로 닫으면 열기 버튼으로 돌아갑니다."), 1),
 							(W(!0), hs(as, null, da(L(n) ? 30 : 0, (e) => (W(), hs("p", { key: e }, "스크롤 확인용 내용 " + N(e), 1))), 128)),
 							q(m, {
@@ -23393,7 +23719,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Rw = { class: "sol-actions" }, zw = { role: "status" }, Bw = /* @__PURE__ */ H({
+}), zw = { class: "sol-actions" }, Bw = { role: "status" }, Vw = /* @__PURE__ */ H({
 	__name: "selection",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F("brief"), r = /* @__PURE__ */ F(!1), i = [{
@@ -23431,7 +23757,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"onUpdate:modelValue": o[2] ||= (e) => /* @__PURE__ */ P(a) ? a.value = e : null,
 						label: "외부 설정명이 있을 때 오른쪽 라벨 숨기기"
 					}, null, 8, ["modelValue"]),
-					K("div", Rw, [o[4] ||= K("label", {
+					K("div", zw, [o[4] ||= K("label", {
 						id: "recipe-immediate-label",
 						for: "recipe-immediate"
 					}, "바뀌면 바로 적용", -1), q(l, {
@@ -23442,13 +23768,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"hide-label": L(a),
 						"aria-labelledby": "recipe-immediate-label"
 					}, null, 8, ["modelValue", "hide-label"])]),
-					K("p", zw, " 자료 " + N(L(t) ? "포함" : "제외") + " · " + N(L(n)) + " · 즉시 설정 " + N(L(r) ? "켬" : "끔"), 1)
+					K("p", Bw, " 자료 " + N(L(t) ? "포함" : "제외") + " · " + N(L(n)) + " · 즉시 설정 " + N(L(r) ? "켬" : "끔"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), Vw = { class: "sol-actions" }, Hw = /* @__PURE__ */ H({
+}), Hw = { class: "sol-actions" }, Uw = /* @__PURE__ */ H({
 	__name: "help",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1);
@@ -23460,7 +23786,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, {
 				default: B(() => [
 					n[2] ||= K("p", null, "짧은 설명에는 툴팁, 읽을 내용과 행동이 있는 추가 정보에는 팝오버를 사용합니다.", -1),
-					K("div", Vw, [q(r, {
+					K("div", Hw, [q(r, {
 						id: "recipe-tooltip",
 						label: "짧은 설명",
 						text: "가상 기록을 찾는 도구예요."
@@ -23480,10 +23806,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Uw = {
+}), Ww = {
 	class: "sol-stack",
 	"aria-label": "단일 및 여러 추가 설명"
-}, Ww = { role: "status" }, Gw = /* @__PURE__ */ H({
+}, Gw = { role: "status" }, Kw = /* @__PURE__ */ H({
 	__name: "accordion",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F({}), r = [
@@ -23510,7 +23836,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 		];
 		return (e, i) => {
 			let a = U("SAccordion"), o = U("SCard");
-			return W(), hs("section", Uw, [q(o, {
+			return W(), hs("section", Ww, [q(o, {
 				"heading-level": 2,
 				title: "추가 설명 한 개"
 			}, {
@@ -23526,7 +23852,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						rel: "noopener"
 					}, "문서 홈 · 새 창", -1)]]),
 					_: 1
-				}, 8, ["modelValue"]), K("p", Ww, N(L(t) ? "상세를 펼쳤어요." : "상세를 접었어요."), 1)]),
+				}, 8, ["modelValue"]), K("p", Gw, N(L(t) ? "상세를 펼쳤어요." : "상세를 접었어요."), 1)]),
 				_: 1
 			}), q(o, {
 				"heading-level": 2,
@@ -23551,7 +23877,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			})]);
 		};
 	}
-}), Kw = { role: "status" }, qw = { class: "sol-actions" }, Jw = /* @__PURE__ */ H({
+}), qw = { role: "status" }, Jw = { class: "sol-actions" }, Yw = /* @__PURE__ */ H({
 	__name: "navigation",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(1), a = /* @__PURE__ */ F(20), o = /* @__PURE__ */ F(!0), s = /* @__PURE__ */ F(1), c = /* @__PURE__ */ F(3), l = /* @__PURE__ */ F(!1), u = Y(() => [{
@@ -23627,7 +23953,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"sibling-count",
 						"compact-pagination"
 					]),
-					K("p", Kw, "부모 페이지 " + N(L(i)) + " · 마지막 제안 " + N(L(s)), 1),
+					K("p", qw, "부모 페이지 " + N(L(i)) + " · 마지막 제안 " + N(L(s)), 1),
 					q(y, {
 						caption: "같은 페이지 설정을 사용하는 Table",
 						columns: [{
@@ -23652,7 +23978,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						items: L(p),
 						onNavigate: m[4] ||= (e) => r.value = !1
 					}, null, 8, ["items"]),
-					K("div", qw, [
+					K("div", Jw, [
 						q(_, { onClick: m[5] ||= (e) => r.value = !0 }, {
 							default: B(() => [...m[11] ||= [J("가상 상세로 이동", -1)]]),
 							_: 1
@@ -23690,16 +24016,16 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Yw = {
+}), Xw = {
 	key: 1,
 	role: "status"
-}, Xw = {
+}, Zw = {
 	key: 5,
 	role: "status"
-}, Zw = {
+}, Qw = {
 	key: 6,
 	role: "status"
-}, Qw = /* @__PURE__ */ H({
+}, $w = /* @__PURE__ */ H({
 	__name: "advanced-inputs",
 	props: { part: {} },
 	setup(e) {
@@ -23737,7 +24063,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						label: "가상 기록 설명",
 						maxlength: 120
 					}, null, 8, ["modelValue"])) : Ts("v-if", !0),
-					!e.part || e.part === "textarea" ? (W(), hs("p", Yw, "내용 지움: " + N(L(n)) + "회", 1)) : Ts("v-if", !0),
+					!e.part || e.part === "textarea" ? (W(), hs("p", Xw, "내용 지움: " + N(L(n)) + "회", 1)) : Ts("v-if", !0),
 					!e.part || e.part === "number" ? (W(), G(d, {
 						key: 2,
 						id: "recipe-number-format",
@@ -23777,14 +24103,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						options: s,
 						"max-selected": 2
 					}, null, 8, ["modelValue"])) : Ts("v-if", !0),
-					e.part ? Ts("v-if", !0) : (W(), hs("p", Xw, N(L(a)) + "개 · " + N(L(o).join(", ") || "선택 없음"), 1)),
-					e.part === "number" ? (W(), hs("p", Zw, "숫자 모델: " + N(L(a) === null ? "null" : L(a)), 1)) : Ts("v-if", !0)
+					e.part ? Ts("v-if", !0) : (W(), hs("p", Zw, N(L(a)) + "개 · " + N(L(o).join(", ") || "선택 없음"), 1)),
+					e.part === "number" ? (W(), hs("p", Qw, "숫자 모델: " + N(L(a) === null ? "null" : L(a)), 1)) : Ts("v-if", !0)
 				]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), $w = /* @__PURE__ */ H({
+}), eT = /* @__PURE__ */ H({
 	__name: "content-tabs",
 	setup(e) {
 		let t = /* @__PURE__ */ F("summary"), n = /* @__PURE__ */ F(""), r = [
@@ -23828,7 +24154,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), eT = { role: "status" }, tT = /* @__PURE__ */ H({
+}), tT = { role: "status" }, nT = /* @__PURE__ */ H({
 	__name: "action-menu",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = [
@@ -23869,16 +24195,16 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						default: B(() => [...r[3] ||= [K("p", null, "우클릭·Shift+F10 또는 표시된 동작 버튼으로 엽니다.", -1)]]),
 						_: 1
 					}),
-					K("p", eT, N(L(t)), 1)
+					K("p", tT, N(L(t)), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), nT = {
+}), rT = {
 	key: 0,
 	class: "sol-actions"
-}, rT = { role: "status" }, iT = { class: "recipe-step-actions" }, aT = { class: "sol-actions" }, oT = /*@__PURE__*/ H({
+}, iT = { role: "status" }, aT = { class: "recipe-step-actions" }, oT = { class: "sol-actions" }, sT = /*@__PURE__*/ H({
 	__name: "identity-progress",
 	props: { part: {} },
 	setup(e) {
@@ -23914,7 +24240,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: e.part ? void 0 : "가상 사용자와 단계"
 			}, {
-				default: B(() => [!e.part || e.part === "avatar" ? (W(), hs("div", nT, [
+				default: B(() => [!e.part || e.part === "avatar" ? (W(), hs("div", rT, [
 					q(b, {
 						label: "가상 사용자 민하",
 						initials: "민"
@@ -23926,7 +24252,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						onPrimary: y[0] ||= (e) => u.value = "가상 사용자 정보",
 						onSelect: y[1] ||= (e) => u.value = e
 					}),
-					K("p", rT, N(L(u)), 1)
+					K("p", iT, N(L(u)), 1)
 				])) : Ts("v-if", !0), !e.part || e.part === "steps" ? (W(), hs(as, { key: 1 }, [
 					q(S, {
 						id: "recipe-step-layout",
@@ -23994,10 +24320,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						ref: r,
 						tabindex: "-1"
 					}, N(L(s)) + " · " + N(L(c)) + " · 서버에 저장하지 않는 가상 검토입니다. ", 513))], 64)),
-					K("div", iT, [q(E, { onClick: _ }, {
+					K("div", aT, [q(E, { onClick: _ }, {
 						default: B(() => [...y[7] ||= [J("처음부터", -1)]]),
 						_: 1
-					}), K("div", aT, [q(E, {
+					}), K("div", oT, [q(E, {
 						disabled: L(a) === 0 || L(o),
 						onClick: y[5] ||= (e) => g(-1)
 					}, {
@@ -24016,11 +24342,11 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, 8, ["title"]);
 		};
 	}
-}), sT = (e, t) => {
+}), cT = (e, t) => {
 	let n = e.__vccOpts || e;
 	for (let [e, r] of t) n[e] = r;
 	return n;
-}, cT = /*#__PURE__*/ sT(oT, [["__scopeId", "data-v-9b028753"]]), lT = { class: "sol-actions" }, uT = /* @__PURE__ */ H({
+}, lT = /*#__PURE__*/ cT(sT, [["__scopeId", "data-v-9b028753"]]), uT = { class: "sol-actions" }, dT = /* @__PURE__ */ H({
 	__name: "progress",
 	setup(e) {
 		let t = /* @__PURE__ */ F("indeterminate"), n = /* @__PURE__ */ F(!0), r = /* @__PURE__ */ F(!0), i = /* @__PURE__ */ F(!0), a = Y(() => t.value), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F("container"), c = /* @__PURE__ */ F(!0), l = /* @__PURE__ */ F(!1), u;
@@ -24149,7 +24475,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"hide-content": L(l)
 					}, {
 						default: B(() => [q(v, { title: "독립 작업 영역" }, {
-							default: B(() => [u[11] ||= K("p", null, "짧은 작업은 표시를 지연해 깜빡임을 줄입니다.", -1), K("div", lT, [q(_, {
+							default: B(() => [u[11] ||= K("p", null, "짧은 작업은 표시를 지연해 깜빡임을 줄입니다.", -1), K("div", uT, [q(_, {
 								id: "recipe-loading-start",
 								onClick: u[7] ||= (e) => d(1200)
 							}, {
@@ -24176,7 +24502,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), dT = { role: "status" }, fT = { role: "status" }, pT = { role: "status" }, mT = /* @__PURE__ */ H({
+}), fT = { role: "status" }, pT = { role: "status" }, mT = { role: "status" }, hT = /* @__PURE__ */ H({
 	__name: "time",
 	setup(e) {
 		let t = /* @__PURE__ */ F("09:00"), n = /* @__PURE__ */ F("legacy"), r = Y(() => n.value === "auto" || n.value === "popover" || n.value === "dialog" ? n.value : void 0), i = /* @__PURE__ */ F(null), a = /* @__PURE__ */ F(!1), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F(""), c = /* @__PURE__ */ F("09:07"), l = /* @__PURE__ */ F(!1), u = /* @__PURE__ */ F(10);
@@ -24233,7 +24559,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						required: "",
 						help: "HH:mm 또는 HHmm으로 입력하거나 Alt+↓로 패널을 엽니다."
 					}, null, 8, ["picker-presentation", "modelValue"]),
-					K("p", dT, "완료값: " + N(L(t) || "없음") + " · 실제 알림을 예약하지 않습니다.", 1),
+					K("p", fT, "완료값: " + N(L(t) || "없음") + " · 실제 알림을 예약하지 않습니다.", 1),
 					q(_, {
 						id: "recipe-time-manual",
 						modelValue: L(a),
@@ -24301,14 +24627,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"scroll-to-current-time",
 						"initial-scroll-value"
 					]),
-					K("p", fT, N(L(s)), 1),
-					K("p", pT, "목록 완료값: " + N(L(i) || "선택 없음"), 1)
+					K("p", pT, N(L(s)), 1),
+					K("p", mT, "목록 완료값: " + N(L(i) || "선택 없음"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), hT = { role: "status" }, gT = { role: "status" }, _T = /* @__PURE__ */ H({
+}), gT = { role: "status" }, _T = { role: "status" }, vT = /* @__PURE__ */ H({
 	__name: "chart-tree",
 	props: { part: {} },
 	setup(e) {
@@ -24369,7 +24695,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							label: "지난주"
 						}]
 					}, null, 8, ["modelValue"]),
-					K("p", hT, "총 " + N(L(o)) + "개 기록 · 가상 자료", 1),
+					K("p", gT, "총 " + N(L(o)) + "개 기록 · 가상 자료", 1),
 					q(u, {
 						id: "recipe-chart",
 						label: "가상 활동 횟수 · 차트와 같은 자료",
@@ -24385,15 +24711,15 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					"onUpdate:expanded": c[2] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
 					label: "가상 기록 폴더",
 					items: i
-				}, null, 8, ["modelValue", "expanded"]), K("p", gT, "선택: " + N(L(t) || "없음"), 1)], 64)) : Ts("v-if", !0)]),
+				}, null, 8, ["modelValue", "expanded"]), K("p", _T, "선택: " + N(L(t) || "없음"), 1)], 64)) : Ts("v-if", !0)]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), vT = { class: "sol-actions" }, yT = {
+}), yT = { class: "sol-actions" }, bT = {
 	id: "recipe-form-validation-result",
 	role: "status"
-}, bT = /* @__PURE__ */ H({
+}, xT = /* @__PURE__ */ H({
 	__name: "form",
 	setup(e) {
 		let t = ai("form"), n = /* @__PURE__ */ F(""), r = /* @__PURE__ */ F("note"), i = /* @__PURE__ */ F(!1), a = /* @__PURE__ */ F(!1), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F(""), c = /* @__PURE__ */ F(""), l = [MS.required("이름을 입력해 주세요."), MS.minLength(3, "이름을 3자 이상 입력해 주세요.")], u;
@@ -24472,7 +24798,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							title: "✓ 가상 입력을 확인했어요.",
 							live: "polite"
 						})) : Ts("v-if", !0),
-						K("div", vT, [q(y, {
+						K("div", yT, [q(y, {
 							type: "submit",
 							variant: "primary",
 							loading: L(a)
@@ -24486,7 +24812,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							default: B(() => [...u[4] ||= [J("검증 표시 지우기", -1)]]),
 							_: 1
 						}, 8, ["disabled"])]),
-						K("p", yT, N(L(c)), 1)
+						K("p", bT, N(L(c)), 1)
 					]),
 					_: 1
 				}, 512)]),
@@ -24494,7 +24820,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), xT = { class: "sol-filterbar" }, ST = { role: "status" }, CT = /* @__PURE__ */ H({
+}), ST = { class: "sol-filterbar" }, CT = { role: "status" }, wT = /* @__PURE__ */ H({
 	__name: "search",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = /* @__PURE__ */ F("all"), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(""), a = [
@@ -24518,7 +24844,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				title: "검색과 상세"
 			}, {
 				default: B(() => [
-					K("div", xT, [q(s, {
+					K("div", ST, [q(s, {
 						id: "recipe-search",
 						modelValue: L(t),
 						"onUpdate:modelValue": a[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
@@ -24545,7 +24871,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						],
 						required: ""
 					}, null, 8, ["modelValue"])]),
-					K("p", ST, "결과 " + N(L(o).length) + "개", 1),
+					K("p", CT, "결과 " + N(L(o).length) + "개", 1),
 					(W(!0), hs(as, null, da(L(o), (e) => (W(), G(u, {
 						key: e.name,
 						title: e.name
@@ -24584,7 +24910,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), wT = { role: "status" }, TT = /* @__PURE__ */ H({
+}), TT = { role: "status" }, ET = /* @__PURE__ */ H({
 	__name: "compare",
 	setup(e) {
 		let t = /* @__PURE__ */ F("simple"), n = [{
@@ -24610,12 +24936,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					label: "작업 방식",
 					layout: "cards",
 					options: n
-				}, null, 8, ["modelValue"]), K("p", wT, "선택: " + N(L(t) === "simple" ? "가볍게 기록" : "차근차근 정리"), 1)]),
+				}, null, 8, ["modelValue"]), K("p", TT, "선택: " + N(L(t) === "simple" ? "가볍게 기록" : "차근차근 정리"), 1)]),
 				_: 1
 			});
 		};
 	}
-}), ET = { role: "status" }, DT = /* @__PURE__ */ H({
+}), DT = { role: "status" }, OT = /* @__PURE__ */ H({
 	__name: "empty",
 	setup(e) {
 		let t = Nx(), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(null), i = /* @__PURE__ */ F(null);
@@ -24660,10 +24986,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					_: 1
 				})]),
 				_: 1
-			}, 8, ["title", "description"])), K("p", ET, N(L(t).code === "en-US" ? "Items: " : "항목 수: ") + N(+!!L(n)), 1)], 64);
+			}, 8, ["title", "description"])), K("p", DT, N(L(t).code === "en-US" ? "Items: " : "항목 수: ") + N(+!!L(n)), 1)], 64);
 		};
 	}
-}), OT = /* @__PURE__ */ H({
+}), kT = /* @__PURE__ */ H({
 	__name: "data",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = /* @__PURE__ */ F(1), r = /* @__PURE__ */ F([]), i = /* @__PURE__ */ F({
@@ -24806,21 +25132,21 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), kT = ["aria-labelledby"], AT = {
+}), AT = ["aria-labelledby"], jT = {
 	key: 0,
 	id: "recipe-inputs-title"
-}, jT = { role: "status" }, MT = { role: "status" }, NT = /* @__PURE__ */ H({
+}, MT = { role: "status" }, NT = { role: "status" }, PT = /* @__PURE__ */ H({
 	__name: "inputs",
 	props: { part: {} },
 	setup(e) {
-		let t = /* @__PURE__ */ F("range"), n = /* @__PURE__ */ F(null), r = Y(() => t.value === "single" ? "single" : "range"), i = /* @__PURE__ */ F(!1), a = /* @__PURE__ */ F("legacy"), o = /* @__PURE__ */ F("bottom-start"), s = Y(() => a.value === "auto" || a.value === "popover" || a.value === "dialog" ? a.value : void 0), c = Y(() => o.value === "top-start" || o.value === "top-end" || o.value === "bottom-end" ? o.value : "bottom-start"), l = (e, t) => e + " (" + Lx(e, t, {
+		let t = /* @__PURE__ */ F(!0), n = /* @__PURE__ */ F("range"), r = /* @__PURE__ */ F(null), i = Y(() => n.value === "single" ? "single" : "range"), a = /* @__PURE__ */ F(!1), o = /* @__PURE__ */ F("legacy"), s = /* @__PURE__ */ F("bottom-start"), c = Y(() => o.value === "auto" || o.value === "popover" || o.value === "dialog" ? o.value : void 0), l = Y(() => s.value === "top-start" || s.value === "top-end" || s.value === "bottom-end" ? s.value : "bottom-start"), u = (e, t) => e + " (" + Lx(e, t, {
 			year: void 0,
 			month: void 0,
 			day: void 0,
 			weekday: "short"
 		}) + ")";
-		V(r, () => n.value = null);
-		let u = /* @__PURE__ */ F([]), d = /* @__PURE__ */ F(null), f = /* @__PURE__ */ F("local"), p = [
+		V(i, () => r.value = null);
+		let d = /* @__PURE__ */ F([]), f = /* @__PURE__ */ F(null), p = /* @__PURE__ */ F("local"), m = [
 			"기록",
 			"독서",
 			"식물",
@@ -24829,38 +25155,38 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 		].map((e) => ({
 			value: e,
 			label: e
-		})), m = !0;
-		V(f, () => {
-			m = !0, d.value = null;
+		})), h = !0;
+		V(p, () => {
+			h = !0, f.value = null;
 		});
-		let h = Y(() => {
-			let e = f.value;
+		let g = Y(() => {
+			let e = p.value;
 			if (e !== "local") return (t, n) => new Promise((r, i) => {
 				let a = () => {
 					clearTimeout(o), i(new DOMException("Cancelled", "AbortError"));
 				}, o = setTimeout(() => {
-					n.removeEventListener("abort", a), e === "error" && m ? (m = !1, i(/* @__PURE__ */ Error("Simulated response"))) : r(p.filter((e) => e.label.includes(t.trim())));
+					n.removeEventListener("abort", a), e === "error" && h ? (h = !1, i(/* @__PURE__ */ Error("Simulated response"))) : r(m.filter((e) => e.label.includes(t.trim())));
 				}, t.includes("느림") ? 450 : 150);
 				n.addEventListener("abort", a, { once: !0 }), n.aborted && a();
 			});
 		});
-		return (m, g) => {
-			let _ = U("SRadioGroup"), v = U("SCheckbox"), y = U("SSelect"), b = U("SDatePicker"), x = U("SCard"), S = U("SFileInput"), C = U("SAutocomplete");
+		return (h, _) => {
+			let v = U("SRadioGroup"), y = U("SCheckbox"), b = U("SSelect"), x = U("SDatePicker"), S = U("SCard"), C = U("SFileInput"), w = U("SAutocomplete");
 			return W(), hs("section", {
 				class: "sol-stack",
 				"aria-labelledby": e.part ? void 0 : "recipe-inputs-title"
 			}, [
-				e.part ? Ts("v-if", !0) : (W(), hs("h2", AT, "로컬 입력 조합")),
-				!e.part || e.part === "date" ? (W(), G(x, {
+				e.part ? Ts("v-if", !0) : (W(), hs("h2", jT, "로컬 입력 조합")),
+				!e.part || e.part === "date" ? (W(), G(S, {
 					key: 1,
 					"heading-level": e.part ? 2 : 3,
 					title: "단일 날짜와 기간"
 				}, {
 					default: B(() => [
-						q(_, {
+						q(v, {
 							id: "recipe-date-mode",
-							modelValue: L(t),
-							"onUpdate:modelValue": g[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+							modelValue: L(n),
+							"onUpdate:modelValue": _[0] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
 							label: "개발 설정 시연",
 							options: [{
 								value: "single",
@@ -24871,16 +25197,16 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							}],
 							required: ""
 						}, null, 8, ["modelValue"]),
-						q(v, {
+						q(y, {
 							id: "recipe-date-weekday",
-							modelValue: L(i),
-							"onUpdate:modelValue": g[1] ||= (e) => /* @__PURE__ */ P(i) ? i.value = e : null,
+							modelValue: L(a),
+							"onUpdate:modelValue": _[1] ||= (e) => /* @__PURE__ */ P(a) ? a.value = e : null,
 							label: "요일 표시 · 저장값은 ISO 유지"
 						}, null, 8, ["modelValue"]),
-						q(y, {
+						q(b, {
 							id: "recipe-date-presentation",
-							modelValue: L(a),
-							"onUpdate:modelValue": g[2] ||= (e) => /* @__PURE__ */ P(a) ? a.value = e : null,
+							modelValue: L(o),
+							"onUpdate:modelValue": _[2] ||= (e) => /* @__PURE__ */ P(o) ? o.value = e : null,
 							label: "팝업 표시 방식",
 							options: [
 								{
@@ -24901,12 +25227,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 								}
 							]
 						}, null, 8, ["modelValue"]),
-						q(y, {
+						q(b, {
 							id: "recipe-date-placement",
-							modelValue: L(o),
-							"onUpdate:modelValue": g[3] ||= (e) => /* @__PURE__ */ P(o) ? o.value = e : null,
+							modelValue: L(s),
+							"onUpdate:modelValue": _[3] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
 							label: "연결 팝업의 기준 위치",
-							disabled: !L(s),
+							disabled: !L(c),
 							options: [
 								{
 									value: "bottom-start",
@@ -24926,16 +25252,16 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 								}
 							]
 						}, null, 8, ["modelValue", "disabled"]),
-						q(b, {
+						q(x, {
 							id: "recipe-date",
-							modelValue: L(n),
-							"onUpdate:modelValue": g[4] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
+							modelValue: L(r),
+							"onUpdate:modelValue": _[4] ||= (e) => /* @__PURE__ */ P(r) ? r.value = e : null,
 							clearable: "",
 							label: "가상 일정",
-							mode: L(r),
-							"picker-presentation": L(s),
-							placement: L(c),
-							"display-formatter": L(i) ? l : void 0
+							mode: L(i),
+							"picker-presentation": L(c),
+							placement: L(l),
+							"display-formatter": L(a) ? u : void 0
 						}, null, 8, [
 							"modelValue",
 							"mode",
@@ -24943,37 +25269,43 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							"placement",
 							"display-formatter"
 						]),
-						K("p", jT, "완료값: " + N(JSON.stringify(L(n))), 1)
+						K("p", MT, "완료값: " + N(JSON.stringify(L(r))), 1)
 					]),
 					_: 1
 				}, 8, ["heading-level"])) : Ts("v-if", !0),
-				!e.part || e.part === "files" ? (W(), G(x, {
+				!e.part || e.part === "files" ? (W(), G(S, {
 					key: 2,
 					"heading-level": e.part ? 2 : 3,
 					title: "로컬 파일 선택과 드롭"
 				}, {
-					default: B(() => [q(S, {
+					default: B(() => [q(y, {
+						id: "recipe-files-preview",
+						modelValue: L(t),
+						"onUpdate:modelValue": _[5] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
+						label: "선택한 이미지의 로컬 미리보기"
+					}, null, 8, ["modelValue"]), q(C, {
+						preview: L(t),
 						id: "recipe-files",
-						modelValue: L(u),
-						"onUpdate:modelValue": g[5] ||= (e) => /* @__PURE__ */ P(u) ? u.value = e : null,
+						modelValue: L(d),
+						"onUpdate:modelValue": _[6] ||= (e) => /* @__PURE__ */ P(d) ? d.value = e : null,
 						label: "가상 첨부 파일",
 						accept: ".txt,.png,.jpg,.jpeg,.pdf",
 						"max-files": 3,
 						"max-file-size": 2097152,
-						help: "파일을 외부로 보내거나 내용을 읽지 않습니다. 이름·형식·크기만 이 화면 메모리에 표시합니다."
-					}, null, 8, ["modelValue"])]),
+						help: "선택한 이미지는 이 화면에서만 로컬 썸네일로 표시합니다. 파일을 외부로 보내지 않으며 제거하거나 화면을 닫으면 미리보기 URL을 해제합니다."
+					}, null, 8, ["preview", "modelValue"])]),
 					_: 1
 				}, 8, ["heading-level"])) : Ts("v-if", !0),
-				!e.part || e.part === "autocomplete" ? (W(), G(x, {
+				!e.part || e.part === "autocomplete" ? (W(), G(S, {
 					key: 3,
 					"heading-level": e.part ? 2 : 3,
 					title: "단일 자동완성"
 				}, {
 					default: B(() => [
-						q(y, {
+						q(b, {
 							id: "recipe-autocomplete-mode",
-							modelValue: L(f),
-							"onUpdate:modelValue": g[6] ||= (e) => /* @__PURE__ */ P(f) ? f.value = e : null,
+							modelValue: L(p),
+							"onUpdate:modelValue": _[7] ||= (e) => /* @__PURE__ */ P(p) ? p.value = e : null,
 							label: "가상 응답",
 							options: [
 								{
@@ -24991,14 +25323,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							],
 							required: ""
 						}, null, 8, ["modelValue"]),
-						q(C, {
+						q(w, {
 							id: "recipe-autocomplete",
-							modelValue: L(d),
-							"onUpdate:modelValue": g[7] ||= (e) => /* @__PURE__ */ P(d) ? d.value = e : null,
+							modelValue: L(f),
+							"onUpdate:modelValue": _[8] ||= (e) => /* @__PURE__ */ P(f) ? f.value = e : null,
 							clearable: "",
 							label: "가상 분류 검색",
-							options: L(p),
-							"load-options": L(h),
+							options: L(m),
+							"load-options": L(g),
 							debounce: 0,
 							locale: { retry: "검색 다시 시도" },
 							help: "방향키·Enter 선택, Escape 닫기. 직접 입력은 검색어이며 선택한 값만 반영합니다. 비동기 응답도 브라우저 안의 가상 처리입니다."
@@ -25007,14 +25339,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							"options",
 							"load-options"
 						]),
-						K("p", MT, "선택값: " + N(L(d) || "없음"), 1)
+						K("p", NT, "선택값: " + N(L(f) || "없음"), 1)
 					]),
 					_: 1
 				}, 8, ["heading-level"])) : Ts("v-if", !0)
-			], 8, kT);
+			], 8, AT);
 		};
 	}
-}), PT = /* @__PURE__ */ H({
+}), FT = /* @__PURE__ */ H({
 	__name: "responses",
 	setup(e) {
 		let t = /* @__PURE__ */ F("ready"), n = ai("resultPanel");
@@ -25111,11 +25443,11 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), FT = { class: "sol-stack" }, IT = { class: "sol-filterbar" }, LT = {
+}), IT = { class: "sol-stack" }, LT = { class: "sol-filterbar" }, RT = {
 	href: "?view=recipes&example=empty",
 	target: "_blank",
 	rel: "noopener"
-}, RT = /* @__PURE__ */ H({
+}, zT = /* @__PURE__ */ H({
 	__name: "composition",
 	setup(e) {
 		let t = /* @__PURE__ */ F(""), n = /* @__PURE__ */ F("all"), r = /* @__PURE__ */ F(!0), i = /* @__PURE__ */ F(!1), a = ai("resultPanel");
@@ -25127,11 +25459,11 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 		}
 		return (e, s) => {
 			let c = U("STextField"), l = U("SSelect"), u = U("SBtn"), d = U("SAlert"), f = U("SCard"), p = U("SIcon"), m = U("SBadge");
-			return W(), hs("div", FT, [q(f, {
+			return W(), hs("div", IT, [q(f, {
 				"heading-level": 2,
 				title: "컨트롤과 보조 행동의 관계"
 			}, {
-				default: B(() => [K("div", IT, [q(c, {
+				default: B(() => [K("div", LT, [q(c, {
 					id: "recipe-composition-query",
 					modelValue: L(t),
 					"onUpdate:modelValue": s[0] ||= (e) => /* @__PURE__ */ P(t) ? t.value = e : null,
@@ -25178,7 +25510,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 					name: "folder",
 					decorative: ""
 				})]),
-				title: B(() => [K("a", LT, [s[5] ||= J("항목 미리보기 · 새 탭 ", -1), q(p, {
+				title: B(() => [K("a", RT, [s[5] ||= J("항목 미리보기 · 새 탭 ", -1), q(p, {
 					name: "external",
 					decorative: "",
 					size: 16
@@ -25192,13 +25524,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			})]);
 		};
 	}
-}), zT = {
+}), BT = {
 	class: "sol-actions",
 	"aria-label": "가상 화면"
-}, BT = {
+}, VT = {
 	key: 0,
 	class: "sol-actions"
-}, VT = { role: "status" }, HT = /* @__PURE__ */ H({
+}, HT = { role: "status" }, UT = /* @__PURE__ */ H({
 	__name: "layouts",
 	setup(e) {
 		let t = ai("heading"), n = /* @__PURE__ */ F("list"), r = /* @__PURE__ */ F("작은 정원"), i = /* @__PURE__ */ F("가상 사용자"), a = /* @__PURE__ */ F("");
@@ -25211,7 +25543,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: "설정·목록·상세 화면틀"
 			}, {
-				actions: B(() => [K("nav", zT, [
+				actions: B(() => [K("nav", BT, [
 					q(c, { onClick: s[0] ||= (e) => o("list") }, {
 						default: B(() => [...s[6] ||= [J("목록", -1)]]),
 						_: 1
@@ -25247,7 +25579,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 									ref: t,
 									tabindex: "-1"
 								}, N(L(n) === "list" ? "목록" : L(n) === "detail" ? "상세" : "설정"), 513),
-								L(n) === "list" ? (W(), hs("div", BT, [(W(), hs(as, null, da(["작은 정원", "조용한 책장"], (e) => q(c, {
+								L(n) === "list" ? (W(), hs("div", VT, [(W(), hs(as, null, da(["작은 정원", "조용한 책장"], (e) => q(c, {
 									key: e,
 									onClick: (t) => {
 										r.value = e, o("detail");
@@ -25281,7 +25613,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 									})]),
 									_: 1
 								})),
-								K("p", VT, N(L(a)), 1)
+								K("p", HT, N(L(a)), 1)
 							])]),
 							_: 1
 						})]),
@@ -25293,7 +25625,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), UT = { class: "sol-actions" }, WT = { class: "sol-actions" }, GT = /* @__PURE__ */ H({
+}), WT = { class: "sol-actions" }, GT = { class: "sol-actions" }, KT = /* @__PURE__ */ H({
 	__name: "workflow",
 	setup(e, { expose: t }) {
 		let n = ai("editTitle"), r = ai("nameField"), i = ai("editButton"), a = ai("undoButton"), o = /* @__PURE__ */ F({
@@ -25385,7 +25717,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"onUpdate:modelValue": t[1] ||= (e) => L(s).note = e,
 						label: "기록 설명"
 					}, null, 8, ["modelValue"]),
-					K("div", UT, [
+					K("div", WT, [
 						q(p, {
 							type: "submit",
 							variant: "primary"
@@ -25402,7 +25734,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							_: 1
 						})
 					])
-				], 32)) : (W(), hs(as, { key: 2 }, [K("p", null, N(L(o).title) + " · " + N(L(o).note), 1), K("div", WT, [q(p, {
+				], 32)) : (W(), hs(as, { key: 2 }, [K("p", null, N(L(o).title) + " · " + N(L(o).note), 1), K("div", GT, [q(p, {
 					id: "recipe-edit",
 					ref_key: "editButton",
 					ref: i,
@@ -25439,10 +25771,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), KT = ["href", "onClick"], qT = {
+}), qT = ["href", "onClick"], JT = {
 	key: 1,
 	role: "status"
-}, JT = /* @__PURE__ */ H({
+}, YT = /* @__PURE__ */ H({
 	__name: "error-summary",
 	setup(e) {
 		let t = ai("summary"), n = ai("nameField"), r = ai("countField"), i = /* @__PURE__ */ F(""), a = /* @__PURE__ */ F(null), o = /* @__PURE__ */ F(!1), s = [MS.required("이름을 입력해 주세요."), MS.minLength(3, "이름을 3자 이상 입력해 주세요.")], c = Y(() => o.value ? [{
@@ -25484,7 +25816,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							default: B(() => [K("ul", null, [(W(!0), hs(as, null, da(L(c), (e) => (W(), hs("li", { key: e.id }, [K("a", {
 								href: "#" + e.id,
 								onClick: du((t) => e.focus(), ["prevent"])
-							}, N(e.label) + " 확인하기", 9, KT)]))), 128))])]),
+							}, N(e.label) + " 확인하기", 9, qT)]))), 128))])]),
 							_: 1
 						}, 512)) : Ts("v-if", !0),
 						q(f, {
@@ -25515,7 +25847,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							default: B(() => [...u[2] ||= [J("가상 입력 확인", -1)]]),
 							_: 1
 						}),
-						L(o) && !L(c).length ? (W(), hs("p", qT, "✓ 두 입력을 확인했어요.")) : Ts("v-if", !0)
+						L(o) && !L(c).length ? (W(), hs("p", JT, "✓ 두 입력을 확인했어요.")) : Ts("v-if", !0)
 					]),
 					_: 1
 				})]),
@@ -25523,7 +25855,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), YT = { class: "sol-actions" }, XT = /* @__PURE__ */ H({
+}), XT = { class: "sol-actions" }, ZT = /* @__PURE__ */ H({
 	__name: "bulk-recovery",
 	setup(e) {
 		let t = ai("resultPanel"), n = ai("runButton"), r = ai("retryButton"), i = /* @__PURE__ */ F([
@@ -25582,7 +25914,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"label",
 						"disabled"
 					]), K("p", null, N(e.state) + " · 처리 " + N(e.attempts) + "회", 1)]))), 128)),
-					K("div", YT, [q(u, {
+					K("div", XT, [q(u, {
 						ref_key: "runButton",
 						ref: n,
 						loading: L(o),
@@ -25616,10 +25948,10 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), ZT = { class: "sol-stack" }, QT = {
+}), QT = { class: "sol-stack" }, $T = {
 	id: "recipe-combobox-result",
 	role: "status"
-}, $T = { class: "sol-actions" }, eE = /* @__PURE__ */ H({
+}, eE = { class: "sol-actions" }, tE = /* @__PURE__ */ H({
 	__name: "combobox",
 	setup(e) {
 		let t = /* @__PURE__ */ F(null), n = /* @__PURE__ */ F(null), r = /* @__PURE__ */ F(null), i = /* @__PURE__ */ F(null), a = /* @__PURE__ */ F(null), o = /* @__PURE__ */ F(!1), s = /* @__PURE__ */ F(!1), c = /* @__PURE__ */ F(!1), l = [
@@ -25660,7 +25992,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				title: "자유 입력과 후보 선택",
 				"heading-level": 2
 			}, {
-				default: B(() => [K("div", ZT, [
+				default: B(() => [K("div", QT, [
 					q(p, {
 						id: "recipe-combobox",
 						ref_key: "combo",
@@ -25686,8 +26018,8 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"readonly",
 						"disabled"
 					]),
-					K("p", QT, " 확정값: " + N(L(t) ?? "없음") + " · reason: " + N(L(i)?.reason ?? "없음") + " · option ID: " + N(L(i)?.reason === "select" ? L(i).option.value : "없음"), 1),
-					K("div", $T, [q(m, { onClick: d[2] ||= (e) => L(a)?.clear() }, {
+					K("p", $T, " 확정값: " + N(L(t) ?? "없음") + " · reason: " + N(L(i)?.reason ?? "없음") + " · option ID: " + N(L(i)?.reason === "select" ? L(i).option.value : "없음"), 1),
+					K("div", eE, [q(m, { onClick: d[2] ||= (e) => L(a)?.clear() }, {
 						default: B(() => [...d[9] ||= [J("메서드로 지우기", -1)]]),
 						_: 1
 					}), q(m, { onClick: d[3] ||= (e) => L(a)?.focus() }, {
@@ -25738,7 +26070,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), tE = { class: "sol-actions" }, nE = { class: "sol-hint" }, rE = /* @__PURE__ */ H({
+}), nE = { class: "sol-actions" }, rE = { class: "sol-hint" }, iE = /* @__PURE__ */ H({
 	__name: "confirm-action",
 	setup(e) {
 		let t = Nx(), n = /* @__PURE__ */ F(!1), r = Y(() => t.value.code === "en-US"), i = /* @__PURE__ */ F(null);
@@ -25753,7 +26085,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, {
 				default: B(() => [
 					K("p", null, N(L(r) ? "The first press asks for confirmation. The second removes this fictional draft." : "한 번 누르면 확인 문구로 바뀌고, 한 번 더 누르면 이 화면의 가상 초안이 제거됩니다."), 1),
-					K("div", tE, [q(o, {
+					K("div", nE, [q(o, {
 						label: L(r) ? "Remove draft" : "초안 제거",
 						"confirm-label": L(r) ? "Press again to remove" : "한 번 더 눌러 제거",
 						tone: "danger",
@@ -25775,13 +26107,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						role: "status",
 						tabindex: "-1"
 					}, N(L(n) ? L(r) ? "The fictional draft was removed." : "가상 초안을 제거했습니다." : L(r) ? "The draft is still here." : "초안이 남아 있습니다."), 513),
-					K("p", nE, N(L(r) ? "Escape, moving focus away or waiting cancels the confirmation." : "Escape, 다른 곳으로 초점 이동 또는 시간이 지나면 확인 상태가 취소됩니다."), 1)
+					K("p", rE, N(L(r) ? "Escape, moving focus away or waiting cancels the confirmation." : "Escape, 다른 곳으로 초점 이동 또는 시간이 지나면 확인 상태가 취소됩니다."), 1)
 				]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), iE = { class: "sol-actions" }, aE = /* @__PURE__ */ H({
+}), aE = { class: "sol-actions" }, oE = /* @__PURE__ */ H({
 	__name: "chip",
 	setup(e) {
 		let t = Nx(), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1), i = Y(() => t.value.code === "en-US"), a = /* @__PURE__ */ F(null);
@@ -25794,7 +26126,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: L(i) ? "Chip labels and selection" : "칩 표시·선택·제거"
 			}, {
-				default: B(() => [K("div", iE, [
+				default: B(() => [K("div", aE, [
 					q(s, { label: L(i) ? "Display label" : "표시용 라벨" }, null, 8, ["label"]),
 					q(s, {
 						selected: L(n),
@@ -25825,7 +26157,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, 8, ["title"]);
 		};
 	}
-}), oE = { class: "sol-actions" }, sE = /* @__PURE__ */ H({
+}), sE = { class: "sol-actions" }, cE = /* @__PURE__ */ H({
 	__name: "badge",
 	setup(e) {
 		let t = Nx(), n = Y(() => t.value.code === "en-US");
@@ -25835,7 +26167,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: L(n) ? "Badge status indicators" : "배지로 상태 표시"
 			}, {
-				default: B(() => [K("p", null, N(L(n) ? "Badges describe a status; they are not action buttons." : "배지는 상태를 설명하는 표시이며 누르는 버튼이 아닙니다."), 1), K("div", oE, [
+				default: B(() => [K("p", null, N(L(n) ? "Badges describe a status; they are not action buttons." : "배지는 상태를 설명하는 표시이며 누르는 버튼이 아닙니다."), 1), K("div", sE, [
 					q(r, {
 						tone: "success",
 						content: L(n) ? "Complete" : "완료"
@@ -25856,7 +26188,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, 8, ["title"]);
 		};
 	}
-}), cE = { class: "sol-actions" }, lE = { class: "sol-hint" }, uE = /* @__PURE__ */ H({
+}), lE = { class: "sol-actions" }, uE = { class: "sol-hint" }, dE = /* @__PURE__ */ H({
 	__name: "icon",
 	setup(e) {
 		let t = Nx(), n = Y(() => t.value.code === "en-US");
@@ -25866,7 +26198,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				"heading-level": 2,
 				title: L(n) ? "Icons with and without text" : "아이콘과 설명"
 			}, {
-				default: B(() => [K("div", cE, [
+				default: B(() => [K("div", lE, [
 					q(r, {
 						name: "info",
 						label: L(n) ? "Information" : "정보"
@@ -25884,12 +26216,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						rotate: 270,
 						label: L(n) ? "Next direction" : "다음 방향"
 					}, null, 8, ["label"])
-				]), K("p", lE, N(L(n) ? "Decorative icons beside visible text are hidden from assistive technology. An icon alone needs a label." : "옆에 설명이 있는 장식 아이콘은 중복 낭독하지 않습니다. 아이콘만 표시할 때는 label로 의미를 전달합니다."), 1)]),
+				]), K("p", uE, N(L(n) ? "Decorative icons beside visible text are hidden from assistive technology. An icon alone needs a label." : "옆에 설명이 있는 장식 아이콘은 중복 낭독하지 않습니다. 아이콘만 표시할 때는 label로 의미를 전달합니다."), 1)]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), dE = { class: "sol-actions" }, fE = { role: "status" }, pE = /* @__PURE__ */ H({
+}), fE = { class: "sol-actions" }, pE = { role: "status" }, mE = /* @__PURE__ */ H({
 	__name: "icon-button",
 	setup(e) {
 		let t = Nx(), n = Y(() => t.value.code === "en-US"), r = /* @__PURE__ */ F(!1), i = /* @__PURE__ */ F(!1), a;
@@ -25906,7 +26238,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			}, {
 				default: B(() => [
 					K("p", null, N(L(n) ? "Save performs a fictional local task. Delete demonstrates a disabled action." : "저장 아이콘은 가상 로컬 작업을 실행하고, 삭제 아이콘은 비활성 상태를 보여줍니다."), 1),
-					K("div", dE, [q(a, {
+					K("div", fE, [q(a, {
 						icon: "save",
 						label: L(n) ? "Save example" : "예제 저장",
 						title: L(n) ? "Save example" : "예제 저장",
@@ -25923,13 +26255,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						tone: "danger",
 						disabled: ""
 					}, null, 8, ["label", "title"])]),
-					K("p", fE, N(L(r) ? L(n) ? "Saving…" : "저장 중…" : L(i) ? L(n) ? "The fictional task finished." : "가상 저장을 완료했습니다." : L(n) ? "Ready to save." : "저장할 수 있습니다."), 1)
+					K("p", pE, N(L(r) ? L(n) ? "Saving…" : "저장 중…" : L(i) ? L(n) ? "The fictional task finished." : "가상 저장을 완료했습니다." : L(n) ? "Ready to save." : "저장할 수 있습니다."), 1)
 				]),
 				_: 1
 			}, 8, ["title"]);
 		};
 	}
-}), mE = { role: "status" }, hE = /* @__PURE__ */ H({
+}), hE = { role: "status" }, gE = /* @__PURE__ */ H({
 	__name: "checkbox",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!0), n = /* @__PURE__ */ F(!1);
@@ -25958,13 +26290,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						label: "선택할 수 없는 항목",
 						disabled: ""
 					}),
-					K("p", mE, " 완료 " + N(L(t) ? "포함" : "제외") + " · 보관 " + N(L(n) ? "포함" : "제외"), 1)
+					K("p", hE, " 완료 " + N(L(t) ? "포함" : "제외") + " · 보관 " + N(L(n) ? "포함" : "제외"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), gE = { role: "status" }, _E = /* @__PURE__ */ H({
+}), _E = { role: "status" }, vE = /* @__PURE__ */ H({
 	__name: "radio-group",
 	setup(e) {
 		let t = /* @__PURE__ */ F("brief"), n = [
@@ -25998,13 +26330,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						options: n,
 						required: ""
 					}, null, 8, ["modelValue"]),
-					K("p", gE, "선택한 표시: " + N(L(t) === "brief" ? "간단히" : "자세히"), 1)
+					K("p", _E, "선택한 표시: " + N(L(t) === "brief" ? "간단히" : "자세히"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), vE = { class: "sol-actions" }, yE = { role: "status" }, bE = /* @__PURE__ */ H({
+}), yE = { class: "sol-actions" }, bE = { role: "status" }, xE = /* @__PURE__ */ H({
 	__name: "switch",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1), r = /* @__PURE__ */ F(!1);
@@ -26028,7 +26360,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"onUpdate:modelValue": i[1] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
 						label: "즉시 알림 켜기 · Switch"
 					}, null, 8, ["modelValue"]),
-					K("div", vE, [i[3] ||= K("label", {
+					K("div", yE, [i[3] ||= K("label", {
 						id: "recipe-switch-external-label",
 						for: "recipe-switch-external"
 					}, "외부 라벨을 쓰는 설정", -1), q(o, {
@@ -26039,13 +26371,13 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"hide-label": "",
 						"aria-labelledby": "recipe-switch-external-label"
 					}, null, 8, ["modelValue"])]),
-					K("p", yE, " 항목 " + N(L(t) ? "선택" : "미선택") + " · 알림 " + N(L(n) ? "켜짐" : "꺼짐") + " · 외부 설정 " + N(L(r) ? "켜짐" : "꺼짐"), 1)
+					K("p", bE, " 항목 " + N(L(t) ? "선택" : "미선택") + " · 알림 " + N(L(n) ? "켜짐" : "꺼짐") + " · 외부 설정 " + N(L(r) ? "켜짐" : "꺼짐"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), xE = { role: "status" }, SE = /* @__PURE__ */ H({
+}), SE = { role: "status" }, CE = /* @__PURE__ */ H({
 	__name: "select",
 	setup(e) {
 		let t = /* @__PURE__ */ F("recent");
@@ -26076,12 +26408,12 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 							disabled: !0
 						}
 					]
-				}, null, 8, ["modelValue"]), K("p", xE, "선택값: " + N(L(t) ?? "없음"), 1)]),
+				}, null, 8, ["modelValue"]), K("p", SE, "선택값: " + N(L(t) ?? "없음"), 1)]),
 				_: 1
 			});
 		};
 	}
-}), CE = { class: "sol-actions" }, wE = /* @__PURE__ */ H({
+}), wE = { class: "sol-actions" }, TE = /* @__PURE__ */ H({
 	__name: "breadcrumbs",
 	setup(e) {
 		let t = /* @__PURE__ */ F("detail"), n = /* @__PURE__ */ F(null), r = [
@@ -26123,7 +26455,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						ref: n,
 						tabindex: "-1"
 					}, N(L(i)[L(i).length - 1].label), 513),
-					K("div", CE, [q(s, { onClick: t[0] ||= (e) => a("list") }, {
+					K("div", wE, [q(s, { onClick: t[0] ||= (e) => a("list") }, {
 						default: B(() => [...t[2] ||= [J("목록 보기", -1)]]),
 						_: 1
 					}), q(s, { onClick: t[1] ||= (e) => a("detail") }, {
@@ -26135,7 +26467,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), TE = { class: "sol-stack" }, EE = { role: "status" }, DE = /* @__PURE__ */ H({
+}), EE = { class: "sol-stack" }, DE = { role: "status" }, OE = /* @__PURE__ */ H({
 	__name: "pagination",
 	setup(e) {
 		let t = /* @__PURE__ */ F(1), n = /* @__PURE__ */ F(20), r = /* @__PURE__ */ F(3), i = /* @__PURE__ */ F(!0), a = /* @__PURE__ */ F(!1), o = /* @__PURE__ */ F(null);
@@ -26154,7 +26486,7 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 				title: "부모가 수락하는 페이지 이동 · Pagination"
 			}, {
 				default: B(() => [
-					K("fieldset", TE, [
+					K("fieldset", EE, [
 						l[5] ||= K("legend", null, "예제 설정", -1),
 						q(u, {
 							id: "recipe-pagination-count",
@@ -26206,14 +26538,14 @@ var gw = Zx(Wx), _w = /* @__PURE__ */ H({
 						"sibling-count",
 						"compact-pagination"
 					]),
-					K("p", EE, "부모 페이지 " + N(L(t)) + " · 최근 제안 " + N(L(o) ?? "아직 없음"), 1)
+					K("p", DE, "부모 페이지 " + N(L(t)) + " · 최근 제안 " + N(L(o) ?? "아직 없음"), 1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), OE = {};
-function kE(e, t) {
+}), kE = {};
+function AE(e, t) {
 	let n = U("SIconBtn"), r = U("STooltip"), i = U("SCard");
 	return W(), G(i, {
 		"heading-level": 2,
@@ -26238,7 +26570,7 @@ function kE(e, t) {
 		_: 1
 	});
 }
-var AE = /*#__PURE__*/ sT(OE, [["render", kE]]), jE = { role: "status" }, ME = /* @__PURE__ */ H({
+var jE = /*#__PURE__*/ cT(kE, [["render", AE]]), ME = { role: "status" }, NE = /* @__PURE__ */ H({
 	__name: "popover",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(!1);
@@ -26277,15 +26609,15 @@ var AE = /*#__PURE__*/ sT(OE, [["render", kE]]), jE = { role: "status" }, ME = /
 						default: B(() => [r[4] ||= K("p", null, " 현재 화면의 항목은 최근 변경 순서로 표시합니다. 설명을 확인해도 자료는 변경되지 않습니다. ", -1)]),
 						_: 1
 					}, 8, ["modelValue"]),
-					K("p", jE, N(L(n) ? "안내를 확인했습니다." : "아직 안내를 확인하지 않았습니다."), 1),
+					K("p", ME, N(L(n) ? "안내를 확인했습니다." : "아직 안내를 확인하지 않았습니다."), 1),
 					r[6] ||= K("p", { class: "sol-hint" }, " Tooltip과 달리 클릭으로 열고 안의 버튼을 조작합니다. Escape·바깥 클릭으로 닫습니다. ", -1)
 				]),
 				_: 1
 			});
 		};
 	}
-}), NE = {}, PE = { class: "sol-actions" };
-function FE(e, t) {
+}), PE = {}, FE = { class: "sol-actions" };
+function IE(e, t) {
 	let n = U("SAvatar"), r = U("SCard");
 	return W(), G(r, {
 		"heading-level": 2,
@@ -26293,7 +26625,7 @@ function FE(e, t) {
 	}, {
 		default: B(() => [
 			t[1] ||= K("p", null, " 동그라미 안의 ‘민’은 이미지가 없을 때 사용하는 대체 글자입니다. Avatar 자체는 메뉴 버튼이 아닙니다. ", -1),
-			K("div", PE, [q(n, {
+			K("div", FE, [q(n, {
 				label: "가상 사용자 민하",
 				initials: "민",
 				size: 48
@@ -26304,52 +26636,52 @@ function FE(e, t) {
 	});
 }
 // src/recipe-registry.ts
-var IE = {
-	"color-examples": ww,
-	writing: Tw,
-	buttons: Ow,
-	fields: jw,
-	choices: Nw,
-	feedback: Pw,
-	dialog: Lw,
-	selection: Bw,
-	help: Hw,
-	accordion: Gw,
-	navigation: Jw,
-	"advanced-inputs": Qw,
-	"content-tabs": $w,
-	"action-menu": tT,
-	"identity-progress": cT,
-	progress: uT,
-	time: mT,
-	"chart-tree": _T,
-	form: bT,
-	search: CT,
-	compare: TT,
-	empty: DT,
-	data: OT,
-	inputs: NT,
-	responses: PT,
-	composition: RT,
-	layouts: HT,
-	workflow: GT,
-	"error-summary": JT,
-	"bulk-recovery": XT,
-	combobox: eE,
-	"confirm-action": rE,
-	chip: aE,
-	badge: sE,
-	icon: uE,
-	"icon-button": pE,
-	checkbox: hE,
-	"radio-group": _E,
-	switch: bE,
-	select: SE,
-	breadcrumbs: wE,
-	pagination: DE,
-	tooltip: AE,
-	popover: ME,
-	avatar: /* @__PURE__ */ sT(NE, [["render", FE]]),
+var LE = {
+	"color-examples": Tw,
+	writing: Ew,
+	buttons: kw,
+	fields: Mw,
+	choices: Pw,
+	feedback: Fw,
+	dialog: Rw,
+	selection: Vw,
+	help: Uw,
+	accordion: Kw,
+	navigation: Yw,
+	"advanced-inputs": $w,
+	"content-tabs": eT,
+	"action-menu": nT,
+	"identity-progress": lT,
+	progress: dT,
+	time: hT,
+	"chart-tree": vT,
+	form: xT,
+	search: wT,
+	compare: ET,
+	empty: OT,
+	data: kT,
+	inputs: PT,
+	responses: FT,
+	composition: zT,
+	layouts: UT,
+	workflow: KT,
+	"error-summary": YT,
+	"bulk-recovery": ZT,
+	combobox: tE,
+	"confirm-action": iE,
+	chip: oE,
+	badge: cE,
+	icon: dE,
+	"icon-button": mE,
+	checkbox: gE,
+	"radio-group": vE,
+	switch: xE,
+	select: CE,
+	breadcrumbs: TE,
+	pagination: OE,
+	tooltip: jE,
+	popover: NE,
+	avatar: /* @__PURE__ */ cT(PE, [["render", IE]]),
 	chart: /* @__PURE__ */ H({
 		__name: "chart",
 		setup(e) {
@@ -26447,29 +26779,126 @@ var IE = {
 				});
 			};
 		}
+	}),
+	"button-group": /* @__PURE__ */ H({
+		__name: "button-group",
+		setup(e) {
+			let t = "Hello solyi", n = /* @__PURE__ */ F(t), r = /* @__PURE__ */ F("start"), i = /* @__PURE__ */ F("horizontal"), a = ai("textControl");
+			function o() {
+				n.value = t, z(() => a.value?.focus());
+			}
+			return (e, s) => {
+				let c = U("STextarea"), l = U("SSelect"), u = U("SBtn"), d = U("SBtnGroup"), f = U("SSegmentedControl"), p = U("SCard");
+				return W(), G(p, {
+					"heading-level": 2,
+					title: "연결된 명령 버튼과 선택 토글"
+				}, {
+					default: B(() => [
+						q(c, {
+							id: "recipe-group-text",
+							ref_key: "textControl",
+							ref: a,
+							modelValue: L(n),
+							"onUpdate:modelValue": s[0] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
+							label: "메모리 안의 예제 문구"
+						}, null, 8, ["modelValue"]),
+						q(l, {
+							id: "recipe-group-orientation",
+							modelValue: L(i),
+							"onUpdate:modelValue": s[1] ||= (e) => /* @__PURE__ */ P(i) ? i.value = e : null,
+							label: "버튼 묶음 방향",
+							options: [{
+								value: "horizontal",
+								label: "가로 · 공간이 부족하면 묶음만 스크롤"
+							}, {
+								value: "vertical",
+								label: "세로"
+							}]
+						}, null, 8, ["modelValue"]),
+						s[8] ||= K("h3", null, "각각 실행하는 명령 · SBtnGroup", -1),
+						q(d, {
+							label: "문구 바꾸기",
+							orientation: L(i) === "vertical" ? "vertical" : "horizontal"
+						}, {
+							default: B(() => [
+								q(u, {
+									disabled: !L(n),
+									onClick: s[2] ||= (e) => n.value = L(n).toUpperCase()
+								}, {
+									default: B(() => [...s[5] ||= [J("대문자로", -1)]]),
+									_: 1
+								}, 8, ["disabled"]),
+								q(u, {
+									disabled: !L(n),
+									onClick: s[3] ||= (e) => n.value = L(n).toLowerCase()
+								}, {
+									default: B(() => [...s[6] ||= [J("소문자로", -1)]]),
+									_: 1
+								}, 8, ["disabled"]),
+								q(u, {
+									disabled: L(n) === t,
+									onClick: o
+								}, {
+									default: B(() => [...s[7] ||= [J("원문 복원", -1)]]),
+									_: 1
+								}, 8, ["disabled"])
+							]),
+							_: 1
+						}, 8, ["orientation"]),
+						s[9] ||= K("h3", null, "하나를 선택해 유지하는 토글 · SSegmentedControl", -1),
+						q(f, {
+							id: "recipe-group-align",
+							modelValue: L(r),
+							"onUpdate:modelValue": s[4] ||= (e) => /* @__PURE__ */ P(r) ? r.value = e : null,
+							label: "미리보기 정렬",
+							options: [
+								{
+									value: "start",
+									label: "시작"
+								},
+								{
+									value: "center",
+									label: "가운데"
+								},
+								{
+									value: "end",
+									label: "끝"
+								}
+							]
+						}, null, 8, ["modelValue"]),
+						K("p", {
+							style: de({ textAlign: L(r) === "center" ? "center" : L(r) === "end" ? "end" : "start" }),
+							role: "status"
+						}, N(L(n)), 5),
+						s[10] ||= K("p", { class: "sol-hint" }, " 명령 묶음의 각 버튼은 자연스러운 Tab 순서와 자체 disabled/loading 상태를 유지합니다. 단일 선택은 기존 SegmentedControl의 방향키·라디오 의미를 재사용합니다. ", -1)
+					]),
+					_: 1
+				});
+			};
+		}
 	})
-}, LE = ["aria-labelledby"], RE = { class: "starter-settings starter-demo-settings" }, zE = {
+}, RE = ["aria-labelledby"], zE = { class: "starter-settings starter-demo-settings" }, BE = {
 	class: "starter-result",
 	role: "status"
-}, BE = ["aria-labelledby"], VE = {
+}, VE = ["aria-labelledby"], HE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, HE = { class: "starter-hint" }, UE = ["aria-labelledby"], WE = {
+}, UE = { class: "starter-hint" }, WE = ["aria-labelledby"], GE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, GE = { class: "starter-control-grid" }, KE = ["aria-labelledby"], qE = {
+}, KE = { class: "starter-control-grid" }, qE = ["aria-labelledby"], JE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, JE = {
+}, YE = {
 	class: "starter-result",
 	role: "status"
-}, YE = ["aria-labelledby"], XE = {
+}, XE = ["aria-labelledby"], ZE = {
 	key: 0,
 	class: "starter-settings starter-demo-settings"
-}, ZE = {
+}, QE = {
 	class: "starter-hint",
 	role: "status"
-}, QE = ["aria-labelledby"], $E = { class: "starter-settings" }, eD = { role: "status" }, tD = { class: "starter-hint" }, nD = ["aria-labelledby"], rD = { class: "starter-settings" }, iD = ["aria-label"], aD = ["id"], oD = ["aria-labelledby"], sD = { class: "starter-settings" }, cD = { class: "starter-settings" }, lD = ["id"], uD = {
+}, $E = ["aria-labelledby"], eD = { class: "starter-settings" }, tD = { role: "status" }, nD = { class: "starter-hint" }, rD = ["aria-labelledby"], iD = { class: "starter-settings" }, aD = ["id"], oD = ["aria-labelledby"], sD = { class: "starter-settings" }, cD = { class: "starter-settings" }, lD = ["id"], uD = {
 	__name: "AdvancedExamples",
 	props: {
 		part: {
@@ -26588,12 +27017,11 @@ var IE = {
 				label: "세 번째 항목",
 				details: { count: 2 }
 			}
-		]), O = /* @__PURE__ */ F(!0), k = /* @__PURE__ */ F(!1), A = /* @__PURE__ */ F(""), j = /* @__PURE__ */ F("2026-10"), ee = /* @__PURE__ */ F("2026-10-07"), te = /* @__PURE__ */ F(!0), ne = /* @__PURE__ */ F(!0), re = /* @__PURE__ */ F(!1), ie = /* @__PURE__ */ F(!1), ae = /* @__PURE__ */ F(!1), oe = /* @__PURE__ */ F(!1), se = Object.freeze({ "2026-10-28": Object.freeze([
+		]), O = /* @__PURE__ */ F(!0), k = /* @__PURE__ */ F(!1), A = /* @__PURE__ */ F(""), j = /* @__PURE__ */ F("2026-10"), ee = /* @__PURE__ */ F("2026-10-07"), M = /* @__PURE__ */ F(!0), te = /* @__PURE__ */ F(!0), ne = /* @__PURE__ */ F(!1), re = /* @__PURE__ */ F(!1), ie = /* @__PURE__ */ F(!1), ae = /* @__PURE__ */ F(!1), oe = Object.freeze({ "2026-10-28": Object.freeze([
 			Object.freeze({
 				id: "a",
 				label: "첫 번째 범주",
-				category: Db("example-a").category,
-				icon: "copy"
+				category: Db("example-a").category
 			}),
 			Object.freeze({
 				id: "b",
@@ -26604,15 +27032,17 @@ var IE = {
 				id: "c",
 				label: "세 번째 상태는 추가 개수로 안내합니다"
 			})
-		]) }), ce = Object.freeze([{
+		]) }), se = /* @__PURE__ */ new Date(), ce = new Date(se);
+		ce.setDate(ce.getDate() + 1);
+		let le = (e) => e.getFullYear() + "-" + String(e.getMonth() + 1).padStart(2, "0") + "-" + String(e.getDate()).padStart(2, "0"), ue = Object.freeze([{
 			key: "one",
 			label: "열 A",
-			date: "2026-10-28"
+			date: le(se)
 		}, {
 			key: "two",
 			label: "열 B",
-			date: "2026-10-29"
-		}]), le = Object.freeze([
+			date: le(ce)
+		}]), de = Object.freeze([
 			Object.freeze({
 				id: "a",
 				column: "one",
@@ -26641,10 +27071,13 @@ var IE = {
 				end: 840,
 				title: "두 번째 열 항목"
 			})
-		]), ue = /* @__PURE__ */ F(le), de = /* @__PURE__ */ F(!1), M = /* @__PURE__ */ F(!1), fe = /* @__PURE__ */ F(!1), pe = /* @__PURE__ */ F(!1), me = /* @__PURE__ */ F(!0), he = /* @__PURE__ */ F(null), ge = /* @__PURE__ */ F(""), _e = 0;
-		function ve(e) {
-			if (he.value = null, ge.value = e.action + " · " + e.to.columnKey + " · " + e.to.startMinute + "–" + e.to.endMinute, !me.value) return;
-			let t = ue.value.find((t) => t.id === e.key);
+		]), fe = /* @__PURE__ */ F(de), pe = /* @__PURE__ */ F(!0), me = /* @__PURE__ */ F(!1), he = /* @__PURE__ */ F(!1), ge = /* @__PURE__ */ F(!1), _e = /* @__PURE__ */ F(!0), ve = /* @__PURE__ */ F(null), ye = /* @__PURE__ */ F(""), be = 0;
+		function xe(e) {
+			if (ve.value = null, ye.value = e.action + " · " + e.to.columnKey + " · " + e.to.startMinute + "–" + e.to.endMinute, !_e.value) {
+				ye.value += " · 부모가 반영하지 않아 원본 유지";
+				return;
+			}
+			let t = fe.value.find((t) => t.id === e.key);
 			if (!t) return;
 			let n = Object.freeze({
 				...t,
@@ -26652,35 +27085,52 @@ var IE = {
 				start: e.to.startMinute,
 				end: e.to.endMinute,
 				...e.action === "duplicate" ? {
-					id: "copy-" + ++_e,
+					id: "copy-" + ++be,
 					title: t.title + " · 복제"
 				} : {}
 			});
-			ue.value = Object.freeze(e.action === "duplicate" ? [...ue.value, n] : ue.value.map((t) => t.id === e.key ? n : t));
+			fe.value = Object.freeze(e.action === "duplicate" ? [...fe.value, n] : fe.value.map((t) => t.id === e.key ? n : t));
 		}
-		function ye() {
-			ue.value = Object.freeze([...le]), he.value = null, ge.value = "";
+		function Se(e) {
+			if (ve.value = null, ye.value = "추가 요청 · " + e.columnKey + " · " + e.startMinute + "–" + e.endMinute, !_e.value) {
+				ye.value += " · 원본 유지";
+				return;
+			}
+			let t = Object.freeze({
+				id: "new-" + ++be,
+				column: e.columnKey,
+				start: e.startMinute,
+				end: e.endMinute,
+				title: "새 가상 항목 " + be
+			});
+			fe.value = Object.freeze([...Ee.value ? [] : fe.value, t]), Ee.value = !1;
 		}
-		function be(e) {
-			he.value = null, ge.value = "취소 · " + e.reason;
+		function Ce(e) {
+			ve.value = null, ye.value = "삭제 요청 · " + e.key, _e.value ? fe.value = Object.freeze(fe.value.filter((t) => t.id !== e.key)) : ye.value += " · 원본 유지";
 		}
-		let xe = /* @__PURE__ */ F(!1), Se = /* @__PURE__ */ F(!1), Ce = Object.freeze([{
+		function we() {
+			fe.value = Object.freeze([...de]), ve.value = null, ye.value = "";
+		}
+		function Te(e) {
+			ve.value = null, ye.value = "취소 · " + e.reason;
+		}
+		let Ee = /* @__PURE__ */ F(!1), De = /* @__PURE__ */ F(!1), Oe = Object.freeze([{
 			id: "band-a",
 			label: "범용 구간",
 			startMinute: 720,
 			endMinute: 780,
 			category: "c2"
 		}]);
-		function we(e) {
+		function ke(e) {
 			O.value && (D.value = e);
 		}
-		function Te(e) {
+		function Ae(e) {
 			A.value = e.status === "cancel" ? "취소: " + e.reason : e.status === "unchanged" ? "순서 유지" : (O.value ? "새 순서 반영: " : "순서 제안만 확인: ") + e.key;
 		}
 		return V([s, c], () => {
 			(s.value || c.value) && (v.value = !1);
 		}), (e, t) => {
-			let i = U("SSwitch"), le = U("SSegmentedControl"), _e = U("SSelect"), Ee = U("SMultiSelect"), De = U("SRangeSlider"), Oe = U("SNumberInput"), ke = U("SSplitBtn"), Ae = U("SContextMenu"), je = U("STextarea"), Me = U("SResizableSplitPane"), Ne = U("SCheckbox"), Pe = U("SBtn"), Fe = U("SSortableList"), Ie = U("SMonthCalendar"), Le = U("STimeGrid");
+			let i = U("SSwitch"), se = U("SSegmentedControl"), ce = U("SSelect"), le = U("SMultiSelect"), de = U("SRangeSlider"), be = U("SNumberInput"), je = U("SSplitBtn"), Me = U("SContextMenu"), Ne = U("STextarea"), Pe = U("SResizableSplitPane"), Fe = U("SCheckbox"), Ie = U("SBtn"), Le = U("SSortableList"), Re = U("SMonthCalendar"), ze = U("STimeGrid");
 			return W(), hs(as, null, [
 				o("segmented") ? (W(), hs("section", {
 					key: 0,
@@ -26692,7 +27142,7 @@ var IE = {
 						_: 1
 					}, 8, ["id"])),
 					t[47] ||= K("p", { class: "starter-hint" }, " 선택·범위·메뉴·분할 부품을 설치한 solyi-ui에서 가져옵니다. 아래 설정은 이 예제들에만 적용됩니다. 모든 데이터와 작업은 가상입니다. ", -1),
-					K("div", RE, [q(i, {
+					K("div", zE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[0] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26703,7 +27153,7 @@ var IE = {
 						"onUpdate:modelValue": t[1] ||= (e) => /* @__PURE__ */ P(c) ? c.value = e : null,
 						label: "확장 예시 읽기 전용"
 					}, null, 8, ["id", "modelValue"])]),
-					q(le, {
+					q(se, {
 						id: n("advanced-segment"),
 						modelValue: L(l),
 						"onUpdate:modelValue": t[2] ||= (e) => /* @__PURE__ */ P(l) ? l.value = e : null,
@@ -26732,8 +27182,8 @@ var IE = {
 						"disabled",
 						"readonly"
 					]),
-					K("p", zE, N(L(l) === "brief" ? "가상 기록 4개" : "가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정"), 1)
-				], 8, LE)) : Ts("v-if", !0),
+					K("p", BE, N(L(l) === "brief" ? "가상 기록 4개" : "가상 기록 4개 · 메모와 변경 정보를 함께 표시하는 설정"), 1)
+				], 8, RE)) : Ts("v-if", !0),
 				o("multiselect") ? (W(), hs("section", {
 					key: 1,
 					class: "starter-card",
@@ -26743,7 +27193,7 @@ var IE = {
 						default: B(() => [...t[48] ||= [J("검색 가능한 MultiSelect", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", VE, [q(i, {
+					L(a) ? (W(), hs("div", HE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[3] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26754,7 +27204,7 @@ var IE = {
 						"onUpdate:modelValue": t[4] ||= (e) => /* @__PURE__ */ P(c) ? c.value = e : null,
 						label: "예제 읽기 전용"
 					}, null, 8, ["id", "modelValue"])])) : Ts("v-if", !0),
-					q(_e, {
+					q(ce, {
 						id: n("advanced-multi-scenario"),
 						modelValue: L(d),
 						"onUpdate:modelValue": t[5] ||= (e) => /* @__PURE__ */ P(d) ? d.value = e : null,
@@ -26776,7 +27226,7 @@ var IE = {
 						],
 						help: "외부 요청 없이 브라우저 안에서 지연·실패를 흉내 냅니다. '없는값'으로 결과 없음을 확인할 수 있어요."
 					}, null, 8, ["id", "modelValue"]),
-					q(Ee, {
+					q(le, {
 						id: n("advanced-multi"),
 						modelValue: L(u),
 						"onUpdate:modelValue": t[6] ||= (e) => /* @__PURE__ */ P(u) ? u.value = e : null,
@@ -26797,8 +27247,8 @@ var IE = {
 						"disabled",
 						"readonly"
 					]),
-					K("p", HE, " 완료 값: " + N(JSON.stringify(L(u))) + " · 가상 요청 " + N(L(f)) + "회. 검색을 바꾸어도 기존 선택은 유지됩니다. ", 1)
-				], 8, BE)) : Ts("v-if", !0),
+					K("p", UE, " 완료 값: " + N(JSON.stringify(L(u))) + " · 가상 요청 " + N(L(f)) + "회. 검색을 바꾸어도 기존 선택은 유지됩니다. ", 1)
+				], 8, VE)) : Ts("v-if", !0),
 				o("range") ? (W(), hs("section", {
 					key: 2,
 					class: "starter-card",
@@ -26808,7 +27258,7 @@ var IE = {
 						default: B(() => [...t[49] ||= [J("양끝 RangeSlider", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", WE, [q(i, {
+					L(a) ? (W(), hs("div", GE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[7] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26819,7 +27269,7 @@ var IE = {
 						"onUpdate:modelValue": t[8] ||= (e) => /* @__PURE__ */ P(c) ? c.value = e : null,
 						label: "예제 읽기 전용"
 					}, null, 8, ["id", "modelValue"])])) : Ts("v-if", !0),
-					q(De, {
+					q(de, {
 						id: n("advanced-range"),
 						modelValue: L(h),
 						"onUpdate:modelValue": t[9] ||= (e) => /* @__PURE__ */ P(h) ? h.value = e : null,
@@ -26840,7 +27290,7 @@ var IE = {
 						"disabled",
 						"readonly"
 					]),
-					K("div", GE, [q(Oe, {
+					K("div", KE, [q(be, {
 						id: n("advanced-lower"),
 						required: "",
 						modelValue: L(h)[0],
@@ -26857,7 +27307,7 @@ var IE = {
 						"max",
 						"disabled",
 						"readonly"
-					]), q(Oe, {
+					]), q(be, {
 						id: n("advanced-upper"),
 						required: "",
 						modelValue: L(h)[1],
@@ -26876,7 +27326,7 @@ var IE = {
 						"readonly"
 					])]),
 					t[50] ||= K("p", { class: "starter-hint" }, " 숫자 입력도 같은 값을 사용합니다. 터치 보조기술의 사용자별 동작은 실제 기기에서 별도 확인해야 합니다. ", -1)
-				], 8, UE)) : Ts("v-if", !0),
+				], 8, WE)) : Ts("v-if", !0),
 				o("split-button", "context-menu") ? (W(), hs("section", {
 					key: 3,
 					class: "starter-card",
@@ -26886,7 +27336,7 @@ var IE = {
 						default: B(() => [J(N(L(a) === "split-button" ? "SplitButton" : L(a) === "context-menu" ? "ContextMenu" : "SplitButton · ContextMenu"), 1)]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", qE, [q(i, {
+					L(a) ? (W(), hs("div", JE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[12] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26898,7 +27348,7 @@ var IE = {
 						label: "예제 읽기 전용"
 					}, null, 8, ["id", "modelValue"])])) : Ts("v-if", !0),
 					t[52] ||= K("p", { class: "starter-hint" }, " 주 동작과 다른 동작을 분리합니다. 실제 파일을 만들거나 자료를 변경하지 않습니다. ", -1),
-					o("split-button") ? (W(), G(ke, {
+					o("split-button") ? (W(), G(je, {
 						key: 1,
 						id: n("advanced-split-button"),
 						label: "가상 내보내기",
@@ -26914,7 +27364,7 @@ var IE = {
 						"disabled",
 						"readonly"
 					])) : Ts("v-if", !0),
-					o("context-menu") ? (W(), G(Ae, {
+					o("context-menu") ? (W(), G(Me, {
 						key: 2,
 						id: n("advanced-context"),
 						open: L(v),
@@ -26934,8 +27384,8 @@ var IE = {
 						"disabled",
 						"readonly"
 					])) : Ts("v-if", !0),
-					K("p", JE, N(L(g)), 1)
-				], 8, KE)) : Ts("v-if", !0),
+					K("p", YE, N(L(g)), 1)
+				], 8, qE)) : Ts("v-if", !0),
 				o("split-pane") ? (W(), hs("section", {
 					key: 4,
 					class: "starter-card",
@@ -26945,7 +27395,7 @@ var IE = {
 						default: B(() => [...t[53] ||= [J("ResizableSplitPane", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					L(a) ? (W(), hs("div", XE, [q(i, {
+					L(a) ? (W(), hs("div", ZE, [q(i, {
 						id: n("advanced-disabled"),
 						modelValue: L(s),
 						"onUpdate:modelValue": t[16] ||= (e) => /* @__PURE__ */ P(s) ? s.value = e : null,
@@ -26956,7 +27406,7 @@ var IE = {
 						"onUpdate:modelValue": t[17] ||= (e) => /* @__PURE__ */ P(c) ? c.value = e : null,
 						label: "예제 읽기 전용"
 					}, null, 8, ["id", "modelValue"])])) : Ts("v-if", !0),
-					q(_e, {
+					q(ce, {
 						id: n("advanced-pane-direction"),
 						modelValue: L(C),
 						"onUpdate:modelValue": t[18] ||= (e) => /* @__PURE__ */ P(C) ? C.value = e : null,
@@ -26970,7 +27420,7 @@ var IE = {
 							label: "위아래 두 영역"
 						}]
 					}, null, 8, ["id", "modelValue"]),
-					q(Me, {
+					q(Pe, {
 						id: n("advanced-pane"),
 						modelValue: L(S),
 						"onUpdate:modelValue": t[20] ||= (e) => /* @__PURE__ */ P(S) ? S.value = e : null,
@@ -26993,7 +27443,7 @@ var IE = {
 							K("br"),
 							J("저녁 책장")
 						], -1), K("p", { class: "starter-hint" }, " 중앙 구분선을 드래그하거나 초점을 두고 방향키로 조절합니다. ", -1)]]),
-						secondary: B(() => [q(je, {
+						secondary: B(() => [q(Ne, {
 							id: n("advanced-pane-memo"),
 							modelValue: L(w),
 							"onUpdate:modelValue": t[19] ||= (e) => /* @__PURE__ */ P(w) ? w.value = e : null,
@@ -27014,8 +27464,8 @@ var IE = {
 						"disabled",
 						"readonly"
 					]),
-					K("p", ZE, " 저장 비율 " + N(L(S)) + "% · " + N(L(T) ? "좁은 폭: 위아래 높이 조절" : "크기 조절 가능") + " · " + N(L(E)), 1)
-				], 8, YE)) : Ts("v-if", !0),
+					K("p", QE, " 저장 비율 " + N(L(S)) + "% · " + N(L(T) ? "좁은 폭: 위아래 높이 조절" : "크기 조절 가능") + " · " + N(L(E)), 1)
+				], 8, XE)) : Ts("v-if", !0),
 				o("sortable") ? (W(), hs("section", {
 					key: 5,
 					class: "starter-card",
@@ -27026,14 +27476,14 @@ var IE = {
 						_: 1
 					}, 8, ["id"])),
 					t[58] ||= K("p", { class: "starter-hint" }, " 손잡이를 드래그하거나 키보드와 위·아래 이동 버튼으로 순서를 제안합니다. 원본 객체는 유지합니다. ", -1),
-					K("div", $E, [
-						q(Ne, {
+					K("div", eD, [
+						q(Fe, {
 							id: n("advanced-sort-accept"),
 							modelValue: L(O),
 							"onUpdate:modelValue": t[23] ||= (e) => /* @__PURE__ */ P(O) ? O.value = e : null,
 							label: "새 순서 반영"
 						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-sort-lock"),
 							modelValue: L(k),
 							"onUpdate:modelValue": t[24] ||= (e) => /* @__PURE__ */ P(k) ? k.value = e : null,
@@ -27053,12 +27503,12 @@ var IE = {
 							"onUpdate:modelValue": t[26] ||= (e) => /* @__PURE__ */ P(c) ? c.value = e : null,
 							label: "정렬 보기 전용"
 						}, null, 8, ["id", "modelValue"])) : Ts("v-if", !0),
-						q(Pe, { onClick: t[27] ||= (e) => D.value = [...L(D)].reverse() }, {
+						q(Ie, { onClick: t[27] ||= (e) => D.value = [...L(D)].reverse() }, {
 							default: B(() => [...t[56] ||= [J("외부 목록 변경 시연", -1)]]),
 							_: 1
 						})
 					]),
-					q(Fe, {
+					q(Le, {
 						id: n("advanced-sortable"),
 						label: "가상 항목 순서",
 						"model-value": L(D),
@@ -27067,13 +27517,13 @@ var IE = {
 						"is-item-disabled": (e) => L(k) && e.id === "b",
 						disabled: L(s),
 						readonly: L(c),
-						"onUpdate:modelValue": we,
-						onEnd: Te
+						"onUpdate:modelValue": ke,
+						onEnd: Ae
 					}, {
 						item: B(({ item: e, index: n, active: r }) => [
 							K("strong", null, N(n + 1) + ". " + N(e.label), 1),
 							K("p", null, N(e.details.count.toFixed(0)) + "개 · " + N(r ? "이동 위치 선택 중" : "대기"), 1),
-							q(Pe, {
+							q(Ie, {
 								variant: "inline",
 								disabled: L(s),
 								onClick: (t) => A.value = e.label + " 본문 버튼 확인"
@@ -27092,9 +27542,9 @@ var IE = {
 						"disabled",
 						"readonly"
 					]),
-					K("p", eD, N(L(A)), 1),
-					K("p", tD, "확정 순서: " + N(L(D).map((e) => e.id).join(" → ")), 1)
-				], 8, QE)) : Ts("v-if", !0),
+					K("p", tD, N(L(A)), 1),
+					K("p", nD, "확정 순서: " + N(L(D).map((e) => e.id).join(" → ")), 1)
+				], 8, $E)) : Ts("v-if", !0),
 				o("month-calendar") ? (W(), hs("section", {
 					key: 6,
 					class: "starter-card",
@@ -27105,41 +27555,41 @@ var IE = {
 						_: 1
 					}, 8, ["id"])),
 					t[60] ||= K("p", { class: "starter-hint" }, " 월과 날짜는 부모가 반영할 때 바뀝니다. 오늘 이동과 키보드 탐색은 선택을 자동 저장하지 않습니다. 날짜별 자료가 늦게 와도 선택은 남습니다. ", -1),
-					K("div", rD, [
-						q(Ne, {
+					K("div", iD, [
+						q(Fe, {
 							id: n("advanced-month-accept"),
-							modelValue: L(te),
-							"onUpdate:modelValue": t[28] ||= (e) => /* @__PURE__ */ P(te) ? te.value = e : null,
+							modelValue: L(M),
+							"onUpdate:modelValue": t[28] ||= (e) => /* @__PURE__ */ P(M) ? M.value = e : null,
 							label: "표시 월 제안 반영"
 						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-month-accept-date"),
-							modelValue: L(ne),
-							"onUpdate:modelValue": t[29] ||= (e) => /* @__PURE__ */ P(ne) ? ne.value = e : null,
+							modelValue: L(te),
+							"onUpdate:modelValue": t[29] ||= (e) => /* @__PURE__ */ P(te) ? te.value = e : null,
 							label: "선택 날짜 제안 반영"
 						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-month-monday"),
-							modelValue: L(ae),
-							"onUpdate:modelValue": t[30] ||= (e) => /* @__PURE__ */ P(ae) ? ae.value = e : null,
+							modelValue: L(ie),
+							"onUpdate:modelValue": t[30] ||= (e) => /* @__PURE__ */ P(ie) ? ie.value = e : null,
 							label: "월요일 시작"
 						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-month-loading"),
-							modelValue: L(re),
-							"onUpdate:modelValue": t[31] ||= (e) => /* @__PURE__ */ P(re) ? re.value = e : null,
+							modelValue: L(ne),
+							"onUpdate:modelValue": t[31] ||= (e) => /* @__PURE__ */ P(ne) ? ne.value = e : null,
 							label: "자료 loading"
 						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-month-empty"),
-							modelValue: L(ie),
-							"onUpdate:modelValue": t[32] ||= (e) => /* @__PURE__ */ P(ie) ? ie.value = e : null,
+							modelValue: L(re),
+							"onUpdate:modelValue": t[32] ||= (e) => /* @__PURE__ */ P(re) ? re.value = e : null,
 							label: "날짜별 자료 없음"
 						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-month-blocked"),
-							modelValue: L(oe),
-							"onUpdate:modelValue": t[33] ||= (e) => /* @__PURE__ */ P(oe) ? oe.value = e : null,
+							modelValue: L(ae),
+							"onUpdate:modelValue": t[33] ||= (e) => /* @__PURE__ */ P(ae) ? ae.value = e : null,
 							label: "10일 선택 막기"
 						}, null, 8, ["id", "modelValue"]),
 						L(a) ? (W(), G(i, {
@@ -27157,31 +27607,25 @@ var IE = {
 							label: "달력 보기 전용"
 						}, null, 8, ["id", "modelValue"])) : Ts("v-if", !0)
 					]),
-					q(Ie, {
+					q(Re, {
 						id: n("advanced-month"),
 						label: "범용 날짜 상태",
 						month: L(j),
 						"model-value": L(ee),
 						today: "2026-10-28",
-						"first-day": +!!L(ae),
-						markers: L(ie) ? {} : L(se),
-						"is-date-disabled": (e) => L(oe) && e.endsWith("-10"),
-						loading: L(re),
+						"first-day": +!!L(ie),
+						markers: L(re) ? {} : L(oe),
+						"is-date-disabled": (e) => L(ae) && e.endsWith("-10"),
+						loading: L(ne),
 						disabled: L(s),
 						readonly: L(c),
 						"onUpdate:month": t[36] ||= (e) => {
-							L(te) && (j.value = e);
+							L(M) && (j.value = e);
 						},
 						"onUpdate:modelValue": t[37] ||= (e) => {
-							L(ne) && (ee.value = e);
+							L(te) && (ee.value = e);
 						}
-					}, {
-						cell: B(({ date: e, disabled: t }) => [e.endsWith("-28") ? (W(), hs("small", {
-							key: 0,
-							"aria-label": t ? "선택 불가 추가 정보" : "추가 정보"
-						}, "ⓘ", 8, iD)) : Ts("v-if", !0)]),
-						_: 1
-					}, 8, [
+					}, null, 8, [
 						"id",
 						"month",
 						"model-value",
@@ -27192,77 +27636,78 @@ var IE = {
 						"disabled",
 						"readonly"
 					]),
+					t[61] ||= K("p", { class: "starter-hint" }, " 항목이나 +N이 있는 날짜를 누르면 아래 상세 목록에서 전체 내용을 읽습니다. 키보드는 날짜를 선택한 뒤 Tab으로 목록을 읽고 Escape로 달력에 돌아옵니다. ", -1),
 					K("p", {
 						id: n("advanced-month-result"),
 						class: "starter-hint"
 					}, " 표시 월: " + N(L(j)) + " · 선택 ISO: " + N(L(ee)), 9, aD)
-				], 8, nD)) : Ts("v-if", !0),
+				], 8, rD)) : Ts("v-if", !0),
 				o("time-grid") ? (W(), hs("section", {
 					key: 7,
 					class: "starter-card",
 					"aria-labelledby": n("advanced-time-grid-title")
 				}, [
 					(W(), G(sa(L(r)), { id: n("advanced-time-grid-title") }, {
-						default: B(() => [...t[61] ||= [J("시간 그리드 · 변경 제안", -1)]]),
+						default: B(() => [...t[62] ||= [J("시간 그리드 · 변경 제안", -1)]]),
 						_: 1
 					}, 8, ["id"])),
-					t[63] ||= K("p", { class: "starter-hint" }, " 기본은 읽기 전용이며 편집을 켜면 이동·크기 변경·복제를 제안합니다. 아래 반영 체크를 끄면 원본은 유지됩니다. 시간대·충돌·새 key·저장은 소비 앱에서 소유합니다. ", -1),
-					K("div", sD, [q(Ne, {
+					t[64] ||= K("p", { class: "starter-hint" }, " 카드 본문을 드래그해 이동하고 위·아래 가장자리로 시간을 조절합니다. 빈 칸을 누르거나 오른쪽 위 추가 버튼으로 항목을 만들 수 있습니다. 반영 체크를 끄면 생성·삭제·이동 요청을 보여주되 원본은 유지합니다. 새 key·충돌·저장은 소비 앱에서 소유합니다. ", -1),
+					K("div", sD, [q(Fe, {
 						id: n("advanced-time-grid-empty"),
-						modelValue: L(xe),
-						"onUpdate:modelValue": t[38] ||= (e) => /* @__PURE__ */ P(xe) ? xe.value = e : null,
+						modelValue: L(Ee),
+						"onUpdate:modelValue": t[38] ||= (e) => /* @__PURE__ */ P(Ee) ? Ee.value = e : null,
 						label: "빈 항목"
-					}, null, 8, ["id", "modelValue"]), q(Ne, {
+					}, null, 8, ["id", "modelValue"]), q(Fe, {
 						id: n("advanced-time-grid-loading"),
-						modelValue: L(Se),
-						"onUpdate:modelValue": t[39] ||= (e) => /* @__PURE__ */ P(Se) ? Se.value = e : null,
+						modelValue: L(De),
+						"onUpdate:modelValue": t[39] ||= (e) => /* @__PURE__ */ P(De) ? De.value = e : null,
 						label: "불러오는 중"
 					}, null, 8, ["id", "modelValue"])]),
 					K("div", cD, [
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-time-grid-edit"),
-							modelValue: L(de),
-							"onUpdate:modelValue": t[40] ||= (e) => /* @__PURE__ */ P(de) ? de.value = e : null,
-							label: "변경 제안 허용"
-						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
-							id: n("advanced-time-grid-disabled"),
-							modelValue: L(M),
-							"onUpdate:modelValue": t[41] ||= (e) => /* @__PURE__ */ P(M) ? M.value = e : null,
-							label: "전체 조작 비활성"
-						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
-							id: n("advanced-time-grid-lock"),
-							modelValue: L(fe),
-							"onUpdate:modelValue": t[42] ||= (e) => /* @__PURE__ */ P(fe) ? fe.value = e : null,
-							label: "첫 항목 조작 비활성"
-						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
-							id: n("advanced-time-grid-pending"),
 							modelValue: L(pe),
-							"onUpdate:modelValue": t[43] ||= (e) => /* @__PURE__ */ P(pe) ? pe.value = e : null,
+							"onUpdate:modelValue": t[40] ||= (e) => /* @__PURE__ */ P(pe) ? pe.value = e : null,
+							label: "편집 켜기 · 끄면 보기 전용"
+						}, null, 8, ["id", "modelValue"]),
+						q(Fe, {
+							id: n("advanced-time-grid-disabled"),
+							modelValue: L(me),
+							"onUpdate:modelValue": t[41] ||= (e) => /* @__PURE__ */ P(me) ? me.value = e : null,
+							label: "편집 잠금 · 추가·드래그·삭제 방지"
+						}, null, 8, ["id", "modelValue"]),
+						q(Fe, {
+							id: n("advanced-time-grid-lock"),
+							modelValue: L(he),
+							"onUpdate:modelValue": t[42] ||= (e) => /* @__PURE__ */ P(he) ? he.value = e : null,
+							label: "첫 항목만 잠금 · 항목별 권한 예제"
+						}, null, 8, ["id", "modelValue"]),
+						q(Fe, {
+							id: n("advanced-time-grid-pending"),
+							modelValue: L(ge),
+							"onUpdate:modelValue": t[43] ||= (e) => /* @__PURE__ */ P(ge) ? ge.value = e : null,
 							label: "첫 항목 반영 대기"
 						}, null, 8, ["id", "modelValue"]),
-						q(Ne, {
+						q(Fe, {
 							id: n("advanced-time-grid-accept"),
-							modelValue: L(me),
-							"onUpdate:modelValue": t[44] ||= (e) => /* @__PURE__ */ P(me) ? me.value = e : null,
-							label: "부모에서 제안 반영"
+							modelValue: L(_e),
+							"onUpdate:modelValue": t[44] ||= (e) => /* @__PURE__ */ P(_e) ? _e.value = e : null,
+							label: "요청을 실제 항목에 반영 · 끄면 원본 유지"
 						}, null, 8, ["id", "modelValue"]),
-						q(Pe, {
+						q(Ie, {
 							id: n("advanced-time-grid-reset"),
-							onClick: ye
+							onClick: we
 						}, {
-							default: B(() => [...t[62] ||= [J("원본으로 외부 갱신", -1)]]),
+							default: B(() => [...t[63] ||= [J("원본으로 외부 갱신", -1)]]),
 							_: 1
 						}, 8, ["id"])
 					]),
-					q(Le, {
+					q(ze, {
 						id: n("advanced-time-grid"),
 						label: "범용 시간 항목",
-						items: L(xe) ? [] : L(ue),
-						columns: L(ce),
-						bands: L(Ce),
+						items: L(Ee) ? [] : L(fe),
+						columns: L(ue),
+						bands: L(Oe),
 						"item-key": (e) => e.id,
 						"item-label": (e) => e.title,
 						"item-column": (e) => e.column,
@@ -27270,18 +27715,23 @@ var IE = {
 						"item-end": (e) => e.end,
 						"start-minute": 480,
 						"end-minute": 1080,
-						loading: L(Se),
-						readonly: !L(de),
-						disabled: L(M),
+						loading: L(De),
+						readonly: !L(pe),
+						disabled: L(me),
 						"allow-resize": "",
 						"allow-duplicate": "",
+						"allow-create": "",
+						"allow-remove": "",
+						"show-current-time": "",
+						onCreate: Se,
+						onRemove: Ce,
 						"snap-minutes": 15,
-						"pending-keys": L(pe) ? ["a"] : [],
-						"is-item-disabled": (e) => L(fe) && e.id === "a",
-						onPreview: t[45] ||= (e) => he.value = e,
-						onCommit: ve,
-						onCancel: be,
-						help: "각 항목에 Tab으로 초점을 둘 수 있습니다. 좁은 화면에서는 가로로 스크롤하고 목록으로 전체 이름을 확인하세요."
+						"pending-keys": L(ge) ? ["a"] : [],
+						"is-item-disabled": (e) => L(he) && e.id === "a",
+						onPreview: t[45] ||= (e) => ve.value = e,
+						onCommit: xe,
+						onCancel: Te,
+						help: "카드 드래그: 이동 · 위/아래 가장자리: 시간 조절 · 항목 Space: 키보드 편집 시작 · Enter: 변경 확정 · Escape: 취소 · Delete: 삭제 요청. 아래 목록에서도 이동·조절·복제·삭제할 수 있습니다. 빨간 현재 시각선은 표시 중인 날짜와 08~18시 범위에서 분마다 갱신됩니다."
 					}, null, 8, [
 						"id",
 						"items",
@@ -27302,7 +27752,7 @@ var IE = {
 						id: n("advanced-time-grid-result"),
 						class: "starter-hint",
 						role: "status"
-					}, N(L(he) ? "미리보기 · " + L(he).to.columnKey + " · " + L(he).to.startMinute + "–" + L(he).to.endMinute : L(ge)), 9, lD)
+					}, N(L(ve) ? "미리보기 · " + L(ve).to.columnKey + " · " + L(ve).to.startMinute + "–" + L(ve).to.endMinute : L(ye)), 9, lD)
 				], 8, oD)) : Ts("v-if", !0)
 			], 64);
 		};
@@ -27323,7 +27773,7 @@ var IE = {
 function fD(e) {
 	let t = document.createElement("div");
 	t.dataset.inlinePreviewRuntime = "", document.body.append(t);
-	let n = /* @__PURE__ */ I([]), r = /* @__PURE__ */ F("ko-KR"), i = /* @__PURE__ */ new Map(), a = pw({ components: {
+	let n = /* @__PURE__ */ I([]), r = /* @__PURE__ */ F("ko-KR"), i = /* @__PURE__ */ new Map(), a = mw({ components: {
 		VApp: _h,
 		VThemeProvider: bh
 	} }), o = xu({ render: () => X(_h, { class: "sol-inline-runtime" }, () => n.value.map((e) => X(zr, {
@@ -27334,16 +27784,16 @@ function fD(e) {
 		"data-package-version": uw
 	}, [X(e.component)]))))) });
 	Mx(o, Y(() => ({ code: r.value }))), o.use(a);
-	for (let [e, t] of Object.entries(vw)) o.component(e, e === "SCard" ? dD : t);
+	for (let [e, t] of Object.entries(yw)) o.component(e, e === "SCard" ? dD : t);
 	o.mount(t);
 	let s = !1;
 	function c(e) {
-		s || mw(a.theme, e, t);
+		s || hw(a.theme, e, t);
 	}
 	return c(e), {
 		async mount(e) {
 			if (s || n.value.some((t) => t.host === e.host)) return;
-			let t = e.view === "advanced" ? uD : IE[e.recipe];
+			let t = e.view === "advanced" ? uD : LE[e.recipe];
 			if (!t) throw Error("Unknown preview recipe: " + e.recipe);
 			let r = {
 				...e,

@@ -131,7 +131,7 @@
       }
     },
     "1.1.1": {
-      "baseline": "f5b9f21 plus agenda focus recovery; 51 APIs, existing 1.1.0 ceilings preserved. Built-source diagnostic: 75471 gzip; named SBtnGroup 6779 gzip. Installed candidate gate remains required.",
+      "baseline": "0674273: all 30 improvements, 51 APIs; exact installed final tarball metrics in IMPROVEMENTS-30-SIZE-RESULT.json. All 1.1.0 caps retained; SBtnGroup named gzip 6779 bytes with 8192-byte cap.",
       "components": [
         "STimeGrid",
         "SPagination",

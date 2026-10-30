@@ -1,9 +1,5 @@
 # 설치와 버전 관리
 
-> 현재 개발 문서는 미게시 1.1.1 후보를 검증합니다. npm 안정 버전은 1.1.0입니다. 후보의 새 API를 npm1.1.0에 포함된 기능으로 간주하지 않습니다.
-
-후보 산출물은 루트 package.json의 solyiArtifacts 경로(artifacts/candidates/1.1.1)에 보존합니다. 포장·내부 예제 설치·계약·배포 파일 검사가 같은 경로를 사용합니다. 기존 artifacts의 첫 후보와 release-assets의 게시 원본은 덮어쓰지 않으며, 이미 존재하는 tarball의 바이트가 달라지면 포장 검사가 계속 거부합니다. 이 경로 선택은 검사 생략이나 npm 게시를 실행하지 않습니다.
-
 ## 현재 설치 경로
 
 [Getting started의 설치](https://ui.solyi.kr/#start/install)는 solyi-ui 1.1.0의 npm·pnpm 명령과 직접 설치 파일을 제공합니다. 정확한 파일·URL·해시는 현재 패키지 정보를 기준으로 합니다.

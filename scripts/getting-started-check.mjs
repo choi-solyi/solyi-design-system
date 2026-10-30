@@ -38,7 +38,8 @@ assert.ok(copied.some(item => item.label.includes('직접 설치') && /npm insta
 assert.doesNotMatch(currentInstallCommand(), /@solyi\/core/);
 assert.doesNotMatch(currentTarballInstallCommand(), /solyi-core-/);
 assert.equal(document.querySelectorAll('a[download]').length, 1, 'Only the consumer UI tarball is needed');
-assert.doesNotMatch(document.body.textContent, /미게시|게시 예정|게시예정|초안|준비 중|준비중|보존 정책|승인 대기/);
+const publishedGuide=document.body.cloneNode(true);for(const notice of publishedGuide.querySelectorAll('[data-candidate-notice]')){assert.notEqual(catalogue.published,current.release);assert.ok(notice.textContent.includes(current.release)&&notice.textContent.includes(catalogue.published));notice.remove();}
+assert.doesNotMatch(publishedGuide.textContent, /미게시|게시 예정|게시예정|초안|준비 중|준비중|보존 정책|승인 대기/);
 assert.equal(currentTarballInstallCommand({current: 'missing', releases: []}), '');
 const changed = structuredClone(catalogue);
 changed.current = '9.9.9';

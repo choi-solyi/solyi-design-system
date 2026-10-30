@@ -1,0 +1,27 @@
+{
+  "release": "1.1.1",
+  "sourceRef": "0674273420690b93149b26b1a6a0c06c6d0566bd",
+  "compatibility": {
+    "node": "^22.18.0 || >=24.12.0",
+    "vue": "3.5.44",
+    "vuetify": "4.3.0"
+  },
+  "packages": [
+    {
+      "name": "@solyi/core",
+      "version": "1.1.1",
+      "file": "solyi-core-1.1.1.tgz",
+      "bytes": 5876781,
+      "sha256": "69b21d9052a082be8a063ce5c2ad35ba9755f272dd1d3ec2ca3e1d6b20855525",
+      "integrity": "sha512-eckYBskqDJ2jE2rn13sOc4Roxi6G9Y2yFNjpajTi/8rQuCk3ADoqcDLglu5n9d+Yr96yJ85b4ykFuDmo1Di5+A=="
+    },
+    {
+      "name": "solyi-ui",
+      "version": "1.1.1",
+      "file": "solyi-ui-1.1.1.tgz",
+      "bytes": 5987420,
+      "sha256": "10381632323b8e23d4c8c0ca079b62b1997343c0f6cee0e975f74ed8c2440ff7",
+      "integrity": "sha512-wn7lf+DgyTeJs3IdoMEMP7xhECX4OMDRMoKAvXGI9+mfDLNyUGivYnKVJmPM/NDUDC+plx7v8hY8wGkFVaPzlQ=="
+    }
+  ]
+}

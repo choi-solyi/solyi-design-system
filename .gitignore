@@ -24,3 +24,6 @@ examples/package-consumer/.runtime-test/picker-host/
 
 # Generated from the canonical root consumer guide.
 packages/*/DESIGN.md
+
+# Generated installed-candidate browser fixture (no application source).
+examples/package-consumer/.menu-stepper/

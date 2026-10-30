@@ -30,7 +30,9 @@ for (const field of ['dependencies', 'optionalDependencies', 'peerDependencies']
 const publicIndex = JSON.parse(await read('docs/releases/index.json'))
 assert.deepEqual(publicIndex, { current: documentVersion, releases: [documentVersion] })
 const { packageReleases } = await import(new URL('../docs/release-data.js', import.meta.url))
-assert.deepEqual(packageReleases, { current: documentVersion, releases: [current] })
+const {releaseHistory}=await import(new URL('../site/changelog-data.js',import.meta.url))
+assert.deepEqual(packageReleases, {published:releaseHistory[0].version,current:documentVersion,releases:[current]})
+assert.equal(packageReleases.published,'1.1.0','Unpublished candidate does not replace the current npm release record')
 // Verify the retained source catalogue without requiring an obsolete previous version.
 for (const release of sourceCatalogue.releases) {
   await verifyRelease(new URL(`docs/releases/${release.release}/`, root))
