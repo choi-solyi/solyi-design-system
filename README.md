@@ -67,10 +67,10 @@ createApp(App)
 현재 npm 버전은 [solyi-ui 1.1.0](https://www.npmjs.com/package/solyi-ui/v/1.1.0)입니다. 50개 공개 S 컴포넌트와 기존 API를 유지하며 입력·선택·정렬·달력·시간 그리드 등을 확장했습니다.
 
 - [버전별 변경 이력](CHANGELOG.md) · [문서 릴리즈 페이지](https://ui.solyi.kr/#releases/changelog)
-- [GitHub Releases](https://github.com/choi-solyi/solyi-design-system/releases) · [1.0.0 이전 원본 기록](documentation/releases/README.md)
+- [GitHub Releases](https://github.com/choi-solyi/solyi-design-system/releases)
 - [npm 게시·설치 검증](documentation/development/NPM-1.1.0-PUBLICATION.md)
 
-1.0.0의 파일·날짜·설명과 이전 문서 기록은 보존합니다. npm 패키지 내부 README를 포함한 게시 파일은 바꾸지 않으며 최신 사용 안내는 이 저장소와 문서를 기준으로 합니다. 소비 앱의 의존성 갱신과 배포는 별도입니다.
+1.0.0의 파일·날짜·설명은 보존합니다. npm 패키지 내부 README를 포함한 게시 파일은 바꾸지 않으며 최신 사용 안내는 이 저장소와 문서를 기준으로 합니다. 소비 앱의 의존성 갱신과 배포는 별도입니다.
 
 ## 개발
 

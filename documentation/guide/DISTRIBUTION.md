@@ -34,7 +34,7 @@ Get-FileHash 파일명.tgz -Algorithm SHA256
 npm ci --ignore-scripts
 ```
 
-기존 `releases/1.0.0/` 다운로드와 원본 해시는 보존합니다. [버전별 변경 이력](../../CHANGELOG.md), [GitHub Releases](https://github.com/choi-solyi/solyi-design-system/releases)와 [이전 문서 기록](../releases/README.md)은 최신 설치 파일 목록과 별개인 누적 이력입니다.
+기존 `releases/1.0.0/` 다운로드와 원본 해시는 보존합니다. [버전별 변경 이력](../../CHANGELOG.md)과 [GitHub Releases](https://github.com/choi-solyi/solyi-design-system/releases)는 게시된 1.0.0·1.1.0의 누적 이력을 제공합니다.
 
 ## 업데이트
 
