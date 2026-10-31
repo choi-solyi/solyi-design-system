@@ -169,3 +169,10 @@
 main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안 Backspace를 직접 확인했다. ',' 한 글자를 Backspace로 지워도 남는 현상을 실제 설치본에서 재현했다. 쉼표 인접 자릿수 삭제 보정이 유효한 숫자 전용인데 malformed 초안에도 적용되어 기본 삭제를 막았다. parseSolNumber로 현재 초안이 유효한 숫자인 경우에만 보정하도록 좁혔다. ',', ',,', '1,2'의 Backspace/Delete와 기존 그룹화·선택·붙여넣기·모델/오류 회귀를 유지한다.
 
 해당 후보가 공개되지 않게 CI41210744676을 취소했고 Pages 업로드/배포가 실행되지 않은 것을 확인했다. 새 후보 artifacts/candidates/1.1.1-mobile-ui-rc3에 재포장하며 rc2 원본은 보존한다. 승인된67KiB 외 다른 예산 변경, npm 게시, 소비 앱 변경 없음. 최종 코드가 바뀌었으므로 전체 필수 pipeline과 최종 숫자 조작을 다시 확인한다.
+
+## rc3 최종 후보 · 삭제 회귀 포함
+
+- sourceRef c50014b9352b271522f9010e6ff6ba694f8260a9; artifacts/candidates/1.1.1-mobile-ui-rc3. UI 5990059B, SHA-256 cc7732deff0d653d1951c3c8681df87221737ae3f90c8c3919c207eef6d0a5ab. artifact/release-assets/docs 및 두 canonical 소비자 lock integrity 일치. 기존1.0.0/1.1.0 원본 검증 통과.
+- final-pipeline-rc3.log: 전체 library:prepare 10/10 종료 코드0. max gzip는 all_plugin 68387/68,608B; 나머지 예산도 기존 기준 통과.
+- rc3 최종 설치본 숫자 전체 회귀 및 실제 생성 docs의 Number/Time 3테마 경로 통과. malformed 쉼표 Backspace/Delete, 모델·caret·중간 붙여넣기·증감/직접 입력 포커스 포함. 수정 영향이 없는 Time/Calendar/Sortable 등의 실제 조작 근거는 앞선 동일 소스 검증을 재사용하고 최종 공개판에서 다시 끝간 조작한다.
+- CI41210744676은 새로운 삭제 결함 발견으로 취소됐고 업로드/Pages 미실행. 새 main 커밋의 CI와 실제 공개 URL 확인은 후속 결과로 남긴다. npm1.1.1/소비 앱 변경 보류, 물리 Android IME·스크린리더 미검증 유지.

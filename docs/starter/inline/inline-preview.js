@@ -18106,7 +18106,7 @@ var CC = (e, t) => {
 			...D,
 			clear: O.clear
 		}), () => {
-			let i = rC(e) || c.value, o = d(), s = o !== null && !p() && (e.formatValue || e.unit) ? [x(o), e.unit].filter(Boolean).join(" ") : void 0;
+			let i = rC(e) || c.value, o = d(), f = o !== null && !p() && (e.formatValue || e.unit) ? [x(o), e.unit].filter(Boolean).join(" ") : void 0;
 			return X("div", { class: "sol-field sol-ui-native-field" }, [
 				SC(e, n, a.value.required),
 				e.formatValue && t.name != null ? X("input", {
@@ -18133,7 +18133,7 @@ var CC = (e, t) => {
 						"aria-valuemin": e.min,
 						"aria-valuemax": e.max,
 						"aria-valuenow": o !== null && Number.isFinite(o) && !p() ? o : void 0,
-						"aria-valuetext": s,
+						"aria-valuetext": f,
 						"aria-invalid": i ? "true" : void 0,
 						"aria-describedby": bC(e, n, i, [e.id + "-constraints", t["aria-describedby"]].filter(Boolean).join(" ")),
 						onInput: E,
@@ -18143,7 +18143,7 @@ var CC = (e, t) => {
 						},
 						onBeforeinput: (t) => {
 							let n = t.target, r = n.selectionStart ?? 0;
-							if (!e.useGrouping || $(e) || Q(e) || n.selectionEnd !== r) return;
+							if (!e.useGrouping || $(e) || Q(e) || n.selectionEnd !== r || Ix(s.value, a.value) === null) return;
 							let i = t.inputType === "deleteContentBackward";
 							if (i && n.value[r - 1] === "," || t.inputType === "deleteContentForward" && n.value[r] === ",") {
 								t.preventDefault();
