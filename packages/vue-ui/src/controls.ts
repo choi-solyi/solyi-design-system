@@ -288,10 +288,14 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
     const preserveEdit = (event: PointerEvent) => {
       preserveInputFocus(event, input.value)
     }
+    let pasted: string | undefined
     function edit(event: Event) {
       if (fieldReadonly(p) || fieldDisabled(p)) return
       const target = event.target as HTMLInputElement
-      draft.value = p.useGrouping && !(event as InputEvent).isComposing ? groupNumberInput(target) : target.value
+      const type = (event as InputEvent).inputType, data = (event as InputEvent).data ?? (type === 'insertFromPaste' ? pasted : undefined)
+      const regroup = /^(insertText|deleteContentBackward|deleteContentForward|deleteByCut|insertFromPaste)$/.test(type) && (type !== 'insertFromPaste' || data !== undefined) && !data?.includes(',') && parseSolNumber(draft.value, l.value) !== null
+      pasted = undefined
+      draft.value = p.useGrouping && !(event as InputEvent).isComposing ? groupNumberInput(target, regroup) : target.value
       if (localError.value) localError.value = message()
     }
     const validation = useSFieldValidation(p, numeric, {
@@ -350,6 +354,7 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
             'aria-describedby': fieldDescription(p, slots, error, [p.id + '-constraints', attrs['aria-describedby']].filter(Boolean).join(' ')),
             onInput: edit,
             onCompositionend: edit,
+            onPaste: (event: ClipboardEvent) => { pasted = event.clipboardData?.getData('text/plain') },
             onBeforeinput: (event: InputEvent) => {
               const target = event.target as HTMLInputElement, start = target.selectionStart ?? 0
               if (!p.useGrouping || fieldReadonly(p) || fieldDisabled(p) || target.selectionEnd !== start) return

@@ -1,11 +1,11 @@
 /** Group the integer part without converting an unfinished decimal to a number. */
-export function groupNumberDraft(value: string): string {
-  if (!/^[+-]?\d[\d,]*(?:\.\d*)?$/.test(value) || value.includes(',,')) return value
+export function groupNumberDraft(value: string, regroup = false): string {
+  if (!/^[+-]?[\d,]+(?:\.\d*)?$/.test(value) || (!regroup && !/^[+-]?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d*)?$/.test(value))) return value
   return value.replace(/^[^.]+/, integer => integer.replaceAll(',', '').replace(/\B(?=(\d{3})+(?!\d))/g, ','))
 }
 
-export function groupNumberInput(input: HTMLInputElement): string {
-  const value = groupNumberDraft(input.value)
+export function groupNumberInput(input: HTMLInputElement, regroup = false): string {
+  const value = groupNumberDraft(input.value, regroup)
   if (value === input.value) return value
   const start = input.selectionStart ?? input.value.length, end = input.selectionEnd ?? start
   const positions = [start, end].map(position => input.value.slice(0, position).replaceAll(',', '').length)
