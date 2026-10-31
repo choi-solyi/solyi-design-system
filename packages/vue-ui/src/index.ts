@@ -10,7 +10,7 @@ export {SLoadingOverlay};
 export type {SolLoadingOverlaySlots} from './loading-overlay';
 import {SCard,SAlert,SEmptyState} from './surfaces';
 import {useVisualViewport} from './viewport';
-import {SChip,SBadge,SIcon,createSIconBtn} from './primitives';
+import {SChip,SBadge,SIcon,createSIconBtn,renderSolIcon} from './primitives';
 export {SChip,SBadge,SIcon};
 export type {SolTone,SolTagVariant,SolTagSize} from './primitives';
 export type {SolIconName} from '@solyi/core/icons';
@@ -77,7 +77,7 @@ export type {SolLocale,SolLocaleSource,SolLocaleCode} from './locale';
 export {uiVersion} from './version';
 function uiIcon(name:'chevron'|'close',direction?:'previous'|'next'):VNode {
   const size=name==='close'?16:20;
-  return h('svg',{class:['sol-icon','sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined],viewBox:'0 0 24 24',width:size,height:size,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));
+  return renderSolIcon(solIconPaths[name],size,0,{class:['sol-ui-icon',size===16?'sol-ui-icon--small':undefined,direction?'sol-ui-icon--'+direction:undefined]});
 }
 import {SBtnGroup} from './button-group';
 export {SBtnGroup};

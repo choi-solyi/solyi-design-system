@@ -363,3 +363,5 @@
 .sol-tree-row {flex-wrap:nowrap;}
 .sol-tree-disclosure {order:2;margin-inline-start:auto;}
 .sol-tree [aria-selected="true"]>.sol-tree-row::after {content:none;}
+
+.sol-actions--commit {display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:var(--sol-space-2);}

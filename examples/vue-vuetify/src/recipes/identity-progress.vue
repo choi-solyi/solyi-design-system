@@ -113,7 +113,7 @@ async function reset() {
       </p>
       <div class="recipe-step-actions">
         <SBtn @click="reset">처음부터</SBtn>
-        <div class="sol-actions">
+        <div class="sol-actions sol-actions--commit">
           <SBtn :disabled="stage === 0 || done" @click="move(-1)">이전 단계</SBtn>
           <SBtn variant="primary" :disabled="done" @click="move(1)">{{
             stage === 2 ? '가상 완료' : '다음 단계'

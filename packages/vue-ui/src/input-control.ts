@@ -1,9 +1,10 @@
+import {solIconPaths} from '@solyi/core/icons';
 import { cloneVNode, h, nextTick, onBeforeUnmount } from 'vue'
 import type { Slots, VNode, VNodeChild } from 'vue'
 import type { SFieldHandle } from './form'
 import type { SolLocale } from './locale'
 import type { SolIconName } from '@solyi/core/icons'
-import { SIcon } from './primitives'
+import { SIcon ,renderSolIcon} from './primitives'
 
 export interface SolInputClearEvent<T> {
   readonly value: T
@@ -58,6 +59,9 @@ const content = (items: VNodeChild[]) =>
 export function preserveInputFocus(event: PointerEvent, element: Element | null | undefined) {
   if (document.activeElement === element) event.preventDefault()
 }
+export function isPointerActivation(event: MouseEvent) {
+  return event.detail > 0 || !!(event as PointerEvent).pointerType
+}
 
 /** One clear/focus lifecycle and action layout; value/event semantics remain in each input. */
 export function useInputControl(p: Props, slots: Slots, options: Options) {
@@ -84,7 +88,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
       if (options.disabled() || typeof document === 'undefined') return
       const current = document.activeElement,
         element = options.element()
-      if (event && event.detail !== 0 && previous !== element) return
+      if (event && isPointerActivation(event)) return
       const owned = element?.closest('.sol-ui-input-frame,.sol-ui-input-enhanced')
       if (
         current &&
@@ -134,7 +138,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
           ? h(
               'span',
               { class: 'sol-ui-input-status', 'aria-hidden': 'true' },
-              h(SIcon, { name: 'info', size: 16, decorative: true }),
+              renderSolIcon(solIconPaths.info,16,0),
             )
           : null),
       p.clearable && state.hasValue && !state.disabled && !state.readonly
@@ -148,7 +152,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
               onPointerdown: (event: PointerEvent) => preserveInputFocus(event, options.element()),
               onClick: clear,
             },
-            h(SIcon, { name: 'close', size: 16, decorative: true }),
+            renderSolIcon(solIconPaths.close,16,0),
           )
         : null,
       options.actions?.(),

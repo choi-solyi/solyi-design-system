@@ -2,7 +2,9 @@
 import type { SolNumberDisplayFormatter } from 'solyi-ui'
 
 defineProps<{ part?: string }>()
-const showNumberFormat = ref(false)
+const showNumberFormat = ref(false),
+  useGrouping = ref(true),
+  largeAmount = ref<number | null>(12000)
 const noteClearCount = ref(0)
 const formatAmount: SolNumberDisplayFormatter = (value, locale) =>
   new Intl.NumberFormat(locale.code, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(
@@ -35,7 +37,14 @@ const options = [
       v-model="showNumberFormat"
       label="숫자 표시 포맷 · 모델은 숫자 유지"
     />
+    <SCheckbox
+      v-if="!part || part === 'number'"
+      id="recipe-number-grouping"
+      v-model="useGrouping"
+      label="입력 중 천 단위 구분"
+    />
     <SNumberInput
+      :use-grouping="useGrouping"
       v-if="!part || part === 'number'"
       id="recipe-amount"
       v-model="amount"
@@ -48,6 +57,21 @@ const options = [
       :presets="[{ value: 2 }, { value: 6 }, { value: 10 }, { value: 5, label: '5 · 간격 불일치' }]"
       :format-value="showNumberFormat ? formatAmount : undefined"
     />
+    <SNumberInput
+      v-if="!part || part === 'number'"
+      id="recipe-large-amount"
+      v-model="largeAmount"
+      :use-grouping="useGrouping"
+      clearable
+      label="큰 수 입력"
+      :min="-1000000000"
+      :max="1000000000"
+      :step="0.01"
+      help="입력 중 정수부는 세 자리로 구분하고, 모델은 숫자로 유지합니다. 위 0–10 예제의 범위 밖 초안은 모델로 반영하지 않습니다."
+    />
+    <p v-if="!part || part === 'number'" role="status">
+      큰 수 모델: {{ largeAmount === null ? 'null' : largeAmount }}
+    </p>
     <SMultiSelect
       v-if="!part || part === 'multiselect'"
       id="recipe-tags"

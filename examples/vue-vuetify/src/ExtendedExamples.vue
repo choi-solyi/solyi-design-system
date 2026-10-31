@@ -31,7 +31,7 @@ function checkSchedule(){const dateValid=datePicker.value?.validate(),timeValid=
         <STextarea id="native-description" v-model="description" label="가상 기록 설명" :maxlength="120" :disabled="disabled" :readonly="readonly" :locale="locale" help="최소 3줄, 필요한 경우 세로로 늘릴 수 있습니다."/>
         <SNumberInput id="native-count" v-model="count" label="가상 목표 개수" :min="0" :max="10" :step="2" :disabled="disabled" :readonly="readonly" :locale="locale" help="직접 입력·방향키·작은 증감 버튼을 같은 규칙으로 처리합니다."/>
       </div>
-      <div class="starter-actions"><SBtn type="submit" variant="primary" :disabled="disabled">가상 입력 확인</SBtn></div>
+      <div class="starter-actions sol-actions--commit"><SBtn type="submit" variant="primary" :disabled="disabled">가상 입력 확인</SBtn></div>
       <p role="status" class="starter-result">{{formStatus}}</p>
     </form>
   </section>
@@ -49,7 +49,7 @@ function checkSchedule(){const dateValid=datePicker.value?.validate(),timeValid=
       <SSelect id="native-toast-tone" required v-model="toastTone" label="가상 알림 의미" :options="[{value:'info',label:'정보'},{value:'success',label:'완료'},{value:'warning',label:'확인'},{value:'danger',label:'오류 · 자동 닫기 없음'}]"/>
       <SSelect id="native-toast-duration" required v-model="toastTiming" label="자동 닫기 설정" :options="[{value:'4000',label:'4초 · 포인터/초점에서 일시정지'},{value:'0',label:'닫을 때까지 유지'}]" help="오류 예시는 이 설정과 관계없이 유지합니다. 중요한 오류를 토스트에만 두지 마세요."/>
     </div>
-    <div class="starter-actions"><SBtn id="native-toast-open" @click="showToast">가상 알림 보기</SBtn></div>
+    <div class="starter-actions sol-actions--commit"><SBtn id="native-toast-open" @click="showToast">가상 알림 보기</SBtn></div>
     <p class="starter-hint" role="status">{{toastClosed ? `마지막 닫기: ${toastClosed}` : '알림은 초점을 빼앗지 않습니다. 같은 부품 한 개를 갱신합니다.'}}</p>
     <SSnackbar id="native-toast" v-model="toastOpen" :message="toastMessage" :tone="toastTone" :duration="toastDuration" :locale="locale" @close="toastClosed=$event"/>
   </section>
@@ -61,7 +61,7 @@ function checkSchedule(){const dateValid=datePicker.value?.validate(),timeValid=
         <SDatePicker id="native-date" ref="datePicker" v-model="dates" label="가상 일정" :mode="mode" required :disabled="disabled" :readonly="readonly" :locale="locale" help="직접 입력 또는 Alt+↓. 기간은 두 번째 선택에서만 확정합니다." @change="lastDate=JSON.stringify($event,null,2)"/>
         <STimePicker id="native-time" ref="timePicker" v-model="time" label="가상 알림 시각" min="09:00" max="18:00" :step="15" required :disabled="disabled" :readonly="readonly" :locale="locale" help="직접 HH:mm/HHmm 입력 또는 작은 시·분 패널을 사용합니다."/>
       </div>
-      <div class="starter-actions"><SBtn type="submit" :disabled="disabled">날짜·시각 확인</SBtn></div>
+      <div class="starter-actions sol-actions--commit"><SBtn type="submit" :disabled="disabled">날짜·시각 확인</SBtn></div>
       <p class="starter-result" role="status">{{scheduleStatus}}</p>
     </form>
     <details class="starter-api-output"><summary>완료 값과 change 출력 · 가상 데이터</summary><pre>{{JSON.stringify({mode,value:dates,time},null,2)}}</pre><pre>{{lastDate}}</pre></details>

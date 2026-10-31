@@ -1,9 +1,7 @@
 /** Group the integer part without converting an unfinished decimal to a number. */
 export function groupNumberDraft(value: string): string {
-  if (!/^[+-]?[\d,]*(?:\.\d*)?$/.test(value) || value.includes(',,')) return value
-  const [integer, decimal] = value.split('.')
-  return integer.replaceAll(',', '').replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
-    (decimal === undefined ? '' : '.' + decimal)
+  if (!/^[+-]?\d[\d,]*(?:\.\d*)?$/.test(value) || value.includes(',,')) return value
+  return value.replace(/^[^.]+/, integer => integer.replaceAll(',', '').replace(/\B(?=(\d{3})+(?!\d))/g, ','))
 }
 
 export function groupNumberInput(input: HTMLInputElement): string {

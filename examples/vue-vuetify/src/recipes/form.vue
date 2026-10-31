@@ -74,9 +74,9 @@ onBeforeUnmount(() => clearTimeout(timer))
       <SCheckbox id="recipe-form-fail" v-model="fail" label="실패를 흉내 내기" />
       <SAlert v-if="serverError" tone="danger" :title="serverError" live="polite" />
       <SAlert v-if="done" tone="success" title="✓ 가상 입력을 확인했어요." live="polite" />
-      <div class="sol-actions">
-        <SBtn type="submit" variant="primary" :loading="busy">프로젝트 확인</SBtn>
+      <div class="sol-actions sol-actions--commit">
         <SBtn :disabled="busy" @click="clearValidation">검증 표시 지우기</SBtn>
+        <SBtn type="submit" variant="primary" :loading="busy">프로젝트 확인</SBtn>
       </div>
       <p id="recipe-form-validation-result" role="status">{{ validationNotice }}</p>
     </SForm>

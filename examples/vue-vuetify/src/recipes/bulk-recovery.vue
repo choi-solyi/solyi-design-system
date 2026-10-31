@@ -79,8 +79,7 @@ onBeforeUnmount(() => {
       />
       <p>{{ row.state }} · 처리 {{ row.attempts }}회</p>
     </div>
-    <div class="sol-actions">
-      <SBtn ref="runButton" :loading="busy" @click="run()"> 선택한 가상 항목 처리 </SBtn>
+    <div class="sol-actions sol-actions--commit">
       <SBtn
         ref="retryButton"
         id="recipe-bulk-retry"
@@ -90,6 +89,7 @@ onBeforeUnmount(() => {
       >
         실패 항목만 다시 시도
       </SBtn>
+      <SBtn ref="runButton" :loading="busy" @click="run()"> 선택한 가상 항목 처리 </SBtn>
     </div>
     <SAlert
       id="recipe-bulk-result"

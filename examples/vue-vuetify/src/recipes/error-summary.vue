@@ -77,7 +77,9 @@ async function submit(event: SFormSubmitEvent) {
         :max="5"
         required
       />
-      <SBtn type="submit" variant="primary">가상 입력 확인</SBtn>
+      <div class="sol-actions sol-actions--commit">
+        <SBtn type="submit" variant="primary">가상 입력 확인</SBtn>
+      </div>
       <p v-if="submitted && !errors.length" role="status">✓ 두 입력을 확인했어요.</p>
     </SForm>
   </SCard>

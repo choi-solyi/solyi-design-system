@@ -1,14 +1,14 @@
 import {useSFieldValidation,fieldError,externalFieldError,fieldDisabled,fieldReadonly} from './form';
 import {defineComponent,h,ref,watch,nextTick,onMounted,onBeforeUnmount,Teleport,mergeProps,computed} from 'vue';
 import type {PropType,SlotsType,VNodeChild} from 'vue';
-import {inputControlProps,useInputControl} from './input-control';
+import {inputControlProps,useInputControl,preserveInputFocus,isPointerActivation} from './input-control';
 import type {SolInputClearEvent,SolInputControlSlots} from './input-control';
 import type {SolLocale} from './locale';
 import {formatFieldDisplay} from './display-format';
 import {dateISO,parseDateOnly,weekday,shiftDay,shiftMonth,parseTimeOnly} from '@solyi/core/date';
 import type {DateParts} from '@solyi/core/date';
 import {solIconPaths} from '@solyi/core/icons';
-import {SIcon} from './primitives';
+import {renderSolIcon} from './primitives';
 import {PickerHost} from './picker-host';
 import type {PickerPresentation,PickerPlacement,PickerHostHandle} from './picker-host';
 import {timeChoices,nearestTime} from './time-values';
@@ -44,7 +44,7 @@ function calendarDayLabel(formatter: Intl.DateTimeFormat, day: DateParts): strin
   return withVisibleNumberLabel(full, String(day.d))
 }
 
-function icon(name:'calendar'|'chevron',direction?:'previous'|'next'){return h('svg',{class:['sol-icon','sol-ui-picker-icon',direction?'sol-ui-picker-icon--'+direction:undefined],width:20,height:20,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'},h('path',{d:solIconPaths[name]}));}
+function icon(name:'calendar'|'chevron',direction?:'previous'|'next'){return renderSolIcon(solIconPaths[name],20,0,{class:['sol-ui-picker-icon',direction?'sol-ui-picker-icon--'+direction:undefined]});}
 
 const pickerHostProps = {
   pickerPresentation: String as PropType<SolPickerPresentation>,
@@ -501,9 +501,10 @@ export const SDatePicker = /* @__PURE__ */ defineComponent({
                 type: 'button',
                 class: 'sol-button inline-action sol-ui-picker-clear',
                 disabled: fieldDisabled(p) || fieldReadonly(p),
-                onClick: () => {
+                onPointerdown: (event: PointerEvent) => preserveInputFocus(event, input.value),
+                onClick: (event: MouseEvent) => {
                   clear()
-                  input.value?.focus()
+                  if (!isPointerActivation(event)) input.value?.focus()
                 },
               },
               l.value.clear,
@@ -1179,7 +1180,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
         open: opened.value, id:p.id+'-panel', labelledby:p.id+'-title',
         anchor:input.value?.closest<HTMLElement>('.sol-ui-input-frame,.sol-time-entry') || input.value,
         returnFocus:opener, presentation:p.pickerPresentation, placement:p.placement,
-        width:'320px', initialFocus:()=>p.presentation==='list'?list.value:hourSelect.value,
+        width:'320px', panelClass:'sol-ui-time-host', initialFocus:()=>p.presentation==='list'?list.value:hourSelect.value,
         focusOnOpen:keyboardOpen,
         onRequestClose:(why)=>close(why, why!=='outside'),
         onReady:()=>{
@@ -1217,7 +1218,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                 if (scrub.source.value === 'input') scrub.cancel('blur', false)
               },
             },
-            [h(SIcon, { name: 'grip', decorative: true }), h('span', { class: 'sol-ui-time-scrub-label' }, l.value.timeScrub!('input'))],
+            [renderSolIcon(solIconPaths.grip,20,0), h('span', { class: 'sol-ui-time-scrub-label' }, l.value.timeScrub!('input'))],
           )
         : null
     }
@@ -1327,7 +1328,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
           if (localError.value) localError.value = parse().error
           validity()
         },
-        onClick: () => void open(false, input.value),
+        onClick: () => p.allowManualInput ? close('close', false) : void open(false, input.value),
         onBlur: () => {
           if (!scrub.active.value && !fieldReadonly(p) && !fieldDisabled(p)) validate()
         },
@@ -1396,10 +1397,11 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                 type: 'button',
                 class: 'sol-button inline-action sol-ui-picker-clear',
                 disabled: fieldDisabled(p) || fieldReadonly(p),
-                onClick: () => {
+                onPointerdown: (event: PointerEvent) => preserveInputFocus(event, input.value),
+                onClick: (event: MouseEvent) => {
                   close('close', false)
                   clear()
-                  input.value?.focus()
+                  if (!isPointerActivation(event)) input.value?.focus()
                 },
               },
               l.value.clear,
@@ -1473,7 +1475,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                                 [
                                   h('span', value),
                                   value === selected
-                                    ? h(SIcon, { name: 'check', size: 16, decorative: true })
+                                    ? renderSolIcon(solIconPaths.check,16,0)
                                     : null,
                                   p.listScrubbable
                                     ? h(
@@ -1488,7 +1490,7 @@ export const STimePicker = /* @__PURE__ */ defineComponent({
                                             event.stopPropagation()
                                           },
                                         },
-                                        h(SIcon, { name: 'grip', decorative: true }),
+                                        renderSolIcon(solIconPaths.grip,20,0),
                                       )
                                     : null,
                                 ],

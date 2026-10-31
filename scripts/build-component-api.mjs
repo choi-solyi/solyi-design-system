@@ -235,6 +235,8 @@ for (const [name, group, description, exampleRoute, example] of records) {
     props.find(prop => prop.name === 'commitOn').description = '직접 입력의 확정 시점입니다. 기본 [enter], blur는 opt-in입니다. 후보 클릭 또는 명시적으로 방향키 탐색 후 Enter는 select입니다. 빈 배열은 자동 직접 입력 확정을 사용하지 않습니다.'
     props.find(prop => prop.name === 'openOnFocus').description = '초점 진입 시 목록을 엽니다. clear·선택·retry의 내부 초점 복원으로 중복 요청하지 않습니다.'
   }
+  if (name === 'SNumberInput') props.find(prop => prop.name === 'useGrouping').description = '기본 true. ko/en 입력 중 정수부를 세 자리 쉼표로 구분하며 모델은 number|null로 유지합니다. false는 구분 없는 편집입니다. formatValue의 편집 종료 후 표시 및 범위·step·초안 검증과 별개입니다.'
+  if (name === 'STimePicker') props.find(prop => prop.name === 'allowManualInput').description = '기본 true인 직접 입력칸은 편집만 합니다. 선택창은 펼침 버튼 또는 Alt+↓로 엽니다. false인 표시칸은 탭해서 선택창을 열며 텍스트 키보드를 요구하지 않습니다.'
   if (name === 'STimePicker') props.find(prop => prop.name === 'presentation').description =
     '기본 두 native select 또는 opt-in 스크롤 목록입니다. 허용값은 native/list입니다.'
   if (name === 'STimePicker') {

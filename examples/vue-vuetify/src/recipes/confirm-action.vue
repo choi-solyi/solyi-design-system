@@ -20,18 +20,18 @@ async function removeDraft() {
           : '한 번 누르면 확인 문구로 바뀌고, 한 번 더 누르면 이 화면의 가상 초안이 제거됩니다.'
       }}
     </p>
-    <div class="sol-actions">
+    <div class="sol-actions sol-actions--commit">
+      <SConfirmAction
+        :label="english ? 'Disabled action' : '비활성 동작'"
+        :confirm-label="english ? 'Confirm' : '확인'"
+        disabled
+      />
       <SConfirmAction
         :label="english ? 'Remove draft' : '초안 제거'"
         :confirm-label="english ? 'Press again to remove' : '한 번 더 눌러 제거'"
         tone="danger"
         :disabled="removed"
         @confirm="removeDraft"
-      />
-      <SConfirmAction
-        :label="english ? 'Disabled action' : '비활성 동작'"
-        :confirm-label="english ? 'Confirm' : '확인'"
-        disabled
       />
     </div>
     <p id="recipe-confirm-action-result" ref="removalResult" role="status" tabindex="-1">

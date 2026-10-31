@@ -114,10 +114,10 @@ onBeforeUnmount(() => {
         required
       />
       <STextarea id="recipe-edit-note" v-model="draft.note" label="기록 설명" />
-      <div class="sol-actions">
-        <SBtn type="submit" variant="primary"> 저장 </SBtn>
+      <div class="sol-actions sol-actions--commit">
         <SBtn @click="cancel">수정 취소</SBtn>
         <SBtn @click="leave">다른 가상 화면으로</SBtn>
+        <SBtn type="submit" variant="primary"> 저장 </SBtn>
       </div>
     </form>
     <template v-else>

@@ -15,11 +15,11 @@ onBeforeUnmount(() => clearTimeout(timer))
 </script>
 <template>
   <SCard :heading-level="2" title="버튼 상태와 동작">
-    <div class="sol-actions">
-      <SBtn variant="primary" :loading="busy" @click="run">확인</SBtn>
+    <div class="sol-actions sol-actions--commit">
       <SBtn @click="result = '보조 동작을 눌렀어요.'">보조 동작</SBtn>
       <SBtn variant="inline" @click="result = ''">초기화</SBtn>
       <SBtn disabled>비활성</SBtn>
+      <SBtn variant="primary" :loading="busy" @click="run">확인</SBtn>
     </div>
     <p role="status">{{ result }}</p>
     <p class="sol-hint">

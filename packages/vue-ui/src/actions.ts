@@ -1,3 +1,4 @@
+import {renderSolIcon} from './primitives';
 import {defineComponent,h,ref,computed,watch,nextTick,onMounted,onBeforeUnmount} from 'vue';
 import type {PropType,Ref} from 'vue';
 import type {SolLocale} from './locale';
@@ -30,7 +31,7 @@ export function useActionMenu(p:ActionProps,emit:MenuEmit,root:Ref<HTMLElement|n
  const render=()=>expanded.value?h('div',{ref:panel,id:p.id+'-menu',popover:'manual',role:'menu','aria-label':p.label,class:'sol-ui-action-menu',style:position.value,onKeydown:key},p.items.map(item=>h('button',{ref:(el:unknown)=>{if(el)buttons.set(item.id,el as HTMLElement);else buttons.delete(item.id);},id:p.id+'-item-'+item.id,type:'button',role:'menuitem',class:['sol-button subtle',item.danger?'sol-ui-menu-danger':''],'aria-disabled':item.disabled?'true':undefined,tabindex:!item.disabled&&active.value===item.id?0:-1,onFocus:()=>{if(!item.disabled)active.value=item.id;},onClick:()=>choose(item)},item.label))):null;
  return {expanded,open,close,render};
 }
-function chevron(){return h('svg',{viewBox:'0 0 24 24',width:20,height:20,fill:'none',stroke:'currentColor','stroke-width':1.6,'stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',class:'sol-ui-icon'},h('path',{d:solIconPaths.chevron}));}
+function chevron(){return renderSolIcon(solIconPaths.chevron,20,0,{class:'sol-ui-icon'});}
 export const SSplitBtn=/* @__PURE__ */ defineComponent({name:'SSplitBtn',inheritAttrs:false,props:{id:actionId,label:actionLabel,items:actionItems,disabled:Boolean,readonly:Boolean,open:actionOpen,locale:Object as PropType<Partial<SolLocale>>,menuLabel:String},emits:{'update:open':updateOpen,select:selectMenu,open:opened,close:closed,primary:(_e:MouseEvent)=>true},setup(p,{attrs,slots,emit}){
  const l=useSolLocale(()=>p.locale),root=ref<HTMLElement|null>(null),trigger=ref<HTMLElement|null>(null),m=useActionMenu(p,emit,root);
  return()=>h('div',{...attrs,ref:root,id:p.id,class:['sol-ui-split-button',attrs.class],role:'group','aria-label':p.label},[h('button',{type:'button',class:'sol-button primary',disabled:p.disabled,'aria-disabled':p.readonly?'true':undefined,onClick:(e:MouseEvent)=>{if(!p.disabled&&!p.readonly)emit('primary',e);}},slots.default?.()||p.label),h('button',{ref:trigger,type:'button',class:'sol-button primary sol-ui-split-toggle',disabled:p.disabled,'aria-disabled':p.readonly?'true':undefined,'aria-label':p.menuLabel||p.label+' '+l.value.moreActions,'aria-haspopup':'menu','aria-expanded':String(m.expanded.value),'aria-controls':m.expanded.value?p.id+'-menu':undefined,onClick:()=>m.expanded.value?m.close():m.open(trigger.value),onKeydown:(e:KeyboardEvent)=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();m.open(trigger.value,undefined,e.key==='ArrowUp');}}},chevron()),m.render()]);

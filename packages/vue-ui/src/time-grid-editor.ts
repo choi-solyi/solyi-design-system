@@ -391,6 +391,7 @@ export function useTimeGridEditor(
   return {
     state: operation.state,
     begin: operation.begin,
+    commit: operation.commit,
     events: { onPointerdownCapture: pointer.clearClick, onKeydown: keydown, onFocusout: focusout },
     cancel: () => operation.cancel('api'),
     valid: computed(() => configurationValid.value && disabledItems.value.valid),

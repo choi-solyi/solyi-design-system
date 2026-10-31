@@ -1,9 +1,10 @@
+import {solIconPaths} from '@solyi/core/icons';
 import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref, watch, TransitionGroup } from 'vue'
 import type { AllowedComponentProps, PropType, SlotsType, VNode, VNodeProps } from 'vue'
 import { displayFieldProps, fieldDescription, fieldMessages } from './controls'
 import { useSolLocale } from './locale'
 import type { SolLocale } from './locale'
-import { SIcon } from './primitives'
+import {renderSolIcon} from './primitives'
 import { snapshotSortable, sameSortableSnapshot, proposeSortableMove } from './sortable-values'
 import { createSortablePointer } from './sortable-pointer'
 import type {
@@ -500,7 +501,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
                           cancel('blur', false)
                       },
                     },
-                    slots['handle-icon']?.(scope) || h(SIcon, { name: 'grip', decorative: true }),
+                    slots['handle-icon']?.(scope) || renderSolIcon(solIconPaths.grip,20,0),
                   ),
                   h('div', { class: 'sol-ui-sortable-content' }, [
                     slots.item?.(scope) || label,
@@ -529,11 +530,7 @@ export const SSortableList = /* @__PURE__ */ defineComponent({
                           'aria-describedby': p.id + '-keys',
                           onClick: () => moveButton(itemKey, direction),
                         },
-                        h(SIcon, {
-                          name: 'arrow',
-                          rotate: direction === -1 ? 270 : 90,
-                          decorative: true,
-                        }),
+                        renderSolIcon(solIconPaths.arrow,20,direction === -1 ? 270 : 90),
                       ),
                     ),
                   ),

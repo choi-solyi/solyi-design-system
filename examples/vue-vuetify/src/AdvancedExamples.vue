@@ -156,6 +156,7 @@ const gridItems = ref(gridSeed),
   gridAccept = ref(true),
   gridPreview = ref(null),
   gridResult = ref('')
+const gridAllowDuplicate = ref(false)
 let gridCopy = 0
 function acceptGridProposal(proposal) {
   gridPreview.value = null
@@ -164,9 +165,9 @@ function acceptGridProposal(proposal) {
     ' · ' +
     proposal.to.columnKey +
     ' · ' +
-    proposal.to.startMinute +
+    gridClock(proposal.to.startMinute) +
     '–' +
-    proposal.to.endMinute
+    gridClock(proposal.to.endMinute)
   if (!gridAccept.value) {
     gridResult.value += ' · 부모가 반영하지 않아 원본 유지'
     return
@@ -191,7 +192,12 @@ function acceptGridProposal(proposal) {
 function createGrid(request) {
   gridPreview.value = null
   gridResult.value =
-    '추가 요청 · ' + request.columnKey + ' · ' + request.startMinute + '–' + request.endMinute
+    '추가 요청 · ' +
+    request.columnKey +
+    ' · ' +
+    gridClock(request.startMinute) +
+    '–' +
+    gridClock(request.endMinute)
   if (!gridAccept.value) {
     gridResult.value += ' · 원본 유지'
     return
@@ -215,15 +221,39 @@ function removeGrid(request) {
   }
   gridItems.value = Object.freeze(gridItems.value.filter(item => item.id !== request.key))
 }
+const gridEditError = ref('')
 const gridEditOpen = ref(false),
   gridEditKey = ref(null),
   gridEditTitle = ref(''),
   gridEditStart = ref(480),
   gridEditEnd = ref(540),
   gridEditColumn = ref('one')
+const gridClock = value =>
+  Number.isFinite(value)
+    ? String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0')
+    : ''
+const gridMinutes = value =>
+  /^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(value || '')
+    ? Number(value.slice(0, 2)) * 60 + Number(value.slice(3))
+    : NaN
+const gridStartClock = computed({
+  get: () => gridClock(gridEditStart.value),
+  set: value => {
+    gridEditStart.value = gridMinutes(value)
+  },
+})
+const gridEndClock = computed({
+  get: () => gridClock(gridEditEnd.value),
+  set: value => {
+    gridEditEnd.value = gridMinutes(value)
+  },
+})
+const gridStartField = useTemplateRef('gridStartField'),
+  gridEndField = useTemplateRef('gridEndField')
 function editGrid(request) {
   const item = gridItems.value.find(item => item.id === request.key)
   if (!item) return
+  gridEditError.value = ''
   gridEditKey.value = item.id
   gridEditTitle.value = item.title
   gridEditStart.value = item.start
@@ -244,6 +274,18 @@ const gridEditInvalid = computed(
     gridEditEnd.value % 15 !== 0,
 )
 function saveGridEdit() {
+  gridEditError.value = ''
+  const startValid = gridStartField.value?.validate(),
+    endValid = gridEndField.value?.validate()
+  if (!startValid || !endValid) {
+    ;(!startValid ? gridStartField.value : gridEndField.value)?.focus()
+    return
+  }
+  if (gridEditInvalid.value) {
+    gridEditError.value =
+      '항목 내용과 시각을 확인해 주세요. 시작은 종료보다 빨라야 하며 15분 간격이어야 합니다.'
+    return
+  }
   if (
     gridEditInvalid.value ||
     gridDisabled.value ||
@@ -757,7 +799,18 @@ watch([disabled, readonly], () => {
       />
       <SBtn :id="previewId('advanced-time-grid-reset')" @click="resetGrid">원본으로 외부 갱신</SBtn>
     </div>
+    <SCheckbox
+      :id="previewId('advanced-time-grid-duplicate')"
+      v-model="gridAllowDuplicate"
+      label="항목 복제 사용"
+    />
+    <p class="starter-hint">
+      복제 사용을 켠 뒤 세로점 메뉴에서 복제를 선택해 미리보기를 엽니다. 아래 복제 버튼으로 같은
+      시각에 새 항목을 추가하거나 취소합니다. 키보드는 방향키로 위치를 조절하고 Enter로 확정,
+      Escape·Tab으로 취소합니다. 원본은 유지합니다.
+    </p>
     <STimeGrid
+      :allow-duplicate="gridAllowDuplicate"
       :id="previewId('advanced-time-grid')"
       label="범용 시간 항목"
       :items="gridEmpty ? [] : gridItems"
@@ -805,34 +858,43 @@ watch([disabled, readonly], () => {
         label="열"
         :options="gridColumns.map(column => ({ value: column.key, label: column.label }))"
       />
-      <SNumberInput
+      <STimePicker
+        ref="gridStartField"
+        clearable
         :id="previewId('advanced-time-grid-edit-start')"
-        v-model="gridEditStart"
-        label="시작 · 분"
-        :min="480"
-        :max="1065"
+        v-model="gridStartClock"
+        label="시작 시각"
+        min="08:00"
+        max="17:45"
         :step="15"
+        picker-presentation="auto"
+        required
       />
-      <SNumberInput
+      <STimePicker
+        ref="gridEndField"
+        clearable
         :id="previewId('advanced-time-grid-edit-end')"
-        v-model="gridEditEnd"
-        label="종료 · 분"
-        :min="495"
-        :max="1080"
+        v-model="gridEndClock"
+        label="종료 시각"
+        min="08:15"
+        max="18:00"
         :step="15"
+        picker-presentation="auto"
+        required
       />
+      <SAlert v-if="gridEditError" tone="danger" :title="gridEditError" live="polite" />
       <template #actions>
         <SBtn @click="gridEditOpen = false">취소</SBtn>
         <SBtn
           variant="primary"
-          :disabled="gridEditInvalid || gridDisabled || gridLoading || !gridEditable"
+          :disabled="gridDisabled || gridLoading || !gridEditable"
           @click="saveGridEdit"
           >저장</SBtn
         >
       </template>
     </SDialog>
     <p :id="previewId('advanced-time-grid-result')" class="starter-hint" role="status">
-      {{gridPreview ? '미리보기 · '+gridPreview.to.columnKey+' · '+gridPreview.to.startMinute+'–'+gridPreview.to.endMinute : gridResult}}
+      {{gridPreview ? '미리보기 · '+gridPreview.to.columnKey+' · '+gridClock(gridPreview.to.startMinute)+'–'+gridClock(gridPreview.to.endMinute) : gridResult}}
     </p>
   </section>
 </template>

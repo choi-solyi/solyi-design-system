@@ -124,7 +124,7 @@ export const SChip = /* @__PURE__ */ defineComponent({
         slots.leading
           ? h('span', { class: 'sol-ui-tag-icon', 'aria-hidden': 'true' }, slots.leading())
           : null,
-        p.selectable && p.selected ? h(SIcon, { name: 'check', size: 16, decorative: true }) : null,
+        p.selectable && p.selected ? renderSolIcon(solIconPaths.check,16,0) : null,
         h('span', { class: 'sol-ui-tag-label' }, content),
         slots.trailing
           ? h('span', { class: 'sol-ui-tag-icon', 'aria-hidden': 'true' }, slots.trailing())
@@ -175,7 +175,7 @@ export const SChip = /* @__PURE__ */ defineComponent({
                     if (!unavailable) emit('remove', event)
                   },
                 },
-                h(SIcon, { name: 'close', size: 16, decorative: true }),
+                renderSolIcon(solIconPaths.close,16,0),
               )
             : null,
         ],

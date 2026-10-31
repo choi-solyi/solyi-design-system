@@ -16,7 +16,9 @@ const error = computed(() =>
         :error="error"
         required
       />
-      <SBtn type="submit" variant="primary"> 기록 확인 </SBtn>
+      <div class="sol-actions sol-actions--commit">
+        <SBtn type="submit" variant="primary"> 기록 확인 </SBtn>
+      </div>
       <SAlert v-if="checked && !error" tone="success" title="✓ 가상 기록 이름을 확인했어요." />
     </form>
   </SCard>

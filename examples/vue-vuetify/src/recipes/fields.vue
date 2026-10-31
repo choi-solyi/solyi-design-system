@@ -52,7 +52,9 @@ function check() {
         label="공유 주소 · 비활성"
         disabled
       />
-      <SBtn type="submit" variant="primary">입력 확인</SBtn>
+      <div class="sol-actions sol-actions--commit">
+        <SBtn type="submit" variant="primary">입력 확인</SBtn>
+      </div>
       <SAlert
         v-if="submitted && !error && !serverRejected"
         tone="success"

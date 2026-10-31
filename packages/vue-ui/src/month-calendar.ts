@@ -7,7 +7,7 @@ import type { SolIconName } from '@solyi/core/icons'
 import type { SolCategoryId } from '@solyi/core'
 import { displayFieldProps, fieldDescription, fieldMessages } from './controls'
 import { formatSolDate, useSolLocale, withVisibleNumberLabel } from './locale'
-import { SBadge, SIcon } from './primitives'
+import { SBadge, SIcon ,renderSolIcon} from './primitives'
 import type { SolTone } from './primitives'
 import {
   calendarMonthLayout,
@@ -326,7 +326,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                 direction === -1 ? 'previous' : 'next',
               ),
           },
-          h(SIcon, { name: 'chevron', rotate: direction === -1 ? 90 : 270, decorative: true }),
+          renderSolIcon(solIconPaths.chevron,20,direction === -1 ? 90 : 270),
         )
       const cells = grid.valid ? grid.cells : Array.from({ length: 42 }, () => null)
       const activeMarkers = active.value ? state.value.days.get(active.value)?.markers || [] : []
@@ -403,6 +403,7 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
               Array.from({ length: 6 }, (_, row) =>
                 h(
                   'tr',
+                  {hidden:grid.valid && !cells.slice(row * 7, row * 7 + 7).some(Boolean)},
                   cells.slice(row * 7, row * 7 + 7).map((cell) => {
                     if (!cell)
                       return h(
@@ -556,26 +557,25 @@ export const SMonthCalendar = /* @__PURE__ */ defineComponent({
                   },
                 },
                 [
-                  h('button', { type:'button',class: 'sol-button subtle sol-ui-month-details-close', onClick: () => { detailsOpen.value=false;focusDate(active.value) } }, l.value.close),
-                  h('h4', { id: p.id + '-details-label' }, [
+                  h('div', {class:'sol-ui-month-details-header'}, [h('h4', { id: p.id + '-details-label' }, [
                     active.value ? formatSolDate(active.value, l.value) + ' · ' : '',
                     l.value.monthCalendarDetails,
-                  ]),
+                  ]),h('button', { type:'button',class: 'sol-button subtle sol-ui-month-details-close', onClick: () => { detailsOpen.value=false;focusDate(active.value) } }, l.value.close)]),
                   activeMarkers.length
                     ? h(
                         'ul',
+                        {tabindex:0,'aria-labelledby':p.id+'-details-label'},
                         activeMarkers.map((marker) =>
                           h('li', { key: marker.id }, [
                             marker.icon
                               ? h(SIcon, { name: marker.icon, size: 16, decorative: true })
                               : null,
-                            marker.category && marker.tone === undefined
-                              ? h(SBadge, {
+                            h(SBadge, {
                                   content: marker.label,
                                   size: 'sm',
-                                  style: markerCategoryStyle(marker),
-                                })
-                              : h('span', marker.label),
+                                  tone:marker.tone,
+                                  style: marker.category && marker.tone === undefined ? markerCategoryStyle(marker) : undefined,
+                                }),
                           ]),
                         ),
                       )

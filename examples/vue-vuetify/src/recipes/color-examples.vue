@@ -74,15 +74,15 @@ function show(tone: ToastTone, label: string) {
       :data-tone="item.tone"
     >
       <span class="sol-status sol-tone-badge">{{ item.icon }} {{ item.label }}</span>
-      <div class="sol-actions">
-        <SBtn variant="primary" :tone="item.tone" @click="show(item.tone, item.label)"
-          >다음 단계</SBtn
-        >
+      <div class="sol-actions sol-actions--commit">
         <SBtn variant="subtle" :tone="item.tone" @click="show(item.tone, item.label)"
           >옅은 배경</SBtn
         >
         <SBtn :tone="item.tone" @click="show(item.tone, item.label)">외곽선</SBtn>
         <SBtn :tone="item.tone" disabled>비활성</SBtn>
+        <SBtn variant="primary" :tone="item.tone" @click="show(item.tone, item.label)"
+          >다음 단계</SBtn
+        >
       </div>
       <SAlert :tone="item.tone" :title="item.icon + ' ' + item.label + ' 안내'">
         <p>{{ item.note }}</p>

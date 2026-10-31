@@ -2,6 +2,8 @@
 import { solIconPaths } from 'solyi-ui/icons'
 import { recipeComponents, recipeLabels } from './recipe-registry'
 
+const layoutPart = new URLSearchParams(window.location.search).get('part') || undefined
+
 type RecipeId = keyof typeof recipeComponents
 type RecipeHandle = { confirmLeave?: () => boolean | Promise<boolean> }
 type RecipePosition = { session: string; index: number }
@@ -308,7 +310,7 @@ onBeforeUnmount(() => {
           <p class="starter-eyebrow">{{ currentGroup }}</p>
           <h2 id="recipe-current-title" ref="title" tabindex="-1">{{ recipeLabels[selected] }}</h2>
         </div>
-        <component ref="recipeInstance" :is="current" :key="selected" />
+        <component ref="recipeInstance" :is="current" :key="selected" v-bind="selected === 'layouts' && layoutPart ? {part:layoutPart} : {}" />
       </section>
     </div>
   </section>
