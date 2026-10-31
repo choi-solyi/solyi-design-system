@@ -152,3 +152,14 @@
 기본 그룹화는 유효한 원문만 처리하며, 이전 초안이 유효하고 실제 자릿수 삽입/삭제인 경우에만 기존 표시의 쉼표를 재배치한다. 명시적으로 입력·붙여넣은 잘못된 쉼표는 보존한다. paste 이벤트의 텍스트를 입력 이벤트와 연결해 중간 숫자 붙여넣기와 malformed 쉼표 붙여넣기를 구별한다. 원문 불변 시 caret/선택 범위는 건드리지 않는다. Chrome에서 1,000→10,000→1,000, 그룹 전체/첫 숫자 삭제, 중간 숫자 붙여넣기, 잘못된 쉼표/선택 범위/모델 보존을 통과했다. OS 클립보드는 별도 미검증이며 이벤트 기반 붙여넣기 재현이다.
 
 실패한 첫 새 artifact는 그대로 두고 새 경로 artifacts/candidates/1.1.1-mobile-ui-rc2에서 재포장한다. 제품 소스가 바뀌었으므로 새로운 sourceRef와 최종 후보로 전체 필수 pipeline을 재실행한다.
+
+## 최종 후보 검증 완료 · main 통합 전
+
+- sourceRef b9f13103ee8f652c71d3030ffd6d4b580a6570ad, artifact artifacts/candidates/1.1.1-mobile-ui-rc2. UI 5990057B, SHA-256 91f4287d1027b1a557801ad82af0b5b3dada859697cbae1cc5cdd2236cfb7751. release-assets/docs 다운로드/artifact 원본과 두 canonical 소비자 lock integrity가 모두 일치했다. 1.0.0·1.1.0 패키지 원본 checksum도 보존됐다.
+- npm run library:prepare 전체 10/10 종료 코드0. 깨끗한 설치/일반 npm pack/51 API/자체 선언 negative/소비 앱 타입·빌드/SSR/locale/폼·clear·Time·Sortable·Calendar·TimeGrid/라이선스·글꼴·문서·check·npm test를 통과했다. 769개 외부 선언 한계와 자체 선언 진단0은 구분한다. 로컬 Node22.22.1; 원격 CI는 고정22.23.3에서 별도 확인한다.
+- 최종 크기: all_plugin 68378/68,608B, 개별 import8종 모두 기존 예산 통과. ESM 299068문자, gzip 76223B, 총JS gzip합 83505B로 다른 기준도 통과. 추가 예산 변경 없음.
+- 최종 canonical 설치본 Chrome 통합21기록, Time48경로, 최종 QA 설치본 clear14경로와 TimeGrid 3테마 CRUD·포인터/터치·resize·취소·controlled·현재 시각 회귀 통과.
+- 생성된 docs 자체에서 CSS 주입 없이 메뉴/sticky 3테마9경로 통과. 실제 로컬 문서에서 Calendar/Sortable/TimeGrid 생성→이동→resize→편집→삭제 및 릴리즈 이력 3테마 통과. 추가 Number/Time 공개 예제 경로도 3테마에서 그룹 초안·모델/오류·증감과 직접 입력 분리·dialog 패딩/취소/재열기를 통과했다. 시간 입력·숫자 입력의 실제 Android IME는 미검증이다.
+- 로컬 static helper의 Windows 끝 구분자 처리 때문에 첫 HTTP root가404였고, 해당 QA helper 경로 정규화만 수정한 뒤 정상 문서로 재검증했다. 제품 문제가 아니다. Number 공개 예제 모델 검사는 문구 대신 실제 보존된 수치로 대응해 로케일 문자열에 종속되지 않도록 했다.
+- 공식 registry 읽기: latest1.1.0,1.1.1 없음. 공개 릴리즈 이력은1.1.0/1.0.0만 유지한다. 1.1.1은 계속 미게시 후보이며 npm publish/새 GitHubRelease/소비 앱 업데이트를 하지 않는다.
+- main/CI/Pages 및 공개 URL 검증은 이 동결 산출물을 커밋한 뒤 별도 실행하고 최종 작업 응답에 정확한 ref/run/배포 결과로 남긴다. 물리 Android·스크린리더·모든 플랫폼 조합 미검증은 유지한다.

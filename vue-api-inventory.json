@@ -271,7 +271,6 @@
         "SSelect",
         "SCheckbox",
         "SProgressLinear",
-        "SProgressCircular",
         "SLoadingOverlay",
         "SBtn"
       ]
@@ -441,11 +440,13 @@
       "source": "examples/vue-vuetify/src/recipes/layouts.vue",
       "registration": "global",
       "components": [
+        "SSelect",
         "SCard",
-        "SBtn",
         "SContainer",
+        "SCheckbox",
         "SRow",
         "SCol",
+        "SBtn",
         "SForm",
         "STextField"
       ]

@@ -37,7 +37,7 @@ export function renderComponentReferences(h,{layout=false,includeLayouts=false}=
           <button type="button" role="tab" id="${id}-api-tab" data-component-tab="api" tabindex="-1" aria-selected="false" aria-controls="${id}-api">API</button>
         </div>
         <div id="${id}-examples" class="component-example-panel" role="tabpanel" aria-labelledby="${id}-examples-tab">
-          ${exampleOwner?`<p>가로 진행·원형 진행·작업 영역 로딩은 <a data-shared-component-example="${exampleOwner}" href="#component/${exampleOwner}">진행과 로딩 예제 모음</a> 한 카드에서 비교합니다. 이 항목의 API는 별도로 유지합니다.</p>`:`<div class="component-example-canvas" data-component-example="${preview.recipe}" data-preview-view="${preview.view}" data-preview-part="${preview.part}"></div>`}
+          ${exampleOwner?`<p>가로 진행과 작업 영역 로딩은 <a data-shared-component-example="${exampleOwner}" href="#component/${exampleOwner}">진행과 로딩 예제 모음</a> 한 카드에서 비교합니다. 이 항목의 API는 별도로 유지합니다.</p>`:`<div class="component-example-canvas" data-component-example="${preview.recipe}" data-preview-view="${preview.view}" data-preview-part="${preview.part}"></div>`}
         </div>
         <div id="${id}-code" class="component-code-panel" role="tabpanel" aria-labelledby="${id}-code-tab" hidden>${code}</div>
         <div id="${id}-api" class="component-api" role="tabpanel" aria-labelledby="${id}-api-tab" hidden><h4>API</h4>
@@ -56,7 +56,7 @@ export function renderComponentReferences(h,{layout=false,includeLayouts=false}=
 
 function componentPreview(component) {
  const aliases={date:['inputs','date'],files:['inputs','files'],autocomplete:['inputs','autocomplete'],tree:['chart-tree','tree']};
- const parts={STimeGrid:'time-grid',STextarea:'textarea',SNumberInput:'number',SMultiSelect:'multiselect',SStepper:'steps',SSegmentedControl:'segmented',SRangeSlider:'range',SContextMenu:'context-menu',SResizableSplitPane:'split-pane'};
+ const parts={SContainer:'container',SRow:'row',SCol:'col',STimeGrid:'time-grid',STextarea:'textarea',SNumberInput:'number',SMultiSelect:'multiselect',SStepper:'steps',SSegmentedControl:'segmented',SRangeSlider:'range',SContextMenu:'context-menu',SResizableSplitPane:'split-pane'};
  const [recipe,part]=aliases[component.example]||[component.example,component.name==='SSortableList'?'sortable':component.name==='SMonthCalendar'?'month-calendar':parts[component.name]||''];
  return {recipe,part,view:component.example==='advanced-vue'?'advanced':'recipes'};
 }
