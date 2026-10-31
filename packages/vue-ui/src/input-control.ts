@@ -55,6 +55,10 @@ interface Options {
 const content = (items: VNodeChild[]) =>
   items.flat().filter(value => value !== null && value !== undefined && value !== false)
 
+export function preserveInputFocus(event: PointerEvent, element: Element | null | undefined) {
+  if (document.activeElement === element) event.preventDefault()
+}
+
 /** One clear/focus lifecycle and action layout; value/event semantics remain in each input. */
 export function useInputControl(p: Props, slots: Slots, options: Options) {
   let disposed = false
@@ -69,7 +73,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
     error: options.error(),
     clear,
   })
-  function clear() {
+  function clear(event?: MouseEvent) {
     if (disposed || options.disabled() || options.readonly()) return
     const previous = typeof document === 'undefined' ? null : document.activeElement
     options.clear()
@@ -80,6 +84,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
       if (options.disabled() || typeof document === 'undefined') return
       const current = document.activeElement,
         element = options.element()
+      if (event && event.detail !== 0 && previous !== element) return
       const owned = element?.closest('.sol-ui-input-frame,.sol-ui-input-enhanced')
       if (
         current &&
@@ -140,6 +145,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
               class: 'sol-button sol-ui-input-clear',
               'aria-label': p.label + ' ' + locale.clear,
               onMousedown: (event: MouseEvent) => event.preventDefault(),
+              onPointerdown: (event: PointerEvent) => preserveInputFocus(event, options.element()),
               onClick: clear,
             },
             h(SIcon, { name: 'close', size: 16, decorative: true }),

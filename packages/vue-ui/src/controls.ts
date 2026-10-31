@@ -2,12 +2,13 @@ import {defineComponent,h,ref,watch,nextTick,onMounted,mergeProps} from 'vue';
 import {SChip} from './primitives';
 import {formatFieldDisplay} from './display-format';
 import type {PropType,Slots,SlotsType,VNode} from 'vue';
-import {inputControlProps,useInputControl} from './input-control';
+import {inputControlProps,useInputControl,preserveInputFocus} from './input-control';
 import type {SolInputClearEvent,SolInputControlSlots} from './input-control';
 import {useSolLocale,formatSolNumber,parseSolNumber} from './locale';
 import type {SolLocale} from './locale';
 import {validationProps,useSFieldValidation,fieldError,fieldDisabled,fieldReadonly} from './form';
 import { addNumberStep, isNumberStepAligned } from './number-step'
+import { groupNumberInput } from './number-draft'
 
 export interface SolOption {value:string;label:string;description?:string;disabled?:boolean}
 export interface SolNumberPreset {value:number;label?:string;disabled?:boolean}
@@ -210,6 +211,7 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
     step: { type: Number, default: 1 },
     presets: { type: Array as PropType<readonly SolNumberPreset[]>, default: () => [] },
     formatValue: Function as PropType<SolNumberDisplayFormatter>,
+    useGrouping: { type: Boolean, default: true },
     unit: { type: String, default: '' },
   },
   slots: Object as SlotsType<SolNumberInputSlots>,
@@ -222,7 +224,8 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
   },
   setup(p, { attrs, slots, emit, expose }) {
     const l = useSolLocale(() => p.locale)
-    const draft = ref(p.modelValue === null ? '' : formatSolNumber(p.modelValue, l.value))
+    const numberText = (value: number) => formatSolNumber(value, l.value, { useGrouping: p.useGrouping })
+    const draft = ref(p.modelValue === null ? '' : numberText(p.modelValue))
     const localError = ref(''), focused = ref(false), input = ref<HTMLInputElement | null>(null)
     const numeric = () => draft.value.trim() === '' ? null : parseSolNumber(draft.value, l.value) ?? NaN
     function numberMessage(value: number | null) {
@@ -240,7 +243,7 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
       localError.value = error
       if (error) { emit('invalid', error); syncValidity(); return false }
       const value = numeric()
-      draft.value = value === null ? '' : formatSolNumber(value, l.value)
+      draft.value = value === null ? '' : numberText(value)
       if (value !== p.modelValue) { emit('update:modelValue', value); emit('change', value) }
       return !p.error && !p.serverError && !p.errorMessages.length
     }
@@ -255,18 +258,22 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
       if (fieldDisabled(p) || fieldReadonly(p)) return
       const next = nudgeValue(direction)
       if (next === null) return
-      draft.value = formatSolNumber(next, l.value)
+      setNumber(next)
+    }
+    function setNumber(value: number) {
+      const element = input.value
+      const selection = element && document.activeElement === element
+        ? [element.selectionStart ?? 0, element.selectionEnd ?? 0, element.selectionDirection ?? undefined] as const : null
+      draft.value = numberText(value)
       commit()
-      input.value?.focus()
+      if (selection) void nextTick(() => element?.setSelectionRange(...selection))
     }
     const isAllowed = (value: number) => Number.isFinite(value) &&
       (p.min === undefined || Number.isFinite(p.min)) &&
       (p.max === undefined || Number.isFinite(p.max)) && !numberMessage(value)
     function setPreset(value: number): boolean {
       if (fieldDisabled(p) || fieldReadonly(p) || !isAllowed(value)) return false
-      draft.value = formatSolNumber(value, l.value)
-      commit()
-      input.value?.focus()
+      setNumber(value)
       return true
     }
     const formatted = (value: number) => formatFieldDisplay(value, formatSolNumber(value, l.value), p.formatValue, l.value)
@@ -277,6 +284,15 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
     function beginEdit() {
       focused.value = !fieldReadonly(p) && !fieldDisabled(p)
       if (focused.value && p.formatValue && input.value) input.value.value = draft.value
+    }
+    const preserveEdit = (event: PointerEvent) => {
+      preserveInputFocus(event, input.value)
+    }
+    function edit(event: Event) {
+      if (fieldReadonly(p) || fieldDisabled(p)) return
+      const target = event.target as HTMLInputElement
+      draft.value = p.useGrouping && !(event as InputEvent).isComposing ? groupNumberInput(target) : target.value
+      if (localError.value) localError.value = message()
     }
     const validation = useSFieldValidation(p, numeric, {
       focus: () => input.value?.focus(), validateIntrinsic: commit,
@@ -290,12 +306,16 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
         if(p.modelValue!==null){emit('update:modelValue',null);emit('change',null)}
         emit('clear',{value:null,reason:'clear'})
       },
-      reconcile:()=>{draft.value=p.modelValue===null?'':formatSolNumber(p.modelValue,l.value);localError.value=''},
+      reconcile:()=>{draft.value=p.modelValue===null?'':numberText(p.modelValue);localError.value=''},
       validate:validation.validate,focus:validation.focus,element:()=>input.value,
     })
     watch(() => p.modelValue, value => {
-      draft.value = value === null ? '' : formatSolNumber(value, l.value)
+      draft.value = value === null ? '' : numberText(value)
       localError.value = ''
+    })
+    watch(() => p.useGrouping, () => {
+      const value = numeric()
+      if (!message()) draft.value = value === null ? '' : numberText(value)
     })
     watch(() => [draft.value, fieldError(p), p.required, p.min, p.max, p.step], () => nextTick(syncValidity))
     watch(() => [fieldDisabled(p), fieldReadonly(p)], () => {
@@ -303,7 +323,7 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
     })
     watch(l, () => {
       if (localError.value) localError.value = message()
-      if (document.activeElement !== input.value && !message()) draft.value = p.modelValue === null ? '' : formatSolNumber(p.modelValue, l.value)
+      if (document.activeElement !== input.value && !message()) draft.value = p.modelValue === null ? '' : numberText(p.modelValue)
       void nextTick(syncValidity)
     })
     onMounted(syncValidity)
@@ -328,10 +348,19 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
             'aria-valuenow': value !== null && Number.isFinite(value) && !message() ? value : undefined,
             'aria-valuetext': valueText, 'aria-invalid': error ? 'true' : undefined,
             'aria-describedby': fieldDescription(p, slots, error, [p.id + '-constraints', attrs['aria-describedby']].filter(Boolean).join(' ')),
-            onInput: (event: Event) => {
-              if (fieldReadonly(p) || fieldDisabled(p)) return
-              draft.value = (event.target as HTMLInputElement).value
-              if (localError.value) localError.value = message()
+            onInput: edit,
+            onCompositionend: edit,
+            onBeforeinput: (event: InputEvent) => {
+              const target = event.target as HTMLInputElement, start = target.selectionStart ?? 0
+              if (!p.useGrouping || fieldReadonly(p) || fieldDisabled(p) || target.selectionEnd !== start) return
+              const backward = event.inputType === 'deleteContentBackward'
+              if ((backward && target.value[start - 1] === ',') ||
+                (event.inputType === 'deleteContentForward' && target.value[start] === ',')) {
+                event.preventDefault()
+                const at = backward ? start - 2 : start
+                target.setRangeText('', at, at + 2, 'start')
+                edit(event)
+              }
             },
             onBlur: (event: FocusEvent) => {
               if (!fieldReadonly(p) && !fieldDisabled(p)) validation.validate()
@@ -352,11 +381,13 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
             h('button', {
             type: 'button', class: 'sol-button',
             disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(-1) === null,
+            onPointerdown: preserveEdit,
             'aria-label': p.label + ' ' + l.value.decrease, onClick: () => nudge(-1),
           }, '−'),
             h('button', {
             type: 'button', class: 'sol-button',
             disabled: fieldDisabled(p) || fieldReadonly(p) || nudgeValue(1) === null,
+            onPointerdown: preserveEdit,
             'aria-label': p.label + ' ' + l.value.increase, onClick: () => nudge(1),
           }, '+'),
           ]),
@@ -369,6 +400,7 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
             disabled: fieldDisabled(p) || fieldReadonly(p) || !!preset.disabled || !isAllowed(preset.value),
             label: preset.label ?? [formatted(preset.value), p.unit].filter(Boolean).join(' '),
             locale: p.locale, onClick: () => setPreset(preset.value),
+            onPointerdown: preserveEdit,
           }))) : null,
         h('span', { id: p.id + '-constraints', class: 'sol-hint' }, l.value.numberHelp(p.min, p.max, p.step)),
         ...fieldMessages(p, slots, error),
