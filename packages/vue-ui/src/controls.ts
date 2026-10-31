@@ -357,7 +357,7 @@ export const SNumberInput = /* @__PURE__ */ defineComponent({
             onPaste: (event: ClipboardEvent) => { pasted = event.clipboardData?.getData('text/plain') },
             onBeforeinput: (event: InputEvent) => {
               const target = event.target as HTMLInputElement, start = target.selectionStart ?? 0
-              if (!p.useGrouping || fieldReadonly(p) || fieldDisabled(p) || target.selectionEnd !== start) return
+              if (!p.useGrouping || fieldReadonly(p) || fieldDisabled(p) || target.selectionEnd !== start || parseSolNumber(draft.value, l.value) === null) return
               const backward = event.inputType === 'deleteContentBackward'
               if ((backward && target.value[start - 1] === ',') ||
                 (event.inputType === 'deleteContentForward' && target.value[start] === ',')) {
