@@ -263,7 +263,7 @@
     {
       "id": "progress",
       "route": "component",
-      "label": "진행 바와 원형 로딩",
+      "label": "가로 진행과 작업 영역 로딩",
       "source": "examples/vue-vuetify/src/recipes/progress.vue",
       "registration": "global",
       "components": [

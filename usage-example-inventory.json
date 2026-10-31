@@ -189,7 +189,7 @@
       "kind": "vue-recipe",
       "recipe": "progress.vue",
       "status": "typed-and-runtime-checked",
-      "title": "진행 바와 원형 로딩"
+      "title": "가로 진행과 작업 영역 로딩"
     },
     {
       "route": "component",

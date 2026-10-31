@@ -176,3 +176,9 @@ main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안
 - final-pipeline-rc3.log: 전체 library:prepare 10/10 종료 코드0. max gzip는 all_plugin 68387/68,608B; 나머지 예산도 기존 기준 통과.
 - rc3 최종 설치본 숫자 전체 회귀 및 실제 생성 docs의 Number/Time 3테마 경로 통과. malformed 쉼표 Backspace/Delete, 모델·caret·중간 붙여넣기·증감/직접 입력 포커스 포함. 수정 영향이 없는 Time/Calendar/Sortable 등의 실제 조작 근거는 앞선 동일 소스 검증을 재사용하고 최종 공개판에서 다시 끝간 조작한다.
 - CI41210744676은 새로운 삭제 결함 발견으로 취소됐고 업로드/Pages 미실행. 새 main 커밋의 CI와 실제 공개 URL 확인은 후속 결과로 남긴다. npm1.1.1/소비 앱 변경 보류, 물리 Android IME·스크린리더 미검증 유지.
+
+## Progress 메뉴·제목 문구 후속 보완
+
+독립 공개 검토에서 starter/?view=recipes&example=progress의 메뉴/h2에 옛 “진행 바와 원형 로딩”이 남은 것을 확인했다. 원인은 제목의 단일 원본 usage-example-inventory.json 미수정이었다. “가로 진행과 작업 영역 로딩”으로 바꾸고 build-usage-examples로 registry/예제 데이터/인벤토리를 재생성했다. Linear 설명의 불필요한 회전 표현도 “움직임”으로 정리했다. progress 키·기존 URL·독립 Circular 이름/API·하단 Loading Overlay는 유지한다.
+
+실제 소비 starter와 문서 산출물을 다시 빌드했고 recipe navigation·preview integration·public sample·51 API 계약 검사를 통과했다. 기존 artifact 경로에 새 npm pack 결과를 대조하는 immutable 검사를 통과하여 UI/Core 패키지 바이트 불변을 확인했다. UI 후보 SHA-256 cc7732deff0d653d1951c3c8681df87221737ae3f90c8c3919c207eef6d0a5ab 및 manifest/소비자 lock은 유지하며 불필요한 재동결/버전 변경을 하지 않는다. 실제 starter 메뉴/h2/내용 및 Circular 보존은 로컬·공개 Chrome에서 이 문서 수정 커밋을 기준으로 확인한다. npm 보류 유지.

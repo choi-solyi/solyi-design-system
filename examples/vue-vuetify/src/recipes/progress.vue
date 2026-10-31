@@ -41,7 +41,7 @@ const options = [
       label="아래 가로 진행 표시의 처리 중 반복 모션"
     />
     <p class="sol-hint">
-      반복 모션은 진행률을 모르는 처리 중 상태에 적용합니다. 기기의 모션 감소 설정에서는 회전·이동을
+      반복 모션은 진행률을 모르는 처리 중 상태에 적용합니다. 기기의 모션 감소 설정에서는 움직임을
       줄이고 상태 문구를 유지합니다.
     </p>
     <SCheckbox id="recipe-progress-value" v-model="showValue" label="수치 표시" />

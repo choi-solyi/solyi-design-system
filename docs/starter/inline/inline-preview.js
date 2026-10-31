@@ -24456,7 +24456,7 @@ var Mw = $x(DS), Nw = /* @__PURE__ */ H({
 						"onUpdate:modelValue": u[1] ||= (e) => /* @__PURE__ */ P(n) ? n.value = e : null,
 						label: "아래 가로 진행 표시의 처리 중 반복 모션"
 					}, null, 8, ["modelValue"]),
-					u[12] ||= K("p", { class: "sol-hint" }, " 반복 모션은 진행률을 모르는 처리 중 상태에 적용합니다. 기기의 모션 감소 설정에서는 회전·이동을 줄이고 상태 문구를 유지합니다. ", -1),
+					u[12] ||= K("p", { class: "sol-hint" }, " 반복 모션은 진행률을 모르는 처리 중 상태에 적용합니다. 기기의 모션 감소 설정에서는 움직임을 줄이고 상태 문구를 유지합니다. ", -1),
 					q(m, {
 						id: "recipe-progress-value",
 						modelValue: L(r),

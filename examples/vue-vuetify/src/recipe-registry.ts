@@ -113,7 +113,7 @@ export const recipeLabels = {
   'content-tabs': '탭과 패널',
   'action-menu': '행동 메뉴',
   'identity-progress': '사용자와 단계',
-  progress: '진행 바와 원형 로딩',
+  progress: '가로 진행과 작업 영역 로딩',
   'progress-circular': '원형 진행과 로딩',
   time: '시간 선택',
   'chart-tree': '차트와 트리',
