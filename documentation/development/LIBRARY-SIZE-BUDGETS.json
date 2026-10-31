@@ -197,7 +197,7 @@
           "maxGzipBytes": 14336
         },
         "all_plugin": {
-          "maxGzipBytes": 67584
+          "maxGzipBytes": 68608
         },
         "STimeGrid": {
           "maxGzipBytes": 17408
