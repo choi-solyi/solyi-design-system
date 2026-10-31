@@ -47,9 +47,9 @@
 |---|---|
 | SNumberInput | 유일한 공통 -/+ 및 숫자 preset 구현. 포인터는 입력 focus 호출 없음/이미 편집 중 caret 보존/키보드 버튼/직접 입력/clear를 실제 Chrome에서 확인 |
 | STimePicker | 펼침은 비편집 listbox/select에 focus, 입력 클릭은 편집. clear 포인터 focus 제거. 16 표시 경로 및 데스크톱 클릭→키보드 실제 실행 |
-| SDatePicker | clear의 동일 포인터 guard 적용. 열기 버튼·달력 roving focus와 Alt+Down 직접 입력 복귀 보존. 모든 presentation의 이번 최종 설치본 실제 검사는 미실행 |
-| STextField, STextarea, SSelect | 공통 clear guard 적용. explicit clear()/focus()와 키보드 clear 계약 보존. 이번 브라우저 spy는 Number 경유 공통 경로를 확인; 세 컴포넌트별 전 경로 미실행 |
-| SAutocomplete, SCombobox, SMultiSelect | 입력·검색·선택 후 query focus는 의도된 검색 작업이며 제거하지 않음. clear는 공통 guard. 선택·검색의 이번 전체 재실행은 미실행 |
+| SDatePicker | clear의 동일 포인터 guard 적용. 열기 버튼·달력 roving focus와 Alt+Down 직접 입력 복귀 보존. 최신 설치본 390px에서 legacy/auto/popover/dialog 열기·취소·재열기, 포인터/키보드 clear·명시적 focus 통과; Date 넓은 화면별 전수는 미실행 |
+| STextField, STextarea, SSelect | 공통 clear guard 적용. explicit clear()/focus()와 키보드 clear 계약 보존. 최신 설치본에서 세 컴포넌트 각각 포인터 clear/키보드 Enter clear/명시적 focus 통과; disabled/readonly 전 조합은 미실행 |
+| SAutocomplete, SCombobox, SMultiSelect | 입력·검색·선택 후 query focus는 의도된 검색 작업이며 제거하지 않음. clear는 공통 guard. 각 포인터/키보드 clear·명시적 focus는 최신 설치본 통과. 검색/선택 전체 상태 재실행은 미실행 |
 | SCheckbox, SSwitch, SRadioGroup, SSegmentedControl, SRangeSlider | focus는 비텍스트 선택/범위 입력 또는 roving·검증 복귀. 텍스트 편집기 강제 focus/공통 -/+ 해당 없음; 이번 전 상태 실제 재실행 미실행 |
 | SFileInput | 파일 선택/미리보기의 버튼·파일 입력, 숫자/텍스트 키보드 강제 focus 해당 없음 |
 | SForm | 오류 제출에 대한 첫 invalid field focus는 의도된 오류 복귀이므로 보존 |
@@ -76,3 +76,34 @@
 - 설치본 소비 타입 fixture(skipLibCheck:true)는 Number useGrouping 및 Time pickerPresentation/presentation 조합·negative boolean 타입을 통과했다. 자체 선언 skipLibCheck:false 통과와 구분한다.
 - 기존 설치본 TimePicker 48경로 및 TimeGrid 3테마 CRUD/포인터·터치 이동/resize/취소/현재 시각선/controlled/키보드 회귀 통과.
 - 임시 tarball SHA-256 409056528bdee766913a70e4f0234043afecbeaebadb66496e0564c66decd8cd, 5989794B. 정식 release manifest/내부 예제 file dependency는 아직 이전 후보를 유지한다. 크기 예산 결정 후 정식 동결과 최종 일치 검사가 필요하다.
+
+## 독립 검토 후 후속 수정 · 최종 수치
+
+이 절이 앞선 임시 수치/검증 범위를 대체한다. 예산은 여전히 미변경이며 공개 배포/정식 동결은 미실행이다.
+
+- 복제 확인 그룹: 설치본 computed display가 block인 것을 재현했다. sol-actions 기반 클래스를 추가해 flex/wrap/gap을 기존 토큰으로 재사용한다. 3테마 실제 설치본에서 primary 우측 끝, 취소→복제 DOM/시각 순서, 모바일 tap, 넘침 없음과 preview/수락/거절/취소를 검증했다. 스크린샷도 직접 확인했다.
+- 숫자 잘못된 초안: ',' 입력 caret 1→0을 실제 설치본에서 재현했다. 그룹화 결과가 원문과 같으면 value/selection을 다시 쓰지 않는다. ',,', '1,,2' 끝 caret과 backward 선택 범위도 보존한다. 기존 중간 입력·Backspace/Delete·붙여넣기·숫자 모델/오류 검사가 포함된 설치본 검사 통과.
+- 추가 발견: STextField clear의 mousedown이 Vuetify VTextField.onControlMousedown으로 전파되어 input.focus()를 불렀다. clear 버튼의 mousedown 전파만 중단한다. 검색·직접 입력·프로그램 focus 경로는 제거하지 않는다. 실제 설치본 spy로 수정 전 실패/수정 후 통과.
+- input-focus-paths-browser-check.mjs: 14경로 통과. STextField/Textarea/Select/Autocomplete/Combobox/MultiSelect 각 1 + Date/Time legacy/auto/popover/dialog 각 4. 포인터 clear 입력 focus 없음, 키보드 Enter clear 입력 복귀, 명시적 focus() 유지. Date 4표시 방식 열기→Escape→재열기→Escape 포함. open 이벤트 뒤 조작하여 렌더 준비 전 Escape 경합을 피한다. 실제 Android IME는 미검증이다.
+- core-action-layout-browser-check.mjs: Core 렌더러를 Vue 예제로 대체하는 문서 호스트만 비활성화한 로컬 문서에서 원본 HTML/CSS/이벤트를 실행했다. Form/오류 요약/Workflow/설정 1100·320px 8경로 + Workflow 이탈 확인 2경로의 주 액션 DOM 마지막/오른쪽 배치 통과. 이탈 확인 버튼 그룹의 정렬 누락도 추가 수정했다. 실제 공개 문서 검증과 구분한다. Core Date/Stepper/Motion 및 나머지 Vue 액션 예제는 여전히 소스 조사만 완료한 범위다.
+- 마지막 설치 tarball 통합 21기록 통과. 두 후속 수정으로 영향을 받지 않는 기존 Time 48경로/TimeGrid 포인터·터치 전체검사는 이전 동일 기능 검사 결과를 재사용했고, 복제 footer/숫자/공통 clear를 최신 설치본에서 재검증했다.
+
+### 동일 도구·조건의 이전 후보 비교
+
+기준은 기존 동결 후보 439d336f…8696f5를 별도 ignored 경로에 읽기용으로 풀어 같은 Vite 8.3.4/peer external/minify/gzip9로 측정했다. 원본 후보는 변경하지 않았다.
+
+| import | 이전 gzip B | 최신 gzip B | 증가 B |
+|---|---:|---:|---:|
+| all_plugin | 67,568 | 68,215 | 647 |
+| SNumberInput (진단용) | 11,563 | 12,110 | 547 |
+| STimePicker (진단용) | 17,750 | 17,831 | 81 |
+| STextField (진단용) | 9,403 | 9,468 | 65 |
+| SCombobox | 12,583 | 12,639 | 56 |
+| STimeGrid | 17,214 | 17,297 | 83 |
+| SMonthCalendar | 12,121 | 12,157 | 36 |
+
+개별 import의 공통 코드는 겹치고 gzip 사전도 달라 증가량을 합산하면 안 된다. 이 비교는 변경별 한 줄의 독립 비용을 뜻하지 않는다. 숫자 초안 그룹화·선택 범위 보존이 가장 큰 증분이고, Time 입력/선택 분리·복제 확인·공통 clear 이벤트 처리도 기여한다. 새 의존성은 없다. SVG 공통화는 기능/크기/aria를 유지하는 안전한 최적화로 남겼다. 추가적인 광범위 이벤트 refactor는 효과가 작아 되돌렸다. 검사·기능·읽기 쉬운 문구를 희생하는 미세 최적화는 진행하지 않는다.
+
+- 실제 설치본 gate: 68,215 > 67,584B로 실패(631B 초과). 측정한 기존 8개 개별 import는 모두 기존 한도 내, STimeGrid 17,297/17,408B. 기존 버전/예산/검사 파일 diff 없음.
+- 권고안(승인 대기): 1.1.1 all_plugin 한도만 67KiB=68,608B로 검토하면 최신 실측 대비 393B 여유다. 기존1.0/1.1 및 개별 import 한도는 유지한다. 새 한도 승인과 UX 통과는 별개이며 승인만으로 최종 출시 완료가 되지 않는다.
+- 최신 임시 tarball: SHA-256 c61d235394d6dbe5d2c1f6a124b0f839b4090b66cf310324c32fcd3758ef05d1, 5,989,802B. 이는 정식 동결 artifact가 아니다. 예산 결정 후 canonical 소비자/manifest/docs 동기화와 전체 필수 pipeline, main/공개 배포 검증이 남는다. npm 1.1.1 게시·소비 앱 변경은 계속 보류한다.

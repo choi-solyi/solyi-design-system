@@ -580,7 +580,7 @@ export const STimeGrid = /* @__PURE__ */ defineComponent({
               )
             : null,
           !p.readonly ? editor.status() : null,
-          editor.state.value?.action === 'duplicate' ? h('div', {class:'sol-actions--commit sol-ui-time-grid-copy-actions',role:'group','aria-label':l.value.timeGridDuplicate}, [
+          editor.state.value?.action === 'duplicate' ? h('div', {class:'sol-actions sol-actions--commit sol-ui-time-grid-copy-actions',role:'group','aria-label':l.value.timeGridDuplicate}, [
             h('span', {class:'sol-hint'}, l.value.timeGridPreview),
             h('button', {type:'button',class:'sol-button',onClick:editor.cancel}, l.value.timeGridCancel),
             h('button', {type:'button',class:'sol-button primary',onClick:editor.commit}, l.value.timeGridDuplicate),

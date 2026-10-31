@@ -5,15 +5,17 @@ export function groupNumberDraft(value: string): string {
 }
 
 export function groupNumberInput(input: HTMLInputElement): string {
+  const value = groupNumberDraft(input.value)
+  if (value === input.value) return value
   const start = input.selectionStart ?? input.value.length, end = input.selectionEnd ?? start
   const positions = [start, end].map(position => input.value.slice(0, position).replaceAll(',', '').length)
-  const value = groupNumberDraft(input.value)
+  const direction = input.selectionDirection
   input.value = value
   const caret = (count: number) => {
     let index = 0
     while (index < value.length && count > 0) if (value[index++] !== ',') count--
     return index
   }
-  input.setSelectionRange(caret(positions[0]), caret(positions[1]), input.selectionDirection ?? undefined)
+  input.setSelectionRange(caret(positions[0]), caret(positions[1]), direction ?? undefined)
   return value
 }

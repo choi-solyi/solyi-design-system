@@ -148,7 +148,7 @@ export function useInputControl(p: Props, slots: Slots, options: Options) {
               type: 'button',
               class: 'sol-button sol-ui-input-clear',
               'aria-label': p.label + ' ' + locale.clear,
-              onMousedown: (event: MouseEvent) => event.preventDefault(),
+              onMousedown: (event: MouseEvent) => { event.preventDefault(); event.stopPropagation() },
               onPointerdown: (event: PointerEvent) => preserveInputFocus(event, options.element()),
               onClick: clear,
             },
