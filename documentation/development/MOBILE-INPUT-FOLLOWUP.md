@@ -182,3 +182,22 @@ main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안
 독립 공개 검토에서 starter/?view=recipes&example=progress의 메뉴/h2에 옛 “진행 바와 원형 로딩”이 남은 것을 확인했다. 원인은 제목의 단일 원본 usage-example-inventory.json 미수정이었다. “가로 진행과 작업 영역 로딩”으로 바꾸고 build-usage-examples로 registry/예제 데이터/인벤토리를 재생성했다. Linear 설명의 불필요한 회전 표현도 “움직임”으로 정리했다. progress 키·기존 URL·독립 Circular 이름/API·하단 Loading Overlay는 유지한다.
 
 실제 소비 starter와 문서 산출물을 다시 빌드했고 recipe navigation·preview integration·public sample·51 API 계약 검사를 통과했다. 기존 artifact 경로에 새 npm pack 결과를 대조하는 immutable 검사를 통과하여 UI/Core 패키지 바이트 불변을 확인했다. UI 후보 SHA-256 cc7732deff0d653d1951c3c8681df87221737ae3f90c8c3919c207eef6d0a5ab 및 manifest/소비자 lock은 유지하며 불필요한 재동결/버전 변경을 하지 않는다. 실제 starter 메뉴/h2/내용 및 Circular 보존은 로컬·공개 Chrome에서 이 문서 수정 커밋을 기준으로 확인한다. npm 보류 유지.
+
+
+## 2026-11-02 문서 메뉴 바깥 터치 포커스
+
+- 기준: main 58c0fb9, 작업 트리 clean에서 시작. 패키지/후보 파일 변경 없음.
+- 로컬 Chrome 475px·320px에서 빈 영역 터치 후 main-content 포커스를 재현. 기준 코드에는 외부 닫기 처리가 없어서 hidden=false였음. 실기기 보고의 닫힘까지 동일 재현했다고 판단하지 않음.
+- site/topics.js: 외부 click의 기본 포커스 이후 닫기. 빈 영역은 열기 버튼에 preventScroll로 복귀하고 입력/링크/버튼/명시적 사용자 포커스는 보존. 메뉴 항목 선택의 제목 포커스와 Escape 계약 유지.
+- 실행: node scripts/mobile-navigation-check.mjs, node scripts/mobile-menu-focus-browser-check.mjs --baseline, node scripts/mobile-menu-focus-browser-check.mjs. 475px·320px의 Escape/빈 영역 touch·mouse/입력·링크·버튼·사용자 지정 focus/트리거 재클릭/현재 메뉴 항목 선택 통과.
+- 증거: qa-output/mobile-menu-focus/{baseline,results}.json 및 475.png/320.png. 브라우저 검사는 docs 셸 + 현재 topics.js만 사용하며 패키지/생성 문서는 수정하지 않음.
+- 실제 Android 기기·IME·스크린리더 재검증은 미실행. 기존 물리 기기 QA와 로컬 에뮬레이션을 구분.
+- 이번 범위는 로컬 수정·검증만. commit/push/공개 배포/npm 게시/소비 앱 변경 미실행.
+
+### 공개 반영 승인 후 최종 확인
+
+- 원격 main도 58c0fb9로 동일함을 확인한 뒤 이번 메뉴 수정만 반영.
+- npm run build/check 통과. 생성 docs/topics.js와 site/topics.js SHA256은 모두 faf4f9fdb19ed9007aec17dab66f4cd2de038334f6b5339450acdb7bc8977470.
+- node scripts/mobile-menu-focus-browser-check.mjs --built: 475px·320px의 모든 포커스 흐름 통과. --url/--commit 인자로 동일 검사를 실제 공개 문서에서도 실행 가능.
+- 동결 1.1.1 후보 SHA256 cc7732deff0d653d1951c3c8681df87221737ae3f90c8c3919c207eef6d0a5ab 유지. 문서 전용 수정이며 npm 게시/소비 앱 변경 없음.
+- 최종 npm test 전체 통과(기존 DOM/내비게이션/접근성 상태/문서·릴리즈 이력 검사 포함). 실제 렌더 포커스는 별도 Chrome 결과로 확인.

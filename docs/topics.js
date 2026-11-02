@@ -157,6 +157,17 @@ export function presentTopics(root,route){
  mobileButton.addEventListener('click',()=>{primary.hidden=!primary.hidden;mobileButton.setAttribute('aria-expanded',String(!primary.hidden));},{signal});
  primary.addEventListener('click',e=>{const a=e.target.closest('a');if(a?.hash===location.hash){e.preventDefault();go(location.hash.split('/')[1]||'',true);}},{signal});
  primary.addEventListener('keydown',e=>{if(e.key==='Escape'&&media.matches){e.preventDefault();closeMobile(true);}},{signal});
+ // Let the pointer's native focus/activation finish before dismissing. A blank
+ // main (tabindex=-1) is not an intentional destination; inputs and links are.
+ function dismissOutside(event){
+  if(!media.matches||primary.hidden||primary.contains(event.target)||mobileButton.contains(event.target))return;
+  const destination=event.target.closest('a[href],area[href],button,input:not([type="hidden"]),select,textarea,summary,label,[contenteditable]:not([contenteditable="false"]),[tabindex]:not([tabindex="-1"])');
+  closeMobile();
+  const focused=document.activeElement;
+  const intentionalFocus=focused!==mobileButton&&!primary.contains(focused)&&focused?.matches('a[href],button,input,select,textarea,summary,[contenteditable]:not([contenteditable="false"]),[tabindex]:not([tabindex="-1"])');
+  if(!destination&&!intentionalFocus)mobileButton.focus({preventScroll:true});
+ }
+ document.addEventListener('click',dismissOutside,{signal});
  function measure(){document.documentElement.style.setProperty('--sol-shell-header-height',document.querySelector('.topbar').getBoundingClientRect().height+'px');document.documentElement.style.setProperty('--sol-document-offset',offset()+'px');queueTrack();}const observer=typeof ResizeObserver==='function'?new ResizeObserver(measure):null;observer?.observe(document.querySelector('.topbar'));measure();window.addEventListener('scroll',queueTrack,{passive:true,signal});window.addEventListener('resize',measure,{signal});media.addEventListener('change',responsive,{signal});
  const api={go};activeDocumentNavigation=api;responsive();setActive(resolveDocumentLocation(location.hash).anchor);
  return()=>{controller.abort();observer?.disconnect();document.documentElement.style.removeProperty('--sol-shell-header-height');if(frame)cancelAnimationFrame(frame);if(activeDocumentNavigation===api)activeDocumentNavigation=null;primary.hidden=false;for(const item of branches){item.link.hidden=false;item.branch.before(item.link);item.branch.remove();}mobileButton.remove();primary.removeAttribute('id');document.documentElement.style.removeProperty('--sol-document-offset');};
