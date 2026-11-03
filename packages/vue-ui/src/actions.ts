@@ -14,13 +14,24 @@ const updateOpen=(_v:boolean)=>true,selectMenu=(_id:string)=>true,opened=()=>tru
 const actionEmits={'update:open':updateOpen,select:selectMenu,open:opened,close:closed};
 const actionProps={id:actionId,label:actionLabel,items:actionItems,disabled:Boolean,readonly:Boolean,open:actionOpen,locale:Object as PropType<Partial<SolLocale>>};
 export function useActionMenu(p:ActionProps,emit:MenuEmit,root:Ref<HTMLElement|null>){
- const local=ref(false),expanded=computed(()=>!p.disabled&&!p.readonly&&p.items.some(item=>!item.disabled)&&(p.open??local.value)),panel=ref<HTMLElement|null>(null),active=ref(''),position=ref({left:'8px',top:'8px'}),buttons=new Map<string,HTMLElement>();let opener:HTMLElement|null=null,anchor:HTMLElement|null=null,point:{x:number;y:number}|null=null,reason:SolMenuCloseReason='programmatic',restore=true,requestedOpen=false,buffer='',bufferTimer:ReturnType<typeof setTimeout>|undefined,disposed=false;
+ const local=ref(false),expanded=computed(()=>!p.disabled&&!p.readonly&&p.items.some(item=>!item.disabled)&&(p.open??local.value)),panel=ref<HTMLElement|null>(null),active=ref(''),position=ref<{left:string;top:string;maxHeight?:string}>({left:'8px',top:'8px'}),buttons=new Map<string,HTMLElement>();let opener:HTMLElement|null=null,point:{x:number;y:number}|null=null,reason:SolMenuCloseReason='programmatic',restore=true,requestedOpen=false,buffer='',bufferTimer:ReturnType<typeof setTimeout>|undefined,disposed=false;
+ let observer:ResizeObserver|undefined;
  const enabled=()=>p.items.filter(i=>!i.disabled);
  function request(value:boolean){if(p.open===undefined)local.value=value;emit('update:open',value);}
- function locate(){if(!expanded.value||!panel.value)return;const b=panel.value.getBoundingClientRect(),r=anchor?.getBoundingClientRect(),x=point?.x??r?.left??8,y=point?.y??r?.bottom??8;position.value={left:Math.max(8,Math.min(x,window.innerWidth-b.width-8))+'px',top:Math.max(8,Math.min(y+4,window.innerHeight-b.height-8))+'px'};}
+ function locate(){
+  const menu=panel.value;if(!expanded.value||!menu)return;
+  const bounds=menu.getBoundingClientRect(),rect=opener?.getBoundingClientRect(),viewport=window.innerHeight;
+  const space=(value:number)=>Math.max(0,Math.min(value,viewport-16));
+  // scrollHeight retains the full content height after an earlier size constraint.
+  const height=menu.scrollHeight+bounds.height-menu.clientHeight;
+  // Available space includes an 8px viewport inset and a 4px anchor gap.
+  const below=space(viewport-(point?.y??rect?.bottom??8)-12),above=space((point?.y??rect?.top??8)-12),down=height<=below||below>=above;
+  const available=down?below:above;
+  position.value={left:Math.max(8,Math.min(point?.x??rect?.left??8,window.innerWidth-bounds.width-8))+'px',top:(down?viewport-8-available:8+available-Math.min(height,available))+'px',maxHeight:available+'px'};
+ }
  function focusItem(){buttons.get(active.value)?.focus();}
  function showPanel(){try{panel.value?.showPopover?.();}catch{}locate();focusItem();}
- function open(from:HTMLElement|null,coordinates?:{x:number;y:number},last=false){if(p.disabled||p.readonly||!enabled().length)return;requestedOpen=true;opener=from;anchor=from;point=coordinates||null;active.value=(last?enabled().at(-1):enabled()[0])?.id||'';if(expanded.value){requestedOpen=false;locate();void nextTick(focusItem);return;}request(true);}
+ function open(from:HTMLElement|null,coordinates?:{x:number;y:number},last=false){if(p.disabled||p.readonly||!enabled().length)return;requestedOpen=true;opener=from;point=coordinates||null;active.value=(last?enabled().at(-1):enabled()[0])?.id||'';if(expanded.value){requestedOpen=false;locate();void nextTick(focusItem);return;}request(true);}
  function close(why:SolMenuCloseReason='programmatic',returnFocus=true){if(!expanded.value)return;reason=why;restore=returnFocus;request(false);}
  function choose(item:SolMenuItem){if(p.disabled||p.readonly||item.disabled)return;emit('select',item.id);close('select');}
  function key(e:KeyboardEvent){if(e.isComposing)return;const list=enabled(),i=list.findIndex(x=>x.id===active.value);let n:number|undefined;if(e.key==='Escape'){e.preventDefault();e.stopPropagation();close('escape');return;}if(e.key==='Tab'){close('tab',false);return;}if(e.key==='Home')n=0;else if(e.key==='End')n=list.length-1;else if(e.key==='ArrowDown')n=(i+1)%list.length;else if(e.key==='ArrowUp')n=(i-1+list.length)%list.length;else if(e.key.length===1&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&e.key!==' '){clearTimeout(bufferTimer);buffer+=e.key.toLowerCase();bufferTimer=setTimeout(()=>buffer='',600);const start=(i+1+list.length)%list.length;for(let j=0;j<list.length;j++){const k=(start+j)%list.length;if(list[k].label.toLowerCase().startsWith(buffer)){n=k;break;}}}if(n!==undefined&&list[n]){e.preventDefault();active.value=list[n].id;focusItem();}}
@@ -35,11 +46,12 @@ export function useActionMenu(p:ActionProps,emit:MenuEmit,root:Ref<HTMLElement|n
    close('outside',e.type==='click');
   }
  };
- watch(expanded,async(value,old)=>{if(value){if(!requestedOpen&&typeof document!=='undefined'){opener=document.activeElement as HTMLElement;anchor=opener;point=null;}requestedOpen=false;if(!enabled().some(i=>i.id===active.value))active.value=enabled()[0]?.id||'';await nextTick();if(disposed||!expanded.value)return;showPanel();emit('open');}else if(old){const hadFocus=!!panel.value?.contains(document.activeElement)||reason==='outside';try{panel.value?.hidePopover?.();}catch{}clearTimeout(bufferTimer);buffer='';await nextTick();if(restore&&hadFocus&&blankFocus(document.activeElement))focusOpener();emit('close',reason);reason='programmatic';restore=true;requestedOpen=false;}});
- watch(()=>[p.disabled,p.readonly],()=>{if(p.disabled||p.readonly){reason='disabled';restore=true;request(false);}});watch(()=>p.items,async()=>{if(!expanded.value)return;if(!enabled().length){close();return;}if(!enabled().some(i=>i.id===active.value)){active.value=enabled()[0].id;await nextTick();focusItem();}},{deep:true});
+ watch(expanded,async(value,old)=>{if(value){if(!requestedOpen&&typeof document!=='undefined'){opener=document.activeElement as HTMLElement;point=null;}requestedOpen=false;if(!enabled().some(i=>i.id===active.value))active.value=enabled()[0]?.id||'';await nextTick();if(disposed||!expanded.value)return;showPanel();emit('open');}else if(old){const hadFocus=!!panel.value?.contains(document.activeElement)||reason==='outside';try{panel.value?.hidePopover?.();}catch{}clearTimeout(bufferTimer);buffer='';await nextTick();if(restore&&hadFocus&&blankFocus(document.activeElement))focusOpener();emit('close',reason);reason='programmatic';restore=true;requestedOpen=false;}});
+ watch(()=>[p.disabled,p.readonly],()=>{if(p.disabled||p.readonly){reason='disabled';restore=true;request(false);}});watch(()=>p.items,()=>{if(!expanded.value)return;if(!enabled().length){close();return;}const changed=!enabled().some(i=>i.id===active.value);if(changed)active.value=enabled()[0].id;locate();if(changed)focusItem();},{deep:true,flush:'post'});
+ watch(panel,element=>{observer?.disconnect();if(element&&typeof ResizeObserver==='function'){observer??=new ResizeObserver(()=>requestAnimationFrame(locate));observer.observe(element);}});
  function bind(method:'addEventListener'|'removeEventListener'){document[method]('click',outside);document[method]('focusin',outside);window[method]('resize',locate);document[method]('scroll',locate,true);}
  onMounted(()=>{bind('addEventListener');if(expanded.value){opener=document.activeElement as HTMLElement;active.value=enabled()[0]?.id||'';void nextTick(showPanel);}});
- onBeforeUnmount(()=>{disposed=true;clearTimeout(bufferTimer);bind('removeEventListener');if(panel.value?.contains(document.activeElement))focusOpener();try{panel.value?.hidePopover?.();}catch{}});
+ onBeforeUnmount(()=>{disposed=true;observer?.disconnect();clearTimeout(bufferTimer);bind('removeEventListener');if(panel.value?.contains(document.activeElement))focusOpener();try{panel.value?.hidePopover?.();}catch{}});
  const render=()=>expanded.value?h('div',{ref:panel,id:p.id+'-menu',popover:'manual',role:'menu','aria-label':p.label,class:'sol-ui-action-menu',style:position.value,onKeydown:key},p.items.map(item=>h('button',{ref:(el:unknown)=>{if(el)buttons.set(item.id,el as HTMLElement);else buttons.delete(item.id);},id:p.id+'-item-'+item.id,type:'button',role:'menuitem',class:['sol-button subtle',item.danger?'sol-ui-menu-danger':''],'aria-disabled':item.disabled?'true':undefined,tabindex:!item.disabled&&active.value===item.id?0:-1,onFocus:()=>{if(!item.disabled)active.value=item.id;},onClick:()=>choose(item)},item.label))):null;
  return {expanded,open,close,render};
 }

@@ -1,0 +1,234 @@
+{
+  "status": "retired; historical evidence only, not loaded by verification",
+  "retiredOn": "2026-11-03",
+  "reason": "User requested removal of internal numerical size blockers without external or measured performance constraints",
+  "previousPolicy": {
+    "compression": "Node gzipSync level 9; Vite 8.3.4 minify:true for peer-external named imports",
+    "versions": {
+      "1.0.0": {
+        "baseline": "Frozen release-assets/1.0.0; original 176k character gate unchanged",
+        "components": [
+          "SForm",
+          "SContainer",
+          "SRow",
+          "SCol",
+          "SCard",
+          "SAlert",
+          "STree",
+          "SProgressLinear",
+          "SProgressCircular",
+          "SBtn",
+          "STextField",
+          "SDialog",
+          "SDataTable",
+          "SCheckbox",
+          "SRadioGroup",
+          "SSwitch",
+          "SSelect",
+          "STextarea",
+          "SNumberInput",
+          "STabs",
+          "SSnackbar",
+          "SDatePicker",
+          "STimePicker",
+          "SSegmentedControl",
+          "SMultiSelect",
+          "SRangeSlider",
+          "SSplitBtn",
+          "SContextMenu",
+          "SResizableSplitPane",
+          "STooltip",
+          "SPopover",
+          "SAccordion",
+          "SFileInput",
+          "SAutocomplete",
+          "SBreadcrumbs",
+          "SAvatar",
+          "SStepper",
+          "SBarChart"
+        ],
+        "maxCharactersExclusive": 176000
+      },
+      "1.1.0": {
+        "baseline": "e3a0dc3 (50 public APIs), completed approved scope; installed tarball measurements in FINAL-SIZE-RESULT.json",
+        "components": [
+          "STimeGrid",
+          "SPagination",
+          "SLoadingOverlay",
+          "SEmptyState",
+          "SConfirmAction",
+          "SMonthCalendar",
+          "SSortableList",
+          "SChip",
+          "SBadge",
+          "SIcon",
+          "SIconBtn",
+          "SForm",
+          "SContainer",
+          "SRow",
+          "SCol",
+          "SCard",
+          "SAlert",
+          "STree",
+          "SProgressLinear",
+          "SProgressCircular",
+          "SBtn",
+          "STextField",
+          "SDialog",
+          "SDataTable",
+          "SCheckbox",
+          "SRadioGroup",
+          "SSwitch",
+          "SSelect",
+          "STextarea",
+          "SNumberInput",
+          "STabs",
+          "SSnackbar",
+          "SDatePicker",
+          "STimePicker",
+          "SSegmentedControl",
+          "SMultiSelect",
+          "SRangeSlider",
+          "SSplitBtn",
+          "SContextMenu",
+          "SResizableSplitPane",
+          "STooltip",
+          "SPopover",
+          "SAccordion",
+          "SFileInput",
+          "SAutocomplete",
+          "SCombobox",
+          "SBreadcrumbs",
+          "SAvatar",
+          "SStepper",
+          "SBarChart"
+        ],
+        "maxCharactersExclusive": 300000,
+        "maxGzipBytes": 76800,
+        "maxTotalJavaScriptBytes": 330000,
+        "maxTotalJavaScriptGzipBytes": 83968,
+        "imports": {
+          "SIcon": {
+            "maxGzipBytes": 8192
+          },
+          "SCombobox": {
+            "maxGzipBytes": 14336
+          },
+          "all_plugin": {
+            "maxGzipBytes": 67584
+          },
+          "STimeGrid": {
+            "maxGzipBytes": 17408
+          },
+          "SMonthCalendar": {
+            "maxGzipBytes": 13312
+          },
+          "SPagination": {
+            "maxGzipBytes": 9216
+          },
+          "SConfirmAction": {
+            "maxGzipBytes": 8192
+          },
+          "SLoadingOverlay": {
+            "maxGzipBytes": 13312
+          }
+        }
+      },
+      "1.1.1": {
+        "baseline": "0674273: all 30 improvements, 51 APIs; exact installed final tarball metrics in IMPROVEMENTS-30-SIZE-RESULT.json. All 1.1.0 caps retained; SBtnGroup named gzip 6779 bytes with 8192-byte cap.",
+        "components": [
+          "STimeGrid",
+          "SPagination",
+          "SLoadingOverlay",
+          "SEmptyState",
+          "SConfirmAction",
+          "SMonthCalendar",
+          "SSortableList",
+          "SChip",
+          "SBadge",
+          "SIcon",
+          "SIconBtn",
+          "SForm",
+          "SContainer",
+          "SRow",
+          "SCol",
+          "SCard",
+          "SAlert",
+          "STree",
+          "SProgressLinear",
+          "SProgressCircular",
+          "SBtnGroup",
+          "SBtn",
+          "STextField",
+          "SDialog",
+          "SDataTable",
+          "SCheckbox",
+          "SRadioGroup",
+          "SSwitch",
+          "SSelect",
+          "STextarea",
+          "SNumberInput",
+          "STabs",
+          "SSnackbar",
+          "SDatePicker",
+          "STimePicker",
+          "SSegmentedControl",
+          "SMultiSelect",
+          "SRangeSlider",
+          "SSplitBtn",
+          "SContextMenu",
+          "SResizableSplitPane",
+          "STooltip",
+          "SPopover",
+          "SAccordion",
+          "SFileInput",
+          "SAutocomplete",
+          "SCombobox",
+          "SBreadcrumbs",
+          "SAvatar",
+          "SStepper",
+          "SBarChart"
+        ],
+        "maxCharactersExclusive": 300000,
+        "maxGzipBytes": 76800,
+        "maxTotalJavaScriptBytes": 330000,
+        "maxTotalJavaScriptGzipBytes": 83968,
+        "imports": {
+          "SIcon": {
+            "maxGzipBytes": 8192
+          },
+          "SCombobox": {
+            "maxGzipBytes": 14336
+          },
+          "all_plugin": {
+            "maxGzipBytes": 68608
+          },
+          "STimeGrid": {
+            "maxGzipBytes": 17408,
+            "approvedException": {
+              "id": "outside-focus-2026-11-03",
+              "maxGzipBytes": 17464,
+              "indexSha256": "3fe4cf284a24e876046370600e687feaa9c8eb0ac899aab211823c0e32b609a9",
+              "reason": "사용자가 승인한 현재 외부 빈 영역 포커스 수정본의 56B 예외. 다른 코드·버전·컴포넌트에는 적용하지 않음."
+            }
+          },
+          "SMonthCalendar": {
+            "maxGzipBytes": 13312
+          },
+          "SPagination": {
+            "maxGzipBytes": 9216
+          },
+          "SConfirmAction": {
+            "maxGzipBytes": 8192
+          },
+          "SLoadingOverlay": {
+            "maxGzipBytes": 13312
+          },
+          "SBtnGroup": {
+            "maxGzipBytes": 8192
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,24 +3,23 @@ import {readFile,readdir} from 'node:fs/promises'
 import {gzipSync} from 'node:zlib'
 import {createHash} from 'node:crypto'
 
-export const budgets=JSON.parse(await readFile(new URL('../documentation/development/LIBRARY-SIZE-BUDGETS.json',import.meta.url),'utf8'))
-export function assertSourceBudget(version,metrics,components){
- const budget=budgets.versions[version]
- assert.ok(budget,'No reviewed library size budget for '+version)
- assert.deepEqual([...components].sort(),[...budget.components].sort(),'Size budget covers this exact public component set')
- assert.ok(metrics.characters<budget.maxCharactersExclusive,'ESM component-source budget: '+metrics.characters+' < '+budget.maxCharactersExclusive+' characters ('+version+')')
- if(budget.maxGzipBytes!==undefined)assert.ok(metrics.gzipBytes<=budget.maxGzipBytes,'ESM gzip budget: '+metrics.gzipBytes+' <= '+budget.maxGzipBytes)
- if(budget.maxTotalJavaScriptBytes!==undefined)assert.ok(metrics.totalJavaScriptBytes<=budget.maxTotalJavaScriptBytes,'All shipped JS byte budget includes every entry and embedded Core')
- if(budget.maxTotalJavaScriptGzipBytes!==undefined)assert.ok(metrics.totalJavaScriptGzipBytes<=budget.maxTotalJavaScriptGzipBytes,'All shipped JS gzip sum budget includes every entry and embedded Core')
- return budget
+// Legacy filename retained for existing command paths. Numeric caps are retired.
+export const sizeProfiles=JSON.parse(await readFile(new URL('../documentation/development/LIBRARY-SIZE-BUDGETS.json',import.meta.url),'utf8'))
+export function assertComponentInventory(version,components){
+ const profile=sizeProfiles.versions[version]
+ assert.ok(profile,'No public component inventory for '+version)
+ assert.deepEqual([...components].sort(),[...profile.components].sort(),'Exact public component set remains a package contract')
+ return profile
 }
-export function assertImportBudget(version,name,metrics){
- const limit=budgets.versions[version]?.imports?.[name]
- assert.ok(limit,'No reviewed named-import budget for '+version+'/'+name)
- if(metrics.gzipBytes<=limit.maxGzipBytes)return
- const exception=limit.approvedException
- assert.ok(exception&&metrics.indexSha256===exception.indexSha256&&metrics.gzipBytes<=exception.maxGzipBytes,name+' peer-external gzip budget: '+metrics.gzipBytes+' <= '+limit.maxGzipBytes)
- return {id:exception.id,normalMaxGzipBytes:limit.maxGzipBytes,approvedMaxGzipBytes:exception.maxGzipBytes}
+export function assertMeasurement(metrics){
+ for(const [name,value]of Object.entries(metrics))assert.ok(Number.isFinite(value)&&value>=0,'Valid nonnegative size measurement: '+name)
+}
+export function assertMeasuredImport(version,name,metrics){
+ assert.ok(sizeProfiles.versions[version]?.imports.includes(name),'No named-import measurement entry for '+version+'/'+name)
+ assertMeasurement(metrics)
+}
+export function measurementDelta(metrics,reference){
+ return Object.fromEntries(Object.entries(metrics).filter(([name])=>Number.isFinite(reference?.[name])).map(([name,value])=>[name,value-reference[name]]))
 }
 export async function measureSource(directory){
  const source=await readFile(new URL('dist/index.js',directory),'utf8'),global=await readFile(new URL('dist/global.d.ts',directory),'utf8')

@@ -1,5 +1,7 @@
 # 1.1.0 최종 포함 범위의 크기 기준
 
+> 2026-11-03 정책 변경: 아래 용량 한도·예외·차단 설명은 당시 검증 이력입니다. 현재는 [크기 측정 정책](LIBRARY-SIZE-POLICY.md)에 따라 수치와 증감을 보고하며 숫자만으로 출시를 차단하지 않습니다. 기존 릴리즈/후보 파일과 비용량 검사는 보존합니다.
+
 사용자가 승인한 PURE 적용·새 버전 기준 정리의 후속입니다. 1.0.0의 38종·176,000자 한도와 동결 파일은 변경하지 않습니다. 초기 1.1.0 예산은 c440b03의 45종용이었으며 이후 승인된 Picker·Dialog와 ConfirmAction/EmptyState/LoadingOverlay/Pagination/TimeGrid를 모두 포함한 **정확히 50종**으로 범위를 확정합니다. 새 API 추가 시 이 집합 검사에서 다시 실패합니다.
 
 실제 npm pack tarball을 격리 설치해 Vite 8.3.4, production minify, Node gzip level 9로 측정했습니다. CSS·Vue·Vuetify를 제외한 컴포넌트 코드 크기이며 앱 전체 전송 크기와 다릅니다. 측정된 peer module 포함 수는 모든 probe에서 0입니다. [원시 결과](FINAL-SIZE-RESULT.json)를 따릅니다.

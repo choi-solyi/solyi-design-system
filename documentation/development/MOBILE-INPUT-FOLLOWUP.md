@@ -273,3 +273,36 @@ main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안
 - 생성 문서 실제경로 #component/scontext-menu와 starter/?view=recipes&example=action-menu를475/320px Chrome에서 검증. Components Context1 + Starter Split/Context2, 총6조합의 빈영역/임시 외부입력probe 포커스/ESC/선택/키보드호출/예제인스턴스 유지 통과. 외부입력probe는 테스트 중 DOM에만 추가·제거하며 앱 자료/저장소를 바꾸지 않음.
 - 기존 배치 제약을 구분: Starter ContextMenu는850px 높이에서 메뉴가 하단트리거를 덮어 재클릭이 불가능함. 충분한1200px 높이에서 재클릭 통과. 실제trigger hit-test와 두 rect를 기록하고 강제click이나 통과삭제로 숨기지 않음. 기존 Fold 보고의 충분한공간 조건과 구분하며 이번포커스수정 외의 배치코드는 변경하지 않음.
 - 실제 UI 증거 built-pages-results.json 및 built-*.png. full canonical 준비 로그 canonical-prepare.log. npm publish/외부소비4앱/실기기 조작은 미실행. CI 및 공개배포 결과는 원격반영 후 별도로 확인.
+
+
+### Fold 하단 메뉴가 트리거를 덮는 회귀 — 로컬 수정 (공개 반영 전)
+
+- 실기기 보고(704×797, 트리거 중심 약101,659)를 받았고, 이전 공개 커밋810f10b의 actions.ts/CSS를 고정한 Chrome 터치 fixture에서 같은 좌표 재터치가 가상 복제 항목을 선택하는 것을 재현했다. 이전 검증에서 화면을1200px로 늘려 재클릭만 통과시킨 방식은 실제 뷰포트 결함을 해결하지 못했다. 앞으로 검사 중 화면 높이를 늘리지 않고 열기 전 좌표의 hit-test와 select 증가량0을 확인한다.
+- 원인: 기존 locate가 뷰포트 하단을 넘는 메뉴를 위로 clamp하면서 트리거와 겹쳤다. SContextMenu/SSplitBtn 및 이를 사용하는 TimeGrid의 공유 useActionMenu 문제이며 문서 햄버거 포커스 문제와 다르다.
+- 변경: 앵커 위/아래 공간을 비교해 flip, 가용 높이에서 메뉴 내부 스크롤, 항목 변경·메뉴 크기 변경 시 위치 재계산. 메뉴에만 border-box를 지정해 Vuetify 전역 reset이 없는 소비자에서도 padding/border가 제한 높이 밖으로 나오지 않게 했다. 공개 props/events/API는 그대로다.
+- 실제 검증: 소스/새 tarball 설치본 각각704×797·475×750·320×640에서21배치(위·중간·아래·실기기 좌표·긴 목록·내용 높이 변경). 기존 baseline에서는 재터치 select+1, 수정본은0, 메뉴 닫힘과 트리거 포커스 복귀. 긴 목록은 내부 스크롤과End 키 도달 확인. 실제 Components Context1/Starter Split·Context2 ×3화면 총9조합에서 blank focus·외부입력 유지·Escape·선택·동일 좌표 재클릭·context key·인스턴스 유지 통과. 704 Starter/320 최소 소비자 열린 메뉴 캡처를 직접 확인했다. 높이 확대·force click을 사용하지 않았다.
+- 격리 QA 사본의 새 로컬 tarball SHA256 85fd756bfcff5fb9426dad7d5e76efc2b6b8932f9e4a93b7814175e244b0a2a9. 두 내부 소비자 새 설치·타입·빌드, 공유 메뉴/TimeGrid runtime·SSR 통과. 자체 선언55개 오류0; 외부 선언769개 기존 제약은 별도다.
+- 크기: ESM299602자/gzip76423B, 전체JS327603B/총gzip83705B, 전체plugin68565B로 기존 한도 이내. 8개 다른 import 통과. STimeGrid17610B는 정상17408B보다202B, 이전 산출물 한정 예외17464B보다146B 초과. 공식 게이트 exit1을 보존했고 한도·예외·hash를 변경하지 않았다. 기능검증 통과가 출시 파이프라인 통과를 뜻하지 않는다.
+- canonical rc4 원본 SHA256 3d0e12e0101634cf9700112bd71e009e72b6048e6f056c39d31a350e4abbb5ed 및 릴리즈 문서/manifest/index/내부 canonical소비자 포인터는 변경하지 않았다. 이번 QA tarball은 미동결 실험 산출물이며 공개 후보를 대체하지 않는다.
+- 현재 로컬 WIP만. 새 commit/push/Pages배포/npm게시/외부소비앱 변경 없음. 실제 Fold·Android IME·스크린리더 미실행. 크기 처리와 새 후보 보존·재동결/문서 정합성, 공개반영 범위 보고 후 후속 진행이 필요하다. 증거: qa-output/action-menu-focus/placement-verification.json 및 거기서 연결한 JSON/PNG. 재현 명령은 추적 중인 action-menu-focus-browser-check.mjs --placement와 action-menu-live-browser-check.mjs --local --commit=810f10bf57baded07c529142fcca12b3f38b26f0 --starter-dist=qa-output/action-menu-focus/package-validation/examples/vue-vuetify/dist 이다.
+
+
+### 하단 메뉴 배치 후속 최적화 — 기준 변경 없음
+
+- TimeGrid는 time-grid.ts:23에서 useActionMenu를 가져와270행에서 항목 수정·삭제·복제 메뉴에 사용한다. 최종 설치본 named import의 실제 번들 모듈은 solyi-ui/dist/index.js 및 core/date-only.js·icons.js다. 메뉴 popover/role/maxHeight는 남고 SContextMenu·SSplitBtn 컴포넌트 wrapper는 제거됐다. 불필요한 다른 메뉴 컴포넌트가 들어온 tree-shaking 실패가 아니다. placement-optimized-installed-size.json에 실제 모듈 경로/잔존 여부를 기록했다.
+- 동작을 유지하며 동일한 opener/anchor 상태를 하나로 합치고, observer를 panel 등장 시 한 번 생성하며, 항목 변경은 Vue post-render watcher에서 처리하도록 중복 nextTick 위치 계산을 정리했다. 가용 공간의 중복 clamp도 공통 계산으로 묶었다. ResizeObserver/flip/내부 스크롤/포커스/접근성·기존 예산 검사는 유지했다.
+- 단계별 TimeGrid gzip17610→17600→17598B. 마지막 값은 메모리 진단뿐 아니라 새 tarball 설치본의 공식 검사로 재확인. 최종 원본299485자/gzip76397B, 전체JS327486B/총gzip83679B, plugin68544B, 나머지8import 통과. TimeGrid만 정상17408B보다190B 초과, 이전 해시 한정17464B보다134B 초과다. 공식 검사 exit1 유지. 이전 예외를 새 hash에 적용하거나 한도를 바꾸지 않았다.
+- 최적화한 소스21배치/8focus조합, 최종 tarball21배치/실제 Components·Starter9조합을 재실행해 통과. 같은 좌표 재터치 select증가0, 외부 빈 곳 복귀와 외부 입력 포커스 유지, 긴 메뉴 스크롤/End도달·메뉴 크기 변경 유지. 두 소비 fixture 새 설치·타입·빌드, 최종 메뉴/TimeGrid runtime·SSR·자체 선언55개도 통과. 로그 및 정확한 소스/후보 해시는 placement-verification.json에 있다.
+- 최종 QA tarball SHA256 1fb7cfc44bc4bfe5fac992b604b896b1446ee21e6631d9ff57db98382cb1a030. 이전 rc4 및 첫 배치 검증용 tarball도 보존했다. 이 파일은 정식 동결 후보로 교체하지 않았다.
+- 현재 확인한 좁은 범위의 안전한 구조 정리로는 한도에 도달하지 못했다. 배치 관찰/스크롤·포커스 기능을 삭제하거나 읽기 어려운 압축으로 바이트를 맞추지 않는다. 추가 방안은 (1) 더 큰 공통 모듈 재설계의 별도 검토·회귀 비용을 감수하거나 (2) 이 수정 산출물에만 한정해17598B 예외를 검토하는 것이다. 후자는 기존 예외보다134B 추가이지만 아직 승인/설정하지 않았다.
+- 새 commit/push/공개 배포/npm/소비앱 변경 없음. 진행 중 명령 없음. 실제 Fold/Android IME/스크린리더 미실행. 공개 반영 전 크기 처리 결정·후보 보존/재동결·문서 동기화와 최종 전달 검증이 남아 있다.
+
+
+### 용량 차단 폐기 — 2026-11-03 현재 정책
+
+- 사용자 요청에 따라 [크기 측정 정책](LIBRARY-SIZE-POLICY.md)으로 전환했다. 기존 문자/raw/gzip/총JS/개별import/plugin 한도 및 해시별56B예외는 활성 설정·실패 검사에서 제거했다. 당시 한도 객체는 LIBRARY-SIZE-BUDGETS-HISTORY.json에 HEAD 원본과 동일하게 보존했다. 과거 PURE 비교의 임의50%감소 조건도 증감 보고로 바꿨으며 AST/SSR/identity/파일 검사는 유지했다.
+- 17KiB는9d7145a(2026-10-29 05:02KST)에서 당시 TimeGrid실측15847B에 여유를 둔 내부값이다. 최초176000자는2a402d4(10-23), 버전별 raw/gzip 한도는4ebfa99(10-28)에 도입됐다. Git author는 사용자 명의지만 사용자가 숫자를 직접 정했다는 뜻은 아니다. 이후 일부 상향/예외 승인은 있었으나 npm플랫폼 제약이나 성능SLO에 근거한 수치는 확인되지 않았다. 상세 이력·공식npm문서와 코드 경로는 정책 문서에 있다.
+- 측정 명령은 최신 QA설치본17598B(TimeGrid)/68544B(plugin)를 정상 보고하고 보존rc4대비+134/+103B를 남긴다. 다른7개import증감0. 원본 문자/byte/gzip·모든JS합계·index hash도 기록한다. 수치만으로 실패하지 않지만 공개API51개·peer외부화·정상측정·타입·빌드·기능·라이선스·무결성은 계속 필수다. CI validate→deploy 의존성을 유지했다.
+- 검증: 초기 공식pipeline1~4빌드/포장 통과 후7단계 무결성에서 QA설치명령의 루트 경로 의존성이 발견돼 실패했다. 검사를 완화하지 않고 격리fixture manifest/lock의 불필요한 루트연결을 제거하고 각 fixture cwd에서 공식5~8단계를 그대로 재개해 모두 통과했다. 이전 --prefix방식의 격리 설치를 완전한 독립 설치라고 부른 것은 부정확했으며 현재 새 설치본에는 root의존성/link가 없다. 증거 로그 둘 모두 보존했다.
+- 현재 npmcheck·Markdown68개/로컬링크239개 통과. 올바르게 새 설치한 예제로 Components/Starter704×797·475×750·320×640의9조합 재클릭/외부포커스/Escape/선택을 최종 재검증했다.1.0.0·1.1.0·미게시rc4 manifest/bytes/hash/integrity검증 통과. 기존 후보 및릴리즈/문서산출물 교체 없음.
+- 상세: qa-output/action-menu-focus/size-policy-validation.json. 과거 PURE45종 비교 실행은 재실행하지 않았고 문법만 확인했다. 후보재동결/manifest·내부fixture·docs동기화/전체전달9~10단계/commit·push·원격CI·공개배포/실제Fold·스크린리더는 아직이다. npm1.1.1과 외부소비앱업데이트는 계속 보류. 현재 실행 중 명령은 없다.

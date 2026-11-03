@@ -4,7 +4,7 @@ import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises'
 import {execFileSync} from 'node:child_process'
 import {fileURLToPath} from 'node:url'
 import {gzipSync} from 'node:zlib'
-import {measureSource} from './library-size-budget.mjs'
+import {measureSource,measurementDelta} from './library-size-budget.mjs'
 const root=new URL('../',import.meta.url),arg=process.argv.find(value=>value.startsWith('--fixtures='))?.slice(11)
 assert.ok(arg,'Pass --fixtures=qa-output/<comparison>/ with installed before/after consumers')
 const out=new URL(arg.replace(/\/?$/,'/'),root)
@@ -51,7 +51,7 @@ assert.deepEqual(report.ssr[0].html,report.ssr[1].html,'All 45 rendered SSR outp
 async function files(directory,prefix=''){const all=[];for(const entry of await readdir(directory,{withFileTypes:true})){if(entry.isDirectory())all.push(...await files(new URL(entry.name+'/',directory),prefix+entry.name+'/'));else all.push(prefix+entry.name)}return all}
 report.unchangedFiles=[]
 for(const file of await files(new URL('before/consumer/node_modules/solyi-ui/dist/',out))){if(file==='index.js')continue;assert.deepEqual(await readFile(new URL('before/consumer/node_modules/solyi-ui/dist/'+file,out)),await readFile(new URL('after/consumer/node_modules/solyi-ui/dist/'+file,out)),file+' bytes unchanged');report.unchangedFiles.push(file)}
-for(const name of ['SIcon','SCombobox']){const rows=report.probes.filter(row=>row.name===name&&row.mode==='peers-external');assert.ok(rows[1].gzipBytes<rows[0].gzipBytes/2,'Substantial real named-import reduction '+name)}
+report.importChanges=['SIcon','SCombobox'].map(name=>{const rows=report.probes.filter(row=>row.name===name&&row.mode==='peers-external');return{name,delta:measurementDelta({bytes:rows[1].bytes,gzipBytes:rows[1].gzipBytes},rows[0])}})
 await writeFile(new URL('comparison.json',out),JSON.stringify(report,null,2)+'\n')
-console.log('PASS: 42 safe annotations / identical executable source AST / 45 SSR outputs and global identities / '+report.unchangedFiles.length+' identical declaration, stylesheet and Core files / actual named-import reduction')
+console.log('PASS: 42 safe annotations / identical executable source AST / 45 SSR outputs and global identities / '+report.unchangedFiles.length+' identical declaration, stylesheet and Core files / named-import size comparison reported')
 console.log(JSON.stringify(report.probes))

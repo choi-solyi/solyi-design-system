@@ -1,8 +1,9 @@
 {
+  "mode": "report-only",
+  "policy": "LIBRARY-SIZE-POLICY.md",
   "compression": "Node gzipSync level 9; Vite 8.3.4 minify:true for peer-external named imports",
   "versions": {
     "1.0.0": {
-      "baseline": "Frozen release-assets/1.0.0; original 176k character gate unchanged",
       "components": [
         "SForm",
         "SContainer",
@@ -43,10 +44,9 @@
         "SStepper",
         "SBarChart"
       ],
-      "maxCharactersExclusive": 176000
+      "imports": []
     },
     "1.1.0": {
-      "baseline": "e3a0dc3 (50 public APIs), completed approved scope; installed tarball measurements in FINAL-SIZE-RESULT.json",
       "components": [
         "STimeGrid",
         "SPagination",
@@ -99,39 +99,18 @@
         "SStepper",
         "SBarChart"
       ],
-      "maxCharactersExclusive": 300000,
-      "maxGzipBytes": 76800,
-      "maxTotalJavaScriptBytes": 330000,
-      "maxTotalJavaScriptGzipBytes": 83968,
-      "imports": {
-        "SIcon": {
-          "maxGzipBytes": 8192
-        },
-        "SCombobox": {
-          "maxGzipBytes": 14336
-        },
-        "all_plugin": {
-          "maxGzipBytes": 67584
-        },
-        "STimeGrid": {
-          "maxGzipBytes": 17408
-        },
-        "SMonthCalendar": {
-          "maxGzipBytes": 13312
-        },
-        "SPagination": {
-          "maxGzipBytes": 9216
-        },
-        "SConfirmAction": {
-          "maxGzipBytes": 8192
-        },
-        "SLoadingOverlay": {
-          "maxGzipBytes": 13312
-        }
-      }
+      "imports": [
+        "SIcon",
+        "SCombobox",
+        "all_plugin",
+        "STimeGrid",
+        "SMonthCalendar",
+        "SPagination",
+        "SConfirmAction",
+        "SLoadingOverlay"
+      ]
     },
     "1.1.1": {
-      "baseline": "0674273: all 30 improvements, 51 APIs; exact installed final tarball metrics in IMPROVEMENTS-30-SIZE-RESULT.json. All 1.1.0 caps retained; SBtnGroup named gzip 6779 bytes with 8192-byte cap.",
       "components": [
         "STimeGrid",
         "SPagination",
@@ -185,43 +164,66 @@
         "SStepper",
         "SBarChart"
       ],
-      "maxCharactersExclusive": 300000,
-      "maxGzipBytes": 76800,
-      "maxTotalJavaScriptBytes": 330000,
-      "maxTotalJavaScriptGzipBytes": 83968,
-      "imports": {
-        "SIcon": {
-          "maxGzipBytes": 8192
+      "imports": [
+        "SIcon",
+        "SCombobox",
+        "all_plugin",
+        "STimeGrid",
+        "SMonthCalendar",
+        "SPagination",
+        "SConfirmAction",
+        "SLoadingOverlay",
+        "SBtnGroup"
+      ],
+      "comparisonReference": {
+        "description": "Preserved unpublished 1.1.1-mobile-ui-rc4; not npm 1.1.0",
+        "version": "1.1.1",
+        "indexSha256": "3fe4cf284a24e876046370600e687feaa9c8eb0ac899aab211823c0e32b609a9",
+        "metrics": {
+          "characters": 299066,
+          "bytes": 301796,
+          "gzipBytes": 76276,
+          "totalJavaScriptBytes": 327067,
+          "totalJavaScriptGzipBytes": 83558,
+          "javascriptFiles": 6
         },
-        "SCombobox": {
-          "maxGzipBytes": 14336
-        },
-        "all_plugin": {
-          "maxGzipBytes": 68608
-        },
-        "STimeGrid": {
-          "maxGzipBytes": 17408,
-          "approvedException": {
-            "id": "outside-focus-2026-11-03",
-            "maxGzipBytes": 17464,
-            "indexSha256": "3fe4cf284a24e876046370600e687feaa9c8eb0ac899aab211823c0e32b609a9",
-            "reason": "사용자가 승인한 현재 외부 빈 영역 포커스 수정본의 56B 예외. 다른 코드·버전·컴포넌트에는 적용하지 않음."
+        "imports": {
+          "SIcon": {
+            "bytes": 18833,
+            "gzipBytes": 7037
+          },
+          "SCombobox": {
+            "bytes": 34323,
+            "gzipBytes": 12722
+          },
+          "all_plugin": {
+            "bytes": 233176,
+            "gzipBytes": 68441
+          },
+          "STimeGrid": {
+            "bytes": 51096,
+            "gzipBytes": 17464
+          },
+          "SMonthCalendar": {
+            "bytes": 33524,
+            "gzipBytes": 12239
+          },
+          "SPagination": {
+            "bytes": 23044,
+            "gzipBytes": 8723
+          },
+          "SConfirmAction": {
+            "bytes": 20875,
+            "gzipBytes": 7776
+          },
+          "SLoadingOverlay": {
+            "bytes": 34504,
+            "gzipBytes": 12246
+          },
+          "SBtnGroup": {
+            "bytes": 17939,
+            "gzipBytes": 6613
           }
-        },
-        "SMonthCalendar": {
-          "maxGzipBytes": 13312
-        },
-        "SPagination": {
-          "maxGzipBytes": 9216
-        },
-        "SConfirmAction": {
-          "maxGzipBytes": 8192
-        },
-        "SLoadingOverlay": {
-          "maxGzipBytes": 13312
-        },
-        "SBtnGroup": {
-          "maxGzipBytes": 8192
         }
       }
     }

@@ -26,7 +26,10 @@ jobs:
           node-version: '22.23.3'
           cache: npm
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: node scripts/library-pipeline.mjs
+      # Size measurements stay in the pipeline/log; numeric caps are not release gates.
+      # Types, builds, API, peer, integrity, license and runtime failures still block deploy.
+      - name: Validate packages and report bundle measurements
+        run: node scripts/library-pipeline.mjs
       - name: Verify failure gate when explicitly requested
         if: ${{ inputs.verify_failure == true }}
         run: exit 1

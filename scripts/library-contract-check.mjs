@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile,readdir,stat} from 'node:fs/promises';
 import {currentPackageNames,artifactDirectory} from './package-identity.mjs';
-import {assertSourceBudget,measureSource} from './library-size-budget.mjs';
+import {assertComponentInventory,measureSource} from './library-size-budget.mjs';
 const root=new URL('../',import.meta.url),json=async file=>JSON.parse(await readFile(new URL(file,root),'utf8'));
 const packs=await json(artifactDirectory()+'pack-report.json');
 const ui=await json('packages/vue-ui/package.json'),core=await json('packages/core/package.json');
@@ -53,11 +53,10 @@ for(const subpath of ['./fonts.css','./code-fonts.css']){
  for(const match of css.matchAll(/url\(["']?([^"')]+)["']?\)/g))assert.ok((await stat(new URL(match[1],cssUrl))).isFile(),'Bundled font URL resolves: '+match[1]);
 }
 const library=await readFile(new URL('packages/vue-ui/dist/index.js',root),'utf8');assert.ok(/from ["']vue["']/.test(library));assert.ok(/from ["']vuetify\//.test(library));assert.match(library,/\.\/core\/overflow\.js/,'Overflow runtime resolves inside the package');
-// A source-size budget is a growth alarm, not proof that peer runtimes are external.
-// Vite's external predicate and the real consumers' single installed runtimes are checked separately.
-// Keep this gate at the original location; versioned criteria include exact API coverage.
+// Preserve exact API coverage independently of the informational size report.
+// Peer externalization and the real consumers' single runtimes remain separate checks.
 const sourceSize=await measureSource(new URL('packages/vue-ui/',root));
-assertSourceBudget(ui.version,sourceSize.metrics,sourceSize.components);
+assertComponentInventory(ui.version,sourceSize.components);
 const types=await readFile(new URL('packages/vue-ui/dist/index.d.ts',root),'utf8');for(const name of ['SBtn','STextField','SDialog','SDataTable','TableColumn','TableSort','SCheckbox','SRadioGroup','SSwitch','SSelect','STextarea','SNumberInput','STabs','SSnackbar','SDatePicker','STimePicker','SSegmentedControl','SMultiSelect','SRangeSlider','SSplitBtn','SContextMenu','SResizableSplitPane','SolRangeValue','SolOptionLoader','SolMenuItem','SolLocale','DateValue','SolPickerHandle','SBtn','STextField','SDialog','SDataTable','SSnackbar','SProgressLinear','SProgressCircular','createSolyiVuetify','applySolyiAppearance'])assert.ok(types.includes(name));
 for(const name of ["SolButton","SolField","SolDialog","SolTable","SolCheckbox","SolRadioGroup","SolSwitch","SolSelect","SolTextarea","SolNumberInput","SolTabs","SolToast","SolDatePicker","SolTimePicker","SolSegmentedControl","SolMultiSelect","SolRangeSlider","SolSplitButton","SolContextMenu","SolResizableSplitPane"])assert.ok(!types.includes(' '+name+':')&&!types.includes(' '+name+';'),'No legacy component declaration '+name);for(const name of ['SCard','SAlert','STree','STreeItem'])assert.ok(types.includes(name));
 for(const name of ['STooltip','SPopover','SAccordion','SBreadcrumbs','SFileInput','SAutocomplete','SAvatar','SStepper','SBarChart','SForm','SContainer','SRow','SCol','SFormHandle','SFieldHandle','sRules'])assert.ok(types.includes(name),name+' public declaration');

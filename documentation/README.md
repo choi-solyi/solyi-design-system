@@ -19,6 +19,7 @@
 
 ## 개발하기
 
+- [라이브러리 크기 측정 정책·도입 근거](development/LIBRARY-SIZE-POLICY.md)
 - [패키지 구조·생성·검증](guide/LIBRARY.md)
 - [샘플 코드·자동 import·문법 강조](development/CODE-EXAMPLES.md)
 - [문서 검색·헤더 설정](development/DOC-SEARCH.md)
