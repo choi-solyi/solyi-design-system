@@ -15351,16 +15351,18 @@ function yS(e, t, n) {
 	let r = /* @__PURE__ */ F(!1), i = Y(() => !e.disabled && !e.readonly && e.items.some((e) => !e.disabled) && (e.open ?? r.value)), a = /* @__PURE__ */ F(null), o = /* @__PURE__ */ F(""), s = /* @__PURE__ */ F({
 		left: "8px",
 		top: "8px"
-	}), c = /* @__PURE__ */ new Map(), l = null, u = null, d = null, f = "programmatic", p = !0, m = !1, h = "", g, _ = !1, v = () => e.items.filter((e) => !e.disabled);
+	}), c = /* @__PURE__ */ new Map(), l = null, u = null, d = "programmatic", f = !0, p = !1, m = "", h, g = !1, _, v = () => e.items.filter((e) => !e.disabled);
 	function y(n) {
 		e.open === void 0 && (r.value = n), t("update:open", n);
 	}
 	function b() {
-		if (!i.value || !a.value) return;
-		let e = a.value.getBoundingClientRect(), t = u?.getBoundingClientRect(), n = d?.x ?? t?.left ?? 8, r = d?.y ?? t?.bottom ?? 8;
+		let e = a.value;
+		if (!i.value || !e) return;
+		let t = e.getBoundingClientRect(), n = l?.getBoundingClientRect(), r = window.innerHeight, o = (e) => Math.max(0, Math.min(e, r - 16)), c = e.scrollHeight + t.height - e.clientHeight, d = o(r - (u?.y ?? n?.bottom ?? 8) - 12), f = o((u?.y ?? n?.top ?? 8) - 12), p = c <= d || d >= f, m = p ? d : f;
 		s.value = {
-			left: Math.max(8, Math.min(n, window.innerWidth - e.width - 8)) + "px",
-			top: Math.max(8, Math.min(r + 4, window.innerHeight - e.height - 8)) + "px"
+			left: Math.max(8, Math.min(u?.x ?? n?.left ?? 8, window.innerWidth - t.width - 8)) + "px",
+			top: (p ? r - 8 - m : 8 + m - Math.min(c, m)) + "px",
+			maxHeight: m + "px"
 		};
 	}
 	function x() {
@@ -15373,10 +15375,10 @@ function yS(e, t, n) {
 		b(), x();
 	}
 	function C(t, n, r = !1) {
-		e.disabled || e.readonly || !v().length || (m = !0, l = t, u = t, d = n || null, o.value = (r ? v().at(-1) : v()[0])?.id || "", i.value ? (m = !1, b(), z(x)) : y(!0));
+		e.disabled || e.readonly || !v().length || (p = !0, l = t, u = n || null, o.value = (r ? v().at(-1) : v()[0])?.id || "", i.value ? (p = !1, b(), z(x)) : y(!0));
 	}
 	function w(e = "programmatic", t = !0) {
-		i.value && (f = e, p = t, y(!1));
+		i.value && (d = e, f = t, y(!1));
 	}
 	function T(n) {
 		e.disabled || e.readonly || n.disabled || (t("select", n.id), w("select"));
@@ -15392,11 +15394,11 @@ function yS(e, t, n) {
 			else if (e.key === "ArrowDown") r = (n + 1) % t.length;
 			else if (e.key === "ArrowUp") r = (n - 1 + t.length) % t.length;
 			else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey && e.key !== " ") {
-				clearTimeout(g), h += e.key.toLowerCase(), g = setTimeout(() => h = "", 600);
+				clearTimeout(h), m += e.key.toLowerCase(), h = setTimeout(() => m = "", 600);
 				let i = (n + 1 + t.length) % t.length;
 				for (let e = 0; e < t.length; e++) {
 					let n = (i + e) % t.length;
-					if (t[n].label.toLowerCase().startsWith(h)) {
+					if (t[n].label.toLowerCase().startsWith(m)) {
 						r = n;
 						break;
 					}
@@ -15420,27 +15422,38 @@ function yS(e, t, n) {
 	};
 	V(i, async (e, n) => {
 		if (e) {
-			if (!m && typeof document < "u" && (l = document.activeElement, u = l, d = null), m = !1, v().some((e) => e.id === o.value) || (o.value = v()[0]?.id || ""), await z(), _ || !i.value) return;
+			if (!p && typeof document < "u" && (l = document.activeElement, u = null), p = !1, v().some((e) => e.id === o.value) || (o.value = v()[0]?.id || ""), await z(), g || !i.value) return;
 			S(), t("open");
 		} else if (n) {
-			let e = !!a.value?.contains(document.activeElement) || f === "outside";
+			let e = !!a.value?.contains(document.activeElement) || d === "outside";
 			try {
 				a.value?.hidePopover?.();
 			} catch {}
-			clearTimeout(g), h = "", await z(), p && e && O(document.activeElement) && D(), t("close", f), f = "programmatic", p = !0, m = !1;
+			clearTimeout(h), m = "", await z(), f && e && O(document.activeElement) && D(), t("close", d), d = "programmatic", f = !0, p = !1;
 		}
 	}), V(() => [e.disabled, e.readonly], () => {
-		(e.disabled || e.readonly) && (f = "disabled", p = !0, y(!1));
-	}), V(() => e.items, async () => {
-		i.value && (v().length ? v().some((e) => e.id === o.value) || (o.value = v()[0].id, await z(), x()) : w());
-	}, { deep: !0 });
+		(e.disabled || e.readonly) && (d = "disabled", f = !0, y(!1));
+	}), V(() => e.items, () => {
+		if (!i.value) return;
+		if (!v().length) {
+			w();
+			return;
+		}
+		let e = !v().some((e) => e.id === o.value);
+		e && (o.value = v()[0].id), b(), e && x();
+	}, {
+		deep: !0,
+		flush: "post"
+	}), V(a, (e) => {
+		_?.disconnect(), e && typeof ResizeObserver == "function" && (_ ??= new ResizeObserver(() => requestAnimationFrame(b)), _.observe(e));
+	});
 	function A(e) {
 		document[e]("click", k), document[e]("focusin", k), window[e]("resize", b), document[e]("scroll", b, !0);
 	}
 	return Yi(() => {
 		A("addEventListener"), i.value && (l = document.activeElement, o.value = v()[0]?.id || "", z(S));
 	}), Qi(() => {
-		_ = !0, clearTimeout(g), A("removeEventListener"), a.value?.contains(document.activeElement) && D();
+		g = !0, _?.disconnect(), clearTimeout(h), A("removeEventListener"), a.value?.contains(document.activeElement) && D();
 		try {
 			a.value?.hidePopover?.();
 		} catch {}

@@ -306,3 +306,11 @@ main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안
 - 검증: 초기 공식pipeline1~4빌드/포장 통과 후7단계 무결성에서 QA설치명령의 루트 경로 의존성이 발견돼 실패했다. 검사를 완화하지 않고 격리fixture manifest/lock의 불필요한 루트연결을 제거하고 각 fixture cwd에서 공식5~8단계를 그대로 재개해 모두 통과했다. 이전 --prefix방식의 격리 설치를 완전한 독립 설치라고 부른 것은 부정확했으며 현재 새 설치본에는 root의존성/link가 없다. 증거 로그 둘 모두 보존했다.
 - 현재 npmcheck·Markdown68개/로컬링크239개 통과. 올바르게 새 설치한 예제로 Components/Starter704×797·475×750·320×640의9조합 재클릭/외부포커스/Escape/선택을 최종 재검증했다.1.0.0·1.1.0·미게시rc4 manifest/bytes/hash/integrity검증 통과. 기존 후보 및릴리즈/문서산출물 교체 없음.
 - 상세: qa-output/action-menu-focus/size-policy-validation.json. 과거 PURE45종 비교 실행은 재실행하지 않았고 문법만 확인했다. 후보재동결/manifest·내부fixture·docs동기화/전체전달9~10단계/commit·push·원격CI·공개배포/실제Fold·스크린리더는 아직이다. npm1.1.1과 외부소비앱업데이트는 계속 보류. 현재 실행 중 명령은 없다.
+
+
+### rc5 재동결과 최종 로컬 전달 검사
+
+- 소스 커밋 d2acfe3 기준으로1.1.1-mobile-ui-rc5를 동결했다. 이전rc4 artifacts는 그대로 두었고 이전release-assets/docs 후보도 검증 후 QA previous-canonical-rc4/source·docs에 보존했다. 기존1.0.0/1.1.0 파일은 유지했다.
+- UI SHA256 1fb7cfc44bc4bfe5fac992b604b896b1446ee21e6631d9ff57db98382cb1a030, 5990290B. 검증한 QA tarball과 바이트 동일. Core도 이전과 동일하다. 새release-assets/docs manifest·SHA256SUMS·두 내부fixture의dependency/lock·문서starter가 rc5에 일치한다.
+- canonical library-pipeline --refresh --prepare-release 전체1~10단계 exit0. 실제 다운로드·API51개·타입/SSR/runtime·설치무결성/라이선스·문서생성/전체기존회귀 통과. 용량은 측정·증감 보고뿐이며 수치 예외 없음. 해당 빌드 Components/Starter9조합도 실제 높이에서 재터치/포커스 검증 통과. 로그 rc5-canonical-pipeline.log 및 rc5-canonical-browser.log.
+- 아직 원격 push/CI/공개반영 전의 로컬 결과다. npm1.1.1은 사용자 직접 테스트 후 결정할 때까지 보류, 외부소비앱/실기기/스크린리더 변경·조작은 하지 않았다.
