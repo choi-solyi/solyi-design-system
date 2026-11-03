@@ -255,3 +255,21 @@ main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안
 - 프로젝트 자체 번들 회귀 기준이며 npm 플랫폼 업로드 한도가 아님. library-pipeline → library-size-check → assertImportBudget가 검사. pages.yml validate 실패는 needs:validate인 문서 배포를 막지만, UI의 prepack은 GUIDE 동기화뿐이며 npm 자체가 이 기준을 검사하지 않음. 공식 lifecycle: https://docs.npmjs.com/cli/v11/using-npm/scripts/ .
 - 원격 HEAD는 d862f03으로 기존 외부변경 미실행 확인. 자동 승인 검토가 내부 예제2개의 package.json 경로 변경을 소비 앱 업데이트로 해석하고 미생성rc4 경로 문제로 전체 복합 명령을 실행 전 거부. root package.json/두 예제 dependency/rc4 생성/commit/push/배포는 해당 명령에서 실행되지 않았음.
 - 내부 검증 예제 examples/package-consumer(private)와 examples/vue-vuetify(private starter)의 최종 tarball 경로 갱신 범위는 별도 확인 필요. 외부 소비4앱과 npm 게시를 보류한 채, 거부된 경로 변경은 재시도하지 않음.
+
+
+### 공개 반영 준비의 승인 검토 상태
+
+- 소스/정확한해시56B예외/검사는 로컬841ae86으로 보존. 원격main은 d862f03이며 push 미실행.
+- rc4 tarball 실제 생성과 pack-report/checksum 확인 후, 두 대상이 private 내부 검증fixture/문서starter임을 저장소guide/metadata로 확인했다. 새 근거에 대한1회 재검토에서 root artifact 포인터와 두 내부 package.json 연결 변경은 승인되어 실행됨. 외부 소비4앱 변경 없음. 아직 lock/공식후보manifest 동기화 전이며 작업트리로 보존.
+- 다음 명령은 자동 검토에서 실행 전에 거부됨: release-assets/1.1.1 및 docs/releases/1.1.1의 기존 미게시후보를 QA로 보존 이동, 인덱스의 임시 변경, 공식 prepare-release 파이프라인. 사유는 정확한 미게시후보 보존·출시준비 승인 부족. 따라서 해당명령의 registry 읽기/이동/인덱스 변경/prepare/배포는 전부 미실행. 재시도하지 않음.
+- 승인된 한정예외를 복사한 기존 격리 작업본에서 library-pipeline.mjs --refresh --packages-only 전체 종료0. 실제 tarball/두소비자 새설치·타입·빌드/9import 예산·경계검사/SSR/선언/전체runtime/공개예제·inline 빌드 통과. 증거 package-approved-exception.log. 공식문서·릴리스 delivery 단계는 보류.
+- 필요한 정확한 후속승인: 미게시1.1.1의 기존후보원본을 보존한 뒤 release-assets/1.1.1·docs/releases/1.1.1 및 관련manifest/index를 검증된rc4로 재동결·동기화. 공개1.0.0/1.1.0 원본/기존rc3는 보존. npm게시·외부소비앱 업데이트·기기조작은 제외. 이 범위 확인 전 공식경로 이동·재동결·push·배포를 진행하지 않음.
+
+
+### 명시 승인 후 공식 후보·문서 준비 완료
+
+- 기존 후보 보존 및 새 후보/릴리즈 문서·파일 목록 동기화에 대한 새 명시 승인 후, 이전 작업 미실행 상태를 확인하고 거부된 작업을1회 재시도해 승인·실행됨. registry1.1.1은404로 미게시 확인. 이전 미게시 source/docs 두 사본의 manifest와 tarball을 verifyRelease로 대조한 뒤, workspace 안 QA 보존 경로로 native Move-Item 처리. rc3 아티팩트도 유지.
+- canonical library-pipeline --refresh --prepare-release 전체10단계 종료0. 새 rc4 sourceRef는841ae86. UI tarball5990124B/SHA256 3d0e12e0101634cf9700112bd71e009e72b6048e6f056c39d31a350e4abbb5ed가 artifacts/release-assets/docs 및 두 내부fixture lock과 일치. 공개1.0.0/1.1.0 파일은 HEAD 대비 변경없음.
+- 생성 문서 실제경로 #component/scontext-menu와 starter/?view=recipes&example=action-menu를475/320px Chrome에서 검증. Components Context1 + Starter Split/Context2, 총6조합의 빈영역/임시 외부입력probe 포커스/ESC/선택/키보드호출/예제인스턴스 유지 통과. 외부입력probe는 테스트 중 DOM에만 추가·제거하며 앱 자료/저장소를 바꾸지 않음.
+- 기존 배치 제약을 구분: Starter ContextMenu는850px 높이에서 메뉴가 하단트리거를 덮어 재클릭이 불가능함. 충분한1200px 높이에서 재클릭 통과. 실제trigger hit-test와 두 rect를 기록하고 강제click이나 통과삭제로 숨기지 않음. 기존 Fold 보고의 충분한공간 조건과 구분하며 이번포커스수정 외의 배치코드는 변경하지 않음.
+- 실제 UI 증거 built-pages-results.json 및 built-*.png. full canonical 준비 로그 canonical-prepare.log. npm publish/외부소비4앱/실기기 조작은 미실행. CI 및 공개배포 결과는 원격반영 후 별도로 확인.
