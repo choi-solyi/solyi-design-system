@@ -201,3 +201,57 @@ main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안
 - node scripts/mobile-menu-focus-browser-check.mjs --built: 475px·320px의 모든 포커스 흐름 통과. --url/--commit 인자로 동일 검사를 실제 공개 문서에서도 실행 가능.
 - 동결 1.1.1 후보 SHA256 cc7732deff0d653d1951c3c8681df87221737ae3f90c8c3919c207eef6d0a5ab 유지. 문서 전용 수정이며 npm 게시/소비 앱 변경 없음.
 - 최종 npm test 전체 통과(기존 DOM/내비게이션/접근성 상태/문서·릴리즈 이력 검사 포함). 실제 렌더 포커스는 별도 Chrome 결과로 확인.
+
+
+## 2026-11-03 Fold 공통 액션 메뉴 외부 터치 후속
+
+### 재현 범위와 원인
+
+- 실제 신고 경로는 #component/scontext-menu 및 starter/?view=recipes&example=action-menu의 SContextMenu/SSplitBtn. d862f03은 문서 탐색 햄버거 수정이므로 이번 해결의 검증 근거가 아님. 이전 범위 식별 오류를 인정하고 같은 메뉴라는 이름만으로 결과를 전용하지 않음.
+- 운영 topics.js/starter.js/inline-preview.js SHA256이 d862f03과 모두 일치. 오래된 배포가 아니라 packages/vue-ui/src/actions.ts 공통 메뉴 경로의 문제.
+- 기준본 native Chrome fixture 475/320px × MAIN/BODY × Split/Context 총8조합에서 재현. 이벤트 trace는 pointerdown 닫기 → 메뉴 제거/포커스 BODY → 호환 mousedown에서 MAIN 포커스 → click에도 복귀 없음. 외부 pointerdown/focusin이 모두 close('outside',false)여서 복귀를 끄고 있었음.
+
+### 최소 수정과 재발 방지
+
+- 외부 닫기를 pointerdown 대신 완료된 click으로 이동. focusin이 실제 입력/링크/버튼에 도착하면 정상 닫기/포커스를 보존하고, 구조적 BODY/HTML/MAIN(-1)은 click 이후 Vue DOM 갱신을 기다려 invoker로 preventScroll 복귀. 터치 기본 동작을 막지 않음.
+- 취소된 제스처에는 click이 없으므로 닫기/복귀를 강제하지 않음. 기존 Tab, Escape, 선택, disabled/readonly, controlled 거절 및 소비자 작업 흐름 포커스 유지. 추가 예약 상태/타이머 없이 처리.
+- 동일 props/events 및 현재 메뉴 항목·열기 버튼 포커스 호출만 공통화. 항목 Map, 키보드 typeahead/순서, 공개 API는 그대로 유지. 읽기 어려운 압축이나 기능 삭제는 하지 않음.
+- action-menu-focus-browser-check.mjs가 Components ID→컴포넌트명→actions.ts 소유와 실제 Starter/AdvancedExamples의 S 태그를 확인. 문서 햄버거 검사를 공통 액션 메뉴 통과로 오인하지 않도록 명시. --baseline은 d862f031의 actions.ts, --consumer는 설치된 패키지를 사용하며 소스 alias 금지.
+
+### 실제 실행 결과
+
+- 소스 타입(noEmit), 기존 확장 런타임/TimeGrid 소스 회귀 통과.
+- 최종 tarball 깨끗한 설치본: native popover의8조합에서 blank touch/mouse, 외부 입력·링크·버튼·사용자 지정 포커스·음수 tabindex, Escape/선택/재클릭, controlled 닫기 거절 통과. pointerdown 시 아직 열려 있음을 실제 trace로 검사. 합성 검사는 pointercancel 후 원래 메뉴 포커스 유지도 확인.
+- 격리 패키지 파이프라인의 Core/bootstrap, 라이브러리 빌드, 정상 npm pack, 두 소비 앱 새 설치·타입·빌드·계약 통과. 공식 파이프라인은 크기 게이트에서 실패한 상태를 보존. 그와 독립적인 기존 하위 명령 전체를 따로 실행해 런타임/SSR/예제·inline 빌드 통과. 원본 파이프라인과 크기 검사는 수정하지 않음.
+- 설치본 선언55개: skipLibCheck:false, 자체 진단0. 기존 외부 선언769건은 별도 한계이며 전체 외부 선언 통과로 말하지 않음. 공통화 후 두 컴포넌트의 props/events/slots/methods/types API 자료가 원본과 완전히 일치.
+
+### 크기와 남은 차단
+
+- 최종 설치본 ESM299066자 <300000, gzip76276B <=76800, 전체 JS327067B/전체 gzip83558B 모두 기준 이내. 최초 예비300251자 초과 해결.
+- 전체 플러그인 gzip68441B <=68608. 개별7종 통과, STimeGrid만17464B >17408B로56B 초과. 추가 기능과 검사를 희생하는 미세 압축은 중단. 한도 변경 없음. 전체 패키지 파이프라인 미통과 및 공개 반영 차단으로 유지.
+- 검증용 로컬 tarball SHA256: 3d0e12e0101634cf9700112bd71e009e72b6048e6f056c39d31a350e4abbb5ed. 원본 동결 후보 cc7732deff0d653d1951c3c8681df87221737ae3f90c8c3919c207eef6d0a5ab 보존.
+- 증거: qa-output/action-menu-focus/{baseline,installed-results,installed-size-complete,api-compatibility,verified-hashes,public-assets}.json 및 package-pipeline-3.log(실패)/package-independent.log(독립 검사 통과).
+- 현재 WIP만 저장. canonical 후보/manifest/내부 소비자/docs 산출물, commit/push/공개 배포/npm publish/소비4앱 변경 없음. 실제 Fold·Android IME·스크린리더 재검증 미실행.
+- 다음 순서: 남은 개별 크기 차단 해결 검토 → 로컬 결과 검토 후 공개 반영 판단/최종 후보 동기화·전체 파이프라인 → 신고된 두 경로의 Fold 재검증 → 사용자 직접 테스트 후 npm 게시 여부 결정. 이번 결과로 배포/게시 승인을 추정하지 않음.
+
+
+### 56B 후속 검토 및 최종 재확인
+
+- TimeGrid가 불필요한 SSplitBtn/SContextMenu 구현이나 새 의존성을 포함하는 현상은 없음. tree-shaking 결과에서 두 컴포넌트/props는 제거됨. 메뉴에 필요한 locale moreActions는 정상 유지.
+- 열기 버튼 focus 소유자를 useActionMenu에서 재사용해 menuOrigin 중복을 없앤 실험: ESM은25자 줄었으나 TimeGrid gzip17466B로2B 증가. 미채택/원복.
+- TimeGrid focus fallback 중복 및 native contains(null) 중복 가드를 정리한 실험: gzip17458B로6B 감소했으나 기준보다50B 초과. 완전한 해소 없이 관련 파일 변경만 늘어나므로 미채택/원복.
+- 메뉴 복귀는 완료된 외부 클릭 이후 구조적 빈 포커스를 복원해야 하고, editor prepareRestore는 기존 소유 포커스/노드 연결/다른 대상 이동을 따로 보호함. 이 조건을 줄여 무조건 공통화하지 않음. 문자 줄 수와 gzip 감소는 비례하지 않으며 숫자만 맞추는 재배열·압축·한도 상향은 하지 않음.
+- 최종 actions.ts SHA256은71cf6141f4625c35f7864d726d01c2f8eccb942c6db46301cceb00f9321e6fab로 검증 tarball 입력과 동일. TimeGrid/editor 실험 변경은 남아 있지 않음.
+- 동일 최종 tarball 설치본에서 action-menu-focus-browser-check.mjs --consumer=... 8조합과 time-grid-runtime-check.mjs --consumer=... 재통과. 공식 library-size-check.mjs --consumer=...는17464>17408로 재실패(exit1). 실패를 기존 통과나 독립 검사 결과로 대체하지 않음.
+- 선택지: 현재 검증한 최소 수정본을 WIP로 보존하고 공개 반영을 보류(권장), 또는 TimeGrid 내부 focus 복원 구조의 더 큰 정리를 별도 범위로 확정해 검토. 후자는 이번 검증 결과만으로 안전한 감축량을 보장할 수 없음. npm 게시/기기 조작/공개 배포는 계속 미실행.
+
+
+### 승인된 56B 예외와 도입 이력 확인
+
+- 사용자 승인에 따라 1.1.1/STimeGrid의 기본17408B는 유지하고, 현재 dist/index.js SHA256 3fe4cf284a24e876046370600e687feaa9c8eb0ac899aab211823c0e32b609a9일 때만17464B까지 인정하는 명시 예외를 추가. 다른 코드/버전/컴포넌트/17465B는 기존처럼 실패. 원본크기·타입·SSR·라이선스 등 다른 기준은 유지.
+- 경계/거부 검사와 최종 설치본9개 import 검사 통과. 결과는 approvedException ID 및 기본/허용 한도를 출력. npm 게시와 공개 배포는 이 검사로 자동 승인되지 않음.
+- 17KiB 최초 도입:9d7145a(2026-10-29 05:02:23 KST), 최종50종 설치본 측정의 TimeGrid15847B에17408B 예산. cfb54c0(2026-10-30 17:23:47 KST)에서1.1.1에 계승. FINAL-SIZE-VALIDATION.md와 git blame117/203줄이 근거.
+- Git author Choi Solyi만으로 사용자가 수치를 직접 정했다고 판단할 수 없음. 대화는 PURE/새 버전 기준 정리에 대한 포괄 승인과 작업 중 정한 실측 기준을 구분하며, 사용자 직접17KiB 지정은 확인하지 못함.
+- 프로젝트 자체 번들 회귀 기준이며 npm 플랫폼 업로드 한도가 아님. library-pipeline → library-size-check → assertImportBudget가 검사. pages.yml validate 실패는 needs:validate인 문서 배포를 막지만, UI의 prepack은 GUIDE 동기화뿐이며 npm 자체가 이 기준을 검사하지 않음. 공식 lifecycle: https://docs.npmjs.com/cli/v11/using-npm/scripts/ .
+- 원격 HEAD는 d862f03으로 기존 외부변경 미실행 확인. 자동 승인 검토가 내부 예제2개의 package.json 경로 변경을 소비 앱 업데이트로 해석하고 미생성rc4 경로 문제로 전체 복합 명령을 실행 전 거부. root package.json/두 예제 dependency/rc4 생성/commit/push/배포는 해당 명령에서 실행되지 않았음.
+- 내부 검증 예제 examples/package-consumer(private)와 examples/vue-vuetify(private starter)의 최종 tarball 경로 갱신 범위는 별도 확인 필요. 외부 소비4앱과 npm 게시를 보류한 채, 거부된 경로 변경은 재시도하지 않음.

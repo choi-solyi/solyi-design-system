@@ -24,3 +24,14 @@ for(const key of ['maxCharactersExclusive','maxGzipBytes','maxTotalJavaScriptByt
 const source=await readFile(new URL('scripts/library-contract-check.mjs',root),'utf8')
 assert.ok(source.indexOf('assertSourceBudget(ui.version')<source.indexOf("const types=await readFile"),'The versioned gate remains before declaration/content checks at its original point')
 console.log('PASS: frozen 1.0.0 budget, new minor source/total/gzip/import boundaries, exact APIs, unknown-version rejection and unchanged gate ordering')
+
+const approved=budgets.versions['1.1.1'].imports.STimeGrid.approvedException
+assert.equal(budgets.versions['1.1.1'].imports.STimeGrid.maxGzipBytes,17408,'Normal TimeGrid cap remains 17KiB')
+assert.equal(approved.maxGzipBytes,17464,'Approval is limited to 56 bytes')
+assert.match(approved.indexSha256,/^[a-f0-9]{64}$/)
+const current={gzipBytes:17464,indexSha256:approved.indexSha256}
+assert.equal(assertImportBudget('1.1.1','STimeGrid',current).id,approved.id)
+for(const metrics of [{...current,gzipBytes:17465},{...current,indexSha256:'0'.repeat(64)},{gzipBytes:17464}])assert.throws(()=>assertImportBudget('1.1.1','STimeGrid',metrics),/gzip budget/)
+assert.throws(()=>assertImportBudget('1.1.0','STimeGrid',current),/gzip budget/)
+assert.throws(()=>assertImportBudget('1.1.1','SIcon',current),/gzip budget/)
+console.log('PASS: exact-index 1.1.1 TimeGrid 56B exception; missing/different code, excess bytes, other versions and APIs still reject')

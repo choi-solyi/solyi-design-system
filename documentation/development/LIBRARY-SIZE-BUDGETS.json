@@ -200,7 +200,13 @@
           "maxGzipBytes": 68608
         },
         "STimeGrid": {
-          "maxGzipBytes": 17408
+          "maxGzipBytes": 17408,
+          "approvedException": {
+            "id": "outside-focus-2026-11-03",
+            "maxGzipBytes": 17464,
+            "indexSha256": "3fe4cf284a24e876046370600e687feaa9c8eb0ac899aab211823c0e32b609a9",
+            "reason": "사용자가 승인한 현재 외부 빈 영역 포커스 수정본의 56B 예외. 다른 코드·버전·컴포넌트에는 적용하지 않음."
+          }
         },
         "SMonthCalendar": {
           "maxGzipBytes": 13312

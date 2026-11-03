@@ -17,9 +17,9 @@ for(const name of Object.keys(budget.imports||{})){
  const chunks=result.output.filter(item=>item.type==='chunk'),code=chunks.map(item=>item.code).join('\n'),modules=chunks.flatMap(item=>Object.keys(item.modules||{})).map(file=>file.replaceAll('\\','/'))
  assert.ok(code.length>0&&code.includes('solyiSizeProbe'),'An observable import survives the app bundler')
  assert.ok(!modules.some(file=>/node_modules\/(?:vue|@vue|vuetify)\//.test(file)),'Peers are external in the component-only measurement')
- const metrics={name,bytes:Buffer.byteLength(code),gzipBytes:gzipSync(code,{level:9}).length,retainedNameStrings:source.components.filter(component=>code.includes(component))}
- assertImportBudget(metadata.version,name,metrics);report.imports.push(metrics)
+ const metrics={name,indexSha256:source.indexSha256,bytes:Buffer.byteLength(code),gzipBytes:gzipSync(code,{level:9}).length,retainedNameStrings:source.components.filter(component=>code.includes(component))}
+ const exception=assertImportBudget(metadata.version,name,metrics);if(exception)metrics.approvedException=exception;report.imports.push(metrics)
 }
 await writeFile(new URL('size-budget-result.json',consumer),JSON.stringify(report,null,2)+'\n')
-console.log('PASS: '+metadata.version+' / '+source.components.length+' exact public APIs / versioned source budgets / '+report.imports.length+' installed import gzip budgets')
+console.log('PASS: '+metadata.version+' / '+source.components.length+' exact public APIs / versioned source budgets and recorded exceptions / '+report.imports.length+' installed import gzip budgets')
 console.log(JSON.stringify(report))
