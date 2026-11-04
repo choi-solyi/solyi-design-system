@@ -22853,6 +22853,7 @@ var kw = $x(wS), Aw = /* @__PURE__ */ H({
 				"aria-labelledby": e.id + "-title",
 				class: [
 					"sol-ui-overlay",
+					o.value && o.value.height < 360 ? "sol-ui-dialog-short-viewport" : void 0,
 					e.presentation === "drawer" ? "sol-ui-drawer-overlay" : void 0,
 					t.class
 				]

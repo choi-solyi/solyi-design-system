@@ -160,3 +160,9 @@ Library libfile_2828e3a7c4988191bda84f104081b1cf의 공식 materialize는 Window
 - 선행 수정본의 독립 로컬 패키지 fixture는 실제 Fold에서 본문 약 94px와 44px 입력·라벨 전체 표시를 확인했습니다. 최종 빈 feedback 포함 수정본의 실기기 재실행 중 활성 화면이 검증 대상에서 바뀌어 검사 명령을 취소하고 임시 forward/reverse 및 서버를 해제했습니다. 최종본의 실기기 재실행은 미완료이며, 선행 수정본 결과로 대신하지 않습니다. 대상 밖 캡처는 보존하지 않습니다.
 - 증거: 작업 workspace의 `qa-output/android-ime-20261104/` 및 저장소 `qa-output/dialog-feedback/browser/ime-result.json`. TalkBack은 사용자 요청으로 이번 검증에서 제외하며 설정을 변경하지 않습니다. Safari/iOS는 미검증입니다. 이 수정은 아직 공개 문서·동결 1.1.1 후보에 반영하지 않았고 npm 게시·소비 앱 변경도 없습니다.
 - 후속 기기 사용 승인 후 최종 코드 `401184f`의 독립 패키지 fixture를 실제 Fold 475 CSS px에서 재검증했습니다. Samsung 키보드로 가용 높이가 236.19px인 상태에서 본문 94.17px, 입력 44px 및 라벨·포커스 테두리 전체 표시를 확인했습니다. 닫기 시 키보드 해제·열기 버튼 포커스 복귀, 재열기 시 정상 높이·닫기 버튼 포커스와 키보드 미표시도 통과했습니다. 기록은 `qa-output/android-ime-20261104/final-retest-result.json`입니다. 검증 탭과 임시 USB forward/reverse를 제거하고 기기 점유를 해제했으며, 공개 배포·후보 재동결·npm 게시는 하지 않았습니다.
+
+### Dialog 수정의 공개 문서용 후보 rc6
+
+- 공개 문서 반영을 위해 `1.1.1-dialog-ime-rc6`를 새로 준비했습니다. UI tarball은 5,990,397 bytes, SHA-256 `b72a259afa72796be19968f99fd563cbc3cf110951676108b95b69914c5195a9`이며 sourceRef는 `4a1484e`입니다. rc5 원본과 기존 canonical 두 사본은 보존했고 공개 1.0.0·1.1.0 bytes는 그대로입니다.
+- `library-pipeline.mjs --refresh --prepare-release` 전체 필수 검사가 통과했습니다. 두 내부 소비 예제의 설치 JS/CSS와 소스 dist, 새 후보·release-assets·docs 사본이 일치합니다. 자체 선언 오류는 0이며 기존 외부 선언 진단 769건은 별도 제한입니다. 외부 소비 앱은 변경하지 않습니다.
+- `dialog-live-browser-check.mjs --local --commit=4a1484e896353b66e72f89c7050f77a0d7602fab`로 실제 빌드 Starter·Components의 3테마/320·475·1100px 관련 9경로를 글꼴 로딩 후 확인했습니다. visual viewport 236/280px·pan은 브라우저 모의 검사이며 위의 실제 Android 결과와 구분합니다. 문서에는 1.1.1을 미게시 후보로 표시하고 npm 안정 버전 및 공개 변경 이력은 1.1.0·1.0.0으로 유지합니다.
