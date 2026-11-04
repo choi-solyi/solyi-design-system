@@ -23394,29 +23394,29 @@ var kw = $x(wS), Aw = /* @__PURE__ */ H({
 			}, {
 				default: B(() => [
 					K("div", Bw, [
+						q(a, {
+							variant: "primary",
+							loading: L(t),
+							onClick: i
+						}, {
+							default: B(() => [...r[2] ||= [J("확인", -1)]]),
+							_: 1
+						}, 8, ["loading"]),
 						q(a, { onClick: r[0] ||= (e) => n.value = "보조 동작을 눌렀어요." }, {
-							default: B(() => [...r[2] ||= [J("보조 동작", -1)]]),
+							default: B(() => [...r[3] ||= [J("보조 동작", -1)]]),
 							_: 1
 						}),
 						q(a, {
 							variant: "inline",
 							onClick: r[1] ||= (e) => n.value = ""
 						}, {
-							default: B(() => [...r[3] ||= [J("초기화", -1)]]),
+							default: B(() => [...r[4] ||= [J("초기화", -1)]]),
 							_: 1
 						}),
 						q(a, { disabled: "" }, {
-							default: B(() => [...r[4] ||= [J("비활성", -1)]]),
+							default: B(() => [...r[5] ||= [J("비활성", -1)]]),
 							_: 1
-						}),
-						q(a, {
-							variant: "primary",
-							loading: L(t),
-							onClick: i
-						}, {
-							default: B(() => [...r[5] ||= [J("확인", -1)]]),
-							_: 1
-						}, 8, ["loading"])
+						})
 					]),
 					K("p", Vw, N(L(n)), 1),
 					r[6] ||= K("p", { class: "sol-hint" }, " 확인은 0.7초의 가상 작업을 실행합니다. 처리 중에는 중복 실행을 막고, 비활성 버튼은 조작할 수 없습니다. ", -1)
