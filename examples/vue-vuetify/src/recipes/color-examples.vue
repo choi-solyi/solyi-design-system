@@ -74,7 +74,7 @@ function show(tone: ToastTone, label: string) {
       :data-tone="item.tone"
     >
       <span class="sol-status sol-tone-badge">{{ item.icon }} {{ item.label }}</span>
-      <div class="sol-actions sol-actions--commit">
+      <div class="sol-actions">
         <SBtn variant="subtle" :tone="item.tone" @click="show(item.tone, item.label)"
           >옅은 배경</SBtn
         >

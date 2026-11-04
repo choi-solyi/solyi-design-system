@@ -20,7 +20,7 @@ async function removeDraft() {
           : '한 번 누르면 확인 문구로 바뀌고, 한 번 더 누르면 이 화면의 가상 초안이 제거됩니다.'
       }}
     </p>
-    <div class="sol-actions sol-actions--commit">
+    <div class="sol-actions">
       <SConfirmAction
         :label="english ? 'Disabled action' : '비활성 동작'"
         :confirm-label="english ? 'Confirm' : '확인'"

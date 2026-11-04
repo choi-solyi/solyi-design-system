@@ -314,3 +314,13 @@ main00eb7a1의 원격 CI41210744676 검증 중, 미실행이던 malformed 초안
 - UI SHA256 1fb7cfc44bc4bfe5fac992b604b896b1446ee21e6631d9ff57db98382cb1a030, 5990290B. 검증한 QA tarball과 바이트 동일. Core도 이전과 동일하다. 새release-assets/docs manifest·SHA256SUMS·두 내부fixture의dependency/lock·문서starter가 rc5에 일치한다.
 - canonical library-pipeline --refresh --prepare-release 전체1~10단계 exit0. 실제 다운로드·API51개·타입/SSR/runtime·설치무결성/라이선스·문서생성/전체기존회귀 통과. 용량은 측정·증감 보고뿐이며 수치 예외 없음. 해당 빌드 Components/Starter9조합도 실제 높이에서 재터치/포커스 검증 통과. 로그 rc5-canonical-pipeline.log 및 rc5-canonical-browser.log.
 - 아직 원격 push/CI/공개반영 전의 로컬 결과다. npm1.1.1은 사용자 직접 테스트 후 결정할 때까지 보류, 외부소비앱/실기기/스크린리더 변경·조작은 하지 않았다.
+
+
+### 버튼 비교 예제의 과도한 오른쪽 배치 보완
+
+- sol-actions--commit 사용15곳을 소스에서 분류했다. Button 상태·색상별 버튼 변형·ConfirmAction 상태 비교 및 Extended 알림 미리보기 트리거4곳은 기본 왼쪽 흐름으로 복구했다. 폼 제출/저장/일괄 처리/단계 완료 등11곳과 Dialog·Card·Alert의 전용 액션 영역은 유지했다. SBtn 자체와 공통CSS/API는 변경하지 않았다.
+- 기존 remaining-action-paths-browser-check를 현재 canonical 설치본 기준으로 갱신했다. 비교는 왼쪽 시작·DOM/줄바꿈 시각순서·넘침없음을 확인하고 실제 확정 액션은 기존 오른쪽 끝/DOM마지막 검사를 유지한다. 세 테마1100/390/320px에서 비교24건+확정액션48건=72건 통과. 보조버튼/Space 실행·두 번 확인·폼/단계 저장·Dialog 취소와 초안 유지도 재사용했다. 캡처에서 넓은 Button 왼쪽 배치와 좁은 Dialog 오른쪽 액션을 직접 확인했다.
+- strict Vue 예제 타입 검사, starter/inline·문서 빌드, Components 예제 연결 검사, public sample77개/57SFC 컴파일 통과. 실제 로컬 Components Button iframe도 왼쪽 시작과 기존 순서를 확인했다. Examples/Sample Code 생성본을 함께 갱신했다.
+- 현재 로컬 WIP이며 commit/push/공개 배포는 하지 않았다. SDK tarball/릴리즈 파일/의존성/외부소비앱/npm은 변경하지 않았다. 물리기기·ADB는 사용하지 않았다. 근거: qa-output/action-menu-focus/button-comparison-alignment.log 및 button-alignment-doc-build.log, button-alignment-local-document.json; 전체 브라우저 결과는 qa-output/mobile-input-followup/remaining-actions/results.json.
+
+- 후속 최종검토: 기존72건을 동일WIP 근거로 재사용하고 로컬 실제문서iframe 1440/390/320px의Button/ConfirmAction 기본·긴확인문구9상태를 추가 점검했다. 왼쪽 시작/가로범위/문구변경 후iframe높이/Escape복귀 통과. API목록·버전·생성데이터쌍 일치와 SDK1fb7cfc4…1a030 유지, diff공백검사 확인. 현재공개판변경/commit/push/기기조작 없음. 상세 button-alignment-final-review.json.

@@ -23195,7 +23195,7 @@ var kw = $x(wS), Aw = /* @__PURE__ */ H({
 	SAvatar: RC,
 	SStepper: zC,
 	SBarChart: BC
-}, Mw = { class: "sol-stack" }, Nw = { class: "sol-actions" }, Pw = { role: "status" }, Fw = { class: "sol-status sol-tone-badge" }, Iw = { class: "sol-actions sol-actions--commit" }, Lw = /* @__PURE__ */ H({
+}, Mw = { class: "sol-stack" }, Nw = { class: "sol-actions" }, Pw = { role: "status" }, Fw = { class: "sol-status sol-tone-badge" }, Iw = { class: "sol-actions" }, Lw = /* @__PURE__ */ H({
 	__name: "color-examples",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F("info"), r = /* @__PURE__ */ F(""), i = /* @__PURE__ */ F("example-a"), a = Y(() => Db(i.value)), o = (e) => ({
@@ -23377,7 +23377,7 @@ var kw = $x(wS), Aw = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), Bw = { class: "sol-actions sol-actions--commit" }, Vw = { role: "status" }, Hw = /* @__PURE__ */ H({
+}), Bw = { class: "sol-actions" }, Vw = { role: "status" }, Hw = /* @__PURE__ */ H({
 	__name: "buttons",
 	setup(e) {
 		let t = /* @__PURE__ */ F(!1), n = /* @__PURE__ */ F(""), r;
@@ -26375,7 +26375,7 @@ var kw = $x(wS), Aw = /* @__PURE__ */ H({
 			});
 		};
 	}
-}), SE = { class: "sol-actions sol-actions--commit" }, CE = { class: "sol-hint" }, wE = /* @__PURE__ */ H({
+}), SE = { class: "sol-actions" }, CE = { class: "sol-hint" }, wE = /* @__PURE__ */ H({
 	__name: "confirm-action",
 	setup(e) {
 		let t = Nx(), n = /* @__PURE__ */ F(!1), r = Y(() => t.value.code === "en-US"), i = /* @__PURE__ */ F(null);
