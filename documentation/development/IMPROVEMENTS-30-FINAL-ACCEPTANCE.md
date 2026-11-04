@@ -150,3 +150,12 @@ Library libfile_2828e3a7c4988191bda84f104081b1cf의 공식 materialize는 Window
 - main 950c790의 CI/Pages 41075068133 성공. 공개 추적 파일 365개가 HTTP 200 및 git blob SHA-256 일치입니다.
 - 첫 공개 Circular 검사는 iframe의 aria-busy=true 상태에서 즉시 count를 읽어 0으로 실패했습니다. 동일 공개 화면에서 ready 후 실제 원형 1개를 확인했으며 제품 누락이 아니었습니다. 검사 호스트가 ready 상태가 될 때까지 기다리도록 보완했습니다. 중간 시도의 inline ID prefix가 자식 17개까지 선택한 strict-mode 오류도 호스트 class 하나로 좁혔습니다. 기존 기능 assertion은 삭제·완화하지 않았습니다.
 - 공개 Violet PC와 Sage dark compact 390 흐름 통과, 공개 Chart PC/모바일 범례의 실제 픽셀에서 순번·요일·기록 수 2/4/0/5가 분리됨을 확인했습니다. Sand 및 전체 결과는 qa-output/public-followups/live-site/results.json에 회수합니다. 패키지 및 docs 파일은 이 검사 보완으로 바뀌지 않으며 동결 hash는 동일합니다.
+
+### 2026-11-04 실제 Android IME: Dialog 입력 잘림 후속 수정(로컬)
+
+- 공개판 Fold Chrome 475 CSS px에서 Samsung 키보드를 열면 visual viewport가 약 236px로 줄고 본문은 30.17px가 되어 44px STextField가 잘렸습니다. 헤더·액션의 화면 내 존재만으로 입력 가시성까지 통과 처리할 수 없습니다.
+- 원인은 공통 SDialog의 고정 여백·헤더·액션이 유지되는 동안 `min-height:0`인 본문만 축소되는 구조입니다. 기존 검사는 작은 native input과 280px 모의 viewport를 사용하여 이 경계를 놓쳤습니다. 수정 전 강화 검사도 320×236에서 본문 16px로 실패했습니다.
+- visual viewport 높이가 360px 미만인 SDialog만 내부 상태 클래스로 간격을 줄입니다. 기존 space 토큰을 재사용하고 헤더·닫기·액션 및 본문 전용 스크롤, 정상 높이 복귀, 공개 props/slots/events는 보존합니다. 새 토큰·의존성·공개 API는 없습니다.
+- `dialog-feedback-browser-check.mjs --ime-only`는 실제 STextField, 긴 본문, 빈 feedback, 세 액션으로 320/475/720px × 236/280px × dialog/drawer 12경로를 확인합니다. 입력 높이+포커스 여백, 본문과의 실제 교차, 고정 헤더/액션, offset pan, 닫기 포커스와 정상 viewport 복귀를 검사합니다. 모의 viewport 결과를 실제 Android로 부르지 않습니다.
+- 선행 수정본의 독립 로컬 패키지 fixture는 실제 Fold에서 본문 약 94px와 44px 입력·라벨 전체 표시를 확인했습니다. 최종 빈 feedback 포함 수정본의 실기기 재실행 중 활성 화면이 검증 대상에서 바뀌어 검사 명령을 취소하고 임시 forward/reverse 및 서버를 해제했습니다. 최종본의 실기기 재실행은 미완료이며, 선행 수정본 결과로 대신하지 않습니다. 대상 밖 캡처는 보존하지 않습니다.
+- 증거: 작업 workspace의 `qa-output/android-ime-20261104/` 및 저장소 `qa-output/dialog-feedback/browser/ime-result.json`. TalkBack은 사용자 요청으로 이번 검증에서 제외하며 설정을 변경하지 않습니다. Safari/iOS는 미검증입니다. 이 수정은 아직 공개 문서·동결 1.1.1 후보에 반영하지 않았고 npm 게시·소비 앱 변경도 없습니다.

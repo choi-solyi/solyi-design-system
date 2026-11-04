@@ -79,6 +79,13 @@
 .sol-ui-dialog-actions-start {display:flex;flex-wrap:wrap;align-items:center;gap:var(--sol-space-3);margin-inline-end:auto;}
 .sol-ui-dialog-feedback {flex:none;margin-top:var(--sol-space-3);overflow-wrap:anywhere;}
 .sol-ui-dialog-feedback>p {margin:0;}
+/* A software keyboard can shrink visualViewport without changing CSS media queries. */
+.sol-ui-dialog-short-viewport>.v-overlay__content {margin-block:var(--sol-space-2);max-height:calc(100% - 2 * var(--sol-space-2));}
+.sol-ui-dialog-short-viewport .sol-ui-dialog {padding:var(--sol-space-2);max-height:calc(var(--sol-dialog-viewport-height,100dvh) - 2 * var(--sol-space-2));}
+.sol-ui-dialog-short-viewport .sol-ui-dialog-heading {margin-bottom:var(--sol-space-2);}
+.sol-ui-dialog-short-viewport .sol-ui-dialog-body {gap:var(--sol-space-2);}
+.sol-ui-dialog-short-viewport .sol-ui-dialog-actions {margin-top:var(--sol-space-2);gap:var(--sol-space-2);}
+.sol-ui-dialog-short-viewport .sol-ui-dialog-feedback {margin-top:var(--sol-space-2);}
 .sol-ui-table {container-type:inline-size;min-width:0;display:grid;gap:var(--sol-space-4);}
 .sol-ui-table-desktop {border:1px solid var(--sol-color-border);border-radius:var(--sol-radius-card);overflow:hidden;}
 .sol-ui-table .sol-data-table {margin:0;table-layout:fixed;width:100%;}
