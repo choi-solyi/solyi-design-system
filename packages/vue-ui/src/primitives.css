@@ -139,6 +139,9 @@
   cursor:default;
   padding: var(--sol-space-1) var(--sol-space-2);
 }
+.sol-ui-badge[data-variant='outlined'] {
+  border: 1px solid var(--sol-tag-fg);
+}
 .sol-ui-badge-anchor {
   position: relative;
   display: inline-flex;
