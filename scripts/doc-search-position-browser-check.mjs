@@ -92,6 +92,7 @@ try {
         await page.waitForTimeout(40);
         positions.push((await panel.boundingBox()).y);
         const box = await input.boundingBox();
+        assert.ok((await page.locator('#document-search-results').boundingBox()).height>=44,'Keyboard viewport still leaves a usable result row');
         assert.ok(
           box.y >= 80 && box.y + box.height <= 360,
           "Input remains inside keyboard-reduced viewport",
