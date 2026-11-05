@@ -12,3 +12,4 @@
 - 첫 후보 준비는 이전 후보 디렉터리 보존 후 index가 이를 참조해 ENOENT로 중단됐다. 기존 index도 보존하고 재동결 전 인덱스를 실재하는 published 1.1.0/1.0.0으로 맞춰 다시 실행했다. 불변성 검사·타입·빌드·기능 기준은 변경하지 않았다.
 - rc7 UI: 5,990,405 bytes, SHA-256 `3277a2b960844d1fb12dce0dff6527c24d975d0b29cd10f8d82611666ed54e7e`. 자체55개 선언 진단0, 기존 외부 선언769건은 별도 알려진 한계다. 기존 공개51개 API/전역등록·SSR·두 내부 소비 앱 타입/빌드를 보존한다.
 - `node scripts/library-pipeline.mjs --refresh --prepare-release` 최종 exit0. npm test/check, 새 tarball의 두 내부 앱 clean install/타입/빌드/런타임/SSR/라이선스/측정 보고/문서·HTTP 소비·이력 보존 검사까지 통과했다. `browser-final3.log` exit0은 검색3폭 및 Badge6테마 경로다. 기존 1.0.0/1.1.0 git diff는 0이다. 공개 반영과 registry 게시는 별도 결과로 기록한다.
+- 후속 문서 전용 보완: 상단 gap을 모바일12px/넓은 화면48px로 고정해 키보드 높이280→236 변화에서도 같은 visual offset의 상단 위치를 유지한다. `browser-fixed-gap.log` exit0으로 이를 직접 assert하고 Badge6경로도 다시 확인했다. 문서 재빌드 후 UI tarball 해시3277a2b9…는 동일하다.

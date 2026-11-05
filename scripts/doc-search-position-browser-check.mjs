@@ -125,6 +125,7 @@ try {
         visualViewport.dispatchEvent(new Event("resize"));
       });
       await input.fill("Chi");
+      assert.ok(Math.abs((await panel.boundingBox()).y-positions[0])<1,'Keyboard height changes with the same visual offset preserve the top anchor');
       assert.ok(
         (await page.locator("#document-search-results").boundingBox()).height >=
           44,
