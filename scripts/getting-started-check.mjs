@@ -31,6 +31,14 @@ for (const item of current.packages.filter(item => item.name === 'solyi-ui')) {
   assert.ok(document.querySelector(`a[href="./releases/${current.release}/${item.file}"]`));
 }
 assert.equal(currentInstallCommand(), 'npm install solyi-ui');
+// Keep the unpublished-candidate fixture above, and separately verify the published guide.
+const stableCatalogue={...catalogue,published:current.release};
+const stableSource=source.replace("import {packageReleases} from './release-data.js';",`const packageReleases=${JSON.stringify(stableCatalogue)};`);
+const stable=await import('data:text/javascript,'+encodeURIComponent(stableSource));
+const stableCopies=[];
+const stableHtml=stable.renderGettingStarted({section:(_id,_title,_description,content)=>content,codeSample:(_label,code)=>{stableCopies.push(code);return `<pre>${escape(code)}</pre>`;}});
+assert.ok(!stableHtml.includes('data-candidate-notice'),'A verified published version is not described as a candidate');
+assert.ok(stableCopies.includes(`npm install --save-exact solyi-ui@${current.release}`),'Published pinned install uses the actual stable version');
 if(current.release!=='1.1.0'){assert.ok(html.includes('미게시 후보'));assert.ok(copied.some(item=>item.code==='npm install --save-exact solyi-ui@1.1.0'),'Pinned npm command uses the published stable version, not an unavailable candidate');}
 assert.ok(copied.some(item => item.code === 'pnpm add solyi-ui'));
 assert.doesNotMatch(currentInstallCommand(), /--save-exact|@latest|vue@|vuetify@/);

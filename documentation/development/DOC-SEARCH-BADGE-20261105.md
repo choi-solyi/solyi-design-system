@@ -13,3 +13,4 @@
 - rc7 UI: 5,990,405 bytes, SHA-256 `3277a2b960844d1fb12dce0dff6527c24d975d0b29cd10f8d82611666ed54e7e`. 자체55개 선언 진단0, 기존 외부 선언769건은 별도 알려진 한계다. 기존 공개51개 API/전역등록·SSR·두 내부 소비 앱 타입/빌드를 보존한다.
 - `node scripts/library-pipeline.mjs --refresh --prepare-release` 최종 exit0. npm test/check, 새 tarball의 두 내부 앱 clean install/타입/빌드/런타임/SSR/라이선스/측정 보고/문서·HTTP 소비·이력 보존 검사까지 통과했다. `browser-final3.log` exit0은 검색3폭 및 Badge6테마 경로다. 기존 1.0.0/1.1.0 git diff는 0이다. 공개 반영과 registry 게시는 별도 결과로 기록한다.
 - 후속 문서 전용 보완: 상단 gap을 모바일12px/넓은 화면48px로 고정해 키보드 높이280→236 변화에서도 같은 visual offset의 상단 위치를 유지한다. `browser-fixed-gap.log` exit0으로 이를 직접 assert하고 Badge6경로도 다시 확인했다. 문서 재빌드 후 UI tarball 해시3277a2b9…는 동일하다.
+- 최종 npm 인증 복구와 게시·registry 설치 검증을 완료했다. E401/승인 요청 만료 설명은 이전 시점의 이력이며 현재 차단은 아니다. [1.1.1 실제 게시 결과](NPM-1.1.1-PUBLICATION.md)를 따른다.

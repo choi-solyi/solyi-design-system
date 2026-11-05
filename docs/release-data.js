@@ -1,6 +1,6 @@
 // Generated current verified package information.
 export const packageReleases={
-  "published": "1.1.0",
+  "published": "1.1.1",
   "current": "1.1.1",
   "releases": [
     {

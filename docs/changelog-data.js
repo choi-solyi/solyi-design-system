@@ -1,6 +1,16 @@
 // Generated from published CHANGELOG.md entries.
 export const releaseHistory=[
   {
+    "version": "1.1.1",
+    "date": "2026-11-05",
+    "entries": [
+      "ButtonGroup과 파일 이미지 미리보기를 추가했습니다.",
+      "날짜·시간·숫자 입력과 선택·정렬·시간표 조작을 개선했습니다.",
+      "달력 자료 표시, 모바일 팝업·메뉴, 버튼 배치와 컴포넌트 예제를 다듬었습니다.",
+      "문서 검색창의 입력 중 위치 흔들림과 테두리 배지 표시를 수정했습니다."
+    ]
+  },
+  {
     "version": "1.1.0",
     "date": "2026-10-29",
     "entries": [

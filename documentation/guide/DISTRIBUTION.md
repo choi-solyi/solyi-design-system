@@ -2,7 +2,7 @@
 
 ## 현재 설치 경로
 
-[Getting started의 설치](https://ui.solyi.kr/#start/install)는 solyi-ui 1.1.0의 npm·pnpm 명령과 직접 설치 파일을 제공합니다. 정확한 파일·URL·해시는 현재 패키지 정보를 기준으로 합니다.
+[Getting started의 설치](https://ui.solyi.kr/#start/install)는 solyi-ui 1.1.1의 npm·pnpm 명령과 직접 설치 파일을 제공합니다. 정확한 파일·URL·해시는 현재 패키지 정보를 기준으로 합니다.
 
 공통 스타일·토큰·폰트가 포함된 `solyi-ui`를 설치합니다. Vue와 Vuetify는 peer dependency이며 UI 번들 안에 중복 포함하지 않습니다. Node·Vue·Vuetify 범위는 [호환 안내](COMPATIBILITY.md)를 확인합니다.
 

@@ -32,7 +32,7 @@ assert.deepEqual(publicIndex, { current: documentVersion, releases: [documentVer
 const { packageReleases } = await import(new URL('../docs/release-data.js', import.meta.url))
 const {releaseHistory}=await import(new URL('../site/changelog-data.js',import.meta.url))
 assert.deepEqual(packageReleases, {published:releaseHistory[0].version,current:documentVersion,releases:[current]})
-assert.equal(packageReleases.published,'1.1.0','Unpublished candidate does not replace the current npm release record')
+assert.equal(packageReleases.published,'1.1.1','Verified npm publication is reflected in the current release record')
 // Verify the retained source catalogue without requiring an obsolete previous version.
 for (const release of sourceCatalogue.releases) {
   await verifyRelease(new URL(`docs/releases/${release.release}/`, root))
