@@ -28,7 +28,9 @@ const server = createServer(async (req, res) => {
   }
 });
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
-const origin = process.argv.includes('--public') ? 'https://ui.solyi.kr' : "http://127.0.0.1:" + server.address().port,
+const origin = process.argv.includes("--public")
+    ? "https://ui.solyi.kr"
+    : "http://127.0.0.1:" + server.address().port,
   records = [];
 let browser;
 try {
@@ -43,7 +45,18 @@ try {
         hasTouch: width < 800,
       }),
       page = await context.newPage();
-    await page.goto(origin + "/#component/smonth-calendar");
+    const appearance =
+      width === 475
+        ? { theme: "sage", mode: "dark" }
+        : width === 1100
+          ? { theme: "sand", mode: "light" }
+          : { theme: "violet", mode: "light" };
+    await page.goto(
+      origin +
+        "/?" +
+        new URLSearchParams(appearance) +
+        "#component/smonth-calendar",
+    );
     await page.locator("#document-search-open").click();
     const panel = page.locator("#document-search-dialog"),
       input = page.locator("#document-search-query");
@@ -92,13 +105,31 @@ try {
         await page.waitForTimeout(40);
         positions.push((await panel.boundingBox()).y);
         const box = await input.boundingBox();
-        assert.ok((await page.locator('#document-search-results').boundingBox()).height>=44,'Keyboard viewport still leaves a usable result row');
+        if (await page.locator("#document-search-results a").count())
+          assert.ok(
+            (await page.locator("#document-search-results").boundingBox())
+              .height >= 44,
+            "Keyboard viewport still leaves a usable result row",
+          );
         assert.ok(
           box.y >= 80 && box.y + box.height <= 360,
           "Input remains inside keyboard-reduced viewport",
         );
       }
       assert.ok(Math.max(...positions) - Math.min(...positions) < 1);
+      await page.evaluate(() => {
+        Object.defineProperty(visualViewport, "height", {
+          configurable: true,
+          get: () => 236,
+        });
+        visualViewport.dispatchEvent(new Event("resize"));
+      });
+      await input.fill("Chi");
+      assert.ok(
+        (await page.locator("#document-search-results").boundingBox()).height >=
+          44,
+        "Very short keyboard viewport retains result space",
+      );
       await input.fill("Chip");
       await input.press("ArrowDown");
       assert.equal(
@@ -125,18 +156,64 @@ try {
     records.push({ width, spread, measurements });
     await context.close();
   }
-  if(!baseline)for(const theme of ['violet','sage','sand'])for(const mode of ['light','dark']){
-    const context=await browser.newContext({viewport:{width:475,height:800}}),page=await context.newPage();
-    await page.goto(origin+'/?'+new URLSearchParams({theme,mode})+'#component/sbadge');
-    const card=page.locator('#sbadge');await card.scrollIntoViewIfNeeded();await card.locator('.inline-preview-canvas:not([aria-busy])').waitFor();
-    const outlined=card.locator('.sol-ui-badge[data-variant="outlined"]');await outlined.waitFor();
-    const style=await outlined.evaluate(el=>{const s=getComputedStyle(el);return {border:s.borderTopWidth,color:s.borderTopColor,text:s.color,role:el.getAttribute('role'),tag:el.tagName}});
-    assert.equal(style.border,'1px');assert.equal(style.color,style.text);assert.notEqual(style.tag,'BUTTON');assert.notEqual(style.role,'button');
-    assert.equal(await card.locator('.sol-ui-badge[data-variant="subtle"]').first().evaluate(el=>getComputedStyle(el).borderTopWidth),'0px');
-    await page.screenshot({path:resolve(out,`badge-${theme}-${mode}.png`)});records.push({theme,mode,badge:style});await context.close();
-  }
+  if (!baseline)
+    for (const theme of ["violet", "sage", "sand"])
+      for (const mode of ["light", "dark"]) {
+        const context = await browser.newContext({
+            viewport: { width: 475, height: 800 },
+          }),
+          page = await context.newPage();
+        await page.goto(
+          origin +
+            "/?" +
+            new URLSearchParams({ theme, mode }) +
+            "#component/sbadge",
+        );
+        const card = page.locator("#sbadge");
+        await card.scrollIntoViewIfNeeded();
+        const surface = (await card.locator("iframe").count())
+          ? card.frameLocator("iframe")
+          : card;
+        const outlined = surface.locator(
+          '.sol-ui-badge[data-variant="outlined"]',
+        );
+        await outlined.waitFor();
+        const style = await outlined.evaluate((el) => {
+          const s = getComputedStyle(el);
+          return {
+            border: s.borderTopWidth,
+            color: s.borderTopColor,
+            text: s.color,
+            role: el.getAttribute("role"),
+            tag: el.tagName,
+          };
+        });
+        assert.equal(style.border, "1px");
+        assert.equal(style.color, style.text);
+        assert.notEqual(style.tag, "BUTTON");
+        assert.notEqual(style.role, "button");
+        assert.equal(
+          await surface
+            .locator('.sol-ui-badge[data-variant="subtle"]')
+            .first()
+            .evaluate((el) => getComputedStyle(el).borderTopWidth),
+          "0px",
+        );
+        await page.screenshot({
+          path: resolve(out, `badge-${theme}-${mode}.png`),
+        });
+        records.push({ theme, mode, badge: style });
+        await context.close();
+      }
   await writeFile(
-    resolve(out, baseline ? "baseline.json" : process.argv.includes('--public') ? 'public-result.json' : "result.json"),
+    resolve(
+      out,
+      baseline
+        ? "baseline.json"
+        : process.argv.includes("--public")
+          ? "public-result.json"
+          : "result.json",
+    ),
     JSON.stringify(
       { visualViewportSimulated: true, physicalAndroid: false, records },
       null,

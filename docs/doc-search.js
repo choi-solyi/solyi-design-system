@@ -17,6 +17,8 @@ export function mountDocumentSearch({getDocuments,goToSection}){
  const input=panel.querySelector('#document-search-query'),clear=panel.querySelector('#document-search-clear'),results=panel.querySelector('#document-search-results'),status=panel.querySelector('#document-search-status'),form=panel.querySelector('form');
  const controller=new AbortController(),signal=controller.signal;let index=null,items=[],composing=false,suppressSubmit=false,restore=true,opener=trigger;
  const links=()=>Array.from(results.querySelectorAll('a'));
+ // Anchor the search field, not the changing result list. Only viewport changes reposition it.
+ function fitViewport(){if(!panel.open)return;const viewport=window.visualViewport,height=viewport?.height||window.innerHeight,offset=viewport?.offsetTop||0,gap=Math.min(48,Math.max(12,height*.08));panel.toggleAttribute('data-short-viewport',height<400);panel.style.setProperty('--doc-search-top',`${offset+gap}px`);panel.style.setProperty('--doc-search-height',`${Math.max(0,height-gap-12)}px`);}
  function renderSearch(){const query=input.value.trim();items=findDocumentResults(index||[],query);clear.disabled=!input.value;results.replaceChildren();
   status.textContent=!query?`문서 ${index?.length||0}개에서 이름이나 설명을 검색하세요.`:items.length?`검색 결과 ${items.length}개. 아래 방향키 또는 Tab으로 결과를 탐색하세요.`:'검색 결과가 없어요. 이름이나 설명의 다른 단어를 입력해 보세요.';
   if(!query)return;
@@ -26,9 +28,12 @@ export function mountDocumentSearch({getDocuments,goToSection}){
  function dismiss(navigating=false){restore=!navigating;if(panel.open)panel.close();}
  function open(){if(panel.open)return;opener=trigger;restore=true;composing=false;suppressSubmit=false;
   if(typeof panel.showModal!=='function'){document.querySelector('#announcement').textContent='문서 검색은 dialog를 지원하는 브라우저에서 사용할 수 있어요. 문서 메뉴를 이용해 주세요.';return;}
-  if(!index)index=getDocuments();renderSearch();panel.showModal();input.focus();
+  if(!index)index=getDocuments();renderSearch();panel.showModal();fitViewport();input.focus();
  }
  trigger.addEventListener('click',open,{signal});
+ window.addEventListener('resize',fitViewport,{signal});
+ window.visualViewport?.addEventListener('resize',fitViewport,{signal});
+ window.visualViewport?.addEventListener('scroll',fitViewport,{signal});
  panel.querySelector('#document-search-close').addEventListener('click',()=>dismiss(),{signal});
  panel.addEventListener('close',()=>{composing=false;if(restore&&opener?.isConnected)opener.focus();},{signal});
  panel.addEventListener('cancel',e=>{if(composing)e.preventDefault();},{signal});

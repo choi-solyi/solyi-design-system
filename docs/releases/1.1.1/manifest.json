@@ -1,6 +1,6 @@
 {
   "release": "1.1.1",
-  "sourceRef": "4a1484e896353b66e72f89c7050f77a0d7602fab",
+  "sourceRef": "cad610d6b77b0b4b1149d8762ad2ca57dcdd24d4",
   "compatibility": {
     "node": "^22.18.0 || >=24.12.0",
     "vue": "3.5.44",
@@ -19,9 +19,9 @@
       "name": "solyi-ui",
       "version": "1.1.1",
       "file": "solyi-ui-1.1.1.tgz",
-      "bytes": 5990397,
-      "sha256": "b72a259afa72796be19968f99fd563cbc3cf110951676108b95b69914c5195a9",
-      "integrity": "sha512-eXyD/q35697B88ED+F7z5F4lkwfKH9oygFil4q46SKzyvnez9Gfqk7ggLlhY22TsrUEXrhfKQ7BDS9lFrSlyFA=="
+      "bytes": 5990405,
+      "sha256": "3277a2b960844d1fb12dce0dff6527c24d975d0b29cd10f8d82611666ed54e7e",
+      "integrity": "sha512-p1KraoQEsjk7uklxkEhTpfye2G4wgf/tNNZB6SqZmozVbAk9mQKzGBbNkDKXIqAhrYqihK/P98hGv/PfiaCTVQ=="
     }
   ]
 }
